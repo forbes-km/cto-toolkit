@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Service Mapper</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --aws: #C97A3D;
+    --azure: #2E6FB0;
+    --gcp: #B0483A;
+    --oci: #7A4FB5;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--ui);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    padding: 44px 32px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 34px;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  header p {
+    margin: 0 0 24px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 680px;
+    line-height: 1.5;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tab {
+    padding: 10px 16px;
+    font-size: 14px;
+    font-family: var(--ui);
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ---- Mapper view ---- */
+  .controls {
+    max-width: 1100px;
+    margin: 24px auto 0;
+    padding: 0 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .search {
+    flex: 1 1 260px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+    font-family: var(--ui);
+    color: var(--ink);
+  }
+  .search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .chip {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: white;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-family: var(--ui);
+    transition: all 0.12s ease;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--ink); }
+  .chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 32px 80px;
+  }
+
+  .category-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 32px 0 10px;
+    font-weight: 600;
+  }
+  .category-label:first-child { margin-top: 8px; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .row:last-child { border-bottom: none; }
+
+  .capability {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 600;
+    padding-top: 6px;
+  }
+  .capability .sub {
+    display: block;
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    margin-top: 2px;
+  }
+
+  .trail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .svc {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 11px;
+    border-radius: 6px;
+    background: white;
+    border: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+  .svc.dim { opacity: 0.25; }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot.aws { background: var(--aws); }
+  .dot.azure { background: var(--azure); }
+  .dot.gcp { background: var(--gcp); }
+  .dot.oci { background: var(--oci); }
+
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  /* ---- Landing zone view ---- */
+  .lz-intro {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 0 28px;
+  }
+
+  .lz-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: white;
+    margin-bottom: 18px;
+    overflow: hidden;
+  }
+
+  .lz-card-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--accent-soft);
+  }
+  .lz-card-head h3 {
+    margin: 0 0 3px;
+    font-size: 15.5px;
+    font-family: var(--ui);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .lz-card-head p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .lz-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .lz-cell {
+    padding: 14px 16px;
+    border-right: 1px solid var(--line);
+  }
+  .lz-cell:last-child { border-right: none; }
+
+  .lz-provider {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .lz-cell p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  @media (max-width: 800px) {
+    .lz-grid { grid-template-columns: 1fr 1fr; }
+    .lz-cell:nth-child(2) { border-right: none; }
+  }
+  @media (max-width: 500px) {
+    .lz-grid { grid-template-columns: 1fr; }
+    .lz-cell { border-right: none; border-bottom: 1px solid var(--line); }
+    .lz-cell:last-child { border-bottom: none; }
+  }
+
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px 48px;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; }
+    .capability { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Cloud Service Mapper</h1>
+  <p>A working reference for translating capabilities and services across AWS, Azure, GCP, and OCI, plus a side-by-side landing zone and foundational best-practices guide. Naming and feature parity shift as providers evolve their catalogs; treat this as a starting point for a conversation, not a guarantee of equivalence.</p>
+  <div class="tabs">
+    <button class="tab active" data-view="mapper">Service mapper</button>
+    <button class="tab" data-view="landing-zone">Landing zone &amp; best practices</button>
+  </div>
+</header>
+
+<div id="mapper-view" class="view active">
+  <div class="controls">
+    <input class="search" id="search" type="text" placeholder="Search a capability or service name…">
+    <button class="chip active" data-provider="all">All providers</button>
+    <button class="chip" data-provider="aws">AWS</button>
+    <button class="chip" data-provider="azure">Azure</button>
+    <button class="chip" data-provider="gcp">GCP</button>
+    <button class="chip" data-provider="oci">OCI</button>
+  </div>
+  <main id="main"></main>
+</div>
+
+<div id="landing-zone-view" class="view">
+  <main style="padding-top: 24px;">
+    <p class="lz-intro">The building blocks every cloud foundation needs before workloads land on it: how accounts are structured, how identity and network are established, and how guardrails get enforced from day one. This is the layer landing zone automation (Control Tower, Landing Zones, blueprints, or a hand-rolled equivalent) is meant to stand up before a single application team gets access.</p>
+    <div id="lz-main"></div>
+  </main>
+</div>
+
+<footer>
+  Reference only. Provider service catalogs and landing zone tooling change frequently; verify current naming, tiering, and feature parity directly against provider documentation before relying on this for a design or migration decision.
+</footer>
+
+<script>
+const data = [
+  // Compute
+  { category: "Compute", capability: "Virtual machines", sub: "General-purpose IaaS compute", aws: "EC2", azure: "Virtual Machines", gcp: "Compute Engine", oci: "Compute" },
+  { category: "Compute", capability: "Managed Kubernetes", sub: "Container orchestration", aws: "EKS", azure: "AKS", gcp: "GKE", oci: "OKE" },
+  { category: "Compute", capability: "Serverless functions", sub: "Event-driven, consumption-billed compute", aws: "Lambda", azure: "Functions", gcp: "Cloud Run functions", oci: "Functions" },
+  { category: "Compute", capability: "Container hosting (serverless)", sub: "Run containers without managing clusters", aws: "Fargate", azure: "Container Apps", gcp: "Cloud Run", oci: "Container Instances" },
+  { category: "Compute", capability: "PaaS web app hosting", sub: "Deploy code or a container to a managed web app platform", aws: "App Runner / Elastic Beanstalk", azure: "App Service", gcp: "App Engine", oci: "No direct equivalent; commonly Container Instances or OKE" },
+  { category: "Compute", capability: "Static site / frontend hosting", sub: "Managed hosting for static sites and SPAs, often git-connected", aws: "Amplify Hosting", azure: "Static Web Apps", gcp: "Firebase Hosting", oci: "No direct equivalent; commonly Object Storage + CDN" },
+  { category: "Compute", capability: "Batch processing", sub: "Scheduled or triggered batch jobs at scale", aws: "Batch", azure: "Batch", gcp: "Batch", oci: "Batch" },
+  { category: "Compute", capability: "VM auto-scaling groups", sub: "Elastic scaling of VM fleets", aws: "Auto Scaling Groups", azure: "Virtual Machine Scale Sets", gcp: "Managed Instance Groups", oci: "Instance Pools" },
+  { category: "Compute", capability: "Bare metal", sub: "Dedicated, non-virtualized hosts", aws: "EC2 Bare Metal", azure: "Dedicated Host", gcp: "Bare Metal Solution", oci: "Bare Metal Instances" },
+  { category: "Compute", capability: "High-performance computing", sub: "Tightly-coupled HPC clusters", aws: "ParallelCluster", azure: "CycleCloud", gcp: "Cluster Toolkit", oci: "HPC shapes + cluster networking" },
+
+  // Storage
+  { category: "Storage", capability: "Object storage", sub: "Durable blob storage for unstructured data", aws: "S3", azure: "Blob Storage", gcp: "Cloud Storage", oci: "Object Storage" },
+  { category: "Storage", capability: "Block storage", sub: "Attached volumes for VMs", aws: "EBS", azure: "Managed Disks", gcp: "Persistent Disk", oci: "Block Volumes" },
+  { category: "Storage", capability: "File storage", sub: "Managed network file systems", aws: "EFS", azure: "Azure Files", gcp: "Filestore", oci: "File Storage" },
+  { category: "Storage", capability: "Archival / cold storage", sub: "Low-cost, high-latency retrieval tiers", aws: "S3 Glacier", azure: "Archive Storage tier", gcp: "Archive Storage class", oci: "Archive Storage" },
+  { category: "Storage", capability: "Hybrid / on-prem gateway", sub: "Bridging on-prem storage to cloud", aws: "Storage Gateway", azure: "Azure File Sync / Stack Edge", gcp: "Storage Transfer Service", oci: "Storage Gateway" },
+  { category: "Storage", capability: "Bulk data transfer appliance", sub: "Physical device for large offline transfer", aws: "Snowball", azure: "Data Box", gcp: "Transfer Appliance", oci: "Data Transfer Appliance" },
+  { category: "Storage", capability: "Managed backup", sub: "Centralized, policy-driven backup across services", aws: "AWS Backup", azure: "Azure Backup", gcp: "Backup and DR Service", oci: "Backup Service (per-resource, no central console)" },
+  { category: "Storage", capability: "Disaster recovery orchestration", sub: "Cross-region failover orchestration and testing", aws: "Elastic Disaster Recovery", azure: "Site Recovery", gcp: "Backup and DR Service", oci: "Full Stack Disaster Recovery" },
+
+  // Database
+  { category: "Database", capability: "Managed relational (general)", sub: "Managed MySQL / PostgreSQL / SQL Server", aws: "RDS", azure: "Azure SQL / Flexible Server", gcp: "Cloud SQL", oci: "Base Database Service" },
+  { category: "Database", capability: "Distributed relational", sub: "Globally distributed, horizontally scalable SQL", aws: "Aurora", azure: "Cosmos DB for PostgreSQL (Citus)", gcp: "Spanner", oci: "Autonomous Database" },
+  { category: "Database", capability: "Managed NoSQL / document", sub: "Schema-flexible document store", aws: "DynamoDB", azure: "Cosmos DB", gcp: "Firestore", oci: "NoSQL Database" },
+  { category: "Database", capability: "In-memory cache", sub: "Managed Redis / Memcached", aws: "ElastiCache", azure: "Azure Cache for Redis", gcp: "Memorystore", oci: "Cache with Redis" },
+  { category: "Database", capability: "Data warehouse", sub: "Managed analytical / columnar warehouse", aws: "Redshift", azure: "Synapse Analytics", gcp: "BigQuery", oci: "Autonomous Data Warehouse" },
+  { category: "Database", capability: "Graph database", sub: "Managed graph query engine", aws: "Neptune", azure: "Cosmos DB (Gremlin API)", gcp: "Spanner Graph", oci: "Graph Studio (on Autonomous DB)" },
+  { category: "Database", capability: "Time-series database", sub: "Optimized for time-stamped metric data", aws: "Timestream", azure: "Data Explorer (Kusto)", gcp: "Bigtable (common time-series pattern)", oci: "No dedicated native service" },
+  { category: "Database", capability: "Database migration service", sub: "Managed heterogeneous/homogeneous DB migration", aws: "Database Migration Service", azure: "Database Migration Service", gcp: "Database Migration Service", oci: "Database Migration" },
+
+  // Networking
+  { category: "Networking", capability: "Virtual network", sub: "Isolated software-defined network", aws: "VPC", azure: "Virtual Network", gcp: "VPC", oci: "VCN" },
+  { category: "Networking", capability: "Load balancing", sub: "L4/L7 traffic distribution", aws: "ELB / ALB", azure: "Load Balancer / App Gateway", gcp: "Cloud Load Balancing", oci: "Load Balancer" },
+  { category: "Networking", capability: "CDN", sub: "Edge content delivery", aws: "CloudFront", azure: "Azure CDN / Front Door", gcp: "Cloud CDN", oci: "OCI CDN" },
+  { category: "Networking", capability: "Edge compute functions", sub: "Code execution at CDN edge locations", aws: "CloudFront Functions / Lambda@Edge", azure: "Front Door + Functions", gcp: "Cloud Run at the edge (limited)", oci: "No dedicated edge-compute product" },
+  { category: "Networking", capability: "DNS", sub: "Managed authoritative DNS", aws: "Route 53", azure: "Azure DNS", gcp: "Cloud DNS", oci: "DNS" },
+  { category: "Networking", capability: "NAT gateway", sub: "Outbound-only internet access for private subnets", aws: "NAT Gateway", azure: "NAT Gateway", gcp: "Cloud NAT", oci: "NAT Gateway" },
+  { category: "Networking", capability: "Private connectivity", sub: "Dedicated network link to on-prem", aws: "Direct Connect", azure: "ExpressRoute", gcp: "Cloud Interconnect", oci: "FastConnect" },
+  { category: "Networking", capability: "Site-to-site VPN", sub: "Encrypted tunnel over public internet", aws: "Site-to-Site VPN", azure: "VPN Gateway", gcp: "Cloud VPN", oci: "Site-to-Site VPN" },
+  { category: "Networking", capability: "Network peering / hub-spoke", sub: "Connecting isolated networks together", aws: "VPC Peering / Transit Gateway", azure: "VNet Peering / Virtual WAN", gcp: "VPC Peering / Network Connectivity Center", oci: "Local/Remote Peering / DRG" },
+  { category: "Networking", capability: "Private service access", sub: "Private endpoints to managed services", aws: "PrivateLink", azure: "Private Link", gcp: "Private Service Connect", oci: "Private Endpoints" },
+  { category: "Networking", capability: "DDoS protection", sub: "Volumetric and protocol attack mitigation", aws: "Shield", azure: "DDoS Protection", gcp: "Cloud Armor", oci: "DDoS Protection (built-in)" },
+
+  // Messaging & Integration
+  { category: "Messaging & Integration", capability: "Managed message queue", sub: "Point-to-point async messaging", aws: "SQS", azure: "Service Bus (Queues)", gcp: "Pub/Sub (pull)", oci: "Queue" },
+  { category: "Messaging & Integration", capability: "Pub/sub / event bus", sub: "Fan-out event distribution", aws: "SNS / EventBridge", azure: "Event Grid", gcp: "Pub/Sub", oci: "Notifications / Streaming" },
+  { category: "Messaging & Integration", capability: "Managed API gateway", sub: "API front door, throttling, auth", aws: "API Gateway", azure: "API Management", gcp: "Apigee / API Gateway", oci: "API Gateway" },
+  { category: "Messaging & Integration", capability: "Event streaming (Kafka-compatible)", sub: "High-throughput distributed log", aws: "MSK", azure: "Event Hubs", gcp: "Managed Service for Apache Kafka", oci: "Streaming" },
+  { category: "Messaging & Integration", capability: "Workflow orchestration", sub: "Durable state machines / orchestration", aws: "Step Functions", azure: "Durable Functions / Logic Apps", gcp: "Workflows", oci: "OCI Functions + Workflows" },
+  { category: "Messaging & Integration", capability: "iPaaS / enterprise integration", sub: "Low-code app and data integration", aws: "AppFlow / EventBridge Pipes", azure: "Logic Apps", gcp: "Application Integration", oci: "Integration (OIC)" },
+  { category: "Messaging & Integration", capability: "Managed Apache Airflow", sub: "Orchestrating multi-step data pipelines as DAGs", aws: "MWAA (Managed Workflows for Apache Airflow)", azure: "Data Factory (Managed Airflow)", gcp: "Cloud Composer", oci: "No native managed Airflow" },
+  { category: "Messaging & Integration", capability: "Transactional email", sub: "Programmatic outbound email delivery", aws: "SES", azure: "Communication Services (Email)", gcp: "No native service; partner (e.g. SendGrid)", oci: "Email Delivery" },
+  { category: "Messaging & Integration", capability: "Push notifications", sub: "Mobile and web push delivery", aws: "SNS Mobile Push / Pinpoint", azure: "Notification Hubs", gcp: "Firebase Cloud Messaging", oci: "Notifications" },
+
+  // Identity & Security
+  { category: "Identity & Security", capability: "Identity and access management", sub: "Roles, policies, permission boundaries", aws: "IAM", azure: "Entra ID (Azure AD)", gcp: "Cloud IAM", oci: "IAM" },
+  { category: "Identity & Security", capability: "Secrets management", sub: "Centralized secret and key storage", aws: "Secrets Manager", azure: "Key Vault", gcp: "Secret Manager", oci: "Vault" },
+  { category: "Identity & Security", capability: "Web application firewall", sub: "L7 application-layer protection", aws: "WAF", azure: "Azure WAF", gcp: "Cloud Armor", oci: "WAF" },
+  { category: "Identity & Security", capability: "Key management / HSM", sub: "Encryption key lifecycle, hardware-backed", aws: "KMS / CloudHSM", azure: "Key Vault (Managed HSM)", gcp: "Cloud KMS / Cloud HSM", oci: "Vault (KMS + HSM)" },
+  { category: "Identity & Security", capability: "Cloud security posture management", sub: "Continuous config and compliance scanning", aws: "Security Hub", azure: "Defender for Cloud", gcp: "Security Command Center", oci: "Cloud Guard" },
+  { category: "Identity & Security", capability: "Threat detection", sub: "Anomaly and threat detection on cloud activity", aws: "GuardDuty", azure: "Defender for Cloud (threat protection)", gcp: "Security Command Center (Event Threat Detection)", oci: "Threat Intelligence / Cloud Guard" },
+  { category: "Identity & Security", capability: "Certificate management", sub: "TLS certificate issuance and rotation", aws: "Certificate Manager", azure: "Key Vault (Certificates)", gcp: "Certificate Manager", oci: "Certificates Service" },
+  { category: "Identity & Security", capability: "Privileged / just-in-time access", sub: "Time-bound elevated permission grants", aws: "No native PIM; commonly IAM Identity Center temporary permission sets or third-party", azure: "Privileged Identity Management", gcp: "Privileged Access Manager (PAM)", oci: "IAM dynamic groups + policies (no dedicated JIT product)" },
+
+  // Observability
+  { category: "Observability", capability: "Metrics and monitoring", sub: "Infrastructure and application metrics", aws: "CloudWatch", azure: "Azure Monitor", gcp: "Cloud Monitoring", oci: "Monitoring" },
+  { category: "Observability", capability: "Centralized logging", sub: "Aggregated log collection and search", aws: "CloudWatch Logs", azure: "Log Analytics", gcp: "Cloud Logging", oci: "Logging" },
+  { category: "Observability", capability: "Distributed tracing", sub: "Request-level tracing across services", aws: "X-Ray", azure: "Application Insights", gcp: "Cloud Trace", oci: "APM" },
+  { category: "Observability", capability: "Audit logging", sub: "Immutable record of control-plane API calls", aws: "CloudTrail", azure: "Activity Log", gcp: "Cloud Audit Logs", oci: "Audit" },
+  { category: "Observability", capability: "Dashboards / alerting", sub: "Visualization and alert rule configuration", aws: "CloudWatch Dashboards", azure: "Azure Monitor Workbooks", gcp: "Cloud Monitoring Dashboards", oci: "Monitoring Dashboards" },
+
+  // Containers & Developer Tools
+  { category: "Containers & Developer Tools", capability: "Container registry", sub: "Managed image storage and scanning", aws: "ECR", azure: "Container Registry", gcp: "Artifact Registry", oci: "Container Registry" },
+  { category: "Containers & Developer Tools", capability: "CI/CD pipelines", sub: "Managed build and deployment pipelines", aws: "CodePipeline / CodeBuild", azure: "Azure DevOps Pipelines / GitHub Actions", gcp: "Cloud Build / Cloud Deploy", oci: "DevOps Build/Deploy Pipelines" },
+  { category: "Containers & Developer Tools", capability: "Infrastructure as code (native)", sub: "Provider-native declarative provisioning", aws: "CloudFormation", azure: "ARM / Bicep", gcp: "Infrastructure Manager (Terraform-based)", oci: "Resource Manager (Terraform-based)" },
+  { category: "Containers & Developer Tools", capability: "Service mesh", sub: "Managed sidecar-based service networking", aws: "App Mesh (in wind-down; migrate to ECS Service Connect or self-managed Istio)", azure: "Istio-based add-on for AKS", gcp: "Cloud Service Mesh (formerly Anthos Service Mesh)", oci: "Service Mesh" },
+  { category: "Containers & Developer Tools", capability: "Secrets injection for workloads", sub: "Runtime secret delivery to containers", aws: "Secrets Manager CSI Driver", azure: "Key Vault CSI Driver", gcp: "Secret Manager CSI Driver", oci: "Vault + OKE integration" },
+
+  // Data & Analytics
+  { category: "Data & Analytics", capability: "Managed ETL / data pipeline", sub: "Serverless data transformation pipelines", aws: "Glue", azure: "Data Factory", gcp: "Dataflow", oci: "Data Integration" },
+  { category: "Data & Analytics", capability: "Data lake storage + catalog", sub: "Structured metadata over object storage", aws: "Lake Formation", azure: "Purview + ADLS", gcp: "Dataplex", oci: "Data Catalog" },
+  { category: "Data & Analytics", capability: "Big data / Spark processing", sub: "Managed Hadoop/Spark clusters", aws: "EMR", azure: "HDInsight", gcp: "Dataproc", oci: "Big Data Service" },
+  { category: "Data & Analytics", capability: "Business intelligence / dashboards", sub: "Self-service BI and reporting", aws: "QuickSight", azure: "Power BI", gcp: "Looker", oci: "Analytics Cloud" },
+  { category: "Data & Analytics", capability: "Unified analytics platform (SaaS)", sub: "Single SaaS surface spanning ingestion, warehousing, BI, and data science", aws: "No single equivalent; closest is combining Redshift, Glue, and QuickSight", azure: "Microsoft Fabric", gcp: "BigQuery (with Looker and Vertex AI integrated around it)", oci: "No single equivalent; closest is Autonomous Data Warehouse plus Analytics Cloud" },
+  { category: "Data & Analytics", capability: "Managed search", sub: "Full-text and log search engine", aws: "OpenSearch Service", azure: "Azure AI Search (formerly Cognitive Search)", gcp: "No native equivalent; Vertex AI Search covers AI-driven search", oci: "OpenSearch Service" },
+
+  // AI / ML
+  { category: "AI & ML", capability: "Managed ML platform", sub: "End-to-end model build, train, deploy", aws: "SageMaker", azure: "Azure Machine Learning", gcp: "Vertex AI", oci: "Data Science" },
+  { category: "AI & ML", capability: "Foundation model / generative AI access", sub: "Hosted LLM and generative model access", aws: "Bedrock", azure: "Azure OpenAI Service", gcp: "Vertex AI (Model Garden)", oci: "Generative AI" },
+  { category: "AI & ML", capability: "Document intelligence / OCR", sub: "Structured extraction from documents", aws: "Textract", azure: "Document Intelligence", gcp: "Document AI", oci: "Document Understanding" },
+  { category: "AI & ML", capability: "Vision AI", sub: "Image classification, detection, moderation", aws: "Rekognition", azure: "Computer Vision", gcp: "Vision AI", oci: "Vision" },
+  { category: "AI & ML", capability: "Speech-to-text / text-to-speech", sub: "Speech recognition and synthesis", aws: "Transcribe / Polly", azure: "Speech Service", gcp: "Speech-to-Text / Text-to-Speech", oci: "Speech" },
+
+  // Governance & Cost
+  { category: "Governance & Cost", capability: "Policy enforcement / guardrails", sub: "Preventive and detective policy controls", aws: "Organizations SCPs / Config Rules", azure: "Azure Policy", gcp: "Organization Policy Service", oci: "Policies (IAM) + Tagging" },
+  { category: "Governance & Cost", capability: "Cost management / billing", sub: "Spend visibility, budgets, forecasting", aws: "Cost Explorer / Budgets", azure: "Cost Management", gcp: "Cloud Billing Reports", oci: "Cost Analysis" },
+  { category: "Governance & Cost", capability: "Resource tagging / inventory", sub: "Tag governance and asset inventory", aws: "Resource Groups & Tag Editor / Config", azure: "Azure Resource Graph", gcp: "Cloud Asset Inventory", oci: "Tagging + Resource Search" },
+  { category: "Governance & Cost", capability: "Multi-account / org management", sub: "Centralized account/subscription hierarchy", aws: "Organizations", azure: "Management Groups", gcp: "Resource Manager (Org/Folders)", oci: "Compartments" },
+];
+
+const lzData = [
+  {
+    title: "Account / subscription / project structure",
+    sub: "How workloads are isolated from each other at the billing and blast-radius level",
+    aws: "Multi-account structure via AWS Organizations, with dedicated accounts for log archive, security tooling, and shared network, provisioned through Control Tower.",
+    azure: "Management group hierarchy (platform, landing zones, sandbox) over subscriptions, aligned to the Azure Landing Zone reference architecture.",
+    gcp: "Resource hierarchy of Organization > Folders > Projects, with folders typically mapped to environment or business unit boundaries.",
+    oci: "Compartments within a single tenancy provide logical isolation without the account-sprawl overhead of the other three providers."
+  },
+  {
+    title: "Identity foundation",
+    sub: "Where identity lives and how it federates into the cloud",
+    aws: "Federate an external IdP into IAM Identity Center; avoid long-lived IAM user credentials entirely in a mature landing zone.",
+    azure: "Entra ID as the identity backbone; conditional access policies enforced before any subscription-level permission is granted.",
+    gcp: "Cloud Identity or a federated external IdP via Workforce Identity Federation; avoid service account key files wherever workload identity federation is available.",
+    oci: "Federate through IAM Identity Domains; dynamic groups scoped to compartments rather than static user-based policies."
+  },
+  {
+    title: "Network foundation",
+    sub: "The baseline topology workloads get dropped into",
+    aws: "Hub-spoke via Transit Gateway, centralized egress through the hub, spokes peered per workload VPC, no direct spoke-to-spoke routing by default.",
+    azure: "Hub-spoke via Virtual WAN or a hub VNet with peering, centralized firewall and DNS in the hub, matches the Azure Landing Zone network topology.",
+    gcp: "Shared VPC with the host project in a network-focused project, service projects attached per workload, centralized Cloud NAT and firewall policy.",
+    oci: "Hub VCN with a Dynamic Routing Gateway (DRG) as the transit point, spoke VCNs attached, centralized egress via a hub NAT gateway."
+  },
+  {
+    title: "Logging and audit baseline",
+    sub: "What gets captured before any workload is deployed, and where it lands",
+    aws: "Organization-wide CloudTrail trail delivering to a centralized, access-restricted S3 bucket in the log archive account, with CloudWatch Logs for workload-level logs.",
+    azure: "Diagnostic settings routed to a centralized Log Analytics workspace in the platform subscription; Azure Activity Log retained at the management group level.",
+    gcp: "Aggregated log sink at the organization level routing to a centralized project, with Cloud Audit Logs enabled for all services by default.",
+    oci: "Service connector hub routing Audit and flow logs to a centralized Object Storage bucket or streaming target outside individual workload compartments."
+  },
+  {
+    title: "Security guardrails",
+    sub: "Preventive and detective controls enforced org-wide, not per team",
+    aws: "Service control policies at the organizational-unit level for preventive guardrails, paired with Config Rules and Security Hub for detective controls.",
+    azure: "Azure Policy assigned at the management group level, with initiative definitions covering the regulatory frameworks the organization must meet.",
+    gcp: "Organization Policy constraints enforced at the folder or org level, paired with Security Command Center for detective coverage.",
+    oci: "IAM policies scoped tightly at the compartment level combined with Cloud Guard detector recipes applied tenancy-wide."
+  },
+  {
+    title: "Cost management and budgets",
+    sub: "How spend visibility and control get built in from day one",
+    aws: "Consolidated billing across the organization, budgets and anomaly detection configured at the account level, cost allocation tags enforced via policy.",
+    azure: "Cost Management scoped per management group and subscription, budgets with action-group-triggered alerts, tag inheritance enforced via policy.",
+    gcp: "Billing account linked across all projects in the org, budget alerts per project or folder, labels enforced via organization policy.",
+    oci: "Cost tracking tags applied at the compartment level, budgets configured per compartment, single consolidated tenancy-level bill."
+  },
+  {
+    title: "Tagging and resource governance",
+    sub: "The metadata standard that makes cost allocation and ownership traceable",
+    aws: "A mandatory tag schema (owner, cost center, environment, data classification) enforced via Config Rules or Service Control Policies at account creation.",
+    azure: "Tag governance enforced via Azure Policy with deny or append effects, tag inheritance from resource group to resource by default.",
+    gcp: "Label schema enforced via organization policy constraints, with Cloud Asset Inventory used to detect untagged resources.",
+    oci: "Defined tags (versus free-form tags) enforced via tag namespaces, applied and validated at the compartment level."
+  },
+  {
+    title: "Landing zone automation / IaC",
+    sub: "How the foundation itself gets provisioned and kept in sync",
+    aws: "Control Tower for the account factory and baseline guardrails, with Terraform or CloudFormation StackSets for anything Control Tower doesn't cover natively.",
+    azure: "Azure Landing Zone Bicep or Terraform modules deployed via the Enterprise-Scale reference implementation, kept in a dedicated platform repository.",
+    gcp: "Terraform via the Cloud Foundation Fabric or an equivalent internal module set, applied through a dedicated CI/CD pipeline with org-level permissions.",
+    oci: "Terraform via OCI Resource Manager stacks, often paired with the OCI Landing Zone reference templates as a starting baseline."
+  },
+];
+
+const providers = ["aws", "azure", "gcp", "oci"];
+const labels = { aws: "AWS", azure: "Azure", gcp: "GCP", oci: "OCI" };
+
+let activeProvider = "all";
+let query = "";
+
+function render() {
+  const main = document.getElementById("main");
+  main.innerHTML = "";
+
+  const q = query.trim().toLowerCase();
+  const filtered = data.filter(row => {
+    if (!q) return true;
+    const haystack = [row.capability, row.sub, row.aws, row.azure, row.gcp, row.oci].join(" ").toLowerCase();
+    return haystack.includes(q);
+  });
+
+  if (filtered.length === 0) {
+    main.innerHTML = '<div class="empty">No capabilities match that search.</div>';
+    return;
+  }
+
+  let lastCategory = null;
+  filtered.forEach(row => {
+    if (row.category !== lastCategory) {
+      const label = document.createElement("div");
+      label.className = "category-label";
+      label.textContent = row.category;
+      main.appendChild(label);
+      lastCategory = row.category;
+    }
+
+    const rowEl = document.createElement("div");
+    rowEl.className = "row";
+
+    const cap = document.createElement("div");
+    cap.className = "capability";
+    cap.innerHTML = row.capability + '<span class="sub">' + row.sub + '</span>';
+    rowEl.appendChild(cap);
+
+    const trail = document.createElement("div");
+    trail.className = "trail";
+    providers.forEach(p => {
+      const svc = document.createElement("span");
+      const dim = activeProvider !== "all" && activeProvider !== p;
+      svc.className = "svc" + (dim ? " dim" : "");
+      svc.innerHTML = '<span class="dot ' + p + '"></span>' + row[p];
+      trail.appendChild(svc);
+    });
+    rowEl.appendChild(trail);
+
+    main.appendChild(rowEl);
+  });
+}
+
+function renderLandingZone() {
+  const container = document.getElementById("lz-main");
+  container.innerHTML = "";
+  lzData.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "lz-card";
+
+    const head = document.createElement("div");
+    head.className = "lz-card-head";
+    head.innerHTML = "<h3>" + item.title + "</h3><p>" + item.sub + "</p>";
+    card.appendChild(head);
+
+    const grid = document.createElement("div");
+    grid.className = "lz-grid";
+    providers.forEach(p => {
+      const cell = document.createElement("div");
+      cell.className = "lz-cell";
+      cell.innerHTML = '<div class="lz-provider"><span class="dot ' + p + '"></span>' + labels[p] + '</div><p>' + item[p] + '</p>';
+      grid.appendChild(cell);
+    });
+    card.appendChild(grid);
+    container.appendChild(card);
+  });
+}
+
+document.getElementById("search").addEventListener("input", (e) => {
+  query = e.target.value;
+  render();
+});
+
+document.querySelectorAll(".chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+    activeProvider = chip.dataset.provider;
+    render();
+  });
+});
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.getElementById(tab.dataset.view + "-view").classList.add("active");
+  });
+});
+
+render();
+renderLandingZone();
+</script>
+
+</body>
+</html>
