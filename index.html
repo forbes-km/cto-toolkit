@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTO Toolkit</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --amber: #B0793D;
+    --amber-soft: #F3E9DA;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--ui);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    padding: 44px 32px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 34px;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  header p {
+    margin: 0 0 20px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  header .byline {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 0 0 32px;
+  }
+  header .byline a { color: var(--accent); text-decoration: none; }
+  header .byline a:hover { text-decoration: underline; }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin: 40px 0 4px;
+  }
+  .section-label:first-child { margin-top: 8px; }
+
+  .section-note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    max-width: 680px;
+    line-height: 1.55;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: white;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.12s ease, transform 0.12s ease;
+    position: relative;
+  }
+  .card:hover {
+    border-color: var(--accent);
+  }
+  .card.disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+  .card.disabled:hover { border-color: var(--line); }
+
+  .card h3 {
+    margin: 0 0 6px;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--ink);
+    font-family: var(--ui);
+  }
+
+  .card p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .badge.live { background: var(--accent-soft); color: var(--accent); }
+  .badge.soon { background: var(--amber-soft); color: var(--amber); }
+  .badge.doc { background: var(--line); color: var(--ink-soft); }
+
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px 48px;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    line-height: 1.6;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CTO Toolkit</h1>
+  <p>A working library of methods, templates, and interactive tools built over 20+ years of running and assessing enterprise technology platforms &mdash; enterprise architecture, cloud modernization, AI systems, and technical M&amp;A diligence.</p>
+  <p class="byline"><a href="https://github.com/forbes-km/cto-toolkit">github.com/forbes-km/cto-toolkit</a></p>
+</header>
+
+<main>
+
+  <div class="section-label">Interactive tools</div>
+  <p class="section-note">Runnable, dependency-free reference tools. Open directly in a browser, no build step. Code is MIT licensed.</p>
+  <div class="grid">
+
+    <a class="card" href="tools/cloud-service-mapper/index.html">
+      <span class="badge live">Live</span>
+      <h3>Cloud Service Mapper</h3>
+      <p>Translate capabilities and services across AWS, Azure, GCP, and OCI, plus a landing zone and foundational best-practices reference.</p>
+    </a>
+
+    <a class="card disabled" href="tools/ai-architecture-map/index.html">
+      <span class="badge soon">Building now</span>
+      <h3>AI Architecture Map</h3>
+      <p>RAG, document intelligence, agent orchestration (MCP/A2A), and human-in-the-loop patterns. Toggle between Azure-managed and self-hosted open-weight builds.</p>
+    </a>
+
+    <a class="card disabled" href="tools/ai-governance-map/index.html">
+      <span class="badge soon">Coming soon</span>
+      <h3>AI Governance Map</h3>
+      <p>Data foundation, governance layer, trusted outputs, and responsible AI controls mapped to concrete implementation, not just policy language.</p>
+    </a>
+
+    <a class="card disabled" href="tools/ai-finops-map/index.html">
+      <span class="badge soon">Coming soon</span>
+      <h3>AI FinOps Map</h3>
+      <p>Cost modeling for token-based pricing, PTU/reserved capacity, GPU amortization for self-hosted models, and chargeback patterns across cloud and on-prem.</p>
+    </a>
+
+  </div>
+
+  <div class="section-label">Methodology &amp; frameworks</div>
+  <p class="section-note">Described at the methodology level. Full scoring engines, weighting tables, and facilitation guides are part of an active advisory practice and available through direct engagement.</p>
+  <div class="grid">
+
+    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/ai-governance">
+      <span class="badge doc">Methodology</span>
+      <h3>AI &amp; LLM Governance</h3>
+      <p>Governance framework for regulated environments.</p>
+    </a>
+
+    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/enterprise-architecture">
+      <span class="badge doc">Methodology</span>
+      <h3>Enterprise Architecture</h3>
+      <p>Capability modeling, EA operating model, EA and security maturity assessments.</p>
+    </a>
+
+    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/modernization-cloud">
+      <span class="badge doc">Methodology</span>
+      <h3>Cloud Modernization &amp; FinOps</h3>
+      <p>Migration and modernization patterns, integration approaches, cloud FinOps.</p>
+    </a>
+
+    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/technology-diligence">
+      <span class="badge doc">Methodology</span>
+      <h3>Technology Diligence</h3>
+      <p>Technology M&amp;A diligence and post-merger integration, including two ML-augmented tools.</p>
+    </a>
+
+    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/stakeholder-vendor">
+      <span class="badge doc">Methodology</span>
+      <h3>Stakeholder &amp; Vendor</h3>
+      <p>Stakeholder engagement and vendor evaluation.</p>
+    </a>
+
+    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/planning-communication">
+      <span class="badge doc">Methodology</span>
+      <h3>Planning &amp; Communication</h3>
+      <p>Board reporting, roadmaps, business cases, ADRs.</p>
+    </a>
+
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Cloud service catalogs, AI vendor capabilities, and pricing change frequently &mdash; verify current details against primary sources before relying on this for a design, migration, or investment decision. Catalog content is all rights reserved, evaluation only; code under <code>/tools</code> is MIT licensed.
+</footer>
+
+</body>
+</html>
