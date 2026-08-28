@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Architecture Map</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --azure: #2E6FB0;
+    --azure-soft: #E7EFF7;
+    --oss: #8A5A2E;
+    --oss-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--ui);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    padding: 44px 32px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .back {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+  .back:hover { color: var(--accent); }
+
+  h1 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 34px;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  header p {
+    margin: 0 0 16px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  .caveat {
+    max-width: 720px;
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0 0 32px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px 32px 80px;
+  }
+
+  .stage-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: white;
+    margin-bottom: 18px;
+    overflow: hidden;
+  }
+
+  .stage-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stage-head .stage-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .stage-head h3 {
+    margin: 2px 0 4px;
+    font-size: 16.5px;
+    font-family: var(--ui);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .stage-head p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .stage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stage-cell {
+    padding: 16px 20px;
+  }
+  .stage-cell.azure { border-right: 1px solid var(--line); }
+
+  .env-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+  .env-label.azure { background: var(--azure-soft); color: var(--azure); }
+  .env-label.oss { background: var(--oss-soft); color: var(--oss); }
+
+  .stage-cell p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .stage-cell code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--paper);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .same-note {
+    grid-column: 1 / -1;
+    padding: 10px 20px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    font-style: italic;
+  }
+
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.azure { border-right: none; border-bottom: 1px solid var(--line); }
+  }
+
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px 48px;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>AI Architecture Map</h1>
+  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. Azure-managed shown next to a self-hosted, open-weight equivalent. Azure column reflects Azure AI Foundry naming as of 2026; verify current service names before relying on this for a design decision.</p>
+  <div class="caveat">Not every stage genuinely differs by environment. Chunking logic, the human-in-the-loop queue, and orchestration state machines run in your own application code regardless of where the model or index lives. Where that's true, it's called out rather than padded with a manufactured distinction.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 1</span>
+      <h3>Document intelligence / ingestion</h3>
+      <p>Turning raw PDFs, scans, forms, and images into machine-readable structured content: OCR, layout analysis, table and key-value extraction.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Document Intelligence for OCR, layout, table, and key-value extraction using prebuilt or custom-trained models. Azure AI Content Understanding covers multimodal parsing (image, audio, video) as a Foundry service when documents aren't purely text/table.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>The <code>unstructured</code> library or <code>docling</code> for parsing, paired with Tesseract or PaddleOCR for text recognition. For layout-aware extraction, a locally served vision-language model (Qwen-VL, InternVL, or a comparable open-weight multimodal model) handles document QA-style extraction where prebuilt OCR alone isn't enough.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 2</span>
+      <h3>Chunking</h3>
+      <p>Splitting extracted content into retrieval-sized units without breaking semantic units apart.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Search's integrated vectorization skillset offers fixed-size and layout-aware chunking as a pipeline step, or you chunk client-side with LangChain/Semantic Kernel text splitters before pushing to the index.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>Same splitters, same code. LangChain's <code>RecursiveCharacterTextSplitter</code>, or embedding-similarity-based semantic chunking, run identically whether the downstream index is Azure AI Search or a self-hosted vector store.</p>
+      </div>
+    </div>
+    <div class="same-note">Genuinely the same either way. Chunking is orchestration-layer logic, not a cloud primitive; the choice of algorithm matters far more than the choice of cloud.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 3</span>
+      <h3>Embeddings</h3>
+      <p>Converting chunks into vectors for semantic retrieval.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure OpenAI embedding models (<code>text-embedding-3-large</code>/<code>small</code>) deployed via Foundry, billed pay-as-you-go per token or reserved via provisioned throughput for predictable latency at volume.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>Open-weight embedding models (BGE-large, E5-mistral, Nomic Embed, GTE) served on owned GPUs via Hugging Face Text Embeddings Inference (TEI) or an Infinity server. No per-token bill; cost is amortized GPU time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 4</span>
+      <h3>Vector indexing &amp; retrieval</h3>
+      <p>Storing embeddings for fast approximate nearest-neighbor search, typically combined with keyword search for hybrid retrieval.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Search: HNSW vector index, hybrid (vector + keyword + semantic ranking) query mode, metadata filters, and ACL-aware secure access baked into the index itself.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>pgvector if you want to stay inside an existing Postgres footprint, or a dedicated vector database (Qdrant, Weaviate, Milvus) for larger-scale ANN search with metadata filtering. Hybrid search typically pairs the vector store with OpenSearch/Elasticsearch for BM25, or uses a store with native hybrid support.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 5</span>
+      <h3>Reranking &amp; context assembly</h3>
+      <p>Re-scoring initial retrieval results with a more precise (and more expensive) model before assembling the final context window.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Search's semantic ranker applies a Microsoft-trained cross-encoder as an L2 re-ranking pass over the initial hybrid results, exposed as a query-type option, no separate deployment required.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>An open cross-encoder reranker (BGE-reranker, Jina Reranker) served alongside the embedding model, typically on the same TEI/Infinity serving stack, called as an explicit extra step in your retrieval code.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 6</span>
+      <h3>Generation / model serving</h3>
+      <p>Running the language model itself against the assembled, grounded context.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Foundry model deployment: Azure OpenAI models or the Foundry Model Catalog's open-weight options, on managed online endpoints. Provisioned Throughput Units (PTU) for predictable latency and cost at volume, or pay-as-you-go token billing for variable load.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>vLLM or TGI serving an open-weight model (Llama, Qwen, Mistral, DeepSeek-class) on owned or leased GPUs, with continuous batching and paged KV-cache for throughput. Ollama for smaller-scale or development use; llama.cpp for CPU/edge deployment.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 7</span>
+      <h3>Agent tool layer (MCP)</h3>
+      <p>Giving the model controlled access to enterprise systems and external data through defined tools.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Foundry Agent Service with built-in tool calling, or a self-built MCP server fronting enterprise systems, called from a Foundry-hosted agent.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>Identical MCP server code; MCP is a transport protocol, not a cloud primitive. The real dependency is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so verify per model rather than assuming.</p>
+      </div>
+    </div>
+    <div class="same-note">The protocol layer is the same either way. What changes is only whether your self-hosted serving stack has tool-calling support wired up for the specific open-weight model you chose.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 8</span>
+      <h3>Human-in-the-loop</h3>
+      <p>Routing outputs by risk and reversibility to a review queue, notification layer, and durable orchestration that can pause and resume a process for hours or days.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Cosmos DB or Azure SQL for the review queue/state table, Teams webhook plus Power Automate for notification and escalation timers, Azure Durable Functions for the durable orchestration that survives a pause spanning hours or days.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>Postgres for the queue, Slack webhook for notification, Temporal (self-hostable) for durable orchestration. Functionally the same architecture, different concrete products.</p>
+      </div>
+    </div>
+    <div class="same-note">This entire stage sits above the model, at the application layer. The tiering logic (reversibility/blast-radius, not confidence alone) and the queue-overload failure mode are identical in both environments. See the deep HITL reference for the full design detail.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 9 &middot; cross-cutting</span>
+      <h3>Security &amp; threat model</h3>
+      <p>Prompt injection, tool-call authorization, and the model supply chain. This isn't a stage the data passes through once, it applies to every stage above.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Content Safety's prompt shields run as a pre-processing gate on both user input and any retrieved or tool-returned content before it reaches the model, since an injected instruction can arrive through a poisoned document just as easily as through the chat box. Tool calls run under managed identities with least-privilege RBAC scoped per agent through Entra ID. Foundry deployments sit behind private endpoints and VNet integration; Azure AI Search restricted to private link with public network access disabled.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>No managed prompt-shield equivalent. Typically an open guard model (Llama Guard, or a policy layer like NeMo Guardrails) run as a pre and post filter in your own pipeline, tuned and maintained by you. Tool-call authorization is your own implementation at the MCP server layer, commonly OAuth2 or mTLS between the agent runtime and each tool server. Model and weight supply chain matters here specifically: verify checksums and provenance of downloaded weights against the publisher's signed release, and treat a weight download the same way you'd treat a new software dependency, since a compromised checkpoint or a malicious custom loading script is a real attack surface. Network isolation is your own VPC or on-prem segmentation around the GPU serving cluster.</p>
+      </div>
+    </div>
+    <div class="same-note">RAG poisoning, malicious content planted in a source document that later gets retrieved and treated as trusted context, targets the retrieval layer, not the model host. Access control and validation on what gets indexed matters equally in both environments.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 10 &middot; cross-cutting</span>
+      <h3>PHI &amp; PII data protection</h3>
+      <p>The technical control layer, not the compliance program. Policy, accountability, and audit ownership for regulated data live on the AI Governance Map; this is what actually enforces it in the pipeline.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Language's PHI/PII detection (Text Analytics for Health) runs as a pipeline step before content reaches the index or the model's context window, redacting or tokenizing protected fields. Encryption at rest is on by default across Storage, Cosmos DB, and AI Search, with customer-managed keys via Key Vault where the regulatory requirement calls for it. Azure AI Search's document-level ACLs mean retrieval only ever surfaces chunks the requesting identity is actually authorized to see, not just what's topically relevant. A signed Business Associate Agreement with Microsoft is a precondition for PHI in Azure OpenAI or Foundry at all; confirm the specific deployed service is actually in scope for your BAA before sending PHI through it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>De-identification via an open tool (Microsoft Presidio, or a PHI-tuned open NER model) run as the same kind of pipeline step, self-maintained. Disk and transport encryption are your own responsibility; nothing is on by default the way it is in a managed cloud service. Access boundaries are enforced in your own retrieval code and the vector store's metadata filtering, with no managed ACL layer to lean on. No BAA applies since there's no third-party processor, but that shifts the entire compliance burden onto your own controls and audit evidence. It does not remove the requirement.</p>
+      </div>
+    </div>
+    <div class="same-note">Minimum necessary access and an immutable audit trail of who or what touched PHI are HIPAA requirements regardless of hosting. Hosting choice changes who implements the control, not whether it's required.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 11 &middot; cross-cutting</span>
+      <h3>Observability &amp; evaluation</h3>
+      <p>Whether any of the above is actually working, and whether it's still working after the next model or index update.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure Monitor plus Application Insights for distributed tracing across the pipeline, with retrieval latency, generation latency, and per-tool-call latency broken out individually. Azure AI Foundry's built-in evaluation and tracing for agent runs, with continuous evaluation against a defined rubric and alerting when groundedness or relevance scores degrade.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>OpenTelemetry instrumentation exported to a self-hosted or managed backend (Grafana, Jaeger). Langfuse or Arize Phoenix for LLM-specific tracing and evaluation. Prometheus and Grafana for GPU utilization, queue depth, and serving-stack metrics; vLLM exposes Prometheus metrics natively.</p>
+      </div>
+    </div>
+    <div class="same-note">Logs and traces are themselves a PHI exposure surface if you're not careful. A stack trace or a debug log that captures the full prompt will capture any PHI that was in it. Redaction policy for observability data needs to match redaction policy for the data itself, in both environments.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 12 &middot; cross-cutting</span>
+      <h3>Disaster recovery &amp; continuity</h3>
+      <p>What happens to the index, the weights, and the running service when something breaks.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Azure AI Search has no built-in point-in-time restore for the index itself; re-indexing from the source document store is the actual recovery path, which means the source document store, not the index, needs its own backup policy. Foundry-hosted models inherit Azure's regional redundancy, but multi-region deployment for the endpoint itself is a separate, deliberate decision if you need it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>Same principle: back up the source documents and treat the vector index as rebuildable, unless the re-embedding cost at your data volume makes a direct index snapshot worth it. Version and store model weights and the exact serving configuration in a model registry with checksums, since "which exact checkpoint was running when this output was generated" is both an operational and an audit question.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 13 &middot; cross-cutting</span>
+      <h3>Capacity &amp; scaling</h3>
+      <p>The architecture question underneath cost: can this actually handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the AI FinOps Map; this is what determines whether capacity is even available to buy.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability, not budget, is often the actual constraint. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas that need to be requested and increased well ahead of a launch, not the week before. The wrapper service around the model call can autoscale normally (Container Apps, AKS), but the model endpoint itself doesn't scale the way stateless compute does, since Foundry deployments are provisioned capacity, not elastic by default.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>GPU procurement lead time is the real constraint here. Buying or leasing H100/H200-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, not raw compute, is usually the actual ceiling on concurrent requests per node.</p>
+      </div>
+    </div>
+    <div class="same-note">Capacity planning has to happen months before a launch in both environments. What changes is the actual bottleneck: quota approval in Azure, GPU hardware availability if self-hosting.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Stage 14 &middot; cross-cutting</span>
+      <h3>Data lineage &amp; source versioning</h3>
+      <p>Which exact source document, and which exact embedding model version, produced the chunk that ended up in a given response. Easy to skip until an incident or an audit asks the question and there's no answer.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell azure">
+        <span class="env-label azure">Azure-managed</span>
+        <p>Microsoft Purview for lineage and cataloging across the source systems feeding ingestion, tracking which document version fed which index generation. Azure AI Search doesn't version indexes natively, so the common pattern is index aliasing: build a new index, swap the alias over to it, and keep the prior index around for rollback rather than relying on built-in point-in-time index history that doesn't exist.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label oss">Self-hosted / open-weight</span>
+        <p>No managed lineage catalog. Typically DVC (Data Version Control) or a plain metadata table alongside the vector store, recording source document hash, ingestion timestamp, and which embedding model version produced each chunk's vector. Same alias-swap pattern as Azure for the vector store itself, just self-implemented: build a new collection, swap the pointer, retain the old collection for rollback.</p>
+      </div>
+    </div>
+    <div class="same-note">This is what actually ties disaster recovery and observability together. It's tempting to treat lineage as optional right up until an incident needs an answer to "which version produced this" and there isn't one.</div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Vendor service names, open-weight model rankings, and serving-stack capabilities change quickly, so verify current details against primary sources before relying on this for a design decision.
+</footer>
+
+</body>
+</html>
