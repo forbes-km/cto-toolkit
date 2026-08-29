@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology Strategy During a Downturn</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technology Strategy During a Downturn</h1>
+  <p>What to do when the CEO says cut technology spend twenty percent by next quarter. The distinction between a cut that costs the business less than it saves and one that doesn't.</p>
+  <div class="caveat">This is the execution playbook for a cut. See <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a> for the pre-ranked priority list this page assumes already exists.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Bad cuts versus better cuts</h3>
+      <p>Not every reduction in spend is equivalent. Some remove cost with almost no value loss; others remove cost by removing value.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Bad cuts</th><th>Better cuts</th></tr>
+          <tr><td>Across-the-board headcount reductions</td><td>Low-value initiatives already flagged as candidates before the pressure arrived</td></tr>
+          <tr><td>Security budget</td><td>Duplicate tooling and licensing</td></tr>
+          <tr><td>Reliability investment</td><td>Unused cloud capacity</td></tr>
+          <tr><td>Critical infrastructure</td><td>Premature platform work built for scale the company isn't at yet</td></tr>
+          <tr><td>Necessary architectural remediation</td><td>Low-value vendor relationships</td></tr>
+          <tr><td>Across-the-board innovation freeze</td><td>Innovation bets that already failed their own kill criteria and hadn't been stopped yet</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Don't confuse reducing spend with reducing value</h3>
+      <p>The two aren't the same thing, and the best cuts are the ones where they diverge most.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Execute these first</span>
+        <p>Cloud rightsizing, duplicate SaaS tooling consolidation, and unused capacity elimination reduce spend with close to zero value loss. These should always be executed before anything with real value attached, and they're usually available in weeks, not quarters.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>An across-the-board percentage cut applied uniformly treats a duplicate analytics tool and a security control as equally expendable, which they are not, and guarantees the cut removes real value somewhere it didn't need to.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Communicating the cut without destroying morale</h3>
+      <p>How the reduction is explained matters almost as much as what's cut.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Be specific about what's being cut and why, tied to the pre-ranked priority list, so the team understands this was a deliberate choice made against known criteria, not a panicked reaction to a number that arrived from finance.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Vague, repeated &quot;doing more with less&quot; messaging with no specifics, which reads as either incompetence or dishonesty to the people doing the work, and erodes trust well beyond whatever the cut itself cost.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>What not to cut even under real pressure</h3>
+      <p>Some categories aren't discretionary line items, whatever the topline number demands.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Security, reliability, and necessary architectural remediation don't reduce cost when cut, they defer it at compounding interest. A downturn is exactly the moment the organization can least afford a preventable incident stacked on top of everything else already under pressure. If these categories appear on a cut list, the list needs to be rebuilt, not defended.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the cut was done badly</h3>
+      <p>Patterns that show up when a budget reduction was executed under pressure without the discipline this page describes.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Cuts were applied as a uniform percentage rather than against a pre-ranked priority list</li>
+          <li>Security or reliability budget was reduced specifically to hit a topline number</li>
+          <li>The team was told to do more with less without specifics on what was deprioritized</li>
+          <li>Innovation bets were cut without applying the kill criteria that should have already existed for them</li>
+          <li>No one has revisited the cuts to confirm they didn't quietly become permanent once the downturn ended</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Reasonable cut targets and sequencing depend on company runway, market position, and how long the downturn is expected to last.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
