@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Review Board</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Architecture Review Board</h1>
+  <p>How to stand up a review board that examines evidence from real engineering work, not diagrams produced specifically for the meeting, and how to keep it running as a genuine forcing function for years after the founding energy fades.</p>
+  <div class="caveat">See <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for the record a review should produce, <a href="../architecture-principles/index.html">Architecture Principles Library</a> for what a board is applying, and <a href="../technology-decision-rights/index.html">Technology Decision Rights</a> for where the board's authority ends and a named individual's begins.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>What belongs in front of the board, and what doesn't</h3>
+      <p>The most common way a review board fails is reviewing everything, which turns it into a bottleneck and trains teams to route around it. The same filter used to decide when a decision needs an ADR applies here.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Goes to the board</th><th>Doesn't need the board</th></tr>
+          <tr><td>A new external dependency or a shared service other teams will depend on</td><td>A team's fully contained internal implementation detail</td></tr>
+          <tr><td>A decision that affects more than one team's roadmap</td><td>A reversible, single-team decision costing less than a day to undo</td></tr>
+          <tr><td>A new system of record or data store other systems will read from</td><td>Adding a field to a schema the team already owns exclusively</td></tr>
+          <tr><td>A deliberate deviation from an established architecture principle</td><td>Following a pattern the board has already approved elsewhere</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Evidence over drawings</h3>
+      <p>The distinction that separates a review with teeth from a rubber stamp with a diagram attached.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a real review looks at</span>
+        <p>The actual running system, real traffic patterns, real incident history, a working prototype or spike, existing code. Evidence that was produced by doing the engineering work, not evidence produced to satisfy the meeting.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The theater version</span>
+        <p>A polished architecture diagram produced in the days before the review, disconnected from the actual codebase, that nobody consults again once the meeting ends. The tell: check the diagram file's last-modified date six months later. If it's the review date, it was never a working artifact.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Setting it up: composition and authority</h3>
+      <p>Two decisions made once, at founding, that determine whether the board has real standing or just a name.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Composition</span>
+        <p>A small standing group, four to six people, spanning the systems most likely to be affected by cross-cutting decisions. Rotate membership on a defined cycle so it doesn't calcify into the same five people's opinions indefinitely. The proposing team's own senior engineer is always in the room, never reviewed in absentia.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Authority, stated explicitly</span>
+        <p>See <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>: the board should be Consulted, rarely Accountable. A named individual, the CTO or a delegate, is accountable for architecture standards and can be persuaded by a strong board recommendation, but the board's vote is input, not a decision no one can override.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The review itself</h3>
+      <p>What makes a specific session evidence-based rather than theater, independent of how well the board was set up.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>The proposing team walks through the actual tradeoffs they considered and rejected, the same alternatives-considered discipline covered on the ADR page, with real numbers behind claims (this handles X load, this costs Y) rather than assertions. The review produces a decision and its reasoning captured in an ADR, not a verbal thumbs-up that disappears when the meeting ends.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>The review becomes a presentation the team already knows how to pass: confident language and a clean diagram calibrated to satisfy the audience rather than genuinely stress-test the reasoning. At that point the board is a rubber stamp with theater added, arguably worse than no review, since it spends real time producing a false signal of scrutiny.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Running it long-term without decaying into theater</h3>
+      <p>A board that works well in its first year and quietly stops working in its third is the most common lifecycle, and it's predictable enough to design against.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What sustains it</span>
+        <p>A standing cadence, biweekly is common, that runs whether or not there's a full docket. A public backlog of upcoming reviews so teams plan around it instead of being surprised. Periodic retrospectives on the board's own past decisions: did what it approved work out, was what it blocked right to block.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it decays</span>
+        <p>The board approves the same rubber-stamp pattern for months. Membership never rotates, so the room's authority rests on tenure rather than current context. No one checks whether a past decision held up, so the board never learns whether its own judgment is any good, and keeps operating on the same instincts regardless of outcomes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Empty slots: turn them into innovation salons, not canceled meetings</h3>
+      <p>What to do with a scheduled review slot that has nothing queued for it, which happens regularly once a board is running well and teams aren't manufacturing proposals just to fill the docket.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The idea</span>
+        <p>Instead of canceling the slot, which trains people to deprioritize the cadence, or filling it with a low-stakes item just to have something on the agenda, open it up: anyone can bring an early-stage idea, a technical curiosity, or a &quot;here's something I've been thinking about&quot; for informal discussion. No funding decision required, no ADR required, genuinely just structured space for ideas that aren't ready for a formal pitch yet.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Why this works better than canceling</span>
+        <p>It keeps the room's habit and rhythm intact, the same people, the same regular slot, the same expectation of showing up prepared to think carefully, without wasting the time when nothing formal needs review. It also creates a low-stakes on-ramp: an idea that gets genuine interest in a salon session is exactly the kind of thing ready to become a real pitch at the next <a href="../innovation-portfolio/index.html">innovation tournament</a>.</p>
+      </div>
+    </div>
+    <div class="same-note">The board and the tournament are the same room used two different ways: one evaluates evidence against a decision that needs to be made, the other surfaces ideas that don't have evidence yet. Keeping both on the same cadence, in the same room, with the same people, is what makes the salon slot feel like a natural extension rather than a separate initiative competing for calendar space.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the board has become theater</h3>
+      <p>Patterns that show up when a review board exists on the calendar but isn't functioning as a real forcing function anymore.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Reviews consistently approve with no real pushback or requested changes</li>
+          <li>No one can name a decision the board changed its mind about after seeing how it played out</li>
+          <li>Board membership hasn't rotated in over a year</li>
+          <li>Decisions aren't captured anywhere durable, no ADR, no written record, once the meeting ends</li>
+          <li>Teams prepare a specific &quot;board-ready&quot; version of their architecture that differs from what's running in production</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Board size, cadence, and authority should reflect your organization's actual scale and decision-rights model, not a fixed template.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

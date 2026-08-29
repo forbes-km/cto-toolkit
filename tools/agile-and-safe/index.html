@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agile and SAFe</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Agile and SAFe</h1>
+  <p>What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it becomes its own kind of theater.</p>
+  <div class="caveat">See <a href="../org-design/index.html">Org Design</a> for the team topology this coordination sits on top of, and <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the DORA outcomes agile claims to produce but doesn't automatically deliver.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The four values, and what commonly gets installed instead</h3>
+      <p>Each value in the agile manifesto requires something real. Most organizations install a process substitute that satisfies the ritual without the underlying substance.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Value</th><th>What it requires</th><th>What commonly gets installed instead</th></tr>
+          <tr><td>Individuals and interactions over processes and tools</td><td>Trust, and a team empowered to change its own process</td><td>A fixed ceremony calendar treated as the definition of agile itself</td></tr>
+          <tr><td>Working software over comprehensive documentation</td><td>Frequent, real integration and deployment</td><td>Sprint demos of work that isn't deployed, satisfying the ritual without the substance</td></tr>
+          <tr><td>Customer collaboration over contract negotiation</td><td>Direct, frequent contact between the team and the people using what they build</td><td>A product owner as the sole interface, recreating the exact handoff agile was meant to remove</td></tr>
+          <tr><td>Responding to change over following a plan</td><td>A backlog genuinely re-prioritized as new information arrives</td><td>A locked sprint commitment defended against any change, optimizing for predictability over responsiveness</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Why &quot;doing agile&quot; and &quot;being agile&quot; diverge</h3>
+      <p>The gap that determines whether the ceremonies are earning their keep.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Being agile</span>
+        <p>The team changes what it does based on what it learns, mid-sprint if warranted, and treats each ceremony as a tool it owns and can modify or drop the moment it stops earning its keep.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Doing agile</span>
+        <p>Standup, retro, planning, and review run on schedule regardless of whether they're producing value, treated as compliance requirements rather than tools the team controls. The tell: ask when the team last changed its own process based on a retro, and get silence.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Where SAFe genuinely helps</h3>
+      <p>A real coordination problem exists at scale, and SAFe was built to address it, whatever else gets said about the framework.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The real problem it addresses</span>
+        <p>Coordinating dependencies across many teams building toward a shared release or shared platform, where informal coordination genuinely breaks down past a certain team count and someone has to own cross-team sequencing explicitly rather than leaving it to hope.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Roughly where it starts to matter</span>
+        <p>Often cited around 50 to 125 people, five to twelve teams, though the real trigger is dependency density between teams, not headcount alone. Ten independent teams with no shared release need none of this; four teams shipping one product together might.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Where SAFe becomes its own theater</h3>
+      <p>The same framework, installed for a coordination problem the organization doesn't have.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The failure mode</span>
+        <p>The framework's ceremonies, PI planning, the various sync meetings, the layered roles, get installed wholesale regardless of whether the organization's actual coordination problem matches what SAFe was built to solve, producing ceremony overhead that outweighs the coordination it buys.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The tell</span>
+        <p>Ask what specific coordination failure a given SAFe ceremony prevents. If the honest answer is &quot;we don't know, this is just what SAFe says to do,&quot; the ceremony is cargo cult, not a solution to a problem the organization has.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Scaling down deliberately, not just up</h3>
+      <p>The adoption decision most organizations skip: choosing which pieces to install and which to leave out.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Apply only the specific mechanisms that address a genuine, named coordination problem, and skip the rest. A framework adopted partially and deliberately produces less overhead than either the full framework or no coordination structure at all.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Adopting the framework &quot;properly&quot; because partial adoption feels like doing it wrong, which installs overhead for coordination problems the organization doesn't have, simply because the framework bundles them together with the ones it does.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs agile or SAFe has become theater</h3>
+      <p>Patterns that show up when process is running on schedule but no longer producing what it's meant to.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Ceremonies run on schedule regardless of whether the team can name what each one is currently producing</li>
+          <li>The team has never changed its own process based on a retrospective</li>
+          <li>Story points or velocity get reported upward as if comparable across different teams</li>
+          <li>SAFe ceremonies are followed without anyone able to name the specific coordination failure each one prevents</li>
+          <li>&quot;Being agile&quot; and &quot;following the ceremony calendar&quot; are treated as the same thing by leadership</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. The right level of process depends on team count, dependency density, and organizational maturity; there is no universally correct amount of ceremony.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
