@@ -72,7 +72,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Vendor Evaluation</h1>
   <p>A preview of the Vendor Evaluation Scorecard: weighted, multi-evaluator scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost, built to produce a defensible recommendation rather than a gut call.</p>
-  <div class="caveat">This page covers the scoring categories and the multi-evaluator mechanic. The full weighted scorecard workbook is available through direct engagement.</div>
+  <div class="caveat">This page covers the scoring categories and the multi-evaluator mechanic, plus a working single-evaluator scorer below. The full weighted scorecard workbook, with multi-evaluator variance tracking, is available through direct engagement.</div>
 </header>
 
 <main>
@@ -113,6 +113,76 @@
       </div>
     </div>
   </div>
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score a vendor</h3>
+      <p>Score one vendor across the same six weighted dimensions from the table above. Runs entirely in your browser; nothing is sent anywhere or stored. The full workbook supports multiple evaluators scoring independently and surfacing variance between them, which is where this framework earns its keep; this preview scores a single pass.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="ve-dims"></div>
+        <button id="ve-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Score it</button>
+        <div id="ve-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const VE_DIMS = [
+      { id: 'functional', label: 'Functional fit', weight: 0.30 },
+      { id: 'security', label: 'Security &amp; compliance posture', weight: 0.20 },
+      { id: 'financial', label: 'Financial stability', weight: 0.15 },
+      { id: 'integration', label: 'Integration complexity', weight: 0.15 },
+      { id: 'support', label: 'Support &amp; SLA', weight: 0.10 },
+      { id: 'exit', label: 'Exit &amp; data portability', weight: 0.10 },
+    ];
+
+    const veEl = document.getElementById('ve-dims');
+    VE_DIMS.forEach(dim => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:grid; grid-template-columns: 230px 1fr 50px 60px; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--line);';
+      row.innerHTML =
+        '<label for="ve-' + dim.id + '" style="font-size:13px; color:var(--ink);">' + dim.label + '</label>' +
+        '<input type="range" id="ve-' + dim.id + '" min="1" max="5" step="1" value="3" style="accent-color:var(--accent); width:100%;">' +
+        '<span id="ve-' + dim.id + '-val" style="font-family:var(--mono); font-size:13px; text-align:center; color:var(--ink-soft);">3</span>' +
+        '<span style="font-family:var(--mono); font-size:11px; text-align:right; color:var(--ink-soft);">' + Math.round(dim.weight * 100) + '%</span>';
+      veEl.appendChild(row);
+      const slider = row.querySelector('input');
+      const valEl = row.querySelector('#ve-' + dim.id + '-val');
+      slider.addEventListener('input', () => { valEl.textContent = slider.value; });
+    });
+
+    document.getElementById('ve-calc').addEventListener('click', () => {
+      let weighted = 0;
+      const breakdown = VE_DIMS.map(dim => {
+        const score = parseInt(document.getElementById('ve-' + dim.id).value, 10);
+        const contribution = score * dim.weight;
+        weighted += contribution;
+        return { label: dim.label, score, contribution };
+      });
+
+      let verdict;
+      if (weighted >= 4.0) {
+        verdict = 'STRONG CANDIDATE. Scores well across the board; proceed to reference calls and the lock-in questions before signing.';
+      } else if (weighted >= 3.0) {
+        verdict = 'PROCEED WITH CONDITIONS. Workable overall, but check which specific dimensions pulled the score down, those are the terms to push on before signing, not after.';
+      } else {
+        verdict = 'SIGNIFICANT CONCERNS. This vendor is a weak fit as scored; treat a low score on any single dimension as a real finding, not noise to average away.';
+      }
+
+      const weakest = breakdown.reduce((a, b) => (b.score < a.score ? b : a));
+
+      const resultEl = document.getElementById('ve-result');
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        '<strong>Weighted score: ' + weighted.toFixed(2) + ' / 5</strong><br>' +
+        'Weakest dimension: ' + weakest.label + ' (' + weakest.score + '/5)<br>' +
+        '<br>' + verdict +
+        '</div>';
+    });
+  </script>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
