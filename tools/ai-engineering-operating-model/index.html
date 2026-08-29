@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI and the Engineering Operating Model</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>AI and the Engineering Operating Model</h1>
+  <p>What AI-assisted coding is doing to how engineering work gets done: skill development, code review, and how to measure productivity when the tool itself is part of the output. Distinct from deciding which AI initiatives to build.</p>
+  <div class="caveat">See <a href="../ai-portfolio-management/index.html">AI Portfolio Management</a> for which AI initiatives are worth funding, and <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the outcome measures this page argues should replace raw output volume.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>What changes, and what doesn't</h3>
+      <p>AI-assisted coding shifts specific parts of the job. It doesn't touch others, and treating it as a uniform speedup misreads what's happening.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Changes</th><th>Doesn't change</th></tr>
+          <tr><td>Speed of first-draft code and boilerplate generation</td><td>The cost of a wrong architectural decision</td></tr>
+          <tr><td>What code review has to look for</td><td>Who's accountable for what ships</td></tr>
+          <tr><td>How junior engineers first encounter patterns</td><td>The need for architectural judgment on anything non-routine</td></tr>
+          <tr><td>Where the bottleneck in the delivery pipeline sits</td><td>The value of debugging intuition built through direct repetition</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>AI productivity does not automatically equal more story points</h3>
+      <p>The most common measurement mistake, and the one most likely to produce a plan that breaks on contact with reality.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What happens</span>
+        <p>AI-assisted coding speeds up the mechanical parts, boilerplate, first drafts, syntax, which shifts the real bottleneck to review, architectural judgment, and testing: the parts that were never the slow part for a senior engineer, but were close to the entire job for a junior one.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The naive read</span>
+        <p>Treating a rise in lines of code or pull request volume as productivity, then setting headcount or delivery expectations against that number. The plan breaks the moment the team hits the bottleneck AI never touched: review capacity and architectural decision-making.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Code review changes shape</h3>
+      <p>Reviewing AI-generated code is a different skill than reviewing human-written code, and most engineers were never trained on the difference.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What's different</span>
+        <p>Reviewing AI-generated code means checking for plausible-but-wrong patterns, code that looks idiomatic and compiles cleanly but embeds a subtly incorrect assumption, more than checking for the kind of mistake a human engineer is likely to make. That's a distinct reviewing skill.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The risk</span>
+        <p>Review fatigue from higher volume, combined with AI-generated code's tendency to look confident and clean, produces a false sense of safety. Reviewers approve faster because the code reads well, not because they verified it more rigorously.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>What happens to junior engineer development</h3>
+      <p>The concern worth stating honestly, and the one most tempting to dismiss because it doesn't show up as a problem until much later.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The concern</span>
+        <p>A junior engineer who leans on AI for the mechanical work skips the repetition that used to build pattern recognition and debugging intuition the slow way. That intuition doesn't obviously appear missing until a novel problem requires it and it isn't there.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to do about it</span>
+        <p>Deliberately assign some work without AI assistance specifically for skill-building, framed as a training decision rather than a productivity one, the same way a pilot still trains on manual flight even though autopilot handles most of the actual flying.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Measuring productivity when the tool is part of the output</h3>
+      <p>The measurement question every other section on this page eventually points back to.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What doesn't work</span>
+        <p>Raw output volume: lines of code, pull requests merged, AI suggestions accepted. All of these can rise while the team ships less real, correct, maintained value, since none of them measure whether the output was right.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What's more honest</span>
+        <p>The outcome measures already covered on Engineering Metrics, cycle time, change failure rate, and ultimately business outcomes, tracked specifically before and after AI tooling adoption, rather than assuming adoption itself is automatically the win.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs AI adoption is being measured or managed naively</h3>
+      <p>Patterns that show up when AI tooling gets adopted enthusiastically but without adjusting how the organization measures or trains around it.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Productivity claims rest on lines of code, PR volume, or AI suggestion acceptance rate rather than outcome measures</li>
+          <li>Code review practice hasn't been adjusted for the specific failure modes of AI-generated code</li>
+          <li>No deliberate mechanism exists for junior engineers to build skills without AI assistance</li>
+          <li>Change failure rate or defect rate hasn't been tracked before and after AI tooling adoption</li>
+          <li>Headcount or timeline plans assume a productivity multiplier that was asserted rather than measured</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. AI-assisted development tooling and its effects on engineering work are evolving quickly; treat this as a set of questions to keep asking, not a fixed conclusion.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

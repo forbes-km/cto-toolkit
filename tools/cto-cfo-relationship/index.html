@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Working with the CFO</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Working with the CFO</h1>
+  <p>The relationship where every capital allocation debate gets litigated. Distinct from the CEO relationship in what it requires: numbers that hold up under scrutiny, not just judgment that's already trusted.</p>
+  <div class="caveat">See <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a> for the underlying numbers this relationship is built on, and <a href="../ceo-cto-relationship/index.html">Working with the CEO</a> for the sibling relationship this one is often confused with.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>What the CFO needs from a CTO</h3>
+      <p>Different from what the CEO needs. The CEO wants judgment and a point of view; the CFO wants numbers that survive scrutiny.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Need</th><th>What it looks like</th><th>What it isn't</th></tr>
+          <tr><td>Predictable numbers</td><td>A forecast that holds, or an early, honest flag the moment it won't</td><td>A number that moves without warning and gets explained after the fact</td></tr>
+          <tr><td>Defensible logic</td><td>A stated method for how a figure was derived, so disagreement is about one assumption</td><td>A number asserted with confidence but no visible derivation</td></tr>
+          <tr><td>Honest framing</td><td>ROI language where it genuinely fits, risk language where it doesn't</td><td>ROI language forced onto every investment regardless of whether it applies</td></tr>
+          <tr><td>No budget-meeting surprises</td><td>Priorities shared before the formal cycle, so the CFO's first exposure isn't in a contentious room</td><td>A ranked list revealed for the first time in front of other executives</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Defending a number the CFO doesn't like</h3>
+      <p>The moment that determines whether the relationship is adversarial or productive going forward.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How it works</span>
+        <p>Show the derivation, not just the conclusion. Walk through the specific assumption that, if changed, would change the number. Disagreement then becomes a conversation about one assumption, which is productive, instead of a vague sense that the number feels wrong, which isn't.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it goes wrong</span>
+        <p>Presenting a number as settled fact with no visible derivation. Any pushback then becomes a credibility fight rather than a disagreement about a specific input, and credibility fights are much harder to walk back than assumption disagreements.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>When ROI framing doesn't fit, and saying so honestly</h3>
+      <p>Forcing every investment into ROI language is a common, well-intentioned mistake that costs credibility over time.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What's genuinely ROI-shaped</span>
+        <p>Infrastructure consolidation, a specific automation replacing manual work, a feature with a modeled revenue impact. These reduce cleanly to a number, and the CFO relationship is healthiest when that number is presented as exactly what it is.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What isn't, and shouldn't be forced</span>
+        <p>Security investment, reliability investment, and technical debt remediation reduce risk and avoid future cost; they rarely produce a clean, defensible ROI figure. Forcing one produces a number nobody believes, which costs more credibility than justifying the investment honestly on risk grounds instead.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The budget conversation before the budget conversation</h3>
+      <p>Where most CFO relationships go wrong: not in the numbers themselves, but in when the CFO first sees them.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Bring the CFO the pre-ranked capital allocation priorities before the formal budget cycle starts, in a one-on-one setting. The first time the CFO sees the logic behind technology priorities should not be in a room with other executives present.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>The CFO's first exposure to how priorities were ranked happens live in the budget meeting itself, which makes every question feel adversarial even when it's genuinely just first contact with the reasoning.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Capitalization and accounting realities worth understanding</h3>
+      <p>A CFO thinks in capex versus opex and amortization schedules. A CTO who understands the basics speaks the CFO's language instead of translating everything through an interpreter.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Software development costs that qualify for capitalization under applicable accounting standards, versus costs that must be expensed immediately, materially change how a project's cost looks in a given quarter, independent of the project's actual value. Understanding this distinction, even at a high level, prevents a CTO from being caught off guard when a CFO cares more about the timing of a cost than its total, or pushes back on a schedule change that seems purely technical but carries a real capitalization consequence on the books.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the relationship is unhealthy</h3>
+      <p>Patterns that show up when the CTO-CFO relationship has drifted into friction, regardless of how either person would describe it individually.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Technology budget numbers get revised after the CFO has already committed them upward, more than once</li>
+          <li>Every investment gets forced into ROI language regardless of whether it genuinely fits</li>
+          <li>The CFO's first exposure to a priority ranking happens in a contentious budget meeting, not before it</li>
+          <li>The CTO can't explain, at a basic level, why a project's cost is phased the way it is on the books</li>
+          <li>Disagreements about a number become personal rather than staying focused on a specific stated assumption</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Accounting treatment and capitalization rules vary by jurisdiction and applicable standard; confirm specifics with finance, not this page.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
