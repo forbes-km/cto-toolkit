@@ -128,6 +128,17 @@
         </table>
       </div>
     </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What correlation shows</span>
+        <p>Two things moved together, or one happened right before the other. That's an observation, not an explanation. The pattern could come from a genuine causal link, a third factor driving both, plain coincidence in a small sample, or a pattern noticed after the fact and mistaken for meaningful because someone went looking for one.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What causation requires</span>
+        <p>A mechanism: if the first thing had been different, the second thing would have been different as a direct result, not just statistically less likely to appear alongside it. Establishing that usually takes more than the one data point that prompted the question, ideally a case where the suspected cause was absent and the effect still didn't happen.</p>
+      </div>
+    </div>
+    <div class="same-note"><strong>Worked example.</strong> A deployment goes out at 2:14pm. Error rates spike five minutes later. The natural read: the deploy caused the spike, since it's the thing sitting right next to it in time. Rolling the deploy back doesn't fix anything. Investigation finds a database connection pool that had been slowly exhausting for three days because of a slow query introduced earlier that week; the deploy's restart briefly reset open connections, masking the problem for a few minutes before the pool hit its ceiling anyway, on a schedule that had nothing to do with the deploy. The deploy correlates with the spike. The slow query, running unnoticed for three days, is what actually caused it.</div>
   </div>
 
   <div class="stage-card">
