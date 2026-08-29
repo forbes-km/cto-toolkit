@@ -155,6 +155,17 @@
   .badge.soon { background: var(--amber-soft); color: var(--amber); }
   .badge.doc { background: var(--line); color: var(--ink-soft); }
 
+  .situation-bar { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  .situation-bar-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 600; margin: 0 0 10px; }
+  .situation-links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .situation-links a { font-size: 12.5px; color: var(--accent); background: var(--accent-soft); padding: 7px 14px; border-radius: 999px; text-decoration: none; font-weight: 600; }
+  .situation-links a:hover { background: var(--accent); color: white; }
+
+  .jump-nav { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 1px solid var(--line); padding: 12px 32px; margin-top: 20px; }
+  .jump-nav-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .jump-nav a { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; font-weight: 600; padding: 4px 0; border-bottom: 2px solid transparent; }
+  .jump-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
   footer {
     max-width: 1100px;
     margin: 0 auto;
@@ -175,9 +186,32 @@
   <p class="byline"><a href="https://github.com/forbes-km/cto-toolkit">github.com/forbes-km/cto-toolkit</a></p>
 </header>
 
+<div class="situation-bar">
+  <p class="situation-bar-label">Start by situation</p>
+  <div class="situation-links">
+    <a href="tools/situation-starting-as-cto/index.html">I'm starting as CTO</a>
+    <a href="tools/situation-cutting-costs/index.html">We're cutting costs</a>
+    <a href="tools/situation-ma/index.html">We're going through M&amp;A</a>
+    <a href="tools/situation-ai/index.html">We're introducing AI</a>
+    <a href="tools/situation-incident/index.html">We just had a major incident</a>
+    <a href="tools/situation-growth/index.html">The company is growing rapidly</a>
+  </div>
+</div>
+
+<div class="jump-nav">
+  <div class="jump-nav-inner">
+    <a href="#sec-ai">AI systems</a>
+    <a href="#sec-cloud-ea">Cloud &amp; enterprise architecture</a>
+    <a href="#sec-risk">Risk &amp; resilience</a>
+    <a href="#sec-planning">Planning &amp; diligence</a>
+    <a href="#sec-leading">Leading the enterprise</a>
+    <a href="#sec-general">General CTO practice</a>
+  </div>
+</div>
+
 <main>
 
-  <div class="section-label">AI systems: architecture, governance, cost</div>
+  <div class="section-label" id="sec-ai">AI systems: architecture, governance, cost</div>
   <p class="section-note">Runnable, dependency-free reference tools. Open directly in a browser, no build step. Code is MIT licensed.</p>
   <div class="grid">
 
@@ -199,10 +233,16 @@
       <p>Cost modeling for token-based pricing, PTU/reserved capacity, GPU amortization for self-hosted models, and chargeback patterns across cloud and on-prem.</p>
     </a>
 
+    <a class="card" href="tools/ai-portfolio-management/index.html">
+      <span class="badge live">Live</span>
+      <h3>AI Portfolio Management</h3>
+      <p>Which AI initiatives should get built: nine scoring dimensions, gating on feasibility and data readiness first, and a Scale/Incubate/Watch/Kill classification.</p>
+    </a>
+
   </div>
 
-  <div class="section-label">Cloud &amp; enterprise architecture</div>
-  <p class="section-note">General cloud infrastructure reference, not AI-specific.</p>
+  <div class="section-label" id="sec-cloud-ea">Cloud &amp; enterprise architecture</div>
+  <p class="section-note">General cloud infrastructure and architecture reference, not AI-specific.</p>
   <div class="grid">
 
     <a class="card" href="tools/cloud-service-mapper/index.html">
@@ -235,30 +275,6 @@
       <p>Six dimensions, strategy alignment, governance, domain coverage, delivery integration, talent, and artifacts, with a scoring calculator that flags real diagnostic patterns.</p>
     </a>
 
-    <a class="card" href="tools/zero-trust-maturity/index.html">
-      <span class="badge live">Live</span>
-      <h3>Zero-Trust Maturity Preview</h3>
-      <p>Six dimensions, identity and access, segmentation, detection and response, vulnerability management, third-party risk, governance and culture, with an in-browser scoring calculator.</p>
-    </a>
-
-    <a class="card" href="tools/security-program/index.html">
-      <span class="badge live">Live</span>
-      <h3>Building a Security Program</h3>
-      <p>How to stand up a security function from little or nothing, sequenced by what reduces risk first, distinct from scoring a program that already exists.</p>
-    </a>
-
-    <a class="card" href="tools/disaster-recovery/index.html">
-      <span class="badge live">Live</span>
-      <h3>Disaster Recovery &amp; Business Continuity</h3>
-      <p>RTO/RPO set honestly by business impact, backup testing discipline, tabletop exercises, and how to answer the board's recovery-time question.</p>
-    </a>
-
-    <a class="card" href="tools/data-governance/index.html">
-      <span class="badge live">Live</span>
-      <h3>Data Governance &amp; Privacy</h3>
-      <p>Classification, ownership versus stewardship, subject access and deletion requests made operational, and which regulation applies when.</p>
-    </a>
-
     <a class="card" href="tools/modernization-execution/index.html">
       <span class="badge live">Live</span>
       <h3>Legacy Modernization Execution</h3>
@@ -279,12 +295,55 @@
 
   </div>
 
-  <div class="section-label">Planning &amp; diligence</div>
+  <div class="section-label" id="sec-risk">Risk &amp; resilience</div>
+  <p class="section-note">Security, continuity, data protection, and the economics of reliability, as their own standing discipline rather than an afterthought inside other pages.</p>
+  <div class="grid">
+
+    <a class="card" href="tools/security-program/index.html">
+      <span class="badge live">Live</span>
+      <h3>Building a Security Program</h3>
+      <p>How to stand up a security function from little or nothing, sequenced by what reduces risk first, distinct from scoring a program that already exists.</p>
+    </a>
+
+    <a class="card" href="tools/zero-trust-maturity/index.html">
+      <span class="badge live">Live</span>
+      <h3>Zero-Trust Maturity Preview</h3>
+      <p>Six dimensions, identity and access, segmentation, detection and response, vulnerability management, third-party risk, governance and culture, with an in-browser scoring calculator.</p>
+    </a>
+
+    <a class="card" href="tools/security-compliance-maturity/index.html">
+      <span class="badge live">Live</span>
+      <h3>Security &amp; Compliance Maturity</h3>
+      <p>A maturity ladder across the five NIST Cybersecurity Framework functions, scored on evidence rather than stated policy, and why a certification isn't the same thing as maturity.</p>
+    </a>
+
+    <a class="card" href="tools/disaster-recovery/index.html">
+      <span class="badge live">Live</span>
+      <h3>Disaster Recovery &amp; Business Continuity</h3>
+      <p>RTO/RPO set honestly by business impact, backup testing discipline, tabletop exercises, and how to answer the board's recovery-time question.</p>
+    </a>
+
+    <a class="card" href="tools/data-governance/index.html">
+      <span class="badge live">Live</span>
+      <h3>Data Governance &amp; Privacy</h3>
+      <p>Classification, ownership versus stewardship, subject access and deletion requests made operational, and which regulation applies when.</p>
+    </a>
+
+    <a class="card" href="tools/reliability-economics/index.html">
+      <span class="badge live">Live</span>
+      <h3>Reliability as an Economic Decision</h3>
+      <p>How much reliability the business can afford, error budgets as an explicit tradeoff, and why overengineering has a real, ongoing cost.</p>
+    </a>
+
+  </div>
+
+  <div class="section-label" id="sec-planning">Planning &amp; diligence</div>
   <p class="section-note">Decision records, roadmapping, stakeholder and vendor management, and technical M&amp;A diligence.</p>
   <div class="grid">
 
     <a class="card" href="tools/adr-roadmapping/index.html">
       <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
       <h3>ADRs &amp; Roadmapping</h3>
       <p>What a good Architecture Decision Record contains, why one roadmap rarely serves both engineering and business audiences, and what gets a business case funded.</p>
     </a>
@@ -297,12 +356,14 @@
 
     <a class="card" href="tools/business-case-calculator/index.html">
       <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
       <h3>Business Case Calculator</h3>
       <p>A working NPV, IRR, benefit-to-cost, and payback calculator, enter costs and benefits by year and get a verdict, in-browser, nothing sent anywhere.</p>
     </a>
 
     <a class="card" href="tools/vendor-evaluation/index.html">
       <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
       <h3>Vendor Evaluation</h3>
       <p>Weighted scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost.</p>
     </a>
@@ -313,9 +374,15 @@
       <p>Technical debt signals, key-person risk, acquisition-specific security posture, integration complexity, and red flags that should stop or reprice a deal.</p>
     </a>
 
+    <a class="card" href="tools/technology-ma-integration/index.html">
+      <span class="badge live">Live</span>
+      <h3>Technology M&amp;A Integration</h3>
+      <p>What happens after close: Day 0 continuity, the 100-day converge/coexist/replace decision, and testing the deal thesis through Year 1.</p>
+    </a>
+
   </div>
 
-  <div class="section-label">Leading the enterprise</div>
+  <div class="section-label" id="sec-leading">Leading the enterprise</div>
   <p class="section-note">The CEO relationship, capital allocation, risk appetite, and decision rights: the executive layer that determines whether everything else in this toolkit gets funded, followed, or ignored.</p>
   <div class="grid">
 
@@ -349,9 +416,27 @@
       <p>What won't be accepted, what's accepted temporarily, and what crosses the threshold for board or CEO visibility, stated in advance.</p>
     </a>
 
+    <a class="card" href="tools/role-boundaries/index.html">
+      <span class="badge live">Live</span>
+      <h3>Role Boundaries: CTO, CIO, CISO, CPO</h3>
+      <p>Where these roles typically split, why the lines move by company type, and why they're organizational choices, not universal truths.</p>
+    </a>
+
+    <a class="card" href="tools/technology-strategy-downturn/index.html">
+      <span class="badge live">Live</span>
+      <h3>Technology Strategy During a Downturn</h3>
+      <p>Bad cuts versus better cuts when the CEO says reduce spend twenty percent, and what not to touch regardless of the pressure.</p>
+    </a>
+
+    <a class="card" href="tools/cto-succession/index.html">
+      <span class="badge live">Live</span>
+      <h3>CTO Leadership &amp; Succession</h3>
+      <p>Who runs engineering if the CTO is out for ninety days, bus-factor analysis applied to leadership, and the succession heatmap.</p>
+    </a>
+
   </div>
 
-  <div class="section-label">General CTO practice</div>
+  <div class="section-label" id="sec-general">General CTO practice</div>
   <p class="section-note">The organizational and operating side of the role: reporting, incident response, org design, and decision frameworks.</p>
   <div class="grid">
 
@@ -363,6 +448,7 @@
 
     <a class="card" href="tools/incident-response/index.html">
       <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
       <h3>Incident Response</h3>
       <p>A blameless, repeatable incident process from detection through postmortem follow-through, with severity classification and common failure modes.</p>
     </a>
@@ -381,6 +467,7 @@
 
     <a class="card" href="tools/technology-strategy/index.html">
       <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
       <h3>Technology Strategy</h3>
       <p>What a technology strategy is versus a roadmap, the three-horizon investment split, and why tradeoffs, not initiatives, are what make a strategy usable.</p>
     </a>
