@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The CTO Operating System</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>The CTO Operating System</h1>
+  <p>A concrete operating rhythm: what belongs at the daily, weekly, monthly, quarterly, and annual tier, and why conflating them is how urgent work quietly displaces the work that matters.</p>
+  <div class="caveat">This is a cadence, not a task list. See <a href="../board-reporting/index.html">Board Reporting</a> for the quarterly board cycle itself, and <a href="../engineering-metrics/index.html">Engineering Metrics</a> for what the monthly portfolio review should measure.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The five tiers</h3>
+      <p>Each tier exists to protect a different kind of work from being displaced by the others. The failure mode at each tier is different too.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Tier</th><th>What belongs here</th><th>The failure mode</th></tr>
+          <tr><td>Daily</td><td>Active critical incidents, a risk that just became material, an executive blocker, a staffing emergency</td><td>Anything that isn't genuinely time-sensitive creeps in, training the organization to escalate everything</td></tr>
+          <tr><td>Weekly</td><td>Engineering leadership sync, architecture and risk review, delivery health, recruiting, vendor issues</td><td>Becomes a status-reporting ritual instead of a decision-making one</td></tr>
+          <tr><td>Monthly</td><td>Portfolio health, financials, security posture, reliability, people metrics</td><td>Gets skipped under deadline pressure, exactly when it's most needed</td></tr>
+          <tr><td>Quarterly</td><td>Strategy reassessment, portfolio reallocation, board preparation, organizational health, technical debt review</td><td>Treated as a report-out instead of an actual reallocation decision</td></tr>
+          <tr><td>Annual</td><td>Strategy reset, operating model, budget, org design, succession, architecture evolution, risk appetite</td><td>Compressed into a single offsite instead of genuine multi-week preparation</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Why cadence beats reactive prioritization</h3>
+      <p>The alternative to a stated cadence isn't no cadence, it's an implicit one where whoever's loudest wins.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a working cadence does</span>
+        <p>Separates urgent from important by giving each its own guaranteed slot, so a crisis doesn't consume the time that should go to the quarterly reallocation decision, and a quarterly review doesn't get treated with an urgency it doesn't warrant.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What happens without one</span>
+        <p>Everything competes for attention at the same priority, and daily fires win every time by default. Long-horizon work, technical debt, succession planning, architecture evolution, never gets protected time because nothing forces it onto the calendar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The daily tier is smaller than it feels</h3>
+      <p>Daily access to the CTO is available, which is exactly why the daily tier is the one most prone to creep.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What belongs</span>
+        <p>Only what genuinely can't wait: an active Sev1 or Sev2, a risk that just crossed a material threshold, an executive blocker stopping other work, a staffing emergency. If it could wait a week without real cost, it isn't a daily item.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The creep</span>
+        <p>Status updates, routine decisions, and anything convenient get pulled into daily attention simply because the CTO is reachable, not because the item requires it. Once this starts, the daily tier stops protecting anything and just becomes the default channel for everything.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The quarterly reset is a reallocation decision, not a report</h3>
+      <p>The tier most likely to exist on the calendar and produce nothing.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What it should produce</span>
+        <p>A real change: capital moved between horizons, a strategic assumption revisited and possibly overturned, an initiative killed. If nothing changed, the review didn't do its job, regardless of how thorough the discussion was.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it becomes without discipline</span>
+        <p>A calendar ritual summarizing the quarter that already happened, with no mechanism forcing a reallocation decision. The portfolio mix persists by inertia rather than by choice, and everyone leaves the room having confirmed what they already believed.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the operating cadence has decayed</h3>
+      <p>The cadence can exist on a calendar and still not be functioning. These patterns show up when it's decayed into performance rather than practice.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Daily conversations routinely include topics that could have waited a week</li>
+          <li>The monthly portfolio or financial review has been skipped or shortened for three or more consecutive months</li>
+          <li>Quarterly reviews haven't produced a real capital reallocation in over a year</li>
+          <li>No one outside the CTO could describe what happens at each cadence tier</li>
+          <li>Annual strategy work gets compressed into a single offsite rather than genuine preparation beforehand</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. The right cadence depends on company size and stage; a ten-person engineering team doesn't need the same rhythm as a five-hundred-person organization.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

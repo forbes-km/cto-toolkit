@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology Risk Appetite</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technology Risk Appetite</h1>
+  <p>Explicitly defining which risks the organization won't accept, will accept temporarily, will monitor, and requires board or CEO visibility for, rather than leaving risk tolerance implicit and rediscovering it after something has already gone wrong.</p>
+  <div class="caveat">This is the cross-cutting frame. Category-specific detail lives on <a href="../security-program/index.html">Security Program</a>, <a href="../disaster-recovery/index.html">Disaster Recovery</a>, <a href="../data-governance/index.html">Data Governance</a>, and <a href="../vendor-evaluation/index.html">Vendor Evaluation</a>.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The five tiers</h3>
+      <p>The same tiers apply regardless of category, security, resilience, architecture, technical debt, vendors, AI, regulatory exposure, or concentration risk.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Tier</th><th>Definition</th><th>Who can accept it</th></tr>
+          <tr><td>Will not accept</td><td>Downside unacceptable regardless of likelihood: unencrypted regulated data at rest, no tested recovery plan for a revenue-critical system</td><td>No one; this is a standing prohibition, not a judgment call</td></tr>
+          <tr><td>Will accept temporarily</td><td>Known, tracked, with a remediation date and a named owner</td><td>The accountable owner from the decision-rights model, with the remediation plan documented</td></tr>
+          <tr><td>Will monitor</td><td>Acceptable at current severity, tracked in case that changes</td><td>The team or function closest to the risk, without escalation, as long as it stays within stated bounds</td></tr>
+          <tr><td>Requires board visibility</td><td>Severity or category crosses a stated materiality threshold</td><td>Surfaced regardless of whether it's currently being actively managed well</td></tr>
+          <tr><td>Requires CEO approval</td><td>Acceptance could affect company viability or a public commitment</td><td>The CEO specifically, not delegated downward regardless of technical familiarity</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Why implicit risk tolerance is worse than a strict written one</h3>
+      <p>A conservative appetite stated clearly beats a permissive one left unstated, because the unstated version isn't a tolerance, it's an accident waiting to be discovered.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What an explicit appetite does</span>
+        <p>Gives engineers and managers a standing answer to &quot;is this acceptable&quot; without escalating every individual judgment call, and gives the CTO a defensible basis for a decision rather than an after-the-fact justification assembled once something has already gone wrong.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What implicit tolerance produces</span>
+        <p>Risk tolerance gets set retroactively, by whoever made the loudest case for or against a specific risk at the time, and the same category of risk gets treated inconsistently across teams depending entirely on who happened to be asking.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The board-visibility threshold</h3>
+      <p>The line that determines whether a risk stays a team-level judgment call or becomes something the board has to know about.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What crosses it</span>
+        <p>A materiality standard stated in advance: dollar exposure above a specific threshold, any risk with potential regulatory or public-disclosure consequence, anything that could affect a stated company commitment. The threshold has to be a number or a specific condition, not a feeling.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>Defining materiality vaguely enough (&quot;significant risk&quot;) that it becomes a judgment call made under pressure in the moment, right when the incentive to under-report is highest and the person making the call has the least distance from the situation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs risk appetite is undefined despite feeling settled</h3>
+      <p>An organization can feel like it has a consistent approach to risk while having none written down anywhere.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Risk acceptance decisions aren't documented anywhere, so no one can show why a given risk was judged acceptable six months later</li>
+          <li>The same category of risk gets treated differently by different teams with no stated reason</li>
+          <li>No materiality threshold exists for what triggers board visibility</li>
+          <li>&quot;We'll accept this for now&quot; risks have no remediation date or owner attached</li>
+          <li>The CTO has never stated, in writing, what the organization will not accept regardless of cost or convenience</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Risk thresholds and escalation requirements should reflect your organization's actual regulatory exposure and board expectations, not a generic default.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

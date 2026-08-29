@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Working with the CEO</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Working with the CEO</h1>
+  <p>The relationship that determines whether everything else in this toolkit gets funded, listened to, or quietly ignored. The single most consequential relationship a CTO manages, and the one least often discussed explicitly.</p>
+  <div class="caveat">See <a href="../technology-decision-rights/index.html">Technology Decision Rights</a> for the fuller decision-ownership model this page's escalation guidance points to, and <a href="../board-reporting/index.html">Board Reporting</a> for the board-facing counterpart to this relationship.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>What the CEO needs from a CTO</h3>
+      <p>Not a list of technical competencies. Four things a CEO can't get from anyone else on the team.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Need</th><th>What it looks like</th><th>What it isn't</th></tr>
+          <tr><td>Translation</td><td>Business strategy translated into its technology consequences, in language a non-technical executive can act on</td><td>Technology strategy explained in a way that requires the CEO to already understand the technology</td></tr>
+          <tr><td>Protection</td><td>Technology risk surfaced while there's still time to do something about it</td><td>Risk explained for the first time during the incident it caused</td></tr>
+          <tr><td>Judgment</td><td>A clear recommendation with the tradeoff stated plainly</td><td>A menu of options with no point of view, leaving the decision entirely to someone without the context to make it well</td></tr>
+          <tr><td>Predictability</td><td>Commitments that hold, or an early, honest flag when they won't</td><td>Optimistic timelines that quietly slip without anyone hearing about it until the deadline arrives</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Telling the CEO no</h3>
+      <p>The moment that defines the relationship more than any status update ever will.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How it works</span>
+        <p>Arrive with the tradeoff already worked out, not just the refusal: &quot;we can hit that date if we cut X, or hit full scope two weeks later, which do you want.&quot; A no with a stated alternative reads as judgment. A no with nothing behind it reads as an obstacle.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it goes wrong</span>
+        <p>A flat no delivered late, often after the CEO has already committed to the date externally, which turns a technical disagreement into a credibility problem for both people, and makes the next no much harder to deliver and to hear.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>When technology should be invisible, and when it's the strategy</h3>
+      <p>Getting this posture wrong in either direction costs credibility.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Invisible</span>
+        <p>For most companies, most of the time, technology is an enabler. The goal is for the CEO to rarely have to think about it, and that quiet is a sign of health, not neglect, as long as it isn't masking a risk building underneath.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The strategic differentiator</span>
+        <p>When the technology genuinely is the competitive edge, what customers are buying is the technical capability, invisibility is the wrong posture. The CTO needs to be actively pushing technology into the CEO's strategic conversations, not staying quietly out of them.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Handling a CEO who's miscalibrated in either direction</h3>
+      <p>Two opposite failure modes, requiring opposite corrections.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Over-indexes on technology</span>
+        <p>Treats every technical detail as something worth personally weighing in on. Give them a small, explicit set of decisions that genuinely warrant their attention, rather than either blocking them out entirely or letting them relitigate implementation details that don't.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Treats technology as a cost center</span>
+        <p>This is a translation failure, not a values failure. Find the specific business metric technology investment moves, and lead every conversation with that number, not with technical merit the CEO has no framework to evaluate.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Escalation and cadence, stated explicitly</h3>
+      <p>What should reach the CEO, and on what rhythm, shouldn't be reinvented every time something comes up.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Escalate: a material change in risk, anything crossing a stated board-visibility threshold, and any commitment at risk of slipping, as early as it's known. Handle independently: implementation approach, internal architecture decisions, and day-to-day engineering management. A regular weekly touchpoint covers the practical items; a deeper monthly or quarterly conversation, tied to the broader operating cadence, covers strategy and portfolio; anything crossing an escalation threshold gets raised immediately, not saved for the next scheduled meeting.</p>
+      </div>
+    </div>
+    <div class="same-note">The full decision-rights model this escalation guidance points to lives on its own page: <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the relationship is unhealthy</h3>
+      <p>Patterns that show up when the CEO-CTO relationship has drifted, regardless of how well either person would describe it individually.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>The CEO learns about a material technology risk from someone other than the CTO</li>
+          <li>Every technology conversation with the CEO is either a routine status update or a crisis, nothing in between</li>
+          <li>The CTO can't name the one or two business metrics the CEO tracks</li>
+          <li>Disagreements get resolved by whoever escalates loudest, not by a stated decision-rights model</li>
+          <li>The CEO has stopped asking the CTO's opinion before making technology-adjacent decisions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. The specifics of this relationship depend heavily on company stage, founder background, and board composition; adapt accordingly.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

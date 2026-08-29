@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology Capital Allocation</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technology Capital Allocation</h1>
+  <p>The standing discipline of allocating scarce capital across run, grow, and transform, security, technical debt, headcount, vendors, and reserve, and being able to answer what gets cut or funded first without re-deriving the answer from scratch each time.</p>
+  <div class="caveat">See <a href="../business-case-calculator/index.html">Business Case Calculator</a> for evaluating a single investment, and <a href="../technology-strategy/index.html">Technology Strategy</a> for the three-horizon split this page extends into a full portfolio view.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Allocation categories</h3>
+      <p>The buckets a technology budget breaks into, distinct enough that lumping them together hides tradeoffs that should be explicit.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Category</th><th>What it covers</th></tr>
+          <tr><td>Run</td><td>The operational cost of keeping existing systems working: hosting, licensing, on-call, routine maintenance</td></tr>
+          <tr><td>Grow</td><td>Proven initiatives extending existing capability into adjacent, validated opportunity</td></tr>
+          <tr><td>Transform</td><td>New bets with genuine uncertainty; the Horizon 3 work from the technology strategy</td></tr>
+          <tr><td>Security</td><td>Dedicated investment, evaluated on its own terms, not folded into run cost or treated as a rounding error</td></tr>
+          <tr><td>Technical debt remediation</td><td>A deliberate allocation, not whatever capacity happens to be left over after everything else is funded</td></tr>
+          <tr><td>Headcount</td><td>People cost, tracked distinctly from tooling and infrastructure spend</td></tr>
+          <tr><td>Vendors</td><td>Licensing and contracted services, reviewed against the criteria in Vendor Evaluation</td></tr>
+          <tr><td>Reserve</td><td>Unallocated buffer for the unplanned; a budget with none is a budget that will blow through its total the first time reality doesn't match the plan</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>The &quot;$10M less&quot; test</h3>
+      <p>A question every CTO eventually gets asked, and the quality of the answer depends entirely on whether it was worked out in advance.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to answer it well</span>
+        <p>Have a pre-ranked list, before the question is asked, of what gets cut first, second, third, with the real consequence of each cut stated plainly, not &quot;we'll do more with less.&quot; This list should already exist; deriving it live under budget pressure produces worse decisions and reads as unprepared.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it goes wrong</span>
+        <p>An across-the-board percentage cut applied uniformly to every team and category, which protects nothing that matters and reflects no actual prioritization, just avoids the discomfort of choosing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The &quot;$10M more&quot; test</h3>
+      <p>The less common but equally revealing version of the same question.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to answer it well</span>
+        <p>A similarly pre-ranked list of what gets funded next, tied to the three-horizon split and stated expected outcomes, so a windfall gets deployed deliberately instead of triggering a scramble of proposals assembled after the fact.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it goes wrong</span>
+        <p>The money gets absorbed by whichever team made the loudest case that quarter, evaluated against no consistent criteria, and disconnected from whatever priorities the rest of the portfolio was supposedly organized around.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>What we'd stop if deciding again</h3>
+      <p>The question almost no organization asks explicitly, and the one most likely to surface a real reallocation opportunity.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why it matters</span>
+        <p>Sunk cost is the most common distortion in capital allocation. An investment that made sense eighteen months ago, under assumptions that have since changed, doesn't automatically still make sense, and few organizations ever explicitly re-ask the question rather than just continuing to fund what's already funded.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How to run it</span>
+        <p>Annually, as part of the operating cadence's yearly review, walk the active portfolio and ask of each item: knowing what we know now, would we start this today. Anything that gets a no needs a stated wind-down plan, not just an uncomfortable silence that lets it keep running by default.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs allocation discipline is missing</h3>
+      <p>Patterns that show up when capital allocation is happening by inertia rather than by explicit decision.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No standing, pre-ranked list exists for what gets cut first under a budget reduction</li>
+          <li>Technical debt remediation gets whatever capacity is left over rather than a dedicated allocation</li>
+          <li>Security investment is evaluated against the same ROI bar as a feature, rather than as its own category with its own logic</li>
+          <li>An unplanned budget increase gets absorbed by whoever asks first rather than evaluated against the standing portfolio</li>
+          <li>No investment currently in the portfolio has been explicitly re-justified in the past twelve months</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Category weights and typical splits vary enormously by company stage, industry, and competitive position; there is no universal correct ratio.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
