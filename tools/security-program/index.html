@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building a Security Program</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Building a Security Program</h1>
+  <p>How to stand up a security function from little or nothing, sequenced by what actually reduces risk first, as distinct from scoring a program that already exists.</p>
+  <div class="caveat">This covers building the program. See <a href="../zero-trust-maturity/index.html">Zero-Trust Maturity</a> for scoring a program once it exists, evaluated on evidence rather than stated policy.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Sequencing: what to build first</h3>
+      <p>Security programs built in the wrong order spend budget on certifications before basics are solid, then fail an audit or a real incident on something the certification never checked.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Stage</th><th>Focus</th><th>What comes after, not before</th></tr>
+          <tr><td>Foundation</td><td>MFA everywhere, least-privilege access, asset inventory, basic logging</td><td>Everything else depends on this being real, not aspirational</td></tr>
+          <tr><td>Visibility</td><td>Centralized logging, vulnerability scanning, dependency tracking</td><td>You can't manage what you can't see; this precedes any formal certification effort</td></tr>
+          <tr><td>Process</td><td>Incident response plan, vulnerability management SLA, access review cadence</td><td>Turns visibility into action with defined ownership and timelines</td></tr>
+          <tr><td>Certification</td><td>SOC 2, ISO 27001, or industry-specific frameworks</td><td>Documents what should already be true; pursuing it earlier produces a program built for the audit, not for actual risk</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Where security reports, and how it's funded</h3>
+      <p>Organizational placement determines whether security has real authority or exists to be consulted and overruled.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Security leadership with a direct line to the CEO, CTO, or board, not buried three levels inside engineering where its priorities compete for the same budget and headcount as feature delivery and consistently lose. Funded as its own line item, not as a rounding error inside another team's budget.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Security reporting to the VP of Engineering whose bonus is tied to shipping velocity, which creates a structural conflict every time a security requirement would slow a release. The person deciding the tradeoff has an incentive on only one side of it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The certification trap</h3>
+      <p>Chasing SOC 2 or ISO 27001 before the underlying practice is real produces a certification that doesn't mean what it's supposed to mean.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Treat the certification as documentation of an existing, functioning program, not the goal itself. If the auditor's checklist is the first time a control gets implemented, it'll be the first thing that lapses once attention moves elsewhere after the audit passes.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A clean SOC 2 report sitting alongside genuinely weak day-to-day practice, because the control existed for exactly the audit window and nowhere else. This is discoverable, and it's exactly the kind of gap a technology diligence process is built to find.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>DevSecOps: where security enters the pipeline</h3>
+      <p>Security that only reviews code after it's written catches less and creates more friction than security embedded earlier.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Automated scanning (SAST, dependency checking, secret detection) running in CI on every commit, with findings surfaced to the engineer who wrote the code within minutes, not batched into a security review weeks later when context is gone and the fix costs more.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A security team that reviews finished features right before release, which makes every finding an emergency, teaches engineers to see security as an obstacle rather than a partner, and pushes real fixes to be rushed under deadline pressure.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Building without headcount</h3>
+      <p>Early-stage companies rarely get a security team on day one. The sequencing still matters even with one part-time person or none.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Start with the foundation-stage items above, they cost discipline more than headcount: enforce MFA, remove standing admin access, keep an actual inventory of what systems exist and who owns them. A fractional security advisor or a well-scoped external assessment can substitute for a full-time hire through the visibility stage; process and certification genuinely need dedicated ownership once the company is large enough that a security incident would be existential.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the program is theater, not practice</h3>
+      <p>Patterns that show up when a security program looks complete in documentation and isn't reflected in daily operation.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Policies exist and are current, but engineers can't describe what they actually do differently because of them</li>
+          <li>A clean audit report alongside known unpatched vulnerabilities or unreviewed access grants</li>
+          <li>Security reviews happen only at release time, never earlier in the development process</li>
+          <li>No one can say when the last access review happened or produce evidence it occurred</li>
+          <li>Security funding and headcount decisions are made by the same leader whose other priorities compete directly with security requirements</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Security program requirements vary significantly by industry, regulatory exposure, and company scale; adapt sequencing accordingly.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

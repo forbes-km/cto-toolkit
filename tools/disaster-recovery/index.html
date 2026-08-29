@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Recovery &amp; Business Continuity</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Disaster Recovery &amp; Business Continuity</h1>
+  <p>What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.</p>
+  <div class="caveat">General DR/BC framework. See <a href="../incident-response/index.html">Incident Response</a> for the process that handles ordinary outages; this page is about recovery from the loss of an entire system, region, or facility.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>RTO and RPO, defined honestly by tier</h3>
+      <p>Recovery Time Objective is how long the business can tolerate a system being down. Recovery Point Objective is how much data loss is acceptable. Both should be set by business impact, not by what's technically easy.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Tier</th><th>Example systems</th><th>Typical RTO</th><th>Typical RPO</th></tr>
+          <tr><td>Tier 1: Revenue-critical</td><td>Payment processing, core transaction systems, customer-facing platform</td><td>Minutes to under 1 hour</td><td>Near-zero, seconds to minutes</td></tr>
+          <tr><td>Tier 2: Operationally important</td><td>Internal tools, reporting, secondary customer channels</td><td>4 to 24 hours</td><td>Minutes to hours</td></tr>
+          <tr><td>Tier 3: Deferred impact</td><td>Archival systems, non-urgent internal tools</td><td>Days</td><td>Up to 24 hours</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Setting RTO and RPO honestly</h3>
+      <p>The single most common DR failure isn't a bad recovery, it's a target that was never realistic in the first place.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Ask the business owner what actually happens at 1 hour, 4 hours, and 24 hours of downtime for each system, in dollars or customer impact, then set the target from that answer. The target should hurt to miss; if missing it wouldn't actually matter, the system is probably a lower tier than it's currently classified.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>An RTO of 4 hours written into a policy document, never tested, while the actual infrastructure would take 2 days to genuinely recover. The number on paper and the number that's true are different, and nobody finds out which one is real until an actual disaster.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Backup testing discipline</h3>
+      <p>A backup that has never been restored is a hypothesis, not a safety net.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Scheduled, automated restore tests, not manual ones someone remembers to run occasionally, with the actual restore time measured and compared against the stated RTO every time. A backup that restores successfully but takes 3x longer than the RTO promises is a finding, not a pass.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Backups that run successfully and are never restored until the day they're actually needed, at which point corruption, missing dependencies, or forgotten configuration steps turn a routine recovery into an extended outage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Tabletop exercises</h3>
+      <p>Rehearsing the decision-making, not just the technical recovery steps.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A scheduled exercise, at least annually for Tier 1 systems, that walks a realistic scenario end to end: who declares the disaster, who has authority to fail over, how customers get notified, and how the team knows recovery is genuinely complete rather than just visually normal again.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A DR plan that's technically sound but has never been rehearsed by the humans who'd execute it, so the actual event surfaces confusion about authority and sequencing that the document assumed away.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Multi-region versus single-region, honestly costed</h3>
+      <p>Multi-region resilience is expensive, and the expense is often invisible until someone actually prices it out.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Cost the actual multi-region architecture, data replication, cross-region networking, the operational overhead of maintaining two live environments, against the quantified cost of the downtime it prevents. For genuinely revenue-critical systems, this usually clears the bar. For everything else, it often doesn't.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Multi-region architecture applied uniformly across the whole estate because it feels like the responsible default, without anyone pricing whether the systems getting that treatment actually warrant it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Answering the board question</h3>
+      <p>&quot;What's our recovery time if we lose a region&quot; is a standard board question. The credible answer is specific, not reassuring.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A credible answer names the tier, states the tested RTO with the date it was last actually verified, and is honest about which systems don't yet meet target. &quot;We're covered&quot; without those specifics is the answer of someone who hasn't tested it recently, and board members who've heard that answer before know the difference.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>DR red flags</h3>
+      <p>Patterns that show up consistently when a disaster recovery program looks complete on paper and isn't.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>RTO and RPO targets exist in a document but have never been tested against actual recovery time</li>
+          <li>The last full-scale restore test or tabletop exercise was more than a year ago, or has never happened</li>
+          <li>Recovery depends on a single person's institutional knowledge rather than a documented, rehearsed runbook</li>
+          <li>Backup and primary infrastructure share a failure domain, same region, same provider account, same network path, undermining the recovery they're meant to enable</li>
+          <li>Tier classification hasn't been revisited since the systems it covers changed significantly</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. RTO and RPO targets, testing cadence, and regulatory DR obligations vary by industry; treat this as a starting framework, not a compliance checklist.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

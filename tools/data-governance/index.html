@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Governance &amp; Privacy</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Data Governance &amp; Privacy</h1>
+  <p>The regulatory and stewardship side of data: who owns it, what protects it, and what happens when a regulator or a customer asks what's held about them. Distinct from the architecture question of how data is stored and modeled.</p>
+  <div class="caveat">This covers governance and regulatory obligation. See <a href="../data-strategy/index.html">Data Strategy</a> for warehouse versus lakehouse versus mesh and the architectural side of the data question.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Which regulation applies, and when</h3>
+      <p>A starting map, not a legal determination. Actual applicability depends on where customers are located, what data is collected, and industry-specific rules; confirm with counsel.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Framework</th><th>Triggers when</th><th>Core obligation</th></tr>
+          <tr><td>GDPR</td><td>Processing personal data of individuals in the EU/EEA, regardless of where the company is based</td><td>Lawful basis for processing, subject access and deletion rights, breach notification within 72 hours</td></tr>
+          <tr><td>CCPA / CPRA</td><td>Processing personal data of California residents above certain revenue or volume thresholds</td><td>Disclosure of data collected, opt-out of sale/sharing, deletion rights</td></tr>
+          <tr><td>HIPAA</td><td>Handling protected health information as a covered entity or business associate</td><td>Safeguards on PHI, breach notification, business associate agreements with vendors</td></tr>
+          <tr><td>Sector and state-specific</td><td>Financial services, children's data, and a growing list of individual state privacy laws</td><td>Varies; often layered on top of the frameworks above rather than replacing them</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Data classification as the foundation</h3>
+      <p>Every governance obligation downstream depends on first knowing what data exists and how sensitive it is.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A classification scheme with a small number of clear tiers, public, internal, confidential, restricted or regulated, applied at the point data is created or collected, not retrofitted later through an audit. Every system holding data above the lowest tier has a named owner accountable for it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A classification policy that exists on paper but was never actually applied to real systems, so nobody can answer a basic question like &quot;where does our customer PII actually live&quot; without a multi-week investigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Subject access and deletion requests, operationally</h3>
+      <p>The rights GDPR and similar frameworks grant individuals are only real if the organization can actually fulfill them within the required window.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A documented, at least partially automated process for locating and exporting or deleting an individual's data across every system that holds it, tested against a real request rather than assumed to work. A tracked SLA against the regulatory deadline, with an owner accountable for meeting it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Fulfillment handled manually by whichever engineer is available, searching system by system with no authoritative list of where personal data lives, which routinely blows past the regulatory response window on anything beyond the simplest request.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Ownership versus stewardship</h3>
+      <p>Two different roles that get conflated, and the conflation is where accountability gaps live.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The distinction</span>
+        <p>A data owner is accountable for the business decisions around a dataset, retention, access policy, whether it should exist at all. A data steward implements those decisions day to day, quality checks, access provisioning, pipeline maintenance. The same person can hold both roles, but the accountability should be explicit either way.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Data that's used operationally by several teams but formally owned by none of them, so retention and access decisions never get made deliberately, they just accumulate as whatever the default happened to be.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Privacy by design, not privacy as review gate</h3>
+      <p>Where privacy consideration enters the development process changes how much friction it creates and how much risk it actually catches.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A lightweight privacy impact assessment built into the design phase for any feature touching personal data, before implementation starts, so decisions about what to collect and how long to keep it are made deliberately rather than defaulted to &quot;collect everything, figure out retention later.&quot;</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Privacy review as a gate right before launch, which arrives too late to change the data model, so findings either get overridden under deadline pressure or become expensive retrofits after the feature is already live and being used.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Governance red flags</h3>
+      <p>Patterns that show up when data governance exists as policy but not as practice.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No single, current inventory of where personal or regulated data lives across the estate</li>
+          <li>Subject access or deletion requests handled manually with no tracked SLA against the regulatory deadline</li>
+          <li>Data retained indefinitely by default because no one made an active decision to delete it</li>
+          <li>Third-party vendors processing personal data with no data processing agreement or business associate agreement on file</li>
+          <li>Privacy consideration enters the process only as a pre-launch review, never during design</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only, not legal advice. Applicable regulations depend on jurisdiction, industry, and the specific data involved; confirm obligations with qualified counsel.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

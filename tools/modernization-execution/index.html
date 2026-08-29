@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy Modernization Execution</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Legacy Modernization Execution</h1>
+  <p>How a migration actually gets run once the decision to modernize has been made. Distinct from deciding what to modernize, that's the Application Portfolio Management question, this is about the execution mechanics that determine whether the migration succeeds or stalls.</p>
+  <div class="caveat">This covers execution mechanics. See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for deciding what to modernize in the first place, and <a href="../technology-diligence-map/index.html">Technology Diligence</a> for assessing what's being inherited in an acquisition.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The strangler fig pattern</h3>
+      <p>The dominant strategy for modernizing a live system without a high-risk, high-visibility cutover: grow the new system around the edges of the old one until the old one can be safely retired.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>New functionality is built in the new system and routed to it, while remaining functionality continues running in the old system, with a routing layer (a proxy, a facade, a feature flag) directing each request to whichever system currently owns it. Over time, more capability migrates to the new system until the old system handles nothing and can be decommissioned. The old system shrinks gradually instead of being replaced in a single event, which is what makes this the lower-risk default over a full rewrite and cutover.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Cutover planning and rollback criteria</h3>
+      <p>Every cutover, whether a full system swap or a single capability moving to the new system, needs a defined rollback trigger decided before the cutover happens, not improvised during it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Specific, pre-agreed rollback criteria (error rate above X percent, latency above Y, a defined list of critical functions that must work correctly) checked immediately after cutover, with the rollback mechanism tested in advance, not assumed to work when it's actually needed under pressure.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>&quot;We'll roll back if it looks bad&quot; as the entire rollback plan, which under real pressure becomes a debate about whether it's actually bad enough yet, while customer impact accumulates during the debate.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Parallel-run validation</h3>
+      <p>Before fully trusting the new system, run it alongside the old one and compare outputs on real traffic.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Shadow traffic sent to both systems, with outputs compared automatically and discrepancies flagged, for long enough to build genuine confidence, weeks for a low-volume system, potentially longer for something with meaningful seasonal or cyclical variation in the data it processes.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A parallel run cut short because it's &quot;looking fine so far,&quot; which misses the edge case that only shows up during month-end processing, a holiday traffic spike, or some other pattern the shortened window never covered.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Data migration sequencing</h3>
+      <p>Moving the data is usually harder and riskier than moving the code, and it's where migrations most often go over budget and over timeline.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Migrate data incrementally where possible, validated in batches with reconciliation checks against the source, rather than one large migration event. Keep the old system's data as the system of record until the new system has been validated against it, not the other way around.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A single large migration event scheduled for a weekend, with no realistic way to validate correctness at that scale before Monday's traffic arrives and problems become customer-visible.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>The big-bang trap</h3>
+      <p>The single decision that most reliably turns a modernization effort into a multi-year, over-budget program.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>Incremental migration, capability by capability or customer segment by customer segment, with value delivered and risk retired at each step, so a stalled migration still leaves something usable rather than two half-finished systems and no working whole.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What backfires</span>
+        <p>A full rewrite planned as a single release after 18 months of development, betting the entire program on one cutover event. If it fails, there's no partial progress to fall back on, just a large sunk cost and a system still running on the platform everyone agreed needed to go.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Sunsetting the old system</h3>
+      <p>The step most migrations quietly skip, leaving the legacy system running indefinitely in a reduced but never fully retired state.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Decommissioning needs to be a scheduled, owned step with its own completion criteria, not an assumed eventual outcome once migration is &quot;basically done.&quot; Without an explicit sunset date and owner, the old system keeps running for the small residual traffic nobody prioritized migrating, and the organization ends up maintaining two systems indefinitely instead of the one it planned for.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs a modernization effort is heading for trouble</h3>
+      <p>Patterns that show up consistently in migrations that stall or run significantly over budget.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No defined rollback criteria, or rollback has never actually been tested</li>
+          <li>The cutover plan is a single large event rather than an incremental sequence</li>
+          <li>Data migration validation is manual spot-checking rather than systematic reconciliation</li>
+          <li>No decommission date exists for the legacy system, even informally</li>
+          <li>The old system's remaining traffic keeps getting deprioritized in favor of new feature work on the new system</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Migration risk and appropriate pace depend heavily on system criticality, data volume, and organizational capacity; adapt accordingly.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

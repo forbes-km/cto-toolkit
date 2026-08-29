@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform Engineering</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Platform Engineering</h1>
+  <p>The team and system that make good delivery metrics achievable, treating internal infrastructure as a product with users, not a shared utility maintained as an afterthought.</p>
+  <div class="caveat">This covers the platform team model. See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the DORA outcomes a good platform makes achievable.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Platform as a product, not a shared utility</h3>
+      <p>The distinction that determines whether a platform team gets adopted voluntarily or gets worked around.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A platform built as a product has users (product engineering teams), a roadmap shaped by what those users actually need, and success measured by adoption and satisfaction, the same discipline applied to any external-facing product. A platform built as a shared utility gets whatever capacity is left over after feature work, has no real user research behind its priorities, and gets adopted only where teams have no other choice. The first approach produces a platform teams want to use; the second produces one they route around the moment they're allowed to.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Self-service versus ticket-driven infrastructure</h3>
+      <p>Whether provisioning something new takes minutes or a multi-day queue determines how much of the platform's value actually reaches engineering teams.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Common infrastructure needs, a new service, a database, a deployment pipeline, provisioned through self-service tooling with sane defaults, no ticket or human approval required for the standard case. Reserve human review for genuinely unusual requests, not the routine ones that make up the bulk of demand.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Every infrastructure request routed through a ticket queue regardless of how routine it is, which caps how fast product teams can move at the platform team's ticket-processing capacity rather than at the actual complexity of the request.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Golden path design</h3>
+      <p>A golden path is the supported, well-paved way to accomplish a common task, deliberately easier than any alternative.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Design the golden path around the most common use case, make it genuinely the fastest option available, and keep it optional rather than mandatory. Teams with unusual requirements should be able to deviate, just without platform-team support for the parts they've customized away from the standard.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A golden path built for an idealized use case that doesn't match what most teams actually need, so adoption stays low and everyone keeps building their own version, defeating the purpose of standardizing in the first place.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Team funding and organizational placement</h3>
+      <p>Platform teams funded as pure overhead get cut first when budget tightens, regardless of the value they're actually delivering.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Frame and track platform investment against a measurable outcome, deployment frequency, lead time, incident rate, so its value is visible in the same terms leadership already uses to evaluate engineering effectiveness, not treated as a cost center whose contribution is assumed rather than shown.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A platform team that can't articulate its impact in outcomes anyone outside engineering tracks, which makes it the easiest line item to cut in a downturn, even when its removal would slow every other engineering team down.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Developer experience as a deliberate metric</h3>
+      <p>What a platform team optimizes for shapes what it actually builds; measuring the experience, not just uptime, keeps the incentives pointed at the right outcome.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Regular, structured feedback from the engineers actually using the platform, time-to-first-deploy for a new service, satisfaction survey results, support ticket volume and resolution time, treated as seriously as uptime and reliability metrics. A platform can be technically reliable and still be actively disliked by the people forced to use it, and that dissatisfaction shows up eventually as workarounds and shadow infrastructure.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>The overbuilt platform trap</h3>
+      <p>Platform teams, left to their own judgment about priorities, tend toward building for imagined future scale rather than the problems product teams have today.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>Prioritization driven by direct input from the teams the platform serves, with roadmap decisions traceable to a specific request or a specific measured friction point, the same product discipline applied to any customer-facing roadmap.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What backfires</span>
+        <p>An elaborate multi-cluster, multi-region abstraction layer built for a scale the company is nowhere near, while product teams struggle with a basic deployment step nobody prioritized fixing because it wasn't as technically interesting to build.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the platform isn't earning its adoption</h3>
+      <p>Patterns that show up when a platform team exists but isn't actually delivering the leverage it's meant to.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Product teams maintain workarounds or shadow infrastructure instead of using the platform's supported path</li>
+          <li>Common provisioning tasks require a ticket and a multi-day wait rather than self-service</li>
+          <li>The platform roadmap isn't traceable to specific requests or friction reported by the teams it serves</li>
+          <li>Platform investment can't be tied to any measurable engineering outcome when leadership asks what it's delivering</li>
+          <li>Developer satisfaction with the platform has never actually been measured, only assumed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Platform team scope and investment level should scale with engineering org size; a ten-person engineering team rarely needs a dedicated platform function.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

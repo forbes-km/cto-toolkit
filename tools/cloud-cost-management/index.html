@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Cost Management</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Cloud Cost Management</h1>
+  <p>Managing general infrastructure spend as a standing discipline, not a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.</p>
+  <div class="caveat">This covers general cloud infrastructure cost, compute, storage, networking, data services. For token-based pricing, PTU and reserved capacity, and GPU amortization on AI workloads, see the <a href="../ai-finops-map/index.html">AI FinOps Map</a>.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Where cost actually hides</h3>
+      <p>The categories that consistently account for the largest share of avoidable spend, in roughly the order worth checking first.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Category</th><th>What to look for</th></tr>
+          <tr><td>Idle and oversized compute</td><td>Instances provisioned for a peak load that rarely occurs, running at 10-15 percent utilization around the clock</td></tr>
+          <tr><td>Non-production environments</td><td>Dev, staging, and QA environments running 24/7 when they're only used during business hours</td></tr>
+          <tr><td>Orphaned resources</td><td>Volumes, snapshots, and load balancers left behind after the workload that used them was decommissioned</td></tr>
+          <tr><td>Untagged spend</td><td>Cost with no owning team attached, which nobody feels accountable for reducing because nobody's dashboard shows it</td></tr>
+          <tr><td>Storage tiering</td><td>Data sitting in a hot storage tier years after it stopped being accessed regularly</td></tr>
+          <tr><td>Data egress</td><td>Cross-region or cross-cloud transfer that could be avoided with different architecture, often invisible until the bill arrives</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Rightsizing and idle elimination</h3>
+      <p>The fastest money on the table, and the easiest to let slide once the first sweep is done.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Automated shutdown for non-production environments outside business hours, utilization-based rightsizing recommendations reviewed monthly, and a default assumption that any resource untouched for 90 days gets flagged for a decommission decision rather than left alone indefinitely.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Treating this as a one-time cleanup sprint instead of an ongoing practice. Six months after the sweep, utilization has drifted again and nobody's watching, because the tooling that found the savings the first time was never left running.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Reserved capacity and commitment strategy</h3>
+      <p>Committing to reserved instances or savings plans locks in a discount and locks in a bet about future usage. Both halves matter.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Commit only on the stable baseline, the usage level that's been consistent for at least six months, and use on-demand or short-term commitments for anything still growing or shrinking. Ladder commitment terms so not everything renews at once, which avoids a cliff where the whole discount structure needs renegotiating simultaneously.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Overcommitting based on a growth projection that doesn't materialize, then paying for reserved capacity that sits unused, which is a worse outcome than paying on-demand rates for the same idle resource would have been.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Tagging, showback, and chargeback</h3>
+      <p>Cost visibility changes behavior. Cost invisibility guarantees nobody optimizes anything they can't see themselves accountable for.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A mandatory tagging policy enforced at resource creation, not applied retroactively by a cleanup script, with showback reporting that puts each team's actual spend in front of that team monthly. Chargeback, where teams' budgets are actually debited, is a stronger lever but works only once tagging discipline is already solid.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Rolling out chargeback before tagging is reliable, which produces disputed, inaccurate bills that teams learn to ignore rather than a credible signal they act on. Trust in the numbers has to come before the numbers carry financial weight.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Governance without becoming a bottleneck</h3>
+      <p>The tension every cost program eventually hits: enough control to prevent waste, not so much that provisioning something new takes a week of approvals.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Guardrails over gatekeeping: budget alerts that trigger automatically, instance-size policies enforced by infrastructure-as-code rather than a manual review, and approval requirements reserved for genuinely large or unusual spend rather than every new resource. Most cost control should be invisible to an engineer working within normal bounds.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A approval queue that becomes the default path for routine provisioning, which teaches engineers to over-request once to avoid asking twice, producing the exact oversizing the governance process was meant to prevent.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs cost governance isn't actually working</h3>
+      <p>Not exhaustive, but the patterns that show up consistently when a cost program looks good on paper and isn't changing behavior.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>The last optimization effort was a one-time project, not a recurring practice with an owner</li>
+          <li>Untagged or misattributed spend is a growing percentage of the bill rather than shrinking</li>
+          <li>Reserved capacity utilization is below 80 percent, meaning committed spend is going unused</li>
+          <li>Non-production environments run around the clock with no automated schedule</li>
+          <li>No one outside the finance or platform team can say what their own team's monthly cloud spend actually is</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Cloud pricing models, discount structures, and vendor tooling change frequently; verify current mechanics against your provider's documentation before committing budget.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
