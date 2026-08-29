@@ -200,6 +200,10 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
+        <div style="display:flex; align-items:center; gap:14px; background:var(--accent-soft); border:1px solid var(--line); border-radius:8px; padding:12px 16px; margin-bottom:18px; font-size:12.5px;">
+          <span style="font-family:var(--mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); white-space:nowrap;">Score key</span>
+          <span style="color:var(--ink);"><strong>Every slider below works the same way, no exceptions:</strong> 1 is always low (low value, or low health, or lots of debt / a highly complex, brittle integration), 5 is always high (high value, or high health, or minimal debt / a clean, well-abstracted integration).</span>
+        </div>
         <div class="axis-label">Business value</div>
         <div id="apm-bv-dims"></div>
         <div class="axis-label">Technical health</div>
@@ -229,9 +233,9 @@
   const APM_TH = [
     { id: 'currency', label: 'Technology currency' },
     { id: 'arch', label: 'Architecture quality' },
-    { id: 'integ', label: 'Integration complexity (inverse)' },
+    { id: 'integ', label: 'Integration complexity', hint: '1 = low health: tightly coupled, brittle to change &middot; 5 = high health: clean, well-abstracted' },
     { id: 'dataFit', label: 'Data architecture fit' },
-    { id: 'debt', label: 'Technical debt (inverse)' }
+    { id: 'debt', label: 'Technical debt', hint: '1 = low health: severe, unmanaged debt &middot; 5 = high health: minimal, well-controlled debt' }
   ];
 
   function buildSliders(containerId, dims) {
@@ -247,6 +251,12 @@
       const slider = row.querySelector('input');
       const valEl = row.querySelector('.dim-val');
       slider.addEventListener('input', () => { valEl.textContent = slider.value; });
+      if (dim.hint) {
+        const hintRow = document.createElement('div');
+        hintRow.style.cssText = 'grid-column: 1 / -1; font-size: 11.5px; color: var(--ink-soft); font-style: italic; padding: 0 0 8px;';
+        hintRow.innerHTML = dim.hint;
+        el.appendChild(hintRow);
+      }
     });
   }
   buildSliders('apm-bv-dims', APM_BV);
