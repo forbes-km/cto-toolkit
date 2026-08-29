@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Governance Map</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>AI Governance Map</h1>
+  <p>Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what actually breaks without them and which regulatory frameworks require them.</p>
+  <div class="caveat">This is the technical and organizational governance layer. Legal review of applicable regulation for your specific jurisdiction and use case is not a substitute this page provides; treat the regulatory mapping table as a starting point for that conversation, not the conversation itself.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Layer 1 &middot; data foundation</span>
+      <h3>Data foundation</h3>
+      <p>Before anything else, know what the model uses. If you cannot answer where a piece of training or retrieval data came from, nothing above this layer holds up.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>Source registry covering every system feeding the AI pipeline</li><li>Data dictionary defining what each field means and where it originated</li><li>Lineage and provenance tracking from source document to retrieved chunk</li><li>Clear data ownership assigned per source system, not left implicit</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>NIST AI RMF's Map function starts here: you cannot assess risk in a system whose inputs you cannot trace. Without this layer, an incident investigation cannot answer &quot;where did this bad output actually come from,&quot; which is the first question any regulator or auditor asks.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Layer 2 &middot; governance layer</span>
+      <h3>Governance layer</h3>
+      <p>Once the data foundation is solid, decide who decides what. Definition locks, retrieval boundaries, input validation, and a named data steward give the system clear lines of accountability.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>Definition locks: agreed, versioned definitions for terms the system reasons about, not left to drift between teams</li><li>Retrieval boundaries: which sources an agent or index is allowed to draw from for a given use case</li><li>Input validation on both user prompts and any document entering the ingestion pipeline</li><li>A named data steward with actual authority to change what's retrievable</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>Without a data steward, retrieval boundaries erode silently as new sources get connected for convenience, and the system starts answering from data nobody approved for that use case. This is the layer that turns &quot;we have a RAG pipeline&quot; into &quot;we have a RAG pipeline someone is accountable for.&quot;</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Layer 3 &middot; trusted outputs</span>
+      <h3>Trusted outputs</h3>
+      <p>With governance in place, you can start defending your answers. Confidence thresholds, output guardrails, and bias checks turn &quot;the AI said so&quot; into something you can stand behind to a customer, auditor, or regulator.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>Confidence thresholds tied to the human-in-the-loop tiering model (see the Architecture Map)</li><li>Output guardrails: schema validation, citation requirements, forbidden-content checks before a response ships</li><li>Bias and fairness checks on outputs for any use case touching people (hiring, credit, care recommendations)</li><li>Explainability sufficient to answer &quot;why did it say that&quot; after the fact, not just at design time</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>A confidence score without a documented threshold policy is not a control, it's a number nobody acts on consistently. This layer is what regulators and auditors actually ask to see evidence of; it needs to produce artifacts (logs, rubric scores), not just exist as a design intention.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Layer 4 &middot; responsible AI</span>
+      <h3>Responsible AI &amp; high-risk oversight</h3>
+      <p>The outer layer: autonomous agents, high-risk decisions, and regulated use cases. This only works because everything underneath it is already solid.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>Formal classification of which use cases count as high-risk under applicable frameworks</li><li>Documented incident response plan specific to AI failures, not a generic IT incident process</li><li>Human oversight for high-risk decisions, implemented as the Tier 2 gate described on the Architecture Map, not a policy statement with no technical enforcement</li><li>Hallucination and groundedness checks running continuously, not only at initial launch</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>The EU AI Act's Article 14 requires human oversight for high-risk AI systems, with enforcement active as of 2026. Credit scoring, employment screening, and medical decisioning are named high-risk categories; if any part of the system touches those, this layer is a compliance requirement, not best practice.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Cross-cutting</span>
+      <h3>Model risk management</h3>
+      <p>Treating the model itself, not just its outputs, as something with a lifecycle that needs governing.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <p>A model inventory listing every deployed model, its version, what it's used for, and who owns the decision to keep using it. Pre-deployment evaluation against a defined rubric before a new model version replaces an old one. Ongoing drift monitoring in production, tied to the observability stage on the Architecture Map, not a one-time evaluation at launch.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>The single most common gap: a team can name the model they deployed in January but not confirm what's actually running in production today after three silent provider-side updates. If you cannot answer &quot;which exact model version produced this output,&quot; you cannot investigate an incident or defend a decision.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Regulatory framework mapping</h3>
+      <p>Which control layer above actually satisfies which framework's requirement. Not legal advice; confirm applicability with counsel for your specific use case and jurisdiction.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Framework</th><th>What it requires</th><th>Which layer covers it</th></tr>
+          <tr><td>HIPAA</td><td>Minimum necessary access, immutable audit trail for PHI access</td><td>Layer 2 (retrieval boundaries) plus the PHI/PII stage on the Architecture Map</td></tr>
+          <tr><td>EU AI Act, Article 14</td><td>Human oversight for high-risk AI systems</td><td>Layer 4, enforced technically via the HITL tiering model</td></tr>
+          <tr><td>NIST AI RMF</td><td>Govern, Map, Measure, Manage functions across the AI lifecycle</td><td>All four layers plus model risk management, roughly one NIST function per layer</td></tr>
+          <tr><td>SOC 2 (if applicable to the AI system)</td><td>Access controls, change management, monitoring evidence</td><td>Layer 2 for access, model risk management for change control, Layer 3 for monitoring evidence</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Accountability</span>
+      <h3>Accountability &amp; audit trail</h3>
+      <p>Who actually signs off on an AI system going live, and what gets logged so that decision can be reconstructed later.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <p>A named accountable owner per AI use case, not a committee with no single decision-maker. Decision logging: every promotion of a new model or index version recorded with who approved it and what evaluation evidence supported the approval.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>Diffuse accountability is the actual root cause behind most AI governance failures that make headlines. It's rarely that no one thought about the risk; it's that no single person owned the decision to accept it.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Incident response</span>
+      <h3>AI-specific incident response</h3>
+      <p>Different from a general IT incident: a hallucinated answer causing harm, a bias incident, or a model behaving unexpectedly needs its own triage path.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <p>A defined severity classification specific to AI failures (harmful hallucination, biased output, data leakage through a response, agent taking an unauthorized action). A rollback path that can revert to a prior model or index version quickly, which depends directly on the versioning discipline described in model risk management above.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>A general incident response process (see the Incident Response tool) usually isn't built to ask &quot;was this the model's fault, the retrieval's fault, or the underlying data's fault,&quot; and that triage question determines the fix. Build this as an extension of the general process, not a replacement for it.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Regulatory requirements and enforcement postures change; verify current obligations against primary sources and counsel before relying on this for a compliance decision.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build vs Buy</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Build vs Buy</h1>
+  <p>The criteria that actually decide a build-versus-buy debate, the differentiation test people misapply most often, and the maintenance cost that rarely makes it into the initial proposal.</p>
+  <div class="caveat">A decision framework, not a calculator. The numbers you plug into the criteria above (real maintenance cost, real vendor pricing, real differentiation) are specific to your business and need honest internal debate, not a template answer.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The criteria that actually decide it</h3>
+      <p>Most build-versus-buy debates get stuck arguing cost in isolation. Cost matters, but it's rarely the deciding factor once these are answered honestly.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Question</th><th>Leans build</th><th>Leans buy</th></tr>
+          <tr><td>Is this a differentiator?</td><td>Yes, this is part of what customers actually pay for versus competitors</td><td>No, it's necessary but not something customers choose you for</td></tr>
+          <tr><td>Does a mature vendor solution exist?</td><td>No, or existing options are a poor fit for the actual requirement</td><td>Yes, and it's been production-hardened by many other customers already</td></tr>
+          <tr><td>Time to value</td><td>You have runway to spend months getting it right</td><td>You need it working in weeks, not quarters</td></tr>
+          <tr><td>Ongoing maintenance capacity</td><td>You have, or are willing to build, a team that will own this indefinitely</td><td>You don't want a permanent internal team dedicated to this domain</td></tr>
+          <tr><td>Vendor lock-in risk if you buy</td><td>Switching cost would be unacceptably high later</td><td>Data portability and exit path are reasonable if the vendor relationship sours</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>The differentiation test, asked honestly</h3>
+      <p>The single most misapplied criterion, usually stretched to justify a decision already made for other reasons.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Genuine differentiation</span>
+        <p>A capability customers explicitly cite as why they chose you over an alternative, or one that materially changes your unit economics versus using a vendor. If you removed it, you'd lose deals or margin specifically because of its absence.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Not actually differentiation</span>
+        <p>&quot;We want more control&quot; or &quot;the vendor's roadmap doesn't match ours exactly&quot; are real preferences, but they aren't differentiation, and building an entire internal system to solve a preference is usually a worse trade than living with 90 percent fit from a vendor.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The maintenance question people skip</h3>
+      <p>Build decisions are evaluated on initial build cost far more often than on the ongoing cost of owning it for the next five years.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What gets counted</span>
+        <p>Initial development time, initial infrastructure cost, time to first working version, the numbers that show up in a project proposal and are easy to estimate.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What gets missed</span>
+        <p>Security patching indefinitely, keeping pace with a changing regulatory or integration landscape, the bus-factor risk when the one engineer who deeply understands it leaves, and the opportunity cost of the team's attention being split across build-and-maintain instead of focused on the actual differentiator.</p>
+      </div>
+    </div>
+    <div class="same-note">A rough rule of thumb worth stress-testing against your own data: total five-year cost of ownership for a build is commonly two to four times the initial build estimate once maintenance, incident response, and opportunity cost are included honestly.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The middle option nobody names: partner or extend</h3>
+      <p>Build-versus-buy is usually presented as binary. A frequently better third option gets skipped.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What it looks like</span>
+        <p>Buying a vendor platform for the undifferentiated 80 percent and building a thin, genuinely differentiated layer on top of it via the vendor's API or extension points, rather than building the whole stack from scratch or accepting 100 percent of the vendor's opinion.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">When to reach for it</span>
+        <p>When the differentiation is narrow and specific (a particular workflow, a particular integration, a particular scoring model) rather than the whole domain. This is very often the actual right answer and gets dismissed early because the binary framing never surfaced it as an option.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Apply the criteria against your own real cost and capability data, not the illustrative numbers on this page.
+</footer>
+
+</body>
+</html>

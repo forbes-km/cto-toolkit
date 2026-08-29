@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI FinOps Map</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>AI FinOps Map</h1>
+  <p>Cost modeling across the same Azure-managed and self-hosted split as the Architecture Map, since the cost shape of a system follows directly from how it's built.</p>
+  <div class="caveat">Cost modeling here is directional, not a substitute for building your own model with your actual volume, region, and negotiated pricing. Vendor pricing changes frequently; verify current rates before using specific numbers in a budget decision.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Pricing model: tokens vs amortized hardware</h3>
+      <p>The fundamental cost shape differs before any workload-specific decisions get made.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>Pay-as-you-go is billed per token, input and output priced separately, output typically several times more expensive than input. Cost scales directly and immediately with usage, visible per-call, but unpredictable at the account level until volume stabilizes.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>Cost is amortized GPU time (purchase or lease depreciation, power, cooling, ops staff), largely fixed regardless of query volume until you hit a capacity ceiling and need to add hardware. Marginal cost per additional query approaches zero until that ceiling, then jumps in a large step when you provision another node.</p>
+      </div>
+    </div>
+    <div class="same-note">The break-even point is a real number, not a vibe. Calculate it: (fixed self-hosted cost per month) divided by (per-token Azure cost) gives the query volume where self-hosting starts winning. Below that volume, pay-as-you-go almost always wins on total cost.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Reserved capacity vs GPU procurement</h3>
+      <p>Committing ahead of time to guarantee throughput and control cost variance.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>Provisioned Throughput Units (PTU) reserve dedicated capacity at a flat monthly rate, converting variable token cost into a predictable fixed cost, but only pays off above a specific utilization threshold; idle PTU capacity is money spent on nothing.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>Owning or leasing GPUs is the hardware equivalent of a PTU reservation: a large fixed commitment that only pays off at sustained utilization. Renting from a GPU cloud (on-demand) is the hardware equivalent of pay-as-you-go, more expensive per hour but no idle-capacity risk.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Chargeback &amp; unit economics</h3>
+      <p>Making AI spend attributable to the team or product that generated it, not a single opaque line item.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>Cost Management's tagging and scope hierarchy lets you attribute Foundry deployment spend to a subscription, resource group, or tag, feeding a per-team or per-product chargeback model the same way any other Azure resource would.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>No managed billing hierarchy to lean on; attribution requires your own request-tagging at the application layer (which team or product initiated the call) correlated against GPU-hour cost allocated proportionally to usage. This is meaningfully more engineering work to build.</p>
+      </div>
+    </div>
+    <div class="same-note">The metric that actually matters in both environments is cost per unit of business value, cost per resolved support ticket, cost per underwriting decision, not cost per token or cost per GPU-hour. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Cost observability &amp; budget alerting</h3>
+      <p>Catching a cost anomaly (a runaway agent loop, a misconfigured retry, a prompt that ballooned in size) before the monthly bill does.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>Azure Cost Management budgets with action-group-triggered alerts at defined thresholds; Azure Monitor can alert on token consumption rate directly if instrumented, catching an anomaly within the billing period rather than after it closes.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>No native billing-anomaly alerting since there's no per-token bill to watch. The equivalent signal is GPU utilization and request-rate anomalies via Prometheus alerting, an unusual spike in request volume or output length is the leading indicator you actually have.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Model selection as a cost lever</h3>
+      <p>The single highest-leverage FinOps decision, made once per use case, before any of the above matters.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>Foundry's model catalog spans a wide price-performance range; routing simple classification or extraction tasks to a smaller, cheaper model and reserving the frontier model for genuinely complex reasoning is often a larger cost lever than any PTU or reservation optimization.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>Same principle, and arguably higher stakes: a smaller open-weight model (7B to 14B class) served efficiently can handle a large share of production traffic at a fraction of the GPU footprint a frontier-class open-weight model requires, if the task doesn't actually need frontier reasoning.</p>
+      </div>
+    </div>
+    <div class="same-note">This is the FinOps decision most teams skip because it requires an evaluation harness to prove the cheaper model is good enough, and building that harness feels like overhead. It almost always pays for itself faster than infrastructure optimization does.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Waste: idle reservations and orphaned capacity</h3>
+      <p>The unglamorous but highest-frequency cost leak in both environments.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>PTU reservations sized for peak load sitting idle most of the day; forgotten dev/test Foundry deployments left running after the project using them ended. Both invisible unless someone is specifically auditing deployed resources against actual active use cases.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>GPU nodes provisioned for a launch that never reached expected volume, or a dev cluster left running after the project wound down. Same failure mode, higher absolute cost per incident since GPU hardware commitments are larger and stickier than a cloud service you can just delete.</p>
+      </div>
+    </div>
+    <div class="same-note">Run a quarterly audit matching every deployed model endpoint or reserved GPU allocation against an active, named use case. Anything without one gets decommissioned, not just flagged.</div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Pricing, reservation models, and hardware costs change quickly; verify current numbers against primary sources before relying on this for a budget or investment decision.
+</footer>
+
+</body>
+</html>

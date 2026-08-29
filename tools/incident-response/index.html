@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incident Response</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Incident Response</h1>
+  <p>A blameless, repeatable incident process: detection through postmortem follow-through, with the specific failure modes that turn a manageable incident into a chaotic one.</p>
+  <div class="caveat">General incident response practice, not incident response for AI-specific failures. See the AI Governance Map for the AI-specific incident triage extension, which builds on this process rather than replacing it.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Severity classification</h3>
+      <p>Defined ahead of time, not decided in the moment of an actual incident when judgment is already under pressure.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Severity</th><th>Definition</th><th>Response</th></tr>
+          <tr><td>SEV1</td><td>Full outage or data breach affecting all or most customers</td><td>Immediate all-hands, incident commander assigned within minutes, executive notification immediate</td></tr>
+          <tr><td>SEV2</td><td>Significant degradation or a subset of customers fully affected</td><td>Incident commander assigned, core responders paged, executive notification within the hour</td></tr>
+          <tr><td>SEV3</td><td>Minor degradation, workaround available, limited customer impact</td><td>Owning team handles it, tracked but no incident command structure invoked</td></tr>
+          <tr><td>SEV4</td><td>No customer impact, internal-only issue caught before it mattered</td><td>Logged, addressed in normal workflow, no incident process needed</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Detection &amp; triage</h3>
+      <p>The first few minutes determine whether the rest of the response is calm or chaotic.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A single, unambiguous entry point for declaring an incident, one command or one button, not a debate about which Slack channel to post in while the outage continues. Whoever notices first declares; severity gets assigned or corrected within minutes, not negotiated at length before response starts.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Multiple people independently investigating the same issue in different channels, duplicating effort and fragmenting the picture of what's actually happening, because there was no single place established ahead of time to converge on.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Incident command</h3>
+      <p>One person owns the incident's coordination. They are explicitly not the person fixing it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>The incident commander's job is coordination and communication, not debugging. They track the timeline, decide when to escalate, and are the single point deciding when the incident is resolved. This role rotates and is trained in advance, not improvised by whoever happens to be senior and available.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>The most senior engineer in the room becomes both incident commander and lead debugger simultaneously. Both jobs suffer: the fix takes longer because they're context-switching to answer status questions, and communication suffers because they're heads-down in logs.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Communication cadence</h3>
+      <p>What gets said, to whom, and how often, especially while the cause is still unknown.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A fixed cadence (every 15 to 30 minutes for a SEV1) with an update even when the update is &quot;still investigating, no new information.&quot; Silence is worse than an uninformative update, since stakeholders fill silence with worse assumptions than reality usually warrants.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Going quiet while &quot;actually working the problem,&quot; which is defensible engineering instinct and terrible stakeholder management. The absence of updates reads as either incompetence or a bigger problem than what's actually happening.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Resolution &amp; recovery</h3>
+      <p>Declaring an incident over is a decision, not a moment that happens automatically when the graphs look normal again.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Resolution requires the incident commander's explicit call, based on a defined bar (metrics back to baseline for a sustained period, not just a momentary dip back to normal), and a documented rollback or mitigation, not just &quot;it seems to have stopped.&quot;</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Calling it resolved the moment the immediate symptom disappears, then having it recur an hour later because the underlying cause was never actually addressed, only its most visible symptom.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Blameless postmortem</h3>
+      <p>The written record that turns an incident into an organizational asset instead of just a bad memory.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>A timeline of what happened, what was known at each decision point (not what's known now in hindsight), contributing factors framed as systemic rather than individual, and concrete action items with owners and due dates. &quot;Blameless&quot; means analyzing the system that allowed the error, not avoiding naming what happened.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A postmortem that either assigns individual blame (which teaches people to hide problems rather than surface them next time) or is so carefully blame-free it avoids naming any specific decision point, producing generic action items nobody's accountable for actually finishing.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Follow-through</h3>
+      <p>The step most postmortem processes skip, which is why the same class of incident recurs.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Action items from postmortems tracked in the same system as normal engineering work, with a review cadence (monthly is common) checking which ones actually shipped versus which quietly died in a backlog. An incident review process without a follow-through audit is theater.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Action items live only in the postmortem document itself, never entered into the team's actual work tracking system, and six months later nobody remembers they existed when the same failure mode recurs.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Adapt severity definitions and cadence to your organization's actual scale and customer commitments before treating this as a runbook.
+</footer>
+
+</body>
+</html>

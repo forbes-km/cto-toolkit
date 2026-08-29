@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Evaluation</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Vendor Evaluation</h1>
+  <p>A weighted scoring framework across functional fit, security posture, financial stability, integration complexity, support, and exit cost, plus the reference-call question that actually surfaces problems.</p>
+  <div class="caveat">A scoring framework, not a specific vendor recommendation. Weighting of each category should shift based on how critical and how difficult to reverse the specific decision is.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Weighted scoring criteria</h3>
+      <p>The categories that belong in every vendor evaluation, regardless of what's being bought, with the weighting varying by how critical and how sticky the vendor relationship will be.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Category</th><th>What to actually check</th><th>Common mistake</th></tr>
+          <tr><td>Functional fit</td><td>Score against your actual top ten requirements, not the vendor's feature list</td><td>Scoring against the demo instead of a trial with your own real data</td></tr>
+          <tr><td>Security &amp; compliance posture</td><td>Current SOC 2 or ISO certification, not an expired one; actual pen test summary if available</td><td>Accepting a security questionnaire response at face value with no artifact requested</td></tr>
+          <tr><td>Financial stability</td><td>Funding stage or profitability, customer concentration risk, runway if it's an early-stage vendor</td><td>Skipping this for anything that isn't a large, obviously stable vendor</td></tr>
+          <tr><td>Integration complexity</td><td>Actual API quality and documentation, tested against a real integration spike, not a sales engineer's assurance</td><td>Estimating integration effort from a slide deck instead of a technical spike</td></tr>
+          <tr><td>Support &amp; SLA</td><td>Actual historical response time from reference customers, not the SLA document's stated target</td><td>Trusting the SLA document without checking whether it's ever actually enforced against the vendor</td></tr>
+          <tr><td>Exit &amp; data portability</td><td>Can you actually export your data in a usable format, and what does contract termination actually require</td><td>Not asking this question until the relationship is already ending</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Reference calls that actually surface something</h3>
+      <p>The single highest-value, most consistently skipped step in vendor evaluation.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>Asking the vendor for a reference in a similar situation to yours (similar scale, similar use case), then asking that reference one specific question: &quot;what would you do differently if you were choosing again today.&quot; That question surfaces real friction far more reliably than &quot;are you happy with them.&quot;</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What backfires</span>
+        <p>Accepting only the references the vendor's sales team hand-picked, and asking only satisfaction questions that have an obvious socially expected positive answer. This step becomes a formality that confirms nothing.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The lock-in question, asked before signing</h3>
+      <p>Exit cost is far easier to evaluate honestly before a contract exists than after switching costs have already accumulated.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Questions to answer now</span>
+        <p>What format can data actually be exported in, is there a contractual data portability clause, what's the actual notice period and any early termination penalty, and how much custom integration work exists that would need to be rebuilt for a different vendor.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The cost of skipping this</span>
+        <p>Discovering the actual exit cost during a renewal negotiation, at exactly the moment the vendor has the least incentive to make leaving easy and the most leverage to raise price, since they know switching now looks expensive.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Weight each category to the specific decision's criticality and reversibility rather than applying a fixed formula.
+</footer>
+
+</body>
+</html>
