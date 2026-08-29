@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We're Cutting Costs</title>
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 900px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 32px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 32px; color: var(--ink-soft); font-size: 15px; max-width: 640px; line-height: 1.55; }
+  main { max-width: 900px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-cell { padding: 8px 20px 16px; }
+  .situation-list { list-style: none; margin: 0; padding: 0; counter-reset: sit; }
+  .situation-list li { counter-increment: sit; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .situation-list li:last-child { border-bottom: none; }
+  .situation-list li::before { content: counter(sit); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .situation-list a { color: var(--ink); font-weight: 600; text-decoration: none; font-size: 13.5px; }
+  .situation-list a:hover { color: var(--accent); }
+  .situation-list span { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 2px; }
+  footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>We're Cutting Costs</h1>
+  <p>Sequenced from fastest, least painful savings to the harder structural decisions. Every link below points to a full page elsewhere on this site.</p>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reading order</span>
+      <h3>Where to start</h3>
+      <p>Capture the cheap, low-value-loss savings first; use the harder pages once those are exhausted.</p>
+    </div>
+    <div class="stage-cell">
+      <ol class="situation-list">
+        <li><div><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a><span>The pre-ranked cut list you should have built before this moment arrived.</span></div></li>
+        <li><div><a href="../cloud-cost-management/index.html">Cloud Cost Management</a><span>The fastest real money, usually available in weeks, not quarters.</span></div></li>
+        <li><div><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a><span>Find the Eliminate-quadrant applications still quietly costing you.</span></div></li>
+        <li><div><a href="../vendor-evaluation/index.html">Vendor Evaluation</a><span>Renegotiate or exit contracts where real lock-in has been costing more than it should.</span></div></li>
+        <li><div><a href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a><span>Bad cuts versus better cuts, and what not to touch regardless of pressure.</span></div></li>
+        <li><div><a href="../platform-engineering/index.html">Platform Engineering</a><span>Don't cut the thing that makes every other team more efficient.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</main>
+
+<footer>
+  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html" style="color:var(--accent);">CTO Toolkit</a> home page.
+</footer>
+
+</body>
+</html>
