@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zero-Trust Maturity Preview</title>
+<title>Stakeholder Engagement</title>
 <style>
   :root {
     --paper: #F6F5F1;
@@ -67,63 +67,78 @@
 
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
-  <h1>Zero-Trust Maturity Preview</h1>
-  <p>A preview of the six-dimension Security &amp; Zero-Trust Maturity Model, scored on evidence rather than stated policy: identity and access, segmentation and blast radius, detection and response, vulnerability management, third-party risk, and governance and culture.</p>
-  <div class="caveat">This page covers the framework and scoring discipline. The full facilitated workbook, scored against a defined zero-trust target architecture, is available through direct engagement.</div>
+  <h1>Stakeholder Engagement</h1>
+  <p>Influence-interest mapping and the engagement plan built on top of it: the placement mistake that breaks most plans before they start, and how to handle the quadrant that gets mismanaged most often.</p>
+  <div class="caveat">A preview of the stakeholder half of the Stakeholder &amp; Vendor methodology. The full mapping tool and structured engagement plan template are available through direct engagement.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h3>Six dimensions, scored independently</h3>
-      <p>Most organizations are unevenly mature across these six; that unevenness is itself the most useful output of the assessment, not a flaw in it.</p>
+      <h3>Influence-interest mapping</h3>
+      <p>The foundation the engagement plan gets built on. Placing a stakeholder wrong on this grid is the most common reason an engagement plan fails before it starts.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Dimension</th><th>Level 1: Ad hoc</th><th>Level 3: Defined</th><th>Level 5: Optimized</th></tr>
-          <tr><td>Identity &amp; access</td><td>Standing broad access, no consistent least-privilege policy across systems</td><td>Documented access policy applied through a defined onboarding/offboarding process</td><td>Just-in-time, continuously verified access with no standing privilege by default</td></tr>
-          <tr><td>Segmentation &amp; blast radius</td><td>Flat network, one compromised credential reaches most of the environment</td><td>Defined network segments with controlled points between them</td><td>Micro-segmented to the workload level; a single compromise is contained by design, not by luck</td></tr>
-          <tr><td>Detection &amp; response</td><td>Reliant on external reports to learn about a problem</td><td>Centralized logging and defined alerting on known threat patterns</td><td>Behavioral anomaly detection catching novel patterns, with a tested response plan behind it</td></tr>
-          <tr><td>Vulnerability management</td><td>Scanning inconsistent, patching reactive and undocumented</td><td>Regular scanning cadence, patching SLA defined and mostly met</td><td>Continuous scanning integrated into deployment, patching SLA consistently met with evidence</td></tr>
-          <tr><td>Third-party risk</td><td>Vendor access granted with no ongoing review</td><td>Vendor risk assessed at onboarding, reviewed periodically</td><td>Continuous vendor risk monitoring, access scoped and reviewed on the same cadence as internal identity</td></tr>
-          <tr><td>Governance &amp; culture</td><td>Security treated as a separate team's job, not embedded in delivery</td><td>Defined security requirements built into the delivery process</td><td>Security ownership distributed to delivery teams, with a lightweight central function, not a gate</td></tr>
+          <tr><th>Quadrant</th><th>Definition</th><th>Engagement approach</th></tr>
+          <tr><td>High influence, high interest</td><td>Can materially help or block the initiative and is already paying attention to it</td><td>Manage closely; regular direct engagement, involve in key decisions before they're finalized</td></tr>
+          <tr><td>High influence, low interest</td><td>Can materially affect the outcome but isn't currently engaged with the details</td><td>Keep satisfied; concise, infrequent updates focused on what matters to them specifically, not a full status report</td></tr>
+          <tr><td>Low influence, high interest</td><td>Cares a great deal but has limited power to change the outcome</td><td>Keep informed; regular updates, genuine channel for input, without over-indexing decisions on their preferences</td></tr>
+          <tr><td>Low influence, low interest</td><td>Neither able nor inclined to affect the outcome</td><td>Monitor; minimal effort, don't manufacture engagement they haven't asked for</td></tr>
         </table>
       </div>
     </div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">How to use this</span>
-      <h3>Scoring honestly, and what to do with the result</h3>
-      <p>The assessment only has value if the scoring is honest, which is harder than it sounds when the person scoring it is also accountable for the result.</p>
+      <span class="stage-num">1</span>
+      <h3>The placement mistake that breaks the plan</h3>
+      <p>Where influence-interest mapping most often goes wrong, before the engagement plan itself is even built.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">How to score it</span>
-        <p>Score against evidence, not intention. &quot;We have a policy&quot; is not Level 3 if the policy isn't followed; it's evidence of intent, not practice. Ask for the artifact (the actual access review log, the actual segmentation diagram, the actual vendor review record) before accepting a self-reported level.</p>
+        <span class="env-label a">The mistake</span>
+        <p>Placing someone by their org chart position instead of their actual influence over this specific initiative. A senior title doesn't guarantee real influence over a given decision, and a mid-level person who controls a critical dependency can have more practical influence than their title suggests.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">What to do with a low score</span>
-        <p>A Level 1 or 2 in any dimension is not itself an emergency; it's a prioritization input. Rank dimensions by business impact if that dimension fails, not by how uncomfortable the low score is, and fund the highest-impact gap first rather than the easiest one to fix.</p>
+        <span class="env-label b">The fix</span>
+        <p>Score influence against the specific decision at hand, not general organizational seniority: who can delay, block, or accelerate this particular initiative, and who has the budget, headcount, or technical dependency that makes them load-bearing here.</p>
       </div>
     </div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Common pitfall</span>
-      <h3>Compliance certification as a false signal of maturity</h3>
-      <p>A frequent gap between what a certification confirms and what an organization assumes it confirms.</p>
+      <span class="stage-num">2</span>
+      <h3>Building the engagement plan itself</h3>
+      <p>The map tells you where someone sits. The plan is what you do about it, and this is where most stakeholder work stops short.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">What a certification confirms</span>
-        <p>SOC 2 or ISO 27001 confirms that defined controls existed and were followed during the specific audit period the certification covers, evaluated against a scope the organization itself proposed.</p>
+        <span class="env-label a">What a real plan includes</span>
+        <p>Named owner per stakeholder (not "the team"), defined cadence matched to their quadrant, the specific message or ask for each touchpoint, and a trigger for when their quadrant placement should be re-evaluated, since influence and interest both shift as an initiative progresses.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">What it doesn't confirm</span>
-        <p>That the scope covered every system that matters, that the maturity level is sustained rather than a point-in-time snapshot assembled for the audit, or that a novel attack pattern outside the certified controls would be caught. Treat certification as a floor, not a ceiling.</p>
+        <span class="env-label b">What gets skipped</span>
+        <p>Re-evaluating placement over time. A stakeholder who started low-interest often becomes high-interest once the initiative starts visibly affecting their team, and a plan built once at kickoff and never revisited misses that shift until it becomes a problem.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Handling the high-influence, low-interest stakeholder</h3>
+      <p>The quadrant most engagement plans get wrong in practice, since the instinct is to either over-engage or ignore them entirely.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The trap</span>
+        <p>Sending this stakeholder the same detailed weekly update everyone else gets. They tune out, and then when a decision needs their sign-off, they have no context and the ask lands as a surprise, which damages trust right at the moment you need it most.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What works instead</span>
+        <p>A short, infrequent update translated into what matters to them specifically, budget impact for a finance stakeholder, risk exposure for legal, timeline impact for a dependent team, not a general status report. When you do need something from them, it lands as a continuation of an existing thread, not a cold ask.</p>
       </div>
     </div>
   </div>
@@ -131,7 +146,7 @@
 </main>
 
 <footer>
-  Reference only. This previews the framework's six dimensions and scoring discipline; the full facilitated instrument and target-state architecture live in the Enterprise Architecture methodology.
+  Reference only. Stakeholder positioning shifts as an initiative progresses; treat this as a starting map to revisit, not a one-time exercise.
 </footer>
 
 </body>
