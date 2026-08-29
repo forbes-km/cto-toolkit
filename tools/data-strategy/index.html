@@ -143,6 +143,60 @@
       </div>
     </div>
   </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Migrating between patterns without a rewrite</h3>
+      <p>Almost no organization starts on the right pattern and stays there forever. How the migration happens matters as much as which pattern is the eventual target.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>Run the new pattern alongside the old one for specific domains first, proving value on a bounded scope before cutting anything over globally. The same strangler-fig discipline covered on <a href="../modernization-execution/index.html">Legacy Modernization Execution</a> applies directly here: incremental migration, not a single rip-and-replace event.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What backfires</span>
+        <p>Announcing a full data platform migration as a single multi-quarter program with no intermediate value delivered along the way. Executive patience for a program with no visible output runs out well before a data platform migration typically finishes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Data contracts, made concrete</h3>
+      <p>&quot;Data contract&quot; gets used loosely. A contract that doesn't specify these things isn't one.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a real contract specifies</span>
+        <p>The schema, a freshness commitment (how current the data is guaranteed to be), the meaning of each field in plain language, and a deprecation policy for breaking changes, published somewhere consumers can find and reference it, not buried in a single engineer's memory.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What passes for a contract but isn't</span>
+        <p>A schema definition with no freshness commitment and no deprecation process. Consumers build against it anyway, because it's the only documentation available, and get broken silently the first time the upstream schema changes without warning.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the data strategy isn't working</h3>
+      <p>Patterns that show up when a data strategy exists on a slide but isn't shaping how data gets built and maintained.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No dataset has a named owner accountable for its quality</li>
+          <li>A migration between patterns has stalled in an expensive middle state, both old and new running indefinitely with no plan to finish</li>
+          <li>Data contracts, where they exist, specify a schema but no freshness or deprecation commitment</li>
+          <li>The same real-world entity holds conflicting values across systems with no field-level source-of-truth mapping to resolve it</li>
+          <li>AI initiatives are blocked by data quality issues that were already flagged as a data strategy risk before the AI initiative started</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
 </main>
 
