@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Portfolio Management</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>AI Portfolio Management</h1>
+  <p>Which AI initiatives should get built, scored and classified with the same discipline applied to the rest of the application estate, rather than funded by enthusiasm or the fear of being left behind.</p>
+  <div class="caveat">See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for the same underlying discipline applied to existing applications, and <a href="../ai-architecture-map/index.html">AI Architecture Map</a>, <a href="../ai-governance-map/index.html">AI Governance Map</a>, and <a href="../ai-finops-map/index.html">AI FinOps Map</a> for the technical, governance, and cost detail behind any initiative that clears this screen.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Scoring dimensions and classification</h3>
+      <p>Nine dimensions feed the score; four classifications follow from it. The point isn't precision, it's forcing the same questions to be asked of every initiative rather than letting the loudest pitch skip the screen entirely.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Dimension</th><th>What it asks</th></tr>
+          <tr><td>Business value</td><td>What outcome does this move, and how much</td></tr>
+          <tr><td>Feasibility</td><td>Can this be built with current capability and technology</td></tr>
+          <tr><td>Data readiness</td><td>Does the required data exist, at the needed quality, with clear rights to use it</td></tr>
+          <tr><td>Risk</td><td>Regulatory, reputational, and model-behavior risk if this goes wrong</td></tr>
+          <tr><td>Adoption likelihood</td><td>Will the people this is built for use it</td></tr>
+          <tr><td>Time to value</td><td>How long until the outcome in row one is realized, not just until launch</td></tr>
+          <tr><td>Operating cost</td><td>The ongoing cost to run this, not just the cost to build it</td></tr>
+          <tr><td>Differentiation</td><td>Does this create an advantage competitors can't quickly copy</td></tr>
+          <tr><td>Reversibility</td><td>How expensive is it to unwind this if it doesn't work out</td></tr>
+        </table>
+        <table class="matrix-table" style="margin-top: 4px;">
+          <tr><th>Classification</th><th>Meaning</th></tr>
+          <tr><td>Scale</td><td>Proven value and feasibility; fund it fully and remove obstacles</td></tr>
+          <tr><td>Incubate</td><td>Promising but unproven on one or more dimensions; fund a bounded pilot with a defined checkpoint</td></tr>
+          <tr><td>Watch</td><td>Not ready to fund, but conditions could change; revisit on a set schedule rather than forgetting about it</td></tr>
+          <tr><td>Kill</td><td>Fails on a gating dimension or has passed its own kill criteria; stop funding it explicitly, not quietly</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Feasibility and data readiness gate the score, they don't just contribute to it</h3>
+      <p>Averaging all nine dimensions into one number lets a high-value, technically infeasible idea pass through if it scores generously elsewhere.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The right sequence</span>
+        <p>Screen on feasibility and data readiness first. If the data doesn't exist at usable quality, or the model risk is unacceptable regardless of upside, the initiative doesn't reach a business-value conversation at all. Gating dimensions eliminate; they don't get averaged away.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What a single blended score hides</span>
+        <p>A compelling business case with a fatal data gap can still produce a respectable average score if the other eight dimensions are strong, which is exactly how organizations end up funding pilots that were never going to work, discovered only after real money and credibility were spent.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Reversibility deserves its own weight</h3>
+      <p>Not all AI bets carry the same downside if they fail, and the classification should reflect that.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why it matters</span>
+        <p>A pilot built on a vendor API is cheap to unwind. A model embedded into a core workflow customers now depend on is not. Two initiatives with identical business-value scores warrant different treatment if one is trivially reversible and the other isn't.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where this gets missed</span>
+        <p>Treating an irreversible bet with the same enthusiasm as a reversible pilot because both scored well on value, without ever separately asking what it costs to walk away if the initial results don't hold up at scale.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Kill criteria set before the bet starts</h3>
+      <p>AI initiatives are unusually prone to surviving on prestige rather than results, which makes advance kill criteria more important here than almost anywhere else in the portfolio.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Define, before funding, the specific result that would trigger a move to Watch or Kill, a metric, a threshold, a date. Write it down where it can't be quietly renegotiated once the team is emotionally invested in the outcome.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>An initiative that's been &quot;six months from proving itself&quot; for over a year, kept alive because killing an AI project carries a different kind of organizational embarrassment than killing an ordinary feature, independent of what the actual results show.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs AI portfolio governance isn't real</h3>
+      <p>Patterns that show up when AI initiatives are being funded by momentum rather than by the same discipline applied elsewhere in the technology portfolio.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No AI initiative has ever been formally moved to Kill despite some producing no measurable result</li>
+          <li>Feasibility and data readiness were never checked before funding, only the business case</li>
+          <li>The same initiative has been described as close to proving itself for well over a year</li>
+          <li>No one can name what's currently in Watch status or when it's due for reassessment</li>
+          <li>AI investment decisions bypass the standard capital allocation process applied to everything else</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Scoring weights should reflect your organization's actual risk tolerance and strategic priorities, not a fixed formula.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

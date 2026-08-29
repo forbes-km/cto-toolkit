@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Role Boundaries: CTO, CIO, CISO, CPO</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Role Boundaries: CTO, CIO, CISO, CPO</h1>
+  <p>Where these roles typically split, and why the boundaries are organizational choices rather than universal truths, ones that still need to be stated explicitly so the same decision doesn't get fought over by two people who each assumed it was theirs.</p>
+  <div class="caveat">This feeds directly into <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>, which formalizes the boundaries this page describes into an explicit decision model.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Typical scope by role</h3>
+      <p>Illustrative, not universal. Many organizations don't have all four roles distinctly, and that's often the right call at their size.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Role</th><th>Typical scope</th></tr>
+          <tr><td>CTO</td><td>Technology strategy, engineering, architecture, technology-enabled competitive advantage</td></tr>
+          <tr><td>CIO</td><td>Internal technology estate, enterprise systems, business technology, IT operations</td></tr>
+          <tr><td>CISO</td><td>Security risk, cyber controls, security governance</td></tr>
+          <tr><td>CPO</td><td>Product strategy, product outcomes</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Why these lines move by company type</h3>
+      <p>The same role name can mean genuinely different jobs depending on what the business is.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Where the split makes sense</span>
+        <p>A hardware or deep-tech company often has the CTO own product direction fully, with no separate CPO, because the product and the technology are close to the same thing. A SaaS company usually splits CTO (how it's built) from CPO (what gets built) cleanly, because those really are separable questions there.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The mistake</span>
+        <p>Importing a role-boundary model from a different kind of company without checking whether the underlying business maps onto it, which produces two people with overlapping mandates and neither fully accountable for the outcome.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The CTO / CIO split specifically</h3>
+      <p>The pairing most likely to exist on paper without a clear real-world distinction behind it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">When it's earned</span>
+        <p>At real scale, the CTO owns what makes the product differentiated and the CIO owns what makes the business run, ERP, internal tools, IT operations. The split lets each focus without the other's priorities crowding it out, and both jobs are genuinely full-time at that size.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">When it isn't</span>
+        <p>Most companies below a certain size never need both roles. Forcing the split prematurely creates two half-empowered leaders instead of one fully accountable one, and the resulting turf questions cost more than the specialization is worth at that stage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The CISO reporting line</h3>
+      <p>The single most consequential structural decision in this group, and it deserves more depth than fits here.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>See <a href="../security-program/index.html">Security Program</a> for the full argument: security reporting into a role whose other incentives directly compete with security priorities creates a structural conflict every time a security requirement would slow a release.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the boundaries aren't working</h3>
+      <p>A boundary can exist on an org chart and still not be functioning day to day.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Two of these roles both believe they own the same category of decision</li>
+          <li>The boundary was set once at founding and never revisited despite the company changing shape significantly since</li>
+          <li>The CISO reports into a role whose incentives conflict with security priorities</li>
+          <li>No one outside the four roles could explain where one's authority ends and another's begins</li>
+          <li>A new hire into one of these roles has to guess at their own scope because it's never been written down</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Role structure should reflect your organization's actual size, business model, and history, not a template borrowed from a different kind of company.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reliability as an Economic Decision</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Reliability as an Economic Decision</h1>
+  <p>How much reliability the business can afford, and how much unreliability it's implicitly willing to sell, framed as an investment decision rather than a purely engineering one.</p>
+  <div class="caveat">See <a href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a> for RTO/RPO and recovery testing, and <a href="../incident-response/index.html">Incident Response</a> for the operational process this economic frame sits above.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Availability tiers, illustrative</h3>
+      <p>Each additional nine of availability costs disproportionately more than the last one, which is exactly why the target should be chosen deliberately rather than defaulted to the highest available.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Availability</th><th>Approx. annual downtime budget</th><th>Relative cost to achieve</th></tr>
+          <tr><td>99%</td><td>About 3.65 days per year</td><td>Baseline</td></tr>
+          <tr><td>99.9%</td><td>About 8.7 hours per year</td><td>Meaningfully higher</td></tr>
+          <tr><td>99.95%</td><td>About 4.4 hours per year</td><td>Materially higher again</td></tr>
+          <tr><td>99.99%</td><td>About 53 minutes per year</td><td>Disproportionately higher; usually justified only for genuinely revenue-critical systems</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>The cost of downtime has to be a real number</h3>
+      <p>Not a slogan. A specific figure, or the investment decision that follows from it can't be evaluated at all.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Quantify what an hour of downtime costs this specific system: lost revenue, SLA penalties, support load, reputational cost where it can be estimated. Only then decide what reliability tier is worth paying for, working backward from that number.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>&quot;Downtime is unacceptable&quot; applied as an unexamined default to every system regardless of whether the math supports the investment that belief implies, which is how reliability spending ends up disconnected from actual business impact.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Error budgets make the tradeoff explicit</h3>
+      <p>A number both engineering and the business can agree on, replacing an unstated and unlimited expectation of perfection.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>An error budget, the amount of unreliability a target tolerates, gives engineering explicit permission to ship faster while the budget isn't exhausted, and an explicit, non-personal signal to slow down and stabilize once it is.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Treating reliability as an unlimited, unstated expectation, where every incident is judged a failure regardless of whether the system was still within a sane, previously agreed tolerance.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Overengineering is a cost, not a virtue</h3>
+      <p>Redundancy protects against downtime, and it also has a real, ongoing operational tax of its own.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Match redundancy investment to the tier a system needs, not the highest tier available. A system that doesn't need five nines shouldn't be built to that standard just because the pattern exists elsewhere in the estate.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Applying multi-region, high-availability architecture uniformly across the estate as the safe default, which quietly taxes every team's velocity for protection most of those systems never needed in the first place.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs reliability spend isn't tied to economics</h3>
+      <p>Patterns that show up when reliability investment is driven by instinct rather than a stated cost-benefit basis.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No system has a stated availability target tied to an actual cost-of-downtime calculation</li>
+          <li>Error budgets don't exist, so every incident is treated with the same severity regardless of whether targets were met</li>
+          <li>Redundancy investment is uniform across the estate rather than tiered to real criticality</li>
+          <li>The cost of the current reliability posture has never been compared to the cost of the downtime it prevents</li>
+          <li>&quot;We need to be more reliable&quot; gets stated with no number attached to what that would cost or save</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Downtime-budget figures are illustrative estimates; actual availability calculations depend on the exact SLA definition and measurement window used.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
