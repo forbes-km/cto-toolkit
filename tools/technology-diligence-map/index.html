@@ -50,15 +50,25 @@
   .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
   .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
   .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card ul { margin: 0; padding-left: 16px; }
+  .type-card li { font-size: 12.5px; line-height: 1.55; color: var(--ink); margin-bottom: 5px; }
+  .type-card li strong { color: var(--ink); }
   .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .stat-line { font-family: var(--mono); font-size: 12px; color: var(--accent); margin: 0 0 16px; }
+  .dim-row { display: grid; grid-template-columns: 230px 1fr 40px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .dim-row:last-child { border-bottom: none; }
+  .dim-row label { font-size: 13px; color: var(--ink); }
+  .dim-row input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .dim-row .dim-val { font-family: var(--mono); font-size: 13px; text-align: center; color: var(--ink-soft); }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
     .grid4 { grid-template-columns: 1fr; }
     .matrix-table { display: block; overflow-x: auto; }
+    .dim-row { grid-template-columns: 1fr; gap: 4px; }
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
 </style>
@@ -77,26 +87,69 @@
     <div class="stage-head">
       <span class="stage-num">In the full toolkit</span>
       <h3>What exists behind this preview</h3>
-      <p>Sixteen named tools and templates spanning diligence through the first 100 days post-close, not just a checklist.</p>
+      <p>Sixteen named tools and templates covering both sides of a transaction, buy-side and sell-side, and the full lifecycle from first data request through the first 100 days post-close.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <ul>
-          <li><strong>M&amp;A Technology Due Diligence Playbook</strong>, the umbrella process tying everything below into a single engagement</li>
-          <li><strong>Technology DD Scoring Workbook</strong>, an eight-domain weighted instrument with a red-flag pattern library and a scoring-to-cost/timeline translation</li>
-          <li><strong>Technical Debt, Risk &amp; Application Portfolio Simulator</strong>, classifying a portfolio using the Gartner TIME framework, plus a separate M&amp;A-specific variant</li>
-          <li><strong>Technical Debt Carry Cost Optimizer</strong>, a multi-year remediation plan minimizing total cost within real budget and capacity constraints, built so every sequencing decision can be explained rather than treated as a black box</li>
-          <li><strong>Diligence Question Bank</strong>, over 300 questions across architecture, security, compliance, data, operations, organization, IP, and healthcare-specific domains</li>
-          <li><strong>Diligence Response Tracker</strong>, logging target-company answers and following up on incomplete or concerning ones</li>
-          <li><strong>Integration Architecture Decision Tree</strong>, choosing consolidate, coexist, or replace based on the specifics of the deal</li>
-          <li><strong>Healthcare M&amp;A Technology Reference</strong>, covering HIPAA, HITRUST, BAAs, and state licensure across the diligence and integration lifecycle</li>
-          <li><strong>Data Room Organization Template</strong>, a four-tier access model usable from either side of a transaction</li>
-          <li><strong>100-Day PMI Timeline and PMI Tracker</strong>, phased workstream milestones plus a working dashboard for key-person retention and synergy realization</li>
-          <li><strong>Diligence Prioritization Engine</strong>, an ML-augmented tool turning a completed scoring workbook into a sequenced, rationale-backed 100-day remediation plan, using an inspectable classifier by design</li>
-        </ul>
+        <p class="stat-line">16 tools and templates &middot; 6 categories &middot; buy-side, sell-side, and post-close</p>
+        <div class="grid4">
+          <div class="type-card">
+            <h4>Buy-side diligence</h4>
+            <p>The core engagement: structure, scope, and score a technology assessment end to end.</p>
+            <ul>
+              <li><strong>M&amp;A Technology Due Diligence Playbook</strong>, the umbrella process across seven evaluation domains, from engagement structuring to report construction</li>
+              <li><strong>Technology DD Process Map</strong>, the end-to-end engagement visualized: planning, deep assessment, synthesis, with deliverables and timing at each phase</li>
+              <li><strong>Technology DD Scoring Workbook</strong>, an eight-domain weighted instrument with a red-flag pattern library and a scoring-to-cost/timeline translation</li>
+              <li><strong>Diligence Question Bank</strong>, over 300 questions across architecture, security, compliance, data, operations, organization, IP, and healthcare-specific domains</li>
+              <li><strong>Diligence Response Tracker</strong>, logging target-company answers and following up on incomplete or concerning ones</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>Sell-side preparation</h4>
+            <p>The other side of the table: positioning a technology organization for sale, not evaluating one.</p>
+            <ul>
+              <li><strong>Sell-Side Technology Preparation Guide</strong>, pre-diligence cleanup, data room construction, management presentation prep, and post-LOI execution through earnout negotiation</li>
+              <li><strong>Data Room Organization Template</strong>, a staged access model usable from either side of a transaction</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>Technical debt economics</h4>
+            <p>Converting engineering debt into a defensible business artifact with dollar figures a CFO will trust.</p>
+            <ul>
+              <li><strong>Technical Debt Assessment Framework</strong>, a seven-domain, five-level severity model with effort bands and a dollar overlay, adapted for pre-deal diligence, 100-day assessment, and ongoing portfolio health</li>
+              <li><strong>Technical Debt, Risk &amp; Application Portfolio Simulator</strong>, classifying a portfolio using the Gartner TIME framework, plus a separate M&amp;A-specific variant</li>
+              <li><strong>Technical Debt Carry Cost Optimizer</strong>, a multi-year remediation plan minimizing total cost within real budget and capacity constraints, built so every sequencing decision can be explained rather than treated as a black box</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>Integration &amp; post-close</h4>
+            <p>What happens after signature: architecture decisions, the first 100 days, and the 12-18 months after that.</p>
+            <ul>
+              <li><strong>Integration Architecture Decision Tree</strong>, choosing merge, integrate, or coexist per system category based on the specifics of the deal</li>
+              <li><strong>Post-Merger Integration Playbook</strong>, the full 12-18 month framework: day-one readiness, stabilization and discovery, then integration execution</li>
+              <li><strong>100-Day Integration Timeline</strong>, phased workstream milestones across the critical first 100 days</li>
+              <li><strong>PMI Tracker</strong>, a working dashboard for key-person retention and synergy realization</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>Healthcare &amp; regulated industries</h4>
+            <p>Depth for the domains general frameworks skip over.</p>
+            <ul>
+              <li><strong>Healthcare M&amp;A Technology Reference</strong>, covering HIPAA, HITRUST, BAAs, and state licensure across the diligence and integration lifecycle</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>ML-augmented</h4>
+            <p>Where the toolkit moves past static templates into inspectable models trained on engagement patterns.</p>
+            <ul>
+              <li><strong>Diligence Prioritization Engine</strong>, turning a completed scoring workbook into a sequenced, rationale-backed 100-day remediation plan, using an inspectable classifier by design</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
@@ -114,6 +167,7 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
@@ -131,6 +185,7 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
@@ -148,9 +203,28 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">4</span>
+      <h3>Regulatory and compliance exposure inherited at close</h3>
+      <p>Certifications and audit history transfer with the deal whether or not the buying organization has fully absorbed what they mean.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to check</span>
+        <p>Current certification status against the renewal calendar, not just whether a certification exists; an attestation eight months from lapsing with no remediation plan is a different risk than a freshly renewed one. Whether certifications were scoped to match actual current operations, or scoped years ago and never re-baselined.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The red flag</span>
+        <p>A compliance program that reads as a once-a-year attestation exercise rather than something embedded in day-to-day operations. Ask how a policy change actually reaches an engineer's day-to-day work; a vague answer here usually means the paperwork and the practice have drifted apart.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
       <h3>Integration complexity assessment</h3>
       <p>Estimating the actual cost and timeline of combining systems post-close, which drives the real economics of the deal far more than the initial purchase price.</p>
     </div>
@@ -165,6 +239,78 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>IP and third-party exposure</h3>
+      <p>A separate domain from security or compliance, and one of the most common ways a clean-looking deal turns expensive after signature.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to check</span>
+        <p>Whether every current and former employee and contractor who touched the codebase has a signed, complete IP assignment agreement on file, not just a policy that says they should. An open-source inventory checked against actual license terms, specifically anything copyleft (GPL and similar) that could obligate source disclosure if triggered by the deal structure.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The red flag</span>
+        <p>A core dependency, commercial or open-source, whose license doesn't survive a change of control, or a contractor engagement from early in the company's history with no IP assignment paperwork at all. Both are cheap to check and expensive to discover after close.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Engineering organization and talent, beyond one or two named people</h3>
+      <p>Key-person risk is the sharpest version of this question; the fuller version is whether the organization as a whole can execute the roadmap the deal assumes.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to check</span>
+        <p>Voluntary attrition over the trailing 24 months against a reasonable industry benchmark, not just the current headcount. Compensation positioning relative to market, since a team paid meaningfully under market carries retention risk the org chart won't show. Whether there's a real bench below the CTO or VP Engineering, or whether departure of one or two people at the top empties the leadership layer.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The red flag</span>
+        <p>Attrition trending up over the trailing year rather than flat or down, especially concentrated among senior engineers, paired with exit interview themes that repeat. One departure is a data point; a pattern across several is the organization telling you something the management deck won't.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Structure</span>
+      <h3>Where findings actually go</h3>
+      <p>A finding without a deal-structure destination is an observation, not a diligence output. Every material item from the sections above lands in one of these.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li><strong>Purchase price adjustment</strong>, for findings that warrant a quantified reduction in consideration</li>
+          <li><strong>Representation and warranty requirement</strong>, for findings where a specific seller commitment protects the buyer</li>
+          <li><strong>Indemnification requirement</strong>, for findings creating potential future liability the buyer needs covered</li>
+          <li><strong>Escrow requirement</strong>, for findings where holding back part of consideration is warranted pending resolution</li>
+          <li><strong>Post-close investment requirement</strong>, for findings that need spending after close to achieve the deal thesis, tracked rather than absorbed silently into "integration cost"</li>
+          <li><strong>Integration planning input</strong>, for findings that inform how systems get combined without changing deal terms at all</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card" id="scorer">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Integration complexity scorer</h3>
+      <p>Score seven dimensions from 1 (clean, compatible) to 5 (deeply divergent, high-effort). Runs entirely in your browser; nothing is sent anywhere or stored. The full toolkit's version weights each dimension by deal thesis and layers on a dollar overlay; this preview uses an even weighting to keep the mechanics visible.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="ics-dims"></div>
+        <button id="ics-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Score it</button>
+        <div id="ics-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
@@ -179,6 +325,9 @@
           <li>An undisclosed prior security incident surfacing during diligence rather than in the seller's initial disclosure</li>
           <li>Licensing terms on a core dependency that don't survive a change of control, discovered late</li>
           <li>Customer contracts with data residency or security commitments the acquiring organization's own infrastructure can't currently meet</li>
+          <li>A certification or attestation presented as current that has lapsed, or was never re-scoped to match how the business actually operates today</li>
+          <li>A core dependency whose license doesn't survive a change of control, or a contractor engagement with no IP assignment on file</li>
+          <li>Senior-engineer attrition trending up over the trailing year with no bench below the departing leaders</li>
         </ul>
       </div>
     </div>
@@ -186,8 +335,58 @@
 
 </main>
 
+<script>
+  const ICS_DIMENSIONS = [
+    { id: 'arch', label: 'Architecture compatibility' },
+    { id: 'data', label: 'Data model compatibility' },
+    { id: 'iam', label: 'Identity and access management' },
+    { id: 'sec', label: 'Security and compliance posture' },
+    { id: 'surface', label: 'Integration surface area' },
+    { id: 'ops', label: 'Operational compatibility' },
+    { id: 'culture', label: 'Team and cultural compatibility' }
+  ];
+
+  const dimsEl = document.getElementById('ics-dims');
+  ICS_DIMENSIONS.forEach(dim => {
+    const row = document.createElement('div');
+    row.className = 'dim-row';
+    row.innerHTML =
+      '<label for="ics-' + dim.id + '">' + dim.label + '</label>' +
+      '<input type="range" id="ics-' + dim.id + '" min="1" max="5" step="1" value="3">' +
+      '<span class="dim-val" id="ics-' + dim.id + '-val">3</span>';
+    dimsEl.appendChild(row);
+    const slider = row.querySelector('input');
+    const valEl = row.querySelector('.dim-val');
+    slider.addEventListener('input', () => { valEl.textContent = slider.value; });
+  });
+
+  function icsBand(score) {
+    if (score < 2.0) return { timeline: '3\u20136 months', cost: '3\u20138% of deal value', read: 'Low complexity. Mostly a coexist-or-connect job; APIs and light consolidation cover most of it.' };
+    if (score < 3.0) return { timeline: '6\u201312 months', cost: '8\u201315% of deal value', read: 'Moderate complexity. Expect a mix of integrate and selective merge decisions, workable within a standard first-year plan.' };
+    if (score < 4.0) return { timeline: '12\u201318 months', cost: '15\u201325% of deal value', read: 'Material complexity. At least one core system likely needs a genuine merge, not just a connector; budget and staff accordingly.' };
+    if (score < 5.0) return { timeline: '18\u201330 months', cost: '25\u201340% of deal value', read: 'High complexity. Multiple foundational systems are in conflict; this reshapes the integration budget and the realistic synergy timeline.' };
+    return { timeline: '30+ months, or reconsider scope', cost: '40%+ of deal value', read: 'Severe complexity. At this level the integration cost can approach or exceed what the deal thesis assumed; revisit before committing to a timeline.' };
+  }
+
+  document.getElementById('ics-calc').addEventListener('click', () => {
+    const scores = ICS_DIMENSIONS.map(dim => parseInt(document.getElementById('ics-' + dim.id).value, 10));
+    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    const band = icsBand(avg);
+    const resultEl = document.getElementById('ics-result');
+    resultEl.innerHTML =
+      '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+      '<strong>Composite score: ' + avg.toFixed(1) + ' / 5</strong><br>' +
+      'Indicative timeline: ' + band.timeline + '<br>' +
+      'Indicative integration cost: ' + band.cost + '<br>' +
+      '<br>' + band.read +
+      '</div>';
+  });
+</script>
+
 <footer>
   Reference only. Coordinate technical findings with legal and financial diligence; this framework covers the technical workstream specifically, not deal structure or valuation.
+  <br>Data management and operational reliability assessment live on their own pages: <a href="../data-strategy/index.html" style="color:var(--accent);">Data Strategy</a> and <a href="../engineering-metrics/index.html" style="color:var(--accent);">Engineering Metrics</a>.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
 </footer>
 
 </body>

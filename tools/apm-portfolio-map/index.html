@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Portfolio Management</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card ul { margin: 0; padding-left: 16px; }
+  .type-card li { font-size: 12.5px; line-height: 1.55; color: var(--ink); margin-bottom: 5px; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .stat-line { font-family: var(--mono); font-size: 12px; color: var(--accent); margin: 0 0 16px; }
+  .dim-row { display: grid; grid-template-columns: 230px 1fr 40px; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .dim-row:last-child { border-bottom: none; }
+  .dim-row label { font-size: 13px; color: var(--ink); }
+  .dim-row input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .dim-row .dim-val { font-family: var(--mono); font-size: 13px; text-align: center; color: var(--ink-soft); }
+  .axis-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); margin: 18px 0 4px; }
+  .axis-label:first-child { margin-top: 0; }
+  .quadrant-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; height: 200px; margin-top: 14px; }
+  .quad-cell { background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12.5px; color: var(--ink-soft); transition: background 0.2s, color 0.2s; text-align: center; padding: 8px; }
+  .quad-cell strong { font-size: 14px; margin-bottom: 2px; }
+  .quad-cell.active { background: var(--accent); color: white; }
+  .quad-cell.active strong { color: white; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+    .dim-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Application Portfolio Management</h1>
+  <p>How to look at an entire application estate at once, rather than one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.</p>
+  <div class="caveat">This page covers the scoring logic at a conceptual level. The full simulator is a working three-sheet instrument (debt backlog, risk register, application portfolio) with a live dashboard, dropdown-governed scoring, and an M&amp;A-specific variant for scoring a target company's portfolio during diligence, available through direct engagement.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">In the full toolkit</span>
+      <h3>What exists behind this preview</h3>
+      <p>A working spreadsheet instrument, not a static framework: three linked sheets feeding one dashboard, with the same scoring logic reused for standing portfolio governance and for scoring an acquisition target's stack under diligence.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p class="stat-line">3 linked sheets &middot; 1 live dashboard &middot; standing portfolio and M&amp;A variants</p>
+        <div class="grid4">
+          <div class="type-card">
+            <h4>Technical debt backlog</h4>
+            <p>Every known debt item scored on severity, business impact, confidence, and remediation effort, rolled up to a priority ranking.</p>
+            <ul>
+              <li>Direct remediation, annual carry, and contingent risk cost per item, each carrying its own confidence rating</li>
+              <li>Status and aging tracked against a target remediation window, so stale items surface instead of hiding</li>
+              <li>Rolls into portfolio-level totals: active items by severity, cost by confidence tier, overdue count</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>Application risk register</h4>
+            <p>A five-factor risk score per application, independent of how valuable or well-built the system is.</p>
+            <ul>
+              <li>Cybersecurity, compliance, operational resilience, vendor, and knowledge-concentration risk scored separately, then composited</li>
+              <li>Surfaces the application that's fine on paper but one departure or one vendor lapse from a bad quarter</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>Portfolio classification (TIME)</h4>
+            <p>Every application placed on the Gartner TIME grid using a Business Value score and a Technical Health score.</p>
+            <ul>
+              <li>Business Value built from five factors: strategic alignment, business criticality, user reach, differentiation, regulatory necessity</li>
+              <li>Technical Health built from five factors: technology currency, architecture quality, integration complexity, data architecture fit, technical debt</li>
+              <li>Composite Portfolio Score, cost score, and risk score sit alongside the classification as informational overlays, not inputs to it</li>
+            </ul>
+          </div>
+          <div class="type-card">
+            <h4>M&amp;A-specific variant</h4>
+            <p>The same instrument, repointed at a target company's application estate during diligence or the first 100 days.</p>
+            <ul>
+              <li>Same scoring mechanics, framed around acquisition-specific questions: what's genuinely redundant with the acquirer's stack, what's a hidden Eliminate candidate the seller never flagged</li>
+              <li>Feeds directly into the Integration Architecture Decision Tree's merge, integrate, or coexist call per system</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>The Gartner TIME model, applied</h3>
+      <p>Every application lands in one of four quadrants based on two independent scores: how much the business needs it, and how healthy it is technically.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The four quadrants</span>
+        <p><strong>Invest</strong>: high value, high health &mdash; fund it. <strong>Tolerate</strong>: low value, high health &mdash; leave it alone, don't over-invest. <strong>Migrate</strong>: high value, low health &mdash; the modernization backlog, ranked by value at risk. <strong>Eliminate</strong>: low value, low health &mdash; the retirement candidates most portfolios are carrying more of than anyone admits.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it breaks down</span>
+        <p>Business Value gets inflated when the scorer is the system's own owner. Score it with someone outside the owning team in the room, or the whole portfolio drifts toward Invest and the model stops doing its job. Technical Health is the opposite failure: engineers score their own systems harshly relative to peers they haven't had to maintain, which skews Migrate counts up.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Risk as an independent axis, not a TIME input</h3>
+      <p>A system can be a clean Invest on the TIME grid and still be the one that takes the company down. Risk is scored and reported separately on purpose.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why it's kept separate</span>
+        <p>Folding risk into Technical Health hides exactly the applications that need visibility: strategically critical, well-funded, actively developed, and sitting on a single unreplaceable engineer or an end-of-life dependency no one has scheduled work against. Reporting risk on its own axis keeps that combination visible instead of averaging it away.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to do with a high-risk Invest</span>
+        <p>These get remediation budget ahead of Migrate-quadrant systems, even though they score well overall, because the downside is asymmetric: a breach or a key-person departure on a high-value system costs more than slow modernization debt on a low-value one.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Turning individual scores into a portfolio signal</h3>
+      <p>One application's score is a data point. The value is in the aggregate: how many Eliminate candidates are still costing real money, how concentrated the high-risk applications are, whether Migrate is growing or shrinking quarter over quarter.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to track over time</span>
+        <p>Average Composite Portfolio Score by quadrant, count of high-risk applications, count of high-cost applications relative to their Business Value, and the ratio of Eliminate-classified applications still consuming a meaningful share of total run cost. Movement in these over two or three quarters tells you whether governance is actually changing behavior or just producing a nicer chart.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>Treating this as a one-time inventory exercise. A TIME classification from eighteen months ago is closer to fiction than data; technical health decays continuously even when business value hasn't moved, so the cadence matters as much as the scoring model itself.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card" id="time-classifier">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>TIME quadrant classifier</h3>
+      <p>Score one application on the same five-factor Business Value and Technical Health axes the full instrument uses. Runs entirely in your browser; nothing is sent anywhere or stored. Risk and cost scoring, and the multi-application portfolio view, are part of the full simulator.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div class="axis-label">Business value</div>
+        <div id="apm-bv-dims"></div>
+        <div class="axis-label">Technical health</div>
+        <div id="apm-th-dims"></div>
+        <button id="apm-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Classify it</button>
+        <div id="apm-result" style="margin-top:16px;"></div>
+        <div class="quadrant-grid" id="apm-quad">
+          <div class="quad-cell" id="q-migrate"><strong>Migrate</strong>High value, low health</div>
+          <div class="quad-cell" id="q-invest"><strong>Invest</strong>High value, high health</div>
+          <div class="quad-cell" id="q-eliminate"><strong>Eliminate</strong>Low value, low health</div>
+          <div class="quad-cell" id="q-tolerate"><strong>Tolerate</strong>Low value, high health</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const APM_BV = [
+    { id: 'strat', label: 'Strategic alignment' },
+    { id: 'crit', label: 'Business criticality' },
+    { id: 'reach', label: 'User reach & dependency' },
+    { id: 'diff', label: 'Differentiation' },
+    { id: 'reg', label: 'Regulatory necessity' }
+  ];
+  const APM_TH = [
+    { id: 'currency', label: 'Technology currency' },
+    { id: 'arch', label: 'Architecture quality' },
+    { id: 'integ', label: 'Integration complexity (inverse)' },
+    { id: 'dataFit', label: 'Data architecture fit' },
+    { id: 'debt', label: 'Technical debt (inverse)' }
+  ];
+
+  function buildSliders(containerId, dims) {
+    const el = document.getElementById(containerId);
+    dims.forEach(dim => {
+      const row = document.createElement('div');
+      row.className = 'dim-row';
+      row.innerHTML =
+        '<label for="apm-' + dim.id + '">' + dim.label + '</label>' +
+        '<input type="range" id="apm-' + dim.id + '" min="1" max="5" step="1" value="3">' +
+        '<span class="dim-val" id="apm-' + dim.id + '-val">3</span>';
+      el.appendChild(row);
+      const slider = row.querySelector('input');
+      const valEl = row.querySelector('.dim-val');
+      slider.addEventListener('input', () => { valEl.textContent = slider.value; });
+    });
+  }
+  buildSliders('apm-bv-dims', APM_BV);
+  buildSliders('apm-th-dims', APM_TH);
+
+  document.getElementById('apm-calc').addEventListener('click', () => {
+    const bvScores = APM_BV.map(d => parseInt(document.getElementById('apm-' + d.id).value, 10));
+    const thScores = APM_TH.map(d => parseInt(document.getElementById('apm-' + d.id).value, 10));
+    const bv = bvScores.reduce((a, b) => a + b, 0) / bvScores.length;
+    const th = thScores.reduce((a, b) => a + b, 0) / thScores.length;
+
+    const highBV = bv >= 3.0;
+    const highTH = th >= 3.0;
+    let quadrant, quadId, read;
+    if (highBV && highTH) { quadrant = 'Invest'; quadId = 'q-invest'; read = 'High value, healthy platform. Fund it and protect it; this is not where remediation budget is scarce.'; }
+    else if (highBV && !highTH) { quadrant = 'Migrate'; quadId = 'q-migrate'; read = 'High value sitting on a deteriorating platform. This is the modernization backlog, and it should be ranked by value at risk, not by ticket age.'; }
+    else if (!highBV && highTH) { quadrant = 'Tolerate'; quadId = 'q-tolerate'; read = 'Healthy but not strategically important. Leave it running; resist the urge to over-invest here just because it is easy to improve.'; }
+    else { quadrant = 'Eliminate'; quadId = 'q-eliminate'; read = 'Low value, low health. A retirement candidate; every quarter it stays live is quiet cost with no strategic return.'; }
+
+    document.querySelectorAll('.quad-cell').forEach(c => c.classList.remove('active'));
+    document.getElementById(quadId).classList.add('active');
+
+    const resultEl = document.getElementById('apm-result');
+    resultEl.innerHTML =
+      '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+      '<strong>Business Value: ' + bv.toFixed(1) + ' / 5 &nbsp;&middot;&nbsp; Technical Health: ' + th.toFixed(1) + ' / 5</strong><br>' +
+      'Classification: <strong>' + quadrant + '</strong><br>' +
+      '<br>' + read +
+      '</div>';
+  });
+</script>
+
+<footer>
+  Reference only. Treat quadrant placement as a starting point for a governance conversation, not a mandate; a single low score on one factor is a reason to look closer, not an automatic verdict.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
