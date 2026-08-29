@@ -56,6 +56,9 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -192,6 +195,20 @@
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
         <p>Action items live only in the postmortem document itself, never entered into the team's actual work tracking system, and six months later nobody remembers they existed when the same failure mode recurs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Postmortem template</h3>
+      <p>A blameless incident report structure: summary, impact, timeline, root cause, and action items with owners. Markdown for pasting into your own docs system, or a formatted Word doc.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="postmortem-template.md" download>Download .md</a>
+        <a class="dl-btn secondary" href="postmortem-template.docx" download>Download .docx</a>
       </div>
     </div>
   </div>

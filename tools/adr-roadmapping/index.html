@@ -54,6 +54,9 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -199,6 +202,20 @@
       </div>
     </div>
     <div class="same-note">What the example demonstrates: three initiatives, all traceable to one strategic priority, sequenced by genuine dependency rather than organizational convenience, each owned by a named business sponsor. The technology choices support the story; they don't constitute it.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>ADR template</h3>
+      <p>A ready-to-use starting point for the format described above: context, decision, alternatives considered, consequences. Markdown for pasting into your own docs system, or a formatted Word doc.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="adr-template.md" download>Download .md</a>
+        <a class="dl-btn secondary" href="adr-template.docx" download>Download .docx</a>
+      </div>
+    </div>
   </div>
 
 </main>

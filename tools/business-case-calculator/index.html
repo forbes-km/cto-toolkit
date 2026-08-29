@@ -54,6 +54,9 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -208,6 +211,20 @@
       <div class="stage-cell">
         <span class="env-label b">Why that ramp matters</span>
         <p>A business case that assumes full benefit realization starting Year 1 is either describing a trivial change or overstating the case. Reviewers who've seen enough of these will discount an unramped benefit projection on sight.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Business case one-pager template</h3>
+      <p>Drop the NPV, IRR, benefit-to-cost, and payback numbers from the calculator above straight into this one-pager, alongside the problem statement, strategic rationale, and risks a pure financial model doesn't capture. Markdown for pasting into your own docs system, or a formatted Word doc.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="business-case-onepager-template.md" download>Download .md</a>
+        <a class="dl-btn secondary" href="business-case-onepager-template.docx" download>Download .docx</a>
       </div>
     </div>
   </div>

@@ -54,6 +54,9 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -141,6 +144,20 @@
       <div class="stage-cell">
         <span class="env-label b">The cost of skipping this</span>
         <p>Discovering the actual exit cost during a renewal negotiation, at exactly the moment the vendor has the least incentive to make leaving easy and the most leverage to raise price, since they know switching now looks expensive.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Vendor evaluation scorecard</h3>
+      <p>The six weighted dimensions above in a fillable format, with per-dimension guidance and a place to log key risks and mitigations. Markdown for pasting into your own docs system, or a formatted Word doc.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="vendor-evaluation-template.md" download>Download .md</a>
+        <a class="dl-btn secondary" href="vendor-evaluation-template.docx" download>Download .docx</a>
       </div>
     </div>
   </div>
