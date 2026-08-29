@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Metrics</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Engineering Metrics</h1>
+  <p>The four DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.</p>
+  <div class="caveat">DORA benchmark bands summarized from the widely cited State of DevOps research; treat the specific thresholds as reference points, not hard pass/fail lines for your organization's context.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The four DORA metrics</h3>
+      <p>The closest thing the industry has to a validated, research-backed set of engineering performance metrics. Not a complete picture on their own, but the right starting point before inventing something else.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Metric</th><th>What it measures</th><th>Elite</th><th>Low</th></tr>
+          <tr><td>Deployment frequency</td><td>How often code reaches production</td><td>On demand, multiple times a day</td><td>Fewer than once per month</td></tr>
+          <tr><td>Lead time for changes</td><td>Time from commit to running in production</td><td>Under one hour</td><td>More than six months</td></tr>
+          <tr><td>Change failure rate</td><td>Percentage of deployments causing a production failure</td><td>0 to 15 percent</td><td>Over 45 percent</td></tr>
+          <tr><td>Time to restore service</td><td>How long a production incident takes to resolve</td><td>Under one hour</td><td>More than six months</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>What not to measure, and why it persists anyway</h3>
+      <p>Story points, lines of code, and commit count remain common despite being well understood as poor proxies. Worth naming why they persist.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why they're wrong</span>
+        <p>Story points measure estimation, not output, and are calibrated differently per team, making cross-team comparison meaningless. Lines of code rewards verbosity over good design. Commit count rewards small, frequent commits over meaningful ones, and is trivially gamed the moment someone knows it's being watched.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Why they persist</span>
+        <p>They're easy to pull from existing tools with no new instrumentation, and they produce a number, which satisfies a reporting requirement even when the number means very little. Replacing them requires investing in DORA-style instrumentation that most orgs haven't built yet.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Distribution, not average</h3>
+      <p>The single most common mistake in reading engineering metrics: reporting a mean when the distribution is what matters.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why the average lies</span>
+        <p>A team with a median lead time of two hours and a long tail of three-week outliers has a very different problem than a team with a consistent two-day lead time across the board, but both can produce the same average. The fix rarely looks the same for both.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to look at instead</span>
+        <p>Report the median and the 90th percentile together. The median tells you what's typical; the gap between median and p90 tells you how bad the worst case gets, and that gap is usually where the real operational risk lives.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Using metrics without weaponizing them</h3>
+      <p>The trust problem that kills a metrics program faster than any technical flaw in the metrics themselves.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>Metrics owned and reviewed at the team level first, with the team using them to improve their own process, before any number rolls up to a leadership dashboard. People who feel a metric is being used to improve their work engage honestly with it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What backfires</span>
+        <p>Individual-level metrics tied to performance review, or a leadership dashboard that ranks teams against each other. Both produce the same response: people optimize for the number instead of the outcome the number was supposed to represent, and the metric stops meaning anything.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Benchmark bands shift as the industry's baseline improves; verify against current State of DevOps research before using specific thresholds in a review.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
+</footer>
+
+</body>
+</html>

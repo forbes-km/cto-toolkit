@@ -44,6 +44,8 @@
   .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
   .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
   .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
   .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
   .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
   .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
@@ -93,6 +95,68 @@
       </div>
     </div>
   </div>
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score your own environment</h3>
+      <p>Rate each dimension 1 to 5 against the table above. This runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="ztm-inputs"></div>
+        <button id="ztm-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate maturity score</button>
+        <div id="ztm-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const ztmDimensions = [
+      "Identity & access",
+      "Segmentation & blast radius",
+      "Detection & response",
+      "Vulnerability management",
+      "Third-party risk",
+      "Governance & culture"
+    ];
+    const inputsEl = document.getElementById('ztm-inputs');
+    ztmDimensions.forEach((dim, i) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
+      const label = document.createElement('span');
+      label.textContent = dim;
+      label.style.cssText = 'font-size:13px; color:var(--ink);';
+      const select = document.createElement('select');
+      select.id = 'ztm-dim-' + i;
+      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink);';
+      [1,2,3,4,5].forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = 'Level ' + v;
+        if (v === 3) opt.selected = true;
+        select.appendChild(opt);
+      });
+      row.appendChild(label);
+      row.appendChild(select);
+      inputsEl.appendChild(row);
+    });
+
+    document.getElementById('ztm-calc').addEventListener('click', () => {
+      let scores = [];
+      ztmDimensions.forEach((dim, i) => {
+        const val = parseInt(document.getElementById('ztm-dim-' + i).value, 10);
+        scores.push({ dim, val });
+      });
+      const avg = scores.reduce((a, b) => a + b.val, 0) / scores.length;
+      const weakest = scores.reduce((a, b) => (b.val < a.val ? b : a));
+      const resultEl = document.getElementById('ztm-result');
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
+        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5.</strong><br>' +
+        'Weakest dimension: <strong>' + weakest.dim + '</strong> at Level ' + weakest.val + '. ' +
+        'Fund this one first regardless of the overall average, since a single weak dimension is where an attacker goes, not the average across all six.' +
+        '</div>';
+    });
+  </script>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">How to use this</span>
@@ -131,7 +195,9 @@
 </main>
 
 <footer>
-  Reference only. This previews the framework's six dimensions and scoring discipline; the full facilitated instrument and target-state architecture live in the Enterprise Architecture methodology.
+  Reference only. This previews the framework's six dimensions and scoring discipline; the full facilitated instrument and target-state architecture live in the <a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a> methodology.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
 </footer>
 
 </body>

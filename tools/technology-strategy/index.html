@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology Strategy</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technology Strategy</h1>
+  <p>What a technology strategy is, as distinct from a roadmap or a tech stack decision, the three-horizon investment split, the test that ties an initiative to a real business outcome, and why tradeoffs, not initiatives, are what make a strategy usable.</p>
+  <div class="caveat">A framework for thinking through strategy formulation, not a substitute for the actual strategic analysis specific to your business, market, and competitive position.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>What a technology strategy is</h3>
+      <p>Not a roadmap, not a list of tools, and not a tech stack decision. A frequent source of confusion worth resolving before anything else.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What it is</span>
+        <p>An explicit, prioritized set of choices about where to invest scarce engineering capacity, what capabilities to build versus buy, and what technical risk to knowingly accept versus what to actively remediate. A strategy is defined as much by what it says no to as what it says yes to.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it gets confused with</span>
+        <p>A roadmap is the sequenced execution of a strategy, not the strategy itself. A tech stack decision is an implementation detail below the strategy. A wish list of every capability engineering would like to build, with nothing prioritized against anything else, isn't a strategy at all.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Three horizons</h3>
+      <p>Adapted from McKinsey's Three Horizons model, applied to technology investment specifically. Most technology strategies fail by spending everything on Horizon 1 and nothing on Horizon 3, then getting blindsided by a competitor who didn't.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Horizon</th><th>Focus</th><th>Typical investment share</th></tr>
+          <tr><td>Horizon 1</td><td>Optimize and defend the core: keep what's working reliable, fast, and cheap to run</td><td>Roughly 60 to 70 percent</td></tr>
+          <tr><td>Horizon 2</td><td>Extend into adjacent, emerging opportunities with a clearer but not yet proven path to value</td><td>Roughly 20 to 30 percent</td></tr>
+          <tr><td>Horizon 3</td><td>Genuine bets: unproven, high-uncertainty, high-potential-payoff exploration</td><td>Roughly 5 to 10 percent</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The &quot;so that&quot; test</h3>
+      <p>The single question that separates a strategy tied to business outcomes from a list of things engineering finds interesting.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How it works</span>
+        <p>Every strategic initiative should complete the sentence: &quot;we will invest in X, so that Y business outcome becomes possible, measured by Z.&quot; If an initiative can't complete that sentence with a specific business outcome and a way to measure it, it doesn't belong in the strategy document, whatever its technical merit.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it gets skipped</span>
+        <p>Infrastructure and platform investments are the most common place this test gets waived, on the assumption that their value is self-evident. It rarely is to a non-technical stakeholder, and skipping the test here is exactly why platform investment is often the hardest thing to get funded.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Tradeoffs are the strategy</h3>
+      <p>What separates a document leadership uses from one that gets written once and never referenced again.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">A real strategy document</span>
+        <p>States explicit tradeoffs: we are prioritizing reliability over feature velocity this year, we are building this capability in-house rather than buying because it's a genuine differentiator, we are accepting this specific technical risk rather than remediating it now because the cost of remediation exceeds its near-term impact.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">A document that gets ignored</span>
+        <p>Lists initiatives with no stated tradeoff, which means every initiative reads as equally important, which means nobody can use the document to make an actual prioritization call when two initiatives compete for the same engineers.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Investment share percentages are illustrative starting points; the right split depends heavily on company stage, market position, and competitive pressure.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
+</footer>
+
+</body>
+</html>

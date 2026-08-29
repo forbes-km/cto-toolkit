@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Strategy</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Data Strategy</h1>
+  <p>Warehouse versus lakehouse versus mesh and when each fits, treating data as a product rather than a project, the golden-record problem in master data management, and why data quality work and AI governance's data foundation layer are the same investment.</p>
+  <div class="caveat">General data strategy patterns, not a specific technology recommendation. The right architecture depends on organizational structure and data maturity more than on which pattern is currently trending.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Warehouse, lakehouse, or mesh</h3>
+      <p>The architectural choice most data strategy conversations start with, and the one most likely to be made on trend rather than fit.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Pattern</th><th>Fits when</th><th>Struggles when</th></tr>
+          <tr><td>Data warehouse</td><td>Structured, well-understood reporting needs, a single team can reasonably own data quality centrally</td><td>Data sources are highly heterogeneous or domain ownership needs to be genuinely distributed</td></tr>
+          <tr><td>Data lakehouse</td><td>Mixed structured and unstructured data, need for both BI and ML workloads on the same underlying data</td><td>Organizational discipline around schema and quality is weak; a lakehouse without governance becomes a swamp fast</td></tr>
+          <tr><td>Data mesh</td><td>Large organization with genuinely independent domains, each with the capacity to own their own data product</td><td>Applied to an organization too small to staff domain-level data ownership; the coordination overhead exceeds the benefit</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Data as a product, not a project</h3>
+      <p>The mindset shift underneath data mesh, applicable even in organizations not adopting the full mesh architecture.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Project mindset</span>
+        <p>A data pipeline gets built once to answer a specific question, then quietly rots as the source system changes underneath it, with no owner responsible for noticing or fixing the drift until a report breaks and someone escalates.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Product mindset</span>
+        <p>A dataset has a named owner, a defined quality bar, a consumer-facing contract (schema, freshness, meaning of each field), and a deprecation process, the same discipline applied to an internal API, applied to data instead.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The golden record problem</h3>
+      <p>Master data management's central challenge: the same real-world entity represented differently across systems, with no single system holding the authoritative version.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why it's hard</span>
+        <p>Customer data alone commonly lives in a CRM, a billing system, a support tool, and a product database, each with its own ID, its own update cadence, and its own partial view. Picking one as automatically authoritative is rarely right for every field.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What works</span>
+        <p>A defined source-of-truth mapping at the field level, not the entity level: billing system is authoritative for payment status, CRM is authoritative for account ownership, product database is authoritative for usage data. Merge logic follows the mapping rather than picking one system to trust for everything.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Data quality as an AI prerequisite</h3>
+      <p>Why this page and the <a href="../ai-governance-map/index.html">AI Governance Map</a>'s data foundation layer are describing the same underlying problem from two different altitudes.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The connection</span>
+        <p>An AI system retrieving from or trained on poor-quality, poorly owned data inherits every one of that data's problems, at scale and with less visibility into the failure than a human analyst working the same data manually would have had.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The practical implication</span>
+        <p>Data quality and ownership work is not a prerequisite project to finish before starting AI work, it's the same foundational investment either way; an organization with strong data product discipline has most of what AI governance's Layer 1 requires already in place.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Architectural pattern choice depends on organizational structure and data maturity; treat this as a starting framework, not a recommendation for your specific environment.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
+</footer>
+
+</body>
+</html>

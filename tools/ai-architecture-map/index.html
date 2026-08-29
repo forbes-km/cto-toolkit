@@ -145,6 +145,8 @@
     line-height: 1.6;
     color: var(--ink);
   }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
   .stage-cell code {
     font-family: var(--mono);
     font-size: 12px;
@@ -359,7 +361,7 @@
     <div class="stage-head">
       <span class="stage-num">Stage 10 &middot; cross-cutting</span>
       <h3>PHI &amp; PII data protection</h3>
-      <p>The technical control layer, not the compliance program. Policy, accountability, and audit ownership for regulated data live on the AI Governance Map; this is what enforces it in the pipeline.</p>
+      <p>The technical control layer, not the compliance program. Policy, accountability, and audit ownership for regulated data live on the <a href="../ai-governance-map/index.html">AI Governance Map</a>; this is what enforces it in the pipeline.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell azure">
@@ -415,7 +417,7 @@
     <div class="stage-head">
       <span class="stage-num">Stage 13 &middot; cross-cutting</span>
       <h3>Capacity &amp; scaling</h3>
-      <p>The architecture question underneath cost: can this handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the AI FinOps Map; this is what determines whether capacity is even available to buy.</p>
+      <p>The architecture question underneath cost: can this handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the <a href="../ai-finops-map/index.html">AI FinOps Map</a>; this is what determines whether capacity is even available to buy.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell azure">
@@ -453,6 +455,8 @@
 
 <footer>
   Reference only. Vendor service names, open-weight model rankings, and serving-stack capabilities change quickly, so verify current details against primary sources before relying on this for a design decision.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
 </footer>
 
 </body>
