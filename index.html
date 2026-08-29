@@ -161,14 +161,38 @@
 
 <header>
   <h1>CTO Toolkit</h1>
-  <p>A working library of methods, templates, and interactive tools built over 20+ years of running and assessing enterprise technology platforms. Covers enterprise architecture, cloud modernization, AI systems, and technical M&amp;A diligence.</p>
+  <p>A working library of methods, templates, and interactive tools built over 20+ years of running and assessing enterprise technology platforms. Covers AI architecture, governance, and cost; cloud modernization; and the general operating side of the CTO role, from board reporting to org design.</p>
   <p class="byline"><a href="https://github.com/forbes-km/cto-toolkit">github.com/forbes-km/cto-toolkit</a></p>
 </header>
 
 <main>
 
-  <div class="section-label">Interactive tools</div>
+  <div class="section-label">AI systems: architecture, governance, cost</div>
   <p class="section-note">Runnable, dependency-free reference tools. Open directly in a browser, no build step. Code is MIT licensed.</p>
+  <div class="grid">
+
+    <a class="card" href="tools/ai-architecture-map/index.html">
+      <span class="badge live">Live</span>
+      <h3>AI Architecture Map</h3>
+      <p>RAG, document intelligence, agent orchestration (MCP/A2A), security, PHI/PII protection, observability, and disaster recovery. Azure-managed compared against self-hosted open-weight builds at every stage.</p>
+    </a>
+
+    <a class="card" href="tools/ai-governance-map/index.html">
+      <span class="badge live">Live</span>
+      <h3>AI Governance Map</h3>
+      <p>Data foundation, governance layer, trusted outputs, and responsible AI controls mapped to concrete implementation and the regulatory frameworks that require them.</p>
+    </a>
+
+    <a class="card" href="tools/ai-finops-map/index.html">
+      <span class="badge live">Live</span>
+      <h3>AI FinOps Map</h3>
+      <p>Cost modeling for token-based pricing, PTU/reserved capacity, GPU amortization for self-hosted models, and chargeback patterns across cloud and on-prem.</p>
+    </a>
+
+  </div>
+
+  <div class="section-label">Cloud &amp; enterprise architecture</div>
+  <p class="section-note">General cloud infrastructure reference, not AI-specific.</p>
   <div class="grid">
 
     <a class="card" href="tools/cloud-service-mapper/index.html">
@@ -177,22 +201,70 @@
       <p>Translate capabilities and services across AWS, Azure, GCP, and OCI, plus a landing zone and foundational best-practices reference.</p>
     </a>
 
-    <a class="card" href="tools/ai-architecture-map/index.html">
+    <a class="card" href="tools/enterprise-architecture-map/index.html">
       <span class="badge live">Live</span>
-      <h3>AI Architecture Map</h3>
-      <p>RAG, document intelligence, agent orchestration (MCP/A2A), security, PHI/PII protection, observability, and disaster recovery. Toggle-style comparison between Azure-managed and self-hosted open-weight builds.</p>
+      <h3>Enterprise Architecture</h3>
+      <p>Capability modeling at a usable altitude, EA operating models and where each breaks down, and architecture governance that doesn't become a bottleneck.</p>
     </a>
 
-    <a class="card disabled" href="tools/ai-governance-map/index.html">
-      <span class="badge soon">Coming soon</span>
-      <h3>AI Governance Map</h3>
-      <p>Data foundation, governance layer, trusted outputs, and responsible AI controls mapped to concrete implementation, not just policy language.</p>
+  </div>
+
+  <div class="section-label">Planning &amp; diligence</div>
+  <p class="section-note">Decision records, roadmapping, vendor evaluation, and technical M&amp;A diligence.</p>
+  <div class="grid">
+
+    <a class="card" href="tools/adr-roadmapping/index.html">
+      <span class="badge live">Live</span>
+      <h3>ADRs &amp; Roadmapping</h3>
+      <p>What a good Architecture Decision Record contains, why one roadmap rarely serves both engineering and business audiences, and what gets a business case funded.</p>
     </a>
 
-    <a class="card disabled" href="tools/ai-finops-map/index.html">
-      <span class="badge soon">Coming soon</span>
-      <h3>AI FinOps Map</h3>
-      <p>Cost modeling for token-based pricing, PTU/reserved capacity, GPU amortization for self-hosted models, and chargeback patterns across cloud and on-prem.</p>
+    <a class="card" href="tools/vendor-evaluation/index.html">
+      <span class="badge live">Live</span>
+      <h3>Vendor Evaluation</h3>
+      <p>Weighted scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost.</p>
+    </a>
+
+    <a class="card" href="tools/technology-diligence-map/index.html">
+      <span class="badge live">Live</span>
+      <h3>Technology Diligence</h3>
+      <p>Technical debt signals, key-person risk, acquisition-specific security posture, integration complexity, and red flags that should stop or reprice a deal.</p>
+    </a>
+
+  </div>
+
+  <div class="section-label">General CTO practice</div>
+  <p class="section-note">The organizational and operating side of the role: reporting, incident response, org design, and decision frameworks.</p>
+  <div class="grid">
+
+    <a class="card" href="tools/board-reporting/index.html">
+      <span class="badge live">Live</span>
+      <h3>Board Reporting</h3>
+      <p>What actually works when reporting technology, security, and AI posture to a board, and the specific mistakes that undermine credibility.</p>
+    </a>
+
+    <a class="card" href="tools/incident-response/index.html">
+      <span class="badge live">Live</span>
+      <h3>Incident Response</h3>
+      <p>A blameless, repeatable incident process from detection through postmortem follow-through, with severity classification and common failure modes.</p>
+    </a>
+
+    <a class="card" href="tools/org-design/index.html">
+      <span class="badge live">Live</span>
+      <h3>Org Design</h3>
+      <p>Team topology patterns, interaction modes, and the span-of-control question that comes up in nearly every reorg conversation.</p>
+    </a>
+
+    <a class="card" href="tools/build-vs-buy/index.html">
+      <span class="badge live">Live</span>
+      <h3>Build vs Buy</h3>
+      <p>The criteria that actually decide a build-versus-buy debate, and the maintenance cost that rarely makes it into the initial proposal.</p>
+    </a>
+
+    <a class="card" href="tools/security-compliance-maturity/index.html">
+      <span class="badge live">Live</span>
+      <h3>Security &amp; Compliance Maturity</h3>
+      <p>A maturity ladder across the five NIST Cybersecurity Framework functions, scored on evidence rather than stated policy.</p>
     </a>
 
   </div>
