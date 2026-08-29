@@ -359,12 +359,12 @@
     <div class="stage-head">
       <span class="stage-num">Stage 10 &middot; cross-cutting</span>
       <h3>PHI &amp; PII data protection</h3>
-      <p>The technical control layer, not the compliance program. Policy, accountability, and audit ownership for regulated data live on the AI Governance Map; this is what actually enforces it in the pipeline.</p>
+      <p>The technical control layer, not the compliance program. Policy, accountability, and audit ownership for regulated data live on the AI Governance Map; this is what enforces it in the pipeline.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell azure">
         <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Language's PHI/PII detection (Text Analytics for Health) runs as a pipeline step before content reaches the index or the model's context window, redacting or tokenizing protected fields. Encryption at rest is on by default across Storage, Cosmos DB, and AI Search, with customer-managed keys via Key Vault where the regulatory requirement calls for it. Azure AI Search's document-level ACLs mean retrieval only ever surfaces chunks the requesting identity is actually authorized to see, not just what's topically relevant. A signed Business Associate Agreement with Microsoft is a precondition for PHI in Azure OpenAI or Foundry at all; confirm the specific deployed service is actually in scope for your BAA before sending PHI through it.</p>
+        <p>Azure AI Language's PHI/PII detection (Text Analytics for Health) runs as a pipeline step before content reaches the index or the model's context window, redacting or tokenizing protected fields. Encryption at rest is on by default across Storage, Cosmos DB, and AI Search, with customer-managed keys via Key Vault where the regulatory requirement calls for it. Azure AI Search's document-level ACLs mean retrieval only ever surfaces chunks the requesting identity is authorized to see, not just what's topically relevant. A signed Business Associate Agreement with Microsoft is a precondition for PHI in Azure OpenAI or Foundry at all; confirm the specific deployed service is in scope for your BAA before sending PHI through it.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label oss">Self-hosted / open-weight</span>
@@ -378,7 +378,7 @@
     <div class="stage-head">
       <span class="stage-num">Stage 11 &middot; cross-cutting</span>
       <h3>Observability &amp; evaluation</h3>
-      <p>Whether any of the above is actually working, and whether it's still working after the next model or index update.</p>
+      <p>Whether any of the above is working, and whether it's still working after the next model or index update.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell azure">
@@ -415,7 +415,7 @@
     <div class="stage-head">
       <span class="stage-num">Stage 13 &middot; cross-cutting</span>
       <h3>Capacity &amp; scaling</h3>
-      <p>The architecture question underneath cost: can this actually handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the AI FinOps Map; this is what determines whether capacity is even available to buy.</p>
+      <p>The architecture question underneath cost: can this handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the AI FinOps Map; this is what determines whether capacity is even available to buy.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell azure">
@@ -446,7 +446,7 @@
         <p>No managed lineage catalog. Typically DVC (Data Version Control) or a plain metadata table alongside the vector store, recording source document hash, ingestion timestamp, and which embedding model version produced each chunk's vector. Same alias-swap pattern as Azure for the vector store itself, just self-implemented: build a new collection, swap the pointer, retain the old collection for rollback.</p>
       </div>
     </div>
-    <div class="same-note">This is what actually ties disaster recovery and observability together. It's tempting to treat lineage as optional right up until an incident needs an answer to "which version produced this" and there isn't one.</div>
+    <div class="same-note">This is what ties disaster recovery and observability together. It's tempting to treat lineage as optional right up until an incident needs an answer to "which version produced this" and there isn't one.</div>
   </div>
 
 </main>

@@ -124,7 +124,7 @@
         <p>No managed billing hierarchy to lean on; attribution requires your own request-tagging at the application layer (which team or product initiated the call) correlated against GPU-hour cost allocated proportionally to usage. This is meaningfully more engineering work to build.</p>
       </div>
     </div>
-    <div class="same-note">The metric that actually matters in both environments is cost per unit of business value, cost per resolved support ticket, cost per underwriting decision, not cost per token or cost per GPU-hour. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
+    <div class="same-note">The metric that matters in both environments is cost per unit of business value, cost per resolved support ticket, cost per underwriting decision, not cost per token or cost per GPU-hour. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
@@ -139,7 +139,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Self-hosted / open-weight</span>
-        <p>No native billing-anomaly alerting since there's no per-token bill to watch. The equivalent signal is GPU utilization and request-rate anomalies via Prometheus alerting, an unusual spike in request volume or output length is the leading indicator you actually have.</p>
+        <p>No native billing-anomaly alerting since there's no per-token bill to watch. The equivalent signal is GPU utilization and request-rate anomalies via Prometheus alerting, an unusual spike in request volume or output length is the leading indicator you have.</p>
       </div>
     </div>
   </div>
@@ -156,7 +156,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Self-hosted / open-weight</span>
-        <p>Same principle, and arguably higher stakes: a smaller open-weight model (7B to 14B class) served efficiently can handle a large share of production traffic at a fraction of the GPU footprint a frontier-class open-weight model requires, if the task doesn't actually need frontier reasoning.</p>
+        <p>Same principle, and arguably higher stakes: a smaller open-weight model (7B to 14B class) served efficiently can handle a large share of production traffic at a fraction of the GPU footprint a frontier-class open-weight model requires, if the task doesn't need frontier reasoning.</p>
       </div>
     </div>
     <div class="same-note">This is the FinOps decision most teams skip because it requires an evaluation harness to prove the cheaper model is good enough, and building that harness feels like overhead. It almost always pays for itself faster than infrastructure optimization does.</div>

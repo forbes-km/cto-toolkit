@@ -68,7 +68,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Governance Map</h1>
-  <p>Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what actually breaks without them and which regulatory frameworks require them.</p>
+  <p>Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them.</p>
   <div class="caveat">This is the technical and organizational governance layer. Legal review of applicable regulation for your specific jurisdiction and use case is not a substitute this page provides; treat the regulatory mapping table as a starting point for that conversation, not the conversation itself.</div>
 </header>
 
@@ -86,7 +86,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>NIST AI RMF's Map function starts here: you cannot assess risk in a system whose inputs you cannot trace. Without this layer, an incident investigation cannot answer &quot;where did this bad output actually come from,&quot; which is the first question any regulator or auditor asks.</p>
+        <p>NIST AI RMF's Map function starts here: you cannot assess risk in a system whose inputs you cannot trace. Without this layer, an incident investigation cannot answer &quot;where did this bad output come from,&quot; which is the first question any regulator or auditor asks.</p>
       </div>
     </div>
   </div>
@@ -120,7 +120,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>A confidence score without a documented threshold policy is not a control, it's a number nobody acts on consistently. This layer is what regulators and auditors actually ask to see evidence of; it needs to produce artifacts (logs, rubric scores), not just exist as a design intention.</p>
+        <p>A confidence score without a documented threshold policy is not a control, it's a number nobody acts on consistently. This layer is what regulators and auditors ask to see evidence of; it needs to produce artifacts (logs, rubric scores), not just exist as a design intention.</p>
       </div>
     </div>
   </div>
@@ -154,7 +154,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>The single most common gap: a team can name the model they deployed in January but not confirm what's actually running in production today after three silent provider-side updates. If you cannot answer &quot;which exact model version produced this output,&quot; you cannot investigate an incident or defend a decision.</p>
+        <p>The single most common gap: a team can name the model they deployed in January but not confirm what's running in production today after three silent provider-side updates. If you cannot answer &quot;which exact model version produced this output,&quot; you cannot investigate an incident or defend a decision.</p>
       </div>
     </div>
   </div>
@@ -162,7 +162,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Regulatory framework mapping</h3>
-      <p>Which control layer above actually satisfies which framework's requirement. Not legal advice; confirm applicability with counsel for your specific use case and jurisdiction.</p>
+      <p>Which control layer above satisfies which framework's requirement. Not legal advice; confirm applicability with counsel for your specific use case and jurisdiction.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -180,7 +180,7 @@
     <div class="stage-head">
       <span class="stage-num">Accountability</span>
       <h3>Accountability &amp; audit trail</h3>
-      <p>Who actually signs off on an AI system going live, and what gets logged so that decision can be reconstructed later.</p>
+      <p>Who signs off on an AI system going live, and what gets logged so that decision can be reconstructed later.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
