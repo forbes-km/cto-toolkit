@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Principles Library</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Architecture Principles Library</h1>
+  <p>Fifteen principles with the reasoning, the trade-off it forces, a worked example of how it shows up in a decision, and the signs it's being misapplied.</p>
+  <div class="caveat">Fifteen principles that have held up across real engagements. Adopt half, adapt some, reject others, a smaller set held seriously is worth more than a longer list held loosely. Track exceptions: zero exceptions means a principle is unused or undertested, too many means it's no longer a principle.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>What makes a principle worth having</h3>
+      <p>Most architecture principles are bad: generic ("we will be agile"), self-serving ("we prefer our favorite technology"), or untestable ("we will deliver business value"). A useful principle has four properties.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Names a specific trade-off the organization has chosen</li>
+          <li>Is defensible against its opposite</li>
+          <li>Produces different decisions than its absence would</li>
+          <li>Comes with examples of when it was applied and what was given up as a result</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider" style="margin: 24px 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 600;">Strategic</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P1</span>
+      <h3>Buy before build, build only where differentiation justifies the cost</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Most software the organization needs has already been built by someone else. Building it again produces ongoing maintenance costs for software that doesn't differentiate the business.</p>
+        <p><strong>Trade-off:</strong> Loss of control over roadmap and feature set. Accepted for commodity capabilities, rejected for differentiating ones.</p>
+        <p><strong>Worked example:</strong> Customer identity management is commodity, adopt a commercial platform. Fraud detection for a specific transaction pattern is differentiating, build it.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Everything gets classified as differentiating to justify building. The cure is making someone name the differentiation concretely.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P2</span>
+      <h3>Pay down technical debt continuously, not in campaigns</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Debt accumulates continuously. Campaigns to address it are always disruptive, under-scoped, and insufficient.</p>
+        <p><strong>Trade-off:</strong> Feature velocity appears lower in the short term because capacity is visibly allocated away from new work.</p>
+        <p><strong>Worked example:</strong> Delivery teams allocate 15 to 20 percent of sprint capacity to debt items, owned by engineering, informed to product.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> The allocation becomes theoretical; sprint reviews consistently show 100 percent feature work.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P3</span>
+      <h3>Make reversible decisions quickly; reserve slow deliberation for the irreversible</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Treating all decisions with the same process produces either dangerous speed on the irreversible or pointless bureaucracy on the reversible.</p>
+        <p><strong>Trade-off:</strong> Some decisions are harder to classify than the principle implies; the organization has to develop judgment about what's reversible in its context.</p>
+        <p><strong>Worked example:</strong> A logging library choice is reversible, the team picks and moves. A primary data platform is not reversible within a reasonable timeframe, it goes through review with ADR documentation.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams classify inconvenient decisions as irreversible to defer them, or reversible to avoid oversight. The test: what does it cost in time and money to change this in 18 months?</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P4</span>
+      <h3>Prefer loose coupling between autonomous teams over tight integration</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Tight coupling between systems produces tight coupling between the teams that own them, and destroys both the system's and the team's autonomy over time.</p>
+        <p><strong>Trade-off:</strong> Loose coupling costs more to build initially; interfaces take design effort that a shared database doesn't.</p>
+        <p><strong>Worked example:</strong> The Order team calls the Customer service's API rather than reading the Customer database directly. The Customer team can refactor storage without coordinating with Order.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams paper over coupling with facades that still expose the underlying structure. Test: if the upstream team changes its implementation, does the downstream code break?</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider" style="margin: 24px 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 600;">Technical</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P5</span>
+      <h3>Failure is the default state; design for it</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> At any non-trivial scale, something is always failing. Systems designed assuming components work experience their first real failure as an outage.</p>
+        <p><strong>Trade-off:</strong> Upfront complexity; designing for failure takes real thought and adds code paths.</p>
+        <p><strong>Worked example:</strong> The order placement service, when the fraud service is unavailable, falls back to rule-based scoring rather than refusing orders. Flagged orders get deferred review.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Retries and fallbacks added without thinking through cascade effects; retry storms that take down dependencies are worse than the original failure.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P6</span>
+      <h3>Observability is a first-class concern, not an afterthought</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Systems not designed to be observed are systems whose behavior is a mystery in production, and the cost of instrumenting retroactively is higher than instrumenting from the start.</p>
+        <p><strong>Trade-off:</strong> Instrumentation is real code that must be maintained; noisy instrumentation is worse than none.</p>
+        <p><strong>Worked example:</strong> Every service produces request logs with correlation IDs, metrics on the operations that matter most, and traces covering cross-service flows, specified alongside functional requirements.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams log everything, measure nothing, and produce dashboards nobody reads. The cure: for each piece of instrumentation, ask what decision it supports.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P7</span>
+      <h3>Prefer convention over configuration; prefer explicit over implicit</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Configuration without convention produces infinite surface area. Convention without explicit seams produces invisible magic.</p>
+        <p><strong>Trade-off:</strong> The organization must invest in establishing and evolving conventions, ongoing work that drifts into inconsistency without it.</p>
+        <p><strong>Worked example:</strong> All services log in a common format and expose health/metrics on conventional paths. A service deviating for regulatory reasons documents why, explicitly.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Conventions are stated but not enforced; new services do whatever their authors prefer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P8</span>
+      <h3>Automate what gets done more than twice</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Manual work is error-prone, non-repeatable, and invisible. The person doing it is a bottleneck and a knowledge concentration point.</p>
+        <p><strong>Trade-off:</strong> Automation costs more than doing the thing once; the 'more than twice' rule calibrates when that cost is worth paying.</p>
+        <p><strong>Worked example:</strong> New developer environment setup was a 3-day manual process. After the second hire it became a script; after the fifth, a one-click pipeline.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Automation becomes an end in itself; teams automate one-off work and produce scripts no one else uses.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider" style="margin: 24px 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 600;">Data</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P9</span>
+      <h3>Data has an authoritative source; other copies are derived, not parallel</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Parallel sources of truth always diverge, usually not discovered until a reconciliation problem surfaces in production.</p>
+        <p><strong>Trade-off:</strong> The authoritative source becomes a hard dependency for every downstream consumer; its availability matters more than in a distributed-truth design.</p>
+        <p><strong>Worked example:</strong> Customer contact information is authoritative in the CRM; Marketing receives it via streaming replica; Billing queries CRM directly. Nobody has their own editable copy.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Two teams claim authoritative ownership of overlapping data; reconciliation scripts appear. The cure is naming a single owner and migrating the other to consumer status.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P10</span>
+      <h3>Data models reflect domain reality, not system convenience</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Data outlives systems. A model shaped by today's storage technology will be wrong when the technology changes, which it will.</p>
+        <p><strong>Trade-off:</strong> Domain-driven models are sometimes less efficient for the current storage technology than technology-optimized ones would be.</p>
+        <p><strong>Worked example:</strong> The order model captures business concepts, order, line item, party, event, because those concepts are stable, regardless of the underlying storage engine.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> The model has fields named for technical conventions (is_deleted, legacy_status_code) that pollute the domain. The cure is separating domain model from storage model.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P11</span>
+      <h3>Classify data by sensitivity before any other decision</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Retrofitting sensitivity controls is more expensive than building them in; systems that move data without awareness of sensitivity produce the gaps that show up in breach postmortems.</p>
+        <p><strong>Trade-off:</strong> Classification requires ongoing organizational discipline, every system handling data must know what classification applies.</p>
+        <p><strong>Worked example:</strong> Customer purchase history is classified Restricted. A log entry including purchase history is subject to Restricted-level controls even if the producing system wouldn't otherwise be.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Classification exists on paper but isn't wired into actual controls. The cure is instrumenting classification into specific enforcement (encryption, access logging).</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider" style="margin: 24px 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 600;">People &amp; process</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P12</span>
+      <h3>The team that builds runs, or the runbook doesn't exist</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Build-only teams produce systems that are hard to operate because they don't experience the operational cost; run-only teams receive systems they can't confidently change.</p>
+        <p><strong>Trade-off:</strong> Asking build teams to operate adds real ongoing work; the alternative cost of operational-ownership confusion is larger, but this isn't a free lunch.</p>
+        <p><strong>Worked example:</strong> A product team building a customer-facing service is on-call for it. If responsibility transfers to a central ops team, the transfer includes validated runbooks and paired on-call for 90 days.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams claim to operate but delegate incidents upward constantly. The cure is staffing and training to the operational responsibility, not softening the principle.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P13</span>
+      <h3>Decisions are recorded; rationale is part of the decision</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> The reasoning behind a decision is usually the most valuable artifact, and the one most frequently lost.</p>
+        <p><strong>Trade-off:</strong> Writing a good rationale takes real effort, most teams underestimate how much.</p>
+        <p><strong>Worked example:</strong> An event-driven integration decision is recorded as an ADR including alternatives considered, why the chosen path won, and what would trigger revisiting it.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> ADRs exist but are written as announcements rather than reasoning. 'We will use X' with no explanation of what was rejected is a memo, not an ADR.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P14</span>
+      <h3>Small, stable teams outperform large, dynamic ones for complex work</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Architectural work compounds on team context. A team that's operated a system for two years makes better decisions about it than one assembled three weeks ago.</p>
+        <p><strong>Trade-off:</strong> Stable teams are harder to scale up rapidly for new initiatives; the organization has to plan for this rather than throwing people at problems.</p>
+        <p><strong>Worked example:</strong> The team owning customer identity has a core of four engineers with two-plus years on it. New engineers onboard over three to six months, not three weeks.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Team composition changes frequently, no one's been on the team more than six months. The cure is slowing the churn, not asking teams to document more.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">P15</span>
+      <h3>Measure what matters; do not optimize what is merely easy to measure</h3>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Rationale:</strong> Goodhart's law applies to architecture: when a measure becomes a target, it stops being a good measure. Easy proxies produce organizations that look healthy while failing at what matters.</p>
+        <p><strong>Trade-off:</strong> Measures that matter are harder to collect and slower to move; the temptation to substitute easy proxies is constant.</p>
+        <p><strong>Worked example:</strong> Instead of 'reviews conducted,' measure 'percentage of significant initiatives with early architecture engagement,' which requires judgment but reflects reality.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Dashboards show green metrics while the function is widely considered unhelpful. The cure: ask what consumers of the work would say is getting better or worse.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">When principles conflict</span>
+      <h3>Conflict is a feature, not a bug</h3>
+      <p>Principles conflict. The conflict surfaces a genuine trade-off; three approaches help resolve it in practice.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li><strong>State the specific conflict.</strong> "These sometimes conflict" is useless; "P1 conflicts with P4 here because the commercial product creates tight coupling with our existing systems" is resolvable.</li>
+          <li><strong>Identify which principle the context prioritizes.</strong> A regulatory system might privilege data classification over decision speed; a greenfield product might privilege the reverse. Neither is wrong, the context matters.</li>
+          <li><strong>Record the resolution</strong> in the ADR. Future decisions in similar contexts have precedent to draw on.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Adopt what's defensible in your specific context; a principle nobody references in a real decision is wall decoration, not a principle.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EA Maturity Assessment</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>EA Maturity Assessment</h1>
+  <p>A structured baseline across six dimensions of <a href="../enterprise-architecture-map/index.html">enterprise architecture</a> maturity, with a working scoring calculator and the diagnostic patterns that show up when specific dimensions diverge from each other.</p>
+  <div class="caveat">This calculator implements the real six-dimension framework and scoring scale. The full facilitator guide covers running a proper multi-scorer assessment, reconciliation sessions, and building a twelve-month roadmap from the result, available through direct engagement.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>What this assessment is for</h3>
+      <p>Produces two things and nothing more: a defensible baseline across six dimensions, and a starting position for a twelve-month improvement plan. It doesn't produce a grade.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Most useful when</span>
+        <ul><li>A new EA leader takes over the function</li><li>An organization is deciding whether to invest in EA at all</li><li>An established function has plateaued and needs a structured look at why</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The scoring scale</span>
+        <ul><li><strong>1, Absent:</strong> no recognizable version exists</li><li><strong>2, Emerging:</strong> exists in pockets, driven by specific individuals, not reliably available</li><li><strong>3, Defined:</strong> named, documented, applied consistently in most cases</li><li><strong>4, Managed:</strong> measured, reviewed, improves in response to data</li><li><strong>5, Optimized:</strong> integrated into business decision-making with evidence of enterprise-wide impact</li></ul>
+      </div>
+    </div>
+    <div class="same-note">Most functions should target 3 to 4 across all six, not 5 everywhere. A 5 in every dimension usually signals over-investment relative to actual risk, not genuine excellence.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The six dimensions</h3>
+      <p>Each answers a different question about the function. A function can be strong in one and weak in another; that unevenness is the useful signal, not noise to average away.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Dimension</th><th>What it asks</th></tr>
+          <tr><td>Strategy Alignment</td><td>Does EA's work connect to the strategy the enterprise is pursuing? The dimension most commonly rated optimistically.</td></tr>
+          <tr><td>Governance</td><td>Are architectural decisions made through a process that scales, with exceptions tracked and reviews credible to delivery teams?</td></tr>
+          <tr><td>Domain Coverage</td><td>Does the function cover the domains EA should cover, or is it a strong application-architecture function playing above its weight class?</td></tr>
+          <tr><td>Delivery Integration</td><td>Does EA produce better decisions in delivery, or operate as a parallel track delivery works around?</td></tr>
+          <tr><td>Talent &amp; Operating Model</td><td>Is the function organized to be sustainable: roles, succession, sponsor relationships, demand management?</td></tr>
+          <tr><td>Artifacts &amp; Tooling</td><td>Does the function maintain what it produces, at a cost proportionate to the value? Scored last and carefully; the easiest dimension to over-invest in.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score your own function</h3>
+      <p>Rate each dimension 1 to 5. Runs entirely in your browser; nothing is sent anywhere or stored. For a real assessment, score independently across 2 to 4 scorers before reconciling, per the facilitator guidance below, this calculator is for a single scorer's pass.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="eam-inputs"></div>
+        <button id="eam-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate maturity score</button>
+        <div id="eam-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const eamDimensions = [
+      "Strategy Alignment",
+      "Governance",
+      "Domain Coverage",
+      "Delivery Integration",
+      "Talent & Operating Model",
+      "Artifacts & Tooling"
+    ];
+    const eamInputsEl = document.getElementById('eam-inputs');
+    eamDimensions.forEach((dim, i) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
+      const label = document.createElement('span');
+      label.textContent = dim;
+      label.style.cssText = 'font-size:13px; color:var(--ink);';
+      const select = document.createElement('select');
+      select.id = 'eam-dim-' + i;
+      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink);';
+      [1,2,3,4,5].forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = 'Level ' + v;
+        if (v === 3) opt.selected = true;
+        select.appendChild(opt);
+      });
+      row.appendChild(label);
+      row.appendChild(select);
+      eamInputsEl.appendChild(row);
+    });
+
+    document.getElementById('eam-calc').addEventListener('click', () => {
+      const scores = {};
+      eamDimensions.forEach((dim, i) => {
+        scores[dim] = parseInt(document.getElementById('eam-dim-' + i).value, 10);
+      });
+      const vals = Object.values(scores);
+      const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+      const weakestDim = Object.keys(scores).reduce((a, b) => (scores[b] < scores[a] ? b : a));
+
+      // Real diagnostic patterns from the facilitator guide
+      const patterns = [];
+      if (scores["Governance"] >= 4 && scores["Delivery Integration"] <= 2) {
+        patterns.push("Strong Governance, weak Delivery Integration: a common sign of mistaking an architecture review board for architecture practice. The fix is moving engagement earlier in the lifecycle.");
+      }
+      if (scores["Artifacts & Tooling"] >= 4 && scores["Strategy Alignment"] <= 2) {
+        patterns.push("Strong Artifacts, weak Strategy Alignment: common in functions that have been captured by IT. The fix is upstream sponsorship and deliberate work with business stakeholders.");
+      }
+      if (scores["Strategy Alignment"] >= 4 && scores["Talent & Operating Model"] <= 2) {
+        patterns.push("Strong Strategy Alignment, weak Talent and Operating Model: often means the function is carried by one or two talented individuals. A vulnerability, not a strength. The fix is role definition and succession planning.");
+      }
+      if (vals.every(v => v <= 2)) {
+        patterns.push("Uniformly low scores: the function is still in formation. Focus the roadmap on establishing two or three practices well, rather than raising everything by half a point at once.");
+      }
+
+      let patternHtml = '';
+      if (patterns.length > 0) {
+        patternHtml = '<div style="margin-top:10px; font-size:13px; line-height:1.6;"><strong>Pattern detected:</strong><ul style="margin:6px 0 0; padding-left:18px;">' +
+          patterns.map(p => '<li>' + p + '</li>').join('') + '</ul></div>';
+      }
+
+      const resultEl = document.getElementById('eam-result');
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
+        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5.</strong> The average is the least interesting number here; the shape of the six scores is where the real signal is.<br>' +
+        'Lowest-scoring dimension: <strong>' + weakestDim + '</strong> at Level ' + scores[weakestDim] + '.' +
+        patternHtml +
+        '</div>';
+    });
+  </script>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Running it as a real assessment</h3>
+      <p>This page's calculator is a single-scorer pass. A real assessment is deliberately multi-evaluator, same principle as the vendor scorecard, for the same reason.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Select scorers</span>
+        <p>The EA leader scores, plus two to four others selected for angle of view, not seniority: a senior delivery leader, a business sponsor who consumes EA output, an outside solution architect, optionally a prior EA leader. Avoid scorers who have a position to defend.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Score, then reconcile</span>
+        <p>Each scorer completes the assessment independently, same briefing, same scale, no discussion, forty-five minutes. Then a ninety-minute session, dimension by dimension: where scores diverge by more than one point, discuss it. The discussion is the data, and persistent divergence is itself a finding worth preserving, not something to average away.</p>
+      </div>
+    </div>
+    <div class="same-note">The overall average is the least interesting number in the assessment, useful for trending year over year, not for conclusions in any single pass. Individual indicators scored 1 or 2 are what a roadmap should be built around.</div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. A single-scorer pass is a starting point, not a substitute for the multi-evaluator process described above.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
+</footer>
+
+</body>
+</html>

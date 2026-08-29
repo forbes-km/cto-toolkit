@@ -91,6 +91,76 @@
       </div>
     </div>
   </div>
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Plot your own stakeholders</h3>
+      <p>Add a name and score influence and interest 1 to 5 each. The quadrant and strategy are computed automatically, same thresholds as above: 1 to 2 is low, 3 to 5 is high on both axes. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:flex; gap:8px; align-items:center; margin-bottom:14px; flex-wrap:wrap;">
+          <input id="sh-name" type="text" placeholder="Name or role" style="flex:1; min-width:140px; padding:7px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--ui); font-size:13px;">
+          <label style="font-size:12.5px;">Influence
+            <select id="sh-influence" style="padding:6px 8px; border:1px solid var(--line); border-radius:6px; font-family:var(--ui); font-size:13px;">
+              <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </label>
+          <label style="font-size:12.5px;">Interest
+            <select id="sh-interest" style="padding:6px 8px; border:1px solid var(--line); border-radius:6px; font-family:var(--ui); font-size:13px;">
+              <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </label>
+          <button id="sh-add" style="padding:8px 16px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Add</button>
+        </div>
+        <div id="sh-grid" style="display:grid; grid-template-columns: 90px 1fr 1fr; grid-template-rows: auto 1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; font-size:12px;">
+          <div style="background:var(--paper);"></div>
+          <div style="background:var(--paper); padding:8px; text-align:center; font-weight:600; color:var(--ink-soft);">Low interest (1-2)</div>
+          <div style="background:var(--paper); padding:8px; text-align:center; font-weight:600; color:var(--ink-soft);">High interest (3-5)</div>
+          <div style="background:var(--paper); padding:8px; writing-mode:vertical-rl; text-align:center; font-weight:600; color:var(--ink-soft);">High influence (3-5)</div>
+          <div id="sh-q-keepsatisfied" style="background:white; padding:10px; min-height:80px;"></div>
+          <div id="sh-q-manageclosely" style="background:white; padding:10px; min-height:80px;"></div>
+          <div style="background:var(--paper); padding:8px; writing-mode:vertical-rl; text-align:center; font-weight:600; color:var(--ink-soft);">Low influence (1-2)</div>
+          <div id="sh-q-monitor" style="background:white; padding:10px; min-height:80px;"></div>
+          <div id="sh-q-keepinformed" style="background:white; padding:10px; min-height:80px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const shStakeholders = [];
+    function shQuadrant(influence, interest) {
+      const highInf = influence >= 3;
+      const highInt = interest >= 3;
+      if (highInf && highInt) return { key: 'manageclosely', label: 'Manage Closely' };
+      if (highInf && !highInt) return { key: 'keepsatisfied', label: 'Keep Satisfied' };
+      if (!highInf && highInt) return { key: 'keepinformed', label: 'Keep Informed' };
+      return { key: 'monitor', label: 'Monitor' };
+    }
+    function shRender() {
+      ['manageclosely','keepsatisfied','keepinformed','monitor'].forEach(key => {
+        document.getElementById('sh-q-' + key).innerHTML = '';
+      });
+      shStakeholders.forEach(s => {
+        const q = shQuadrant(s.influence, s.interest);
+        const el = document.getElementById('sh-q-' + q.key);
+        const chip = document.createElement('div');
+        chip.style.cssText = 'font-size:12px; padding:3px 0; color:var(--ink);';
+        chip.textContent = s.name + ' (I:' + s.influence + ' / In:' + s.interest + ')';
+        el.appendChild(chip);
+      });
+    }
+    document.getElementById('sh-add').addEventListener('click', () => {
+      const nameEl = document.getElementById('sh-name');
+      const name = nameEl.value.trim();
+      if (!name) return;
+      const influence = parseInt(document.getElementById('sh-influence').value, 10);
+      const interest = parseInt(document.getElementById('sh-interest').value, 10);
+      shStakeholders.push({ name, influence, interest });
+      nameEl.value = '';
+      shRender();
+    });
+  </script>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
@@ -147,6 +217,8 @@
 
 <footer>
   Reference only. Stakeholder positioning shifts as an initiative progresses; treat this as a starting map to revisit, not a one-time exercise.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
 </footer>
 
 </body>

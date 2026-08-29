@@ -70,97 +70,173 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Enterprise Architecture</h1>
-  <p>A preview of the operating-model concepts underneath the full EA methodology: capability modeling, EA operating models, and architecture governance that doesn't become a bottleneck.</p>
-  <div class="caveat">This page covers the concepts. The named artifacts, Business Capability Model, Operating Model Canvas, EA Operating Model, Architecture Review Operating Model, a 14-principle library, and a six-dimension EA Maturity Assessment, are full workbooks available through direct engagement.</div>
+  <p>What EA is and isn't, how it differs from domain and solution architecture, the structural rules a capability model has to follow to stay useful, the six-dimension operating model canvas, how the EA function itself should run, and the five ways EA functions fail.</p>
+  <div class="caveat">Business Capability Model, Operating Model Canvas, EA Operating Model, Architecture Review Operating Model, Architecture Principles Library, and <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a> are all real, field-tested workbooks with full facilitation guides, templates, and worked examples available through direct engagement. This page previews the reasoning and structure of each, not the complete deliverable.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">In the full toolkit</span>
-      <h3>Named artifacts this page previews</h3>
-      <p>Six specific instruments, not just the general concepts below.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <ul>
-          <li><strong>EA Definition</strong>, a working definition of what enterprise architecture is and isn't, used to frame scope before the rest applies</li>
-          <li><strong>Business Capability Model</strong>, the anchor artifact roadmaps, investment cases, and operating model work all reference back to</li>
-          <li><strong>Operating Model Canvas</strong>, a one-page diagnostic covering accountability, workflow, decision rights, information, technology, and locations</li>
-          <li><strong>EA Operating Model</strong>, how the architecture function itself should be structured, staffed, and operated</li>
-          <li><strong>Architecture Review Operating Model</strong>, a governance model that engages delivery teams early rather than approving late</li>
-          <li><strong>Architecture Principles Library</strong>, fourteen strategic, technical, data, and people/process principles, each with the reasoning behind it</li>
-          <li><strong>EA Maturity Assessment</strong>, a six-dimension scoring instrument with a facilitator guide for running it honestly</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Framework</span>
-      <h3>Capability modeling, three levels deep</h3>
-      <p>The foundation everything else in enterprise architecture sits on. If the capability model is wrong or too granular to be useful, nothing built on top of it holds up.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <table class="matrix-table">
-          <tr><th>Level</th><th>Definition</th><th>Example</th></tr>
-          <tr><td>L0: Business capability</td><td>What the business does, independent of how, expressed as a noun phrase, not a process</td><td>Customer Onboarding</td></tr>
-          <tr><td>L1: Sub-capability</td><td>The distinct components a capability breaks into, still technology-agnostic</td><td>Identity Verification, Account Provisioning, Welcome Communication</td></tr>
-          <tr><td>L2: Capability-to-system mapping</td><td>Which actual systems currently deliver each sub-capability, where the model becomes actionable</td><td>Identity Verification delivered by a specific KYC vendor plus an internal rules engine</td></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
       <span class="stage-num">1</span>
-      <h3>Why most capability models fail</h3>
-      <p>Not from lack of effort. From being built at the wrong altitude or never maintained after the initial workshop.</p>
+      <h3>What enterprise architecture is</h3>
+      <p>The discipline of shaping how an organization operates: translating strategy into the capabilities, processes, information, and technology required to execute it, and governing how those elements evolve together.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">The failure</span>
-        <p>A capability map with 200 or more entries, built once in a two-day workshop, stored in a document nobody opens again. Too granular to reason about at a leadership level, too static to reflect a system landscape that changes monthly.</p>
+        <span class="env-label a">Is</span>
+        <p>The unit of analysis is the enterprise as an operating system. Business capabilities define what the organization does; the operating model defines how those capabilities are delivered; technology exists to support that operating model. When EA works, technology decisions follow from capability decisions, and capability decisions follow from strategy.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">What works instead</span>
-        <p>Roughly 20 to 40 L0/L1 capabilities, reviewed and updated quarterly as part of an existing planning cadence rather than as a standalone exercise, with the L2 system mapping treated as the layer that changes most often and the L0/L1 layer treated as comparatively stable.</p>
+        <span class="env-label b">Is not</span>
+        <ul><li>A documentation function; the goal is future-state decisions, not a current-state inventory</li><li>A technology review board; approving individual selections is narrow governance, not the discipline itself</li><li>A framework exercise; TOGAF and Zachman are vocabularies, not the work</li><li>A long-range planning department; EA is distinct in owning the linkage between strategic intent and operational reality across domains</li></ul>
       </div>
     </div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
-      <h3>EA operating model</h3>
-      <p>How the architecture function itself is structured relative to the engineering organization it serves.</p>
+      <h3>Enterprise, domain, and solution architecture</h3>
+      <p>Three disciplines answering different questions at different scopes. Work done at the wrong scope either stalls (too broad for the problem) or creates debt (too narrow for the implication).</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Centralized</span>
-        <p>A single EA team owns architecture decisions and review across the company. Strong consistency, but becomes a bottleneck and loses touch with implementation detail as the engineering org scales past what one team can stay close to.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Federated / embedded</span>
-        <p>Architects sit inside or alongside product engineering teams, with a lightweight central function for cross-cutting standards and review. Faster decisions, closer to implementation reality, but consistency requires deliberate effort (a shared decision log, a standards forum) rather than happening automatically.</p>
+        <table class="matrix-table">
+          <tr><th></th><th>Enterprise</th><th>Domain</th><th>Solution</th></tr>
+          <tr><td>Scope</td><td>The organization as a whole</td><td>A specific capability or technology domain</td><td>A single initiative, product, or system</td></tr>
+          <tr><td>Primary question</td><td>How should the organization operate and evolve to deliver on strategy?</td><td>How should this domain be structured and advanced over time?</td><td>How do we design and deliver this specific solution?</td></tr>
+          <tr><td>Time horizon</td><td>Three to five years, rolling</td><td>One to three years</td><td>Weeks to months</td></tr>
+          <tr><td>Failure mode</td><td>Drifts into abstraction, loses connection to delivery</td><td>Becomes a rubber-stamp review function rather than a design discipline</td><td>Optimizes locally at the expense of the broader portfolio</td></tr>
+        </table>
       </div>
     </div>
-    <div class="same-note">Hub-and-spoke, the federated model with a genuinely lightweight hub, is the most common landing point for organizations past roughly 200 engineers. Purely centralized rarely survives that scale; purely embedded without any hub tends to drift into inconsistent standards within 12 to 18 months.</div>
+    <div class="same-note">When the handoffs between the three work, the organization delivers faster with less rework. When they break, EA loses credibility and solution architects reinvent foundational decisions on every project.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
-      <h3>Architecture governance without becoming a bottleneck</h3>
-      <p>The tension every EA operating model has to resolve: enough oversight to catch real risk, not so much that teams route around it.</p>
+      <h3>Business Capability Model: the structural rules</h3>
+      <p>A hierarchical, business-led view of what the organization does, independent of process or technology. Violating these rules loses credibility quickly; they are not style preferences.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">What works</span>
-        <p>A lightweight architecture review triggered by objective criteria (a new external dependency, a new data store, anything touching regulated data, anything with a five-figure or larger ongoing cost), not by an architect's subjective judgment call applied inconsistently across teams.</p>
+        <span class="env-label a">The rules</span>
+        <ul><li>Capabilities are nouns, not verbs: <em>Customer Onboarding</em>, not <em>Onboard Customers</em>. Verb phrases slide toward process, which varies by business unit and time.</li><li>MECE at each level: child capabilities are mutually exclusive and collectively exhaustive under their parent</li><li>Three levels is usually enough, four is the ceiling; Level 1 is 8 to 12 capabilities, Level 2 decomposes each into 3 to 8</li><li>The business owns the model; EA facilitates. A model that can't survive a conversation with the COO is an IT artifact with capability labels, not a capability model</li></ul>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">What backfires</span>
-        <p>Requiring review for every change regardless of size or risk. This is the same failure mode as the HITL queue-overload problem on the <a href="../ai-architecture-map/index.html">Architecture Map</a>: when the gate catches everything, reviewers start rubber-stamping, and the review stops catching anything that matters.</p>
+        <span class="env-label b">Common failure modes</span>
+        <ul><li>The model that's really an org chart, and breaks the next time the org restructures</li><li>The model that reads like a process map, verb phrases and sequential flow</li><li>The model nobody owns, drifting from reality within two reorganizations</li><li>The model used only for IT planning, never referenced in a business investment conversation</li></ul>
+      </div>
+    </div>
+    <div class="same-note">Method note: a defensible Level 1 and Level 2 model takes six to eight weeks for an organization of moderate complexity, most of it workshop time with business owners, not desk research.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Operating Model Canvas: six dimensions</h3>
+      <p>A one-page view of how a capability is delivered. Makes an operating model that's normally invisible, living in heads and habits, explicit enough to reason about in one conversation.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Dimension</th><th>Question</th></tr>
+          <tr><td>Accountability</td><td>Who is accountable for the outcomes this capability produces? Not activity, a small number of named roles.</td></tr>
+          <tr><td>Workflow</td><td>How does work flow from initiation to completion? Main path and significant variants.</td></tr>
+          <tr><td>Decision rights</td><td>What decisions get made here, and who makes them? The dimension most often left underspecified.</td></tr>
+          <tr><td>Information</td><td>What does the capability consume, produce, and rely on? Where is the authoritative source?</td></tr>
+          <tr><td>Technology</td><td>What systems enable the capability? Where are the load-bearing manual workarounds?</td></tr>
+          <tr><td>Locations</td><td>Where is work performed, by whom, under what arrangement? Internal vs. external, geographic distribution.</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">Five diagnostic patterns show up repeatedly once a canvas is complete: accountability-workflow mismatch (the accountable role doesn't control the critical path), decision rights vacuum (significant decisions have no clear owner), information authority ambiguity (two systems both claim to be the source of truth), technology-workflow inversion (process steps exist because the system requires them, not because they add value), and location-decision rights mismatch (decisions made where the work can't be observed).</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>What the EA function provides, and what it deliberately doesn't</h3>
+      <p>Naming the boundary explicitly is what keeps a function from diluting its capacity trying to do everything asked of it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Provides</span>
+        <ul><li>Decision support on significant technology choices (platform selection, build-vs-buy)</li><li>Target-state design for material, multi-team initiatives</li><li>Standards and reference material</li><li>Architecture review</li><li>Capability and portfolio guidance</li><li>Escalation target for cross-team architectural disagreements</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Does not provide</span>
+        <ul><li>Operational firefighting; production incidents go to the teams that own the affected systems</li><li>Individual engineering decisions within an established architecture</li><li>Delivery or program management</li><li>Resolution of organizational or political problems dressed as technology questions</li></ul>
+      </div>
+    </div>
+    <div class="same-note">The test for any EA activity: name a specific decision it will improve, and how. If no decision can be named, the activity probably doesn't belong in the function.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Roles and capacity allocation</h3>
+      <p>A rough guide for full-time architects. The specific percentages matter less than the discipline of allocating deliberately rather than letting whatever's loudest consume all of it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Roles</span>
+        <ul><li><strong>Head of EA:</strong> owns the operating model and the CIO/CTO relationship; still practices architecture, doesn't just lead</li><li><strong>Principal Architects:</strong> own the most significant decisions; scarce, and the function's effectiveness tracks how well their time is protected</li><li><strong>Domain Architects:</strong> the authoritative voice within a specific domain (data, security, integration)</li><li><strong>Solution Architects:</strong> the practical interface between EA and delivery teams</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Capacity, steady state</span>
+        <ul><li>30 to 40 percent: direct engagements</li><li>20 to 25 percent: review and consultation</li><li>15 to 20 percent: function-level work (standards, reference material)</li><li>10 to 15 percent: learning and development</li><li>10 to 15 percent: organizational overhead</li></ul>
+      </div>
+    </div>
+    <div class="same-note">Architects at 100 percent direct engagement and 0 percent function-level work means the function is cannibalizing its own future. The reverse means it isn't producing value today. Neither is sustainable.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Demand management</h3>
+      <p>The single most common EA failure mode is unmanaged demand: every ask accepted, capacity consumed by whoever escalates loudest. A single intake channel with real triage is the fix.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Triage outcomes</span>
+        <ul><li><strong>Accept:</strong> within scope, staffed, given a priority and expected timeline</li><li><strong>Redirect:</strong> not EA scope, pointed to the right function with a warm handoff</li><li><strong>Decline:</strong> genuinely out of scope or not worth the time now, with a stated reason</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Prioritization criteria</span>
+        <ul><li>Strategic significance</li><li>Reversibility, harder-to-reverse ranks higher</li><li>Timing criticality, is there a real window for input</li><li>Sponsor engagement</li><li>Blast radius</li></ul>
+      </div>
+    </div>
+    <div class="same-note">Notably absent from the criteria: who is asking. Prioritizing by requester seniority produces capture by the loudest voices, not the most valuable work.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Architecture review: four touchpoints</h3>
+      <p>Engagement, not approval. Five short conversations during design beat one long review at the end, and the default posture is collaborative, not gatekeeping.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Touchpoint</th><th>Timing</th><th>Purpose</th></tr>
+          <tr><td>Early consult</td><td>Pre-scoping, before funding</td><td>Orientation and shared context; no formal decision</td></tr>
+          <tr><td>Design review</td><td>After initial design, before deep build</td><td>Pressure-test the design, surface risks, name decisions and owners</td></tr>
+          <tr><td>Readiness check</td><td>Before production deployment</td><td>Confirm design-to-build integrity, not a generic approval</td></tr>
+          <tr><td>Post-deployment</td><td>Quarterly or event-driven</td><td>Feedback loop; extract patterns for the catalog</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">Required engagement triggers on objective criteria: a new enterprise-shared capability, a new technology category, a standards exception request, spend above a defined threshold, or regulated data beyond ordinary scope. Small, in-pattern initiatives need no engagement at all; asking permission to use an already-reviewed pattern isn't governance, it's friction.</div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>How EA functions fail</h3>
+      <p>Five well-known patterns, worth naming so they can be watched for rather than discovered after the fact.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The patterns</span>
+        <ul><li><strong>Ivory tower:</strong> artifacts nobody uses; the function is respected in form, irrelevant in practice</li><li><strong>Governance theatre:</strong> review happens, but decisions get made elsewhere anyway</li><li><strong>Engineering-by-architects:</strong> architects doing detailed engineering work while actual architecture goes undone</li><li><strong>Unmanaged demand:</strong> every request accepted, best work crowded out by the urgent</li><li><strong>Credibility erosion:</strong> recommendations ignored, decisions made without EA hearing about them until after</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The honest test</span>
+        <p>The function that works isn't the one with the cleanest org chart or the most complete artifact library. It's the one whose consumers, business leaders, delivery teams, engineering leadership, would actively resist losing. A function that can name five leaders who'd fight to keep it is doing well; one that can't should treat the absence as actionable information.</p>
       </div>
     </div>
   </div>
@@ -168,7 +244,7 @@
 </main>
 
 <footer>
-  Reference only. Adapt capability granularity and operating model to your organization's actual size and structure rather than applying this as a template.
+  Reference only. Adapt capability granularity, operating model, and review thresholds to your organization's actual size and structure rather than applying this as a template.
   <br><span style="opacity:0.7">Last reviewed August 2026.</span>
 
 </footer>
