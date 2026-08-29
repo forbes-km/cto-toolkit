@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epistemology &amp; Research Methods</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Epistemology &amp; Research Methods</h1>
+  <p>How we know what we know, and how to know enough, fast enough, to make a real decision. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, made explicit here instead of left implicit.</p>
+  <div class="caveat">This borders on academic epistemology, but it isn't taught as theory here. It's the applied version already embedded in this toolkit: the "Confidence: High/Medium/Low" tags in <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>'s technical debt scoring, the evidence-requirements lists in <a href="../technology-diligence-map/index.html">Technology Diligence</a>, the "what was assessed, what wasn't" sections in every diligence memo template. This page names the pattern and shows where else it applies.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Academic concept, translated into practice</h3>
+      <p>Epistemology is the study of what counts as knowledge and how it's justified. None of these ideas require a philosophy background to use; they're already implicit in good discovery work.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Concept</th><th>Practical translation</th><th>Where it shows up</th></tr>
+          <tr><td>Justified true belief</td><td>A finding needs stated evidence and reasoning behind it, not just confident assertion</td><td>Every "Evidence Requirements" list across the diligence frameworks</td></tr>
+          <tr><td>Degrees of belief</td><td>State how sure you are, not just what you think is true. Certainty is rarely binary.</td><td>Confidence tags (High/Medium/Low) on every dollar figure in technical debt assessment</td></tr>
+          <tr><td>Falsifiability</td><td>A claim only means something if some piece of evidence could have proven it wrong</td><td>Red-flag pattern libraries naming what specifically would change a finding</td></tr>
+          <tr><td>Evidence hierarchy</td><td>Not all sources deserve equal trust; rank them before you rely on them</td><td>Management representation ranked below direct system access in every diligence checklist</td></tr>
+          <tr><td>Bounded rationality</td><td>Perfect information isn't available; the goal is the best decision achievable given real constraints</td><td>Time-boxed diligence phases, quick-win prioritization in the 100-day assessment</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Why the research window should be bounded, not exhaustive</h3>
+      <p>The instinct that more research is always better is wrong for organizational decisions in a way it isn't for a dissertation.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The actual question</span>
+        <p>Not &quot;have we learned everything,&quot; but &quot;have we learned enough to decide better than we would with no research at all, relative to what more research costs in time and opportunity.&quot; Confidence gains follow a diminishing curve: the fifth independent data point usually moves a conclusion more than the fiftieth does, once the pattern has already stabilized.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where open-ended research fails</span>
+        <p>Academic research optimizes for near-total certainty over a timeframe measured in years, because the currency is being right, not being timely. A business decision has a clock the underlying situation doesn't wait for. A diligence report finished after the deal has already closed has close to zero value, no matter how thorough it is.</p>
+      </div>
+    </div>
+    <div class="same-note">This is why confirmatory diligence runs 2-4 weeks and exclusivity diligence runs 4-8 weeks elsewhere on this site, not because more time wouldn't produce marginally more certainty, but because the decision has a deadline, and every framework here separates &quot;what was assessed&quot; from &quot;what wasn't&quot; rather than pretending the boundary doesn't exist.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Research methods, the actual toolkit</h3>
+      <p>None of these require formal training. They're habits of checking a claim before treating it as settled.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Method</th><th>What it does</th><th>Where it applies</th></tr>
+          <tr><td>Triangulation</td><td>Cross-check a claim against at least two independent sources before treating it as fact</td><td>A claim made in one interview versus the same claim confirmed by system access or a second interviewee who wasn't in the room for the first</td></tr>
+          <tr><td>Primary versus secondary evidence</td><td>Direct observation outranks a secondhand account of the observation</td><td>Reviewing the actual codebase versus accepting a description of the codebase's quality</td></tr>
+          <tr><td>Sampling logic</td><td>A convenience sample, whoever happens to be available and willing, is not a representative sample</td><td>Interview subject selection; reference customers a vendor hand-picks versus a broader, independently chosen set</td></tr>
+          <tr><td>Disconfirmation-seeking</td><td>Actively look for evidence against the working conclusion, not just more evidence for it</td><td>Testing whether an alternative explanation survives contact with the same evidence</td></tr>
+          <tr><td>Correlation versus causation</td><td>A pattern in the data isn't automatically an explanation of the pattern</td><td>Distinguishing a triggering event from the underlying condition it merely exposed, in incident root-cause analysis</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Confirmation bias is structural in discovery work, not a personal failing</h3>
+      <p>It isn't a character flaw that shows up occasionally. The shape of discovery work invites it by default.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why discovery invites it</span>
+        <p>A working hypothesis usually forms early, often within the first interview or the first system walkthrough, and every subsequent finding then gets unconsciously filtered through it. A compressed collection window raises the temptation to stop looking the moment a plausible story has assembled, since a plausible story feels like an answer.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Practice</span>
+        <p>Before writing the finding down, state the working conclusion explicitly and deliberately argue the opposite for a few minutes, even alone. It's a small, cheap step compared to the cost of a wrong root cause or a wrong severity rating that resurfaces the same problem next quarter.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Calibrated confidence beats false precision</h3>
+      <p>A number presented as fact when it's actually a best estimate is a small dishonesty that compounds into bad decisions downstream.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Pair every material number with a confidence tag and a one-line reason: what would need to be true, or what evidence would need to arrive, for that confidence to move up or down. A range with a stated confidence level is more useful and more honest than a single unqualified figure.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Dropping the confidence tag because an unqualified number feels more authoritative in a report or a board deck. This trades honesty for the appearance of certainty, and the decision built on top of it inherits precision the underlying research never actually supported.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Applied</span>
+      <h3>Where this already lives across the toolkit</h3>
+      <p>None of this is new to this site; it's the pattern underneath several pages, named explicitly here for the first time.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li><strong>Technology Diligence</strong>: evidence-requirements lists and the discipline of separating what was confirmed from what was taken on management's word</li>
+          <li><strong>Technical Debt Assessment</strong>: a five-level severity scale and a confidence rating (High/Medium/Low) attached to every dollar figure, so a report never travels with more certainty than the underlying work supports</li>
+          <li><strong>Application Portfolio Management</strong>: the explicit caution that Business Value scores drift toward inflation when the scorer is the system's own owner, a direct application of source bias</li>
+          <li><strong>Incident Response</strong>: the distinction between a triggering event and the underlying condition it exposed, which is the correlation-versus-causation problem applied to postmortems</li>
+          <li><strong>Vendor Evaluation</strong>: the caution against accepting only the references a vendor's sales team hand-picked, a direct sampling-bias correction</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs research quality is weak, regardless of how long it took</h3>
+      <p>Time spent is not the same thing as rigor. These patterns show up in reports that took weeks and reports that took an afternoon alike.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Findings state conclusions with no evidence source attached</li>
+          <li>A single interview or a single document is treated with the same confidence as a cross-referenced, triangulated finding</li>
+          <li>No visible effort was made to find evidence against the working conclusion before it was written down</li>
+          <li>Numbers are presented without a confidence range or a stated basis</li>
+          <li>The research window kept extending without anyone asking whether the additional time was actually buying more confidence, or just more pages</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. This is a practical translation of research discipline, not a formal epistemology course; treat it as a set of habits worth building into any discovery process, not a complete theory.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
