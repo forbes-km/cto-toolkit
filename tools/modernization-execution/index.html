@@ -63,7 +63,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Legacy Modernization Execution</h1>
-  <p>How a migration actually gets run once the decision to modernize has been made. Distinct from deciding what to modernize, that's the Application Portfolio Management question, this is about the execution mechanics that determine whether the migration succeeds or stalls.</p>
+  <p>How a migration gets run once the decision to modernize has been made. Distinct from deciding what to modernize, that's the Application Portfolio Management question, this is about the execution mechanics that determine whether the migration succeeds or stalls.</p>
   <div class="caveat">This covers execution mechanics. See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for deciding what to modernize in the first place, and <a href="../technology-diligence-map/index.html">Technology Diligence</a> for assessing what's being inherited in an acquisition.</div>
 </header>
 
@@ -90,11 +90,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Specific, pre-agreed rollback criteria (error rate above X percent, latency above Y, a defined list of critical functions that must work correctly) checked immediately after cutover, with the rollback mechanism tested in advance, not assumed to work when it's actually needed under pressure.</p>
+        <p>Specific, pre-agreed rollback criteria (error rate above X percent, latency above Y, a defined list of critical functions that must work correctly) checked immediately after cutover, with the rollback mechanism tested in advance, not assumed to work when it's needed under pressure.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>&quot;We'll roll back if it looks bad&quot; as the entire rollback plan, which under real pressure becomes a debate about whether it's actually bad enough yet, while customer impact accumulates during the debate.</p>
+        <p>&quot;We'll roll back if it looks bad&quot; as the entire rollback plan, which under real pressure becomes a debate about whether it's bad enough yet, while customer impact accumulates during the debate.</p>
       </div>
     </div>
   </div>
@@ -175,7 +175,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li>No defined rollback criteria, or rollback has never actually been tested</li>
+          <li>No defined rollback criteria, or rollback has never been tested</li>
           <li>The cutover plan is a single large event rather than an incremental sequence</li>
           <li>Data migration validation is manual spot-checking rather than systematic reconciliation</li>
           <li>No decommission date exists for the legacy system, even informally</li>

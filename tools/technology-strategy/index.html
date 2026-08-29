@@ -56,6 +56,9 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -71,7 +74,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Technology Strategy</h1>
   <p>What a technology strategy is, as distinct from a roadmap or a tech stack decision, the three-horizon investment split, the test that ties an initiative to a real business outcome, and why tradeoffs, not initiatives, are what make a strategy usable.</p>
-  <div class="caveat">A framework for thinking through strategy formulation, not a substitute for the actual strategic analysis specific to your business, market, and competitive position.</div>
+  <div class="caveat">A framework for thinking through strategy formulation, not a substitute for the strategic analysis specific to your business, market, and competitive position.</div>
 </header>
 
 <main>
@@ -84,7 +87,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What it is</span>
-        <p>An explicit, prioritized set of choices about where to invest scarce engineering capacity, what capabilities to build versus buy, and what technical risk to knowingly accept versus what to actively remediate. A strategy is defined as much by what it says no to as what it says yes to.</p>
+        <p>An explicit, prioritized set of choices about where to invest scarce engineering capacity, what capabilities to build versus buy, and what technical risk to knowingly accept versus what to remediate. A strategy is defined as much by what it says no to as what it says yes to.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it gets confused with</span>
@@ -139,7 +142,21 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">A document that gets ignored</span>
-        <p>Lists initiatives with no stated tradeoff, which means every initiative reads as equally important, which means nobody can use the document to make an actual prioritization call when two initiatives compete for the same engineers.</p>
+        <p>Lists initiatives with no stated tradeoff, which means every initiative reads as equally important, which means nobody can use the document to make a prioritization call when two initiatives compete for the same engineers.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Technology strategy template</h3>
+      <p>The three-horizon investment table and a dedicated tradeoffs section above, in a fillable format, plus strategic pillars, success metrics, risks, and a governance cadence. Markdown for pasting into your own docs system, or a formatted Word doc.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="technology-strategy-template.md" download>Download .md</a>
+        <a class="dl-btn secondary" href="technology-strategy-template.docx" download>Download .docx</a>
       </div>
     </div>
   </div>

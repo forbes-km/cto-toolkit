@@ -138,7 +138,7 @@
         <p>A mechanism: if the first thing had been different, the second thing would have been different as a direct result, not just statistically less likely to appear alongside it. Establishing that usually takes more than the one data point that prompted the question, ideally a case where the suspected cause was absent and the effect still didn't happen.</p>
       </div>
     </div>
-    <div class="same-note"><strong>Worked example.</strong> A deployment goes out at 2:14pm. Error rates spike five minutes later. The natural read: the deploy caused the spike, since it's the thing sitting right next to it in time. Rolling the deploy back doesn't fix anything. Investigation finds a database connection pool that had been slowly exhausting for three days because of a slow query introduced earlier that week; the deploy's restart briefly reset open connections, masking the problem for a few minutes before the pool hit its ceiling anyway, on a schedule that had nothing to do with the deploy. The deploy correlates with the spike. The slow query, running unnoticed for three days, is what actually caused it.</div>
+    <div class="same-note"><strong>Worked example.</strong> A deployment goes out at 2:14pm. Error rates spike five minutes later. The natural read: the deploy caused the spike, since it's the thing sitting right next to it in time. Rolling the deploy back doesn't fix anything. Investigation finds a database connection pool that had been slowly exhausting for three days because of a slow query introduced earlier that week; the deploy's restart briefly reset open connections, masking the problem for a few minutes before the pool hit its ceiling anyway, on a schedule that had nothing to do with the deploy. The deploy correlates with the spike. The slow query, running unnoticed for three days, is what caused it.</div>
   </div>
 
   <div class="stage-card">
@@ -163,7 +163,7 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Calibrated confidence beats false precision</h3>
-      <p>A number presented as fact when it's actually a best estimate is a small dishonesty that compounds into bad decisions downstream.</p>
+      <p>A number presented as fact when it's a best estimate is a small dishonesty that compounds into bad decisions downstream.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -172,7 +172,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Dropping the confidence tag because an unqualified number feels more authoritative in a report or a board deck. This trades honesty for the appearance of certainty, and the decision built on top of it inherits precision the underlying research never actually supported.</p>
+        <p>Dropping the confidence tag because an unqualified number feels more authoritative in a report or a board deck. This trades honesty for the appearance of certainty, and the decision built on top of it inherits precision the underlying research never supported.</p>
       </div>
     </div>
   </div>
@@ -209,7 +209,7 @@
           <li>A single interview or a single document is treated with the same confidence as a cross-referenced, triangulated finding</li>
           <li>No visible effort was made to find evidence against the working conclusion before it was written down</li>
           <li>Numbers are presented without a confidence range or a stated basis</li>
-          <li>The research window kept extending without anyone asking whether the additional time was actually buying more confidence, or just more pages</li>
+          <li>The research window kept extending without anyone asking whether the additional time was buying more confidence, or just more pages</li>
         </ul>
       </div>
     </div>
