@@ -49,10 +49,4 @@ Redacted or fully synthetic example outputs live alongside the tools that produc
 
 ## License
 
-**⚠️ Needs your decision before this ships.** The prior version of this file scoped the MIT license to `/tools` when that folder held exactly one open tool (Cloud Service Mapper). Now that every page on the site lives under `/tools`, carrying that sentence forward unchanged would silently MIT-license the entire methodology catalog, not just the one tool it originally meant. I haven't made that call for you. Below is the license section written to preserve your original intent (only Cloud Service Mapper is open; everything else is all-rights-reserved, evaluation-only) rather than the literal old wording. Confirm this is still what you want, or tell me which pages, if any, should be open.
-
-Catalog content (methodology, frameworks, templates, worked examples, and the calculators that implement them) is all rights reserved, evaluation only.
-
-`/tools/cloud-service-mapper` is MIT licensed. Open `index.html` in a browser; no build step, no dependencies.
-
-Full terms in [`LICENSE`](./LICENSE).
+MIT licensed throughout, catalog content and code alike. See [`LICENSE`](./LICENSE) for full terms.
