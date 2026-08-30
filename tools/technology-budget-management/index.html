@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Running the Technology Budget</title>
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Running the Technology Budget</h1>
+  <p>The operational mechanics of managing a standing budget across a year: variance, showback versus chargeback, and the review cadence that catches drift before it becomes a surprise. Distinct from deciding how to allocate capital in the first place.</p>
+  <div class="caveat">See <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a> for the strategic allocation this page executes against, and <a href="../cto-cfo-relationship/index.html">Working with the CFO</a> for capitalization and amortization basics, not repeated here.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Vocabulary worth having cold</h3>
+      <p>Terms that come up constantly in a budget conversation and are worth knowing precisely, not just recognizing.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Term</th><th>What it means</th></tr>
+          <tr><td>Run-rate</td><td>What a cost annualizes to at its current pace, distinct from a one-time cost that won't repeat</td></tr>
+          <tr><td>Variance</td><td>The gap between forecast and actual; favorable if actual cost came in lower or actual value came in higher than planned, unfavorable the other way</td></tr>
+          <tr><td>Accrual versus cash timing</td><td>A cost gets recognized when it's incurred, not necessarily when cash moves; a signed annual contract can show up as a full expense before a single payment has gone out</td></tr>
+          <tr><td>Burn rate</td><td>Net cash spent per month; the number that determines runway at an early-stage company more than total budget size does</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Forecast versus actual: what triggers a reforecast</h3>
+      <p>Not every gap between plan and reality is a problem. Knowing which gaps are normal and which are signal is the actual skill here.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Normal drift</span>
+        <p>Cloud costs fluctuating with real usage, a hire landing a month later than planned, ordinary seasonal patterns already built into the forecast. Small variance in either direction, within roughly 5 to 10 percent, is what a forecast is supposed to absorb, not a finding.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Real red flags</span>
+        <p>A category running more than 10 to 15 percent off forecast for two consecutive months, a single large unplanned commitment, or the same category missing in the same direction every quarter. The last pattern usually means the estimate method itself is wrong, not that reality is noisy.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Showback versus chargeback</h3>
+      <p>Two different mechanisms for making technology cost visible to the teams generating it, with different requirements and different politics.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Showback</span>
+        <p>Each team sees what it costs; no money moves between budgets. Builds awareness and light peer pressure without the political fight over whose budget absorbs what. The right starting point almost everywhere.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Chargeback</span>
+        <p>Team budgets are directly debited for what they consume. Creates real ownership and a genuine incentive to optimize, but it requires trustworthy, granular cost attribution first. Chargeback built on shaky tagging just produces disputed bills nobody believes, which is worse than not having it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The review cadence itself</h3>
+      <p>See <a href="../cto-operating-system/index.html">The CTO Operating System</a> for where this sits in the broader monthly rhythm. This is what the review itself needs to contain.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a real review covers</span>
+        <p>Actuals versus forecast by category, with the variance explained in one sentence per line item, not just a number sitting next to another number. Any category trending toward a reforecast gets flagged as it happens, not discovered when the quarter closes.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What a review that's just theater looks like</span>
+        <p>A spreadsheet recited back without anyone asking why a variance happened. It produces the same conversation every month, and no decision ever comes out of it differently than it would have without the meeting.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the budget is being tracked, not managed</h3>
+      <p>Patterns that show up when a budget process exists on the calendar but isn't catching anything before it becomes a problem.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Variance gets discovered at quarter-end review rather than flagged as it's happening</li>
+          <li>No one can explain why a specific line item is off forecast, only that it is</li>
+          <li>Chargeback exists on paper but nobody trusts the underlying cost attribution</li>
+          <li>The same category misses in the same direction every quarter and the forecast method has never been revisited</li>
+          <li>Budget review meetings recite the numbers without any decision changing afterward</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Specific variance thresholds and review mechanics should reflect your organization's actual budget size and volatility, not a fixed rule.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
