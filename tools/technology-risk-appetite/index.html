@@ -129,6 +129,58 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>A worked example, applying the tiers</h3>
+      <p>What the five-tier model looks like against a real, common scenario rather than an abstract description.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>The finding:</strong> a known vulnerability in a legacy authentication library, requiring a multi-month migration to remediate properly, discovered during a routine dependency audit.</p>
+        <p><strong>Will not accept?</strong> No. Exploiting it requires a specific, unlikely combination of internal network access and a second, unrelated compromise; it doesn't meet the &quot;unacceptable regardless of likelihood&quot; bar on its own.</p>
+        <p><strong>Will accept temporarily.</strong> Yes, with a remediation date tied to the actual migration timeline, a named owner (head of security), and interim compensating controls (additional network segmentation around the affected service) documented alongside the acceptance, not just the acceptance itself.</p>
+        <p><strong>Board visibility?</strong> Depends on whether the affected system handles regulated data. If it does, the materiality threshold is crossed regardless of how contained the practical exploit path looks, because the threshold is about data category, not the CTO's confidence in the mitigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>When the remediation date passes</h3>
+      <p>The moment that reveals whether &quot;will accept temporarily&quot; was a real tier or just a way to defer a hard conversation indefinitely.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What should happen</span>
+        <p>The accepted risk gets reviewed again with the same rigor as the original acceptance. If the date passes without remediation and without a re-justified new date, it escalates automatically to the next tier up, board visibility, rather than quietly receiving a new date stamped on it by the same person who missed the last one.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A risk accepted a year ago, now on its third quietly extended remediation date, still sitting in the same tier with no escalation and no accountability for the pattern of missed dates itself, which is a worse signal than the original risk.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Revisiting the appetite as the company changes</h3>
+      <p>The appetite itself has a shelf life, distinct from any individual risk decision made under it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>What was reasonable to tolerate at a five-person startup with no customers often becomes &quot;will not accept&quot; the moment the company signs its first enterprise customer with a security addendum, or crosses into handling regulated data for the first time. Revisit the appetite itself, not just individual risk decisions made under it, on the same annual cadence as the strategy reset.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>The appetite document was written once, early, by whoever was CTO at the time, and nobody revisits the actual thresholds as the company's regulatory exposure, customer base, or public profile changes around it, so the document quietly stops matching the business it's supposed to govern.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs risk appetite is undefined despite feeling settled</h3>
       <p>An organization can feel like it has a consistent approach to risk while having none written down anywhere.</p>
@@ -141,6 +193,7 @@
           <li>No materiality threshold exists for what triggers board visibility</li>
           <li>&quot;We'll accept this for now&quot; risks have no remediation date or owner attached</li>
           <li>The CTO has never stated, in writing, what the organization will not accept regardless of cost or convenience</li>
+          <li>A remediation date has slipped more than once on the same accepted risk with no automatic escalation</li>
         </ul>
       </div>
     </div>
