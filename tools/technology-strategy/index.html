@@ -149,6 +149,64 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>A worked example</h3>
+      <p>A compressed real scenario showing the method end to end: strategic priority through horizon allocation through a stated tradeoff.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Situation:</strong> a mid-market SaaS company, $60M ARR, engineering team of 90, competing against two larger incumbents on feature breadth and one well-funded startup on price. The CEO wants to know what the technology organization is going to do about it this year.</p>
+        <p><strong>Strategic priority:</strong> defend gross margin while shipping the two integrations sales says are costing the most deals, without adding headcount.</p>
+        <table class="matrix-table">
+          <tr><th>Horizon</th><th>What's in it this year</th><th>The &quot;so that&quot; test applied</th></tr>
+          <tr><td>Horizon 1 (65%)</td><td>Infrastructure cost reduction, on-call load reduction, the two highest-defect legacy modules stabilized</td><td>&quot;We will invest in cost reduction, so that gross margin improves 4 points without a price increase, measured monthly&quot;</td></tr>
+          <tr><td>Horizon 2 (25%)</td><td>The two integrations sales has flagged, built on a shared integration platform rather than one-off connectors</td><td>&quot;We will invest in a shared integration layer, so that the next five integration requests ship in weeks not quarters, measured by integration lead time&quot;</td></tr>
+          <tr><td>Horizon 3 (10%)</td><td>A single exploratory bet: whether usage-based pricing is technically feasible on the current billing system</td><td>&quot;We will invest in a pricing model spike, so that the leadership team has a real answer before the next pricing conversation, measured by a working prototype, not a slide deck&quot;</td></tr>
+        </table>
+        <p><strong>The stated tradeoff:</strong> no new customer-facing features outside the two flagged integrations ship this year. That line is what makes the document usable; it's the sentence a product manager points to when a stakeholder asks for a third integration in March.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>One strategy, two audiences</h3>
+      <p>The same mistake covered on <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for the roadmap itself shows up one layer up, at the strategy document.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The board and executive version</span>
+        <p>Three to five priorities, each with the business outcome and the tradeoff stated in one sentence, no architecture detail, no technology names unless the technology itself is the competitive story. This is the version that goes in the board deck alongside the content on <a href="../board-reporting/index.html">Board Reporting</a>.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The engineering version</span>
+        <p>The same priorities, expanded with the technical approach, sequencing dependencies, and named owners. Engineers need to know how, not just why; a strategy document that stays at board-level abstraction throughout gives a team nothing to plan against.</p>
+      </div>
+    </div>
+    <div class="same-note">Maintain one underlying document and generate both views from it, the same discipline as the roadmap split, rather than maintaining two documents that drift out of sync within a quarter.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Revisiting and sunsetting a strategy</h3>
+      <p>A strategy document has a shelf life, and most organizations never explicitly declare when it's expired.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Revisit formally on the annual cadence described in <a href="../cto-operating-system/index.html">The CTO Operating System</a>, and out of cycle the moment a stated assumption breaks: a competitor ships the thing Horizon 3 was betting against, a key hire who owned a priority leaves, the market shifts underneath the plan. A strategy that hasn't been checked against reality in six months is being followed on faith, not evidence.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Last year's strategy document quietly stays the reference point because writing a new one feels like admitting the old one failed. It didn't fail; circumstances changed, which is what strategies are supposed to respond to. An unrevised strategy is a bigger tell than a revised one.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Download</span>
       <h3>Technology strategy template</h3>
       <p>The three-horizon investment table and a dedicated tradeoffs section above, in a fillable format, plus strategic pillars, success metrics, risks, and a governance cadence. Markdown for pasting into your own docs system, or a formatted Word doc.</p>

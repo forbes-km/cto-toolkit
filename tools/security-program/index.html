@@ -156,6 +156,61 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Third-party and vendor risk as part of the program</h3>
+      <p>Most breaches now originate through a vendor, not a direct attack on the company's own perimeter. A security program that stops at the company's own systems is scoped to the wrong boundary.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Every vendor with access to production systems or sensitive data gets a security review before signing, not after, using the same evidence-over-policy discipline covered in the certification trap above. Track which vendors hold what data, and require notification obligations for a vendor's own breach written into the contract, not assumed.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Security review happens for major platform vendors and gets skipped for the small SaaS tool a team signed up for with a credit card, which is exactly the kind of vendor least likely to have a mature security program and most likely to be the actual entry point when something goes wrong.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>The human element, done honestly</h3>
+      <p>Most real incidents start with a person, not a zero-day. Awareness training exists to address this and usually doesn't.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What changes behavior</span>
+        <p>Short, frequent, specific training tied to real incidents the company or its industry has seen, plus simulated phishing that's used to identify where more support is needed, not to publicly shame whoever clicked. The goal is a workforce that reports a suspicious email in minutes, not one that's afraid to admit a mistake.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The checkbox version</span>
+        <p>An annual training video nobody remembers a week later, run once for compliance purposes and never referenced again. It satisfies an audit requirement and does close to nothing for actual risk, which is the same gap the certification trap describes, applied to people instead of controls.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>What the program looks like at different stages</h3>
+      <p>The sequencing above holds at every size. What changes is how much of it is a dedicated person versus a shared responsibility.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Stage</th><th>What's realistic</th></tr>
+          <tr><td>Under 50 engineers</td><td>Foundation stage owned by engineering leadership directly, no dedicated headcount yet. A fractional advisor for anything requiring specialized judgment.</td></tr>
+          <tr><td>50 to 200 engineers</td><td>First dedicated security hire, typically a generalist covering foundation and visibility stages. Certification work, if customer-driven, usually needs external audit support.</td></tr>
+          <tr><td>200 to 1,000 engineers</td><td>A small team with a named leader reporting per the authority guidance above, specialization beginning (application security separate from infrastructure security).</td></tr>
+          <tr><td>1,000-plus engineers</td><td>A full function with dedicated roles across the domains this page and <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> describe, and enough scale that the vendor risk program above needs its own owner.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the program is theater, not practice</h3>
       <p>Patterns that show up when a security program looks complete in documentation and isn't reflected in daily operation.</p>
@@ -168,6 +223,7 @@
           <li>Security reviews happen only at release time, never earlier in the development process</li>
           <li>No one can say when the last access review happened or produce evidence it occurred</li>
           <li>Security funding and headcount decisions are made by the same leader whose other priorities compete directly with security requirements</li>
+          <li>Vendor security review happens for large platform contracts and gets skipped for anything signed up with a credit card</li>
         </ul>
       </div>
     </div>
