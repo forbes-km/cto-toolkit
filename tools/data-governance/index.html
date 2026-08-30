@@ -126,6 +126,20 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
+      <h3>A worked example: a request end to end</h3>
+      <p>What the practice above looks like against a real request, including where it commonly breaks.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A request arrives through a web form and gets logged against the SLA clock immediately. The response process checks it against the data inventory: CRM, product database, support ticketing, and email marketing tool are all on the list, get queried, and the results get compiled into a portable export within the regulatory window.</p>
+        <p><strong>Where it commonly breaks:</strong> the analytics warehouse isn't on the inventory, because nobody classified it as holding personal data even though it has user IDs joinable back to a real identity through the product database. The request gets marked complete while a meaningful chunk of what the organization holds on that person was never touched. This is exactly why the inventory in section 1 has to be built by mapping real data flows, not by asking each team what they think they hold.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
       <h3>Ownership versus stewardship</h3>
       <p>Two different roles that get conflated, and the conflation is where accountability gaps live.</p>
     </div>
@@ -143,7 +157,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">4</span>
+      <span class="stage-num">5</span>
       <h3>Privacy by design, not privacy as review gate</h3>
       <p>Where privacy consideration enters the development process changes how much friction it creates and how much risk it catches.</p>
     </div>
@@ -155,6 +169,42 @@
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
         <p>Privacy review as a gate right before launch, which arrives too late to change the data model, so findings either get overridden under deadline pressure or become expensive retrofits after the feature is already live and being used.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Breach notification, the actual mechanics</h3>
+      <p>The 72-hour clock most people have heard of, and the specific way organizations usually miss it despite meaning to comply.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What has to happen</span>
+        <p>The 72-hour window starts when the organization becomes aware of a breach, not when it's fully understood. A preliminary notification with known facts, followed by updates as the investigation progresses, is compliant. Waiting for a complete picture before notifying anything is not.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Treating the deadline as something to hit only once the full scope is understood, which routinely blows past 72 hours since a real investigation almost always takes longer than that, when a partial, honest, updated notification would have been compliant from day one.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Cross-border data transfer, briefly</h3>
+      <p>A specific, common gap that surfaces during customer security reviews more often than during an internal audit.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What's required</span>
+        <p>Standard Contractual Clauses or an equivalent mechanism for transferring EU personal data outside the EEA, documented per vendor, not assumed to be covered by a vendor's general terms of service.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Discovering during a customer security questionnaire that data has been flowing to a vendor or a region with no transfer mechanism in place, sometimes for years, because nobody mapped where data goes once it leaves the primary system.</p>
       </div>
     </div>
   </div>
@@ -173,6 +223,7 @@
           <li>Data retained indefinitely by default because no one made an active decision to delete it</li>
           <li>Third-party vendors processing personal data with no data processing agreement or business associate agreement on file</li>
           <li>Privacy consideration enters the process only as a pre-launch review, never during design</li>
+          <li>No documented transfer mechanism exists for personal data moving to vendors or regions outside its origin</li>
         </ul>
       </div>
     </div>

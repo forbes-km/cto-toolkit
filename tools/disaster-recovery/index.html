@@ -171,6 +171,93 @@
     </div>
   </div>
 
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Is the faster recovery time worth its cost?</h3>
+      <p>The same cost-benefit logic as <a href="../reliability-economics/index.html">Reliability as an Economic Decision</a>, applied to recovery speed instead of uptime. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: 300px 1fr; gap:10px 16px; align-items:center; font-size:13px; max-width:600px;">
+          <label for="dr-cost">Cost of downtime, per hour ($)</label>
+          <input id="dr-cost" type="number" value="25000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-current-rto">Current RTO (hours)</label>
+          <input id="dr-current-rto" type="number" value="24" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-target-rto">Target RTO (hours)</label>
+          <input id="dr-target-rto" type="number" value="4" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-prob">Probability of a disaster event this year (%)</label>
+          <input id="dr-prob" type="number" value="20" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-invest">Annual cost to reach the faster RTO ($)</label>
+          <input id="dr-invest" type="number" value="150000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+        </div>
+        <button id="dr-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="dr-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('dr-calc').addEventListener('click', () => {
+      const costPerHour = parseFloat(document.getElementById('dr-cost').value) || 0;
+      const currentRTO = parseFloat(document.getElementById('dr-current-rto').value) || 0;
+      const targetRTO = parseFloat(document.getElementById('dr-target-rto').value) || 0;
+      const prob = (parseFloat(document.getElementById('dr-prob').value) || 0) / 100;
+      const invest = parseFloat(document.getElementById('dr-invest').value) || 0;
+
+      const resultEl = document.getElementById('dr-result');
+
+      if (targetRTO >= currentRTO) {
+        resultEl.innerHTML =
+          '<div style="background:var(--b-soft); border-left:3px solid var(--b); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+          'Target RTO isn\'t faster than the current RTO. Pick a target with less recovery time than what you already have.' +
+          '</div>';
+        return;
+      }
+
+      const hoursSaved = currentRTO - targetRTO;
+      const expectedAnnualSavings = prob * hoursSaved * costPerHour;
+      const net = expectedAnnualSavings - invest;
+
+      let verdict;
+      if (net > 0) {
+        verdict = 'JUSTIFIED, at this estimated probability. Expected annual value exceeds the investment by $' + Math.round(net).toLocaleString() + '. This is an expected value across many possible years, not a guarantee for any single year, treat it the way an insurance purchase gets treated, not a certain return.';
+      } else {
+        verdict = 'NOT JUSTIFIED AT THESE NUMBERS. Expected annual value is $' + Math.round(Math.abs(net)).toLocaleString() + ' short of the investment. Either the disaster probability is understated, the cost-per-hour figure is too low, or this RTO tier isn\'t worth building to yet.';
+      }
+
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        '<strong>Recovery time saved per event: ' + hoursSaved.toFixed(1) + ' hours</strong><br>' +
+        'Expected annual value of that improvement: $' + Math.round(expectedAnnualSavings).toLocaleString() + '<br>' +
+        'Investment required: $' + Math.round(invest).toLocaleString() + '/year<br>' +
+        '<br>' + verdict +
+        '</div>';
+    });
+  </script>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Communicating DR investment as insurance, not certainty</h3>
+      <p>See <a href="../cto-cfo-relationship/index.html">Working with the CFO</a> for the general argument about when ROI framing doesn't fit. DR spend is one of the clearest examples.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Frame DR investment the way an insurance purchase gets framed: an expected-value calculation across many possible years, not a promised return in any single year. The probability input in the calculator above is a genuine estimate, not a precise fact, and saying so out loud is more credible than pretending otherwise.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Presenting a DR business case with the same confident ROI language used for a revenue-generating feature, which invites exactly the wrong question, &quot;did we get that return this year,&quot; when the honest answer is that a well-run DR program often means the disaster didn't happen to test it.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
@@ -185,6 +272,7 @@
           <li>Recovery depends on a single person's institutional knowledge rather than a documented, rehearsed runbook</li>
           <li>Backup and primary infrastructure share a failure domain, same region, same provider account, same network path, undermining the recovery they're meant to enable</li>
           <li>Tier classification hasn't been revisited since the systems it covers changed significantly</li>
+          <li>DR investment gets pitched with certain-return ROI language rather than being framed honestly as insurance against a probabilistic event</li>
         </ul>
       </div>
     </div>

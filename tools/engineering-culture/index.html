@@ -110,7 +110,21 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">2</span>
+      <span class="stage-num">3</span>
+      <h3>A worked example: diagnosing a real gap</h3>
+      <p>What the audit in section 1 looks like run against real data instead of impressions.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A company's values deck states &quot;we value work-life balance and sustainable pace.&quot; Nobody has ever written a rule contradicting that. But a look at the last two promotion cycles against actual work-pattern data shows every engineer promoted to senior had a visible pattern of late-night and weekend Slack activity; nobody promoted in that window kept a strictly nine-to-six pattern.</p>
+        <p>No survey would have caught this, since a pulse survey asks about stated values, not revealed behavior. Cross-referencing promotion outcomes against a specific behavioral signal, hours of activity, not self-reported sentiment, made the actual reward function visible immediately. The stated value and what gets rewarded had diverged completely, and the gap was invisible until someone looked at the right data instead of asking the right question.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
       <h3>Blameless is a practice, not a slogan</h3>
       <p>See <a href="../incident-response/index.html">Incident Response</a> for the mechanics of a blameless postmortem. This is about what determines whether the practice survives contact with a genuinely bad outage.</p>
     </div>
@@ -128,7 +142,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">3</span>
+      <span class="stage-num">5</span>
       <h3>Whose culture wins in a merger or a scaling moment</h3>
       <p>Two cultures rarely blend into something new. One absorbs the other, and which one wins is more predictable than most leaders expect.</p>
     </div>
@@ -146,7 +160,43 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">4</span>
+      <span class="stage-num">6</span>
+      <h3>Remote and hybrid culture specifically</h3>
+      <p>The core mechanism doesn't change with location. What changes is how much deliberate effort it takes to make it visible.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What stays the same</span>
+        <p>Culture is still what gets rewarded, not what gets said. If anything, it becomes more visible remotely, since behavior happens in trackable channels, Slack timestamps, meeting attendance, async response times, rather than the more ambiguous signal physical presence in an office used to provide.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What genuinely changes</span>
+        <p>The blameless-culture trust described above depends on visible, repeated leadership behavior. Remote teams see far less of that by default, no hallway conversations, no visible body language during a tense moment, so leadership has to be far more deliberate about making the same restraint visible through explicit written communication rather than trusting it'll simply be felt.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Burnout as a distinct signal from attrition</h3>
+      <p>Someone burned out and still employed is a worse leading indicator than someone who already left.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why it's distinct</span>
+        <p>Declining output and a rising error rate in a burned-out but still-employed engineer often get misread as a performance problem rather than a culture symptom, precisely because they haven't yet generated the attrition data point that would trigger a real investigation.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to watch</span>
+        <p>A sudden change in someone's own baseline, working hours, response time, output quality, is a more reliable signal than a static threshold. A chronically overworked culture normalizes a baseline that looks fine compared to itself but wouldn't compare well to a genuinely healthy organization.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
       <h3>Measuring culture without gaming it</h3>
       <p>See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the trust problem that determines whether any metrics program survives; culture measurement has the identical problem.</p>
     </div>
@@ -176,6 +226,7 @@
           <li>The stated values and the actual promotion criteria have diverged, and most people already know it</li>
           <li>Blameless postmortems exist as a stated policy, but the last serious incident produced visible blame anyway</li>
           <li>Pulse survey trends are flat or declining while leadership continues describing culture as strong in the same conversation</li>
+          <li>Someone's individual work baseline has shifted noticeably and it's being treated as a performance issue rather than investigated as a possible culture symptom</li>
         </ul>
       </div>
     </div>
