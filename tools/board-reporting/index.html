@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Board Reporting</title>
+<meta name="description" content="A preview of the Technology Board Reporting Framework: what works reporting technology, security, and AI posture to a board.">
+<meta property="og:title" content="Board Reporting | CTO Toolkit">
+<meta property="og:description" content="A preview of the Technology Board Reporting Framework: what works reporting technology, security, and AI posture to a board, the out-of-cycle escalation mechanism.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -54,6 +58,8 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -69,7 +75,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Board Reporting</h1>
   <p>A preview of the Technology Board Reporting Framework: what works reporting technology, security, and AI posture to a board, the out-of-cycle escalation mechanism, and the specific mistakes that undermine credibility.</p>
-  <div class="caveat">This page covers the operating practice. The full framework, structure, cadence, and escalation thresholds tailored to a specific board, is available through direct engagement.</div>
+  <div class="caveat">This page covers the operating practice, plus a downloadable sample deck applying it. The full framework, structure, cadence, and escalation thresholds tailored to a specific board, is available through direct engagement.</div>
 </header>
 
 <main>
@@ -111,6 +117,25 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
+      <h3>Two clocks, not one: internal escalation versus external disclosure</h3>
+      <p>For a public company, the out-of-cycle path above and the regulatory disclosure deadline are related but genuinely distinct, and conflating them is a real risk, not just an organizational nicety.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The internal clock</span>
+        <p>The board should hear about a likely-material incident within roughly 24 hours, well ahead of any external deadline, so there's time to prepare a proper disclosure and align on the facts before anyone outside the company sees them.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The external clock</span>
+        <p>Under current SEC rules, a public company must disclose a cybersecurity incident determined to be material on Form 8-K within four business days of that materiality determination, not four days from discovery. The clock starts when materiality is decided, which is exactly why the internal escalation path needs to run well ahead of it, not up against it.</p>
+      </div>
+    </div>
+    <div class="same-note">This is a compliance question, not a communications preference. Confirm the exact disclosure obligations, timing, and materiality process for your company with counsel; don't rely on this page for the legal determination.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
       <h3>Translating technical risk into business risk</h3>
       <p>The single most common failure mode in board reporting: reporting the risk in the language it was diagnosed in, not the language the board makes decisions in.</p>
     </div>
@@ -124,10 +149,11 @@
         <p>&quot;We have a CVSS 9.1 vulnerability in our OAuth implementation&quot; is accurate and unusable by a board that isn't going to look up what CVSS 9.1 means mid-meeting. If a board member has to ask &quot;what does that mean for us,&quot; the report failed before the discussion even starts.</p>
       </div>
     </div>
+    <div class="same-note">For more than one or two risks, a single narrative paragraph stops working. A heat map, top risks plotted by likelihood and impact, gives the board a portfolio view in one glance, with the highest-priority item then unpacked in business language the way the example above does.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">4</span>
+      <span class="stage-num">5</span>
       <h3>Investment &amp; roadmap tied to outcomes</h3>
       <p>Connecting engineering spend and roadmap decisions to something the board governs: capital allocation and strategic risk.</p>
     </div>
@@ -144,31 +170,31 @@
   </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
+      <span class="stage-num">6</span>
       <h3>Security &amp; compliance posture</h3>
       <p>What a board needs to know here, distinct from an operational security review the CISO or security team runs separately.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What works</span>
-        <p>A small, stable set of metrics tracked over time: mean time to detect, mean time to remediate critical vulnerabilities, percentage of the environment covered by current compliance certifications, and any material incidents since the last meeting, with the incident response postmortem attached if one occurred.</p>
+        <p>A small, stable set of metrics tracked over time: mean time to detect, mean time to remediate critical vulnerabilities, percentage of the environment covered by current compliance certifications, third-party and vendor posture (percentage of vendors with a current SOC 2 or equivalent), and current cyber insurance coverage, with any material incidents since the last meeting and the incident response postmortem attached if one occurred.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What backfires</span>
-        <p>A wall of green checkmarks with no trend line and no incident history. A board cannot distinguish &quot;consistently secure&quot; from &quot;we've never measured this rigorously enough to find a problem&quot; without a track record to compare against.</p>
+        <p>A wall of green checkmarks with no trend line, no incident history, and no sense of how the organization compares to industry peers. A board cannot distinguish &quot;consistently secure&quot; from &quot;we've never measured this rigorously enough to find a problem&quot; without a track record and an external reference point to compare against.</p>
       </div>
     </div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">6</span>
+      <span class="stage-num">7</span>
       <h3>Reporting on AI specifically</h3>
       <p>An increasingly standard board expectation, and one most technology leaders haven't built a repeatable format for yet.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What works</span>
-        <p>A short standing section covering what AI systems are in production, what's spent on them, and what governance controls are in place, referencing the AI Governance Map's control layers directly rather than reinventing the language each quarter. Boards are increasingly asking about this whether or not it's offered.</p>
+        <p>A short standing section covering what AI systems are in production, what's spent on them, and what governance controls are in place, referencing the AI Governance Map's control layers directly rather than reinventing the language each quarter. Boards are increasingly asking about this whether or not it's offered, and forward-looking boards are starting to ask about emerging technology risk more broadly, post-quantum cryptography readiness is now a live board discussion topic at some companies, not just AI.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What backfires</span>
@@ -178,7 +204,7 @@
   </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">7</span>
+      <span class="stage-num">8</span>
       <h3>Common mistakes, named directly</h3>
       <p>Patterns that show up repeatedly enough to call out specifically rather than leave implicit in the sections above.</p>
     </div>
@@ -190,6 +216,19 @@
       <div class="stage-cell">
         <span class="env-label b">The fix</span>
         <p>Before every board meeting, write one sentence per section: &quot;what do I want the board to know, feel, or decide because of this.&quot; If a section doesn't have a clear answer to that, cut it or rework it. A board deck is a decision-support tool, not a documentation artifact.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Sample board deck</h3>
+      <p>A seven-slide illustrative example applying every section above: at-a-glance metrics, business outcomes, security and AI posture, a risk heat map plus one risk translated into business terms, investment tied to outcomes, and a specific ask. Figures are synthetic; adapt the structure with your own numbers.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="sample-board-report.pptx" download>Download .pptx</a>
       </div>
     </div>
   </div>

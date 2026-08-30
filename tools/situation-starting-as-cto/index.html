@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>I'm Starting as CTO</title>
+<meta name="description" content="A curated reading order for the first 90 days, not a comprehensive list. Every link below points to a full page elsewhere on this site.">
+<meta property="og:title" content="I'm Starting as CTO | CTO Toolkit">
+<meta property="og:description" content="A curated reading order for the first 90 days, not a comprehensive list. Every link below points to a full page elsewhere on this site.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
@@ -41,7 +45,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>I'm Starting as CTO</h1>
-  <p>A curated reading order for the first 90 days, not a comprehensive list. Every link below points to a full page elsewhere on this site.</p>
+  <p>A curated reading order, the full shape of the role you're now responsible for, how to apply an evidence-based lens to what you're being told, what should exist by each 90-day checkpoint, and one outside recommendation worth your time.</p>
 </header>
 
 <main>
@@ -67,6 +71,96 @@
       </ol>
     </div>
   </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">See the whole job</span>
+      <h3>The reading list is sequenced. The role isn't a sequence.</h3>
+      <p>Working the list above gets you moving. It isn't the full shape of what you're now responsible for.</p>
+    </div>
+    <div class="stage-cell">
+      <p style="font-size:13px; line-height:1.65; margin:0;"><a href="../cto-operating-system/index.html">The CTO Operating System</a> maps the complete set of responsibility areas, technology strategy, architecture, team and organization, capital allocation, risk and security, executive relationships, delivery oversight, hands-on technical work, plus how the balance of time across them shifts as the organization scales. Read the list above to get moving this week. Read that page once, early, to see the whole board you're now playing on, so nothing on it comes as a surprise in month four.</p>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The epistemic lens</span>
+      <h3>Reading what you're told, not just what you're shown</h3>
+      <p>Every new CTO inherits a set of claims, stated with total confidence by people who may or may not have checked. See <a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a> for the full framework; this is what it looks like applied to your first thirty days.</p>
+    </div>
+    <div class="stage-cell">
+      <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+        <tr>
+          <th style="text-align:left; padding:9px 12px; background:var(--accent-soft); border:1px solid var(--line); font-size:11.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft);">What you'll hear</th>
+          <th style="text-align:left; padding:9px 12px; background:var(--accent-soft); border:1px solid var(--line); font-size:11.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft);">What to check</th>
+          <th style="text-align:left; padding:9px 12px; background:var(--accent-soft); border:1px solid var(--line); font-size:11.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft);">What silence tells you</th>
+        </tr>
+        <tr>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">&quot;We don't have a technical debt problem&quot;</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">Ask for the artifact: an APM score, a tracked debt backlog</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">No artifact means nobody's measured it, which is itself the finding</td>
+        </tr>
+        <tr>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">&quot;Our deployments are reliable&quot;</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">Ask for the actual change failure rate and MTTR trend</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">A confident claim with no number behind it is an opinion wearing a fact's clothing</td>
+        </tr>
+        <tr>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">&quot;The team's in good shape&quot;</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">Check attrition, specifically regretted attrition, and referral rate</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">Revealed preference beats a manager's felt sense every time</td>
+        </tr>
+        <tr>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">&quot;This vendor's solid, never an issue&quot;</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">Ask when it was last tested: a real outage, a security review</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">Untested reliability isn't verified reliability, it's just unlucky so far</td>
+        </tr>
+        <tr>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">&quot;Security posture is strong&quot;</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">Ask for the artifact: last pen test, actual access review log</td>
+          <td style="padding:9px 12px; border:1px solid var(--line); line-height:1.55;">A policy document is evidence of intent, not evidence of practice</td>
+        </tr>
+      </table>
+      <p style="font-size:12px; color:var(--ink-soft); line-height:1.55; margin:12px 0 0;">None of this is about assuming bad faith. Most people repeating these claims genuinely believe them, and often inherited the belief from someone else who never checked either. The habit worth building in the first month isn't suspicion, it's asking for the artifact before accepting the sentence.</p>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Outputs</span>
+      <h3>What good looks like at 30, 60, and 90 days</h3>
+      <p>The reading list above tells you what to study. This is what should exist by each checkpoint, not just what you should have read about.</p>
+    </div>
+    <div class="stage-cell">
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <tr>
+          <th style="text-align:left; padding:10px 12px; background:var(--accent-soft); border:1px solid var(--line); font-size:12px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); width:90px;">Day 30</th>
+          <td style="padding:10px 12px; border:1px solid var(--line); line-height:1.6;">A real technology and application inventory, not the org chart's idea of one. A first-pass decision-rights map, even in draft. Key-person and succession risk named specifically, not assumed to be fine. A standing weekly cadence already running with both the CEO and the CFO.</td>
+        </tr>
+        <tr>
+          <th style="text-align:left; padding:10px 12px; background:var(--accent-soft); border:1px solid var(--line); font-size:12px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft);">Day 60</th>
+          <td style="padding:10px 12px; border:1px solid var(--line); line-height:1.6;">The application portfolio scored, not just inventoried. The Architecture Review Board holding its first real review. An honest read on what the culture rewards, distinct from what the values deck says. A first draft of where the organization's risk appetite genuinely sits, even where it's never been stated out loud.</td>
+        </tr>
+        <tr>
+          <th style="text-align:left; padding:10px 12px; background:var(--accent-soft); border:1px solid var(--line); font-size:12px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft);">Day 90</th>
+          <td style="padding:10px 12px; border:1px solid var(--line); line-height:1.6;">A stated technology strategy, not a set of quiet intentions in your own head. A first board narrative delivered, not just survived. A first real pass at capital allocation priorities, ranked, not just discussed.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worth considering</span>
+      <h3>The Wharton CTO Program</h3>
+      <p>Not everything in the first year is solvable by reading. Some of it is solved by having peers going through the same thing at the same time.</p>
+    </div>
+    <div class="stage-cell">
+      <p style="font-size:13px; line-height:1.65; margin:0;">Most of what's genuinely hard about the first year in this role isn't technical, it's the judgment calls nobody else in the building has faced before. A structured peer cohort helps precisely because everyone in it is working through the same category of problem in parallel, at a different company, which makes their notes worth comparing against your own. Wharton's Chief Technology Officer Program is a real, substantive program if you can make the time for it: cohort-based, built around applying the material to your own organization rather than abstract case studies, and the peer network it builds tends to outlast the program itself. Worth a look: <a href="https://online-execed.wharton.upenn.edu/chief-technology-officer-program" target="_blank" rel="noopener" style="color:var(--accent);">Wharton Executive Education, Chief Technology Officer Program</a>.</p>
+    </div>
+  </div>
+
 </main>
 
 <footer>
