@@ -87,6 +87,27 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Cloud versus on-prem: what changes</h3>
+      <p>The self-service and golden path guidance below was written cloud-first, since that's the more mature case. Here's what's different if some or all of the estate is on-prem or bare metal.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Dimension</th><th>Cloud</th><th>On-prem / bare metal</th></tr>
+          <tr><td>Provisioning speed</td><td>Minutes, via API</td><td>Hours if capacity is already racked; weeks or months if new hardware has to be ordered</td></tr>
+          <tr><td>Scaling</td><td>Elastic; spin up and tear down on demand</td><td>Bounded by physical capacity already on hand; scaling means ordering and racking more of it</td></tr>
+          <tr><td>Self-service ceiling</td><td>Effectively unlimited from the requester's point of view</td><td>Self-service against a pre-provisioned capacity pool; a request past available headroom has to queue or escalate, it can't just be self-service</td></tr>
+          <tr><td>Cost model</td><td>Opex, pay-per-use, elastic</td><td>Largely fixed capex already spent; utilization efficiency matters more than avoiding waste, since the hardware cost is sunk either way</td></tr>
+          <tr><td>Tooling maturity</td><td>Mature; every major IaC tool has first-class cloud provider support</td><td>Less mature; bare metal is still commonly flagged in current platform engineering discussion as &quot;artisanal infrastructure,&quot; provisioned manually and outside the platform's own tooling, even at organizations that are otherwise fully API-driven everywhere else</td></tr>
+        </table>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Most real platform teams in 2026 aren't choosing one or the other. A common pattern: steady-state, predictable workloads (databases, core services) run on-prem or on bare metal where it's cheaper at scale or required for latency and compliance reasons, while variable and spiky workloads scale in the cloud. A small number of providers now offer &quot;bare metal cloud,&quot; single-tenant physical performance with the same API-driven provisioning cloud users expect, narrowing this gap further, but it remains the less mature option and needs to be evaluated as such, not assumed equivalent to a mainstream cloud provider's tooling.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Self-service versus ticket-driven infrastructure</h3>
       <p>Whether provisioning something new takes minutes or a multi-day queue determines how much of the platform's value reaches engineering teams.</p>
@@ -114,6 +135,8 @@
         <p>A developer needs a new PostgreSQL database for a service. Through a developer portal (Backstage is the common open-source choice; Port is a common commercial alternative) or an internal CLI, they select a pre-approved &quot;new database&quot; template and fill in a short form: service name, environment, expected scale tier.</p>
         <p>Submitting the form triggers an infrastructure-as-code pipeline, often a Terraform module or a Crossplane composition, that provisions the database with the organization's standards already baked in: encryption at rest, standard tagging for cost allocation, automated backups, and network policy applied without the developer having to know or configure any of it themselves. The database is ready in minutes, registered automatically in the service catalog, with ownership and cost attribution wired in from the start. No ticket, no human approval, for the standard case.</p>
         <p>The template itself is where governance lives, not in a review step. Security, compliance, and tagging requirements get encoded once, in the template, rather than re-checked by a human on every request. A genuinely unusual request, a non-standard database engine, an exception to the network policy, is exactly the case that should still route to a human, because it's the case the template wasn't built to handle safely on its own.</p>
+        <p style="font-size:12px; color:var(--ink-soft);">On-prem, the same template pattern applies, provisioning still runs through a pipeline with standards baked in, but the pipeline also has to check available capacity before it commits, and route to a human when the request would exceed it. That capacity check has no real equivalent in the cloud version of this example above.</p>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">The database example above is self-service at the resource level, inside an environment that already exists. The same discipline applies one level up: issuing an entire new, pre-governed subscription or account to a team, Azure calls this subscription vending, AWS calls it Account Factory, GCP typically calls it a project factory. See the landing zone reference on <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> for how each provider's version works.</p>
       </div>
     </div>
   </div>
