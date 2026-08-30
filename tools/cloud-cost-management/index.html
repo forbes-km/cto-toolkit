@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloud Cost Management</title>
+<title>Cloud FinOps</title>
 <style>
   :root {
     --paper: #F6F5F1;
@@ -50,6 +50,8 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -62,17 +64,35 @@
 
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
-  <h1>Cloud Cost Management</h1>
+  <h1>Cloud FinOps</h1>
   <p>Managing general infrastructure spend as a standing discipline, not a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.</p>
-  <div class="caveat">This covers general cloud infrastructure cost, compute, storage, networking, data services. For token-based pricing, PTU and reserved capacity, and GPU amortization on AI workloads, see the <a href="../ai-finops-map/index.html">AI FinOps Map</a>.</div>
+  <div class="caveat">This covers general cloud infrastructure cost, compute, storage, networking, data services, using the FinOps Foundation's own framework. For token-based pricing, PTU and reserved capacity, and GPU amortization on AI workloads, see the <a href="../ai-finops-map/index.html">AI FinOps Map</a>. The Foundation itself publishes the full framework, certifications, and the FOCUS specification at <a href="https://www.finops.org" target="_blank" rel="noopener">finops.org</a>.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The FinOps Foundation's three phases</h3>
+      <p>Not an invented framework, this is the FinOps Foundation's own model, the industry body (under the Linux Foundation) that maintains the FinOps Framework and the FOCUS billing specification referenced throughout this page.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Phase</th><th>Focus</th><th>Typical activities</th></tr>
+          <tr><td>Inform</td><td>Visibility and allocation</td><td>Tagging, showback, budgets, forecasting, benchmarking spend against peers</td></tr>
+          <tr><td>Optimize</td><td>Reducing waste and improving rates</td><td>Rightsizing, reserved capacity and commitment discounts, workload rearchitecture for cost efficiency</td></tr>
+          <tr><td>Operate</td><td>Continuous governance</td><td>Automated policies, anomaly detection, aligning engineering and finance around cost as a shared, ongoing metric</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Where cost hides</h3>
-      <p>The categories that consistently account for the largest share of avoidable spend, in roughly the order worth checking first.</p>
+      <p>The categories that consistently account for the largest share of avoidable spend, in roughly the order worth checking first. This is the Optimize phase in practice.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -163,6 +183,110 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>FOCUS: a shared billing language across clouds</h3>
+      <p>The FinOps Foundation's second major contribution beyond the phase model, and the reason cross-cloud cost comparison stopped being a manual exercise.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What it solves</span>
+        <p>Before FOCUS (the FinOps Open Cost and Usage Specification), comparing a dollar of AWS spend to a dollar of Azure spend meant manually normalizing wildly different billing export formats, column names, and units. FOCUS is an open, vendor-neutral spec, now adopted by AWS, Microsoft, Google, and others, that puts every provider's billing data into the same shape.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it doesn't solve</span>
+        <p>FOCUS standardizes the data format, not the underlying pricing or discount structures. A normalized bill still requires the same rightsizing and commitment discipline covered above; FOCUS removes the translation tax from the reporting layer, it doesn't remove the need for the practice itself.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Crawl, Walk, Run, applied practically</h3>
+      <p>The FinOps Foundation's maturity model, stated concretely enough to assess against rather than claim.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What distinguishes each stage</span>
+        <p><strong>Crawl:</strong> tagging exists but is inconsistent, cost visibility is monthly and reactive, no forecasting. <strong>Walk:</strong> tagging enforced at creation, showback running, budgets set proactively, rightsizing is a recurring practice, not a one-time sweep. <strong>Run:</strong> chargeback in place, unit economics tracked (cost per customer or transaction), anomaly detection automated, cost is a first-class input to architecture decisions rather than an afterthought.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>Treating maturity as a label to claim rather than a description of what's happening. An organization that calls itself &quot;Run&quot; but can't answer what a single team spent last month is Crawl with better branding.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score your own FinOps maturity</h3>
+      <p>Six capability domains from the FinOps Foundation framework, scored 1 to 5. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="cf-inputs"></div>
+        <button id="cf-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate maturity score</button>
+        <div id="cf-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cfDomains = [
+      "Cost allocation & tagging",
+      "Rate optimization (commitments, discounts)",
+      "Anomaly management",
+      "Forecasting & budgeting",
+      "Unit economics",
+      "Governance & accountability"
+    ];
+    const cfInputsEl = document.getElementById('cf-inputs');
+    cfDomains.forEach((dom, i) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
+      const label = document.createElement('span');
+      label.textContent = dom;
+      label.style.cssText = 'font-size:13px; color:var(--ink);';
+      const select = document.createElement('select');
+      select.id = 'cf-dom-' + i;
+      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink);';
+      [1,2,3,4,5].forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = 'Level ' + v;
+        if (v === 3) opt.selected = true;
+        select.appendChild(opt);
+      });
+      row.appendChild(label);
+      row.appendChild(select);
+      cfInputsEl.appendChild(row);
+    });
+
+    document.getElementById('cf-calc').addEventListener('click', () => {
+      let scores = [];
+      cfDomains.forEach((dom, i) => {
+        const val = parseInt(document.getElementById('cf-dom-' + i).value, 10);
+        scores.push({ dom, val });
+      });
+      const avg = scores.reduce((a, b) => a + b.val, 0) / scores.length;
+      const weakest = scores.reduce((a, b) => (b.val < a.val ? b : a));
+      let stage;
+      if (avg < 2.5) stage = 'Crawl';
+      else if (avg < 4.0) stage = 'Walk';
+      else stage = 'Run';
+      const resultEl = document.getElementById('cf-result');
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
+        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5 (' + stage + ')</strong><br>' +
+        'Weakest domain: <strong>' + weakest.dom + '</strong> at Level ' + weakest.val + '. ' +
+        'Fund the weakest domain first, not the one that\'s easiest to improve; a Run-level rate optimization practice sitting on top of Crawl-level allocation is still Crawl overall, since nobody can act on savings they can\'t attribute.' +
+        '</div>';
+    });
+  </script>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs cost governance isn't working</h3>
       <p>Not exhaustive, but the patterns that show up consistently when a cost program looks good on paper and isn't changing behavior.</p>
@@ -175,7 +299,21 @@
           <li>Reserved capacity utilization is below 80 percent, meaning committed spend is going unused</li>
           <li>Non-production environments run around the clock with no automated schedule</li>
           <li>No one outside the finance or platform team can say what their own team's monthly cloud spend is</li>
+          <li>The organization describes itself as FinOps &quot;mature&quot; but can't answer what a single team spent last month</li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Cloud FinOps workbook</h3>
+      <p>Six linked tabs: a rightsizing tracker, a reserved capacity break-even calculator, showback and chargeback allocation, the maturity assessment above made live, and a savings opportunity log. Every formula recalculates when you change an input.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="cloud-finops-workbook.xlsx" download>Download .xlsx</a>
       </div>
     </div>
   </div>
