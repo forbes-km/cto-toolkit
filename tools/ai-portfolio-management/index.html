@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Portfolio Management</title>
+<meta name="description" content="Which AI initiatives should get built, scored and classified with the same discipline applied to the rest of the application estate.">
+<meta property="og:title" content="AI Portfolio Management | CTO Toolkit">
+<meta property="og:description" content="Which AI initiatives should get built, scored and classified with the same discipline applied to the rest of the application estate, rather than funded by enthusiasm or the fear of being left behind.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -155,6 +159,105 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score an initiative</h3>
+      <p>Score all nine dimensions 1 to 5. Feasibility and data readiness are hard gates, a low score on either kills the initiative regardless of everything else. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="aipm-inputs"></div>
+        <button id="aipm-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Classify it</button>
+        <div id="aipm-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const aipmDims = [
+      { id: "value", label: "Business value", hint: "1 = minimal impact, 5 = high impact" },
+      { id: "feasibility", label: "Feasibility (gate)", hint: "1 = not feasible now, 5 = highly feasible" },
+      { id: "data", label: "Data readiness (gate)", hint: "1 = data doesn't exist or unusable, 5 = fully ready" },
+      { id: "risk", label: "Risk", hint: "1 = high regulatory/model risk, 5 = low risk" },
+      { id: "adoption", label: "Adoption likelihood", hint: "1 = unlikely to be used, 5 = certain adoption" },
+      { id: "time", label: "Time to value", hint: "1 = very long, 5 = fast" },
+      { id: "cost", label: "Operating cost", hint: "1 = expensive to run, 5 = cheap to run" },
+      { id: "diff", label: "Differentiation", hint: "1 = easily copied, 5 = hard to copy" },
+      { id: "reversibility", label: "Reversibility", hint: "1 = hard to unwind, 5 = easy to unwind" },
+    ];
+
+    const aipmInputsEl = document.getElementById('aipm-inputs');
+    aipmDims.forEach((dim) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
+      const labelWrap = document.createElement('div');
+      const label = document.createElement('div');
+      label.textContent = dim.label;
+      label.style.cssText = 'font-size:13px; color:var(--ink); font-weight:600;';
+      const hint = document.createElement('div');
+      hint.textContent = dim.hint;
+      hint.style.cssText = 'font-size:11px; color:var(--ink-soft);';
+      labelWrap.appendChild(label);
+      labelWrap.appendChild(hint);
+      const select = document.createElement('select');
+      select.id = 'aipm-' + dim.id;
+      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink); min-width:90px;';
+      [1,2,3,4,5].forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        if (v === 3) opt.selected = true;
+        select.appendChild(opt);
+      });
+      row.appendChild(labelWrap);
+      row.appendChild(select);
+      aipmInputsEl.appendChild(row);
+    });
+
+    document.getElementById('aipm-calc').addEventListener('click', () => {
+      const scores = {};
+      aipmDims.forEach(dim => {
+        scores[dim.id] = parseInt(document.getElementById('aipm-' + dim.id).value, 10);
+      });
+
+      const resultEl = document.getElementById('aipm-result');
+      const avg = aipmDims.reduce((sum, d) => sum + scores[d.id], 0) / aipmDims.length;
+
+      let tier, verdict;
+      const gateFailed = scores.feasibility < 3 || scores.data < 3;
+
+      if (gateFailed) {
+        tier = 'KILL';
+        const failedGates = [];
+        if (scores.feasibility < 3) failedGates.push('feasibility');
+        if (scores.data < 3) failedGates.push('data readiness');
+        verdict = 'This fails a gating dimension (' + failedGates.join(' and ') + '), so it does not reach the business-value conversation at all, regardless of the average score. Gating dimensions eliminate; they are not averaged away.';
+      } else if (avg >= 4.0 && scores.reversibility <= 2) {
+        tier = 'INCUBATE';
+        verdict = 'The average score alone would suggest Scale, but reversibility is low, this bet is expensive to unwind if it does not work out. Fund a bounded pilot with a defined checkpoint rather than a full commitment; the downside asymmetry earns the extra caution.';
+      } else if (avg >= 4.0) {
+        tier = 'SCALE';
+        verdict = 'Proven value and feasibility, with a downside that is manageable if it does not work out. Fund it fully and remove obstacles.';
+      } else if (avg >= 3.0) {
+        tier = 'INCUBATE';
+        verdict = 'Promising but unproven on one or more dimensions. Fund a bounded pilot with a defined checkpoint, not an open-ended commitment.';
+      } else {
+        tier = 'WATCH';
+        verdict = 'Not ready to fund at this score. Revisit on a set schedule rather than letting it quietly disappear or quietly keep spending.';
+      }
+
+      const weakest = aipmDims.reduce((a, b) => (scores[b.id] < scores[a.id] ? b : a));
+
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        '<strong>Classification: ' + tier + '</strong> (average score ' + avg.toFixed(1) + ' of 5)<br>' +
+        'Weakest dimension: <strong>' + weakest.label.replace(' (gate)', '') + '</strong> at ' + scores[weakest.id] + '/5<br>' +
+        '<br>' + verdict +
+        '</div>';
+    });
+  </script>
 
   <div class="stage-card">
     <div class="stage-head">
