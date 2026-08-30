@@ -159,6 +159,38 @@
   </script>
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">Sequencing</span>
+      <h3>Where to start, since you can't do all six at once</h3>
+      <p>Treating six dimensions as equally urgent is how effort gets spread thin everywhere and deep nowhere.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The highest-leverage starting point</span>
+        <p>Identity and access almost always comes first. Segmentation, detection, and even third-party risk all assume you can trust who's making a request in the first place; building micro-segmentation on top of standing broad access just adds complexity around a foundation that's still weak.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>Spreading effort evenly across all six dimensions produces slow, shallow progress everywhere and leaves the foundational dimension exactly as weak as it started, which is worse than concentrating effort where it compounds.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Reading a real score pattern, not just the average</h3>
+      <p>What the six-dimension breakdown reveals when it's uneven, which it almost always is.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Scores:</strong> Identity &amp; access 2, Segmentation &amp; blast radius 2, Detection &amp; response 4, Vulnerability management 3, Third-party risk 2, Governance &amp; culture 3. Average: 2.7.</p>
+        <p><strong>The diagnosis the average hides:</strong> strong detection sitting on top of weak identity and segmentation is a specific, dangerous pattern. This organization can see an attacker after they're already in, but the foundational controls that would have made getting in hard, or limited what they could reach once inside, are still weak. The instinct this score pattern usually triggers, buy more detection tooling since it's already the strongest area, is exactly backwards. More visibility into a wide-open environment doesn't reduce how wide open it is. Identity and segmentation need the next dollar, not detection.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">How to use this</span>
       <h3>Scoring honestly, and what to do with the result</h3>
       <p>The assessment only has value if the scoring is honest, which is harder than it sounds when the person scoring it is also accountable for the result.</p>
@@ -174,6 +206,7 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
@@ -190,6 +223,7 @@
         <p>That the scope covered every system that matters, that the maturity level is sustained rather than a point-in-time snapshot assembled for the audit, or that a novel attack pattern outside the certified controls would be caught. Treat certification as a floor, not a ceiling.</p>
       </div>
     </div>
+    <div class="same-note">See <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> for the broader NIST CSF-based governance ladder this architecture-specific model complements; the two are meant to disagree sometimes, not tell the same story twice.</div>
   </div>
 
 </main>

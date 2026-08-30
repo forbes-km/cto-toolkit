@@ -129,12 +129,62 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
+      <h3>The CTO / CPO split, done honestly</h3>
+      <p>The pairing this page's own title implies gets equal treatment, and hasn't, until now.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">When it's earned</span>
+        <p>Once &quot;how to build it&quot; and &quot;what to build&quot; are genuinely full-time, separate cognitive loads, with enough product surface area that no single person can hold both the technical architecture and the full market and customer picture in their head at once.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">When it isn't</span>
+        <p>Hiring a CPO before there's enough product complexity to justify it adds a translation layer between what customers need and what gets built, a layer a single technically fluent, product-minded CTO could have held directly, and often held better, with no handoff loss.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Role structure by company archetype, worked</h3>
+      <p>What the boundaries above look like assembled into a real org, at three different points.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Archetype</th><th>CTO</th><th>CPO</th><th>CIO</th><th>CISO</th></tr>
+          <tr><td>Early-stage startup (under 50 engineers)</td><td>Owns strategy, engineering, and product direction together</td><td>Doesn't exist yet; folded into the CTO role</td><td>Doesn't exist; IT handled by a generalist or outsourced</td><td>Doesn't exist; security owned by the CTO directly</td></tr>
+          <tr><td>Mid-scale SaaS (200 to 1,000 engineers)</td><td>Owns how the product is built: architecture, engineering</td><td>Owns what gets built: roadmap, customer research</td><td>A light IT function, often still reporting through the CTO or COO</td><td>Dedicated hire, reporting per the guidance on <a href="../security-program/index.html">Security Program</a></td></tr>
+          <tr><td>Hardware or deep-tech</td><td>Owns both product and technology direction; no separate CPO</td><td>Doesn't exist; folded into the CTO role</td><td>May exist for internal systems, separate from the product itself</td><td>Often folded into engineering leadership until real scale is reached</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
       <h3>The CISO reporting line</h3>
       <p>The single most consequential structural decision in this group, and it deserves more depth than fits here.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p>See <a href="../security-program/index.html">Security Program</a> for the full argument: security reporting into a role whose other incentives directly compete with security priorities creates a structural conflict every time a security requirement would slow a release.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>A worked disagreement</h3>
+      <p>What the boundary resolves when two roles genuinely disagree, not just in theory.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>The CPO wants to ship a feature fast to close a specific enterprise deal. The CTO says the underlying data model needs to change first, or the shortcut will block three roadmap items next quarter and become unmaintainable.</p>
+        <p>Checking <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>: product roadmap priorities have the CPO Accountable, the CTO Consulted, engineering Responsible. The CTO doesn't get a veto, but the CPO genuinely has to weigh the technical input, not just note it and proceed. In this case, the negotiated outcome is a scoped-down version that closes the deal on time without the risky shortcut, with the full feature and the data model fix shipping together next quarter. Nobody has to relitigate who had final say, because the boundary already answered that before the disagreement started.</p>
       </div>
     </div>
   </div>
@@ -153,6 +203,7 @@
           <li>The CISO reports into a role whose incentives conflict with security priorities</li>
           <li>No one outside the four roles could explain where one's authority ends and another's begins</li>
           <li>A new hire into one of these roles has to guess at their own scope because it's never been written down</li>
+          <li>A CPO or CIO was hired before the underlying business complexity justified splitting the role from the CTO's</li>
         </ul>
       </div>
     </div>

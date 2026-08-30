@@ -144,6 +144,85 @@
     </div>
   </div>
 
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Is the next nine worth it?</h3>
+      <p>Enter what an hour of downtime costs, your current tier, the tier you're considering, and what reaching it would cost annually. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: 260px 1fr; gap:10px 16px; align-items:center; font-size:13px; max-width:560px;">
+          <label for="re-cost">Cost of downtime, per hour ($)</label>
+          <input id="re-cost" type="number" value="25000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="re-current">Current availability tier</label>
+          <select id="re-current" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--ui); font-size:13px;">
+            <option value="99">99%</option>
+            <option value="99.9" selected>99.9%</option>
+            <option value="99.95">99.95%</option>
+            <option value="99.99">99.99%</option>
+          </select>
+
+          <label for="re-target">Target availability tier</label>
+          <select id="re-target" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--ui); font-size:13px;">
+            <option value="99">99%</option>
+            <option value="99.9">99.9%</option>
+            <option value="99.95" selected>99.95%</option>
+            <option value="99.99">99.99%</option>
+          </select>
+
+          <label for="re-invest">Annual cost to reach target tier ($)</label>
+          <input id="re-invest" type="number" value="180000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+        </div>
+        <button id="re-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="re-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const RE_DOWNTIME_MINUTES = { "99": 5259.6, "99.9": 525.96, "99.95": 262.98, "99.99": 52.596 };
+
+    document.getElementById('re-calc').addEventListener('click', () => {
+      const costPerHour = parseFloat(document.getElementById('re-cost').value) || 0;
+      const current = document.getElementById('re-current').value;
+      const target = document.getElementById('re-target').value;
+      const invest = parseFloat(document.getElementById('re-invest').value) || 0;
+
+      const resultEl = document.getElementById('re-result');
+
+      if (parseFloat(target) <= parseFloat(current)) {
+        resultEl.innerHTML =
+          '<div style="background:var(--b-soft); border-left:3px solid var(--b); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+          'Target tier isn\'t higher than the current tier. Pick a target with less downtime than what you already have.' +
+          '</div>';
+        return;
+      }
+
+      const currentMinutes = RE_DOWNTIME_MINUTES[current];
+      const targetMinutes = RE_DOWNTIME_MINUTES[target];
+      const minutesSaved = currentMinutes - targetMinutes;
+      const hoursSaved = minutesSaved / 60;
+      const expectedSavings = hoursSaved * costPerHour;
+      const net = expectedSavings - invest;
+
+      let verdict;
+      if (net > 0) {
+        verdict = 'JUSTIFIED. Expected downtime-cost avoidance exceeds the investment by $' + Math.round(net).toLocaleString() + ' a year, assuming downtime is genuinely reduced to the target tier, not just budgeted for.';
+      } else {
+        verdict = 'NOT JUSTIFIED AT THESE NUMBERS. The investment costs $' + Math.round(Math.abs(net)).toLocaleString() + ' more than the downtime it is expected to prevent. Either the cost-per-hour figure is understated, or this tier isn\'t worth building to yet.';
+      }
+
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        '<strong>Downtime avoided: ' + hoursSaved.toFixed(1) + ' hours/year, worth $' + Math.round(expectedSavings).toLocaleString() + '</strong><br>' +
+        'Investment required: $' + Math.round(invest).toLocaleString() + '/year<br>' +
+        '<br>' + verdict +
+        '</div>';
+    });
+  </script>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
@@ -158,6 +237,7 @@
           <li>Redundancy investment is uniform across the estate rather than tiered to real criticality</li>
           <li>The cost of the current reliability posture has never been compared to the cost of the downtime it prevents</li>
           <li>&quot;We need to be more reliable&quot; gets stated with no number attached to what that would cost or save</li>
+          <li>The next nine gets pursued because it's technically achievable, not because the math above says it's worth it</li>
         </ul>
       </div>
     </div>
