@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CTO Toolkit</title>
+<meta name="description" content="40+ frameworks and interactive tools spanning AI architecture and cloud engineering, M&amp;A diligence, security and risk, and executive practice: capital allocation, decision rights, and the CEO relationship.">
+<meta property="og:title" content="CTO Toolkit: From AI Architecture to Boardroom Leadership">
+<meta property="og:description" content="40+ frameworks and interactive tools spanning AI architecture and cloud engineering, M&amp;A diligence, security and risk, and executive practice: capital allocation, decision rights, and the CEO relationship.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/index.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CTO Toolkit: From AI Architecture to Boardroom Leadership">
+<meta name="twitter:description" content="40+ frameworks and interactive tools spanning AI architecture, cloud engineering, M&amp;A diligence, security and risk, and executive practice.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -144,6 +154,22 @@
   .badge.live { background: var(--accent-soft); color: var(--accent); }
   .badge.soon { background: var(--amber-soft); color: var(--amber); }
   .badge.doc { background: var(--line); color: var(--ink-soft); }
+  .badge.calc { background: #E7EFF7; color: #2E6FB0; margin-left: 6px; }
+
+  .situation-bar { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  .situation-bar-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 600; margin: 0 0 10px; }
+  .situation-links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .situation-links a { font-size: 12.5px; color: var(--accent); background: var(--accent-soft); padding: 7px 14px; border-radius: 999px; text-decoration: none; font-weight: 600; }
+  .situation-links a:hover { background: var(--accent); color: white; }
+  .start-here { max-width: 1100px; margin: 14px auto 0; padding: 0 32px; }
+  .start-here-inner { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 11px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: var(--ink); }
+  .start-here-inner a { color: var(--accent); font-weight: 600; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .start-here-inner a:hover { text-decoration-color: var(--accent); }
+
+  .jump-nav { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 1px solid var(--line); padding: 12px 32px; margin-top: 20px; }
+  .jump-nav-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .jump-nav a { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; font-weight: 600; padding: 4px 0; border-bottom: 2px solid transparent; }
+  .jump-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
   footer {
     max-width: 1100px;
@@ -165,148 +191,327 @@
   <p class="byline"><a href="https://github.com/forbes-km/cto-toolkit">github.com/forbes-km/cto-toolkit</a></p>
 </header>
 
+<div class="situation-bar">
+  <p class="situation-bar-label">Start by situation</p>
+  <div class="situation-links">
+    <a href="tools/situation-starting-as-cto/index.html">I'm starting as CTO</a>
+    <a href="tools/situation-cutting-costs/index.html">We're cutting costs</a>
+    <a href="tools/situation-ma/index.html">We're going through M&amp;A</a>
+    <a href="tools/situation-ai/index.html">We're introducing AI</a>
+    <a href="tools/situation-incident/index.html">We just had a major incident</a>
+    <a href="tools/situation-growth/index.html">The company is growing rapidly</a>
+  </div>
+</div>
+
+<div class="start-here">
+  <div class="start-here-inner">
+    Short on time? Read <a href="tools/epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a> first, it's the thinking behind everything else here.
+  </div>
+</div>
+
+<div class="jump-nav">
+  <div class="jump-nav-inner">
+    <a href="#sec-ai">AI systems</a>
+    <a href="#sec-cloud-ea">Cloud &amp; enterprise architecture</a>
+    <a href="#sec-risk">Risk &amp; resilience</a>
+    <a href="#sec-planning">Planning &amp; diligence</a>
+    <a href="#sec-leading">Leading the enterprise</a>
+    <a href="#sec-general">General CTO practice</a>
+  </div>
+</div>
+
 <main>
 
-  <div class="section-label">AI systems: architecture, governance, cost</div>
+  <div class="section-label" id="sec-ai">AI systems: architecture, governance, cost</div>
   <p class="section-note">Runnable, dependency-free reference tools. Open directly in a browser, no build step. Code is MIT licensed.</p>
   <div class="grid">
 
     <a class="card" href="tools/ai-architecture-map/index.html">
-      <span class="badge live">Live</span>
-      <h3>AI Architecture Map</h3>
+      <h3>AI Architecture</h3>
       <p>RAG, document intelligence, agent orchestration (MCP/A2A), security, PHI/PII protection, observability, and disaster recovery. Azure-managed compared against self-hosted open-weight builds at every stage.</p>
     </a>
 
     <a class="card" href="tools/ai-governance-map/index.html">
-      <span class="badge live">Live</span>
-      <h3>AI Governance Map</h3>
+      <h3>AI Governance</h3>
       <p>Data foundation, governance layer, trusted outputs, and responsible AI controls mapped to concrete implementation and the regulatory frameworks that require them.</p>
     </a>
 
     <a class="card" href="tools/ai-finops-map/index.html">
-      <span class="badge live">Live</span>
-      <h3>AI FinOps Map</h3>
+      <h3>AI FinOps</h3>
       <p>Cost modeling for token-based pricing, PTU/reserved capacity, GPU amortization for self-hosted models, and chargeback patterns across cloud and on-prem.</p>
+    </a>
+
+    <a class="card" href="tools/ai-portfolio-management/index.html">
+      <h3>AI Portfolio Management</h3>
+      <p>Which AI initiatives should get built: nine scoring dimensions, gating on feasibility and data readiness first, and a Scale/Incubate/Watch/Kill classification.</p>
     </a>
 
   </div>
 
-  <div class="section-label">Cloud &amp; enterprise architecture</div>
-  <p class="section-note">General cloud infrastructure reference, not AI-specific.</p>
+  <div class="section-label" id="sec-cloud-ea">Cloud &amp; enterprise architecture</div>
+  <p class="section-note">General cloud infrastructure and architecture reference, not AI-specific.</p>
   <div class="grid">
 
     <a class="card" href="tools/cloud-service-mapper/index.html">
-      <span class="badge live">Live</span>
+      <span class="badge calc">Interactive</span>
       <h3>Cloud Service Mapper</h3>
       <p>Translate capabilities and services across AWS, Azure, GCP, and OCI, plus a landing zone and foundational best-practices reference.</p>
     </a>
 
     <a class="card" href="tools/enterprise-architecture-map/index.html">
-      <span class="badge live">Live</span>
       <h3>Enterprise Architecture</h3>
-      <p>Capability modeling at a usable altitude, EA operating models and where each breaks down, and architecture governance that doesn't become a bottleneck.</p>
+      <p>What EA is versus domain and solution architecture, the capability model's structural rules, the operating model canvas, EA function roles and capacity, and the five ways EA functions fail.</p>
+    </a>
+
+    <a class="card" href="tools/apm-portfolio-map/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>Application Portfolio Management</h3>
+      <p>Gartner TIME classification, independent risk scoring, and a technical debt backlog for a full application estate, in-browser quadrant calculator included, plus a variant for scoring an acquisition target's portfolio.</p>
+    </a>
+
+    <a class="card" href="tools/architecture-principles/index.html">
+      <h3>Architecture Principles Library</h3>
+      <p>Fifteen principles across strategic, technical, data, and people domains, each with the reasoning, the trade-off it forces, a worked example, and how it's commonly misapplied.</p>
+    </a>
+
+    <a class="card" href="tools/architecture-review-board/index.html">
+      <h3>Architecture Review Board</h3>
+      <p>Reviewing evidence from real engineering work, not diagrams made for the meeting, plus running the board long-term without it decaying into theater.</p>
+    </a>
+
+    <a class="card" href="tools/ea-maturity-assessment/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>EA Maturity Assessment</h3>
+      <p>Six dimensions, strategy alignment, governance, domain coverage, delivery integration, talent, and artifacts, with a scoring calculator that flags real diagnostic patterns.</p>
+    </a>
+
+    <a class="card" href="tools/modernization-execution/index.html">
+      <h3>Legacy Modernization Execution</h3>
+      <p>How a migration gets run: the strangler fig pattern, cutover and rollback planning, parallel-run validation, and the big-bang trap.</p>
+    </a>
+
+    <a class="card" href="tools/cloud-cost-management/index.html">
+      <span class="badge doc">Template</span>
+      <span class="badge calc">Interactive</span>
+      <h3>Cloud FinOps</h3>
+      <p>The FinOps Foundation's three-phase framework and Crawl/Walk/Run maturity model, FOCUS billing standardization, rightsizing, reserved capacity, and showback/chargeback, with a maturity calculator.</p>
+    </a>
+
+    <a class="card" href="tools/data-strategy/index.html">
+      <h3>Data Strategy</h3>
+      <p>Warehouse versus lakehouse versus mesh and when each fits, treating data as a product, the golden-record problem, and why this is the same investment as AI governance's data foundation.</p>
     </a>
 
   </div>
 
-  <div class="section-label">Planning &amp; diligence</div>
-  <p class="section-note">Decision records, roadmapping, vendor evaluation, and technical M&amp;A diligence.</p>
+  <div class="section-label" id="sec-risk">Risk &amp; resilience</div>
+  <p class="section-note">Security, continuity, data protection, and the economics of reliability, as their own standing discipline rather than an afterthought inside other pages.</p>
+  <div class="grid">
+
+    <a class="card" href="tools/security-program/index.html">
+      <h3>Building a Security Program</h3>
+      <p>How to stand up a security function from little or nothing, sequenced by what reduces risk first, distinct from scoring a program that already exists.</p>
+    </a>
+
+    <a class="card" href="tools/zero-trust-maturity/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>Zero-Trust Maturity Preview</h3>
+      <p>Six dimensions, identity and access, segmentation, detection and response, vulnerability management, third-party risk, governance and culture, with an in-browser scoring calculator.</p>
+    </a>
+
+    <a class="card" href="tools/security-compliance-maturity/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>Security &amp; Compliance Maturity</h3>
+      <p>A maturity ladder across the five NIST Cybersecurity Framework functions, scored on evidence rather than stated policy, and why a certification isn't the same thing as maturity.</p>
+    </a>
+
+    <a class="card" href="tools/disaster-recovery/index.html">
+      <h3>Disaster Recovery &amp; Business Continuity</h3>
+      <p>RTO/RPO set honestly by business impact, backup testing discipline, tabletop exercises, and how to answer the board's recovery-time question.</p>
+    </a>
+
+    <a class="card" href="tools/data-governance/index.html">
+      <h3>Data Governance &amp; Privacy</h3>
+      <p>Classification, ownership versus stewardship, subject access and deletion requests made operational, and which regulation applies when.</p>
+    </a>
+
+    <a class="card" href="tools/reliability-economics/index.html">
+      <h3>Reliability as an Economic Decision</h3>
+      <p>How much reliability the business can afford, error budgets as an explicit tradeoff, and why overengineering has a real, ongoing cost.</p>
+    </a>
+
+  </div>
+
+  <div class="section-label" id="sec-planning">Planning &amp; diligence</div>
+  <p class="section-note">Decision records, roadmapping, stakeholder and vendor management, and technical M&amp;A diligence.</p>
   <div class="grid">
 
     <a class="card" href="tools/adr-roadmapping/index.html">
-      <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
       <h3>ADRs &amp; Roadmapping</h3>
       <p>What a good Architecture Decision Record contains, why one roadmap rarely serves both engineering and business audiences, and what gets a business case funded.</p>
     </a>
 
+    <a class="card" href="tools/stakeholder-engagement/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>Stakeholder Engagement</h3>
+      <p>Influence-interest mapping, the placement mistake that breaks most engagement plans, and an interactive grid that auto-sorts stakeholders you add into their quadrant.</p>
+    </a>
+
+    <a class="card" href="tools/business-case-calculator/index.html">
+      <span class="badge doc">Template</span>
+      <span class="badge calc">Interactive</span>
+      <h3>Business Case Calculator</h3>
+      <p>A working NPV, IRR, benefit-to-cost, and payback calculator, enter costs and benefits by year and get a verdict, in-browser, nothing sent anywhere.</p>
+    </a>
+
     <a class="card" href="tools/vendor-evaluation/index.html">
-      <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
+      <span class="badge calc">Interactive</span>
       <h3>Vendor Evaluation</h3>
       <p>Weighted scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost.</p>
     </a>
 
     <a class="card" href="tools/technology-diligence-map/index.html">
-      <span class="badge live">Live</span>
+      <span class="badge calc">Interactive</span>
       <h3>Technology Diligence</h3>
       <p>Technical debt signals, key-person risk, acquisition-specific security posture, integration complexity, and red flags that should stop or reprice a deal.</p>
     </a>
 
+    <a class="card" href="tools/technology-ma-integration/index.html">
+      <h3>Technology M&amp;A Integration</h3>
+      <p>What happens after close: Day 0 continuity, the 100-day converge/coexist/replace decision, and testing the deal thesis through Year 1.</p>
+    </a>
+
   </div>
 
-  <div class="section-label">General CTO practice</div>
+  <div class="section-label" id="sec-leading">Leading the enterprise</div>
+  <p class="section-note">The CEO and CFO relationships, capital allocation, risk appetite, and decision rights: the executive layer that determines whether everything else in this toolkit gets funded, followed, or ignored.</p>
+  <div class="grid">
+
+    <a class="card" href="tools/ceo-cto-relationship/index.html">
+      <h3>Working with the CEO</h3>
+      <p>Telling the CEO no, when technology should be invisible versus when it's the strategy, and handling a CEO miscalibrated in either direction.</p>
+    </a>
+
+    <a class="card" href="tools/cto-cfo-relationship/index.html">
+      <h3>Working with the CFO</h3>
+      <p>Defending a number with its derivation, when ROI framing doesn't fit and shouldn't be forced, and the budget conversation that has to happen before the budget meeting.</p>
+    </a>
+
+    <a class="card" href="tools/cto-operating-system/index.html">
+      <h3>The CTO Operating System</h3>
+      <p>A concrete daily-to-annual operating rhythm, and why conflating the tiers is how urgent work quietly displaces what matters.</p>
+    </a>
+
+    <a class="card" href="tools/technology-decision-rights/index.html">
+      <h3>Technology Decision Rights</h3>
+      <p>A RACI-style model for making decision ownership explicit, because most executive conflict is an undefined decision right wearing a personality conflict's clothes.</p>
+    </a>
+
+    <a class="card" href="tools/technology-capital-allocation/index.html">
+      <span class="badge doc">Template</span>
+      <span class="badge calc">Interactive</span>
+      <h3>Technology Capital Allocation</h3>
+      <p>Run, grow, and transform, security, debt, and reserve as one portfolio, and a pre-ranked answer to what gets cut or funded first.</p>
+    </a>
+
+    <a class="card" href="tools/technology-budget-management/index.html">
+      <h3>Running the Technology Budget</h3>
+      <p>Forecast versus actual variance, showback versus chargeback, and what a monthly budget review needs to contain to catch drift early.</p>
+    </a>
+
+    <a class="card" href="tools/technology-risk-appetite/index.html">
+      <h3>Technology Risk Appetite</h3>
+      <p>What won't be accepted, what's accepted temporarily, and what crosses the threshold for board or CEO visibility, stated in advance.</p>
+    </a>
+
+    <a class="card" href="tools/role-boundaries/index.html">
+      <h3>Role Boundaries: CTO, CIO, CISO, CPO</h3>
+      <p>Where these roles typically split, why the lines move by company type, and why they're organizational choices, not universal truths.</p>
+    </a>
+
+    <a class="card" href="tools/technology-strategy-downturn/index.html">
+      <h3>Technology Strategy During a Downturn</h3>
+      <p>Bad cuts versus better cuts when the CEO says reduce spend twenty percent, and what not to touch regardless of the pressure.</p>
+    </a>
+
+    <a class="card" href="tools/cto-succession/index.html">
+      <h3>CTO Leadership &amp; Succession</h3>
+      <p>Who runs engineering if the CTO is out for ninety days, bus-factor analysis applied to leadership, and the succession heatmap.</p>
+    </a>
+
+  </div>
+
+  <div class="section-label" id="sec-general">General CTO practice</div>
   <p class="section-note">The organizational and operating side of the role: reporting, incident response, org design, and decision frameworks.</p>
   <div class="grid">
 
     <a class="card" href="tools/board-reporting/index.html">
-      <span class="badge live">Live</span>
       <h3>Board Reporting</h3>
-      <p>What actually works when reporting technology, security, and AI posture to a board, and the specific mistakes that undermine credibility.</p>
+      <p>What works when reporting technology, security, and AI posture to a board, and the specific mistakes that undermine credibility.</p>
     </a>
 
     <a class="card" href="tools/incident-response/index.html">
-      <span class="badge live">Live</span>
+      <span class="badge doc">Template</span>
       <h3>Incident Response</h3>
       <p>A blameless, repeatable incident process from detection through postmortem follow-through, with severity classification and common failure modes.</p>
     </a>
 
     <a class="card" href="tools/org-design/index.html">
-      <span class="badge live">Live</span>
       <h3>Org Design</h3>
       <p>Team topology patterns, interaction modes, and the span-of-control question that comes up in nearly every reorg conversation.</p>
     </a>
 
+    <a class="card" href="tools/engineering-culture/index.html">
+      <h3>Engineering Culture</h3>
+      <p>Why culture is what gets rewarded, not what gets said, blameless as a practice rather than a slogan, and whose culture wins in a merger or scaling moment.</p>
+    </a>
+
     <a class="card" href="tools/build-vs-buy/index.html">
-      <span class="badge live">Live</span>
       <h3>Build vs Buy</h3>
-      <p>The criteria that actually decide a build-versus-buy debate, and the maintenance cost that rarely makes it into the initial proposal.</p>
+      <p>The criteria that decide a build-versus-buy debate, and the maintenance cost that rarely makes it into the initial proposal.</p>
     </a>
 
-    <a class="card" href="tools/security-compliance-maturity/index.html">
-      <span class="badge live">Live</span>
-      <h3>Security &amp; Compliance Maturity</h3>
-      <p>A maturity ladder across the five NIST Cybersecurity Framework functions, scored on evidence rather than stated policy.</p>
+    <a class="card" href="tools/technology-strategy/index.html">
+      <span class="badge doc">Template</span>
+      <h3>Technology Strategy</h3>
+      <p>What a technology strategy is versus a roadmap, the three-horizon investment split, and why tradeoffs, not initiatives, are what make a strategy usable.</p>
     </a>
 
-  </div>
-
-  <div class="section-label">Methodology &amp; frameworks</div>
-  <p class="section-note">Described at the methodology level. Full scoring engines, weighting tables, and facilitation guides are part of an active advisory practice and available through direct engagement.</p>
-  <div class="grid">
-
-    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/ai-governance">
-      <span class="badge doc">Methodology</span>
-      <h3>AI &amp; LLM Governance</h3>
-      <p>Governance framework for regulated environments.</p>
+    <a class="card" href="tools/innovation-portfolio/index.html">
+      <h3>Innovation Portfolio Management</h3>
+      <p>Funding models that survive quarterly pressure, stage-gate versus continuous discovery, kill criteria set before a bet starts, and innovation tournaments as the sourcing mechanism.</p>
     </a>
 
-    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/enterprise-architecture">
-      <span class="badge doc">Methodology</span>
-      <h3>Enterprise Architecture</h3>
-      <p>Capability modeling, EA operating model, EA and security maturity assessments.</p>
+    <a class="card" href="tools/agile-and-safe/index.html">
+      <h3>Agile and SAFe</h3>
+      <p>Why doing agile and being agile diverge, where SAFe genuinely helps at scale, and where it becomes its own kind of ceremony theater.</p>
     </a>
 
-    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/modernization-cloud">
-      <span class="badge doc">Methodology</span>
-      <h3>Cloud Modernization &amp; FinOps</h3>
-      <p>Migration and modernization patterns, integration approaches, cloud FinOps.</p>
+    <a class="card" href="tools/engineering-metrics/index.html">
+      <h3>Engineering Metrics</h3>
+      <p>The four DORA metrics and their benchmark bands, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives.</p>
     </a>
 
-    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/technology-diligence">
-      <span class="badge doc">Methodology</span>
-      <h3>Technology Diligence</h3>
-      <p>Technology M&amp;A diligence and post-merger integration, including two ML-augmented tools.</p>
+    <a class="card" href="tools/ai-engineering-operating-model/index.html">
+      <h3>AI and the Engineering Operating Model</h3>
+      <p>Why AI productivity doesn't automatically equal more story points, how code review has to change, and what it does to junior engineer skill development.</p>
     </a>
 
-    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/stakeholder-vendor">
-      <span class="badge doc">Methodology</span>
-      <h3>Stakeholder &amp; Vendor</h3>
-      <p>Stakeholder engagement and vendor evaluation.</p>
+    <a class="card" href="tools/platform-engineering/index.html">
+      <h3>Platform Engineering</h3>
+      <p>The team and system that make good delivery metrics achievable: golden paths, self-service infrastructure, and treating the platform as a product with real users.</p>
     </a>
 
-    <a class="card" href="https://github.com/forbes-km/cto-toolkit/tree/main/planning-communication">
-      <span class="badge doc">Methodology</span>
-      <h3>Planning &amp; Communication</h3>
-      <p>Board reporting, roadmaps, business cases, ADRs.</p>
+    <a class="card" href="tools/technical-hiring-leveling/index.html">
+      <h3>Technical Hiring &amp; Leveling</h3>
+      <p>Leveling by scope and ambiguity rather than tenure, interview loop design, independent scoring before group discussion, and culture add versus culture fit.</p>
+    </a>
+
+    <a class="card" href="tools/epistemology-research-methods/index.html">
+      <h3>Epistemology &amp; Research Methods</h3>
+      <p>The discipline underneath every finding on this site, made explicit: evidence hierarchies, bounded research windows, confirmation bias, and calibrated confidence over false precision.</p>
     </a>
 
   </div>
@@ -315,6 +520,8 @@
 
 <footer>
   Reference only. Cloud service catalogs, AI vendor capabilities, and pricing change frequently, so verify current details against primary sources before relying on this for a design, migration, or investment decision. Catalog content is all rights reserved, evaluation only; code under <code>/tools</code> is MIT licensed.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+
 </footer>
 
 </body>
