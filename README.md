@@ -1,36 +1,58 @@
-# CTO Toolkit: Cloud Modernization, Enterprise Architecture & M&A Diligence
+# CTO Toolkit
 
-A working library of methods, templates, and scoring instruments built over 20+ years of running and assessing enterprise technology platforms, including eight years as CTO of a global healthcare platform and ongoing technical due diligence work on both buy-side and sell-side transactions.
+A working library of frameworks, templates, and interactive tools for enterprise technology leadership, built over 20+ years of running and assessing enterprise technology platforms, including eight years as CTO of a global healthcare platform and ongoing technical due diligence work on both buy-side and sell-side transactions.
 
-Most of what's cataloged here is described at the methodology level rather than distributed in full. Working versions, including scoring engines, configurable weighting tables, and facilitation guides, are maintained as part of an active advisory practice and are available through direct engagement. A few things in here are real and runnable right now: see **Open tools** below.
+Live site: https://forbes-km.github.io/cto-toolkit/
 
 ---
 
-## Categories
+## Structure
 
-| Folder | What's in it |
+Every page lives under `/tools/<page-slug>/index.html`. There's no separate category-folder structure, the root `index.html` is the full index, organized into six sections:
+
+| Section | Covers |
 |---|---|
-| [`/ai-governance`](./ai-governance) | AI and LLM governance framework for regulated environments |
-| [`/modernization-cloud`](./modernization-cloud) | Cloud migration, modernization, integration patterns, FinOps |
-| [`/planning-communication`](./planning-communication) | Board reporting, roadmaps, business cases, ADRs |
-| [`/stakeholder-vendor`](./stakeholder-vendor) | Stakeholder engagement and vendor evaluation |
-| [`/technology-diligence`](./technology-diligence) | Technology M&A diligence and post-merger integration, including two ML-augmented tools |
-| [`/enterprise-architecture`](./enterprise-architecture) | Capability modeling, EA operating model, EA and security maturity assessments |
+| AI systems | Architecture, governance, cost modeling, and portfolio management for AI initiatives |
+| Cloud & enterprise architecture | EA operating model, application portfolio, architecture review, cloud cost, data strategy |
+| Risk & resilience | Security program, zero-trust and compliance maturity, disaster recovery, reliability economics |
+| Planning & diligence | Roadmapping, stakeholder engagement, vendor evaluation, technology M&A diligence and integration |
+| Leading the enterprise | CEO/CFO relationships, decision rights, capital allocation, risk appetite, succession, board reporting |
+| General CTO practice | Org design, engineering culture, hiring, engineering metrics, build vs buy, platform engineering |
 
-Each folder has its own README with the full list and description for that category.
+Six situational entry points (`/tools/situation-*`) resequence the same catalog around a specific moment instead of a topic: starting as CTO, cutting costs, going through M&A, introducing AI, a major incident, rapid growth.
 
-## Open tools
+`CONTENT-GOVERNANCE.md` tracks every page: type, deploy status, cross-link dependencies, and known limitations. It's updated each time a page ships or changes meaningfully, and is the source of truth for what's live versus still in progress.
 
-- [`/tools/cloud-service-mapper`](./tools/cloud-service-mapper) - a real, dependency-free, MIT-licensed reference tool for translating cloud service capabilities across AWS, Azure, GCP, and OCI. Open `index.html` in a browser, no build step.
+---
+
+## What's runnable
+
+- **15 interactive calculators**, embedded directly in their pages, no separate app: application portfolio scoring, AI initiative classification (Scale/Incubate/Watch/Kill), zero-trust and EA maturity assessment, security and compliance maturity, business case NPV/IRR, capital allocation modeling, reliability and disaster-recovery cost-benefit, cloud FinOps maturity, vendor evaluation, and stakeholder mapping, among others
+- **Downloadable templates** (.md and .docx): ADR, incident postmortem, vendor evaluation scorecard, technology strategy, business case one-pager
+- **Downloadable workbooks** (.xlsx, formula-driven, not static exports): technology capital allocation, cloud FinOps
+- **A sample board reporting deck** (.pptx), illustrative figures, structure matches the board reporting page's own guidance
+- **Cloud Service Mapper**: a dependency-free reference tool translating capabilities across AWS, Azure, GCP, and OCI, including a landing zone comparison covering identity, network, guardrails, and subscription/account/project vending
+
+---
+
+## Depth varies by design
+
+Pages range from focused reference material to full frameworks with worked examples, interactive tools, and downloadable templates. Some pages state explicitly where they're a preview of a fuller framework, with the complete version, custom scoring, and facilitation, available through direct engagement, rather than published in full.
+
+---
 
 ## Samples
 
-- [`/samples`](./samples) - redacted or fully synthetic example outputs from the tools described above, so they can be evaluated by what they produce.
+Redacted or fully synthetic example outputs live alongside the tools that produce them rather than in a separate folder, the sample board deck is the clearest example: a complete, illustrative deck built to the structure the Board Reporting page describes, labeled as synthetic throughout.
 
-## How the pieces connect
-
-`/assets_data_flow.svg` shows how the diligence and technical debt tools chain together: a populated scoring workbook feeds a prioritization or optimization engine, which produces a sequenced, rationale-backed plan.
+---
 
 ## License
 
-Catalog content (methodology descriptions, playbooks, templates) is all rights reserved, evaluation only. Code inside `/tools` is MIT licensed. Full terms in [`LICENSE`](./LICENSE).
+**⚠️ Needs your decision before this ships.** The prior version of this file scoped the MIT license to `/tools` when that folder held exactly one open tool (Cloud Service Mapper). Now that every page on the site lives under `/tools`, carrying that sentence forward unchanged would silently MIT-license the entire methodology catalog, not just the one tool it originally meant. I haven't made that call for you. Below is the license section written to preserve your original intent (only Cloud Service Mapper is open; everything else is all-rights-reserved, evaluation-only) rather than the literal old wording. Confirm this is still what you want, or tell me which pages, if any, should be open.
+
+Catalog content (methodology, frameworks, templates, worked examples, and the calculators that implement them) is all rights reserved, evaluation only.
+
+`/tools/cloud-service-mapper` is MIT licensed. Open `index.html` in a browser; no build step, no dependencies.
+
+Full terms in [`LICENSE`](./LICENSE).
