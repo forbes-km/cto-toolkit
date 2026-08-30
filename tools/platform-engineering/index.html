@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Platform Engineering</title>
+<meta name="description" content="The team and system that make good delivery metrics achievable, treating internal infrastructure as a product with users.">
+<meta property="og:title" content="Platform Engineering | CTO Toolkit">
+<meta property="og:description" content="The team and system that make good delivery metrics achievable, treating internal infrastructure as a product with users, not a shared utility maintained as an afterthought.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -165,6 +169,86 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score your own platform</h3>
+      <p>Five dimensions, one for each practice covered above. Score 1 to 5. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="pe-inputs"></div>
+        <button id="pe-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="pe-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const peDims = [
+      { id: "selfservice", label: "Self-service coverage", hint: "1 = nearly everything needs a ticket, 5 = routine provisioning is self-service" },
+      { id: "goldenpath", label: "Golden path adoption", hint: "1 = most teams build their own, 5 = the golden path is the default nearly everyone uses" },
+      { id: "funding", label: "Outcome-linked funding", hint: "1 = platform value is assumed, 5 = investment is tracked against delivery metrics" },
+      { id: "dx", label: "Developer experience measurement", hint: "1 = never measured, 5 = tracked as seriously as uptime" },
+      { id: "roadmap", label: "Roadmap traceability", hint: "1 = driven by what's technically interesting, 5 = every item traces to a specific request" },
+    ];
+
+    const peInputsEl = document.getElementById('pe-inputs');
+    peDims.forEach((dim) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
+      const labelWrap = document.createElement('div');
+      const label = document.createElement('div');
+      label.textContent = dim.label;
+      label.style.cssText = 'font-size:13px; color:var(--ink); font-weight:600;';
+      const hint = document.createElement('div');
+      hint.textContent = dim.hint;
+      hint.style.cssText = 'font-size:11px; color:var(--ink-soft);';
+      labelWrap.appendChild(label);
+      labelWrap.appendChild(hint);
+      const select = document.createElement('select');
+      select.id = 'pe-' + dim.id;
+      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink); min-width:70px;';
+      [1,2,3,4,5].forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        if (v === 3) opt.selected = true;
+        select.appendChild(opt);
+      });
+      row.appendChild(labelWrap);
+      row.appendChild(select);
+      peInputsEl.appendChild(row);
+    });
+
+    document.getElementById('pe-calc').addEventListener('click', () => {
+      const scores = {};
+      peDims.forEach(dim => {
+        scores[dim.id] = parseInt(document.getElementById('pe-' + dim.id).value, 10);
+      });
+
+      const avg = peDims.reduce((sum, d) => sum + scores[d.id], 0) / peDims.length;
+      const weakest = peDims.reduce((a, b) => (scores[b.id] < scores[a.id] ? b : a));
+
+      let verdict;
+      if (avg >= 4.0) {
+        verdict = 'Strong across the board. The remaining work is protecting this, not building it, watch the weakest dimension below so it does not quietly slip while attention moves elsewhere.';
+      } else if (avg >= 3.0) {
+        verdict = 'A real platform practice with real gaps. Fund the weakest dimension next, not the one that is easiest or most interesting to fix.';
+      } else {
+        verdict = 'This is closer to a shared utility than a product team yet. Start with whichever dimension is weakest, it is very likely the reason teams are routing around the platform rather than adopting it.';
+      }
+
+      const resultEl = document.getElementById('pe-result');
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5</strong><br>' +
+        'Weakest dimension: <strong>' + weakest.label + '</strong> at ' + scores[weakest.id] + '/5<br>' +
+        '<br>' + verdict +
+        '</div>';
+    });
+  </script>
 
   <div class="stage-card">
     <div class="stage-head">
