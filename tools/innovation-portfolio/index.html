@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Innovation Portfolio Management</title>
+<meta name="description" content="Structuring innovation as a managed portfolio across the same three horizons as the broader technology strategy.">
+<meta property="og:title" content="Innovation Portfolio Management | CTO Toolkit">
+<meta property="og:description" content="Structuring innovation as a managed portfolio across the same three horizons as the broader technology strategy.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -70,7 +74,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Innovation Portfolio Management</h1>
-  <p>Structuring innovation as a managed portfolio across the same three horizons as the broader <a href="../technology-strategy/index.html">technology strategy</a>: funding models that survive quarterly pressure, stage-gate versus continuous discovery, kill criteria set before a bet starts, and the two failure modes specific to innovation work.</p>
+  <p>Structuring innovation as a managed portfolio across the same three horizons as the broader <a href="../technology-strategy/index.html">technology strategy</a>: funding models that survive quarterly pressure, stage-gate versus continuous discovery, kill criteria set before a bet starts, the two failure modes specific to innovation work, and a calculator that checks your own portfolio against the specific red flags this page names.</p>
   <div class="caveat">A framework for structuring and governing an innovation portfolio, not a guarantee that any specific bet succeeds. The discipline is in the process, kill criteria, funding protection, honest metrics, not in picking winners in advance.</div>
 </header>
 
@@ -198,6 +202,90 @@
     </div>
     <div class="same-note">A standing forum with an empty docket is a natural home for this. See <a href="../architecture-review-board/index.html">Architecture Review Board</a> for turning an unscheduled review slot into an informal salon where early-stage ideas get tested before they're ready for a formal tournament pitch.</div>
   </div>
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Portfolio health check</h3>
+      <p>Enter your current horizon split, this year's kill activity, and bet-type diversity. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: 280px 1fr; gap:10px 16px; align-items:center; font-size:13px; max-width:600px;">
+          <label for="ip-h1">Horizon 1 allocation (%)</label>
+          <input id="ip-h1" type="number" value="65" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="ip-h2">Horizon 2 allocation (%)</label>
+          <input id="ip-h2" type="number" value="25" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="ip-h3">Horizon 3 allocation (%)</label>
+          <input id="ip-h3" type="number" value="10" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="ip-killed">Bets killed this year</label>
+          <input id="ip-killed" type="number" value="0" min="0" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="ip-scaled">Bets scaled this year</label>
+          <input id="ip-scaled" type="number" value="3" min="0" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="ip-types">Distinct bet types currently active</label>
+          <select id="ip-types" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; background:white; font-family:var(--ui); font-size:13px;">
+            <option value="1">1 (all the same type)</option>
+            <option value="2" selected>2</option>
+            <option value="3">3 (adjacent-market, new-capability, new-business-model)</option>
+          </select>
+        </div>
+        <button id="ip-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Check the portfolio</button>
+        <div id="ip-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('ip-calc').addEventListener('click', () => {
+      const h1 = parseFloat(document.getElementById('ip-h1').value) || 0;
+      const h2 = parseFloat(document.getElementById('ip-h2').value) || 0;
+      const h3 = parseFloat(document.getElementById('ip-h3').value) || 0;
+      const killed = parseFloat(document.getElementById('ip-killed').value) || 0;
+      const scaled = parseFloat(document.getElementById('ip-scaled').value) || 0;
+      const types = parseInt(document.getElementById('ip-types').value, 10);
+
+      const total = h1 + h2 + h3;
+      const totalDecisions = killed + scaled;
+      const killRate = totalDecisions > 0 ? (killed / totalDecisions) * 100 : null;
+
+      const flags = [];
+
+      if (Math.abs(total - 100) > 0.5) {
+        flags.push('Horizon allocations sum to ' + total.toFixed(1) + '%, not 100%. Fix the split before reading the rest of this.');
+      }
+      if (h1 > 70) {
+        flags.push('Horizon 1 is running above the 60 to 70 percent target band. Likely candidate: Horizon 1 capture, product improvements relabeled as innovation because that\u2019s where the safe, fundable work already is.');
+      }
+      if (h3 < 5) {
+        flags.push('Horizon 3 is below the 5 to 10 percent target band, at ' + h3 + '%. This is what a portfolio looks like right before Horizon 3 investment quietly drifts to zero.');
+      }
+      if (totalDecisions > 0 && killRate === 0) {
+        flags.push('Zero kills against ' + scaled + ' scaled this year. Zero kills is a bigger red flag than a high kill rate, it usually means the hard conversation isn\u2019t happening, not that every bet is succeeding.');
+      }
+      if (types <= 1) {
+        flags.push('Only one bet type currently active. The portfolio may be quietly concentrated in a single kind of bet rather than genuinely diversified across adjacent-market, new-capability, and new-business-model bets.');
+      }
+
+      const resultEl = document.getElementById('ip-result');
+      let html = '<div style="background:' + (flags.length ? 'var(--b-soft)' : 'var(--accent-soft)') + '; border-left:3px solid ' + (flags.length ? 'var(--b)' : 'var(--accent)') + '; padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">';
+
+      if (killRate !== null) {
+        html += '<strong>Kill rate: ' + killRate.toFixed(0) + '%</strong> (' + killed + ' killed, ' + scaled + ' scaled)<br><br>';
+      }
+
+      if (flags.length === 0) {
+        html += 'No red flags against the checks this page names directly: horizon split is within target bands, the kill rate is nonzero, and bet-type diversity looks real. That doesn\u2019t guarantee the portfolio is healthy, only that it clears the specific, checkable signals this page argues for.';
+      } else {
+        html += flags.map(f => '\u2022 ' + f).join('<br><br>');
+      }
+      html += '</div>';
+      resultEl.innerHTML = html;
+    });
+  </script>
 
 </main>
 
