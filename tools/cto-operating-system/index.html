@@ -66,8 +66,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>The CTO Operating System</h1>
-  <p>A concrete operating rhythm: what belongs at the daily, weekly, monthly, quarterly, and annual tier, and why conflating them is how urgent work quietly displaces the work that matters.</p>
-  <div class="caveat">This is a cadence, not a task list. See <a href="../board-reporting/index.html">Board Reporting</a> for the quarterly board cycle itself, and <a href="../engineering-metrics/index.html">Engineering Metrics</a> for what the monthly portfolio review should measure.</div>
+  <p>A concrete operating rhythm, what belongs at the daily, weekly, monthly, quarterly, and annual tier, plus a map of the actual areas of responsibility and how time allocation across them genuinely shifts as the organization scales.</p>
+  <div class="caveat">This is a cadence and an allocation model, not a task list. See <a href="../board-reporting/index.html">Board Reporting</a> for the quarterly board cycle itself, and <a href="../engineering-metrics/index.html">Engineering Metrics</a> for what the monthly portfolio review should measure.</div>
 </header>
 
 <main>
@@ -93,6 +93,54 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Areas of responsibility</h3>
+      <p>The five tiers above answer when. This answers what, and where to go on this site for the full depth on each.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Area</th><th>What it covers</th><th>Depth on this site</th></tr>
+          <tr><td>Technology strategy &amp; direction</td><td>The three-horizon investment split, tradeoffs, competitive positioning</td><td><a href="../technology-strategy/index.html">Technology Strategy</a></td></tr>
+          <tr><td>Architecture &amp; technical standards</td><td>Capability models, principles, review governance</td><td><a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a>, <a href="../architecture-principles/index.html">Architecture Principles</a>, <a href="../architecture-review-board/index.html">Architecture Review Board</a></td></tr>
+          <tr><td>Team &amp; organization</td><td>Structure, hiring, leveling, culture</td><td><a href="../org-design/index.html">Org Design</a>, <a href="../technical-hiring-leveling/index.html">Technical Hiring &amp; Leveling</a>, <a href="../engineering-culture/index.html">Engineering Culture</a></td></tr>
+          <tr><td>Capital allocation &amp; budget</td><td>Portfolio-level investment decisions and the standing budget process</td><td><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a>, <a href="../technology-budget-management/index.html">Running the Technology Budget</a></td></tr>
+          <tr><td>Risk &amp; security</td><td>Stated risk appetite, security program, resilience</td><td><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a>, <a href="../security-program/index.html">Security Program</a>, <a href="../disaster-recovery/index.html">Disaster Recovery</a></td></tr>
+          <tr><td>Executive &amp; board relationships</td><td>The relationships that determine whether anything above gets funded or heard</td><td><a href="../ceo-cto-relationship/index.html">Working with the CEO</a>, <a href="../cto-cfo-relationship/index.html">Working with the CFO</a>, <a href="../board-reporting/index.html">Board Reporting</a></td></tr>
+          <tr><td>Delivery oversight</td><td>Whether the organization is shipping, reliably, and knows it</td><td><a href="../engineering-metrics/index.html">Engineering Metrics</a>, <a href="../platform-engineering/index.html">Platform Engineering</a>, <a href="../incident-response/index.html">Incident Response</a></td></tr>
+          <tr><td>Hands-on technical work</td><td>Direct coding, architecture deep-dives, code review</td><td>No dedicated page; this is the category with the steepest decline as the organization scales, covered in the allocation table below</td></tr>
+          <tr><td>M&amp;A &amp; diligence</td><td>Applies only during an active transaction, not a steady-state allocation</td><td><a href="../technology-diligence-map/index.html">Technology Diligence</a>, <a href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Time allocation by company stage</h3>
+      <p>Illustrative, not measured. The point is the direction of the shift, not the precision of any single number; treat these as a starting frame to check your own calendar against, not a target to hit exactly.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Area</th><th>Early-stage (under 50 eng)</th><th>Scale-stage (50-500 eng)</th><th>Enterprise (500+ eng)</th></tr>
+          <tr><td>Technology strategy &amp; direction</td><td>8%</td><td>15%</td><td>20%</td></tr>
+          <tr><td>Architecture &amp; technical standards</td><td>12%</td><td>15%</td><td>10%</td></tr>
+          <tr><td>Team &amp; organization</td><td>20%</td><td>20%</td><td>15%</td></tr>
+          <tr><td>Capital allocation &amp; budget</td><td>3%</td><td>8%</td><td>13%</td></tr>
+          <tr><td>Risk &amp; security</td><td>2%</td><td>7%</td><td>8%</td></tr>
+          <tr><td>Executive &amp; board relationships</td><td>10%</td><td>15%</td><td>22%</td></tr>
+          <tr><td>Delivery oversight</td><td>15%</td><td>12%</td><td>10%</td></tr>
+          <tr><td>Hands-on technical work</td><td>30%</td><td>8%</td><td>2%</td></tr>
+        </table>
+        <p style="font-size:12.5px; color:var(--ink-soft); margin-top:8px;">M&amp;A and diligence isn't in the table because it isn't a steady-state allocation; it spikes heavily during an active transaction regardless of stage and returns to near-zero afterward.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Why cadence beats reactive prioritization</h3>
       <p>The alternative to a stated cadence isn't no cadence, it's an implicit one where whoever's loudest wins.</p>
@@ -112,6 +160,42 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
+      <h3>Why allocation should shift, not stay fixed</h3>
+      <p>The table above isn't three unrelated snapshots. It's one trajectory, and the shift itself has to be managed deliberately.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>Deliberately renegotiating your own time allocation at each real scaling milestone, a new engineering VP hired, a real architecture function stood up, a CFO relationship established, rather than letting the shift happen passively or resisting it out of habit.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode, in both directions</span>
+        <p>A CTO who keeps writing code and reviewing every pull request well past the point the org has outgrown that involvement becomes the bottleneck they used to prevent. A CTO who delegates architecture and technical judgment before the org has anyone ready to hold it leaves a real capability gap disguised as &quot;scaling the team.&quot;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Intended versus actual: where the time really goes</h3>
+      <p>Most CTOs, asked to describe their allocation, would sketch something close to the table above. Their calendar usually disagrees.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The gap</span>
+        <p>An honestly audited calendar usually shows meetings and reactive interruptions consuming twenty to thirty percentage points more than intended, almost always stolen from technology strategy and hands-on deep work, the two categories with no urgent deadline forcing their own defense.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The fix</span>
+        <p>The Thursday deep-work block described later on this page isn't a nice-to-have; it's the actual mechanism that defends strategy time from being silently eaten by whatever's urgent that particular week. Audit the real calendar quarterly against the intended allocation, not just a gut sense of how the time is going.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
       <h3>The daily tier is smaller than it feels</h3>
       <p>Daily access to the CTO is available, which is exactly why the daily tier is the one most prone to creep.</p>
     </div>
@@ -129,7 +213,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">3</span>
+      <span class="stage-num">5</span>
       <h3>The quarterly reset is a reallocation decision, not a report</h3>
       <p>The tier most likely to exist on the calendar and produce nothing.</p>
     </div>
@@ -147,7 +231,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">4</span>
+      <span class="stage-num">6</span>
       <h3>The weekly tier: sync, not status</h3>
       <p>The tier that runs most often and is therefore most at risk of becoming ritual rather than function.</p>
     </div>
@@ -165,7 +249,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
+      <span class="stage-num">7</span>
       <h3>The annual tier, done properly</h3>
       <p>The tier most often compressed, and the one where compression costs the most.</p>
     </div>
@@ -183,7 +267,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">6</span>
+      <span class="stage-num">8</span>
       <h3>A worked week, illustrative</h3>
       <p>What the tiers look like assembled into one actual calendar, for a CTO at roughly a 150-engineer organization.</p>
     </div>
@@ -217,6 +301,8 @@
           <li>No one outside the CTO could describe what happens at each cadence tier</li>
           <li>Annual strategy work gets compressed into a single offsite rather than genuine preparation beforehand</li>
           <li>The weekly sync consistently produces no decisions, and the real decisions happen in a separate, unscheduled conversation afterward</li>
+          <li>The calendar hasn't been audited against an intended time allocation in over a year, or ever</li>
+          <li>Hands-on technical work hasn't declined as a share of time despite the organization scaling well past the stage where that made sense</li>
         </ul>
       </div>
     </div>
