@@ -105,6 +105,21 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Self-service provisioning, concretely</h3>
+      <p>What "self-service tooling with sane defaults" looks like, rather than left as an abstraction.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A developer needs a new PostgreSQL database for a service. Through a developer portal (Backstage is the common open-source choice; Port is a common commercial alternative) or an internal CLI, they select a pre-approved &quot;new database&quot; template and fill in a short form: service name, environment, expected scale tier.</p>
+        <p>Submitting the form triggers an infrastructure-as-code pipeline, often a Terraform module or a Crossplane composition, that provisions the database with the organization's standards already baked in: encryption at rest, standard tagging for cost allocation, automated backups, and network policy applied without the developer having to know or configure any of it themselves. The database is ready in minutes, registered automatically in the service catalog, with ownership and cost attribution wired in from the start. No ticket, no human approval, for the standard case.</p>
+        <p>The template itself is where governance lives, not in a review step. Security, compliance, and tagging requirements get encoded once, in the template, rather than re-checked by a human on every request. A genuinely unusual request, a non-standard database engine, an exception to the network policy, is exactly the case that should still route to a human, because it's the case the template wasn't built to handle safely on its own.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>Golden path design</h3>
       <p>A golden path is the supported, well-paved way to accomplish a common task, deliberately easier than any alternative.</p>
