@@ -70,8 +70,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Data Strategy</h1>
-  <p>Warehouse versus lakehouse versus mesh and when each fits, treating data as a product rather than a project, the golden-record problem in master data management, and why data quality work and AI governance's data foundation layer are the same investment.</p>
-  <div class="caveat">General data strategy patterns, not a specific technology recommendation. The right architecture depends on organizational structure and data maturity more than on which pattern is currently trending.</div>
+  <p>Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.</p>
+  <div class="caveat">General data strategy patterns, not a specific technology recommendation. The right architecture and operating model depend on organizational structure and data maturity more than on which pattern is currently trending.</div>
 </header>
 
 <main>
@@ -79,7 +79,7 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Warehouse, lakehouse, or mesh</h3>
-      <p>The architectural choice most data strategy conversations start with, and the one most likely to be made on trend rather than fit.</p>
+      <p>The architectural choice most data strategy conversations start with, and only one piece of the actual strategy.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -92,6 +92,7 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
@@ -109,9 +110,47 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
+      <h3>The operating model: centralized versus federated data teams</h3>
+      <p>The organizational question underneath data mesh. Mesh describes how data is structured and owned technically; this is who's staffed, and where they report.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Centralized</span>
+        <p>One team owns data infrastructure, pipelines, and quality end to end across the whole company. Consistent standards and a single point of accountability, but becomes a bottleneck as the number of data-consuming teams grows past what one team can service responsively.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Federated</span>
+        <p>Data engineers embedded within each domain team, closer to the business context and faster to respond to that domain's needs. Standards and quality drift apart across domains without a strong central platform layer underneath providing shared tooling and governance.</p>
+      </div>
+    </div>
+    <div class="same-note">Most organizations land somewhere between the two: a central platform team providing shared infrastructure and standards, with domain-embedded engineers applying them locally. The failure mode is picking neither deliberately and ending up with an accidental, undocumented mix of both.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Data literacy and self-service, not just engineering access</h3>
+      <p>Most data strategies are written for the people building the pipelines. This is about everyone else.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>A defined, curated set of self-service tools and pre-modeled datasets a non-technical analyst can query directly with guardrails, paired with genuine training investment, not just a BI tool license handed out and called self-service.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Self-service rolled out as tool access alone, which produces a proliferation of inconsistent, ungoverned dashboards each answering the same business question slightly differently, worse for decision-making than the centralized bottleneck it was meant to fix.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
       <h3>The golden record problem</h3>
       <p>Master data management's central challenge: the same real-world entity represented differently across systems, with no single system holding the authoritative version.</p>
     </div>
@@ -126,9 +165,10 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">3</span>
+      <span class="stage-num">5</span>
       <h3>Data quality as an AI prerequisite</h3>
       <p>Why this page and the <a href="../ai-governance-map/index.html">AI Governance Map</a>'s data foundation layer are describing the same underlying problem from two different altitudes.</p>
     </div>
@@ -143,9 +183,46 @@
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">4</span>
+      <span class="stage-num">6</span>
+      <h3>Real-time versus batch, as a strategic decision</h3>
+      <p>An implementation detail on the surface, and an economic decision underneath, the same shape as the argument on <a href="../reliability-economics/index.html">Reliability as an Economic Decision</a>, applied to data freshness instead of system uptime.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">When real-time earns its cost</span>
+        <p>Fraud detection, live personalization, operational alerting, use cases where the value of the insight decays to near-zero within minutes or seconds, genuinely justifying real-time infrastructure's higher operational complexity and cost.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The overengineering trap</span>
+        <p>Building real-time streaming infrastructure for a report that gets looked at once a week. The freshness nobody needed doesn't add value; it just adds an ongoing operational tax the same way an unneeded ninth of availability does.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Build versus buy for the data stack</h3>
+      <p>See <a href="../build-vs-buy/index.html">Build vs Buy</a> for the general framework. Data tooling is one of the clearest places it applies.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Where buying usually wins</span>
+        <p>ETL and ELT tooling, data catalogs, and BI platforms are mature, competitive markets. Building these in-house rarely produces a genuine competitive advantage and usually just recreates a worse version of what's commercially available.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where building can be justified</span>
+        <p>A genuinely novel data product that is itself the company's competitive differentiation, not the infrastructure underneath it. The same differentiation test from Build vs Buy applies directly: would the company lose deals or margin without owning this specifically.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
       <h3>Migrating between patterns without a rewrite</h3>
       <p>Almost no organization starts on the right pattern and stays there forever. How the migration happens matters as much as which pattern is the eventual target.</p>
     </div>
@@ -163,7 +240,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
+      <span class="stage-num">9</span>
       <h3>Data contracts, made concrete</h3>
       <p>&quot;Data contract&quot; gets used loosely. A contract that doesn't specify these things isn't one.</p>
     </div>
@@ -175,6 +252,19 @@
       <div class="stage-cell">
         <span class="env-label b">What passes for a contract but isn't</span>
         <p>A schema definition with no freshness commitment and no deprecation process. Consumers build against it anyway, because it's the only documentation available, and get broken silently the first time the upstream schema changes without warning.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">10</span>
+      <h3>Data as a product to external customers</h3>
+      <p>A question worth asking explicitly, even for organizations that will answer no.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>For some organizations, the data itself, aggregated, anonymized, or offered directly, is a real monetization opportunity distinct from its internal analytical use. This isn't relevant to every company, but it's worth asking deliberately rather than never considering it at all: does this organization sit on data that would be genuinely valuable to someone else, and if so, is productizing it worth the privacy, security, and packaging investment that would require. The honest answer for most companies is no, but it should be a considered no, not a question nobody asked.</p>
       </div>
     </div>
   </div>
@@ -193,6 +283,9 @@
           <li>Data contracts, where they exist, specify a schema but no freshness or deprecation commitment</li>
           <li>The same real-world entity holds conflicting values across systems with no field-level source-of-truth mapping to resolve it</li>
           <li>AI initiatives are blocked by data quality issues that were already flagged as a data strategy risk before the AI initiative started</li>
+          <li>Self-service access was granted with no curation or training, producing multiple dashboards that answer the same question differently</li>
+          <li>Real-time infrastructure exists for a use case nobody has ever needed the data faster than daily for</li>
+          <li>The centralized-versus-federated data team question was never decided deliberately, it just happened by accident of hiring</li>
         </ul>
       </div>
     </div>
