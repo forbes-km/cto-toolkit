@@ -97,6 +97,80 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Classify your own numbers</h3>
+      <p>Enter your actual metrics and see which band each one falls in against the table above. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px 16px;">
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-deploy" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Deployment frequency (deploys per week)</label>
+            <input id="dora-deploy" type="number" value="5" min="0" step="0.1" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-lead" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Change lead time (hours, commit to production)</label>
+            <input id="dora-lead" type="number" value="4" min="0" step="0.1" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-fail" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Change fail rate (%)</label>
+            <input id="dora-fail" type="number" value="20" min="0" max="100" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-recovery" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Failed deployment recovery time (hours)</label>
+            <input id="dora-recovery" type="number" value="3" min="0" step="0.1" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-rework" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Deployment rework rate (%, informational only)</label>
+            <input id="dora-rework" type="number" value="15" min="0" max="100" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+        </div>
+        <button id="dora-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Classify</button>
+        <div id="dora-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SIX_MONTHS_HRS = 6 * 30 * 24;
+
+    function doraBand(value, eliteTest, lowTest) {
+      if (eliteTest(value)) return 'Elite';
+      if (lowTest(value)) return 'Low';
+      return 'Medium';
+    }
+
+    document.getElementById('dora-calc').addEventListener('click', () => {
+      const deploy = parseFloat(document.getElementById('dora-deploy').value) || 0;
+      const lead = parseFloat(document.getElementById('dora-lead').value) || 0;
+      const fail = parseFloat(document.getElementById('dora-fail').value) || 0;
+      const recovery = parseFloat(document.getElementById('dora-recovery').value) || 0;
+      const rework = parseFloat(document.getElementById('dora-rework').value) || 0;
+
+      const bands = {
+        deploy: doraBand(deploy, v => v >= 7, v => v < 0.25),
+        lead: doraBand(lead, v => v < 1, v => v > SIX_MONTHS_HRS),
+        fail: doraBand(fail, v => v <= 15, v => v > 45),
+        recovery: doraBand(recovery, v => v < 1, v => v > SIX_MONTHS_HRS),
+      };
+
+      const bandColor = { Elite: 'var(--accent)', Medium: 'var(--b)', Low: '#C0392B' };
+
+      const resultEl = document.getElementById('dora-result');
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.9;">' +
+        'Deployment frequency: <strong style="color:' + bandColor[bands.deploy] + '">' + bands.deploy + '</strong><br>' +
+        'Change lead time: <strong style="color:' + bandColor[bands.lead] + '">' + bands.lead + '</strong><br>' +
+        'Change fail rate: <strong style="color:' + bandColor[bands.fail] + '">' + bands.fail + '</strong><br>' +
+        'Failed deployment recovery time: <strong style="color:' + bandColor[bands.recovery] + '">' + bands.recovery + '</strong><br>' +
+        'Deployment rework rate: <strong>' + rework.toFixed(1) + '%</strong> (no standardized band exists yet; compare this against your own trend over time, not against Elite or Low)' +
+        '</div>';
+    });
+  </script>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>

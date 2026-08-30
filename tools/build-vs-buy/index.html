@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build vs Buy</title>
+<meta name="description" content="The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often.">
+<meta property="og:title" content="Build vs Buy | CTO Toolkit">
+<meta property="og:description" content="The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often, and the maintenance cost that rarely makes it into the initial proposal.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -69,7 +73,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Build vs Buy</h1>
   <p>The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often, and the maintenance cost that rarely makes it into the initial proposal.</p>
-  <div class="caveat">A decision framework, not a calculator. The numbers you plug into the criteria above (real maintenance cost, real vendor pricing, real differentiation) are specific to your business and need honest internal debate, not a template answer.</div>
+  <div class="caveat">A decision framework the calculator below helps you apply, not a replacement for figuring out your own honest numbers. The scores you enter (real maintenance capacity, real vendor fit, real differentiation) are specific to your business and need honest internal debate, not a template answer.</div>
 </header>
 
 <main>
@@ -92,6 +96,94 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score your own decision</h3>
+      <p>Score each criterion from the table above, 1 to 5, high meaning it leans build. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="bvb-inputs"></div>
+        <button id="bvb-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Score it</button>
+        <div id="bvb-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bvbDims = [
+      { id: "diff", label: "Differentiation", hint: "1 = commodity, not a differentiator, 5 = core differentiator customers cite", def: 4 },
+      { id: "vendor", label: "Vendor fit", hint: "1 = a mature, well-fitting vendor exists, 5 = no good option exists", def: 4 },
+      { id: "time", label: "Time-to-value pressure", hint: "1 = need it in weeks, 5 = have runway for months", def: 3 },
+      { id: "maint", label: "Maintenance capacity", hint: "1 = don't want a permanent team on this, 5 = have or will build one", def: 4 },
+      { id: "lockin", label: "Lock-in risk if bought", hint: "1 = exit path is reasonable, 5 = switching cost would be unacceptable later", def: 3 },
+    ];
+
+    const bvbInputsEl = document.getElementById('bvb-inputs');
+    bvbInputsEl.style.cssText = 'display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px 20px;';
+    bvbDims.forEach((dim) => {
+      const box = document.createElement('div');
+      box.style.cssText = 'border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);';
+      const label = document.createElement('div');
+      label.textContent = dim.label;
+      label.style.cssText = 'font-size:13px; color:var(--ink); font-weight:600; margin-bottom:3px;';
+      const hint = document.createElement('div');
+      hint.textContent = dim.hint;
+      hint.style.cssText = 'font-size:11px; color:var(--ink-soft); margin-bottom:8px; line-height:1.4;';
+      const select = document.createElement('select');
+      select.id = 'bvb-' + dim.id;
+      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink); width:100%;';
+      [1,2,3,4,5].forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        if (v === dim.def) opt.selected = true;
+        select.appendChild(opt);
+      });
+      box.appendChild(label);
+      box.appendChild(hint);
+      box.appendChild(select);
+      bvbInputsEl.appendChild(box);
+    });
+
+    document.getElementById('bvb-calc').addEventListener('click', () => {
+      const scores = {};
+      bvbDims.forEach(dim => {
+        scores[dim.id] = parseInt(document.getElementById('bvb-' + dim.id).value, 10);
+      });
+      const avg = bvbDims.reduce((sum, d) => sum + scores[d.id], 0) / bvbDims.length;
+
+      let lean;
+      if (avg >= 4) lean = 'BUILD';
+      else if (avg >= 3) lean = 'PARTNER OR EXTEND';
+      else if (avg >= 2) lean = 'BUY';
+      else lean = 'STRONGLY BUY';
+
+      const resultEl = document.getElementById('bvb-result');
+      let verdict = '';
+
+      if (scores.diff <= 2) {
+        verdict += 'Differentiation scored low. Whatever the average says below, re-run the differentiation test from section 1 honestly before leaning build, a weak differentiation score dragged up by the other four criteria is exactly the pattern that produces a build decision made to justify a preference rather than a real one.<br><br>';
+      }
+
+      if (lean === 'PARTNER OR EXTEND') {
+        verdict += 'This score sits in the range where the middle option from section 3, buying the undifferentiated majority and building a thin, genuinely differentiated layer on top, is usually the actual right answer, not a compromise between the other two.';
+      } else if (lean === 'BUILD') {
+        verdict += 'A build lean. Before committing, make sure a five-year total cost of ownership estimate exists, not just the initial build cost, section 2\u2019s rule of thumb: commonly two to four times the initial estimate once maintenance and opportunity cost are included honestly.';
+      } else {
+        verdict += 'A buy lean. Check vendor concentration before signing, per section 5, this decision in isolation may look fine while quietly adding to a pattern of dependency on the same handful of vendors across other decisions.';
+      }
+
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        '<strong>Average: ' + avg.toFixed(1) + ' of 5 &mdash; ' + lean + '</strong><br><br>' +
+        verdict +
+        '</div>';
+    });
+  </script>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
