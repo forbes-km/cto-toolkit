@@ -53,6 +53,8 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
@@ -93,6 +95,110 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Run your own allocation</h3>
+      <p>Enter your total budget, current spend, and target percentage for each category. Runs entirely in your browser; nothing is sent anywhere or stored. The downloadable workbook below carries the same logic across seven linked tabs, this is the quick version.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="margin-bottom:14px;">
+          <label style="font-size:13px; font-weight:600;">Total annual budget ($)
+            <input id="ca-total" type="number" value="10000000" style="margin-left:10px; width:160px; padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+          </label>
+        </div>
+        <div id="ca-rows" style="display:grid; grid-template-columns: 130px 1fr 100px; gap:8px 12px; align-items:center; font-size:12.5px; margin-bottom:8px;">
+          <div style="font-weight:600;">Category</div>
+          <div style="font-weight:600;">Current spend ($)</div>
+          <div style="font-weight:600;">Target %</div>
+        </div>
+        <button id="ca-calc" style="margin-top:10px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="ca-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CA_CATEGORIES = [
+      { id: 'run', label: 'Run', current: 3970000, target: 40 },
+      { id: 'grow', label: 'Grow', current: 1600000, target: 15 },
+      { id: 'transform', label: 'Transform', current: 700000, target: 7 },
+      { id: 'security', label: 'Security', current: 950000, target: 10 },
+      { id: 'debt', label: 'Technical debt', current: 750000, target: 8 },
+      { id: 'headcount', label: 'Headcount', current: 1250000, target: 12 },
+      { id: 'vendors', label: 'Vendors', current: 380000, target: 4 },
+      { id: 'reserve', label: 'Reserve', current: 400000, target: 4 },
+    ];
+
+    const caRowsEl = document.getElementById('ca-rows');
+    CA_CATEGORIES.forEach(cat => {
+      const label = document.createElement('div');
+      label.textContent = cat.label;
+      const currentInput = document.createElement('input');
+      currentInput.type = 'number';
+      currentInput.id = 'ca-current-' + cat.id;
+      currentInput.value = cat.current;
+      currentInput.style.cssText = 'width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;';
+      const targetInput = document.createElement('input');
+      targetInput.type = 'number';
+      targetInput.id = 'ca-target-' + cat.id;
+      targetInput.value = cat.target;
+      targetInput.min = 0;
+      targetInput.max = 100;
+      targetInput.style.cssText = 'width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;';
+      caRowsEl.appendChild(label);
+      caRowsEl.appendChild(currentInput);
+      caRowsEl.appendChild(targetInput);
+    });
+
+    document.getElementById('ca-calc').addEventListener('click', () => {
+      const total = parseFloat(document.getElementById('ca-total').value) || 0;
+      let currentSum = 0;
+      let targetPctSum = 0;
+      const rows = CA_CATEGORIES.map(cat => {
+        const current = parseFloat(document.getElementById('ca-current-' + cat.id).value) || 0;
+        const targetPct = parseFloat(document.getElementById('ca-target-' + cat.id).value) || 0;
+        currentSum += current;
+        targetPctSum += targetPct;
+        const currentPct = total > 0 ? (current / total) * 100 : 0;
+        const targetDollar = total * (targetPct / 100);
+        const varianceDollar = current - targetDollar;
+        return { label: cat.label, current, currentPct, targetPct, targetDollar, varianceDollar };
+      });
+
+      const biggestGap = rows.reduce((a, b) => (Math.abs(b.varianceDollar) > Math.abs(a.varianceDollar) ? b : a));
+
+      let tableHtml = '<table class="matrix-table" style="margin-top:4px;"><tr><th>Category</th><th>Current</th><th>Target</th><th>Variance</th></tr>';
+      rows.forEach(r => {
+        const varColor = Math.abs(r.varianceDollar) > total * 0.01 ? 'color:var(--b); font-weight:600;' : '';
+        const roundedVar = Math.round(r.varianceDollar);
+        const varDisplay = roundedVar === 0 ? '$0' : (roundedVar > 0 ? '+$' + roundedVar.toLocaleString() : '-$' + Math.abs(roundedVar).toLocaleString());
+        tableHtml += '<tr><td>' + r.label + '</td><td>$' + Math.round(r.current).toLocaleString() + ' (' + r.currentPct.toFixed(1) + '%)</td><td>$' + Math.round(r.targetDollar).toLocaleString() + ' (' + r.targetPct.toFixed(1) + '%)</td><td style="' + varColor + '">' + varDisplay + '</td></tr>';
+      });
+      tableHtml += '</table>';
+
+      const targetPctOff = Math.abs(targetPctSum - 100) > 0.1;
+      const currentOffBudget = Math.abs(currentSum - total) > total * 0.005;
+
+      let verdict = '';
+      if (targetPctOff) {
+        verdict += 'Target percentages sum to ' + targetPctSum.toFixed(1) + '%, not 100%. This allocation isn\'t decided yet, just aspirational, fix the targets before treating this as a plan.<br>';
+      }
+      if (currentOffBudget) {
+        verdict += 'Current spend sums to $' + Math.round(currentSum).toLocaleString() + ' against a $' + Math.round(total).toLocaleString() + ' budget, a gap of $' + Math.round(currentSum - total).toLocaleString() + '. Confirm the total budget or the category figures.<br>';
+      }
+      verdict += 'Largest gap: <strong>' + biggestGap.label + '</strong>, running $' + Math.round(Math.abs(biggestGap.varianceDollar)).toLocaleString() + (biggestGap.varianceDollar >= 0 ? ' over' : ' under') + ' its target. Start the reallocation conversation there, not with the smallest, easiest-to-argue line item.';
+
+      const resultEl = document.getElementById('ca-result');
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        verdict +
+        '</div>' +
+        tableHtml;
+    });
+  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -202,6 +308,19 @@
           <tr><td>Reserve</td><td>5%</td><td>Untouched unless a specific, named trigger occurs</td></tr>
         </table>
         <p>The specific percentages are illustrative, not a template to copy. What matters is that every category has a number and a reason, and the reserve line exists at all.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Capital allocation workbook</h3>
+      <p>Seven linked tabs: the allocation summary above made live, a pre-ranked cut list and funding list with running totals, a zero-based review tracker, a real-options tracker for Horizon 3 bets, and a three-year projection. Every formula recalculates when you change an input; nothing is hardcoded.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="technology-capital-allocation-workbook.xlsx" download>Download .xlsx</a>
       </div>
     </div>
   </div>
