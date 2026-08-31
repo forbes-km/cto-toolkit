@@ -74,7 +74,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Governance Map</h1>
-  <p>Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them.</p>
+  <p>Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them. Includes the standards and credentials landscape, AIGP, ISO/IEC 42001, NIST AI RMF, and where each applies.</p>
   <div class="caveat">This is the technical and organizational governance layer. Legal review of applicable regulation for your specific jurisdiction and use case is not a substitute this page provides; treat the regulatory mapping table as a starting point for that conversation, not the conversation itself.</div>
 </header>
 
@@ -167,6 +167,45 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reference</span>
+      <h3>The standards and credentials landscape</h3>
+      <p>Four different things people mean when they say &quot;AI governance,&quot; easy to conflate and genuinely different in what they certify, who holds them, and what they cost.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Name</th><th>What it is</th><th>Who or what it applies to</th></tr>
+          <tr><td>AIGP (IAPP)</td><td>An individual professional credential, the AI-governance equivalent of IAPP's CIPP privacy certifications. 100-question exam across four domains: AI governance foundations, applicable laws and standards, governing AI development, governing AI deployment and use.</td><td>A person. Validates that someone can run an AI governance program; doesn't certify the organization or any specific system.</td></tr>
+          <tr><td>ISO/IEC 42001</td><td>A certifiable AI management system standard, the AI equivalent of ISO 27001 for information security. Third-party audited (Stage 1 and Stage 2), valid three years with annual surveillance audits, roughly 38 Annex A controls selected and justified against your own risk assessment, not a fixed checklist.</td><td>An organization's AI management system. Already held by AWS, Anthropic, and Microsoft. Doesn't by itself satisfy EU AI Act obligations, but the risk assessment and governance structure it requires feeds directly into the technical documentation the Act does require.</td></tr>
+          <tr><td>NIST AI RMF</td><td>A voluntary US framework (Govern, Map, Measure, Manage), guidance to structure a program against, not a certification anyone audits you to.</td><td>An organization's practice, self-assessed. Already referenced throughout this page's layer structure.</td></tr>
+          <tr><td>ISO/IEC 23894</td><td>Risk management guidance specific to AI, meant to be used alongside ISO 31000's general risk management approach.</td><td>An organization's risk process. Guidance, not a certifiable standard on its own.</td></tr>
+          <tr><td>OECD AI Principles</td><td>High-level international principles (inclusive growth, human-centered values, transparency, robustness, accountability), adopted by dozens of governments as policy language.</td><td>National policy and regulation that draws on these principles; not something an organization implements or gets certified against directly.</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">The practical distinction that matters most: AIGP tells you something about a person you might hire or promote into an AI governance role. ISO 42001 tells a customer or regulator something about your organization, backed by an independent audit. Neither substitutes for the other, and neither substitutes for the technical controls described in the four layers above; a certified management system with no enforced technical controls underneath it is a real and common failure pattern.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Judgment call</span>
+      <h3>Is ISO 42001 certification worth pursuing</h3>
+      <p>A real decision with a real cost, not something to default into because the standard exists.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Worth it</span>
+        <p>Enterprise customers or regulators are asking for independent evidence of AI governance maturity, not just a policy document. Selling into procurement processes where a competitor's ISO 42001 badge is becoming a checkbox. The organization already holds ISO 27001, since the incremental cost and timeline drop substantially when the management-system muscle already exists.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Not worth it yet</span>
+        <p>A small AI footprint with a handful of internal use cases and no customer demanding third-party evidence. The four layers above aren't solidly in place yet, certifying a management system before the underlying technical controls exist produces a certificate that doesn't reflect reality, and an auditor will eventually find that gap. NIST AI RMF, applied honestly and evidenced internally, covers most of the same ground without the $20,000 to $60,000 audit cost and multi-year commitment.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
       <h3>Regulatory framework mapping</h3>
       <p>Which control layer above satisfies which framework's requirement. Not legal advice; confirm applicability with counsel for your specific use case and jurisdiction.</p>
     </div>
@@ -177,6 +216,7 @@
           <tr><td>HIPAA</td><td>Minimum necessary access, immutable audit trail for PHI access</td><td>Layer 2 (retrieval boundaries) plus the PHI/PII stage on the <a href="../ai-architecture-map/index.html">Architecture Map</a></td></tr>
           <tr><td>EU AI Act, Article 14</td><td>Human oversight for high-risk AI systems</td><td>Layer 4, enforced technically via the HITL tiering model</td></tr>
           <tr><td>NIST AI RMF</td><td>Govern, Map, Measure, Manage functions across the AI lifecycle</td><td>All four layers plus model risk management, roughly one NIST function per layer</td></tr>
+          <tr><td>ISO/IEC 42001</td><td>An auditable AI management system: policy, risk assessment, selected Annex A controls, continuous improvement</td><td>All four layers plus the accountability and model risk management sections provide the evidence an auditor asks for</td></tr>
           <tr><td>SOC 2 (if applicable to the AI system)</td><td>Access controls, change management, monitoring evidence</td><td>Layer 2 for access, model risk management for change control, Layer 3 for monitoring evidence</td></tr>
         </table>
       </div>
