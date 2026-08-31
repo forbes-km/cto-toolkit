@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI FinOps Map</title>
+<meta name="description" content="Cost modeling across the same Azure-managed and self-hosted split as the Architecture Map.">
+<meta property="og:title" content="AI FinOps Map | CTO Toolkit">
+<meta property="og:description" content="Cost modeling across the same Azure-managed and self-hosted split as the Architecture Map, since the cost shape of a system follows directly from how it's built.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -70,7 +74,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI FinOps Map</h1>
-  <p>Cost modeling across the same Azure-managed and self-hosted split as the <a href="../ai-architecture-map/index.html">Architecture Map</a>, since the cost shape of a system follows directly from how it's built.</p>
+  <p>Cost modeling across the same Azure-managed and self-hosted split as the <a href="../ai-architecture-map/index.html">Architecture Map</a>, since the cost shape of a system follows directly from how it's built. Includes a break-even calculator and the two cost levers, prompt caching and batch processing, most teams leave unused.</p>
   <div class="caveat">Cost modeling here is directional, not a substitute for building your own model with your actual volume, region, and negotiated pricing. Vendor pricing changes frequently; verify current rates before using specific numbers in a budget decision.</div>
 </header>
 
@@ -93,6 +97,61 @@
     </div>
     <div class="same-note">The break-even point is a real number, not a vibe. Calculate it: (fixed self-hosted cost per month) divided by (per-token Azure cost) gives the query volume where self-hosting starts winning. Below that volume, pay-as-you-go almost always wins on total cost.</div>
   </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Find your own break-even point</h3>
+      <p>The formula above, made concrete. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px 16px;">
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="fin-fixed" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Fixed self-hosted cost per month ($)</label>
+            <input id="fin-fixed" type="number" value="50000" min="0" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="fin-cost" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Managed cost per query ($)</label>
+            <input id="fin-cost" type="number" value="0.05" min="0" step="0.001" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="fin-volume" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Actual or expected queries per month</label>
+            <input id="fin-volume" type="number" value="2000000" min="0" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+        </div>
+        <button id="fin-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="fin-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('fin-calc').addEventListener('click', () => {
+      const fixed = parseFloat(document.getElementById('fin-fixed').value) || 0;
+      const costPerQuery = parseFloat(document.getElementById('fin-cost').value) || 0;
+      const volume = parseFloat(document.getElementById('fin-volume').value) || 0;
+
+      const resultEl = document.getElementById('fin-result');
+
+      if (costPerQuery <= 0) {
+        resultEl.innerHTML = '<div style="background:var(--b-soft); border-left:3px solid var(--b); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px;">Enter a managed cost per query greater than zero to calculate a break-even point.</div>';
+        return;
+      }
+
+      const breakEvenVolume = fixed / costPerQuery;
+      const managedCost = volume * costPerQuery;
+      const diff = managedCost - fixed;
+      const winner = diff > 0 ? 'Self-hosting' : diff < 0 ? 'Pay-as-you-go' : 'Neither, this is exactly the break-even point';
+
+      resultEl.innerHTML =
+        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
+        '<strong>Break-even volume: ' + Math.round(breakEvenVolume).toLocaleString() + ' queries/month</strong><br>' +
+        'At ' + volume.toLocaleString() + ' queries/month: managed costs $' + Math.round(managedCost).toLocaleString() + ', self-hosted costs $' + Math.round(fixed).toLocaleString() + '<br>' +
+        '<br><strong>' + winner + '</strong>' + (diff !== 0 ? ' wins by $' + Math.abs(Math.round(diff)).toLocaleString() + '/month at this volume.' : '.') +
+        '</div>';
+    });
+  </script>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
@@ -180,6 +239,44 @@
       </div>
     </div>
     <div class="same-note">Run a quarterly audit matching every deployed model endpoint or reserved GPU allocation against an active, named use case. Anything without one gets decommissioned, not just flagged.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Prompt caching</h3>
+      <p>A cost lever specific to how LLMs are billed, with no equivalent in traditional cloud FinOps.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>Repeated prompt prefixes above a minimum length get served from cache automatically on Standard deployments, at a steep discount, commonly in the 50 to 90 percent range on the cached portion, no client-side opt-in required. The architectural work is keeping the cacheable part of the prompt (system prompt, tool definitions, stable RAG context) byte-identical and in the same position on every request; dynamic content (timestamps, session IDs) has to move to the end, after the cacheable prefix, or the cache never hits.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>vLLM and most modern serving stacks support prefix caching (often called automatic prefix caching or APC) natively, the same discipline applies: stable content first, dynamic content last. The saving shows up as GPU time not spent recomputing the same prefix, rather than a line-item discount on a bill, so it has to be measured through throughput and latency metrics instead of a cost dashboard.</p>
+      </div>
+    </div>
+    <div class="same-note">Pricing subsidies on caching are not permanent. Azure's own pricing page has already moved from free cache writes to billed cache writes; treat any specific caching discount as something to re-verify against current pricing before it's built into a budget, not a fixed assumption.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Batch / asynchronous processing</h3>
+      <p>Trading latency for a flat discount, available whenever the workload can tolerate a delayed result.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Azure-managed</span>
+        <p>The Batch API processes a submitted job asynchronously, typically within a 24-hour target, at roughly 50 percent off standard pay-as-you-go pricing. Genuinely useful for nightly document processing, bulk content generation, embeddings refreshes, and model evaluations, anything that doesn't need an answer in the next few seconds. Not usable for interactive chat or any customer-facing path expecting an immediate response.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Self-hosted / open-weight</span>
+        <p>The equivalent move is scheduling batch workloads for off-peak GPU capacity, or running them through the same continuous-batching serving stack at a lower priority queue than interactive traffic. There's no separate billed rate to point to, the saving comes from higher GPU utilization on hardware that would otherwise sit idle overnight, which still has to be measured to know it's happening.</p>
+      </div>
+    </div>
+    <div class="same-note">The same discipline applies in both environments: anything without a hard latency requirement is a batch candidate. Auditing which workloads are still running on the interactive path out of habit, not necessity, is a real and recurring source of avoidable spend.</div>
   </div>
 
 </main>
