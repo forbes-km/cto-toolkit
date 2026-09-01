@@ -310,7 +310,8 @@
           <div class="lz-grid">
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock Guardrails, content filtering and PII redaction built in</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Content Safety, prompt shields and content filtering built in</p></div>
-            <div class="lz-cell" style="grid-column: span 2;"><p style="font-style: italic; color: var(--ink-soft);">Verify current capability directly against provider docs for GCP and OCI; this varies fast enough that a cached product name here would likely be stale.</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Gemini Safety Settings for content filtering, plus Model Armor as a separate service for prompt injection and sensitive data protection</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>OCI Guardrails: content moderation, prompt injection defense, and PII detection, in Inform or Block mode</p></div>
           </div>
         </div>
 
@@ -445,7 +446,7 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>No confirmed first-party managed reranker at time of writing; verify current capability directly against OCI documentation rather than assuming parity with the other three.</p>
+      <p>Native Cohere Rerank models (Rerank 3.5, and Rerank 4 as of 2026) built into the Generative AI service itself, called directly via the RerankText API, available both on-demand and through dedicated clusters. Unlike AWS, this is first-party, not a marketplace add-on.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -555,11 +556,11 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Specific managed guardrail capability varies by release; verify current offering directly against Vertex AI documentation. IAM and VPC Service Controls provide the network and identity isolation layer regardless.</p>
+      <p>Two layers: Gemini's built-in Safety Settings for per-request content filtering (hate speech, harassment, sexually explicit, dangerous content, configurable thresholds), plus Model Armor as a separate dedicated service for prompt injection and jailbreak detection, sensitive data protection, and malware scanning. IAM and VPC Service Controls provide the network and identity isolation layer underneath both.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>Specific managed guardrail capability not confirmed at time of writing; verify directly against OCI documentation. IAM policies and network security groups provide the isolation layer regardless.</p>
+      <p>OCI Guardrails, a named, documented feature with three protections: content moderation (hate speech, harassment, violence, explicit material), prompt injection defense (binary risk scoring on embedded malicious instructions), and PII detection. Configurable in Inform mode (logs and returns results) or Block mode (rejects the request), available on both on-demand and dedicated cluster endpoints.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -588,7 +589,7 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>Specific managed PHI/PII detection service not confirmed at time of writing; verify directly against OCI documentation. Encryption at rest is on by default across OCI storage services regardless.</p>
+      <p>PII detection is one of the three protections built into OCI Guardrails (see Stage 9), identifying names, emails, phone numbers, and similar sensitive fields as a pipeline step. Encryption at rest is on by default across OCI storage services regardless.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
