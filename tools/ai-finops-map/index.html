@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI FinOps Map</title>
-<meta name="description" content="Cost modeling across the same Azure-managed and self-hosted split as the Architecture Map.">
+<meta name="description" content="Cost modeling stage by stage across AWS, Azure, GCP, OCI, and self-hosted, the same environments the Architecture Map covers in depth.">
 <meta property="og:title" content="AI FinOps Map | CTO Toolkit">
-<meta property="og:description" content="Cost modeling across the same Azure-managed and self-hosted split as the Architecture Map, since the cost shape of a system follows directly from how it's built.">
+<meta property="og:description" content="Cost modeling stage by stage across AWS, Azure, GCP, OCI, and self-hosted, since the cost shape of a system follows directly from how it's built.">
 <meta property="og:type" content="article">
 <style>
   :root {
@@ -60,11 +60,39 @@
   .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .provider-toggle { position: sticky; top: 12px; z-index: 10; display: flex; gap: 6px; background: white; border: 1px solid var(--line); border-radius: 10px; padding: 6px; margin-bottom: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .provider-btn { flex: 1; padding: 9px 10px; border: none; background: transparent; border-radius: 7px; font-family: var(--ui); font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--ink-soft); display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.15s; }
+  .provider-btn .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .provider-btn[data-provider="aws"] .dot { background: #C97A3D; }
+  .provider-btn[data-provider="azure"] .dot { background: var(--a); }
+  .provider-btn[data-provider="gcp"] .dot { background: #B0483A; }
+  .provider-btn[data-provider="oci"] .dot { background: #7A4FB5; }
+  .provider-btn[data-provider="oss"] .dot { background: var(--b); }
+  .provider-btn.active { background: var(--accent-soft); color: var(--ink); }
+  .provider-btn:hover:not(.active) { background: var(--paper); }
+  .provider-content { display: none; padding: 16px 20px; }
+  .provider-content.active { display: block; }
+  .provider-content p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--ink); }
+  .provider-content code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .provider-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .provider-label .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .provider-content[data-provider="aws"] .provider-label { background: #F5E9DC; color: #C97A3D; }
+  .provider-content[data-provider="aws"] .dot { background: #C97A3D; }
+  .provider-content[data-provider="azure"] .provider-label { background: var(--a-soft); color: var(--a); }
+  .provider-content[data-provider="azure"] .dot { background: var(--a); }
+  .provider-content[data-provider="gcp"] .provider-label { background: #F5E0DD; color: #B0483A; }
+  .provider-content[data-provider="gcp"] .dot { background: #B0483A; }
+  .provider-content[data-provider="oci"] .provider-label { background: #EBE2F5; color: #7A4FB5; }
+  .provider-content[data-provider="oci"] .dot { background: #7A4FB5; }
+  .provider-content[data-provider="oss"] .provider-label { background: var(--b-soft); color: var(--b); }
+  .provider-content[data-provider="oss"] .dot { background: var(--b); }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
     .grid4 { grid-template-columns: 1fr; }
     .matrix-table { display: block; overflow-x: auto; }
+    .provider-toggle { flex-wrap: wrap; }
+    .provider-btn { flex: 1 1 30%; font-size: 11.5px; padding: 8px 6px; }
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
 </style>
@@ -74,28 +102,47 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI FinOps Map</h1>
-  <p>Cost modeling across the same Azure-managed and self-hosted split as the <a href="../ai-architecture-map/index.html">Architecture Map</a>, since the cost shape of a system follows directly from how it's built. Includes a break-even calculator and the two cost levers, prompt caching and batch processing, most teams leave unused.</p>
+  <p>Cost modeling stage by stage, the same shape as the <a href="../ai-architecture-map/index.html">Architecture Map</a> it follows. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage below switches to that environment's cost model. Includes a break-even calculator and the two cost levers, prompt caching and batch processing, most teams leave unused.</p>
   <div class="caveat">Cost modeling here is directional, not a substitute for building your own model with your actual volume, region, and negotiated pricing. Vendor pricing changes frequently; verify current rates before using specific numbers in a budget decision.</div>
 </header>
 
 <main>
+
+  <div class="provider-toggle" id="provider-toggle">
+    <button class="provider-btn active" data-provider="aws"><span class="dot"></span><span>AWS</span></button>
+    <button class="provider-btn" data-provider="azure"><span class="dot"></span><span>Azure</span></button>
+    <button class="provider-btn" data-provider="gcp"><span class="dot"></span><span>GCP</span></button>
+    <button class="provider-btn" data-provider="oci"><span class="dot"></span><span>OCI</span></button>
+    <button class="provider-btn" data-provider="oss"><span class="dot"></span><span>Self-hosted</span></button>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Pricing model: tokens vs amortized hardware</h3>
       <p>The fundamental cost shape differs before any workload-specific decisions get made.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>Pay-as-you-go is billed per token, input and output priced separately, output typically several times more expensive than input. Cost scales directly and immediately with usage, visible per-call, but unpredictable at the account level until volume stabilizes.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>Cost is amortized GPU time (purchase or lease depreciation, power, cooling, ops staff), largely fixed regardless of query volume until you hit a capacity ceiling and need to add hardware. Marginal cost per additional query approaches zero until that ceiling, then jumps in a large step when you provision another node.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Bedrock is billed per token, input and output priced separately, output typically several times more expensive than input, with per-model rates spanning roughly $0.035 to $10 per million input tokens depending on model tier. Cost scales directly and immediately with usage, unpredictable at the account level until volume stabilizes.</p>
     </div>
-    <div class="same-note">The break-even point is a real number, not a vibe. Calculate it: (fixed self-hosted cost per month) divided by (per-token Azure cost) gives the query volume where self-hosting starts winning. Below that volume, pay-as-you-go almost always wins on total cost.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Pay-as-you-go is billed per token, input and output priced separately, output typically several times more expensive than input. Cost scales directly and immediately with usage, visible per-call, but unpredictable at the account level until volume stabilizes.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Vertex AI bills per character for most Gemini models rather than per token, input and output metered separately. A real, easy-to-miss cost multiplier here: Gemini's internal reasoning tokens are billed as output, and can inflate a request's real cost five to tenfold beyond what the visible response length would suggest.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>On-demand OCI Generative AI is billed per transaction (character-based) for on-demand inference, separate from the per-unit-hour rate that applies once you move to a dedicated cluster. Consumption draws against an existing Universal Credits commitment rather than a standalone bill.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>Cost is amortized GPU time (purchase or lease depreciation, power, cooling, ops staff), largely fixed regardless of query volume until you hit a capacity ceiling and need to add hardware. Marginal cost per additional query approaches zero until that ceiling, then jumps in a large step when you provision another node.</p>
+    </div>
+    <div class="same-note">The break-even point is a real number, not a vibe. Calculate it: (fixed self-hosted cost per month) divided by (per-query managed cost) gives the query volume where self-hosting starts winning. Below that volume, pay-as-you-go almost always wins on total cost.</div>
   </div>
 
   <div class="stage-card" id="calculator">
@@ -158,15 +205,25 @@
       <h3>Reserved capacity vs GPU procurement</h3>
       <p>Committing ahead of time to guarantee throughput and control cost variance.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>Provisioned Throughput Units (PTU) reserve dedicated capacity at a flat monthly rate, converting variable token cost into a predictable fixed cost, but only pays off above a specific utilization threshold; idle PTU capacity is money spent on nothing.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>Owning or leasing GPUs is the hardware equivalent of a PTU reservation: a large fixed commitment that only pays off at sustained utilization. Renting from a GPU cloud (on-demand) is the hardware equivalent of pay-as-you-go, more expensive per hour but no idle-capacity risk.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Provisioned Throughput reserves dedicated capacity in model units, billed hourly whether used or not, at roughly $24 to $200 per hour depending on model. Only pays off above sustained utilization; buying a 6-month commitment before traffic is stable is the single fastest way to overspend here. Custom or fine-tuned models require Provisioned Throughput; they can't run on-demand at all.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Provisioned Throughput Units (PTU) reserve dedicated capacity at a flat monthly rate, converting variable token cost into a predictable fixed cost, but only pays off above a specific utilization threshold; idle PTU capacity is money spent on nothing.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Provisioned throughput, priced per generative scale unit hour rather than per token, with 20 to 45 percent savings available via 1-month or 1-year commitments. Break-even against on-demand typically lands around $50 a day in sustained spend on a single model; below that, on-demand usually wins.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Dedicated AI clusters bill per unit-hour, but the distinctive gotcha here is the minimum commitment: hosting clusters require at least 744 unit-hours, roughly a full month, even if actual usage is far lower. That minimum doesn't exist on the other three clouds' reserved-capacity tiers.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>Owning or leasing GPUs is the hardware equivalent of a reserved-capacity commitment: a large fixed cost that only pays off at sustained utilization. Renting from a GPU cloud (on-demand) is the hardware equivalent of pay-as-you-go, more expensive per hour but no idle-capacity risk.</p>
     </div>
   </div>
   <div class="stage-card">
@@ -175,17 +232,27 @@
       <h3>Chargeback &amp; unit economics</h3>
       <p>Making AI spend attributable to the team or product that generated it, not a single opaque line item.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>Cost Management's tagging and scope hierarchy lets you attribute Foundry deployment spend to a subscription, resource group, or tag, feeding a per-team or per-product chargeback model the same way any other Azure resource would.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>No managed billing hierarchy to lean on; attribution requires your own request-tagging at the application layer (which team or product initiated the call) correlated against GPU-hour cost allocated proportionally to usage. This is meaningfully more engineering work to build.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Cost Explorer's tagging and cost allocation tags attribute Bedrock spend to a team, product, or environment tag, feeding a per-team chargeback model the same way any other AWS resource would.</p>
     </div>
-    <div class="same-note">The metric that matters in both environments is cost per unit of business value, cost per resolved support ticket, cost per underwriting decision, not cost per token or cost per GPU-hour. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Cost Management's tagging and scope hierarchy lets you attribute Foundry deployment spend to a subscription, resource group, or tag, feeding a per-team or per-product chargeback model the same way any other Azure resource would.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Cloud Billing labels plus BigQuery billing export let you attribute Vertex AI spend down to the label or project level, queryable alongside the rest of the GCP bill rather than as an isolated line item.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Compartment structure plus tag-based attribution in OCI Cost Analysis, with FOCUS 1.2 exports increasingly the default pipeline for feeding a chargeback model, falls back to a tagless mode when tag coverage is incomplete.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>No managed billing hierarchy to lean on; attribution requires your own request-tagging at the application layer (which team or product initiated the call) correlated against GPU-hour cost allocated proportionally to usage. This is meaningfully more engineering work to build.</p>
+    </div>
+    <div class="same-note">The metric that matters across every environment is cost per unit of business value, cost per resolved support ticket, cost per underwriting decision, not cost per token or cost per GPU-hour. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
@@ -193,15 +260,25 @@
       <h3>Cost observability &amp; budget alerting</h3>
       <p>Catching a cost anomaly (a runaway agent loop, a misconfigured retry, a prompt that ballooned in size) before the monthly bill does.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>Azure Cost Management budgets with action-group-triggered alerts at defined thresholds; Azure Monitor can alert on token consumption rate directly if instrumented, catching an anomaly within the billing period rather than after it closes.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>No native billing-anomaly alerting since there's no per-token bill to watch. The equivalent signal is GPU utilization and request-rate anomalies via Prometheus alerting, an unusual spike in request volume or output length is the leading indicator you have.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>AWS Budgets with configurable thresholds and Cost Anomaly Detection using machine learning to flag unusual spend patterns automatically, without a manually defined rule for every scenario.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Cost Management budgets with action-group-triggered alerts at defined thresholds; Monitor can alert on token consumption rate directly if instrumented, catching an anomaly within the billing period rather than after it closes.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Budgets & Alerts plus Cost Anomaly Detection at the billing-account level; the reasoning-token cost multiplier from Stage 1 is exactly the kind of anomaly this catches before it compounds across a month of traffic.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>OCI Cost Analysis with budget-based alerts, increasingly paired with FOCUS 1.2 billing exports for teams that have moved off the native dashboard onto a broader FinOps pipeline.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>No native billing-anomaly alerting since there's no per-token bill to watch. The equivalent signal is GPU utilization and request-rate anomalies via Prometheus alerting, an unusual spike in request volume or output length is the leading indicator you have.</p>
     </div>
   </div>
   <div class="stage-card">
@@ -210,15 +287,25 @@
       <h3>Model selection as a cost lever</h3>
       <p>The single highest-leverage FinOps decision, made once per use case, before any of the above matters.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>Foundry's model catalog spans a wide price-performance range; routing simple classification or extraction tasks to a smaller, cheaper model and reserving the frontier model for genuinely complex reasoning is often a larger cost lever than any PTU or reservation optimization.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>Same principle, and arguably higher stakes: a smaller open-weight model (7B to 14B class) served efficiently can handle a large share of production traffic at a fraction of the GPU footprint a frontier-class open-weight model requires, if the task doesn't need frontier reasoning.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Bedrock's catalog spans roughly $0.035 to $10 per million input tokens across model tiers; routing simple classification or extraction tasks to a cheaper model (Nova Micro or Haiku-class) and reserving the frontier model for genuinely complex reasoning is often a larger lever than any reservation optimization.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Foundry's model catalog spans a wide price-performance range; routing simple classification or extraction tasks to a smaller, cheaper model and reserving the frontier model for genuinely complex reasoning is often a larger cost lever than any PTU or reservation optimization.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Gemini Flash-Lite at roughly $0.10/$0.40 per million tokens versus Pro-tier pricing several times higher; the same routing principle applies, with the added wrinkle that reasoning tokens make the effective cost gap between tiers larger than the sticker price alone suggests.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>OCI's catalog spans Oracle-curated and partner models (Cohere, Llama, xAI Grok) at meaningfully different price points; the same routing principle applies, and dedicated-cluster pricing tiers differ enough by model family that the choice compounds with the reserved-capacity decision from Stage 2.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>Same principle, and arguably higher stakes: a smaller open-weight model (7B to 14B class) served efficiently can handle a large share of production traffic at a fraction of the GPU footprint a frontier-class open-weight model requires, if the task doesn't need frontier reasoning.</p>
     </div>
     <div class="same-note">This is the FinOps decision most teams skip because it requires an evaluation harness to prove the cheaper model is good enough, and building that harness feels like overhead. It almost always pays for itself faster than infrastructure optimization does.</div>
   </div>
@@ -226,19 +313,29 @@
     <div class="stage-head">
       <span class="stage-num">6</span>
       <h3>Waste: idle reservations and orphaned capacity</h3>
-      <p>The unglamorous but highest-frequency cost leak in both environments.</p>
+      <p>The unglamorous but highest-frequency cost leak across every environment.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>PTU reservations sized for peak load sitting idle most of the day; forgotten dev/test Foundry deployments left running after the project using them ended. Both invisible unless someone is specifically auditing deployed resources against actual active use cases.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>GPU nodes provisioned for a launch that never reached expected volume, or a dev cluster left running after the project wound down. Same failure mode, higher absolute cost per incident since GPU hardware commitments are larger and stickier than a cloud service you can just delete.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Provisioned Throughput reserved for peak load sitting idle most of the day; forgotten Knowledge Bases vector storage (OpenSearch Serverless bills a minimum around $345/month even at zero query traffic) left running after a project ends. Both invisible unless someone is specifically auditing deployed resources against active use cases.</p>
     </div>
-    <div class="same-note">Run a quarterly audit matching every deployed model endpoint or reserved GPU allocation against an active, named use case. Anything without one gets decommissioned, not just flagged.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>PTU reservations sized for peak load sitting idle most of the day; forgotten dev/test Foundry deployments left running after the project using them ended. Both invisible unless someone is specifically auditing deployed resources against actual active use cases.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Online prediction endpoints, Vector Search nodes, and Workbench instances all bill per hour regardless of traffic; a forgotten deployed endpoint is one of the most common GCP AI cost surprises, silently running up thousands a month for zero real usage.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Idle dedicated AI clusters are described directly in Oracle's own licensing guidance as the top cost trap: a reserved cluster bills around the clock, and under-utilized, can cost many times what on-demand inference would for the same volume, compounded by the 744-hour minimum commitment from Stage 2.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>GPU nodes provisioned for a launch that never reached expected volume, or a dev cluster left running after the project wound down. Same failure mode, higher absolute cost per incident since GPU hardware commitments are larger and stickier than a cloud service you can just delete.</p>
+    </div>
+    <div class="same-note">Run a quarterly audit matching every deployed model endpoint or reserved capacity allocation, on any provider, against an active, named use case. Anything without one gets decommissioned, not just flagged.</div>
   </div>
 
   <div class="stage-card">
@@ -247,17 +344,27 @@
       <h3>Prompt caching</h3>
       <p>A cost lever specific to how LLMs are billed, with no equivalent in traditional cloud FinOps.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>Repeated prompt prefixes above a minimum length get served from cache automatically on Standard deployments, at a steep discount, commonly in the 50 to 90 percent range on the cached portion, no client-side opt-in required. The architectural work is keeping the cacheable part of the prompt (system prompt, tool definitions, stable RAG context) byte-identical and in the same position on every request; dynamic content (timestamps, session IDs) has to move to the end, after the cacheable prefix, or the cache never hits.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>vLLM and most modern serving stacks support prefix caching (often called automatic prefix caching or APC) natively, the same discipline applies: stable content first, dynamic content last. The saving shows up as GPU time not spent recomputing the same prefix, rather than a line-item discount on a bill, so it has to be measured through throughput and latency metrics instead of a cost dashboard.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Prompt caching on Bedrock caches a stable prefix (system prompt, long reference document) and bills the cached portion at roughly 10 percent of the standard input rate, up to 90 percent savings on context-heavy applications. Same architectural discipline as every provider here: stable content first, dynamic content last, or the cache never hits.</p>
     </div>
-    <div class="same-note">Pricing subsidies on caching are not permanent. Azure's own pricing page has already moved from free cache writes to billed cache writes; treat any specific caching discount as something to re-verify against current pricing before it's built into a budget, not a fixed assumption.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Repeated prompt prefixes above a minimum length get served from cache automatically on Standard deployments, at a steep discount, commonly in the 50 to 90 percent range on the cached portion, no client-side opt-in required. The architectural work is keeping the cacheable part of the prompt byte-identical and in the same position on every request; dynamic content has to move to the end, after the cacheable prefix, or the cache never hits.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Context caching stores a repeated prompt prefix at a steep discount, commonly cited around 75 to 90 percent off the cached portion depending on source, plus a separate storage charge billed per character per hour the cache is held. Worth checking current figures directly since sources genuinely disagree on the exact discount rate.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>No confirmed general-purpose prompt caching tier found across OCI Generative AI at time of writing; some individual third-party models hosted on OCI reportedly discount cached input tokens, but verify directly against current OCI documentation before assuming parity with the other three clouds.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>vLLM and most modern serving stacks support prefix caching (often called automatic prefix caching or APC) natively, the same discipline applies: stable content first, dynamic content last. The saving shows up as GPU time not spent recomputing the same prefix, rather than a line-item discount on a bill, so it has to be measured through throughput and latency metrics instead of a cost dashboard.</p>
+    </div>
+    <div class="same-note">Pricing subsidies on caching are not permanent. Azure's own pricing page has already moved from free cache writes to billed cache writes; treat any specific caching discount, on any provider, as something to re-verify against current pricing before it's built into a budget, not a fixed assumption.</div>
   </div>
 
   <div class="stage-card">
@@ -266,17 +373,27 @@
       <h3>Batch / asynchronous processing</h3>
       <p>Trading latency for a flat discount, available whenever the workload can tolerate a delayed result.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Azure-managed</span>
-        <p>The Batch API processes a submitted job asynchronously, typically within a 24-hour target, at roughly 50 percent off standard pay-as-you-go pricing. Genuinely useful for nightly document processing, bulk content generation, embeddings refreshes, and model evaluations, anything that doesn't need an answer in the next few seconds. Not usable for interactive chat or any customer-facing path expecting an immediate response.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Self-hosted / open-weight</span>
-        <p>The equivalent move is scheduling batch workloads for off-peak GPU capacity, or running them through the same continuous-batching serving stack at a lower priority queue than interactive traffic. There's no separate billed rate to point to, the saving comes from higher GPU utilization on hardware that would otherwise sit idle overnight, which still has to be measured to know it's happening.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Batch Inference processes a submitted job asynchronously at 50 percent off standard on-demand pricing; Amazon Nova models additionally offer a Flex tier at the same discount. Batch doesn't support tool calling, structured output, or multi-turn conversation, so it's a different execution model, not just a slower one, don't move an agent loop to Batch just because the token price is lower.</p>
     </div>
-    <div class="same-note">The same discipline applies in both environments: anything without a hard latency requirement is a batch candidate. Auditing which workloads are still running on the interactive path out of habit, not necessity, is a real and recurring source of avoidable spend.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>The Batch API processes a submitted job asynchronously, typically within a 24-hour target, at roughly 50 percent off standard pay-as-you-go pricing. Genuinely useful for nightly document processing, bulk content generation, embeddings refreshes, and model evaluations. Not usable for interactive chat or any customer-facing path expecting an immediate response.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Batch Prediction runs non-urgent jobs asynchronously at roughly 50 percent off standard rates within a 24-hour SLA. One genuine gotcha: Google bills for the full provisioned cluster runtime, not just active processing time, so under-filled batch jobs can cost more per prediction than expected; batching requests into larger groups is the fix.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>No confirmed asynchronous batch-discount tier found across OCI Generative AI at time of writing; verify directly against current OCI documentation rather than assuming a 50-percent-off tier exists here the way it does on the other three clouds.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>The equivalent move is scheduling batch workloads for off-peak GPU capacity, or running them through the same continuous-batching serving stack at a lower priority queue than interactive traffic. There's no separate billed rate to point to, the saving comes from higher GPU utilization on hardware that would otherwise sit idle overnight, which still has to be measured to know it's happening.</p>
+    </div>
+    <div class="same-note">The same discipline applies across every environment: anything without a hard latency requirement is a batch candidate. Auditing which workloads are still running on the interactive path out of habit, not necessity, is a real and recurring source of avoidable spend.</div>
   </div>
 
 </main>
@@ -287,5 +404,14 @@
 
 </footer>
 
+<script>
+  document.getElementById('provider-toggle').addEventListener('click', (e) => {
+    const btn = e.target.closest('.provider-btn');
+    if (!btn) return;
+    const provider = btn.dataset.provider;
+    document.querySelectorAll('.provider-btn').forEach(b => b.classList.toggle('active', b.dataset.provider === provider));
+    document.querySelectorAll('.provider-content').forEach(c => c.classList.toggle('active', c.dataset.provider === provider));
+  });
+</script>
 </body>
 </html>
