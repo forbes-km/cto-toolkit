@@ -90,7 +90,7 @@
           <tr><td>Govern</td><td>No documented cybersecurity risk strategy at the leadership level; security reports up as a technical status update, not a business risk</td><td>Named executive accountability, a documented risk management strategy, and defined reporting cadence to leadership or the board</td><td>Cybersecurity risk is a standing item in enterprise risk management, with roles, policy, and supply chain risk expectations reviewed on a defined schedule, not only after an incident forces it</td></tr>
           <tr><td>Identify</td><td>No current asset inventory; risk assessment happens reactively after an incident</td><td>Documented asset inventory, periodic risk assessments on a defined schedule</td><td>Continuous, automated asset discovery feeding a live risk register tied to business impact</td></tr>
           <tr><td>Protect</td><td>Access controls inconsistent across systems; no formal least-privilege policy</td><td>Documented access control policy, applied through a defined onboarding and offboarding process</td><td>Least-privilege enforced automatically, access reviewed continuously, not just at audit time</td></tr>
-          <tr><td>Detect</td><td>Reliant on external reports or customer complaints to learn about a problem</td><td>Centralized logging and defined alerting rules for known threat patterns</td><td>Behavioral anomaly detection catching novel patterns, not just known signatures</td></tr>
+          <tr><td>Detect</td><td>Reliant on external reports or customer complaints to learn about a problem</td><td>Centralized logging and defined alerting rules for known threat patterns</td><td>Behavioral anomaly detection running alongside signature-based rules, catching a wider range of patterns than either alone, though no detection approach guarantees catching a genuinely novel attack</td></tr>
           <tr><td>Respond</td><td>No defined incident process; response improvised each time</td><td>Documented incident response plan with defined roles, tested annually at minimum</td><td>Response plan tested quarterly via tabletop or live drill, refined from each real incident's postmortem</td></tr>
           <tr><td>Recover</td><td>Backups exist but restoration has never been tested</td><td>Documented recovery procedures, restoration tested annually</td><td>Recovery time objectives defined per system criticality and verified against actual tested restoration times</td></tr>
         </table>
@@ -123,11 +123,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What a certification confirms</span>
-        <p>SOC 2 or ISO 27001 confirms that defined controls existed and were followed during the specific audit period the certification covers, evaluated against a scope the organization itself proposed.</p>
+        <p>SOC 2 or ISO 27001 provides assurance over a defined scope and a defined audit period: that the specific controls in that scope existed and operated as described during that window. That's a narrower, bounded claim than &quot;maturity&quot; as this page uses the term, this ladder describes an ongoing, evolving posture across an entire function, not a point-in-time assurance statement about a specific control set the organization itself proposed for audit.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it doesn't confirm</span>
-        <p>That the scope covered every system that matters, that the maturity level is sustained rather than a point-in-time snapshot assembled for the audit, or that a novel attack pattern outside the certified controls would be caught. Treat certification as a floor, not a ceiling.</p>
+        <p>That the scope covered every system that matters, that the posture is sustained after the audit period ends rather than a snapshot assembled for it, or that a novel attack pattern outside the certified controls would be caught. Treat certification as evidence for one point on the ladder, not a substitute for scoring the rest of it.</p>
       </div>
     </div>
   </div>
@@ -204,7 +204,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What it enables</span>
-        <p>Most major regulatory frameworks and industry standards reference or heavily overlap with CSF 2.0's six functions, Govern especially, since regulators and customer security questionnaires increasingly ask the governance question directly: who owns this, and how is it reported to leadership. A single NIST CSF assessment gives a reasonable starting map for gap analysis against HIPAA, PCI DSS, or a customer security questionnaire, without redoing the assessment from scratch for each one.</p>
+        <p>Many regulatory frameworks, industry standards, and customer security questionnaires reference or heavily overlap with CSF 2.0's six functions, Govern especially, since regulators and procurement teams increasingly ask the governance question directly: who owns this, and how is it reported to leadership. A single NIST CSF assessment gives a reasonable starting map for gap analysis against HIPAA, PCI DSS, or a customer security questionnaire, without redoing the assessment from scratch for each one.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where the crosswalk breaks down</span>
