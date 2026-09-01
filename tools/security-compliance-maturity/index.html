@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Security &amp; Compliance Maturity</title>
+<meta name="description" content="A maturity ladder across the six NIST Cybersecurity Framework 2.0 functions, including Govern, scored on evidence rather than stated policy.">
+<meta property="og:title" content="Security & Compliance Maturity | CTO Toolkit">
+<meta property="og:description" content="A maturity ladder across the six NIST Cybersecurity Framework 2.0 functions, including Govern, scored on evidence rather than stated policy.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -68,7 +72,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Security &amp; Compliance Maturity</h1>
-  <p>A maturity ladder across the five NIST Cybersecurity Framework functions, scored on evidence rather than stated policy, plus the common trap of mistaking a compliance certification for actual maturity.</p>
+  <p>A maturity ladder across the six NIST Cybersecurity Framework 2.0 functions, Govern included, scored on evidence rather than stated policy, plus the common trap of mistaking a compliance certification for actual maturity.</p>
   <div class="caveat">A self-assessment framework, not a substitute for an independent audit. Internal scoring is useful for prioritization; external validation is what an auditor, customer, or regulator will rely on.</div>
 </header>
 
@@ -76,13 +80,14 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h3>Maturity ladder, mapped to NIST CSF functions</h3>
-      <p>Five levels across the five NIST Cybersecurity Framework functions. Score each function separately; most organizations are unevenly mature across them, which is itself useful information.</p>
+      <h3>Maturity ladder, mapped to NIST CSF 2.0 functions</h3>
+      <p>Five levels across the six NIST Cybersecurity Framework 2.0 functions. Score each function separately; most organizations are unevenly mature across them, which is itself useful information. Govern sits underneath the other five, added in CSF 2.0 specifically because a technically mature program with no executive-level ownership or risk strategy is a real and common gap, not a hypothetical one.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Function</th><th>Level 1: Ad hoc</th><th>Level 3: Defined</th><th>Level 5: Optimized</th></tr>
+          <tr><td>Govern</td><td>No documented cybersecurity risk strategy at the leadership level; security reports up as a technical status update, not a business risk</td><td>Named executive accountability, a documented risk management strategy, and defined reporting cadence to leadership or the board</td><td>Cybersecurity risk is a standing item in enterprise risk management, with roles, policy, and supply chain risk expectations reviewed on a defined schedule, not only after an incident forces it</td></tr>
           <tr><td>Identify</td><td>No current asset inventory; risk assessment happens reactively after an incident</td><td>Documented asset inventory, periodic risk assessments on a defined schedule</td><td>Continuous, automated asset discovery feeding a live risk register tied to business impact</td></tr>
           <tr><td>Protect</td><td>Access controls inconsistent across systems; no formal least-privilege policy</td><td>Documented access control policy, applied through a defined onboarding and offboarding process</td><td>Least-privilege enforced automatically, access reviewed continuously, not just at audit time</td></tr>
           <tr><td>Detect</td><td>Reliant on external reports or customer complaints to learn about a problem</td><td>Centralized logging and defined alerting rules for known threat patterns</td><td>Behavioral anomaly detection catching novel patterns, not just known signatures</td></tr>
@@ -143,6 +148,7 @@
 
   <script>
     const scmDimensions = [
+      "Govern",
       "Identify",
       "Protect",
       "Detect",
@@ -198,7 +204,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What it enables</span>
-        <p>Most major regulatory frameworks and industry standards reference or heavily overlap with the CSF's five functions. A single NIST CSF assessment gives a reasonable starting map for gap analysis against HIPAA, PCI DSS, or a customer security questionnaire, without redoing the assessment from scratch for each one.</p>
+        <p>Most major regulatory frameworks and industry standards reference or heavily overlap with CSF 2.0's six functions, Govern especially, since regulators and customer security questionnaires increasingly ask the governance question directly: who owns this, and how is it reported to leadership. A single NIST CSF assessment gives a reasonable starting map for gap analysis against HIPAA, PCI DSS, or a customer security questionnaire, without redoing the assessment from scratch for each one.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where the crosswalk breaks down</span>
@@ -223,7 +229,7 @@
 </main>
 
 <footer>
-  Reference only. NIST CSF function definitions summarized here; consult the current NIST framework documentation directly for the full, authoritative control catalog.
+  Reference only. NIST CSF 2.0 function definitions summarized here; consult the current NIST framework documentation directly for the full, authoritative control catalog.
 </footer>
 
 </body>
