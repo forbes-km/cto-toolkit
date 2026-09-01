@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Architecture Map</title>
+<meta name="description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response.">
+<meta property="og:title" content="AI Architecture Map | CTO Toolkit">
+<meta property="og:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. Toggle between AWS, Azure, GCP, OCI, and self-hosted at every stage.">
+<meta property="og:type" content="article">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -117,6 +121,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
+  .stage-grid.single {
+    grid-template-columns: 1fr;
+  }
 
   .stage-cell {
     padding: 16px 20px;
@@ -178,6 +185,55 @@
     font-size: 12.5px;
     line-height: 1.6;
   }
+  .lz-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 14px; overflow: hidden; }
+  .lz-card-head { padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--accent-soft); }
+  .lz-card-head h4 { margin: 0; font-size: 15px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .lz-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .lz-cell { padding: 14px 18px; border-right: 1px solid var(--line); }
+  .lz-cell:last-child { border-right: none; }
+  .lz-provider { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; margin-bottom: 6px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+  .lz-cell p { margin: 0; font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+  .lz-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .lz-dot.aws { background: #C97A3D; }
+  .lz-dot.gcp { background: #B0483A; }
+  .lz-dot.oci { background: #7A4FB5; }
+  .lz-dot.azure { background: var(--azure); }
+
+  .provider-toggle { position: sticky; top: 12px; z-index: 10; display: flex; gap: 6px; background: white; border: 1px solid var(--line); border-radius: 10px; padding: 6px; margin-bottom: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .provider-btn { flex: 1; padding: 9px 10px; border: none; background: transparent; border-radius: 7px; font-family: var(--ui); font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--ink-soft); display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.15s; }
+  .provider-btn .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .provider-btn[data-provider="aws"] .dot { background: #C97A3D; }
+  .provider-btn[data-provider="azure"] .dot { background: var(--azure); }
+  .provider-btn[data-provider="gcp"] .dot { background: #B0483A; }
+  .provider-btn[data-provider="oci"] .dot { background: #7A4FB5; }
+  .provider-btn[data-provider="oss"] .dot { background: var(--oss); }
+  .provider-btn.active { background: var(--accent-soft); color: var(--ink); }
+  .provider-btn:hover:not(.active) { background: var(--paper); }
+  .provider-content { display: none; padding: 16px 20px; }
+  .provider-content.active { display: block; }
+  .provider-content p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--ink); }
+  .provider-content code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .provider-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .provider-label .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .provider-content[data-provider="aws"] .provider-label { background: #F5E9DC; color: #C97A3D; }
+  .provider-content[data-provider="aws"] .dot { background: #C97A3D; }
+  .provider-content[data-provider="azure"] .provider-label { background: var(--azure-soft); color: var(--azure); }
+  .provider-content[data-provider="azure"] .dot { background: var(--azure); }
+  .provider-content[data-provider="gcp"] .provider-label { background: #F5E0DD; color: #B0483A; }
+  .provider-content[data-provider="gcp"] .dot { background: #B0483A; }
+  .provider-content[data-provider="oci"] .provider-label { background: #EBE2F5; color: #7A4FB5; }
+  .provider-content[data-provider="oci"] .dot { background: #7A4FB5; }
+  .provider-content[data-provider="oss"] .provider-label { background: var(--oss-soft); color: var(--oss); }
+  .provider-content[data-provider="oss"] .dot { background: var(--oss); }
+  @media (max-width: 700px) {
+    .provider-toggle { flex-wrap: wrap; }
+    .provider-btn { flex: 1 1 30%; font-size: 11.5px; padding: 8px 6px; }
+  }
+  @media (max-width: 700px) {
+    .lz-grid { grid-template-columns: 1fr; }
+    .lz-cell { border-right: none; border-bottom: 1px solid var(--line); }
+    .lz-cell:last-child { border-bottom: none; }
+  }
 </style>
 </head>
 <body>
@@ -185,11 +241,91 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Architecture Map</h1>
-  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. Azure-managed shown next to a self-hosted, open-weight equivalent. Azure column reflects Azure AI Foundry naming as of 2026; verify current service names before relying on this for a design decision.</p>
-  <div class="caveat">Not every stage genuinely differs by environment. Chunking logic, the human-in-the-loop queue, and orchestration state machines run in your own application code regardless of where the model or index lives. Where that's true, it's called out rather than padded with a manufactured distinction.</div>
+  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle, click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product names and service naming reflect 2026 offerings; verify current service names against primary sources before relying on any of this for a design decision, this space moves fast.</p>
+  <div class="caveat">Not every stage genuinely differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere; where that's true, it's called out as a single statement rather than padded into five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure genuinely differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
 </header>
 
 <main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Managed platform equivalents, all four clouds</h3>
+      <p>The same six capabilities the toggle below covers in full depth, summarized here across all four providers at a glance. This is a rosetta stone for translating a design conversation across clouds, not a substitute for the depth that follows.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div class="lz-card">
+          <div class="lz-card-head"><h4>Managed model access</h4></div>
+          <div class="lz-grid">
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock, unified Converse API across model families (Claude, Titan, Llama, Mistral)</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Foundry, Azure OpenAI models plus the Foundry Model Catalog's open-weight options</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI, Gemini-first with third-party and open-weight models via Model Garden</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>OCI Generative AI, native and third-party models</p></div>
+          </div>
+        </div>
+
+        <div class="lz-card">
+          <div class="lz-card-head"><h4>Managed RAG / knowledge base</h4></div>
+          <div class="lz-grid">
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock Knowledge Bases (S3, Confluence, SharePoint sources)</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Search with integrated vectorization, hybrid vector, keyword, and semantic ranking built into the index itself</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI Search (Google Drive, Cloud Storage sources)</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>Generative AI Agents RAG service, integrated vector store and ingestion pipeline built in</p></div>
+          </div>
+        </div>
+
+        <div class="lz-card">
+          <div class="lz-card-head"><h4>Agent orchestration</h4></div>
+          <div class="lz-grid">
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock Agents, AgentCore, and Flows</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Foundry Agent Service, built-in tool calling</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI Agent Builder</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>Generative AI Agents, tool and API orchestration built into the same service as RAG</p></div>
+          </div>
+        </div>
+
+        <div class="lz-card">
+          <div class="lz-card-head"><h4>Native vector search</h4></div>
+          <div class="lz-grid">
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>pgvector on RDS, or OpenSearch at larger scale</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Search's HNSW vector index, hybrid query mode built in</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI Vector Search, or vector functions inside BigQuery</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>AI Vector Search built into Oracle Database 23ai, or HeatWave GenAI for the MySQL side</p></div>
+          </div>
+        </div>
+
+        <div class="lz-card">
+          <div class="lz-card-head"><h4>Custom / self-managed training</h4></div>
+          <div class="lz-grid">
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>SageMaker</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>Azure Machine Learning</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI custom training</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>OCI Data Science, paired with GPU-backed AI infrastructure instances</p></div>
+          </div>
+        </div>
+
+        <div class="lz-card">
+          <div class="lz-card-head"><h4>Guardrails / content safety</h4></div>
+          <div class="lz-grid">
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock Guardrails, content filtering and PII redaction built in</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Content Safety, prompt shields and content filtering built in</p></div>
+            <div class="lz-cell" style="grid-column: span 2;"><p style="font-style: italic; color: var(--ink-soft);">Verify current capability directly against provider docs for GCP and OCI; this varies fast enough that a cached product name here would likely be stale.</p></div>
+          </div>
+        </div>
+
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Model family availability by provider changes fast and sometimes contradicts itself across sources within the same few months, confirm current model catalog and licensing directly with the provider rather than trusting a cached comparison, including this one.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="provider-toggle" id="provider-toggle">
+    <button class="provider-btn active" data-provider="aws"><span class="dot"></span><span>AWS</span></button>
+    <button class="provider-btn" data-provider="azure"><span class="dot"></span><span>Azure</span></button>
+    <button class="provider-btn" data-provider="gcp"><span class="dot"></span><span>GCP</span></button>
+    <button class="provider-btn" data-provider="oci"><span class="dot"></span><span>OCI</span></button>
+    <button class="provider-btn" data-provider="oss"><span class="dot"></span><span>Self-hosted</span></button>
+  </div>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -197,15 +333,25 @@
       <h3>Document intelligence / ingestion</h3>
       <p>Turning raw PDFs, scans, forms, and images into machine-readable structured content: OCR, layout analysis, table and key-value extraction.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Document Intelligence for OCR, layout, table, and key-value extraction using prebuilt or custom-trained models. Azure AI Content Understanding covers multimodal parsing (image, audio, video) as a Foundry service when documents aren't purely text/table.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>The <code>unstructured</code> library or <code>docling</code> for parsing, paired with Tesseract or PaddleOCR for text recognition. For layout-aware extraction, a locally served vision-language model (Qwen-VL, InternVL, or a comparable open-weight multimodal model) handles document QA-style extraction where prebuilt OCR alone isn't enough.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Textract for OCR, layout, table, and key-value extraction; pair with Comprehend for downstream entity extraction on the recovered text.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Document Intelligence for OCR, layout, table, and key-value extraction using prebuilt or custom-trained models. AI Content Understanding covers multimodal parsing (image, audio, video) as a Foundry service when documents aren't purely text/table.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Document AI, with prebuilt processors for common document types (invoices, IDs, contracts) and a general OCR processor for everything else.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Document Understanding for OCR, table, and key-value extraction through prebuilt AI models, customizable for industry-specific extraction needs.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>The <code>unstructured</code> library or <code>docling</code> for parsing, paired with Tesseract or PaddleOCR for text recognition. For layout-aware extraction, a locally served vision-language model (Qwen-VL, InternVL, or a comparable open-weight multimodal model) handles document QA-style extraction where prebuilt OCR alone isn't enough.</p>
     </div>
   </div>
 
@@ -215,17 +361,12 @@
       <h3>Chunking</h3>
       <p>Splitting extracted content into retrieval-sized units without breaking semantic units apart.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Search's integrated vectorization skillset offers fixed-size and layout-aware chunking as a pipeline step, or you chunk client-side with LangChain/Semantic Kernel text splitters before pushing to the index.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>Same splitters, same code. LangChain's <code>RecursiveCharacterTextSplitter</code>, or embedding-similarity-based semantic chunking, run identically whether the downstream index is Azure AI Search or a self-hosted vector store.</p>
+        <span class="env-label oss">Same across every environment</span>
+        <p>Chunking is orchestration-layer logic, not a cloud primitive, so this one doesn't change when you switch the toggle above. LangChain's <code>RecursiveCharacterTextSplitter</code>, embedding-similarity-based semantic chunking, or a managed index's built-in chunking step (Azure AI Search's integrated vectorization skillset is one example) all run identically regardless of which provider or self-hosted stack sits downstream. The choice of algorithm matters far more than the choice of cloud.</p>
       </div>
     </div>
-    <div class="same-note">Genuinely the same either way. Chunking is orchestration-layer logic, not a cloud primitive; the choice of algorithm matters far more than the choice of cloud.</div>
   </div>
 
   <div class="stage-card">
@@ -234,15 +375,25 @@
       <h3>Embeddings</h3>
       <p>Converting chunks into vectors for semantic retrieval.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure OpenAI embedding models (<code>text-embedding-3-large</code>/<code>small</code>) deployed via Foundry, billed pay-as-you-go per token or reserved via provisioned throughput for predictable latency at volume.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>Open-weight embedding models (BGE-large, E5-mistral, Nomic Embed, GTE) served on owned GPUs via Hugging Face Text Embeddings Inference (TEI) or an Infinity server. No per-token bill; cost is amortized GPU time.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Titan Text Embeddings via Bedrock, or Cohere Embed for multilingual needs, billed per token with no separate deployment step.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>OpenAI embedding models (<code>text-embedding-3-large</code>/<code>small</code>) via Foundry, pay-as-you-go per token or reserved via provisioned throughput for predictable latency at volume.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Vertex AI text embedding models, billed per character, with native integration into BigQuery for embedding data already living there.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>OCI Generative AI embedding models, callable through the same API surface as OCI's generation models.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>Open-weight embedding models (BGE-large, E5-mistral, Nomic Embed, GTE) served on owned GPUs via Hugging Face Text Embeddings Inference (TEI) or an Infinity server. No per-token bill; cost is amortized GPU time.</p>
     </div>
   </div>
 
@@ -252,15 +403,25 @@
       <h3>Vector indexing &amp; retrieval</h3>
       <p>Storing embeddings for fast approximate nearest-neighbor search, typically combined with keyword search for hybrid retrieval.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Search: HNSW vector index, hybrid (vector + keyword + semantic ranking) query mode, metadata filters, and ACL-aware secure access baked into the index itself.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>pgvector if you want to stay inside an existing Postgres footprint, or a dedicated vector database (Qdrant, Weaviate, Milvus) for larger-scale ANN search with metadata filtering. Hybrid search typically pairs the vector store with OpenSearch/Elasticsearch for BM25, or uses a store with native hybrid support.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>OpenSearch Service for large-scale ANN search with hybrid BM25 support, or pgvector on RDS/Aurora for teams staying inside an existing Postgres footprint.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Search: HNSW vector index, hybrid (vector + keyword + semantic ranking) query mode, metadata filters, and ACL-aware secure access baked into the index itself.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Vertex AI Vector Search for dedicated ANN at scale, or vector functions inside BigQuery when the data already lives there and a separate index is overhead.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>AI Vector Search built directly into Oracle Database 23ai, keeping vectors and relational data in one system rather than a separate store.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>pgvector if you want to stay inside an existing Postgres footprint, or a dedicated vector database (Qdrant, Weaviate, Milvus) for larger-scale ANN search with metadata filtering. Hybrid search typically pairs the vector store with OpenSearch/Elasticsearch for BM25, or uses a store with native hybrid support.</p>
     </div>
   </div>
 
@@ -270,15 +431,25 @@
       <h3>Reranking &amp; context assembly</h3>
       <p>Re-scoring initial retrieval results with a more precise (and more expensive) model before assembling the final context window.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Search's semantic ranker applies a Microsoft-trained cross-encoder as an L2 re-ranking pass over the initial hybrid results, exposed as a query-type option, no separate deployment required.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>An open cross-encoder reranker (BGE-reranker, Jina Reranker) served alongside the embedding model, typically on the same TEI/Infinity serving stack, called as an explicit extra step in your retrieval code.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>No first-party managed reranker; Cohere Rerank is available as a Bedrock marketplace model, called as an explicit extra step, same pattern as self-hosting one.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Search's semantic ranker applies a Microsoft-trained cross-encoder as an L2 re-ranking pass over the initial hybrid results, exposed as a query-type option, no separate deployment required.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Vertex AI Search includes a ranking API as part of its managed search stack, applying a similar L2 re-ranking pass over initial results.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>No confirmed first-party managed reranker at time of writing; verify current capability directly against OCI documentation rather than assuming parity with the other three.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>An open cross-encoder reranker (BGE-reranker, Jina Reranker) served alongside the embedding model, typically on the same TEI/Infinity serving stack, called as an explicit extra step in your retrieval code.</p>
     </div>
   </div>
 
@@ -288,15 +459,25 @@
       <h3>Generation / model serving</h3>
       <p>Running the language model itself against the assembled, grounded context.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Foundry model deployment: Azure OpenAI models or the Foundry Model Catalog's open-weight options, on managed online endpoints. Provisioned Throughput Units (PTU) for predictable latency and cost at volume, or pay-as-you-go token billing for variable load.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>vLLM or TGI serving an open-weight model (Llama, Qwen, Mistral, DeepSeek-class) on owned or leased GPUs, with continuous batching and paged KV-cache for throughput. Ollama for smaller-scale or development use; llama.cpp for CPU/edge deployment.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Bedrock model deployment: unified Converse API across Claude, Titan, Llama, and Mistral. Provisioned Throughput for predictable latency at volume, on-demand for variable load, plus a batch tier at a discount for non-interactive workloads.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Foundry model deployment: Azure OpenAI models or the Foundry Model Catalog's open-weight options, on managed online endpoints. Provisioned Throughput Units (PTU) for predictable latency and cost at volume, or pay-as-you-go token billing for variable load.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Vertex AI model deployment: Gemini-first, with third-party and open-weight models available through Model Garden. Provisioned throughput and pay-as-you-go both available, same shape as the other two.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>OCI Generative AI model deployment, native and third-party models, callable through the same managed endpoint pattern as the rest of the OCI Generative AI service.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>vLLM or TGI serving an open-weight model (Llama, Qwen, Mistral, DeepSeek-class) on owned or leased GPUs, with continuous batching and paged KV-cache for throughput. Ollama for smaller-scale or development use; llama.cpp for CPU/edge deployment.</p>
     </div>
   </div>
 
@@ -306,17 +487,27 @@
       <h3>Agent tool layer (MCP)</h3>
       <p>Giving the model controlled access to enterprise systems and external data through defined tools.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Foundry Agent Service with built-in tool calling, or a self-built MCP server fronting enterprise systems, called from a Foundry-hosted agent.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>Identical MCP server code; MCP is a transport protocol, not a cloud primitive. The real dependency is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so verify per model rather than assuming.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Bedrock Agents, AgentCore, and Flows for managed tool-use orchestration, or a self-built MCP server fronting enterprise systems, called from a Bedrock-hosted agent.</p>
     </div>
-    <div class="same-note">The protocol layer is the same either way. What changes is only whether your self-hosted serving stack has tool-calling support wired up for the specific open-weight model you chose.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Foundry Agent Service with built-in tool calling, or a self-built MCP server fronting enterprise systems, called from a Foundry-hosted agent.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Vertex AI Agent Builder for managed tool orchestration, or a self-built MCP server called from a Vertex AI-hosted agent.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>OCI Generative AI Agents, with tool and API orchestration built into the same service that handles RAG.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>Identical MCP server code across every environment; MCP is a transport protocol, not a cloud primitive. The real dependency is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so verify per model rather than assuming.</p>
+    </div>
+    <div class="same-note">The protocol layer is the same everywhere. What changes across all five environments is only whether the serving stack in question has tool-calling support wired up for the specific model you chose.</div>
   </div>
 
   <div class="stage-card">
@@ -325,17 +516,27 @@
       <h3>Human-in-the-loop</h3>
       <p>Routing outputs by risk and reversibility to a review queue, notification layer, and durable orchestration that can pause and resume a process for hours or days.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Cosmos DB or Azure SQL for the review queue/state table, Teams webhook plus Power Automate for notification and escalation timers, Azure Durable Functions for the durable orchestration that survives a pause spanning hours or days.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>Postgres for the queue, Slack webhook for notification, Temporal (self-hostable) for durable orchestration. Functionally the same architecture, different concrete products.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>DynamoDB for the review queue/state table, SNS or SQS plus EventBridge for notification and escalation timers, Step Functions for the durable orchestration that survives a pause spanning hours or days.</p>
     </div>
-    <div class="same-note">This entire stage sits above the model, at the application layer. The tiering logic (reversibility/blast-radius, not confidence alone) and the queue-overload failure mode are identical in both environments. See the deep HITL reference for the full design detail.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Cosmos DB or Azure SQL for the review queue/state table, Teams webhook plus Power Automate for notification and escalation timers, Azure Durable Functions for the durable orchestration that survives a pause spanning hours or days.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Firestore for the review queue/state table, Pub/Sub for notification, Cloud Workflows for the durable orchestration spanning the pause.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Autonomous Database for the review queue/state table, Notifications service for alerts, OCI Functions chained via Events for the durable orchestration.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>Postgres for the queue, Slack webhook for notification, Temporal (self-hostable) for durable orchestration. Functionally the same architecture as every column above, different concrete products.</p>
+    </div>
+    <div class="same-note">This entire stage sits above the model, at the application layer. The tiering logic (reversibility/blast-radius, not confidence alone) and the queue-overload failure mode are identical across all five environments. See the deep HITL reference for the full design detail.</div>
   </div>
 
   <div class="stage-card">
@@ -344,17 +545,27 @@
       <h3>Security &amp; threat model</h3>
       <p>Prompt injection, tool-call authorization, and the model supply chain. This isn't a stage the data passes through once, it applies to every stage above.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Content Safety's prompt shields run as a pre-processing gate on both user input and any retrieved or tool-returned content before it reaches the model, since an injected instruction can arrive through a poisoned document just as easily as through the chat box. Tool calls run under managed identities with least-privilege RBAC scoped per agent through Entra ID. Foundry deployments sit behind private endpoints and VNet integration; Azure AI Search restricted to private link with public network access disabled.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>No managed prompt-shield equivalent. Typically an open guard model (Llama Guard, or a policy layer like NeMo Guardrails) run as a pre and post filter in your own pipeline, tuned and maintained by you. Tool-call authorization is your own implementation at the MCP server layer, commonly OAuth2 or mTLS between the agent runtime and each tool server. Model and weight supply chain matters here specifically: verify checksums and provenance of downloaded weights against the publisher's signed release, and treat a weight download the same way you'd treat a new software dependency, since a compromised checkpoint or a malicious custom loading script is a real attack surface. Network isolation is your own VPC or on-prem segmentation around the GPU serving cluster.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Bedrock Guardrails runs as a pre-processing gate for content filtering and PII redaction on both input and retrieved content. Tool calls run under IAM roles scoped per agent; Bedrock endpoints sit behind VPC endpoints with public access disabled.</p>
     </div>
-    <div class="same-note">RAG poisoning, malicious content planted in a source document that later gets retrieved and treated as trusted context, targets the retrieval layer, not the model host. Access control and validation on what gets indexed matters equally in both environments.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Content Safety's prompt shields run as a pre-processing gate on both user input and any retrieved or tool-returned content before it reaches the model, since an injected instruction can arrive through a poisoned document just as easily as through the chat box. Tool calls run under managed identities with least-privilege RBAC scoped per agent through Entra ID. Foundry deployments sit behind private endpoints and VNet integration; AI Search restricted to private link with public network access disabled.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Specific managed guardrail capability varies by release; verify current offering directly against Vertex AI documentation. IAM and VPC Service Controls provide the network and identity isolation layer regardless.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Specific managed guardrail capability not confirmed at time of writing; verify directly against OCI documentation. IAM policies and network security groups provide the isolation layer regardless.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>No managed prompt-shield equivalent. Typically an open guard model (Llama Guard, or a policy layer like NeMo Guardrails) run as a pre and post filter in your own pipeline, tuned and maintained by you. Tool-call authorization is your own implementation at the MCP server layer, commonly OAuth2 or mTLS between the agent runtime and each tool server. Model and weight supply chain matters here specifically: verify checksums and provenance of downloaded weights against the publisher's signed release. Network isolation is your own VPC or on-prem segmentation around the GPU serving cluster.</p>
+    </div>
+    <div class="same-note">RAG poisoning, malicious content planted in a source document that later gets retrieved and treated as trusted context, targets the retrieval layer, not the model host. Access control and validation on what gets indexed matters equally across every environment.</div>
   </div>
 
   <div class="stage-card">
@@ -363,15 +574,25 @@
       <h3>PHI &amp; PII data protection</h3>
       <p>The technical control layer, not the compliance program. Policy, accountability, and audit ownership for regulated data live on the <a href="../ai-governance-map/index.html">AI Governance Map</a>; this is what enforces it in the pipeline.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Language's PHI/PII detection (Text Analytics for Health) runs as a pipeline step before content reaches the index or the model's context window, redacting or tokenizing protected fields. Encryption at rest is on by default across Storage, Cosmos DB, and AI Search, with customer-managed keys via Key Vault where the regulatory requirement calls for it. Azure AI Search's document-level ACLs mean retrieval only ever surfaces chunks the requesting identity is authorized to see, not just what's topically relevant. A signed Business Associate Agreement with Microsoft is a precondition for PHI in Azure OpenAI or Foundry at all; confirm the specific deployed service is in scope for your BAA before sending PHI through it.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>De-identification via an open tool (Microsoft Presidio, or a PHI-tuned open NER model) run as the same kind of pipeline step, self-maintained. Disk and transport encryption are your own responsibility; nothing is on by default the way it is in a managed cloud service. Access boundaries are enforced in your own retrieval code and the vector store's metadata filtering, with no managed ACL layer to lean on. No BAA applies since there's no third-party processor, but that shifts the entire compliance burden onto your own controls and audit evidence. It does not remove the requirement.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Comprehend Medical and Comprehend's PII detection run as a pipeline step redacting protected fields; Macie inventories sensitive data already sitting in S3. A signed BAA with AWS is a precondition for PHI in Bedrock; confirm the specific model is in scope.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Language's PHI/PII detection (Text Analytics for Health) runs as a pipeline step, redacting or tokenizing protected fields. AI Search's document-level ACLs mean retrieval only surfaces chunks the requesting identity is authorized to see. A signed BAA with Microsoft is a precondition for PHI in Azure OpenAI or Foundry.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Cloud DLP (Sensitive Data Protection) for PII/PHI detection and redaction as a pipeline step, with de-identification templates reusable across the pipeline. A BAA with Google is a precondition for PHI in Vertex AI.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Specific managed PHI/PII detection service not confirmed at time of writing; verify directly against OCI documentation. Encryption at rest is on by default across OCI storage services regardless.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>De-identification via an open tool (Microsoft Presidio, or a PHI-tuned open NER model) run as the same kind of pipeline step, self-maintained. Disk and transport encryption are your own responsibility; nothing is on by default the way it is in a managed cloud service. No BAA applies since there's no third-party processor, but that shifts the entire compliance burden onto your own controls and audit evidence rather than removing the requirement.</p>
     </div>
     <div class="same-note">Minimum necessary access and an immutable audit trail of who or what touched PHI are HIPAA requirements regardless of hosting. Hosting choice changes who implements the control, not whether it's required.</div>
   </div>
@@ -382,17 +603,27 @@
       <h3>Observability &amp; evaluation</h3>
       <p>Whether any of the above is working, and whether it's still working after the next model or index update.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure Monitor plus Application Insights for distributed tracing across the pipeline, with retrieval latency, generation latency, and per-tool-call latency broken out individually. Azure AI Foundry's built-in evaluation and tracing for agent runs, with continuous evaluation against a defined rubric and alerting when groundedness or relevance scores degrade.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>OpenTelemetry instrumentation exported to a self-hosted or managed backend (Grafana, Jaeger). Langfuse or Arize Phoenix for LLM-specific tracing and evaluation. Prometheus and Grafana for GPU utilization, queue depth, and serving-stack metrics; vLLM exposes Prometheus metrics natively.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>CloudWatch plus X-Ray for distributed tracing across the pipeline, retrieval and generation latency broken out individually. X-Ray is transitioning to OpenTelemetry as its primary instrumentation standard, worth building on directly rather than the legacy SDK.</p>
     </div>
-    <div class="same-note">Logs and traces are themselves a PHI exposure surface if you're not careful. A stack trace or a debug log that captures the full prompt will capture any PHI that was in it. Redaction policy for observability data needs to match redaction policy for the data itself, in both environments.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Monitor plus Application Insights for distributed tracing, with retrieval latency, generation latency, and per-tool-call latency broken out individually. AI Foundry's built-in evaluation and tracing for agent runs, with alerting when groundedness or relevance scores degrade.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Cloud Trace plus Cloud Monitoring for distributed tracing and metrics across the pipeline, with the same latency-breakdown pattern as the other providers.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Application Performance Monitoring (APM) for distributed tracing and latency breakdown across the pipeline.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>OpenTelemetry instrumentation exported to a self-hosted or managed backend (Grafana, Jaeger). Langfuse or Arize Phoenix for LLM-specific tracing and evaluation. Prometheus and Grafana for GPU utilization, queue depth, and serving-stack metrics; vLLM exposes Prometheus metrics natively.</p>
+    </div>
+    <div class="same-note">Logs and traces are themselves a PHI exposure surface if you're not careful. A stack trace or a debug log that captures the full prompt will capture any PHI that was in it. Redaction policy for observability data needs to match redaction policy for the data itself, across every environment.</div>
   </div>
 
   <div class="stage-card">
@@ -401,15 +632,25 @@
       <h3>Disaster recovery &amp; continuity</h3>
       <p>What happens to the index, the weights, and the running service when something breaks.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Azure AI Search has no built-in point-in-time restore for the index itself; re-indexing from the source document store is the actual recovery path, which means the source document store, not the index, needs its own backup policy. Foundry-hosted models inherit Azure's regional redundancy, but multi-region deployment for the endpoint itself is a separate, deliberate decision if you need it.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>Same principle: back up the source documents and treat the vector index as rebuildable, unless the re-embedding cost at your data volume makes a direct index snapshot worth it. Version and store model weights and the exact serving configuration in a model registry with checksums, since "which exact checkpoint was running when this output was generated" is both an operational and an audit question.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>OpenSearch and most managed vector stores lack point-in-time index restore; re-indexing from the source document store is the real recovery path. Bedrock-hosted models inherit AWS's regional redundancy; multi-region endpoint deployment is a separate decision.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>AI Search has no built-in point-in-time restore for the index itself; re-indexing from the source document store is the actual recovery path. Foundry-hosted models inherit Azure's regional redundancy; multi-region deployment is a separate decision.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Same pattern: Vertex AI Vector Search has no native point-in-time restore, source-document re-indexing is the recovery path. Vertex AI-hosted models inherit GCP's regional redundancy.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Oracle Database 23ai's native backup and point-in-time recovery covers vector data stored in-database, a genuine difference from the other three, since the vectors live inside the database rather than a separate index.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>Same principle as the managed clouds: back up the source documents and treat the vector index as rebuildable, unless the re-embedding cost at your data volume makes a direct index snapshot worth it. Version and store model weights and the exact serving configuration in a model registry with checksums, since "which exact checkpoint was running when this output was generated" is both an operational and an audit question.</p>
     </div>
   </div>
 
@@ -419,17 +660,27 @@
       <h3>Capacity &amp; scaling</h3>
       <p>The architecture question underneath cost: can this handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the <a href="../ai-finops-map/index.html">AI FinOps Map</a>; this is what determines whether capacity is even available to buy.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability, not budget, is often the actual constraint. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas that need to be requested and increased well ahead of a launch, not the week before. The wrapper service around the model call can autoscale normally (Container Apps, AKS), but the model endpoint itself doesn't scale the way stateless compute does, since Foundry deployments are provisioned capacity, not elastic by default.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>GPU procurement lead time is the real constraint here. Buying or leasing H100/H200-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, not raw compute, is usually the actual ceiling on concurrent requests per node.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Provisioned Throughput reserves capacity ahead of time; on-demand avoids that but comes with TPM/RPM rate quotas requiring an increase request well ahead of launch. Cross-region inference routes traffic across regions to dodge regional capacity limits at no added charge, a genuine differentiator here.</p>
     </div>
-    <div class="same-note">Capacity planning has to happen months before a launch in both environments. What changes is the actual bottleneck: quota approval in Azure, GPU hardware availability if self-hosting.</div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability, not budget, is often the actual constraint. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas needing an increase request well ahead of launch. Foundry deployments are provisioned capacity, not elastic by default.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Same shape: provisioned throughput for predictable capacity, pay-as-you-go with per-model rate quotas otherwise. Regional availability of specific Gemini model versions is often the binding constraint, same pattern as the other two clouds.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>Capacity and quota mechanics follow the same general shape as the other clouds; verify current provisioned-throughput and rate-limit specifics directly against OCI documentation before planning a launch around them.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>GPU procurement lead time is the real constraint here. Buying or leasing H100/H200-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, not raw compute, is usually the actual ceiling on concurrent requests per node.</p>
+    </div>
+    <div class="same-note">Capacity planning has to happen months before a launch across every environment. What changes is the actual bottleneck: quota approval on a managed cloud, GPU hardware availability if self-hosting.</div>
   </div>
 
   <div class="stage-card">
@@ -438,15 +689,25 @@
       <h3>Data lineage &amp; source versioning</h3>
       <p>Which exact source document, and which exact embedding model version, produced the chunk that ended up in a given response. Easy to skip until an incident or an audit asks the question and there's no answer.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell azure">
-        <span class="env-label azure">Azure-managed</span>
-        <p>Microsoft Purview for lineage and cataloging across the source systems feeding ingestion, tracking which document version fed which index generation. Azure AI Search doesn't version indexes natively, so the common pattern is index aliasing: build a new index, swap the alias over to it, and keep the prior index around for rollback rather than relying on built-in point-in-time index history that doesn't exist.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label oss">Self-hosted / open-weight</span>
-        <p>No managed lineage catalog. Typically DVC (Data Version Control) or a plain metadata table alongside the vector store, recording source document hash, ingestion timestamp, and which embedding model version produced each chunk's vector. Same alias-swap pattern as Azure for the vector store itself, just self-implemented: build a new collection, swap the pointer, retain the old collection for rollback.</p>
-      </div>
+    <div class="provider-content active" data-provider="aws">
+      <span class="provider-label"><span class="dot"></span>AWS</span>
+      <p>Glue Data Catalog with Lake Formation for lineage tracking across source systems feeding ingestion. Managed vector stores generally lack native index versioning, so the same alias-swap pattern applies: build new, swap the pointer, retain the old for rollback.</p>
+    </div>
+    <div class="provider-content" data-provider="azure">
+      <span class="provider-label"><span class="dot"></span>Azure</span>
+      <p>Microsoft Purview for lineage and cataloging across the source systems feeding ingestion, tracking which document version fed which index generation. AI Search doesn't version indexes natively, so the common pattern is index aliasing: build new, swap the alias, retain the prior index for rollback.</p>
+    </div>
+    <div class="provider-content" data-provider="gcp">
+      <span class="provider-label"><span class="dot"></span>GCP</span>
+      <p>Dataplex for lineage and cataloging across source systems. Same alias-swap pattern for the vector store itself, since Vertex AI Vector Search doesn't version indexes natively either.</p>
+    </div>
+    <div class="provider-content" data-provider="oci">
+      <span class="provider-label"><span class="dot"></span>OCI</span>
+      <p>OCI Data Catalog for lineage and cataloging across source systems feeding ingestion, tracking which document version fed which index generation.</p>
+    </div>
+    <div class="provider-content" data-provider="oss">
+      <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
+      <p>No managed lineage catalog. Typically DVC (Data Version Control) or a plain metadata table alongside the vector store, recording source document hash, ingestion timestamp, and which embedding model version produced each chunk's vector. Same alias-swap pattern as every managed cloud above for the vector store itself, just self-implemented: build a new collection, swap the pointer, retain the old collection for rollback.</p>
     </div>
     <div class="same-note">This is what ties disaster recovery and observability together. It's tempting to treat lineage as optional right up until an incident needs an answer to "which version produced this" and there isn't one.</div>
   </div>
@@ -459,5 +720,14 @@
 
 </footer>
 
+<script>
+  document.getElementById('provider-toggle').addEventListener('click', (e) => {
+    const btn = e.target.closest('.provider-btn');
+    if (!btn) return;
+    const provider = btn.dataset.provider;
+    document.querySelectorAll('.provider-btn').forEach(b => b.classList.toggle('active', b.dataset.provider === provider));
+    document.querySelectorAll('.provider-content').forEach(c => c.classList.toggle('active', c.dataset.provider === provider));
+  });
+</script>
 </body>
 </html>
