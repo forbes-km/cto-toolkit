@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology Portfolio Management</title>
+<meta name="description" content="Ranking and sequencing competing initiatives across categories, not within one, plus a WSJF calculator that ranks your own list.">
+<meta property="og:title" content="Technology Portfolio Management | CTO Toolkit">
+<meta property="og:description" content="How to decide what makes the cut when an AI pilot, a tech-debt paydown, and a compliance mandate are all fighting for the same engineering capacity.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .wsjf-form { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr) auto; gap: 10px; align-items: end; margin-bottom: 16px; }
+  .wsjf-form label { display: block; font-size: 11.5px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+  .wsjf-form input, .wsjf-form select { width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px; font-family: var(--ui); font-size: 13px; }
+  .wsjf-add-btn { padding: 8px 16px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; height: 36px; }
+  .wsjf-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .wsjf-table th, .wsjf-table td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .wsjf-table th { background: var(--accent-soft); font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .wsjf-table td.score { font-family: var(--mono); font-weight: 700; color: var(--accent); }
+  .wsjf-table td.rank { font-family: var(--mono); color: var(--ink-soft); width: 28px; }
+  .wsjf-remove { background: none; border: none; color: var(--b); cursor: pointer; font-size: 12px; font-weight: 600; padding: 2px 6px; }
+  .wsjf-clear { margin-top: 10px; padding: 7px 14px; background: white; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 6px; font-family: var(--ui); font-size: 12.5px; cursor: pointer; }
+  @media (max-width: 900px) {
+    .wsjf-form { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+    .wsjf-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technology Portfolio Management</h1>
+  <p>Not the application estate, not AI specifically, not innovation specifically, not the budget. This is the narrower, genuinely missing piece: ranking and sequencing every initiative competing for the same engineering capacity, regardless of category, plus a working WSJF calculator that ranks a list you build yourself.</p>
+  <div class="caveat">This page assumes you already know your available capacity. It doesn't estimate it. If capacity itself is the uncertain number, that's a separate, prior problem this framework can't solve for you.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>How this relates to the other four portfolio pages</h3>
+      <p>Four different lenses on four different things, not four competing answers to the same question.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Page</th><th>What it scores</th><th>What it doesn't do</th></tr>
+          <tr><td><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a></td><td>The existing application estate: Tolerate, Invest, Migrate, Eliminate</td><td>Doesn't rank new initiatives against each other, or against running applications</td></tr>
+          <tr><td><a href="../ai-portfolio-management/index.html">AI Portfolio Management</a></td><td>AI initiatives specifically, gated on feasibility and data readiness first</td><td>Doesn't compare an AI initiative's priority against a non-AI one competing for the same sprint capacity</td></tr>
+          <tr><td><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a></td><td>Exploratory bets specifically, across the three horizons</td><td>Doesn't cover run-the-business work, which is most of the actual portfolio at most companies</td></tr>
+          <tr><td><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td><td>The dollars, split across Run, Grow, Transform, Security, Debt, and Reserve as one portfolio</td><td>Allocates budget to buckets; doesn't rank individual competing initiatives within or across those buckets</td></tr>
+          <tr><td><strong>This page</strong></td><td>Every competing initiative, any category, ranked and sequenced on one list against the same capacity constraint</td><td>Doesn't replace the category-specific scoring above, a project still needs its AI-readiness or innovation-stage evaluation before it lands here</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>The default is a de facto portfolio, not a deliberate one</h3>
+      <p>Most organizations never decide their portfolio. It accumulates.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a deliberate portfolio looks like</span>
+        <p>Every active initiative sits on one list, ranked against every other active initiative, regardless of which team or category proposed it. The list is re-ranked on a fixed cadence, not just when something new shows up. Items get removed, not just added.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The tell that it's not deliberate</span>
+        <p>The roadmap has never had an item removed, only added. Nobody can say, without checking three different documents, what the fourth-highest-priority initiative in the company is right now. Prioritization happens by whoever escalates loudest, not by a comparable score.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>WSJF: ranking across categories on one scale</h3>
+      <p>Weighted Shortest Job First, from SAFe's Lean Portfolio Management, built on Don Reinertsen's Cost of Delay economics. The reason it works here: it doesn't care what type of work an item is.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>WSJF = Cost of Delay &divide; Job Size. Cost of Delay is the sum of three components, each scored on a relative Fibonacci scale (1, 2, 3, 5, 8, 13, 20): <strong>User-Business Value</strong> (the direct economic or customer benefit), <strong>Time Criticality</strong> (does the value decay if this waits), and <strong>Risk Reduction / Opportunity Enablement</strong> (does this unlock or de-risk other work). Divide that sum by relative <strong>Job Size</strong>, and the result ranks a moderately valuable two-week job above a highly valuable six-month one, because value delivered sooner compounds and value delayed decays. An AI pilot, a compliance mandate, and a technical debt paydown all get scored on the same four inputs, which is exactly what makes this usable across categories where the other four portfolio pages can't reach.</p>
+      </div>
+    </div>
+    <div class="same-note">The scores are relative, not precise measurements. Anchor the smallest, most obvious item on your list at 1 for each component, then size everything else against it. The ranking is the useful output, not the individual numbers.</div>
+  </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Rank your own portfolio</h3>
+      <p>Add every initiative competing for capacity right now, regardless of category. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div class="wsjf-form">
+          <div>
+            <label for="wsjf-name">Initiative</label>
+            <input id="wsjf-name" type="text" placeholder="e.g. Migrate billing to new provider">
+          </div>
+          <div>
+            <label for="wsjf-ubv">Business value</label>
+            <select id="wsjf-ubv">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+              <option value="5" selected>5</option><option value="8">8</option><option value="13">13</option><option value="20">20</option>
+            </select>
+          </div>
+          <div>
+            <label for="wsjf-tc">Time criticality</label>
+            <select id="wsjf-tc">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+              <option value="5" selected>5</option><option value="8">8</option><option value="13">13</option><option value="20">20</option>
+            </select>
+          </div>
+          <div>
+            <label for="wsjf-rroe">Risk reduction / opportunity</label>
+            <select id="wsjf-rroe">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+              <option value="5" selected>5</option><option value="8">8</option><option value="13">13</option><option value="20">20</option>
+            </select>
+          </div>
+          <div>
+            <label for="wsjf-size">Job size</label>
+            <select id="wsjf-size">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+              <option value="5" selected>5</option><option value="8">8</option><option value="13">13</option><option value="20">20</option>
+            </select>
+          </div>
+          <button class="wsjf-add-btn" id="wsjf-add">Add</button>
+        </div>
+        <div id="wsjf-result"></div>
+        <button class="wsjf-clear" id="wsjf-clear">Clear all</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let wsjfItems = [
+      { name: 'AI support-ticket triage pilot', ubv: 8, tc: 5, rroe: 8, size: 5 },
+      { name: 'Pay down auth-service tech debt', ubv: 5, tc: 3, rroe: 13, size: 8 },
+      { name: 'SOC 2 evidence automation', ubv: 3, tc: 13, rroe: 5, size: 3 },
+      { name: 'New market data pipeline (innovation bet)', ubv: 13, tc: 2, rroe: 3, size: 20 },
+    ];
+
+    function renderWsjf() {
+      const resultEl = document.getElementById('wsjf-result');
+      if (wsjfItems.length === 0) {
+        resultEl.innerHTML = '<p style="font-size:13px; color:var(--ink-soft); padding:12px 0;">No initiatives yet. Add one above.</p>';
+        return;
+      }
+      const scored = wsjfItems.map(item => {
+        const cod = item.ubv + item.tc + item.rroe;
+        const score = cod / item.size;
+        return { ...item, cod, score };
+      }).sort((a, b) => b.score - a.score);
+
+      let html = '<table class="wsjf-table"><tr><th>Rank</th><th>Initiative</th><th>Value</th><th>Time crit.</th><th>Risk/opp.</th><th>Cost of Delay</th><th>Job size</th><th>WSJF</th><th></th></tr>';
+      scored.forEach((item, i) => {
+        const origIndex = wsjfItems.indexOf(item);
+        html += `<tr><td class="rank">${i + 1}</td><td>${item.name}</td><td>${item.ubv}</td><td>${item.tc}</td><td>${item.rroe}</td><td>${item.cod}</td><td>${item.size}</td><td class="score">${item.score.toFixed(2)}</td><td><button class="wsjf-remove" data-index="${origIndex}">Remove</button></td></tr>`;
+      });
+      html += '</table>';
+      resultEl.innerHTML = html;
+
+      document.querySelectorAll('.wsjf-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.dataset.index, 10);
+          wsjfItems.splice(idx, 1);
+          renderWsjf();
+        });
+      });
+    }
+
+    document.getElementById('wsjf-add').addEventListener('click', () => {
+      const name = document.getElementById('wsjf-name').value.trim();
+      if (!name) return;
+      const ubv = parseInt(document.getElementById('wsjf-ubv').value, 10);
+      const tc = parseInt(document.getElementById('wsjf-tc').value, 10);
+      const rroe = parseInt(document.getElementById('wsjf-rroe').value, 10);
+      const size = parseInt(document.getElementById('wsjf-size').value, 10);
+      wsjfItems.push({ name, ubv, tc, rroe, size });
+      document.getElementById('wsjf-name').value = '';
+      renderWsjf();
+    });
+
+    document.getElementById('wsjf-clear').addEventListener('click', () => {
+      wsjfItems = [];
+      renderWsjf();
+    });
+
+    renderWsjf();
+  </script>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Category-blind ranking vs. reserved capacity</h3>
+      <p>A real tension, not a solved problem. Pure WSJF ranking can starve categories that never win on pure economic score.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Pure ranking</span>
+        <p>Every initiative competes on the same list, highest WSJF wins the next slot regardless of category. Simple, defensible, and honest about tradeoffs. The risk: technical debt and security work, which rarely score high on Time Criticality until something breaks, permanently lose to visible, revenue-attached features.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Reserved capacity by category</span>
+        <p>A fixed share of capacity, say the debt and reserve percentages from <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a>, is set aside before ranking begins, then WSJF ranks within each reserved share. Protects categories that would otherwise never win, at the cost of a less pure, harder-to-defend prioritization story.</p>
+      </div>
+    </div>
+    <div class="same-note">Most functioning portfolios use both: a capacity floor for the categories that lose on pure economics, WSJF ranking inside and above that floor for everything else.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Sequencing and dependencies</h3>
+      <p>A ranked list isn't a schedule. Value-order ignores what blocks what.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A high-WSJF initiative that depends on a lower-ranked one still has to wait, running it first just produces rework or a stalled effort waiting on its own dependency. Before finalizing sequence, check the top ten items against each other for blocking relationships, not just against the full backlog. The common failure: nobody maps this until two teams have already started conflicting work, which is a coordination cost the ranking itself was supposed to prevent.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Killing something already in flight</h3>
+      <p>The hardest and most avoided move in portfolio management, and the one that matters most.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The failure mode</span>
+        <p>An initiative that scored well six months ago keeps running on inertia, re-scoring it against today's list would rank it below several things that didn't exist when it started, but nobody re-runs the comparison because it's already funded and staffed.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The discipline</span>
+        <p>Every re-ranking cycle scores in-flight work against new proposals on the same list, not a separate "already committed" list exempt from comparison. Money and time already spent are gone regardless of the decision now; the only real question is whether finishing beats every current alternative for the capacity remaining.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Cadence</h3>
+      <p>A portfolio ranked once a year is a portfolio managed by whoever spoke last in December.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Quarterly re-ranking of the full list is the common floor, monthly for organizations moving fast enough that a quarter is a long time. Between formal cycles, a genuinely time-critical item can force an out-of-cycle re-rank, but that path should be visibly rare, if it's not, the formal cadence is too slow for the business it's serving.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. WSJF weights and Fibonacci scoring are illustrative; the framework's value is in relative comparison, not the specific numbers.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
