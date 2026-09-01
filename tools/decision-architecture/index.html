@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Architecture</title>
+<meta name="description" content="The actual shape underneath the 48 pages: six stages, a feedback loop, and a foundational layer that doesn't fit a sequence.">
+<meta property="og:title" content="Decision Architecture | CTO Toolkit">
+<meta property="og:description" content="Strategy, operating model, architecture, governance, execution, measurement, and why the honest version of this isn't a straight line.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 900px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .philosophy { max-width: 720px; font-family: var(--sans); font-size: 18px; line-height: 1.6; color: var(--ink); margin: 20px 0 28px; padding: 20px 24px; background: white; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; }
+  main { max-width: 1000px; margin: 0 auto; padding: 8px 32px 80px; }
+
+  .diagram { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 32px 24px; margin-bottom: 20px; }
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .flow-stage { flex: 1; min-width: 0; text-align: center; padding: 16px 6px; }
+  .flow-stage .num { font-family: var(--mono); font-size: 10px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 6px; }
+  .flow-stage .name { font-weight: 700; font-size: 13px; color: var(--ink); }
+  .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 16px; flex: 0 0 16px; }
+  .feedback-note { text-align: center; font-size: 12.5px; color: var(--accent); font-weight: 600; margin: 10px 0 0; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .foundation { margin-top: 22px; padding-top: 20px; border-top: 2px solid var(--line); }
+  .foundation-label { font-family: var(--mono); font-size: 10.5px; color: var(--b); text-transform: uppercase; letter-spacing: 0.06em; text-align: center; margin-bottom: 10px; }
+  .foundation-items { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .foundation-item { background: var(--b-soft); color: var(--b); font-size: 12.5px; font-weight: 600; padding: 7px 14px; border-radius: 999px; }
+  @media (max-width: 700px) {
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+  }
+
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 17px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+  .stage-body { padding: 14px 20px 18px; }
+  .page-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .page-link { font-size: 12.5px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 6px 12px; border-radius: 999px; text-decoration: none; }
+  .page-link:hover { background: var(--accent); color: white; }
+  .page-link.hybrid { background: var(--b-soft); color: var(--b); }
+  .page-link.hybrid:hover { background: var(--b); color: white; }
+  .hybrid-note { font-size: 11.5px; color: var(--ink-soft); font-style: italic; margin-top: 10px; }
+  .same-note { padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  footer { max-width: 1000px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Decision Architecture</h1>
+  <p>Not a table of contents, the actual shape underneath it. Where every page in this toolkit sits, and, just as honestly, which pages don't sit anywhere in the sequence at all.</p>
+  <div class="philosophy">Technology leadership isn't the optimization of technology. It's the design of an organizational system that lets technology create business value while controlling risk, complexity, cost, and friction. That system has a shape: strategy sets direction, an operating model turns direction into how decisions get made, architecture and governance constrain what gets built and how, execution is where it happens, and measurement tells you whether any of it worked, then feeds back into strategy. Every page below sits somewhere in that shape, or explains why it doesn't.</div>
+</header>
+
+<main>
+
+  <div class="diagram">
+    <div class="flow">
+      <div class="flow-stage"><span class="num">1</span><span class="name">Strategy</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-stage"><span class="num">2</span><span class="name">Operating Model</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-stage"><span class="num">3</span><span class="name">Architecture</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-stage"><span class="num">4</span><span class="name">Governance</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-stage"><span class="num">5</span><span class="name">Execution</span></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-stage"><span class="num">6</span><span class="name">Measurement</span></div>
+    </div>
+    <div class="feedback-note">&#8635; Measurement feeds back into Strategy, this isn't a one-way line, it's a loop</div>
+    <div class="foundation">
+      <div class="foundation-label">Foundational &middot; cross-cutting, not a stage in the sequence</div>
+      <div class="foundation-items">
+        <span class="foundation-item">Epistemology &amp; Research Methods</span>
+        <span class="foundation-item">Working with the CEO</span>
+        <span class="foundation-item">Working with the CFO</span>
+        <span class="foundation-item">Stakeholder Engagement</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1 &middot; Strategy</span>
+      <h3>What are we trying to do</h3>
+      <p>Direction and priority, before anything gets built or governed.</p>
+    </div>
+    <div class="stage-body">
+      <div class="page-list">
+        <a class="page-link" href="../technology-strategy/index.html">Technology Strategy</a>
+        <a class="page-link" href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a>
+        <a class="page-link" href="../data-strategy/index.html">Data Strategy</a>
+        <a class="page-link" href="../innovation-portfolio/index.html">Innovation Portfolio Management</a>
+        <a class="page-link" href="../ai-portfolio-management/index.html">AI Portfolio Management</a>
+        <a class="page-link" href="../build-vs-buy/index.html">Build vs Buy</a>
+        <a class="page-link" href="../business-case-calculator/index.html">Business Case Calculator</a>
+        <a class="page-link" href="../vendor-evaluation/index.html">Vendor Evaluation</a>
+        <a class="page-link" href="../technology-diligence-map/index.html">Technology Diligence</a>
+        <a class="page-link hybrid" href="../technology-risk-appetite/index.html">Technology Risk Appetite</a>
+        <a class="page-link hybrid" href="../technology-capital-allocation/index.html">Technology Capital Allocation</a>
+      </div>
+      <div class="hybrid-note">Highlighted links are genuinely hybrid, listed here and in a second stage below, not a filing error.</div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2 &middot; Operating Model</span>
+      <h3>How decisions get made, and by whom</h3>
+      <p>Turning direction into a functioning system: roles, rhythms, decision rights.</p>
+    </div>
+    <div class="stage-body">
+      <div class="page-list">
+        <a class="page-link" href="../cto-operating-system/index.html">The CTO Operating System</a>
+        <a class="page-link" href="../technology-decision-rights/index.html">Technology Decision Rights</a>
+        <a class="page-link" href="../role-boundaries/index.html">Role Boundaries</a>
+        <a class="page-link" href="../org-design/index.html">Org Design</a>
+        <a class="page-link" href="../enterprise-architecture-map/index.html">Enterprise Architecture</a>
+        <a class="page-link" href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a>
+        <a class="page-link" href="../grc-operating-model/index.html">Governance, Risk &amp; Compliance</a>
+        <a class="page-link" href="../security-program/index.html">Building a Security Program</a>
+        <a class="page-link" href="../cto-succession/index.html">CTO Leadership &amp; Succession</a>
+        <a class="page-link" href="../technology-budget-management/index.html">Running the Technology Budget</a>
+        <a class="page-link" href="../platform-engineering/index.html">Platform Engineering</a>
+        <a class="page-link hybrid" href="../architecture-review-board/index.html">Architecture Review Board</a>
+        <a class="page-link hybrid" href="../technology-capital-allocation/index.html">Technology Capital Allocation</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3 &middot; Architecture</span>
+      <h3>What gets built, and how it's structured</h3>
+      <p>The technical shape: systems, platforms, the application estate.</p>
+    </div>
+    <div class="stage-body">
+      <div class="page-list">
+        <a class="page-link" href="../ai-architecture-map/index.html">AI Architecture</a>
+        <a class="page-link" href="../architecture-principles/index.html">Architecture Principles Library</a>
+        <a class="page-link" href="../cloud-service-mapper/index.html">Cloud Service Mapper</a>
+        <a class="page-link" href="../apm-portfolio-map/index.html">Application Portfolio Management</a>
+        <a class="page-link" href="../zero-trust-maturity/index.html">Zero-Trust Maturity</a>
+        <a class="page-link hybrid" href="../cloud-cost-management/index.html">Cloud FinOps</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4 &middot; Governance</span>
+      <h3>Where the constraints and control mechanisms live</h3>
+      <p>Not centralization for its own sake, the specific decisions worth constraining and why.</p>
+    </div>
+    <div class="stage-body">
+      <div class="page-list">
+        <a class="page-link" href="../ai-governance-map/index.html">AI Governance</a>
+        <a class="page-link" href="../data-governance/index.html">Data Governance &amp; Privacy</a>
+        <a class="page-link" href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a>
+        <a class="page-link hybrid" href="../technology-risk-appetite/index.html">Technology Risk Appetite</a>
+        <a class="page-link hybrid" href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a>
+        <a class="page-link hybrid" href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a>
+        <a class="page-link hybrid" href="../architecture-review-board/index.html">Architecture Review Board</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5 &middot; Execution</span>
+      <h3>Where it happens, day to day</h3>
+      <p>Delivery, incidents, people, the work itself once direction and constraints are set.</p>
+    </div>
+    <div class="stage-body">
+      <div class="page-list">
+        <a class="page-link" href="../agile-and-safe/index.html">Agile and SAFe</a>
+        <a class="page-link" href="../engineering-culture/index.html">Engineering Culture</a>
+        <a class="page-link" href="../technical-hiring-leveling/index.html">Technical Hiring &amp; Leveling</a>
+        <a class="page-link" href="../ai-engineering-operating-model/index.html">AI and the Engineering Operating Model</a>
+        <a class="page-link" href="../incident-response/index.html">Incident Response</a>
+        <a class="page-link" href="../modernization-execution/index.html">Legacy Modernization Execution</a>
+        <a class="page-link hybrid" href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a>
+        <a class="page-link hybrid" href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6 &middot; Measurement</span>
+      <h3>Whether any of it worked</h3>
+      <p>The evidence that feeds back into Strategy, closing the loop rather than ending it.</p>
+    </div>
+    <div class="stage-body">
+      <div class="page-list">
+        <a class="page-link" href="../engineering-metrics/index.html">Engineering Metrics</a>
+        <a class="page-link" href="../reliability-economics/index.html">Reliability as an Economic Decision</a>
+        <a class="page-link" href="../ai-finops-map/index.html">AI FinOps</a>
+        <a class="page-link hybrid" href="../board-reporting/index.html">Board Reporting</a>
+        <a class="page-link hybrid" href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a>
+        <a class="page-link hybrid" href="../cloud-cost-management/index.html">Cloud FinOps</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Foundational &middot; not a stage</span>
+      <h3>What doesn't fit the sequence, and why forcing it would be dishonest</h3>
+      <p>Four pages that aren't a step you pass through once. They're either underneath every stage or running continuously alongside all of them.</p>
+    </div>
+    <div class="stage-body">
+      <div class="page-list">
+        <a class="page-link" href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a>
+        <a class="page-link" href="../ceo-cto-relationship/index.html">Working with the CEO</a>
+        <a class="page-link" href="../cto-cfo-relationship/index.html">Working with the CFO</a>
+        <a class="page-link" href="../stakeholder-engagement/index.html">Stakeholder Engagement</a>
+      </div>
+    </div>
+    <div class="same-note">Epistemology is about how you evaluate claims across every stage above, not a stage itself. The relationship pages aren't a phase you complete, they're continuously active regardless of which stage the actual work is in.</div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. This mapping describes how the toolkit's own content relates, not a universal framework every organization should adopt as-is.
+  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+</footer>
+
+</body>
+</html>
