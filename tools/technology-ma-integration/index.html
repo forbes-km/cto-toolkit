@@ -67,14 +67,14 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Technology M&amp;A Integration</h1>
   <p>What happens after the deal closes. Diligence tells you what you're buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.</p>
-  <div class="caveat">Diligence-stage assessment lives on <a href="../technology-diligence-map/index.html">Technology Diligence</a>. Scoring the combined application estate uses the same instrument as <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>. This page picks up where those leave off, at close.</div>
+  <div class="caveat">Diligence-stage assessment lives on <a href="../technology-diligence-map/index.html">Technology Diligence</a>. Scoring the combined application estate uses the same instrument as <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>. This page picks up where those leave off, at close, and covers the reasoning conceptually; Technology Diligence's own preview section lists the working-artifact layer beyond this page, a scheduled timeline tool, a decision tree, and a tracker, for readers who need more than the reasoning.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reference</span>
-      <h3>The four phases</h3>
+      <h3>The five phases</h3>
       <p>Each phase has a different job, and doing a later phase's work during an earlier one is one of the most common ways integrations go wrong.</p>
     </div>
     <div class="stage-grid single">
@@ -83,8 +83,9 @@
           <tr><th>Phase</th><th>Job</th><th>Focus</th></tr>
           <tr><td>Day 0</td><td>Don't break anything</td><td>Identity, access, security continuity, communications, critical systems kept running exactly as they were</td></tr>
           <tr><td>First 30 days</td><td>Understand what you have</td><td>Technology inventory, people, vendors, contracts, architecture, security gaps, dependencies</td></tr>
-          <tr><td>100 days</td><td>Decide, don't default</td><td>Converge, coexist, or replace decisions per system; organizational integration; platform and data decisions; application retirement</td></tr>
-          <tr><td>Year 1</td><td>Deliver the thesis</td><td>Target architecture, technical debt remediation, platform convergence, cost synergies, operating model</td></tr>
+          <tr><td>100 days</td><td>Decide, don't default</td><td>Converge, coexist, or replace decisions per system, made and assigned an owner, not yet executed</td></tr>
+          <tr><td>100 days to Year 1</td><td>Execute the decisions</td><td>The actual migration, consolidation, and platform convergence work, sequenced and tracked against what was decided at day 100, this is most of the calendar and most of the real effort</td></tr>
+          <tr><td>Year 1</td><td>Test the thesis</td><td>Measure realized synergies and convergence against what diligence promised, technical debt remediation, target architecture, operating model</td></tr>
         </table>
       </div>
     </div>
@@ -129,6 +130,24 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
+      <h3>Days 100 to 365: executing the decisions, not just measuring them</h3>
+      <p>The phase this framework most commonly loses, a decision made at day 100 with no visible forcing function behind it for the next nine months.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Each converge, coexist, or replace decision made at day 100 gets a named owner, a sequenced execution plan, and a specific target date within the year, tracked on the same standing cadence as everything else in this phase. Migration and consolidation work starts immediately after the decision, not months later once someone remembers it was made.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>The decision gets made and recorded at the 100-day mark, then nobody schedules or resources the execution work. Six months later the system is still officially &quot;decided to converge,&quot; with nothing having moved, which in practice is indistinguishable from never having decided at all.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
       <h3>The call, worked across real system categories</h3>
       <p>What the decision looks like against specific, common systems, rather than as an abstract framework.</p>
     </div>
@@ -147,7 +166,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">4</span>
+      <span class="stage-num">5</span>
       <h3>The diligence-to-integration handoff</h3>
       <p>Where institutional knowledge most commonly gets lost, right at the moment the deal closes and attention shifts.</p>
     </div>
@@ -165,7 +184,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
+      <span class="stage-num">6</span>
       <h3>Cultural integration, in this specific window</h3>
       <p>See <a href="../engineering-culture/index.html">Engineering Culture</a> for the general argument about whose culture wins in a merger. This is that argument, compressed into a much higher-stakes, much shorter timeframe.</p>
     </div>
@@ -183,9 +202,9 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">6</span>
+      <span class="stage-num">7</span>
       <h3>Year 1 is where the deal thesis gets tested</h3>
-      <p>The numbers used to justify the deal don't disappear once it closes, even though attention usually does.</p>
+      <p>The numbers used to justify the deal don't disappear once it closes, even though attention usually does. This is the measurement point for the execution work from Stage 3, not a separate deliverable that appears on its own.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -198,6 +217,150 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>PMI tracker: synergy realization and key-person retention</h3>
+      <p>The working dashboard Stage 3 and Stage 7 both argue you need, not just reference. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <h4 style="margin:0 0 4px; font-size:14px; font-weight:600; color:var(--ink);">Synergy realization</h4>
+        <p style="margin:0 0 12px; font-size:12.5px; color:var(--ink-soft);">The specific figures used to justify the deal, tracked against what's been realized.</p>
+        <div style="display:grid; grid-template-columns: 2fr 1fr 1fr auto; gap:10px; align-items:end; margin-bottom:12px;">
+          <div>
+            <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Synergy</label>
+            <input id="pmi-syn-name" type="text" placeholder="e.g. Consolidate CRM licensing" style="width:100%; padding:7px 8px; border:1px solid var(--line); border-radius:6px; font-size:13px;">
+          </div>
+          <div>
+            <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Promised ($)</label>
+            <input id="pmi-syn-promised" type="number" placeholder="150000" style="width:100%; padding:7px 8px; border:1px solid var(--line); border-radius:6px; font-size:13px;">
+          </div>
+          <div>
+            <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Realized ($)</label>
+            <input id="pmi-syn-realized" type="number" placeholder="90000" style="width:100%; padding:7px 8px; border:1px solid var(--line); border-radius:6px; font-size:13px;">
+          </div>
+          <button id="pmi-syn-add" style="padding:8px 16px; background:var(--accent); color:white; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; height:36px;">Add</button>
+        </div>
+        <div id="pmi-syn-result"></div>
+        <button id="pmi-syn-clear" style="margin-top:10px; padding:7px 14px; background:white; color:var(--ink-soft); border:1px solid var(--line); border-radius:6px; font-size:12.5px; cursor:pointer;">Clear synergies</button>
+      </div>
+    </div>
+    <div class="stage-grid single" style="border-top:1px solid var(--line);">
+      <div class="stage-cell">
+        <h4 style="margin:0 0 4px; font-size:14px; font-weight:600; color:var(--ink);">Key-person retention</h4>
+        <p style="margin:0 0 12px; font-size:12.5px; color:var(--ink-soft);">The people the deal thesis quietly depends on staying.</p>
+        <div style="display:grid; grid-template-columns: 1.5fr 1.5fr 1fr auto; gap:10px; align-items:end; margin-bottom:12px;">
+          <div>
+            <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Name</label>
+            <input id="pmi-kp-name" type="text" placeholder="e.g. Head of Engineering, acquired co." style="width:100%; padding:7px 8px; border:1px solid var(--line); border-radius:6px; font-size:13px;">
+          </div>
+          <div>
+            <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Role / why they matter</label>
+            <input id="pmi-kp-role" type="text" placeholder="e.g. Only person who understands the billing system" style="width:100%; padding:7px 8px; border:1px solid var(--line); border-radius:6px; font-size:13px;">
+          </div>
+          <div>
+            <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Status</label>
+            <select id="pmi-kp-status" style="width:100%; padding:7px 8px; border:1px solid var(--line); border-radius:6px; font-size:13px;">
+              <option value="Retained">Retained</option>
+              <option value="At risk">At risk</option>
+              <option value="Departed">Departed</option>
+            </select>
+          </div>
+          <button id="pmi-kp-add" style="padding:8px 16px; background:var(--accent); color:white; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; height:36px;">Add</button>
+        </div>
+        <div id="pmi-kp-result"></div>
+        <button id="pmi-kp-clear" style="margin-top:10px; padding:7px 14px; background:white; color:var(--ink-soft); border:1px solid var(--line); border-radius:6px; font-size:12.5px; cursor:pointer;">Clear people</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let pmiSynergies = [
+      { name: 'Consolidate CRM licensing', promised: 150000, realized: 140000 },
+      { name: 'Merge data center footprint', promised: 400000, realized: 110000 },
+      { name: 'Retire duplicate ITSM tool', promised: 60000, realized: 60000 },
+    ];
+    let pmiKeyPeople = [
+      { name: 'Head of Engineering, acquired co.', role: 'Only person who understands the billing system', status: 'At risk' },
+      { name: 'Lead architect, acquired co.', role: 'Owns the core product data model', status: 'Retained' },
+    ];
+
+    function renderPmiSynergies() {
+      const el = document.getElementById('pmi-syn-result');
+      if (pmiSynergies.length === 0) {
+        el.innerHTML = '<p style="font-size:13px; color:var(--ink-soft);">No synergies tracked yet.</p>';
+        return;
+      }
+      let totalPromised = 0, totalRealized = 0;
+      let html = '<table style="width:100%; border-collapse:collapse; font-size:13px;"><tr><th style="text-align:left; padding:6px 8px; border:1px solid var(--line); background:var(--accent-soft); font-size:11.5px; text-transform:uppercase;">Synergy</th><th style="text-align:left; padding:6px 8px; border:1px solid var(--line); background:var(--accent-soft); font-size:11.5px; text-transform:uppercase;">Promised</th><th style="text-align:left; padding:6px 8px; border:1px solid var(--line); background:var(--accent-soft); font-size:11.5px; text-transform:uppercase;">Realized</th><th style="text-align:left; padding:6px 8px; border:1px solid var(--line); background:var(--accent-soft); font-size:11.5px; text-transform:uppercase;">% Realized</th><th style="border:1px solid var(--line); background:var(--accent-soft);"></th></tr>';
+      pmiSynergies.forEach((s, i) => {
+        totalPromised += s.promised;
+        totalRealized += s.realized;
+        const pct = s.promised > 0 ? (s.realized / s.promised) * 100 : 0;
+        const color = pct >= 90 ? 'var(--accent)' : pct >= 70 ? 'var(--ink)' : 'var(--b)';
+        html += `<tr><td style="padding:6px 8px; border:1px solid var(--line);">${s.name}</td><td style="padding:6px 8px; border:1px solid var(--line);">$${s.promised.toLocaleString()}</td><td style="padding:6px 8px; border:1px solid var(--line);">$${s.realized.toLocaleString()}</td><td style="padding:6px 8px; border:1px solid var(--line); font-weight:700; color:${color};">${pct.toFixed(0)}%</td><td style="padding:6px 8px; border:1px solid var(--line);"><button data-i="${i}" class="pmi-syn-remove" style="background:none; border:none; color:var(--b); cursor:pointer; font-size:12px; font-weight:600;">Remove</button></td></tr>`;
+      });
+      const totalPct = totalPromised > 0 ? (totalRealized / totalPromised) * 100 : 0;
+      html += `<tr style="font-weight:700;"><td style="padding:6px 8px; border:1px solid var(--line);">Total</td><td style="padding:6px 8px; border:1px solid var(--line);">$${totalPromised.toLocaleString()}</td><td style="padding:6px 8px; border:1px solid var(--line);">$${totalRealized.toLocaleString()}</td><td style="padding:6px 8px; border:1px solid var(--line); color:${totalPct >= 70 ? 'var(--accent)' : 'var(--b)'};">${totalPct.toFixed(0)}%</td><td style="border:1px solid var(--line);"></td></tr>`;
+      html += '</table>';
+      el.innerHTML = html;
+      document.querySelectorAll('.pmi-syn-remove').forEach(btn => {
+        btn.addEventListener('click', () => { pmiSynergies.splice(parseInt(btn.dataset.i, 10), 1); renderPmiSynergies(); });
+      });
+    }
+
+    function renderPmiKeyPeople() {
+      const el = document.getElementById('pmi-kp-result');
+      if (pmiKeyPeople.length === 0) {
+        el.innerHTML = '<p style="font-size:13px; color:var(--ink-soft);">No key people tracked yet.</p>';
+        return;
+      }
+      const statusColor = { 'Retained': 'var(--accent)', 'At risk': 'var(--b)', 'Departed': '#C0392B' };
+      let html = '<table style="width:100%; border-collapse:collapse; font-size:13px;"><tr><th style="text-align:left; padding:6px 8px; border:1px solid var(--line); background:var(--accent-soft); font-size:11.5px; text-transform:uppercase;">Name</th><th style="text-align:left; padding:6px 8px; border:1px solid var(--line); background:var(--accent-soft); font-size:11.5px; text-transform:uppercase;">Role</th><th style="text-align:left; padding:6px 8px; border:1px solid var(--line); background:var(--accent-soft); font-size:11.5px; text-transform:uppercase;">Status</th><th style="border:1px solid var(--line); background:var(--accent-soft);"></th></tr>';
+      pmiKeyPeople.forEach((p, i) => {
+        html += `<tr><td style="padding:6px 8px; border:1px solid var(--line);">${p.name}</td><td style="padding:6px 8px; border:1px solid var(--line);">${p.role}</td><td style="padding:6px 8px; border:1px solid var(--line); font-weight:700; color:${statusColor[p.status]};">${p.status}</td><td style="padding:6px 8px; border:1px solid var(--line);"><button data-i="${i}" class="pmi-kp-remove" style="background:none; border:none; color:var(--b); cursor:pointer; font-size:12px; font-weight:600;">Remove</button></td></tr>`;
+      });
+      html += '</table>';
+      const atRisk = pmiKeyPeople.filter(p => p.status !== 'Retained').length;
+      if (atRisk > 0) {
+        html += `<p style="font-size:12px; color:var(--b); margin-top:8px; font-style:italic;">${atRisk} of ${pmiKeyPeople.length} tracked people are at risk or have departed.</p>`;
+      }
+      el.innerHTML = html;
+      document.querySelectorAll('.pmi-kp-remove').forEach(btn => {
+        btn.addEventListener('click', () => { pmiKeyPeople.splice(parseInt(btn.dataset.i, 10), 1); renderPmiKeyPeople(); });
+      });
+    }
+
+    document.getElementById('pmi-syn-add').addEventListener('click', () => {
+      const name = document.getElementById('pmi-syn-name').value.trim();
+      const promised = parseFloat(document.getElementById('pmi-syn-promised').value) || 0;
+      const realized = parseFloat(document.getElementById('pmi-syn-realized').value) || 0;
+      if (!name) return;
+      pmiSynergies.push({ name, promised, realized });
+      document.getElementById('pmi-syn-name').value = '';
+      document.getElementById('pmi-syn-promised').value = '';
+      document.getElementById('pmi-syn-realized').value = '';
+      renderPmiSynergies();
+    });
+    document.getElementById('pmi-syn-clear').addEventListener('click', () => { pmiSynergies = []; renderPmiSynergies(); });
+
+    document.getElementById('pmi-kp-add').addEventListener('click', () => {
+      const name = document.getElementById('pmi-kp-name').value.trim();
+      const role = document.getElementById('pmi-kp-role').value.trim();
+      const status = document.getElementById('pmi-kp-status').value;
+      if (!name) return;
+      pmiKeyPeople.push({ name, role, status });
+      document.getElementById('pmi-kp-name').value = '';
+      document.getElementById('pmi-kp-role').value = '';
+      renderPmiKeyPeople();
+    });
+    document.getElementById('pmi-kp-clear').addEventListener('click', () => { pmiKeyPeople = []; renderPmiKeyPeople(); });
+
+    renderPmiSynergies();
+    renderPmiKeyPeople();
+  </script>
 
   <div class="stage-card">
     <div class="stage-head">
