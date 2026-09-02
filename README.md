@@ -1,6 +1,6 @@
 # CTO Toolkit
 
-A working library of frameworks, templates, and interactive tools for enterprise technology leadership, built over 20+ years of running and assessing enterprise technology platforms, including eight years as CTO of a global healthcare platform and ongoing technical due diligence work on both buy-side and sell-side transactions.
+A working library of frameworks, templates, and interactive tools for enterprise technology leadership, built over 20+ years of practice running and assessing enterprise technology platforms.
 
 Live site: https://forbes-km.github.io/cto-toolkit/
 
