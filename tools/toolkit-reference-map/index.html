@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toolkit Reference Map</title>
+<meta name="description" content="What each page gives you, checked against real content rather than assumed uniform: an interactive artifact, a decision checklist, or a reference framework.">
+<meta property="og:title" content="Toolkit Reference Map | CTO Toolkit">
+<meta property="og:description" content="53 pages, grouped by what you get from each one, verified against real page content.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 760px; line-height: 1.5; }
+  .caveat { max-width: 760px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table td { border: 1px solid var(--line); padding: 9px 14px; }
+  .matrix-table td a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .matrix-table td a:hover { text-decoration-color: var(--accent); }
+  .preview-tag { font-family: var(--mono); font-size: 10px; color: var(--b); background: var(--b-soft); padding: 2px 7px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em; margin-left: 4px; }
+  .count-line { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin: 0 0 14px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Toolkit Reference Map</h1>
+  <p>Most pages in this toolkit follow the same shape: a concept, grounded in a framework, tested against a diagnostic, pointed at a decision. Where they differ, and where it matters for how you use them, is what you walk away with. Some pages end in an interactive tool you run yourself. Some end in a decision checklist, structured judgment, not a calculator. A few are conceptual grounding with no built-in tool at all. This page groups all 53 by which one, checked against each page's real content rather than assumed uniform.</p>
+  <div class="caveat">"Preview" tags mark pages that cover the thinking behind a larger toolkit, templates, question banks, or facilitation guides, that's available through direct engagement rather than delivered on the page itself. Everything else on this page is complete as published.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Result: Interactive artifact</span>
+      <h3>Pages that end in a tool you run yourself</h3>
+      <p>A calculator, scorer, or health check embedded in the page. Runs in your browser; nothing is sent anywhere.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p class="count-line">21 pages</p>
+        <table class="matrix-table">
+          <tr><td><a href="../ai-finops-map/index.html">AI FinOps Map</a></td></tr>
+          <tr><td><a href="../ai-portfolio-management/index.html">AI Portfolio Management</a></td></tr>
+          <tr><td><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../build-vs-buy/index.html">Build vs Buy</a></td></tr>
+          <tr><td><a href="../business-case-calculator/index.html">Business Case Calculator</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../cloud-cost-management/index.html">Cloud FinOps</a></td></tr>
+          <tr><td><a href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a></td></tr>
+          <tr><td><a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../engineering-metrics/index.html">Engineering Metrics</a></td></tr>
+          <tr><td><a href="../grc-operating-model/index.html">Governance, Risk & Compliance</a></td></tr>
+          <tr><td><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a></td></tr>
+          <tr><td><a href="../platform-engineering/index.html">Platform Engineering</a></td></tr>
+          <tr><td><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a></td></tr>
+          <tr><td><a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a></td></tr>
+          <tr><td><a href="../stakeholder-engagement/index.html">Stakeholder Engagement</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td></tr>
+          <tr><td><a href="../technology-diligence-map/index.html">Technology Diligence</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a></td></tr>
+          <tr><td><a href="../technology-portfolio-management/index.html">Technology Portfolio Management</a></td></tr>
+          <tr><td><a href="../vendor-evaluation/index.html">Vendor Evaluation</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../zero-trust-maturity/index.html">Zero-Trust Maturity Preview</a> <span class="preview-tag">preview</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Result: Decision checklist</span>
+      <h3>Pages that end in structured judgment, not a calculator</h3>
+      <p>A checklist, red-flag list, or sign-off criteria you apply by hand. The diagnostic is a set of questions, not a scored tool.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p class="count-line">23 pages</p>
+        <table class="matrix-table">
+          <tr><td><a href="../ai-engineering-operating-model/index.html">AI and the Engineering Operating Model</a></td></tr>
+          <tr><td><a href="../agile-and-safe/index.html">Agile and SAFe</a></td></tr>
+          <tr><td><a href="../architecture-review-board/index.html">Architecture Review Board</a></td></tr>
+          <tr><td><a href="../security-program/index.html">Building a Security Program</a></td></tr>
+          <tr><td><a href="../cto-succession/index.html">CTO Leadership &amp; Succession</a></td></tr>
+          <tr><td><a href="../data-governance/index.html">Data Governance &amp; Privacy</a></td></tr>
+          <tr><td><a href="../data-strategy/index.html">Data Strategy</a></td></tr>
+          <tr><td><a href="../engineering-culture/index.html">Engineering Culture</a></td></tr>
+          <tr><td><a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a></td></tr>
+          <tr><td><a href="../modernization-execution/index.html">Legacy Modernization Execution</a></td></tr>
+          <tr><td><a href="../org-design/index.html">Org Design</a></td></tr>
+          <tr><td><a href="../role-boundaries/index.html">Role Boundaries: CTO, CIO, CISO, CPO</a></td></tr>
+          <tr><td><a href="../technology-budget-management/index.html">Running the Technology Budget</a></td></tr>
+          <tr><td><a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a></td></tr>
+          <tr><td><a href="../technical-hiring-leveling/index.html">Technical Hiring &amp; Leveling</a></td></tr>
+          <tr><td><a href="../technology-decision-rights/index.html">Technology Decision Rights</a></td></tr>
+          <tr><td><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a></td></tr>
+          <tr><td><a href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a></td></tr>
+          <tr><td><a href="../cto-operating-system/index.html">The CTO Operating System</a></td></tr>
+          <tr><td><a href="../transformation-and-innovation/index.html">Transformation and Innovation</a></td></tr>
+          <tr><td><a href="../seeing-the-system-before-changing-it/index.html">Understanding the System Before Changing It</a></td></tr>
+          <tr><td><a href="../ceo-cto-relationship/index.html">Working with the CEO</a></td></tr>
+          <tr><td><a href="../cto-cfo-relationship/index.html">Working with the CFO</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Result: Reference framework</span>
+      <h3>Pages that are conceptual grounding, no built-in tool</h3>
+      <p>Vocabulary, principles, or a structural map you're meant to know and apply yourself, not run through a checklist or calculator on the page.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p class="count-line">9 pages</p>
+        <table class="matrix-table">
+          <tr><td><a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../ai-architecture-map/index.html">AI Architecture Map</a></td></tr>
+          <tr><td><a href="../ai-governance-map/index.html">AI Governance Map</a></td></tr>
+          <tr><td><a href="../architecture-principles/index.html">Architecture Principles Library</a></td></tr>
+          <tr><td><a href="../board-reporting/index.html">Board Reporting</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a></td></tr>
+          <tr><td><a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a> <span class="preview-tag">preview</span></td></tr>
+          <tr><td><a href="../incident-response/index.html">Incident Response</a></td></tr>
+          <tr><td><a href="../technology-strategy/index.html">Technology Strategy</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Categorization is based on each page's actual published content, an interactive tool element, a checklist section, or neither, checked programmatically against all 53 pages rather than asserted uniformly. See <a href="../decision-architecture/index.html">Decision Architecture</a> for how these same pages map to the six domains and the foundational layer; this page answers a different question, what you get, not where it sits.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>
