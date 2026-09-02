@@ -69,6 +69,19 @@
   header .byline a { color: var(--accent); text-decoration: none; }
   header .byline a:hover { text-decoration: underline; }
 
+  header .caveat {
+    max-width: 720px;
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0 0 28px;
+    border-radius: 0 6px 6px 0;
+  }
+  header .caveat a { color: var(--accent); }
+
   main {
     max-width: 1100px;
     margin: 0 auto;
@@ -189,6 +202,7 @@
 <header>
   <h1>CTO Toolkit</h1>
   <p>A working library of methods, templates, and interactive tools built over 20+ years of running and assessing enterprise technology platforms. Covers AI architecture, governance, and cost; cloud and enterprise architecture; security, risk, and resilience; M&amp;A diligence and planning; the executive relationships and decisions that everything above depends on, including capital allocation, decision rights, and the CEO and CFO relationship; and the general operating side of the CTO role, from board reporting to org design.</p>
+  <div class="caveat">This toolkit distills a much larger body of proprietary work, several thousand pages built over 20+ years of practice. AI was used to help generate some of what's published here, synthesizing that underlying material into the pages below so the broader work could be shared. The full repository, and the proprietary detail it contains, stays private.</div>
   <p class="byline"><a href="https://github.com/forbes-km/cto-toolkit">github.com/forbes-km/cto-toolkit</a></p>
 </header>
 
