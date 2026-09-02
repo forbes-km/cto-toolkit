@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seeing the System Before Changing It</title>
-<meta name="description" content="A ten-question diagnostic for running before an intervention, not after the unintended consequences show up.">
+<meta name="description" content="A ten-question diagnostic for understanding a system, team, process, or technology, well enough to anticipate how it will respond before you intervene.">
 <meta property="og:title" content="Seeing the System Before Changing It | CTO Toolkit">
-<meta property="og:description" content="Boundary, actors, incentives, feedback, delays, second-order effects, constraints, and the smallest change that produces the desired behavior.">
+<meta property="og:description" content="Boundaries, actors, incentives, feedback loops, delays, indirect effects, constraints, and measures, understood before you intervene.">
 <meta property="og:type" content="article">
 <style>
   :root {
@@ -64,6 +64,9 @@
     .matrix-table { display: block; overflow-x: auto; }
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  .phase-label { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin: 30px 0 10px; padding-top: 8px; }
+  .phase-label:first-child { margin-top: 0; }
+  .phase-label .phase-desc { font-family: var(--ui); font-weight: 400; text-transform: none; letter-spacing: normal; color: var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -71,12 +74,17 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Seeing the System Before Changing It</h1>
-  <p>A ten-question diagnostic to run before an intervention ships, not the postmortem that explains why it backfired.</p>
+  <p>A ten-question diagnostic for understanding a system before intervening in it.</p>
+  <p>A system can be a team, a process, an operating model, a software platform, a technology architecture, or the network of people, processes, technology, incentives, constraints, and dependencies that interact to produce an outcome.</p>
+  <p>The principle is simple: before changing a system, understand enough of its structure and behavior to anticipate how it's likely to respond. That doesn't mean understanding every detail, an impossible bar in a system of any real size. It means understanding the boundaries, actors, incentives, feedback loops, delays, constraints, and measures that could cause the intervention to behave differently from the plan.</p>
+  <p>This matters most when the system crosses organizational or technical boundaries. A change that appears local can alter behavior elsewhere, sometimes immediately and sometimes months later.</p>
   <div class="caveat">Pairs with <a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a> for the underlying concepts, <a href="../decision-architecture/index.html">Decision Architecture</a> for where this sits relative to everything else, and <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for where the answers should get written down.</div>
-  <p class="example-note">Worked example running through every question below: a CTO decides to shut down the company's last on-premises data center and force a full migration to a single cloud provider, on a nine-month timeline, to cut fixed cost and eliminate a hardware refresh cycle nobody wants to fund again.</p>
+  <p class="example-note">Worked example running through every question below: a CTO decides to shut down the company's last on-premises data center and force a full migration to a single cloud provider, on a nine-month timeline, to cut fixed cost and eliminate a hardware refresh cycle nobody wants to fund again. Technology, people, process, incentives, compliance, finance, and operational knowledge are all part of the system being changed here, not just the servers.</p>
 </header>
 
 <main>
+
+  <div class="phase-label">Phase 1 &middot; Understand the system <span class="phase-desc">: what it is, and what's inside it</span></div>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -132,6 +140,8 @@
     </div>
   </div>
 
+  <div class="phase-label">Phase 2 &middot; Understand the behavior <span class="phase-desc">: what drives it, and what it's already doing</span></div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">4</span>
@@ -186,20 +196,22 @@
     </div>
   </div>
 
+  <div class="phase-label">Phase 3 &middot; Understand the consequences <span class="phase-desc">: what an intervention would disturb</span></div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">7</span>
-      <h3>Identify second-order effects</h3>
-      <p>What the first intervention causes, one step removed from the thing you were trying to fix.</p>
+      <h3>Identify indirect effects</h3>
+      <p>What emerges from the intervention beyond the thing it was aimed at, whether that shows up nearby, elsewhere, or later.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>First-order effects get modeled because they're the point of the change. Second-order effects get missed because nobody's job was to look for them.</p>
+        <p>The intended effect gets modeled because it's the point of the change. Indirect effects get missed because nobody's job was to look for them, and they don't always arrive as a single, traceable step. Sometimes it's a feedback loop producing a result much later. Sometimes it's simultaneous, showing up in a part of the organization nobody thought to check.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">In the example</span>
-        <p>The original goal was cutting fixed infrastructure cost. The second-order effect: engineering velocity slows for two quarters as teams relearn deployment and debugging patterns built around a physical environment that no longer exists, which shows up on a dashboard as a delivery problem with no obvious connection to the infrastructure decision that caused it.</p>
+        <p>The original goal was cutting fixed infrastructure cost. One indirect effect: engineering velocity slows for two quarters as teams relearn deployment and debugging patterns built around a physical environment that no longer exists, which shows up on a dashboard as a delivery problem with no obvious connection to the infrastructure decision that caused it.</p>
       </div>
     </div>
   </div>
@@ -240,22 +252,25 @@
     </div>
   </div>
 
+  <div class="phase-label">Phase 4 &middot; Intervene <span class="phase-desc">: then close the loop</span></div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">10</span>
-      <h3>Design the intervention</h3>
-      <p>The smallest change that produces the system behavior you want, not the largest change that feels decisive.</p>
+      <h3>Design the intervention, then observe the response</h3>
+      <p>The intervention that changes the system behavior you want with the least unnecessary disruption, not the largest change that feels decisive.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Everything above exists to inform this one design choice. A smaller, sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them.</p>
+        <p>Everything above exists to inform this design choice. A sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them, though a real structural problem sometimes needs a real structural fix, not a smaller version of the same mistake. Either way, the intervention isn't the last step. Watch what the system does in response, and update the answers above if it's not what questions 4 through 9 predicted.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">In the example</span>
-        <p>Not "shut down the data center in nine months." A sequenced migration that closes the compliance and DR gap before the physical facility goes away, even if that means the fixed-cost savings land two quarters later than originally planned. The smaller, sequenced version costs more patience up front and considerably less unrecoverable exposure later.</p>
+        <p>Not "shut down the data center in nine months." A sequenced migration that closes the compliance and DR gap before the physical facility goes away, even if that means the fixed-cost savings land two quarters later than originally planned. The sequenced version costs more patience up front and considerably less unrecoverable exposure later. After it ships, the incentive and feedback-loop answers from questions 4 and 5 get checked against what teams are doing, not assumed correct because the migration completed.</p>
       </div>
     </div>
+    <div class="same-note">This is where the loop closes back into the rest of the toolkit: <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> records the decision, and whatever gets measured afterward feeds back into the Measurement stage of <a href="../decision-architecture/index.html">Decision Architecture</a>, which feeds back into Strategy. This diagnostic doesn't end at the decision.</div>
   </div>
 
   <div class="stage-card">
@@ -269,7 +284,7 @@
         <ul>
           <li>You can name at least two actors, beyond the team proposing the change, who will behave differently once it ships</li>
           <li>You can name the current incentive the change removes or reverses, not just the goal it's meant to achieve</li>
-          <li>You've written down a second-order effect you expect, not just the first-order one the proposal is optimized for</li>
+          <li>You've written down an indirect effect you expect, not just the intended one the proposal is optimized for</li>
           <li>The success metric measures the outcome you want, not the easiest thing to measure by the deadline</li>
           <li>You've stated which constraints are real and which are just how it's always been done, out loud, in the room</li>
         </ul>
