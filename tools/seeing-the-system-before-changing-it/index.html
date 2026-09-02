@@ -92,7 +92,7 @@
   <div class="examples-intro">
     <div class="example-card">
       <span class="env-label b">Example: operating model</span>
-      <p>Four product engineering teams each run their own on-call rotation. Leadership consolidates all four into one centralized platform on-call team, to cut the total headcount dedicated to paging duty. No infrastructure changes, this is a people-and-process system.</p>
+      <p>Four business units each run their own technology organization, its own budget, roadmap, and technology leader reporting directly to that business unit's president. Leadership centralizes all technology under one enterprise CTO, and the four business-unit technology leaders now report through the CTO instead of their business president. No infrastructure changes, this is a people-and-process system.</p>
     </div>
     <div class="example-card">
       <span class="env-label c">Example: system of systems</span>
@@ -118,7 +118,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Not "we're consolidating four on-call schedules into one." The system being changed is every engineer's undocumented, muscle-memory knowledge of their own service's failure modes, and the informal trust each product team built with the people who used to answer their pages.</p>
+        <p>Not "we're changing four reporting lines." The system being changed is every business unit president's direct influence over what used to be their own technology priorities, and the speed that came from a technology leader who sat in that president's own staff meeting every week.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -141,7 +141,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>The boundary drawn for planning was "staffing and rotation schedule." Excluded: the deep, undocumented expertise each team's engineers hold about their own service's quirks, which doesn't transfer to a generalist platform engineer just because the schedule changed.</p>
+        <p>The boundary drawn for planning was "reporting lines and the org chart." Excluded: the commitments each business unit president already made to their own board or customers based on having direct control over technology, and the unwritten, unit-specific prioritization logic no one ever documented centrally.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -164,7 +164,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Not just the platform team taking on the new paging load. Every product engineer who loses the direct link between their own code and their own sleep. Every support engineer who now escalates to a generalist instead of the person who wrote the service.</p>
+        <p>Not just the four technology leaders now reporting to the CTO. Every business unit president who loses direct authority over what used to be their own roadmap. Every business stakeholder who now routes a request through a shared enterprise queue instead of a direct relationship with an embedded technology leader.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -188,7 +188,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>The current system rewards each product team for keeping its own service reliable, since they personally get paged for it. Centralizing on-call removes that direct link and replaces it with a shared, diffused incentive that motivates no single team in particular.</p>
+        <p>The current system rewards each business unit's technology leader for being maximally responsive to their own president, since that's who evaluates them and controls their budget. Centralizing removes that direct incentive and replaces it with enterprise-level prioritization no single president controls, so responsiveness to any one unit necessarily drops even as total enterprise throughput rises.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -210,7 +210,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Amplified: platform team burnout, carrying pages for systems they didn't build and lack the context to triage quickly. Suppressed: the tight loop between "I wrote this bug" and "I got paged for it" that used to make product engineers write more careful code.</p>
+        <p>Amplified: standardization pressure, since a centralized CTO is rewarded for reducing duplicate platforms and enforcing common tooling across units. Suppressed: the fast, informal channel that let a business unit president get an urgent fix bumped to the front of the queue without a formal enterprise-wide justification.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -232,7 +232,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Pages get answered on time for the first few months, while the platform team is fresh from the transition and the original teams are still around to backstop informally. The real cost, slower resolution on unusual failures, shows up six to nine months later, once that tribal knowledge has faded.</p>
+        <p>For the first two quarters, the four technology leaders keep making the same calls they always did out of habit and relationship, so almost nothing visibly changes. The real effect, roadmap decisions increasingly reflecting enterprise tradeoffs instead of any one unit's priorities, shows up nine to twelve months later, once the centralized budget cycle runs its first full round.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -256,7 +256,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>The goal was reducing on-call headcount. One indirect effect: incident postmortems get shallower, because the platform engineer who responded can restore service but lacks the context to find root cause, so the same failure class recurs across different services without anyone connecting the pattern.</p>
+        <p>The goal was reducing duplicate technology spend across units. One indirect effect: business unit presidents who used to treat their technology leader as part of their own leadership team start making major business decisions with no technology input in the room, because that seat physically moved to a different reporting line and stopped showing up to their staff meeting.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -278,7 +278,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Real constraint: a support SLA contractually requires human response within 15 minutes, regardless of who's on call. Not real, just never questioned: the assumption that only the original team can diagnose their own service, true back when the team was small and undocumented, and not true forever.</p>
+        <p>Real constraint: one business unit operates under a regulatory requirement that mandates a separately governed technology function, that unit can't be fully centralized without a real compliance problem. Not real, just never questioned: the assumption that every unit needs its own full technology leadership stack rather than shared platform capability with unit-specific product ownership.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -300,7 +300,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>If the measure is "on-call headcount reduced," teams hit that number regardless of whether resolution time gets worse. The metric that matters is mean time to resolution held steady or improved, not headcount alone.</p>
+        <p>If the measure is "total technology headcount reduced," the cuts land hardest on whichever unit documented its context the least, not on genuine duplication. The metric that matters is duplicate capability eliminated without loss of unit-specific delivery speed, not headcount alone.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -324,7 +324,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Not consolidating all four rotations on day one. A phased handoff where each original team stays on a secondary escalation tier for two quarters, so tribal knowledge transfers before it's needed under pressure. Afterward, resolution-time data from the first incidents gets checked against the old baseline, not assumed fine because pages got answered.</p>
+        <p>Not centralizing all four units in one reorg announcement. A phased centralization starting with the shared services duplicated identically across all four units, common infrastructure, security, while each unit keeps a dedicated technology lead in their president's staff meeting for at least two more budget cycles. Afterward, check whether presidents still report technology as represented at their leadership table, not just assume the org chart change was fine because nobody complained in month one.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
