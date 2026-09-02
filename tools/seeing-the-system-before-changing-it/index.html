@@ -125,6 +125,7 @@
         <p>Not "we're adding an event bus." The system being changed is every point-to-point contract between the five systems, the implicit timing and ordering assumptions baked into each one, and every downstream report or reconciliation process that quietly depends on those assumptions holding.</p>
       </div>
     </div>
+    <div class="same-note">The technique for finding the system instead of stopping at the artifact is root cause analysis: ask why the artifact is the proposed fix, then why that answer is true, and repeat until the answer isn't itself caused by something further upstream. Toyota's 5 Whys is the simplest version of this. Stop after one round and you've defined the artifact, not the system.</div>
   </div>
 
   <div class="stage-card">
@@ -147,6 +148,7 @@
         <p>The boundary drawn for planning was "the integration layer." Excluded: the five system owners' own roadmaps, each of which assumed continued control over their point-to-point contracts, and the data warehouse's nightly batch jobs, which rely on a delivery order the event bus doesn't guarantee.</p>
       </div>
     </div>
+    <div class="same-note">The technique for drawing a boundary that doesn't quietly exclude the inconvenient part is MECE, mutually exclusive, collectively exhaustive, a McKinsey problem-structuring principle: break what's potentially in scope into pieces that don't overlap and, together, cover the whole system, then test each piece against the boundary question directly. An issue tree is the same technique on paper, one big question broken into an exhaustive, non-overlapping set of smaller ones, instead of a boundary drawn once by instinct and never checked for what it left out.</div>
   </div>
 
   <div class="stage-card">
@@ -354,7 +356,7 @@
 </main>
 
 <footer>
-  Reference only. This diagnostic surfaces the interactions worth examining before a decision, it doesn't replace the judgment call once you've examined them.
+  Reference only. This diagnostic surfaces the interactions worth examining before a decision, it doesn't replace the judgment call once you've examined them. The 5 Whys technique in card 1 originates at Toyota, credited to Sakichi Toyoda; MECE in card 2 is a McKinsey &amp; Company problem-structuring principle.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
