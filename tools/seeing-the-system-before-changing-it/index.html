@@ -20,6 +20,8 @@
     --a-soft: #E7EFF7;
     --b: #8A5A2E;
     --b-soft: #F3E9DC;
+    --c: #6B4C9A;
+    --c-soft: #EEE9F5;
     --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
     --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -30,10 +32,14 @@
   .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
   .back:hover { color: var(--accent); }
   h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
-  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
-  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 16px; border-radius: 0 6px 6px 0; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 760px; line-height: 1.5; }
+  .caveat { max-width: 760px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 16px; border-radius: 0 6px 6px 0; }
   .caveat a { color: var(--accent); }
-  .example-note { max-width: 720px; font-size: 13px; line-height: 1.55; color: var(--ink-soft); font-style: italic; margin: 0 0 32px; }
+  .examples-intro { max-width: 760px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 0 0 32px; }
+  .example-card { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: white; }
+  .example-card .env-label { margin-bottom: 6px; }
+  .example-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+  @media (max-width: 700px) { .examples-intro { grid-template-columns: 1fr; } }
   main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
   .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
   .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
@@ -42,11 +48,14 @@
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
   .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
   .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
   .stage-cell { padding: 16px 20px; }
   .stage-cell.a { border-right: 1px solid var(--line); }
+  .stage-grid.triple .stage-cell.b { border-right: 1px solid var(--line); }
   .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
   .env-label.a { background: var(--a-soft); color: var(--a); }
   .env-label.b { background: var(--b-soft); color: var(--b); }
+  .env-label.c { background: var(--c-soft); color: var(--c); }
   .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
   .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
   .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
@@ -59,8 +68,8 @@
   .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
   @media (max-width: 700px) {
-    .stage-grid { grid-template-columns: 1fr; }
-    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .stage-grid, .stage-grid.triple { grid-template-columns: 1fr; }
+    .stage-cell.a, .stage-grid.triple .stage-cell.b { border-right: none; border-bottom: 1px solid var(--line); }
     .matrix-table { display: block; overflow-x: auto; }
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
@@ -79,7 +88,17 @@
   <p>The principle is simple: before changing a system, understand enough of its structure and behavior to anticipate how it's likely to respond. That doesn't mean understanding every detail, an impossible bar in a system of any real size. It means understanding the boundaries, actors, incentives, feedback loops, delays, constraints, and measures that could cause the intervention to behave differently from the plan.</p>
   <p>This matters most when the system crosses organizational or technical boundaries. A change that appears local can alter behavior elsewhere, sometimes immediately and sometimes months later.</p>
   <div class="caveat">Pairs with <a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a> for the underlying concepts, <a href="../decision-architecture/index.html">Decision Architecture</a> for where this sits relative to everything else, and <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for where the answers should get written down.</div>
-  <p class="example-note">Worked example running through every question below: a CTO decides to shut down the company's last on-premises data center and force a full migration to a single cloud provider, on a nine-month timeline, to cut fixed cost and eliminate a hardware refresh cycle nobody wants to fund again. Technology, people, process, incentives, compliance, finance, and operational knowledge are all part of the system being changed here, not just the servers.</p>
+
+  <div class="examples-intro">
+    <div class="example-card">
+      <span class="env-label b">Example: operating model</span>
+      <p>Four product engineering teams each run their own on-call rotation. Leadership consolidates all four into one centralized platform on-call team, to cut the total headcount dedicated to paging duty. No infrastructure changes, this is a people-and-process system.</p>
+    </div>
+    <div class="example-card">
+      <span class="env-label c">Example: system of systems</span>
+      <p>Five core enterprise systems, CRM, ERP, billing, a data warehouse, and the customer-facing app, are wired together through years of ad hoc point-to-point integrations. The company replaces all of them with a central event bus, so each system publishes and subscribes to shared events instead of calling each other directly.</p>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -92,14 +111,18 @@
       <h3>Define the system</h3>
       <p>What you're changing, stated at the level where the real behavior lives, not the level where the budget line sits.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>Name the system being changed, not just the artifact being removed or added. The artifact is the visible trigger. The system is everything whose behavior depends on it.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>Not "we're consolidating four on-call schedules into one." The system being changed is every engineer's undocumented, muscle-memory knowledge of their own service's failure modes, and the informal trust each product team built with the people who used to answer their pages.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>Not "we're closing a data center." That's the artifact. The system being changed is every deployment pipeline, every disaster recovery plan, every compliance control, and every team's operational muscle memory that currently assumes on-prem is an option.</p>
+        <span class="env-label c">System of systems</span>
+        <p>Not "we're adding an event bus." The system being changed is every point-to-point contract between the five systems, the implicit timing and ordering assumptions baked into each one, and every downstream report or reconciliation process that quietly depends on those assumptions holding.</p>
       </div>
     </div>
   </div>
@@ -110,14 +133,18 @@
       <h3>Define the boundary</h3>
       <p>What you're excluding, and whether that exclusion makes the analysis easier or just makes it wrong.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>Every analysis draws a boundary around what counts as "in scope." The boundary is usually drawn to make the planning tractable, which means it's drawn to exclude exactly the inconvenient parts.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>The boundary drawn for planning was "staffing and rotation schedule." Excluded: the deep, undocumented expertise each team's engineers hold about their own service's quirks, which doesn't transfer to a generalist platform engineer just because the schedule changed.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>The boundary drawn for planning purposes was "infrastructure and cost." Excluded from that boundary: the procurement contracts written against on-prem hardware, the security certifications that referenced the physical data center by name, and the two teams whose disaster recovery runbook assumes a second physical site exists.</p>
+        <span class="env-label c">System of systems</span>
+        <p>The boundary drawn for planning was "the integration layer." Excluded: the five system owners' own roadmaps, each of which assumed continued control over their point-to-point contracts, and the data warehouse's nightly batch jobs, which rely on a delivery order the event bus doesn't guarantee.</p>
       </div>
     </div>
   </div>
@@ -128,14 +155,18 @@
       <h3>Identify actors</h3>
       <p>Who behaves differently because of the intervention, not just who signs off on it.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>Approval lists and stakeholder lists are not the same thing as the list of people whose day-to-day behavior changes. The second list is usually longer and less obvious.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>Not just the platform team taking on the new paging load. Every product engineer who loses the direct link between their own code and their own sleep. Every support engineer who now escalates to a generalist instead of the person who wrote the service.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>Not just the infrastructure team executing the migration. The security team now re-certifying controls against a cloud provider's shared responsibility model instead of a facility they controlled directly. The finance team now facing variable cloud spend instead of a depreciated fixed asset. Every engineer who used to solve a hardware problem by walking over to the rack, who now has to open a ticket with a cloud provider's support queue instead.</p>
+        <span class="env-label c">System of systems</span>
+        <p>Not just the team building the event bus. Every system owner who now has to instrument their system to publish events instead of just responding to direct calls. Every analyst whose report assumed CRM updates arrive before billing updates, an order the bus doesn't guarantee.</p>
       </div>
     </div>
   </div>
@@ -148,14 +179,18 @@
       <h3>Identify incentives</h3>
       <p>What behavior the current system rewards, which is usually not the same thing as what the org chart says it rewards.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>Every system rewards something whether anyone designed it to or not. Find the actual reward structure before assuming the intervention only changes what it was aimed at.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>The current system rewards each product team for keeping its own service reliable, since they personally get paged for it. Centralizing on-call removes that direct link and replaces it with a shared, diffused incentive that motivates no single team in particular.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>The current system quietly rewards teams for keeping workloads on-prem, because on-prem capacity is sunk cost that shows up as free to the requesting team, while cloud spend is metered and visible on their own budget line. Shutting down the data center removes that incentive structure entirely and replaces it with the opposite one, cost now visible everywhere, without anyone deciding that on purpose.</p>
+        <span class="env-label c">System of systems</span>
+        <p>The current system rewards each system owner for shipping their own roadmap fast, since integrations are point-to-point and entirely theirs to manage. An event bus rewards owners for publishing stable, well-documented event contracts, a different skill than shipping features quickly.</p>
       </div>
     </div>
   </div>
@@ -166,14 +201,18 @@
       <h3>Identify feedback loops</h3>
       <p>What gets amplified, what gets suppressed, once the change is live.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>An intervention rarely just adds a new behavior. It usually strengthens one existing loop and weakens another, and the weakened loop was often doing quiet, unglamorous work.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>Amplified: platform team burnout, carrying pages for systems they didn't build and lack the context to triage quickly. Suppressed: the tight loop between "I wrote this bug" and "I got paged for it" that used to make product engineers write more careful code.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>Amplified: cost visibility, since every team now sees its own cloud bill instead of an amortized shared facility cost, which increases pressure to right-size continuously. Suppressed: the informal cross-team favor economy that ran through "can I get rack space" conversations, which quietly handled some resource contention that now has no informal channel left.</p>
+        <span class="env-label c">System of systems</span>
+        <p>Amplified: how freely owners add new integrations, since publishing an event is cheaper than negotiating a new point-to-point contract with another team. Suppressed: the friction that used to force two teams to talk before building a new dependency between their systems.</p>
       </div>
     </div>
   </div>
@@ -184,14 +223,18 @@
       <h3>Identify delays</h3>
       <p>What consequences won't appear immediately, and how long the gap plausibly runs before they do.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>A delay is what lets a bad intervention look successful for a while. The longer the delay, the more confidently people will point to the wrong evidence when asked if it worked.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>Pages get answered on time for the first few months, while the platform team is fresh from the transition and the original teams are still around to backstop informally. The real cost, slower resolution on unusual failures, shows up six to nine months later, once that tribal knowledge has faded.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>The migration completes on schedule and looks successful for two to three quarters. The compliance re-certification gap, workloads running on interim controls that were approved as temporary and never revisited, doesn't surface until the next external audit cycle, which may be twelve to eighteen months out.</p>
+        <span class="env-label c">System of systems</span>
+        <p>The event bus goes live and every system publishes correctly on day one. The real cost shows up months later, when the warehouse's nightly reports start silently running on stale data during any week event delivery lags by even a few minutes, a failure mode the old synchronous calls never had.</p>
       </div>
     </div>
   </div>
@@ -204,14 +247,18 @@
       <h3>Identify indirect effects</h3>
       <p>What emerges from the intervention beyond the thing it was aimed at, whether that shows up nearby, elsewhere, or later.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>The intended effect gets modeled because it's the point of the change. Indirect effects get missed because nobody's job was to look for them, and they don't always arrive as a single, traceable step. Sometimes it's a feedback loop producing a result much later. Sometimes it's simultaneous, showing up in a part of the organization nobody thought to check.</p>
+        <p>The intended effect gets modeled because it's the point of the change. Indirect effects get missed because nobody's job was to look for them, and they don't always arrive as a single, traceable step. Sometimes it's a feedback loop producing a result much later. Sometimes it's simultaneous, showing up somewhere nobody thought to check.</p>
+      </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>The goal was reducing on-call headcount. One indirect effect: incident postmortems get shallower, because the platform engineer who responded can restore service but lacks the context to find root cause, so the same failure class recurs across different services without anyone connecting the pattern.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>The original goal was cutting fixed infrastructure cost. One indirect effect: engineering velocity slows for two quarters as teams relearn deployment and debugging patterns built around a physical environment that no longer exists, which shows up on a dashboard as a delivery problem with no obvious connection to the infrastructure decision that caused it.</p>
+        <span class="env-label c">System of systems</span>
+        <p>The goal was reducing integration maintenance burden. One indirect effect: the customer-facing app starts showing intermittent, hard-to-reproduce data inconsistencies, because two events that used to arrive in guaranteed order under a direct call now sometimes arrive out of order through the bus, a case nobody who built the original UI logic anticipated.</p>
       </div>
     </div>
   </div>
@@ -222,14 +269,18 @@
       <h3>Identify constraints</h3>
       <p>Which constraints are real, physics or contract or regulation, and which are organizational habits nobody has re-examined lately.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>Every plan runs into "we can't do that because X." Half of those X's are load-bearing. The other half are just how it's always been done, restated as if it were a law of physics.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>Real constraint: a support SLA contractually requires human response within 15 minutes, regardless of who's on call. Not real, just never questioned: the assumption that only the original team can diagnose their own service, true back when the team was small and undocumented, and not true forever.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>Real constraint: a specific data residency requirement tied to one regulatory jurisdiction that limits which region a subset of workloads can run in. Not a real constraint, just never questioned: the assumption that disaster recovery requires a second physical site rather than a second cloud region, an assumption baked into a runbook nobody has revised since before the company had a serious cloud footprint.</p>
+        <span class="env-label c">System of systems</span>
+        <p>Real constraint: billing's downstream finance reporting requires transactional consistency an eventually-consistent bus can't provide without extra work. Not real, just never questioned: the assumption that every integration needs to be real-time, when several of the five systems only ever needed daily reconciliation.</p>
       </div>
     </div>
   </div>
@@ -240,14 +291,18 @@
       <h3>Identify measures</h3>
       <p>What you're optimizing, and what behavior that specific metric will produce once people start managing to it.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>Whatever gets measured gets managed to, including the parts of the metric you didn't intend. State the metric, then ask what the cheapest way to hit it looks like.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>If the measure is "on-call headcount reduced," teams hit that number regardless of whether resolution time gets worse. The metric that matters is mean time to resolution held steady or improved, not headcount alone.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>If the measure is "migration completed on schedule," teams will hit the date by deferring the hard cutovers, the ones with the real compliance and DR exposure, into a "phase two" that never gets funded once the visible project closes and the budget line disappears. The metric that matters is workloads migrated with DR and compliance controls re-validated, not workloads moved.</p>
+        <span class="env-label c">System of systems</span>
+        <p>If the measure is "point-to-point integrations removed," teams migrate the easy ones first and leave the fragile, high-risk ones for later, the opposite of where the real risk lives. The metric that matters is risk-weighted fragility reduced, not integration count.</p>
       </div>
     </div>
   </div>
@@ -260,14 +315,18 @@
       <h3>Design the intervention, then observe the response</h3>
       <p>The intervention that changes the system behavior you want with the least unnecessary disruption, not the largest change that feels decisive.</p>
     </div>
-    <div class="stage-grid">
+    <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
         <p>Everything above exists to inform this design choice. A sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them, though a real structural problem sometimes needs a real structural fix, not a smaller version of the same mistake. Either way, the intervention isn't the last step. Watch what the system does in response, and update the answers above if it's not what questions 4 through 9 predicted.</p>
       </div>
+      <div class="stage-cell b">
+        <span class="env-label b">Operating model</span>
+        <p>Not consolidating all four rotations on day one. A phased handoff where each original team stays on a secondary escalation tier for two quarters, so tribal knowledge transfers before it's needed under pressure. Afterward, resolution-time data from the first incidents gets checked against the old baseline, not assumed fine because pages got answered.</p>
+      </div>
       <div class="stage-cell">
-        <span class="env-label b">In the example</span>
-        <p>Not "shut down the data center in nine months." A sequenced migration that closes the compliance and DR gap before the physical facility goes away, even if that means the fixed-cost savings land two quarters later than originally planned. The sequenced version costs more patience up front and considerably less unrecoverable exposure later. After it ships, the incentive and feedback-loop answers from questions 4 and 5 get checked against what teams are doing, not assumed correct because the migration completed.</p>
+        <span class="env-label c">System of systems</span>
+        <p>Not cutting all five systems over in one release. A phased migration starting with the two systems least sensitive to ordering, with the old point-to-point path kept running in parallel until event delivery is proven reliable under real load. Afterward, the warehouse's report accuracy gets checked against the old baseline, not assumed fine because the bus is technically delivering events.</p>
       </div>
     </div>
     <div class="same-note">This is where the loop closes back into the rest of the toolkit: <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> records the decision, and whatever gets measured afterward feeds back into the Measurement stage of <a href="../decision-architecture/index.html">Decision Architecture</a>, which feeds back into Strategy. This diagnostic doesn't end at the decision.</div>
