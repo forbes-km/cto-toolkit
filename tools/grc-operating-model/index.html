@@ -130,7 +130,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Distributed</span>
-        <p>Security owns security compliance, legal owns privacy compliance, finance owns financial controls, each close to its own domain's real context. The risk: findings don't reliably reach each other, and a genuinely cross-cutting risk, AI governance is the clearest current example, can fall through every function's boundary at once because it isn't fully owned by any of them.</p>
+        <p>Security owns security compliance, legal owns privacy compliance, finance owns financial controls, each close to its own domain's real context. The risk: findings don't reliably reach each other, and a cross-cutting risk, AI governance is the clearest current example, can fall through every function's boundary at once because it isn't fully owned by any of them.</p>
       </div>
     </div>
     <div class="same-note">Most real organizations land somewhere in between: a small central function owning the common control library and the risk register, with domain owners responsible for implementing controls within their own area against it. The failure mode is landing there by accident rather than deciding it deliberately, the same distinction <a href="../role-boundaries/index.html">Role Boundaries</a> makes for CTO, CIO, CISO, and CPO scope generally.</div>
@@ -199,7 +199,7 @@
       if (frameworks <= 1) {
         verdict = 'With only one framework, there\u2019s nothing to map controls across yet. The savings shows up starting with the second framework.';
       } else if (pctSaved < 15) {
-        verdict = 'Low overlap means a common control library won\u2019t save much here. Worth checking whether the overlap estimate is realistic, most SOC 2, ISO 27001, and NIST CSF control sets genuinely do overlap substantially, closer to the default above than to this.';
+        verdict = 'Low overlap means a common control library won\u2019t save much here. Worth checking whether the overlap estimate is realistic, most SOC 2, ISO 27001, and NIST CSF control sets do overlap substantially, closer to the default above than to this.';
       } else {
         verdict = 'This is the case for building the library instead of treating each framework as its own project: real, compounding savings that grow with every additional framework added.';
       }

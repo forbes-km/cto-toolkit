@@ -84,7 +84,7 @@
           <tr><td>99%</td><td>About 3.65 days per year</td><td>Baseline</td></tr>
           <tr><td>99.9%</td><td>About 8.7 hours per year</td><td>Meaningfully higher</td></tr>
           <tr><td>99.95%</td><td>About 4.4 hours per year</td><td>Materially higher again</td></tr>
-          <tr><td>99.99%</td><td>About 53 minutes per year</td><td>Disproportionately higher; usually justified only for genuinely revenue-critical systems</td></tr>
+          <tr><td>99.99%</td><td>About 53 minutes per year</td><td>Disproportionately higher; usually justified only for revenue-critical systems</td></tr>
         </table>
       </div>
     </div>
@@ -209,7 +209,7 @@
 
       let verdict;
       if (net > 0) {
-        verdict = 'JUSTIFIED. Expected downtime-cost avoidance exceeds the investment by $' + Math.round(net).toLocaleString() + ' a year, assuming downtime is genuinely reduced to the target tier, not just budgeted for.';
+        verdict = 'JUSTIFIED. Expected downtime-cost avoidance exceeds the investment by $' + Math.round(net).toLocaleString() + ' a year, assuming downtime is reduced to the target tier, not just budgeted for.';
       } else {
         verdict = 'NOT JUSTIFIED AT THESE NUMBERS. The investment costs $' + Math.round(Math.abs(net)).toLocaleString() + ' more than the downtime it is expected to prevent. Either the cost-per-hour figure is understated, or this tier isn\'t worth building to yet.';
       }

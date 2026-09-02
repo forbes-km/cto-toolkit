@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systems Thinking for CTOs</title>
+<meta name="description" content="The vocabulary, stocks, flows, feedback loops, delays, boundaries, and what each one changes across the six stages of Decision Architecture.">
+<meta property="og:title" content="Systems Thinking for CTOs | CTO Toolkit">
+<meta property="og:description" content="Where organizational behavior comes from, and what that changes at each stage of Decision Architecture.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Systems Thinking for CTOs</h1>
+  <p>A cost cut in one team and a reliability push in another can both be the right call on their own, and still combine into an outage neither team saw coming. The outcome came from how the two decisions connected, a connection nobody was tracking. Five terms describe connections like that well enough to work with: stocks, flows, feedback loops, delays, and boundaries. The table below defines each one, then the rest of the page applies them to the calls a CTO makes, ending with what changes at each stage of Decision Architecture.</p>
+  <div class="caveat">Applied at every stage of <a href="../decision-architecture/index.html">Decision Architecture</a>, alongside <a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a>, see card 6 for what it changes stage by stage. See <a href="../seeing-the-system-before-changing-it/index.html">Seeing the System Before Changing It</a> for the diagnostic built on this vocabulary.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1 &middot; Reference</span>
+      <h3>The vocabulary</h3>
+      <p>Five terms, used consistently through the rest of this page and in Seeing the System Before Changing It.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Term</th><th>What it is</th><th>Where it shows up</th></tr>
+          <tr><td>Stock</td><td>A quantity sitting somewhere at a point in time</td><td>Backlog size, technical debt, headcount, cash runway, open incidents</td></tr>
+          <tr><td>Flow</td><td>The rate something moves into or out of a stock</td><td>Deploy frequency, hiring rate, ticket close rate, burn rate</td></tr>
+          <tr><td>Feedback loop</td><td>A stock's own level changing the flows into or out of it</td><td>Rising technical debt slows delivery, which raises pressure to cut corners, which raises technical debt further</td></tr>
+          <tr><td>Delay</td><td>The gap between a flow changing and the stock visibly responding</td><td>A hiring freeze today doesn't register as reduced capacity for months</td></tr>
+          <tr><td>Boundary</td><td>What's included in the analysis, and what's assumed to hold constant</td><td>Scoping a migration as "infrastructure cost" leaves the compliance exposure it also creates outside the analysis</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Where the behavior comes from</h3>
+      <p>Two ways to trace the same incident back to a cause, and why they land on different fixes.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Looking at the component</span>
+        <p>Treats the thing in front of you (a service, a team, a budget line) as the unit of analysis. Optimize the component, ship the fix, move on. This is the default mode most engineering organizations run in, because it matches how work gets assigned and measured.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Looking at the system</span>
+        <p>Treats the component as one node in a structure of stocks, flows, and delays connecting it to everything around it. The question becomes what changed, and for whom, rather than whether this one number improved. A caching layer that cuts latency for one service can push load onto a shared database three other teams depend on. The component fix worked. The system got worse.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Reinforcing and balancing loops</h3>
+      <p>The two loop types that make up most feedback structures in a technology organization.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Reinforcing loops</span>
+        <p>Amplify a direction already in motion. A team ships fast, gets praised, ships faster, cuts more corners to keep the pace, ships faster still. Nothing in the loop signals a problem until the corners cut become an incident.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Balancing loops</span>
+        <p>Pull a system back toward a target, and the target is often implicit rather than stated. An SRE team paged constantly starts declining marginal features regardless of what the roadmap says, because the loop pulling toward fewer pages is stronger than the one pulling toward shipping the roadmap.</p>
+      </div>
+    </div>
+    <div class="same-note">Fixing the symptom (add more on-call engineers, buy more capacity, mandate more process) relieves the visible pressure without touching the loop generating it. The pressure returns, usually larger, because the underlying incentive stays exactly where it was and the system now has one more workaround to route around before anyone deals with the loop itself.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Local optimization vs. system optimization</h3>
+      <p>The tension that shows up in nearly every cross-team resourcing fight, usually without anyone naming it that way.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Local optimization looks like</th><th>System optimization looks like</th></tr>
+          <tr><td>Each team hits its own velocity and cost targets</td><td>The end-to-end delivery pipeline gets faster, even if one team's metrics look worse</td></tr>
+          <tr><td>A platform team ships features for its biggest internal customer first</td><td>A platform team ships the golden path that reduces total organizational toil</td></tr>
+          <tr><td>Security reviews every change with equal rigor</td><td>Security calibrates rigor to blast radius, so low-risk changes move fast and high-risk ones get real scrutiny</td></tr>
+          <tr><td>Cost is optimized service by service</td><td>Cost is optimized against the business outcome the services jointly produce</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">Every entry on the left is a reasonable thing for an individual manager to optimize for, given how they're measured. Local optimization is usually someone doing their job correctly. The system-level cost lands on someone else's dashboard, which is exactly why it goes unaddressed.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Delays and second-order effects</h3>
+      <p>The consequence that doesn't show up until long after the decision that caused it, by which point the connection is no longer obvious to anyone in the room.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Technical debt taken on during a growth push doesn't slow anything down immediately, that's the point of taking it on. The cost shows up eighteen months later as declining delivery velocity that gets diagnosed as a hiring problem or a process problem, because the original decision is long forgotten and the delay severed the visible link between cause and effect.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Worked example</span>
+        <p>A company consolidates from four cloud accounts to one to simplify billing and governance. Immediate effect: cleaner cost reporting, faster procurement. Second-order effect, visible eight months later: every team now shares the same service quotas and blast radius, so an incident in one product line throttles API limits for every other product line sharing the account. The consolidation was correct. Nobody mapped the coupling it created before shipping it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>What this changes at each stage of Decision Architecture</h3>
+      <p>The same five terms applied to the six stages, so this stays a lens on the toolkit rather than a separate track next to it.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Stage</th><th>What systems thinking adds</th></tr>
+          <tr><td><a href="../technology-strategy/index.html">1 &middot; Strategy</a></td><td>A portfolio bet is also a claim about which loops get stronger and which get starved of resource. State that claim in the business case, not just the return.</td></tr>
+          <tr><td><a href="../technology-decision-rights/index.html">2 &middot; Operating Model</a></td><td>Decision rights concentrate authority at the boundary where cross-team feedback would otherwise get lost between two owners, each accountable for their own component.</td></tr>
+          <tr><td><a href="../architecture-principles/index.html">3 &middot; Architecture</a></td><td>Coupling is a system property. Every dependency on an architecture diagram is a channel a delay or a reinforcing loop travels through, not just a technical relationship.</td></tr>
+          <tr><td><a href="../grc-operating-model/index.html">4 &middot; Governance</a></td><td>A control scoped to one component misses the system-level cost it creates. This is the same gap Governance, Risk &amp; Compliance calls a cross-cutting risk falling through every function's boundary at once.</td></tr>
+          <tr><td><a href="../engineering-culture/index.html">5 &middot; Execution</a></td><td>The team shipping fastest under a reinforcing loop, more praise, more speed, is often quietly borrowing from a balancing loop nobody's watching: on-call capacity, review rigor, onboarding time.</td></tr>
+          <tr><td><a href="../reliability-economics/index.html">6 &middot; Measurement</a></td><td>A metric improving at the component level while the system degrades is the local-optimization trap from card 4. Check what the metric is trading away before reporting it as a win.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs you're treating a system as an isolated component</h3>
+      <p>Patterns that show up when a fix is about to move a problem rather than resolve it.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>The proposal's success metric belongs to one team, but the change touches shared infrastructure, a shared budget, or a shared on-call rotation</li>
+          <li>Nobody in the room can name who behaves differently once this ships, only what changes technically</li>
+          <li>The fix addresses a symptom that has already been patched once before under a different name</li>
+          <li>The timeline for measuring success is shorter than the delay before second-order effects would plausibly show up</li>
+          <li>The org chart, rather than the dependency graph, decided who was consulted before the decision was made</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Systems thinking surfaces interactions worth examining before an intervention. It doesn't guarantee the intervention chosen afterward is correct.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seeing the System Before Changing It</title>
+<meta name="description" content="A ten-question diagnostic for running before an intervention, not after the unintended consequences show up.">
+<meta property="og:title" content="Seeing the System Before Changing It | CTO Toolkit">
+<meta property="og:description" content="Boundary, actors, incentives, feedback, delays, second-order effects, constraints, and the smallest change that produces the desired behavior.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 16px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  .example-note { max-width: 720px; font-size: 13px; line-height: 1.55; color: var(--ink-soft); font-style: italic; margin: 0 0 32px; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Seeing the System Before Changing It</h1>
+  <p>A ten-question diagnostic to run before an intervention ships, not the postmortem that explains why it backfired.</p>
+  <div class="caveat">Pairs with <a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a> for the underlying concepts, <a href="../decision-architecture/index.html">Decision Architecture</a> for where this sits relative to everything else, and <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for where the answers should get written down.</div>
+  <p class="example-note">Worked example running through every question below: a CTO decides to shut down the company's last on-premises data center and force a full migration to a single cloud provider, on a nine-month timeline, to cut fixed cost and eliminate a hardware refresh cycle nobody wants to fund again.</p>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Define the system</h3>
+      <p>What you're changing, stated at the level where the real behavior lives, not the level where the budget line sits.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>Name the system being changed, not just the artifact being removed or added. The artifact is the visible trigger. The system is everything whose behavior depends on it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>Not "we're closing a data center." That's the artifact. The system being changed is every deployment pipeline, every disaster recovery plan, every compliance control, and every team's operational muscle memory that currently assumes on-prem is an option.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Define the boundary</h3>
+      <p>What you're excluding, and whether that exclusion makes the analysis easier or just makes it wrong.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>Every analysis draws a boundary around what counts as "in scope." The boundary is usually drawn to make the planning tractable, which means it's drawn to exclude exactly the inconvenient parts.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>The boundary drawn for planning purposes was "infrastructure and cost." Excluded from that boundary: the procurement contracts written against on-prem hardware, the security certifications that referenced the physical data center by name, and the two teams whose disaster recovery runbook assumes a second physical site exists.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Identify actors</h3>
+      <p>Who behaves differently because of the intervention, not just who signs off on it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>Approval lists and stakeholder lists are not the same thing as the list of people whose day-to-day behavior changes. The second list is usually longer and less obvious.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>Not just the infrastructure team executing the migration. The security team now re-certifying controls against a cloud provider's shared responsibility model instead of a facility they controlled directly. The finance team now facing variable cloud spend instead of a depreciated fixed asset. Every engineer who used physical proximity to hardware as an informal escalation path during incidents.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Identify incentives</h3>
+      <p>What behavior the current system rewards, which is usually not the same thing as what the org chart says it rewards.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>Every system rewards something whether anyone designed it to or not. Find the actual reward structure before assuming the intervention only changes what it was aimed at.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>The current system quietly rewards teams for keeping workloads on-prem, because on-prem capacity is sunk cost that shows up as free to the requesting team, while cloud spend is metered and visible on their own budget line. Shutting down the data center removes that incentive structure entirely and replaces it with the opposite one, cost now visible everywhere, without anyone deciding that on purpose.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Identify feedback loops</h3>
+      <p>What gets amplified, what gets suppressed, once the change is live.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>An intervention rarely just adds a new behavior. It usually strengthens one existing loop and weakens another, and the weakened loop was often doing quiet, unglamorous work.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>Amplified: cost visibility, since every team now sees its own cloud bill instead of an amortized shared facility cost, which increases pressure to right-size continuously. Suppressed: the informal cross-team favor economy that ran through "can I get rack space" conversations, which quietly handled some resource contention that now has no informal channel left.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Identify delays</h3>
+      <p>What consequences won't appear immediately, and how long the gap plausibly runs before they do.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>A delay is what lets a bad intervention look successful for a while. The longer the delay, the more confidently people will point to the wrong evidence when asked if it worked.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>The migration completes on schedule and looks successful for two to three quarters. The compliance re-certification gap, workloads running on interim controls that were approved as temporary and never revisited, doesn't surface until the next external audit cycle, which may be twelve to eighteen months out.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Identify second-order effects</h3>
+      <p>What the first intervention causes, one step removed from the thing you were trying to fix.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>First-order effects get modeled because they're the point of the change. Second-order effects get missed because nobody's job was to look for them.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>The original goal was cutting fixed infrastructure cost. The second-order effect: engineering velocity slows for two quarters as teams relearn deployment and debugging patterns built around a physical environment that no longer exists, which shows up on a dashboard as a delivery problem with no obvious connection to the infrastructure decision that caused it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Identify constraints</h3>
+      <p>Which constraints are real, physics or contract or regulation, and which are organizational habits nobody has re-examined lately.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>Every plan runs into "we can't do that because X." Half of those X's are load-bearing. The other half are just how it's always been done, restated as if it were a law of physics.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>Real constraint: a specific data residency requirement tied to one regulatory jurisdiction that limits which region a subset of workloads can run in. Not a real constraint, just never questioned: the assumption that disaster recovery requires a second physical site rather than a second cloud region, an assumption baked into a runbook nobody has revised since before the company had a serious cloud footprint.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Identify measures</h3>
+      <p>What you're optimizing, and what behavior that specific metric will produce once people start managing to it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>Whatever gets measured gets managed to, including the parts of the metric you didn't intend. State the metric, then ask what the cheapest way to hit it looks like.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>If the measure is "migration completed on schedule," teams will hit the date by deferring the hard cutovers, the ones with the real compliance and DR exposure, into a "phase two" that never gets funded once the visible project closes and the budget line disappears. The metric that matters is workloads migrated with DR and compliance controls re-validated, not workloads moved.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">10</span>
+      <h3>Design the intervention</h3>
+      <p>The smallest change that produces the system behavior you want, not the largest change that feels decisive.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The question</span>
+        <p>Everything above exists to inform this one design choice. A smaller, sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">In the example</span>
+        <p>Not "shut down the data center in nine months." A sequenced migration that closes the compliance and DR gap before the physical facility goes away, even if that means the fixed-cost savings land two quarters later than originally planned. The smaller, sequenced version costs more patience up front and considerably less unrecoverable exposure later.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Before you sign off on the intervention</h3>
+      <p>Run this against any change crossing more than one team's boundary, a shared platform, or a standing risk control.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>You can name at least two actors, beyond the team proposing the change, who will behave differently once it ships</li>
+          <li>You can name the current incentive the change removes or reverses, not just the goal it's meant to achieve</li>
+          <li>You've written down a second-order effect you expect, not just the first-order one the proposal is optimized for</li>
+          <li>The success metric measures the outcome you want, not the easiest thing to measure by the deadline</li>
+          <li>You've stated which constraints are real and which are just how it's always been done, out loud, in the room</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. This diagnostic surfaces the interactions worth examining before a decision, it doesn't replace the judgment call once you've examined them.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

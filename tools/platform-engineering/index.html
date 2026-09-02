@@ -136,7 +136,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Common infrastructure needs, a new service, a database, a deployment pipeline, provisioned through self-service tooling with sane defaults, no ticket or human approval required for the standard case. Reserve human review for genuinely unusual requests, not the routine ones that make up the bulk of demand.</p>
+        <p>Common infrastructure needs, a new service, a database, a deployment pipeline, provisioned through self-service tooling with sane defaults, no ticket or human approval required for the standard case. Reserve human review for unusual requests, not the routine ones that make up the bulk of demand.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -155,7 +155,7 @@
       <div class="stage-cell">
         <p>A developer needs a new PostgreSQL database for a service. Through a developer portal (Backstage is the common open-source choice; Port is a common commercial alternative) or an internal CLI, they select a pre-approved &quot;new database&quot; template and fill in a short form: service name, environment, expected scale tier.</p>
         <p>Submitting the form triggers an infrastructure-as-code pipeline, often a Terraform module or a Crossplane composition, that provisions the database with the organization's standards already baked in: encryption at rest, standard tagging for cost allocation, automated backups, and network policy applied without the developer having to know or configure any of it themselves. The database is ready in minutes, registered automatically in the service catalog, with ownership and cost attribution wired in from the start. No ticket, no human approval, for the standard case.</p>
-        <p>The template itself is where governance lives, not in a review step. Security, compliance, and tagging requirements get encoded once, in the template, rather than re-checked by a human on every request. A genuinely unusual request, a non-standard database engine, an exception to the network policy, is exactly the case that should still route to a human, because it's the case the template wasn't built to handle safely on its own.</p>
+        <p>The template itself is where governance lives, not in a review step. Security, compliance, and tagging requirements get encoded once, in the template, rather than re-checked by a human on every request. A unusual request, a non-standard database engine, an exception to the network policy, is exactly the case that should still route to a human, because it's the case the template wasn't built to handle safely on its own.</p>
         <p style="font-size:12px; color:var(--ink-soft);">On-prem, the same template pattern applies, provisioning still runs through a pipeline with standards baked in, but the pipeline also has to check available capacity before it commits, and route to a human when the request would exceed it. That capacity check has no real equivalent in the cloud version of this example above.</p>
         <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">The database example above is self-service at the resource level, inside an environment that already exists. The same discipline applies one level up: issuing an entire new, pre-governed subscription or account to a team, Azure calls this subscription vending, AWS calls it Account Factory, GCP typically calls it a project factory. See the landing zone reference on <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> for how each provider's version works.</p>
       </div>
@@ -171,7 +171,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Design the golden path around the most common use case, make it genuinely the fastest option available, and keep it optional rather than mandatory. Teams with unusual requirements should be able to deviate, just without platform-team support for the parts they've customized away from the standard.</p>
+        <p>Design the golden path around the most common use case, make it the fastest option available, and keep it optional rather than mandatory. Teams with unusual requirements should be able to deviate, just without platform-team support for the parts they've customized away from the standard.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
