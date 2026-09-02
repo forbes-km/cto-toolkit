@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Decision Architecture</title>
-<meta name="description" content="The actual shape underneath the 50 pages: six stages, a feedback loop, and a foundational layer that doesn't fit a sequence.">
+<meta name="description" content="The actual shape underneath the 52 pages: six stages, a feedback loop, and a foundational layer that doesn't fit a sequence.">
 <meta property="og:title" content="Decision Architecture | CTO Toolkit">
 <meta property="og:description" content="Strategy, operating model, architecture, governance, execution, measurement, and why the honest version of this isn't a straight line.">
 <meta property="og:type" content="article">
@@ -48,6 +48,12 @@
     .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
   }
 
+  .layers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .layer-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+  .layer-card .layer-name { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 8px; }
+  .layer-card p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--ink); }
+  @media (max-width: 700px) { .layers { grid-template-columns: 1fr; } }
+
   .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
   .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
   .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
@@ -61,6 +67,10 @@
   .page-link.hybrid:hover { background: var(--b); color: white; }
   .hybrid-note { font-size: 11.5px; color: var(--ink-soft); font-style: italic; margin-top: 10px; }
   .same-note { padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) { .matrix-table { display: block; overflow-x: auto; } }
   footer { max-width: 1000px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
 </style>
 </head>
@@ -69,13 +79,20 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Decision Architecture</h1>
-  <p>The structure behind the 50 pages: six stages, plus the pages that don't fit a stage at all.</p>
-  <div class="philosophy">Technology leadership isn't the optimization of technology. It's the design of an organizational system that lets technology create business value while controlling risk, complexity, cost, and friction. That system has a shape: strategy sets direction, an operating model turns direction into how decisions get made, architecture and governance constrain what gets built and how, execution is where it happens, and measurement tells you whether any of it worked, then feeds back into strategy. Every page below sits somewhere in that shape, or explains why it doesn't.</div>
+  <p>The structure behind the 52 pages: six stages, plus the pages that don't fit a stage at all.</p>
+  <div class="philosophy">Technology leadership isn't the optimization of technology. It's the design of an organizational system that lets technology create business value while controlling risk, complexity, cost, and friction. That system has a shape: strategy sets direction, an operating model turns direction into how decisions get made, architecture and governance constrain what gets built and how, execution is where it happens, and measurement tells you whether any of it worked, then feeds back into strategy. The loop back to strategy follows Deming's plan-do-check-act cycle; the split between governance and operating model follows COBIT's separation of governing from managing. Every page below sits somewhere in that shape, or explains why it doesn't.</div>
 </header>
 
 <main>
 
+  <div class="layers">
+    <div class="layer-card"><span class="layer-name">Where</span><p>Six stages below: which page applies to which part of running the function, from setting direction to measuring whether it worked.</p></div>
+    <div class="layer-card"><span class="layer-name">How</span><p>PrOACT: the process for making one decision well, run inside whichever of the six stages that decision currently sits in.</p></div>
+    <div class="layer-card"><span class="layer-name">Lens</span><p>Foundational: standing habits of mind, evaluating evidence, seeing interconnection, managing key relationships, active regardless of stage or decision.</p></div>
+  </div>
+
   <div class="diagram">
+    <div class="layer-name" style="text-align: center; margin-bottom: 14px;">Where &middot; the six stages</div>
     <div class="flow">
       <div class="flow-stage"><span class="num">1</span><span class="name">Strategy</span></div>
       <div class="flow-arrow">&rarr;</div>
@@ -91,10 +108,11 @@
     </div>
     <div class="feedback-note">&#8635; Measurement feeds back into Strategy, this isn't a one-way line, it's a loop</div>
     <div class="foundation">
-      <div class="foundation-label">Foundational &middot; cross-cutting, not a stage in the sequence</div>
+      <div class="foundation-label">Lens &middot; Foundational, cross-cutting, not a stage in the sequence</div>
       <div class="foundation-items">
         <span class="foundation-item">Epistemology &amp; Research Methods</span>
         <span class="foundation-item">Systems Thinking for CTOs</span>
+        <span class="foundation-item">Seeing the System Before Changing It</span>
         <span class="foundation-item">Working with the CEO</span>
         <span class="foundation-item">Working with the CFO</span>
         <span class="foundation-item">Stakeholder Engagement</span>
@@ -119,6 +137,7 @@
         <a class="page-link" href="../business-case-calculator/index.html">Business Case Calculator</a>
         <a class="page-link" href="../vendor-evaluation/index.html">Vendor Evaluation</a>
         <a class="page-link" href="../technology-diligence-map/index.html">Technology Diligence</a>
+        <a class="page-link" href="../technology-portfolio-management/index.html">Technology Portfolio Management</a>
         <a class="page-link hybrid" href="../technology-risk-appetite/index.html">Technology Risk Appetite</a>
         <a class="page-link hybrid" href="../technology-capital-allocation/index.html">Technology Capital Allocation</a>
       </div>
@@ -184,6 +203,7 @@
         <a class="page-link hybrid" href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a>
         <a class="page-link hybrid" href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a>
         <a class="page-link hybrid" href="../architecture-review-board/index.html">Architecture Review Board</a>
+        <a class="page-link hybrid" href="../board-reporting/index.html">Board Reporting</a>
       </div>
     </div>
   </div>
@@ -202,6 +222,7 @@
         <a class="page-link" href="../ai-engineering-operating-model/index.html">AI and the Engineering Operating Model</a>
         <a class="page-link" href="../incident-response/index.html">Incident Response</a>
         <a class="page-link" href="../modernization-execution/index.html">Legacy Modernization Execution</a>
+        <a class="page-link hybrid" href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a>
         <a class="page-link hybrid" href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a>
         <a class="page-link hybrid" href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a>
       </div>
@@ -228,7 +249,28 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Foundational &middot; not a stage</span>
+      <span class="stage-num">How &middot; PrOACT</span>
+      <h3>Making one decision well</h3>
+      <p>Hammond, Keeney, and Raiffa's PrOACT framework (<em>Smart Choices</em>, 1999, building on Howard Raiffa's earlier decision analysis work) is the standard sequence, run inside whichever of the six stages the decision currently sits in.</p>
+    </div>
+    <div class="stage-body">
+      <table class="matrix-table">
+        <tr><th>PrOACT step</th><th>What it looks like</th><th>Where it lives here</th></tr>
+        <tr><td>Frame the Problem</td><td>State what's being decided, and what's explicitly out of scope</td><td>Strategy, <a href="../technology-strategy/index.html">Technology Strategy</a></td></tr>
+        <tr><td>Objectives</td><td>State what you're optimizing for before you look at options, so the options don't retroactively define the goal</td><td>Strategy, <a href="../business-case-calculator/index.html">Business Case Calculator</a></td></tr>
+        <tr><td>Alternatives</td><td>Real options on the table, not the one you already prefer plus a straw man</td><td>Governance, <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
+        <tr><td>Consequences</td><td>Confidence-graded evidence for what each alternative produces</td><td>Foundational, <a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a></td></tr>
+        <tr><td>Tradeoffs</td><td>Explicit scoring against the same criteria, so the tradeoff is visible instead of hidden inside a gut call</td><td>Strategy, <a href="../vendor-evaluation/index.html">Vendor Evaluation</a></td></tr>
+        <tr><td>Choose</td><td>A named, accountable owner makes the call</td><td>Operating Model, <a href="../technology-decision-rights/index.html">Technology Decision Rights</a></td></tr>
+        <tr><td>Implement and monitor</td><td>Ship it, then check whether it produced what the objectives step said it should</td><td>Execution and Measurement, <a href="../engineering-metrics/index.html">Engineering Metrics</a></td></tr>
+      </table>
+    </div>
+    <div class="same-note">The six stages above answer where a decision's supporting content lives. PrOACT answers how you make any one decision well, regardless of which stage it's in. A CTO doing both, using the stage map to find the right page and the PrOACT sequence to reason through the call, is the difference this page exists to make explicit.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Lens &middot; Foundational</span>
       <h3>What doesn't fit the sequence, and why forcing it would be dishonest</h3>
       <p>Six pages that aren't a step you pass through once. They're either underneath every stage or running continuously alongside all of them.</p>
     </div>
@@ -248,8 +290,8 @@
 </main>
 
 <footer>
-  Reference only. This mapping describes how the toolkit's own content relates, not a universal framework every organization should adopt as-is.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. This mapping describes how the toolkit's own content relates, not a universal framework every organization should adopt as-is. The strategy-to-measurement feedback loop draws on W. Edwards Deming's plan-do-check-act cycle; the governance/operating-model split draws on ISACA's COBIT framework; the decision-process table draws on Hammond, Keeney, and Raiffa, <em>Smart Choices: A Practical Guide to Making Better Decisions</em> (Harvard Business School Press, 1999).
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>
