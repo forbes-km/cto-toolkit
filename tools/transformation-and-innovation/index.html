@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformation and Innovation</title>
+<meta name="description" content="Two different problems that get called the same thing. Innovation is a selection problem, transformation is an adoption problem, and most failed initiatives are solving the wrong one.">
+<meta property="og:title" content="Transformation and Innovation | CTO Toolkit">
+<meta property="og:description" content="Real frameworks for each, and a diagnostic for which one your organization has.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 760px; line-height: 1.5; }
+  .caveat { max-width: 760px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Transformation and Innovation</h1>
+  <p>Two words that get used as synonyms for "change" and answer two different questions. Innovation asks what should exist that doesn't yet, a product, a process, a business model, and it's fundamentally a selection problem: generate enough real options, then kill the bad ones fast and cheap before they're expensive. Transformation asks how an entire organization starts operating differently, and it's fundamentally an adoption problem: the hard part was never deciding what to do, it's getting people and systems to do it differently and keep doing it after the initiative team moves on.</p>
+  <p>Most people who conflate the two are only doing one of them, usually innovation, a pilot, a proof of concept, and calling it transformation because the word sounds bigger.</p>
+  <div class="caveat">Pairs with <a href="../innovation-portfolio/index.html">Innovation Portfolio</a> for where tournament-sourced bets get funded and killed, <a href="../seeing-the-system-before-changing-it/index.html">Understanding the System Before Changing It</a> for diagnosing what a transformation would disturb, and <a href="../decision-architecture/index.html">Decision Architecture</a> for where this sits relative to everything else.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1 &middot; Reference</span>
+      <h3>Two different problems, one blurred word</h3>
+      <p>The distinction that most conversations about "driving change" skip past.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th></th><th>Innovation</th><th>Transformation</th></tr>
+          <tr><td>Core question</td><td>What should exist that doesn't yet?</td><td>How does the whole organization work differently?</td></tr>
+          <tr><td>Fundamentally a problem of</td><td>Selection, generating enough real options and killing the weak ones early</td><td>Adoption, getting people and systems to change behavior and keep it changed</td></tr>
+          <tr><td>Where it fails</td><td>Too few real alternatives, or nothing ever gets killed</td><td>The kickoff gets funded, reinforcement six months later doesn't</td></tr>
+          <tr><td>Symptom when it's missing</td><td>The org executes reliably but keeps optimizing the same things the same way</td><td>The org has good pilots that never make it past the flagship site</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">Innovation without transformation produces pilots that never scale. Transformation without innovation produces the same organization, just faster and more expensive to run. Neither failure looks like the other, which is why treating them as one problem usually means solving neither.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Diagnose which one you have</h3>
+      <p>Before fixing anything, find out which problem is real, because the fixes don't transfer.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">You have an innovation problem if</span>
+        <p>The org executes reliably, ships on schedule, runs a tight operation, and keeps optimizing the same processes the same way. Nobody's proposing anything different, or the ideas that do surface never get a real evaluation against a kill criterion. More change management won't fix this. The gap is upstream, not enough real options ever reach a decision.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">You have a transformation problem if</span>
+        <p>The org has plenty of good ideas, pilots that work, proofs of concept that prove the concept, and none of them make it past the team or facility that built them. More AI pilots won't fix this. The gap is downstream, adoption, incentives, and the operating model never got built to carry a working idea past its origin point.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The innovation stack: generating and selecting</h3>
+      <p>Three real, citable pieces, not an invented framework, for the selection problem.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Concept</th><th>What it does</th><th>CTO example</th></tr>
+          <tr><td>Jobs to Be Done<br><span style="color:var(--ink-soft); font-weight:400;">Clayton Christensen, <em>Competing Against Luck</em>, 2016</span></td><td>Before generating options, name the job the user is hiring a solution to do. Prevents building impressive things nobody needed.</td><td>A platform team ships a slicker internal dashboard nobody asked for, while the job engineers were hiring the old one to do, tell me fast whether my deploy is safe, went unaddressed</td></tr>
+          <tr><td>Innovation Tournaments<br><span style="color:var(--ink-soft); font-weight:400;">Terwiesch &amp; Ulrich, <em>Innovation Tournaments</em>, 2009</span></td><td>Treat innovation as a funnel: generate far more ideas than you need, then kill most of them fast and cheap, before they're expensive. The discipline is in the killing, not the generating. See <a href="../innovation-portfolio/index.html">Innovation Portfolio</a> for how this runs as a standing quarterly mechanism.</td><td>A quarterly open call where any engineer pitches against a fixed rubric, horizon fit, a kill criterion, a funding ask, judged by a panel outside the pitcher's own chain</td></tr>
+          <tr><td>Ten Types of Innovation<br><span style="color:var(--ink-soft); font-weight:400;">Keeley et al. (Doblin/Deloitte), 2013</span></td><td>Innovation isn't only new product features. It spans configuration (how you're organized, your business model), the offering itself, and experience (how people interact with it).</td><td>A hospital IT org whose entire "innovation" pipeline is AI features misses that a new referral or scheduling workflow can be just as innovative, and often ships faster</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>The transformation stack: adoption at scale</h3>
+      <p>Three real, citable pieces for the adoption problem, which is the one most technical leaders have the least formal training in.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Concept</th><th>What it does</th><th>CTO example</th></tr>
+          <tr><td>Kotter's 8-Step Model<br><span style="color:var(--ink-soft); font-weight:400;">John Kotter, <em>Leading Change</em>, 1996</span></td><td>The sequence: urgency, coalition, vision, communication, removing obstacles, short-term wins, consolidating gains, anchoring in culture. Most failed transformations skip straight to communicating the vision and never build the coalition or clear the obstacles.</td><td>A platform migration gets a company-wide announcement and a town hall, but no coalition of respected engineers vouching for it inside each team, and adoption stalls exactly where the announcement didn't reach</td></tr>
+          <tr><td>Dual Operating System<br><span style="color:var(--ink-soft); font-weight:400;">John Kotter, <em>Accelerate</em>, 2014</span></td><td>You don't transform an organization by restructuring the org chart. Run a second, network-like structure alongside the hierarchy, specifically for the change effort, because the hierarchy is built for reliable operations, not for change.</td><td>Staffing a transformation initiative with the same reporting lines and cadence as steady-state IT operations, then wondering why it moves at steady-state speed</td></tr>
+          <tr><td>ADKAR<br><span style="color:var(--ink-soft); font-weight:400;">Jeff Hiatt / Prosci, 2006</span></td><td>The individual mechanics of adoption: Awareness, Desire, Knowledge, Ability, Reinforcement. Explains exactly where adoption dies, usually Desire or Reinforcement, rarely Awareness, since most initiatives over-invest in the kickoff announcement and under-invest in what happens six months later.</td><td>A new clinical documentation tool gets a full rollout announcement (Awareness, done well) and training (Knowledge, done well), but no reinforcement once the project team disbands, so usage quietly reverts within two quarters</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">Awareness and Knowledge are the easy, visible parts of a rollout, an announcement and a training session. Desire and Reinforcement are the parts that determine whether the change survives contact with a busy person's existing habits, and they're the parts almost every initiative underfunds.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Where this fits in the toolkit</h3>
+      <p>This page is the adoption layer the rest of the toolkit didn't have a name for.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Page</th><th>What it answers</th></tr>
+          <tr><td><a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a></td><td>What structure is producing the behavior you're trying to change</td></tr>
+          <tr><td><a href="../seeing-the-system-before-changing-it/index.html">Understanding the System Before Changing It</a></td><td>What a specific intervention would disturb before you make it</td></tr>
+          <tr><td><a href="../decision-architecture/index.html">Decision Architecture</a></td><td>How the decision to act gets made</td></tr>
+          <tr><td>Transformation and Innovation, this page</td><td>Whether what you're trying to do is generate the right option or get an organization to adopt one</td></tr>
+          <tr><td><a href="../innovation-portfolio/index.html">Innovation Portfolio</a></td><td>Where a sourced, tournament-selected bet gets funded, staged, and killed if it doesn't earn the next stage</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Before you call it a transformation</h3>
+      <p>Run this before staffing an initiative as a transformation. If most of these are unanswered, it's still an innovation effort, and that's fine, just don't fund or staff it like the bigger thing.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>You can name the coalition, the specific people whose credibility will carry this past their own team, not just the executive sponsor who announced it</li>
+          <li>You have a reinforcement plan for six months after launch, not just a training plan for week one</li>
+          <li>The initiative is staffed and run differently from steady-state operations, not folded into the normal reporting cadence</li>
+          <li>You know which ADKAR stage past pilots have died at, and it's not still Awareness</li>
+          <li>You've distinguished whether the real gap is generating better options or getting existing good ones adopted, and you're not applying an innovation fix to an adoption problem or the reverse</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. These frameworks describe patterns that show up consistently across innovation and transformation efforts; they don't guarantee any specific initiative succeeds. Sources: Clayton Christensen, <em>Competing Against Luck</em> (Harper Business, 2016); Christian Terwiesch and Karl Ulrich, <em>Innovation Tournaments</em> (Harvard Business Press, 2009); Larry Keeley et al., <em>Ten Types of Innovation</em> (Wiley, 2013); John Kotter, <em>Leading Change</em> (Harvard Business School Press, 1996) and <em>Accelerate</em> (Harvard Business Review Press, 2014); Jeff Hiatt, <em>ADKAR</em> (Prosci Learning Center Publications, 2006).
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>
