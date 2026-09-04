@@ -178,6 +178,80 @@
       </ol>
     </div></div>
   </div>
+
+
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Diagram</span>
+      <h2>Command in, events out</h2>
+      <p>The first combination in the list above, drawn. It is the shape most estates should converge on, and the dashed brown line is the rule that is broken most often.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
+<svg viewBox="0 0 880 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="int-title" style="width:100%;height:auto;display:block;max-width:880px;margin:0 auto;">
+<defs>
+  <marker id="int-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker>
+  <marker id="int-arrowa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+</defs>
+<title id="int-title">Command in, events out: the integration combination most estates should converge on</title>
+<rect x="30" y="130" width="130" height="70" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="95.0" y="161.2" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Client</text>
+<text x="95.0" y="177.2" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">web, mobile, partner</text>
+<rect x="200" y="130" width="130" height="70" rx="8" fill="var(--a-soft)" stroke="var(--a)" stroke-width="1"/>
+<text x="265.0" y="161.2" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Gateway</text>
+<text x="265.0" y="177.2" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">auth, rate limit, routing</text>
+<line x1="160" y1="165" x2="198" y2="165" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<text x="166" y="156" text-anchor="start" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">REST</text>
+<rect x="370" y="130" width="150" height="70" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+<text x="445.0" y="161.2" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service A</text>
+<text x="445.0" y="177.2" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">accepts commands</text>
+<line x1="330" y1="165" x2="368" y2="165" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<text x="332" y="156" text-anchor="start" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">command</text>
+<rect x="370" y="240" width="150" height="56" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="445.0" y="264.3" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Own database</text>
+<text x="445.0" y="279.8" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">plus an outbox table</text>
+<line x1="445" y1="200" x2="445" y2="238" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<text x="452" y="224" text-anchor="start" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">one local transaction</text>
+<rect x="560" y="240" width="130" height="56" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="625.0" y="264.3" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Outbox relay</text>
+<text x="625.0" y="279.8" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">monitored for lag</text>
+<line x1="520" y1="268" x2="558" y2="268" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<rect x="560" y="130" width="130" height="70" rx="8" fill="var(--b-soft)" stroke="var(--b)" stroke-width="1"/>
+<text x="625.0" y="161.2" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Event stream</text>
+<text x="625.0" y="177.2" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">published schema</text>
+<line x1="625" y1="238" x2="625" y2="202" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<text x="632" y="226" text-anchor="start" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">domain event</text>
+<rect x="730" y="40" width="130" height="56" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+<text x="795.0" y="64.3" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service B</text>
+<text x="795.0" y="79.8" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">reacts, idempotent</text>
+<rect x="730" y="130" width="130" height="56" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+<text x="795.0" y="154.3" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service C</text>
+<text x="795.0" y="169.8" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">reacts, idempotent</text>
+<rect x="730" y="220" width="130" height="48" rx="8" fill="var(--paper)" stroke="var(--line)" stroke-width="1"/>
+<text x="795.0" y="240.3" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Dead-letter queue</text>
+<text x="795.0" y="255.3" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">owned, alerted</text>
+<rect x="730" y="300" width="130" height="56" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="795.0" y="316.5" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Lakehouse</text>
+<text x="795.0" y="332.0" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">analytics only, never</text>
+<text x="795.0" y="347.5" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">back into operations</text>
+<path d="M690,155 C710,155 710,68 728,68" fill="none" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<line x1="690" y1="165" x2="728" y2="158" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<path d="M690,175 C710,175 710,328 728,328" fill="none" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)"/>
+<line x1="795" y1="186" x2="795" y2="218" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#int-arrow)" stroke-dasharray="4 3"/>
+<text x="788" y="210" text-anchor="end" font-size="9.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">failed after retries</text>
+<path d="M745,186 C745,335 600,335 522,292" fill="none" stroke="var(--b)" stroke-width="1.3" stroke-dasharray="3 3"/>
+<line x1="640" y1="306" x2="656" y2="322" stroke="var(--b)" stroke-width="2"/><line x1="656" y1="306" x2="640" y2="322" stroke="var(--b)" stroke-width="2"/>
+<text x="30" y="58" text-anchor="start" font-size="10.5" fill="var(--b)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service C never reads Service A's database; the contract is the only path.</text>
+<text x="30" y="74" text-anchor="start" font-size="10.5" fill="var(--b)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service A never calls B or C synchronously to finish a write.</text>
+<rect x="30" y="330" width="670" height="76" rx="8" fill="var(--paper)" stroke="var(--line)"/>
+<text x="46" y="352" text-anchor="start" font-size="10.5" fill="var(--accent)" font-weight="600" letter-spacing="0.05em" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">THE RULE</text>
+<text x="46" y="372" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Synchronous in for the answer the caller needs now. Asynchronous out for every fact others react to.</text>
+<text x="46" y="388" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Consumers are added without touching the producer, and every consumer is idempotent.</text>
+</svg>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">The outbox is what makes the event reliable: it is written in the same transaction as the data, and the relay publishes it afterwards. The lakehouse consumes the same stream but never feeds an operational decision back synchronously.</p>
+    </div></div>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Governance</span>
