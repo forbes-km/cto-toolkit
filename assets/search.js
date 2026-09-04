@@ -13,7 +13,8 @@
   // ---------- styles (scoped, matches site's paper/ink/accent palette) ----------
   var style = document.createElement("style");
   style.textContent = [
-    "#cto-search-root{max-width:720px;margin:0 0 28px;position:relative;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}",
+    "#cto-search-root{max-width:1100px;margin:0 auto 28px;padding:0 32px;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}",
+    ".cto-search-inner{max-width:720px;position:relative;}",
     ".cto-search-box{display:flex;align-items:center;gap:8px;border:1px solid var(--line,#DCDAD2);background:#fff;border-radius:9px;padding:10px 14px;transition:border-color .12s ease;}",
     ".cto-search-box:focus-within{border-color:var(--accent,#2E5E4E);}",
     ".cto-search-box svg{flex:0 0 auto;color:var(--ink-soft,#52564F);}",
@@ -39,12 +40,14 @@
 
   // ---------- markup ----------
   mount.innerHTML =
-    '<div class="cto-search-box">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
-      '<input class="cto-search-input" type="text" placeholder="Search all 60+ pages\u2026 (e.g. \u201cbreak-even\u201d, \u201czero trust\u201d, \u201cRACI\u201d)" autocomplete="off" spellcheck="false">' +
-      '<span class="cto-search-kbd">/</span>' +
-    '</div>' +
-    '<div class="cto-search-results"></div>';
+    '<div class="cto-search-inner">' +
+      '<div class="cto-search-box">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
+        '<input class="cto-search-input" type="text" placeholder="Search all 60+ pages\u2026 (e.g. \u201cbreak-even\u201d, \u201czero trust\u201d, \u201cRACI\u201d)" autocomplete="off" spellcheck="false">' +
+        '<span class="cto-search-kbd">/</span>' +
+      '</div>' +
+      '<div class="cto-search-results"></div>' +
+    '</div>';
 
   var input = mount.querySelector(".cto-search-input");
   var resultsEl = mount.querySelector(".cto-search-results");
