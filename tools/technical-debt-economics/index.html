@@ -38,8 +38,8 @@
   .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
   .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
-  .stage-grid.single { grid-template-columns: 1fr; }
-  .stage-cell { padding: 16px 20px; }
+  .stage-grid.single { grid-template-columns: minmax(0, 1fr); }
+  .stage-cell { padding: 16px 20px; min-width: 0; }
   .stage-cell.a { border-right: 1px solid var(--line); }
   .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
   .env-label.a { background: var(--a-soft); color: var(--a); }
@@ -114,7 +114,7 @@
       <div class="field"><span>Loaded engineering cost per hour ($)</span><input type="number" id="td-rate" value="120"></div>
       <div class="field"><span>Annual remediation budget ($)</span><input type="number" id="td-budget" value="600000"></div>
       <div class="field"><span>Planning horizon (years)</span><input type="number" id="td-years" value="3" min="1" max="6"></div>
-      <div style="overflow-x:auto; margin-top:12px;">
+      <div style="overflow-x:auto; max-width:100%; margin-top:12px;">
       <table class="matrix-table" id="td-table">
         <tr><th>Item</th><th>Hours / month lost to it</th><th>Hard carry cost / yr ($)</th><th>Event probability / yr (%)</th><th>Event cost ($)</th><th>Remediation hours</th><th>Remediation hard cost ($)</th></tr>
       </table>
@@ -202,8 +202,8 @@
   ];
   for(var i=0;i<N;i++){
     var tr=document.createElement('tr');
-    tr.innerHTML='<td><input type="text" id="td-n'+i+'" placeholder="Item '+(i+1)+'" style="width:220px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>'+
-      ['h','c','p','e','rh','rc'].map(function(k){return '<td><input type="number" id="td-'+k+i+'" style="width:110px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>';}).join('');
+    tr.innerHTML='<td><input type="text" id="td-n'+i+'" placeholder="Item '+(i+1)+'" style="width:190px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>'+
+      ['h','c','p','e','rh','rc'].map(function(k){return '<td><input type="number" id="td-'+k+i+'" style="width:88px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>';}).join('');
     tbl.appendChild(tr);
   }
   function v(id){var e=document.getElementById(id);var x=parseFloat(e.value);return isNaN(x)?0:x;}
@@ -245,13 +245,13 @@
     var totalNothing=items.reduce(function(s,i){return s+i.nothing;},0);
     var totalRem=items.reduce(function(s,i){return s+i.rem;},0);
     var h='<p><b>Annual cost of doing nothing across the portfolio: '+fmt(totalNothing)+'</b> against a one-time remediation cost of '+fmt(totalRem)+'. Cost paid over the '+years+'-year horizon on items not yet remediated: '+fmt(carried)+'.</p>';
-    h+='<table class="matrix-table" style="margin-top:8px;"><tr><th>Rank</th><th>Item</th><th>Carry / yr</th><th>Risk / yr</th><th>Do nothing / yr</th><th>Remediate</th><th>Payback</th><th>Fund in</th></tr>';
+    h+='<div style="overflow-x:auto;max-width:100%;"><table class="matrix-table" style="margin-top:8px;"><tr><th>Rank</th><th>Item</th><th>Carry / yr</th><th>Risk / yr</th><th>Do nothing / yr</th><th>Remediate</th><th>Payback</th><th>Fund in</th></tr>';
     items.forEach(function(it,i){
       var pb=isFinite(it.payback)?(it.payback<1?(Math.round(it.payback*12)+' months'):(it.payback.toFixed(1)+' years')):'n/a';
       var fy=it.year?('Year '+it.year):'<span style="color:var(--b)">Unfunded in horizon</span>';
       h+='<tr><td>'+(i+1)+'</td><td>'+it.name.replace(/</g,'&lt;')+'</td><td>'+fmt(it.carry)+'</td><td>'+fmt(it.risk)+'</td><td>'+fmt(it.nothing)+'</td><td>'+fmt(it.rem)+'</td><td>'+pb+'</td><td>'+fy+'</td></tr>';
     });
-    h+='</table>';
+    h+='</table></div>';
     var unf=items.filter(function(i){return !i.year;});
     if(unf.length){var un=unf.reduce(function(s,i){return s+i.nothing;},0);h+='<p style="margin-top:10px;">Items unfunded within the horizon carry '+fmt(un)+' per year. That number belongs in the board report as accepted risk, or in the next budget conversation as the case for a larger allocation.</p>';}
     out.style.display='block';out.innerHTML=h;
