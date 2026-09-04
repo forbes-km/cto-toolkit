@@ -70,7 +70,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Data Strategy</h1>
-  <p>Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.</p>
+  <p>Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, metadata and lineage, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.</p>
   <div class="caveat">General data strategy patterns, not a specific technology recommendation. The right architecture and operating model depend on organizational structure and data maturity more than on which pattern is currently trending.</div>
 </header>
 
@@ -82,15 +82,15 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Warehouse, lakehouse, or mesh</h3>
-      <p>The architectural choice most data strategy conversations start with, and only one piece of the actual strategy.</p>
+      <p>The architectural choice most data strategy conversations start with, one of eleven topics on this page, not the whole strategy. Definitions first, then the tradeoff.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Pattern</th><th>Fits when</th><th>Struggles when</th></tr>
-          <tr><td>Data warehouse</td><td>Structured, well-understood reporting needs, a single team can reasonably own data quality centrally</td><td>Data sources are highly heterogeneous or domain ownership needs to be distributed</td></tr>
-          <tr><td>Data lakehouse</td><td>Mixed structured and unstructured data, need for both BI and ML workloads on the same underlying data</td><td>Organizational discipline around schema and quality is weak; a lakehouse without governance becomes a swamp fast</td></tr>
-          <tr><td>Data mesh</td><td>Large organization with independent domains, each with the capacity to own their own data product</td><td>Applied to an organization too small to staff domain-level data ownership; the coordination overhead exceeds the benefit</td></tr>
+          <tr><th>Pattern</th><th>What it is</th><th>Fits when</th><th>Struggles when</th></tr>
+          <tr><td>Data warehouse</td><td>A central repository holding structured, pre-cleaned data, modeled and indexed for fast BI and reporting queries.</td><td>Structured, well-understood reporting needs, a single team can reasonably own data quality centrally</td><td>Data sources are highly heterogeneous or domain ownership needs to be distributed</td></tr>
+          <tr><td>Data lakehouse</td><td>Cheap, flexible storage for raw data in any format, with a warehouse-style query and schema layer built on top of it.</td><td>Mixed structured and unstructured data, need for both BI and ML workloads on the same underlying data</td><td>Organizational discipline around schema and quality is weak; a lakehouse without governance becomes a swamp fast</td></tr>
+          <tr><td>Data mesh</td><td>A decentralized operating model: each business domain owns, publishes, and is accountable for its own data as a product, instead of one central team owning all of it.</td><td>Large organization with independent domains, each with the capacity to own their own data product</td><td>Applied to an organization too small to staff domain-level data ownership; the coordination overhead exceeds the benefit</td></tr>
         </table>
       </div>
     </div>
@@ -172,6 +172,25 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
+      <h3>Metadata, catalog, and lineage</h3>
+      <p>The layer that answers "what data do we have, what does it mean, and what breaks if I change it," consistently the weakest layer in organizations that otherwise have their data strategy in order.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why it's easy to skip</span>
+        <p>A catalog and lineage graph don't show up in a quarterly roadmap the way a new pipeline or dashboard does, and the pain of not having them is diffuse: a slow, five-hop manual trace when a report breaks, a schema change shipped without knowing which six downstream jobs depend on it, an analyst who can't tell if a dataset is still owned or safe to trust. None of that shows up as a single dramatic incident, so it stays permanently below the cutline.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it actually buys you</span>
+        <p>A catalog makes data discoverable and answers who owns it and whether it's still trustworthy. Lineage traces the path from source system to final dashboard or model, so a schema change or a broken pipeline can be traced to every downstream consumer in minutes instead of hours of tribal-knowledge archaeology. Both compound directly into the migration work further down this page, you can't safely run old and new in parallel if you don't know what depends on what, and into the AI grounding problem below, an agent that can't see schema, lineage, and ownership will guess.</p>
+      </div>
+    </div>
+    <div class="same-note">Buy here almost without exception, this is the same mature, competitive market referenced in Build versus buy below. The strategic decision isn't build-versus-buy, it's making metadata active from day one (tagged, enforced, and surfaced where people already work) rather than a static wiki page that's stale within a quarter.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
       <h3>Data quality as an AI prerequisite</h3>
       <p>Why this page and the <a href="../ai-governance-map/index.html">AI Governance Map</a>'s data foundation layer are describing the same underlying problem from two different altitudes.</p>
     </div>
@@ -189,7 +208,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">6</span>
+      <span class="stage-num">7</span>
       <h3>Real-time versus batch, as a strategic decision</h3>
       <p>An implementation detail on the surface, and an economic decision underneath, the same shape as the argument on <a href="../reliability-economics/index.html">Reliability as an Economic Decision</a>, applied to data freshness instead of system uptime.</p>
     </div>
@@ -207,7 +226,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">7</span>
+      <span class="stage-num">8</span>
       <h3>Build versus buy for the data stack</h3>
       <p>See <a href="../build-vs-buy/index.html">Build vs Buy</a> for the general framework. Data tooling is one of the clearest places it applies.</p>
     </div>
@@ -225,7 +244,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">8</span>
+      <span class="stage-num">9</span>
       <h3>Migrating between patterns without a rewrite</h3>
       <p>Almost no organization starts on the right pattern and stays there forever. How the migration happens matters as much as which pattern is the eventual target.</p>
     </div>
@@ -243,7 +262,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">9</span>
+      <span class="stage-num">10</span>
       <h3>Data contracts, made concrete</h3>
       <p>&quot;Data contract&quot; gets used loosely. A contract that doesn't specify these things isn't one.</p>
     </div>
@@ -261,7 +280,7 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">10</span>
+      <span class="stage-num">11</span>
       <h3>Data as a product to external customers</h3>
       <p>A question worth asking explicitly, even for organizations that will answer no.</p>
     </div>
