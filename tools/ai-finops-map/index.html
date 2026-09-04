@@ -106,6 +106,9 @@
   <div class="caveat">Cost modeling here is directional, not a substitute for building your own model with your actual volume, region, and negotiated pricing. Vendor pricing changes frequently; verify current rates before using specific numbers in a budget decision.</div>
 </header>
 
+<div id="cto-search-root"></div>
+
+
 <main>
 
   <div class="provider-toggle" id="provider-toggle">
@@ -413,5 +416,7 @@
     document.querySelectorAll('.provider-content').forEach(c => c.classList.toggle('active', c.dataset.provider === provider));
   });
 </script>
+<script>window.CTO_BASE = "../../";</script>
+<script src="../../assets/search.js"></script>
 </body>
 </html>

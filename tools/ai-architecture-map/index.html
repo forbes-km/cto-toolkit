@@ -245,6 +245,9 @@
   <div class="caveat">Not every stage differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere; where that's true, it's called out as a single statement rather than padded into five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
 </header>
 
+<div id="cto-search-root"></div>
+
+
 <main>
 
   <div class="stage-card">
@@ -730,5 +733,7 @@
     document.querySelectorAll('.provider-content').forEach(c => c.classList.toggle('active', c.dataset.provider === provider));
   });
 </script>
+<script>window.CTO_BASE = "../../";</script>
+<script src="../../assets/search.js"></script>
 </body>
 </html>
