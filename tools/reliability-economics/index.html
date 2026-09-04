@@ -225,6 +225,64 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>Tiering the estate, not the system</h3>
+      <p>The calculator above evaluates one system. The decision that actually saves money is made once, across the estate: which systems get which tier, and why.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table" style="margin-bottom:0;">
+        <tr><th>Tier</th><th>Typical target</th><th>What qualifies</th><th>What the tier buys</th></tr>
+        <tr><td>Tier 1: revenue and safety critical</td><td>99.95% to 99.99%</td><td>Checkout, order capture, clinical or safety systems, anything where an hour of outage is a board-level event</td><td>Multi-zone or multi-region, automated failover tested quarterly, 24x7 on-call at least six deep, error budget policy signed by the product executive</td></tr>
+        <tr><td>Tier 2: business critical</td><td>99.9%</td><td>Internal systems that stop work when down: identity, CI, core data pipelines, customer support tooling</td><td>Multi-zone, tested restore, business-hours on-call with escalation, an SLO with a dashboard</td></tr>
+        <tr><td>Tier 3: important</td><td>99.5%</td><td>Reporting, internal tools, anything with a manual workaround</td><td>Single region with backups, restore tested annually, best-effort response</td></tr>
+        <tr><td>Tier 4: everything else</td><td>No commitment</td><td>Experiments, sandboxes, deprecated systems awaiting retirement</td><td>Backups if the data matters; otherwise nothing</td></tr>
+      </table>      <p style="margin-bottom:8px;">The assignment is a product decision with an engineering cost attached, made by the business owner of each system against the cost-of-downtime number, not by engineering against what feels safe. Most estates that do this exercise find they have been paying Tier 1 costs on Tier 3 systems and running a Tier 1 system on Tier 3 infrastructure, at the same time.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>A checkout service, from 99.9% to 99.99%</h3>
+      <p>The arithmetic is simple. What matters is that it gets done before the architecture is chosen, not after.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">The numbers</span><p>An hour of checkout downtime costs $40,000 in lost orders and recovery effort. At 99.9% the annual downtime budget is about 8.7 hours, or roughly $350,000 of expected loss. At 99.99% it is about 53 minutes, roughly $35,000. The next nine is worth about $315,000 a year in avoided loss. Reaching it means a second region, automated failover, and a deeper on-call rota: about $220,000 a year in infrastructure and people. The investment clears by roughly $95,000 a year, and it is approved.</p></div>
+      <div class="stage-cell"><span class="env-label b">The same arithmetic on the reporting system</span><p>An hour of downtime on the internal reporting platform costs about $2,000 in delayed work. At 99.9% that is $17,000 a year of expected loss. The proposed multi-region rebuild costs $180,000 a year. It fails by an order of magnitude and is declined, and the team that proposed it is asked what a tested nightly restore would cost instead. That number is $15,000, and it gets funded. The two decisions together are the point: reliability spending moves toward where downtime costs money and away from where it does not.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>Measuring availability from where the customer stands</h3>
+      <p>A tier target means nothing if it is measured at the wrong place. Most organizations measure where it is convenient and report a number the customer would not recognize.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table" style="margin-bottom:0;">
+        <tr><th>Measured at</th><th>What it tells you</th><th>What it hides</th></tr>
+        <tr><td>The infrastructure (host up, container running)</td><td>Whether the platform is alive</td><td>Every failure above the platform: a deployed bug, a dependency timeout, a full disk that returns errors from a running process</td></tr>
+        <tr><td>The load balancer (HTTP 200 rate)</td><td>Whether requests are being answered</td><td>Slow responses that time out on the client, correct-looking errors, and the customers who could not reach the load balancer at all</td></tr>
+        <tr><td>A synthetic transaction (a scripted checkout every minute from outside)</td><td>Whether the journey works end to end from the outside</td><td>Real user diversity: regions, devices, the edge case only real traffic hits</td></tr>
+        <tr><td>Real user monitoring (success rate of actual customer journeys)</td><td>What customers experienced</td><td>Nothing that matters, at the cost of more instrumentation; this is the number an SLO should be built on</td></tr>
+      </table>      <p style="margin-bottom:8px;">A defensible availability claim states the measurement point and the window. Five nines at the load balancer over a good quarter is not the same claim as four nines on real customer journeys over three years, and anyone doing diligence will ask which one you mean.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h3>The availability number that measures the wrong thing</h3>
+      <p>The most common failure in reliability economics is not the arithmetic; it is doing the arithmetic on a number that does not reflect the customer's experience.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The board deck reports 99.98% availability, measured as the percentage of minutes the load balancer returned a 200. Customer churn analysis shows that a meaningful share of cancellations cite reliability. Both are true: the checkout took nine seconds to respond for two weeks after a database change, every request returned 200, and no alert fired. The reliability investment case, built on the 99.98%, concluded no further spending was needed.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Define availability for each Tier 1 and Tier 2 system as the success rate of a named customer journey within a latency bound, measured from the client side. Rebuild the cost-of-downtime number against that definition. The number usually gets worse and the investment case usually gets clearer. See <a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a> for how the measurement is built and who owns it.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs reliability spend isn't tied to economics</h3>
       <p>Patterns that show up when reliability investment is driven by instinct rather than a stated cost-benefit basis.</p>
@@ -247,7 +305,7 @@
 
 <footer>
   Reference only. Downtime-budget figures are illustrative estimates; actual availability calculations depend on the exact SLA definition and measurement window used. See <a href="../observability-sre-operating-model/index.html" style="color:var(--accent);">Observability &amp; SRE Operating Model</a> for how the function that delivers reliability is organized. Error budgets and service level objectives as practiced here originate in Google's Site Reliability Engineering (O'Reilly, 2016). The economic framing and calculator are this site's.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>
