@@ -77,6 +77,10 @@
   }
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
 </style>
 </head>
 <body>
@@ -173,6 +177,21 @@
       </table>
     </div></div>
   </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h2>Carry-cost workbook and a sample remediation plan</h2>
+      <p>The workbook runs the three-number method above on a portfolio of up to forty items: NPV cost of doing nothing, NPV savings for each candidate year, best year, savings ratio, priority class, and a ranked list, with the discount rate and horizon as inputs. It ships loaded with a twelve-item sample portfolio. The second file is the output the full optimizer produced for that same portfolio: a five-year plan with per-item rationale.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <a class="dl-btn primary" href="technical-debt-carry-cost-preview.xlsx" download>Download carry-cost workbook (.xlsx)</a>
+        <a class="dl-btn secondary" href="sample-debt-remediation-plan.xlsx" download>Download sample remediation plan (.xlsx)</a>
+      </div>
+      <div class="stage-cell" style="padding-top:0;"><p style="font-size:12.5px;color:var(--ink-soft);margin:0;">The workbook stops at the ranking. The full optimizer adds the constrained multi-year sequencer (annual budget, engineer-day capacity, dependency chains, deferred items reported as accepted risk), a rationale per item, and in the production version a learned priority scorer, skill-mix capacity, and sensitivity analysis. Available through direct engagement.</p></div>
+    </div>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>

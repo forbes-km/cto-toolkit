@@ -38,8 +38,8 @@
   .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
   .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
-  .stage-grid.single { grid-template-columns: 1fr; }
-  .stage-cell { padding: 16px 20px; }
+  .stage-grid.single { grid-template-columns: minmax(0, 1fr); }
+  .stage-cell { padding: 16px 20px; min-width: 0; }
   .stage-cell.a { border-right: 1px solid var(--line); }
   .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
   .env-label.a { background: var(--a-soft); color: var(--a); }
@@ -77,6 +77,10 @@
   }
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
 </style>
 </head>
 <body>
@@ -198,6 +202,20 @@
       </ol>
     </div></div>
   </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h2>Technology diligence scoring workbook</h2>
+      <p>Eight sheets: deal context and weights, eight-domain scoring on a 1-to-5 evidence scale with per-domain guidance, seven-dimension integration complexity, a red flag register, a findings log with severity and deal implication, an integration cost estimator, and an executive summary that assembles itself from the scores. Usable on a live engagement as it stands.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <a class="dl-btn primary" href="technology-dd-scoring-workbook-preview.xlsx" download>Download scoring workbook (.xlsx)</a>
+      </div>
+      <div class="stage-cell" style="padding-top:0;"><p style="font-size:12.5px;color:var(--ink-soft);margin:0;">Three things are held back and marked where they would sit: calibrated domain and integration weights by deal type, the full red flag library of roughly fifty patterns (two per domain are included), and the integration cost bands from engagement history. Available through direct engagement.</p></div>
+    </div>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
