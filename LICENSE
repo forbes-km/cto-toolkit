@@ -1,37 +1,30 @@
-LICENSE
+MIT License
 
-This repository contains two categories of content under different terms.
+Copyright (c) 2026 Kevin Forbes
 
-1. CATALOG CONTENT (all methodology descriptions, playbooks, templates, and
-   sample outputs described in the top-level README and the per-category
-   folders, excluding the /tools directory)
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-   Copyright (c) 2026 Kevin Forbes. All rights reserved.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-   This content is provided for evaluation and reference purposes only. No
-   part of it may be reproduced, distributed, or used to build a derivative
-   product or service without prior written permission. Working versions of
-   the tools and templates described here, including scoring engines,
-   weighting tables, and facilitation guides, are available through direct
-   engagement and are not covered by any open license.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-2. TOOLS DIRECTORY (/tools)
+---
 
-   Individual tools inside /tools carry their own license, stated in that
-   tool's own README. Unless otherwise stated, code inside /tools is
-   provided under the MIT License:
-
-   Permission is hereby granted, free of charge, to any person obtaining a
-   copy of this software and associated documentation files, to deal in the
-   software without restriction, including without limitation the rights to
-   use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-   copies of the software, subject to the following conditions:
-
-   The above copyright notice and this permission notice shall be included
-   in all copies or substantial portions of the software.
-
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-   LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+Scope note. This license covers everything published in this repository:
+the pages, the in-browser calculators, the downloadable templates and
+workbooks, and the Cloud Service Mapper. The fuller frameworks, scoring
+instruments, and facilitation material that several pages describe as
+available through direct engagement are not published here and are not
+covered by this license.

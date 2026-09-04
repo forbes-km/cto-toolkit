@@ -4,10 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>We Just Had a Major Incident</title>
+<meta name="description" content="A situational entry point for the days after a major incident: what to decide in the first 72 hours, the questions to ask before the postmortem, the trap that turns a recoverable incident into a credibility problem, and what should exist at 7, 30, and 90 days.">
+<meta property="og:title" content="We Just Had a Major Incident | CTO Toolkit">
+<meta property="og:description" content="A situational entry point for the days after a major incident: what to decide in the first 72 hours, the questions to ask before the postmortem, the trap that turns a recoverable incident into a credibility problem, and what should exist at 7, 30, and 90 days.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/situation-incident/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="We Just Had a Major Incident | CTO Toolkit">
+<meta name="twitter:description" content="A situational entry point for the days after a major incident: what to decide in the first 72 hours, the questions to ask before the postmortem, the trap that turns a recoverable incident into a credibility problem, and what should exist at 7, 30, and 90 days.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <style>
   :root {
     --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
     --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
     --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
     --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -23,9 +34,19 @@
   .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
   .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
   .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
-  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-head a { color: var(--accent); }
   .stage-cell { padding: 8px 20px 16px; }
+  .stage-cell p { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+  .stage-cell a { color: var(--accent); }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid .stage-cell { padding: 16px 20px; }
+  .stage-grid .stage-cell p { margin: 0; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
   .situation-list { list-style: none; margin: 0; padding: 0; counter-reset: sit; }
   .situation-list li { counter-increment: sit; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
   .situation-list li:last-child { border-bottom: none; }
@@ -33,7 +54,22 @@
   .situation-list a { color: var(--ink); font-weight: 600; text-decoration: none; font-size: 13.5px; }
   .situation-list a:hover { color: var(--accent); }
   .situation-list span { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 2px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .matrix-table td a { color: var(--accent); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -41,30 +77,103 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>We Just Had a Major Incident</h1>
-  <p>From the response itself through communicating it upward and deciding what changes afterward. Every link below points to a full page elsewhere on this site.</p>
+  <p>The response is probably over or nearly over. What happens in the next two weeks decides whether this becomes a story about a system that failed or a story about a leadership team that did not know what it was running. This page sequences the decisions, the questions, and the outputs, and links to the full pages for each.</p>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reading order</span>
-      <h3>Where to start</h3>
-      <p>Run the response first; the reflection and communication work matters just as much once the fire is out.</p>
+      <h2>Where to start</h2>
+      <p>Run the response first. The reflection and communication work matters just as much once the fire is out, and it is where most of the lasting damage is done or avoided.</p>
     </div>
     <div class="stage-cell">
       <ol class="situation-list">
         <li><div><a href="../incident-response/index.html">Incident Response</a><span>Detection through postmortem follow-through, with the failure modes that turn a manageable incident chaotic.</span></div></li>
-        <li><div><a href="../board-reporting/index.html">Board Reporting</a><span>Communicating what happened upward without making it worse.</span></div></li>
-        <li><div><a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a><span>Root cause versus triggering event, and the correlation-versus-causation trap in postmortems.</span></div></li>
+        <li><div><a href="../regulatory-map/index.html">Regulatory Map</a><span>Which reporting clocks started when you became aware, and who owns each one.</span></div></li>
+        <li><div><a href="../data-governance/index.html">Data Governance &amp; Privacy</a><span>If any personal or regulated data was involved, which notification regimes apply and which clocks started the moment you became aware.</span></div></li>
+        <li><div><a href="../board-reporting/index.html">Board Reporting</a><span>Communicating what happened upward without making it worse, and the out-of-cycle escalation path that should already exist.</span></div></li>
+        <li><div><a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a><span>Root cause versus triggering event, and the correlation-versus-causation trap that produces confident, wrong postmortems.</span></div></li>
         <li><div><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a><span>Was this a risk the organization meant to accept, or a gap in the stated appetite itself.</span></div></li>
+        <li><div><a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a><span>If detection was slow or the same few people carried the response, the operating model is the finding.</span></div></li>
+        <li><div><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a><span>Turn the incident's cost into the number that decides the next reliability investment.</span></div></li>
         <li><div><a href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a><span>If this was bigger than a single incident: recovery testing, RTO/RPO, and what the board will ask next.</span></div></li>
       </ol>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Decisions with a date</span>
+      <h2>What has to be decided, and by when</h2>
+      <p>These decisions do not wait for the postmortem. Deferring them is itself a decision, usually the wrong one.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>By when</th><th>Decision</th><th>Who owns it</th><th>What it looks like when it goes wrong</th></tr>
+        <tr><td>Hour 4</td><td>Is this potentially material, reportable, or customer-notifiable, and which clocks have started</td><td>CTO with counsel and the CISO</td><td>The 72-hour breach notification window and the materiality assessment are discovered on day three</td></tr>
+        <tr><td>Hour 24</td><td>What customers, the board, and the company are told, in what words, by whom</td><td>CEO, with the CTO supplying the facts and the timeline</td><td>Three different stories reach three audiences and the least accurate one reaches the press</td></tr>
+        <tr><td>Day 3</td><td>Whether the immediate fix is stable enough to stand down the war room and return to normal operations</td><td>Incident commander, ratified by the CTO</td><td>The war room runs for two weeks because nobody is willing to say the residual risk is acceptable</td></tr>
+        <tr><td>Day 7</td><td>Who runs the postmortem, who attends, and whether it is blameless in practice rather than in name</td><td>CTO</td><td>The postmortem is run by the team that owns the failed system and produces action items only for that team</td></tr>
+        <tr><td>Day 14</td><td>Which postmortem actions get funded now, from what, and which are consciously deferred with a date</td><td>CTO with the CFO</td><td>Forty actions, none funded, all still open at the next incident</td></tr>
+        <tr><td>Day 30</td><td>Whether the incident changes the stated risk appetite, the DR posture, or the operating model</td><td>CTO with the CEO and board</td><td>The organization spends on the specific failure and leaves the class of failure untouched</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Questions to ask</span>
+      <h2>Questions to ask before the postmortem, not during it</h2>
+      <p>Answers the CTO should have before sitting in the room. The postmortem is for the team to learn; these are for the CTO to understand what kind of organization had this incident.</p>
+    </div>
+    <div class="stage-cell">
+      <ul class="checklist">
+        <li>How long between the failure beginning and someone knowing, and was that someone a customer</li>
+        <li>How many people could have run this response, and how many actually did</li>
+        <li>Was any part of the recovery dependent on a single person's knowledge, credentials, or access</li>
+        <li>Did the runbook exist, was it current, and was it actually used</li>
+        <li>Did any monitoring fire before the impact, and if so, why was it not acted on</li>
+        <li>Which contributing conditions were known and previously deprioritized, and where is that decision recorded</li>
+        <li>What did the response cost in engineering time, cloud spend, credits, and customer concessions, in dollars</li>
+        <li>Which customer contracts carry notification, service credit, or termination clauses that this incident triggered</li>
+        <li>Was the last restore or failover test for this class of system run in the past twelve months, and did it pass</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The trap</span>
+      <h2>Fixing the incident instead of the class of incident</h2>
+      <p>The most common outcome of a major incident is a well-executed fix for the specific failure, with the conditions that produced it left in place.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The database failover that did not work gets tested and fixed. The fact that no failover in the estate has been tested in two years is not raised, because the postmortem's scope was the incident. Six months later a different failover fails, and this time the board asks why the first one did not prompt the question.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>One question in every postmortem, asked by the CTO personally: where else in the estate does this same condition exist. The answer becomes a separate item with its own owner, funded from the reserve in <a href="../technology-capital-allocation/index.html">Capital Allocation</a>, and reported to the board as the real remediation. The specific fix is table stakes; the class-level answer is the leadership output.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Outputs</span>
+      <h2>What should exist at 7, 30, and 90 days</h2>
+      <p>The postmortem document is the least of it.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Checkpoint</th><th>What exists</th></tr>
+        <tr><td>Day 7</td><td>A written timeline with detection, escalation, and recovery times stated in minutes, not adjectives. A completed regulatory and contractual notification log. A one-page summary for the board in the form the <a href="../board-reporting/index.html">Board Reporting</a> page describes. The postmortem scheduled with the right attendees, including someone from outside the owning team.</td></tr>
+        <tr><td>Day 30</td><td>The postmortem published internally, with actions that have owners, dates, and funding decisions. The class-of-incident question answered with a list. A recorded decision on whether the risk appetite or DR posture changes. If detection or response depended on too few people, an operating model change proposed with a cost attached.</td></tr>
+        <tr><td>Day 90</td><td>The funded actions closed or visibly progressing against their dates. A restore or failover test run on the class of system that failed. The incident's cost stated in dollars and used in the next <a href="../reliability-economics/index.html">reliability investment</a> conversation. The board updated once more, unprompted, which is what turns a bad quarter into evidence of control.</td></tr>
+      </table>
     </div>
   </div>
 </main>
 
 <footer>
-  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html" style="color:var(--accent);">CTO Toolkit</a> home page.
+  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html">CTO Toolkit</a> home page.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

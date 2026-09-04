@@ -29,4 +29,4 @@ Provider service catalogs and landing zone tooling evolve constantly. Naming cha
 
 ## License
 
-MIT. See the repository root LICENSE for the terms covering this specific tool, which differ from the rest of the repository.
+MIT, the same as the rest of the repository. See the root LICENSE.

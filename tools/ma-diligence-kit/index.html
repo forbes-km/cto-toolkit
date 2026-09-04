@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M&amp;A Diligence Kit: Question Bank, Data Room, Sell-Side Prep</title>
+<meta name="description" content="A prioritized technology diligence question bank across architecture, security, data, operations, people, IP, and cost, with what a bad answer looks like; a four-tier data room structure; and a six-month sell-side preparation sequence for technology leaders on the selling side of a transaction.">
+<meta property="og:title" content="M&amp;A Diligence Kit: Question Bank, Data Room, Sell-Side Prep | CTO Toolkit">
+<meta property="og:description" content="A prioritized technology diligence question bank across architecture, security, data, operations, people, IP, and cost, with what a bad answer looks like; a four-tier data room structure; and a six-month sell-side preparation sequence for technology leaders on the selling side of a transaction.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/ma-diligence-kit/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="M&amp;A Diligence Kit: Question Bank, Data Room, Sell-Side Prep | CTO Toolkit">
+<meta name="twitter:description" content="A prioritized technology diligence question bank across architecture, security, data, operations, people, IP, and cost, with what a bad answer looks like; a four-tier data room structure; and a six-month sell-side preparation sequence for technology leaders on the selling side of a transaction.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .btn { padding: 9px 18px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .field:last-child { border-bottom: none; }
+  .field input, .field select { font-family: var(--ui); font-size: 13px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); width: 150px; }
+  .result { margin-top: 14px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); margin-right: 4px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+    .field input, .field select { width: 110px; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>M&amp;A Diligence Kit: Question Bank, Data Room, Sell-Side Prep</h1>
+  <p>The <a href="../technology-diligence-map/index.html">Technology Diligence</a> page covers the method and the red flags. This page is the working kit: the questions to ask or answer, the data room structure that organizes the answers and controls who sees what, and the preparation sequence for a technology leader whose company is about to be sold.</p>
+  <div class="caveat">The question bank here is a curated subset of the full bank, chosen for what most often moves price or terms. Healthcare, financial services, and public-sector transactions carry additional regulatory questions; see <a href="../regulatory-map/index.html">Regulatory Map</a> for which regimes apply and who owns them.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">How to use</span>
+      <h2>Three tools, two sides of the table</h2>
+      <p>The question bank is what a buyer asks. The data room structure is how a seller answers before being asked. The sell-side guide is what a technology leader does in the months before a process starts so that the answers exist. Read the one for your side, then the other one, because the counterparty will.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Tool</th><th>Buy-side use</th><th>Sell-side use</th></tr>
+        <tr><td>Question bank</td><td>The interview and document-request list, prioritized so a two-week confirmatory window covers what moves price first</td><td>The list to answer internally, honestly, six months before a buyer asks, so nothing in it is a surprise</td></tr>
+        <tr><td>Data room template</td><td>What to request if the seller's room is disorganized, and a checklist of what is missing</td><td>The folder structure to populate, with the four-tier access model that protects what should not be shown until late</td></tr>
+        <tr><td>Sell-side preparation</td><td>The signals that a target prepared well, which correlates with fewer post-close surprises</td><td>The sequence of work from the decision to sell through the first buyer meeting</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Question bank</span>
+      <h2>Architecture and technical debt</h2>
+      <p>Priority 1 questions should be answered before a price is agreed. Priority 2 belong in confirmatory diligence. Priority 3 inform the integration plan.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Priority</th><th>Question</th><th>Ask via</th><th>What a bad answer looks like</th></tr>
+        <tr><td>1</td><td>Draw the system as it runs today, not the target architecture, and mark what fewer than three people understand</td><td>Interview</td><td>A slide from the last investor deck; nobody in the room can draw the current state</td></tr>
+        <tr><td>1</td><td>Which runtimes, databases, and frameworks are past vendor end of life, and what is the plan and cost to move</td><td>Doc</td><td>A list has to be compiled for the question; extended support contracts nobody mentioned</td></tr>
+        <tr><td>1</td><td>What is the technical debt backlog, with a cost of remediation and a carry cost per item</td><td>Doc</td><td>A backlog of tickets with no costs, or a statement that debt is under control with no artifact</td></tr>
+        <tr><td>1</td><td>How is the platform hosted, in which regions and accounts, and who holds the root credentials</td><td>Doc</td><td>A shared root account, a personal credit card on a cloud account, production in a region the buyer cannot operate in</td></tr>
+        <tr><td>2</td><td>What is the deployment frequency, change failure rate, and time to restore for the core product over the last twelve months</td><td>Doc</td><td>Numbers unavailable; deployments happen monthly by one person on a weekend</td></tr>
+        <tr><td>2</td><td>What third-party components, open-source licenses, and embedded SDKs are in the product, and which carry copyleft or commercial obligations</td><td>Doc</td><td>No software bill of materials; a GPL dependency in a commercially licensed product</td></tr>
+        <tr><td>2</td><td>Which parts of the product would have to be rewritten to scale ten times, and has anyone estimated it</td><td>Interview</td><td>Everyone agrees it will scale; the load test is from three years ago</td></tr>
+        <tr><td>3</td><td>What does a full environment rebuild from source and backups take, and when was it last done</td><td>Interview</td><td>Never; the environment was built by hand and the person who built it left</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Question bank</span>
+      <h2>Security, compliance, and data</h2>
+      <p>Certifications tell you what was in scope for an audit. These questions tell you what is true.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Priority</th><th>Question</th><th>Ask via</th><th>What a bad answer looks like</th></tr>
+        <tr><td>1</td><td>Which systems and products are in scope for each certification held, and which revenue-bearing systems are out of scope</td><td>Doc</td><td>The SOC 2 covers the corporate network and not the product that drives the valuation</td></tr>
+        <tr><td>1</td><td>List every security incident, breach, or near-miss in the last three years, with notifications made and outcomes</td><td>Doc</td><td>None reported, and a customer contract on file references a credit for a breach</td></tr>
+        <tr><td>1</td><td>Where is customer and employee personal data stored and processed, under which legal entity and jurisdiction, and what lawful basis and transfer mechanism applies</td><td>Doc</td><td>Data in three clouds across two continents with no record of why; sub-processors not listed</td></tr>
+        <tr><td>1</td><td>How many accounts hold privileged access across the cloud tenants and directory, and how many of those have phishing-resistant MFA and time-bound elevation</td><td>Doc</td><td>Twelve permanent global admins, two belonging to former employees; see <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a></td></tr>
+        <tr><td>2</td><td>When was the last external penetration test, what were the critical and high findings, and which are still open</td><td>Doc</td><td>Test is two years old; criticals open with no date</td></tr>
+        <tr><td>2</td><td>What data does the product send to AI or ML providers, under which terms, and with what retention</td><td>Doc</td><td>Customer data sent to a consumer AI tool by the support team under default terms</td></tr>
+        <tr><td>2</td><td>Which customer contracts carry security, availability, or data-residency commitments that exceed what the platform delivers</td><td>Doc</td><td>A 99.99 percent SLA on a platform with no redundancy; residency promised in a region not used</td></tr>
+        <tr><td>3</td><td>What is the backup, restore, and disaster recovery posture, and when was a restore last tested end to end</td><td>Interview</td><td>Backups exist; restore never tested; RTO and RPO undefined</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Question bank</span>
+      <h2>Operations, organization, IP, and cost</h2>
+      <p>The questions that most often reprice a deal are here, and they are the ones diligence teams under time pressure skip.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Priority</th><th>Question</th><th>Ask via</th><th>What a bad answer looks like</th></tr>
+        <tr><td>1</td><td>For each system that generates revenue, name the people who can change it in production, and their tenure, compensation, and retention terms</td><td>Doc</td><td>One name repeated across every system; no retention agreements; that person has not been told about the deal</td></tr>
+        <tr><td>1</td><td>Who owns the intellectual property in the product: employee and contractor assignment agreements, open-source contributions, university or prior-employer claims</td><td>Doc</td><td>Contractors with no assignment clause built the core; a founder's prior employer has a plausible claim</td></tr>
+        <tr><td>1</td><td>What is the fully loaded run cost of the platform by month for the last 24 months, and what drives the variance</td><td>Doc</td><td>Cloud bill grew 60 percent with no revenue growth to match; reserved commitments expire at close</td></tr>
+        <tr><td>1</td><td>Which contracts have change-of-control, assignment, or most-favored-customer clauses, and which vendors gain leverage at close</td><td>Doc</td><td>The core database vendor's license terminates on change of control</td></tr>
+        <tr><td>2</td><td>What is the engineering headcount by role, level, location, and employment type, and what is regretted attrition over 24 months</td><td>Doc</td><td>Half the team are contractors through one agency; attrition unmeasured</td></tr>
+        <tr><td>2</td><td>What does the on-call rota look like, how many incidents per month, and what is the escalation path when the first responder cannot fix it</td><td>Interview</td><td>Two people on permanent call; escalation is the CTO's mobile</td></tr>
+        <tr><td>2</td><td>Which product commitments have been made to customers or the market that are not yet built, and what would they cost</td><td>Interview</td><td>A roadmap sold to enterprise customers that engineering has not seen</td></tr>
+        <tr><td>3</td><td>What tooling, licenses, and subscriptions exist, who owns each, and which would the combined entity duplicate</td><td>Doc</td><td>No inventory; several tools paid by individuals on expense</td></tr>
+        <tr><td>3</td><td>For healthcare or financial targets specifically: which regulatory registrations, business associate agreements, and audit obligations transfer, and which must be re-executed</td><td>Doc</td><td>BAAs with the wrong entity; a state licensure requirement nobody on the deal team knows about</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Template</span>
+      <h2>Data room structure with a four-tier access model</h2>
+      <p>A well-organized technology data room signals a well-run technology function. The tiers control what a buyer sees at each stage, so that the most sensitive material is only visible to a buyer who has earned it.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Tier</th><th>Who sees it</th><th>When</th><th>Folders</th></tr>
+        <tr><td>1: Overview</td><td>Any qualified buyer under NDA</td><td>Teaser and first management meeting</td><td>01 Technology overview narrative; 02 Architecture summary (current state, one page); 03 Team structure and headcount summary; 04 Certifications and attestations held; 05 Product roadmap summary</td></tr>
+        <tr><td>2: Confirmatory</td><td>Buyers who have submitted an indicative offer</td><td>Confirmatory diligence</td><td>06 Detailed architecture and data flow diagrams; 07 Technical debt register with costs; 08 Engineering metrics, 24 months; 09 Security policies, last pen test summary, incident register; 10 Data inventory and privacy documentation; 11 Third-party components and license inventory; 12 Infrastructure and run cost, 24 months; 13 Vendor contract summaries with change-of-control flags</td></tr>
+        <tr><td>3: Restricted</td><td>Final bidder or bidders, named individuals only</td><td>Exclusivity</td><td>14 Full pen test reports and open findings; 15 Employee and contractor agreements, IP assignments; 16 Key-person list with compensation and retention terms; 17 Customer contract exceptions (SLA, residency, security commitments); 18 Open litigation, regulatory correspondence, and audit findings</td></tr>
+        <tr><td>4: Clean team</td><td>Outside counsel and designated clean-team members only</td><td>Post-exclusivity, pre-close</td><td>19 Source code access (read-only, escrowed, or on-site review); 20 Production access evidence (privileged account export); 21 Customer-identifiable data, where its review is legally necessary</td></tr>
+      </table>      <p>Every folder has an index file naming its contents and its owner. Every document is dated. Nothing is uploaded that the technology leader has not read; a data room is a set of representations, and the buyer's counsel will treat it as one.</p>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Sell-side preparation</span>
+      <h2>The six months before a process</h2>
+      <p>Most sell-side technology preparation is a scramble after the banker's request list arrives. The work below, done early, changes the price and shortens the process.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ol class="num-list">
+        <li><div><b>Month 6: Answer the question bank internally</b>Run every priority 1 and 2 question above against your own organization, in writing, as if you were the buyer. The gaps are the preparation plan. This is a <a href="../technology-diligence-map/index.html">Technology Diligence</a> exercise pointed at yourself.</div></li>
+        <li><div><b>Month 5: Fix what is cheap and visible</b>Remove former employees' access. Eliminate standing privileged access. Close open critical pen test findings. Retire the end-of-life version that would appear in every buyer's report. These cost weeks and remove findings that cost millions in price.</div></li>
+        <li><div><b>Month 4: Build the artifacts that do not exist</b>A current-state architecture diagram. A technical debt register with costs, using <a href="../technical-debt-economics/index.html">Technical Debt Economics</a>. A software bill of materials. An inventory of privileged accounts and non-human identities. A run-cost history with variance explained. A buyer will produce these if you do not, and theirs will be less flattering.</div></li>
+        <li><div><b>Month 3: Paper the people and the IP</b>IP assignment agreements for every current and former contributor. Retention agreements for the named key people, executed before they hear about the process from anyone else. A succession answer for each critical system, using <a href="../cto-succession/index.html">CTO Leadership &amp; Succession</a>.</div></li>
+        <li><div><b>Month 2: Review the contracts</b>Every customer contract for SLA, residency, and security commitments the platform does not meet; every vendor contract for change-of-control and assignment clauses. Renegotiate or document the exposure. Do not let the buyer find it.</div></li>
+        <li><div><b>Month 1: Build the data room and rehearse the narrative</b>Populate tiers 1 and 2. Write the technology overview narrative as prose, not slides, describing the estate as it is, with its known weaknesses and their remediation plan stated plainly. A buyer who finds a weakness you disclosed treats you as credible; one who finds a weakness you omitted reprices everything.</div></li>
+      </ol>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h2>Disclosing the target state instead of the current state</h2>
+      <p>The most common sell-side failure is presenting the architecture the team is building toward as if it were the architecture that exists.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The overview shows microservices, event streaming, and a zero-trust network. The buyer's engineers find a monolith, a nightly batch, and a flat network with the target-state work six months from done. Every other representation in the data room is now suspect, the confirmatory window extends, and the price moves.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Show the current state, honestly labeled, alongside the target state, honestly dated and costed. Buyers expect debt; what they price is surprise. A credible current-state picture with a funded plan is worth more than an aspirational one, and it is the only version that survives the buyer's own engineers reading the code.</p></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Reference only. The full question bank with 300 questions, the response tracker, and the healthcare M&A technology reference are part of the private methodology.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

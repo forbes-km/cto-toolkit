@@ -4,10 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>We're Cutting Costs</title>
+<meta name="description" content="A situational entry point for a technology cost reduction mandate: the decisions with dates, the questions that separate real savings from deferred cost, the across-the-board trap, and what should exist at 30, 60, and 90 days.">
+<meta property="og:title" content="We're Cutting Costs | CTO Toolkit">
+<meta property="og:description" content="A situational entry point for a technology cost reduction mandate: the decisions with dates, the questions that separate real savings from deferred cost, the across-the-board trap, and what should exist at 30, 60, and 90 days.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/situation-cutting-costs/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="We're Cutting Costs | CTO Toolkit">
+<meta name="twitter:description" content="A situational entry point for a technology cost reduction mandate: the decisions with dates, the questions that separate real savings from deferred cost, the across-the-board trap, and what should exist at 30, 60, and 90 days.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <style>
   :root {
     --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
     --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
     --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
     --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -23,9 +34,19 @@
   .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
   .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
   .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
-  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-head a { color: var(--accent); }
   .stage-cell { padding: 8px 20px 16px; }
+  .stage-cell p { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+  .stage-cell a { color: var(--accent); }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid .stage-cell { padding: 16px 20px; }
+  .stage-grid .stage-cell p { margin: 0; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
   .situation-list { list-style: none; margin: 0; padding: 0; counter-reset: sit; }
   .situation-list li { counter-increment: sit; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
   .situation-list li:last-child { border-bottom: none; }
@@ -33,7 +54,22 @@
   .situation-list a { color: var(--ink); font-weight: 600; text-decoration: none; font-size: 13.5px; }
   .situation-list a:hover { color: var(--accent); }
   .situation-list span { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 2px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .matrix-table td a { color: var(--accent); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -41,33 +77,105 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>We're Cutting Costs</h1>
-  <p>Sequenced from fastest, least painful savings to the harder structural decisions. Every link below points to a full page elsewhere on this site.</p>
+  <p>The number has probably already been chosen for you. What you still control is whether the cut lands on things that matter, whether the savings are real or just deferred, and whether the organization on the other side of it can still deliver. This page sequences the decisions and links to the pages that hold the detail.</p>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reading order</span>
-      <h3>Where to start</h3>
-      <p>Capture the cheap, low-value-loss savings first; use the harder pages once those are exhausted.</p>
+      <h2>Where to start</h2>
+      <p>Framing first, then the ranked list, then the CFO. The mechanics of cloud and vendor savings come after the decisions about what is protected.</p>
     </div>
     <div class="stage-cell">
       <ol class="situation-list">
-        <li><div><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a><span>The pre-ranked cut list you should have built before this moment arrived.</span></div></li>
-        <li><div><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a><span>A tight kill-rate discipline and tournament-sourced bets matter more, not less, when budget is scarce.</span></div></li>
-        <li><div><a href="../cto-cfo-relationship/index.html">Working with the CFO</a><span>Defend the number with its derivation; this conversation determines whether the cuts feel deliberate or reactive.</span></div></li>
-        <li><div><a href="../cloud-cost-management/index.html">Cloud FinOps</a><span>The fastest real money, usually available in weeks, not quarters.</span></div></li>
-        <li><div><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a><span>Find the Eliminate-quadrant applications still quietly costing you.</span></div></li>
-        <li><div><a href="../vendor-evaluation/index.html">Vendor Evaluation</a><span>Renegotiate or exit contracts where real lock-in has been costing more than it should.</span></div></li>
-        <li><div><a href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a><span>Bad cuts versus better cuts, and what not to touch regardless of pressure.</span></div></li>
-        <li><div><a href="../platform-engineering/index.html">Platform Engineering</a><span>Don't cut the thing that makes every other team more efficient.</span></div></li>
+        <li><div><a href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a><span>The framing for the whole exercise: what to protect, what to pause, and what to kill, decided before the spreadsheet opens.</span></div></li>
+        <li><div><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a><span>The pre-ranked cut list this moment demands. If it does not exist yet, this page is how to build it in a week.</span></div></li>
+        <li><div><a href="../cto-cfo-relationship/index.html">Working with the CFO</a><span>Numbers with visible derivation, and the conversation that has to happen before the budget meeting rather than in it.</span></div></li>
+        <li><div><a href="../technology-budget-management/index.html">Running the Technology Budget</a><span>Where the money actually goes today, at a level of detail the CFO will trust.</span></div></li>
+        <li><div><a href="../cloud-cost-management/index.html">Cloud FinOps</a><span>Usually the fastest real savings: rightsizing, commitment coverage, waste elimination, and showback so it does not creep back.</span></div></li>
+        <li><div><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a><span>The TIME map turns a vague desire to retire things into a named list with owners and dates.</span></div></li>
+        <li><div><a href="../technical-debt-economics/index.html">Technical Debt Economics</a><span>Which debt to keep carrying and which to fund, as numbers, so the cut does not land on the item with the highest carry cost.</span></div></li>
+        <li><div><a href="../vendor-evaluation/index.html">Vendor Evaluation</a><span>Exit cost and renewal leverage for the contracts that make up most of the non-people spend.</span></div></li>
+        <li><div><a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a><span>The renewal calendar and the clauses to fix; usually the largest real, non-recurring saving available.</span></div></li>
+        <li><div><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a><span>Which bets survive and which get paused explicitly rather than starved quietly.</span></div></li>
+        <li><div><a href="../platform-engineering/index.html">Platform Engineering</a><span>Where consolidation reduces both cost and cognitive load, and where it just moves the cost somewhere less visible.</span></div></li>
       </ol>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Decisions with a date</span>
+      <h2>What has to be decided, and by when</h2>
+      <p>A cost mandate has a clock on it from the day it lands. These are the decisions that determine whether the cut is a plan or a scramble.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>By when</th><th>Decision</th><th>Who owns it</th><th>What it looks like when it goes wrong</th></tr>
+        <tr><td>Day 3</td><td>Which categories are protected outright, before any line-item review begins: security baseline, regulatory obligations, the systems that make revenue</td><td>CTO, agreed with the CEO</td><td>Everything is negotiable, so the loudest advocates protect their budgets and the quiet ones absorb the cut</td></tr>
+        <tr><td>Day 7</td><td>Whether the target is achievable without headcount, and if not, what the headcount number is and where it lands</td><td>CTO with the CFO and CHRO</td><td>A tooling-only plan is presented, misses by half, and a headcount cut arrives late and unplanned</td></tr>
+        <tr><td>Day 14</td><td>The ranked cut list, with the consequence of each item stated plainly, delivered to the CFO one-on-one</td><td>CTO</td><td>The list is revealed for the first time in the budget meeting and every line becomes a fight</td></tr>
+        <tr><td>Day 21</td><td>Which vendor renewals in the next twelve months get renegotiated, consolidated, or exited, and who runs each negotiation</td><td>CTO with procurement</td><td>Contracts auto-renew at list price during the exact quarter the company is cutting</td></tr>
+        <tr><td>Day 30</td><td>Which in-flight initiatives stop, pause with a restart condition, or continue at reduced scope</td><td>CTO with the CEO</td><td>Nothing is stopped, everything is slowed, and every initiative misses</td></tr>
+        <tr><td>Day 45</td><td>How savings are tracked and reported, and who signs off that a saving is real rather than deferred</td><td>CTO with finance</td><td>Savings are declared at the announcement and never reconciled, and the cost comes back within a year</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Questions to ask</span>
+      <h2>Questions that separate real savings from deferred cost</h2>
+      <p>Most cost plans fail because nobody asked whether the saving is a reduction, a deferral, or a transfer. Ask these before any number goes to the CFO.</p>
+    </div>
+    <div class="stage-cell">
+      <ul class="checklist">
+        <li>What is the actual run cost of the estate, by system, and how much of it is licensing that scales with headcount you are about to reduce</li>
+        <li>Which applications on the TIME map are already marked tolerate or eliminate, and what has stopped them being retired so far</li>
+        <li>How much of cloud spend is uncommitted on-demand, and how much of the committed spend is under-utilized</li>
+        <li>Which contracts renew in the next twelve months, at what value, and with what notice period</li>
+        <li>For every proposed saving, is it a reduction in run cost, a deferral of spend that returns later, or a transfer of cost to another team or the business</li>
+        <li>What is the cost of the next major incident, and does the proposed cut increase its probability</li>
+        <li>Which roles, if cut, remove the only person who understands a system that still makes money</li>
+        <li>What does the security program lose, specifically, and does that change the stated risk appetite</li>
+        <li>What would the team stop doing if headcount were reduced, and has anyone written that list down</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The trap</span>
+      <h2>The across-the-board percentage</h2>
+      <p>The most common way to cut technology cost is to apply the same percentage to every team and category. It protects nothing that matters and reflects no prioritization; it just avoids the discomfort of choosing.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Every team loses fifteen percent. Security loses its pen test budget, the platform team loses the engineer who was automating the thing that costs the most, and the revenue-critical system's on-call rota drops to two people. Nine months later the run cost is back where it was, the deferred work is more expensive, and the best people have left because they could see nothing was being decided.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Decide the protected categories first, then cut deeper in fewer places. Retire whole systems rather than trimming every system. Take the vendor renewals seriously; they are usually the largest real, non-recurring saving available. Report savings only when they show up in the ledger, and keep the <a href="../technology-capital-allocation/index.html">ranked list</a> alive after the cut so the next round, if it comes, is already answered.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Outputs</span>
+      <h2>What should exist at 30, 60, and 90 days</h2>
+      <p>The announcement is the easy part. These are the artifacts that make the saving real and defensible.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Checkpoint</th><th>What exists</th></tr>
+        <tr><td>Day 30</td><td>A protected-category list agreed with the CEO. A ranked cut list with consequences stated, already reviewed by the CFO privately. A vendor renewal calendar for the next twelve months with a strategy per contract. An explicit stop, pause, and continue decision for every in-flight initiative.</td></tr>
+        <tr><td>Day 60</td><td>Cloud commitment coverage and rightsizing actions executed, with the saving visible in the bill rather than in a forecast. The first vendor renegotiations closed. Headcount decisions, if any, made and communicated once, not in waves. A written record of what the organization has stopped doing.</td></tr>
+        <tr><td>Day 90</td><td>A savings tracker reconciled against actual spend, signed by finance. A restart condition recorded for every paused initiative. The security and reliability posture re-stated against the new spend level so nobody is surprised later. The next round of cuts, if asked for, answered from the same list rather than from scratch.</td></tr>
+      </table>
     </div>
   </div>
 </main>
 
 <footer>
-  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html" style="color:var(--accent);">CTO Toolkit</a> home page.
+  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html">CTO Toolkit</a> home page.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

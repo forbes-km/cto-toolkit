@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaS Contract &amp; Renewal Negotiation</title>
+<meta name="description" content="Where SaaS money is actually lost (auto-renewal uplifts, shelfware, tier creep, uncapped consumption), the renewal calendar as a control with a 180-day sequence, the contract clauses that decide the next renewal, how to run the renewal conversation against a vendor&#x27;s sales playbook, a worked $400k example, and the procurement-owns-the-paper pitfall.">
+<meta property="og:title" content="SaaS Contract &amp; Renewal Negotiation | CTO Toolkit">
+<meta property="og:description" content="Where SaaS money is actually lost (auto-renewal uplifts, shelfware, tier creep, uncapped consumption), the renewal calendar as a control with a 180-day sequence, the contract clauses that decide the next renewal, how to run the renewal conversation against a vendor&#x27;s sales playbook, a worked $400k example, and the procurement-owns-the-paper pitfall.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/saas-contract-negotiation/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SaaS Contract &amp; Renewal Negotiation | CTO Toolkit">
+<meta name="twitter:description" content="Where SaaS money is actually lost (auto-renewal uplifts, shelfware, tier creep, uncapped consumption), the renewal calendar as a control with a 180-day sequence, the contract clauses that decide the next renewal, how to run the renewal conversation against a vendor&#x27;s sales playbook, a worked $400k example, and the procurement-owns-the-paper pitfall.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .btn { padding: 9px 18px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .field:last-child { border-bottom: none; }
+  .field input, .field select { font-family: var(--ui); font-size: 13px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); width: 150px; }
+  .result { margin-top: 14px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); margin-right: 4px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+    .field input, .field select { width: 110px; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>SaaS Contract &amp; Renewal Negotiation</h1>
+  <p><a href="../vendor-evaluation/index.html">Vendor Evaluation</a> covers selection and exit cost. This page covers the part of the relationship where most of the money goes: the renewal, and the clauses set at first signing that decide how every renewal after it will go.</p>
+  <div class="caveat">Contract terms vary by vendor, jurisdiction, and leverage. The clauses here are the ones worth asking for; whether you get them depends on your size and alternatives. Involve procurement and counsel; do not treat this page as either.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h2>Where the money is actually lost</h2>
+      <p>Selection gets the attention. Renewal is where most of the money goes, because the vendor knows the switching cost, the contract auto-renews at an uplift, and the person who negotiated the original deal has usually moved on.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Leak</th><th>How it happens</th><th>Typical size</th></tr>
+        <tr><td>Auto-renewal at list uplift</td><td>The contract renews for another term with a 5 to 10 percent increase unless notice is given 60 to 90 days before the end date, and nobody owns the calendar</td><td>The uplift compounds every year; over a five-year relationship the price can be 40 percent above the original</td></tr>
+        <tr><td>Shelfware</td><td>Licenses bought for a planned headcount or a rollout that never reached full adoption, renewed at the same count because nobody checked utilization</td><td>Commonly 20 to 35 percent of seats in enterprise SaaS estates; higher in tools bought during growth</td></tr>
+        <tr><td>Tier creep</td><td>A feature needed by one team moves the whole organization to the next tier</td><td>The tier delta multiplied by every seat</td></tr>
+        <tr><td>Consumption without a cap</td><td>Usage-based pricing (API calls, tokens, compute, data volume) with no committed level and no alert</td><td>Unpredictable; the first sign is the invoice</td></tr>
+        <tr><td>Duplicate tools</td><td>Two teams bought two products that do the same thing, each below the approval threshold</td><td>The smaller of the two contracts, plus the integration cost of both</td></tr>
+        <tr><td>Renewal timing under pressure</td><td>The renewal lands during a quarter-end crunch or a leadership change and is signed to make it go away</td><td>Whatever leverage existed, forfeited</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>The renewal calendar as a control</h2>
+      <p>The single highest-return artifact in vendor management is a calendar. It is also the one most organizations do not have.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>For every contract above a threshold (set it low; $25k a year catches most of the leaks), record: the end date, the notice deadline, the auto-renewal terms, the current annual value, the uplift clause, the utilization, and the named owner. Review it monthly. Anything with a notice deadline inside 180 days gets a negotiation plan; anything inside 90 days without one is already late.</p>
+      <p>The 180-day mark matters because it is roughly when a credible alternative can still be evaluated. Once the vendor knows you cannot switch before the renewal date, the negotiation is about their willingness to be reasonable, and the calendar was the thing that could have given you leverage.</p>      <table class="matrix-table">
+        <tr><th>Days before end date</th><th>Action</th></tr>
+        <tr><td>180</td><td>Pull utilization. Decide whether this is a renew, renegotiate, downsize, consolidate, or exit. If renegotiate or exit, name the alternative and start evaluating it, visibly.</td></tr>
+        <tr><td>120</td><td>Send the vendor a written notice of intent to renegotiate, with the specific asks. Ask for the price of the alternative in writing. Involve procurement.</td></tr>
+        <tr><td>90</td><td>Serve any contractual non-renewal notice required to preserve the option, even if you expect to renew. A served notice can be withdrawn; a missed one cannot.</td></tr>
+        <tr><td>60</td><td>Final terms agreed or the exit plan in motion. Anything still open here is being negotiated under time pressure, which is the vendor's preferred condition.</td></tr>
+        <tr><td>0</td><td>Signed terms filed in one place, calendar updated with the new dates, utilization baseline reset.</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>The clauses that decide the next renewal</h2>
+      <p>The negotiation that matters most happens at the first signing, because that is when the renewal terms are set. These are the clauses to fix then, and to fix retroactively at the next renewal if they were missed.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Clause</th><th>Ask for</th><th>Why</th></tr>
+        <tr><td>Renewal uplift</td><td>A cap (ideally zero to 3 percent, or tied to a published index), applying to all renewals, not just the first</td><td>An uncapped uplift is a blank cheque; a cap on the first renewal only moves the problem one year</td></tr>
+        <tr><td>Auto-renewal and notice</td><td>No auto-renewal, or a notice period of 30 days or less, and the vendor's obligation to notify you 90 days before the deadline</td><td>Puts the burden of the calendar on the side that benefits from you missing it</td></tr>
+        <tr><td>Seat flexibility</td><td>The right to reduce seat count at renewal, and true-down at least annually for consumption</td><td>Otherwise every optimistic forecast becomes a permanent floor</td></tr>
+        <tr><td>Price hold and most-favored terms</td><td>Pricing held for the full term, and a commitment that new customers of similar size are not offered materially better terms</td><td>Prevents the list price from being renegotiated in the middle of a term through a product repackaging</td></tr>
+        <tr><td>Tier and packaging protection</td><td>Features you have today stay in your tier for the term; repackaging cannot force an upgrade</td><td>Repackaging is the most common way SaaS vendors raise effective prices without touching the rate card</td></tr>
+        <tr><td>Data exit</td><td>Full export in a documented, non-proprietary format, at no charge, within 30 days of termination, with the data retained for that period</td><td>Without this the switching cost is whatever the vendor decides it is. In the EU, the Data Act now supports switching rights for cloud services; use it</td></tr>
+        <tr><td>Termination for convenience or for cause</td><td>A clear right to terminate for material breach including SLA failure, and where possible for convenience with a notice period</td><td>A contract that can only end at the renewal date has one negotiation point per term</td></tr>
+        <tr><td>Security and compliance</td><td>Right to audit or to receive current attestations, breach notification within a defined window, sub-processor change notice, and the ability to object</td><td>See <a href="../regulatory-map/index.html">Regulatory Map</a> for the regimes that make this mandatory rather than optional</td></tr>
+        <tr><td>Assignment and change of control</td><td>The contract survives your own change of control and the vendor's, at the same terms</td><td>Otherwise an acquisition on either side reopens the price; see <a href="../ma-diligence-kit/index.html">M&amp;A Diligence Kit</a></td></tr>
+        <tr><td>Service levels with teeth</td><td>Credits that are meaningful, an escalation path, and termination rights after repeated failure</td><td>A 99.9 percent SLA with a 5 percent credit is a marketing statement</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h2>Running the renewal conversation</h2>
+      <p>Vendors run renewals as a sales process with a playbook, a quota, and a quarter-end. Most customers run them as an admin task. The asymmetry is the whole problem.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ol class="num-list">
+        <li><div><b>Know your number before theirs</b>Utilization, value realized, the cost of the alternative including migration, and the internal budget. If you cannot say what the product is worth to you, the vendor will say it for you.</div></li>
+        <li><div><b>Make the alternative real</b>A credible evaluation of a competitor, or of doing without, changes the vendor's behavior more than any argument. It does not have to be a bluff to work; it has to be visible.</div></li>
+        <li><div><b>Use the vendor's calendar</b>Vendors discount at their quarter-end and year-end. If your renewal date does not align, ask to move it. A three-month extension to reach their fiscal year-end is often worth more than any other single lever.</div></li>
+        <li><div><b>Trade term for price, carefully</b>A longer commitment is the vendor's favorite ask. Accept it only with the uplift cap, the seat flexibility, and the exit terms above, so that a three-year deal does not become three years of leverage for them.</div></li>
+        <li><div><b>Bundle the asks</b>Bring the clause corrections, the price, and any service issues to the same conversation. Vendors will fix contract terms in exchange for a renewal they were worried about; they will not reopen the contract mid-term.</div></li>
+        <li><div><b>Escalate above the account executive</b>The AE's discount authority is limited and their incentive is to close at the highest price that does not lose the deal. A conversation between your executive and theirs, at the right moment, changes both.</div></li>
+        <li><div><b>Get everything in the order form</b>Verbal commitments about roadmap, support, or future pricing are worth nothing at the next renewal. If it matters, it is in the signed document.</div></li>
+      </ol>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>A $400k renewal</h2>
+      <p>The pattern recurs at every scale.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">Without the calendar</span><p>The contract for a collaboration platform, $400k a year, 2,000 seats, auto-renews at 8 percent with 90 days' notice. Nobody notices until the invoice arrives at $432k. Utilization was 1,300 seats. The vendor points to the notice clause. The organization pays $432k for a year, of which roughly $150k is for seats nobody uses, and is now negotiating the following year from the same position.</p></div>
+      <div class="stage-cell"><span class="env-label b">With it</span><p>At 180 days, utilization shows 1,300 active seats. A competitor evaluation begins, visibly. At 120 days the vendor is told the intent is to renew at 1,400 seats, flat price per seat, with an uplift cap and true-down rights, or to migrate. At 90 days non-renewal notice is served to preserve the option. The vendor, facing a quarter-end and a live competitor, agrees to 1,400 seats at a 5 percent per-seat discount, 3 percent cap, annual true-down. The renewal lands at $266k. The difference funds two engineers.</p></div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h2>Procurement owns the contract, nobody owns the value</h2>
+      <p>Handing renewals to procurement produces better paper and the same shelfware, because procurement can negotiate the rate but not the seat count, the tier, or whether the product is needed at all.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Procurement negotiates a 7 percent discount on a renewal for a tool the engineering team stopped using six months ago. The discount is reported as a saving. The tool is renewed for two more years.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Every contract has a business owner who answers three questions at 180 days: are we using it, do we still need it, and what is it worth. Procurement then negotiates the terms for the answer. Tie the owner's answer to the utilization data, not to their preference, and make the total contract value by owner visible in the <a href="../technology-budget-management/index.html">technology budget</a> so that shelfware has a name attached to it.</p></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Reference only. The renewal calendar template and negotiation playbook are part of the private methodology.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

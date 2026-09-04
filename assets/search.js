@@ -43,7 +43,7 @@
     '<div class="cto-search-inner">' +
       '<div class="cto-search-box">' +
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
-        '<input class="cto-search-input" type="text" placeholder="Search all 60+ pages\u2026 (e.g. \u201cbreak-even\u201d, \u201czero trust\u201d, \u201cRACI\u201d)" autocomplete="off" spellcheck="false">' +
+        '<input class="cto-search-input" type="text" placeholder="Search all 65+ pages\u2026 (e.g. \u201cbreak-even\u201d, \u201czero trust\u201d, \u201cRACI\u201d)" autocomplete="off" spellcheck="false">' +
         '<span class="cto-search-kbd">/</span>' +
       '</div>' +
       '<div class="cto-search-results"></div>' +

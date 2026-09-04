@@ -4,10 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>We're Introducing AI</title>
+<meta name="description" content="A situational entry point for a technology leader being asked to bring AI into the enterprise: the decisions with dates, the questions that separate viable initiatives from demos, the pilot-sprawl trap, and what should exist at 30, 90, and 180 days.">
+<meta property="og:title" content="We're Introducing AI | CTO Toolkit">
+<meta property="og:description" content="A situational entry point for a technology leader being asked to bring AI into the enterprise: the decisions with dates, the questions that separate viable initiatives from demos, the pilot-sprawl trap, and what should exist at 30, 90, and 180 days.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/situation-ai/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="We're Introducing AI | CTO Toolkit">
+<meta name="twitter:description" content="A situational entry point for a technology leader being asked to bring AI into the enterprise: the decisions with dates, the questions that separate viable initiatives from demos, the pilot-sprawl trap, and what should exist at 30, 90, and 180 days.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <style>
   :root {
     --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
     --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
     --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
     --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -23,9 +34,19 @@
   .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
   .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
   .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
-  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-head a { color: var(--accent); }
   .stage-cell { padding: 8px 20px 16px; }
+  .stage-cell p { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+  .stage-cell a { color: var(--accent); }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid .stage-cell { padding: 16px 20px; }
+  .stage-grid .stage-cell p { margin: 0; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
   .situation-list { list-style: none; margin: 0; padding: 0; counter-reset: sit; }
   .situation-list li { counter-increment: sit; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
   .situation-list li:last-child { border-bottom: none; }
@@ -33,7 +54,22 @@
   .situation-list a { color: var(--ink); font-weight: 600; text-decoration: none; font-size: 13.5px; }
   .situation-list a:hover { color: var(--accent); }
   .situation-list span { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 2px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .matrix-table td a { color: var(--accent); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -41,31 +77,104 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>We're Introducing AI</h1>
-  <p>From what to build, to how to build it safely, to what it costs, to what it does to how your team works. Every link below points to a full page elsewhere on this site.</p>
+  <p>The pressure is probably coming from the board or the CEO, the use cases are probably vague, and there are probably already three unsanctioned tools in use. The job is not to slow this down; it is to give it a structure so that the money goes to initiatives that can actually ship, the data is ready when they do, and the governance exists before the first regulator or customer asks about it. This page sequences the decisions and links to the pages that hold the detail.</p>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reading order</span>
-      <h3>Where to start</h3>
-      <p>Decide what's worth building before diving into architecture; govern and cost it once the initiative is real.</p>
+      <h2>Where to start</h2>
+      <p>Portfolio and data first, because they decide what is feasible. Governance and architecture next, because they decide what is safe and repeatable. Cost throughout.</p>
     </div>
     <div class="stage-cell">
       <ol class="situation-list">
-        <li><div><a href="../ai-portfolio-management/index.html">AI Portfolio Management</a><span>Which AI initiatives should get built, and which get killed before real money is spent.</span></div></li>
-        <li><div><a href="../ai-architecture-map/index.html">AI Architecture Map</a><span>RAG, document intelligence, agent orchestration, and the managed-versus-self-hosted tradeoff.</span></div></li>
-        <li><div><a href="../ai-governance-map/index.html">AI Governance Map</a><span>Data foundation, governance layer, trusted outputs, and the regulatory frameworks that require them.</span></div></li>
-        <li><div><a href="../ai-finops-map/index.html">AI FinOps Map</a><span>Token pricing, PTU and reserved capacity, and GPU amortization for self-hosted models.</span></div></li>
-        <li><div><a href="../ai-engineering-operating-model/index.html">AI and the Engineering Operating Model</a><span>What it does to code review, junior engineer development, and how to measure productivity once the tool is part of the output.</span></div></li>
-        <li><div><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a><span>Apply the same acceptance tiers to AI-specific risk rather than inventing a separate standard.</span></div></li>
+        <li><div><a href="../ai-portfolio-management/index.html">AI Portfolio Management</a><span>Gate on feasibility and data readiness first, then classify every initiative as Scale, Incubate, Watch, or Kill. This is the page that turns a wishlist into a portfolio.</span></div></li>
+        <li><div><a href="../data-strategy/index.html">Data Strategy</a><span>Data quality, lineage, and ownership are the prerequisite most AI programs discover after the pilot. Read this before committing to anything that depends on your own data.</span></div></li>
+        <li><div><a href="../ai-governance-map/index.html">AI Governance Map</a><span>Risk tiering, intake, human oversight, and the standards landscape: ISO/IEC 42001, NIST AI RMF, and when certification is worth it.</span></div></li>
+        <li><div><a href="../regulatory-map/index.html">Regulatory Map</a><span>The EU AI Act timeline after the 2026 deferral, the US state picture, and who owns each obligation.</span></div></li>
+        <li><div><a href="../ai-architecture-map/index.html">AI Architecture Map</a><span>RAG, document intelligence, agent orchestration, PHI and PII protection, and observability, with provider choices at every stage.</span></div></li>
+        <li><div><a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a><span>Agents act with whatever identity they are given; scope it before the first one reaches production.</span></div></li>
+        <li><div><a href="../ai-finops-map/index.html">AI FinOps Map</a><span>Token economics, reserved capacity, caching and batch discounts, and the break-even for self-hosting. Model this before the bill teaches you.</span></div></li>
+        <li><div><a href="../ai-engineering-operating-model/index.html">AI and the Engineering Operating Model</a><span>What changes in how engineers work when AI tooling is in the loop, and what does not.</span></div></li>
+        <li><div><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a><span>State explicitly what the organization will not accept from an AI system before someone ships it.</span></div></li>
+        <li><div><a href="../build-vs-buy/index.html">Build vs Buy</a><span>Most AI capability should be bought or composed. The page for deciding where the exceptions are.</span></div></li>
       </ol>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Decisions with a date</span>
+      <h2>What has to be decided, and by when</h2>
+      <p>The organization is already using AI whether or not a decision has been made. These decisions replace drift with structure without slowing the work down.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>By when</th><th>Decision</th><th>Who owns it</th><th>What it looks like when it goes wrong</th></tr>
+        <tr><td>Day 7</td><td>Who owns AI in the organization: one accountable executive, a portfolio, and an intake path, so that requests have somewhere to go</td><td>CEO, on the CTO's recommendation</td><td>Every function starts its own initiative, nobody can say what the company is doing with AI, and the board finds out from a vendor</td></tr>
+        <tr><td>Day 14</td><td>What is already in use, sanctioned or not, and which of it handles customer, employee, or regulated data</td><td>CTO with the CISO</td><td>A shadow tool with an open data-retention policy has been receiving customer records for six months</td></tr>
+        <tr><td>Day 30</td><td>The risk tiers and the intake criteria, published, with the uses that are prohibited outright named</td><td>CTO with legal and the CISO</td><td>Governance arrives after the first initiative ships and is experienced as a brake rather than a lane</td></tr>
+        <tr><td>Day 45</td><td>The first portfolio classification: which initiatives Scale, Incubate, Watch, or Kill, and what each one costs</td><td>CTO with the business owners</td><td>Fifteen pilots, no kills, and a budget line that nobody can trace to an outcome</td></tr>
+        <tr><td>Day 60</td><td>The platform decision: which model providers, which hosting posture, which guardrails and observability are mandatory for anything in production</td><td>CTO with the architecture function</td><td>Each team picks a provider, builds its own retrieval stack, and none of it is monitorable or portable</td></tr>
+        <tr><td>Day 90</td><td>The unit economics of the first production initiative, measured, and whether it justifies scaling</td><td>CTO with the CFO</td><td>The pilot's demo cost is used as the production estimate and the bill arrives at ten times the model</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Questions to ask</span>
+      <h2>Questions that separate initiatives from demos</h2>
+      <p>Ask these of every proposed initiative before it gets a budget line, and again before it goes to production.</p>
+    </div>
+    <div class="stage-cell">
+      <ul class="checklist">
+        <li>For each proposed initiative, what data does it need, does it exist, who owns it, and what is its quality today</li>
+        <li>Which initiatives would be valuable if they worked, and which are being proposed because they are visible</li>
+        <li>What is the organization's actual tolerance for a wrong answer in this use case, and who has said so</li>
+        <li>Which of the current AI tools in use retain or train on the data sent to them, and what has been sent</li>
+        <li>Where does a human review the output, and is that review real or a checkbox</li>
+        <li>What does the first initiative cost per transaction at production volume, not at demo volume</li>
+        <li>Which regulations already apply to the decisions the AI will influence, regardless of the fact that it is AI</li>
+        <li>If the model provider changed pricing, terms, or availability tomorrow, what would break and how fast could it be swapped</li>
+        <li>What would the organization stop doing if this initiative succeeded, and does anyone want to stop doing it</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The trap</span>
+      <h2>Pilot sprawl</h2>
+      <p>The most common state of an enterprise AI program at month nine is a dozen pilots, each with a champion, none with a kill criterion, and no way to say which of them the company is actually betting on.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Every function got a pilot approved because saying no felt like being against AI. Each one used a different provider, built its own prompt library, and stored its own copy of the data. Six are technically working, none are in production, the cost is now visible on the cloud bill, and the board asks what the company got for it. The honest answer is a set of demos.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Run it as a portfolio from day one, with the gating in <a href="../ai-portfolio-management/index.html">AI Portfolio Management</a>: feasibility and data readiness before anything else, an explicit Kill classification that is used, and a cap on concurrent incubations. Pay for the platform layer once, centrally: guardrails, observability, retrieval, and cost attribution. Measure unit economics on the first production initiative before scaling anything, and report the portfolio to the board as a portfolio, including the kills.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Outputs</span>
+      <h2>What should exist at 30, 90, and 180 days</h2>
+      <p>A program that can show these artifacts is a program the board can fund with confidence. One that cannot is a set of pilots.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Checkpoint</th><th>What exists</th></tr>
+        <tr><td>Day 30</td><td>One accountable owner and a published intake path. An inventory of AI tools already in use, with data exposure classified. Risk tiers and prohibited uses published. The first version of the risk appetite statement covering AI systems.</td></tr>
+        <tr><td>Day 90</td><td>A classified portfolio with costs, owners, and kill criteria. A platform decision recorded as an ADR: providers, hosting posture, mandatory guardrails and observability. The data readiness gaps for the Scale and Incubate initiatives named with owners. At least one initiative killed, publicly, so the organization learns the classification is real.</td></tr>
+        <tr><td>Day 180</td><td>The first production initiative live, with measured unit economics and a monitored error rate, reported to the board. Cost attribution by initiative on the bill. A governance process that has processed real intake and can show its decisions. A one-page AI narrative for the board that describes a portfolio, not a pile of pilots.</td></tr>
+      </table>
     </div>
   </div>
 </main>
 
 <footer>
-  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html" style="color:var(--accent);">CTO Toolkit</a> home page.
+  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html">CTO Toolkit</a> home page.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

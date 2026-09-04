@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Debt Economics</title>
+<meta name="description" content="Turning technical debt into three numbers per item (carry cost, risk exposure, remediation cost), a browser calculator that ranks a debt portfolio by return on the remediation dollar and sequences it across years within a budget, where high-ratio debt hides, and the debt-budget pitfall that funds nothing in particular.">
+<meta property="og:title" content="Technical Debt Economics | CTO Toolkit">
+<meta property="og:description" content="Turning technical debt into three numbers per item (carry cost, risk exposure, remediation cost), a browser calculator that ranks a debt portfolio by return on the remediation dollar and sequences it across years within a budget, where high-ratio debt hides, and the debt-budget pitfall that funds nothing in particular.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technical-debt-economics/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technical Debt Economics | CTO Toolkit">
+<meta name="twitter:description" content="Turning technical debt into three numbers per item (carry cost, risk exposure, remediation cost), a browser calculator that ranks a debt portfolio by return on the remediation dollar and sequences it across years within a budget, where high-ratio debt hides, and the debt-budget pitfall that funds nothing in particular.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .btn { padding: 9px 18px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .field:last-child { border-bottom: none; }
+  .field input, .field select { font-family: var(--ui); font-size: 13px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); width: 150px; }
+  .result { margin-top: 14px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); margin-right: 4px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+    .field input, .field select { width: 110px; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technical Debt Economics</h1>
+  <p>Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a real budget.</p>
+  <div class="caveat">The calculator is a transparent, simplified version of the debt carry-cost optimizer in the private methodology. It ignores dependencies, team capacity, and partial remediation on purpose, so every ranking it produces can be explained. Inputs are estimates; the value is in the ranking, not the decimals.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h2>Three numbers per item, or it is not a debt conversation</h2>
+      <p>Technical debt discussions fail because they are conducted in adjectives. An item is not fundable until it has a carry cost, a remediation cost, and a risk exposure, each stated in dollars per year. Rough is fine. Absent is not.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Number</th><th>What it is</th><th>How to estimate it in an hour</th></tr>
+        <tr><td>Carry cost</td><td>What the debt costs every year it stays: slower delivery, extra operational toil, licensing for the thing you should have retired, the workaround everyone maintains</td><td>Engineering hours per month spent working around it, times a loaded hourly rate, times twelve, plus any hard costs (licenses, hosting, support contracts) that exist only because of it</td></tr>
+        <tr><td>Risk exposure</td><td>The expected annual cost of the incident, breach, or outage the debt makes more likely</td><td>Probability of a material event in a year, times the cost of that event (revenue, recovery, credits, regulatory). A 20 percent chance of a $500k event is $100k a year. Precision is not the point; the order of magnitude is</td></tr>
+        <tr><td>Remediation cost</td><td>What it costs to make it go away, once</td><td>Engineering hours to fix, migrate, or retire, times the loaded rate, plus any one-time hard costs. Include the cost of the parallel run or cutover if there is one</td></tr>
+      </table>      <p>Carry cost plus risk exposure is the annual cost of doing nothing. Divided into remediation cost it gives the payback period. Items with a payback under a year are not debt decisions; they are operating decisions that have been avoided. Items with a payback over five years are usually not worth doing unless the risk exposure is dominated by a tail event that the organization has said it will not accept, which is what <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a> is for.</p>
+    </div></div>
+  </div>
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h2>Carry-cost calculator and multi-year sequencer</h2>
+      <p>Enter up to eight debt items and an annual remediation budget. The tool computes annual cost of doing nothing, payback, and a ranking, then sequences the items across years within the budget. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <div class="field"><span>Loaded engineering cost per hour ($)</span><input type="number" id="td-rate" value="120"></div>
+      <div class="field"><span>Annual remediation budget ($)</span><input type="number" id="td-budget" value="600000"></div>
+      <div class="field"><span>Planning horizon (years)</span><input type="number" id="td-years" value="3" min="1" max="6"></div>
+      <div style="overflow-x:auto; margin-top:12px;">
+      <table class="matrix-table" id="td-table">
+        <tr><th>Item</th><th>Hours / month lost to it</th><th>Hard carry cost / yr ($)</th><th>Event probability / yr (%)</th><th>Event cost ($)</th><th>Remediation hours</th><th>Remediation hard cost ($)</th></tr>
+      </table>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn" id="td-calc">Rank and sequence</button>
+        <button class="btn secondary" id="td-sample">Load sample portfolio</button>
+        <button class="btn secondary" id="td-clear">Clear</button>
+      </div>
+      <div id="td-result" class="result" style="display:none;"></div>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h2>How the sequencer decides</h2>
+      <p>The logic is deliberately simple enough to explain to a CFO in one sentence: fund the items that remove the most annual cost per remediation dollar, within the budget, and carry the rest.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ol class="num-list">
+        <li><div><b>Annual cost of doing nothing</b>Carry cost plus risk exposure, for each item.</div></li>
+        <li><div><b>Ratio</b>Annual cost of doing nothing divided by remediation cost. This is the return on the remediation dollar. Items are ranked by it.</div></li>
+        <li><div><b>Greedy allocation by year</b>Walk the ranked list. If an item fits in the current year's remaining budget, fund it that year. If it does not fit, carry it to the next year and keep walking so smaller items can use the remaining capacity. Repeat for the horizon.</div></li>
+        <li><div><b>Carry cost paid meanwhile</b>Every year an item is not yet remediated, its annual cost of doing nothing is paid. The total across the horizon is reported so the sequence can be compared against a different budget.</div></li>
+        <li><div><b>What it does not do</b>It does not model dependencies between items, capacity constraints per team, or the option of partial remediation. The private version does; this is the transparent core. A sequencing decision that cannot be explained is one the CFO will not fund twice.</div></li>
+      </ol>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>Reading a ranked portfolio</h2>
+      <p>Load the sample portfolio above. The ranking usually surprises people in the same way.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What the ranking shows</span><p>The item everyone talks about, the large monolith rewrite, ranks low: a large remediation cost against a carry cost that is real but diffuse. The item nobody talks about, an unsupported database version with a meaningful breach probability, ranks first because its risk exposure dominates and its remediation is cheap. A small integration workaround that costs one engineer a week a month ranks second. Two of the top four items cost less than $50k to fix.</p></div>
+      <div class="stage-cell"><span class="env-label b">What to do with it</span><p>Fund the top of the list this quarter without a further business case; the numbers are the case. Take the monolith to the <a href="../technology-capital-allocation/index.html">capital allocation</a> conversation as a transform investment, not a debt item, because that is what it is. Report the annual cost of doing nothing for the unfunded remainder to the board as a number, once a year, so nobody can later say the risk was hidden.</p></div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>Where debt hides and how to find it</h2>
+      <p>The backlog in <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> and the signals in <a href="../technology-diligence-map/index.html">Technology Diligence</a> are the inputs. These are the places that reliably produce items with high ratios.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Source</th><th>What to look for</th><th>Typical carry cost driver</th></tr>
+        <tr><td>Unsupported or end-of-life versions</td><td>Runtimes, databases, operating systems, and frameworks past vendor support</td><td>Risk exposure; also extended support contracts and the inability to patch</td></tr>
+        <tr><td>Manual operational toil</td><td>Deployments, restores, certificate renewals, and data fixes done by hand</td><td>Hours per month, plus the outage each one eventually causes</td></tr>
+        <tr><td>Duplicated capability</td><td>Two or more systems doing the same job because a migration stopped halfway</td><td>Double licensing, double integration, double on-call</td></tr>
+        <tr><td>Undocumented single-person systems</td><td>Anything only one engineer can change</td><td>Key-person risk expressed as a probability times the cost of losing them</td></tr>
+        <tr><td>Missing tests on critical paths</td><td>Change failure rate concentrated in a few services</td><td>Incident cost and the slowdown of every change to those services</td></tr>
+        <tr><td>Deferred security findings</td><td>Pen test and scan findings older than one quarter</td><td>Almost pure risk exposure; usually cheap to remediate relative to it</td></tr>
+        <tr><td>Workarounds in the integration layer</td><td>Transformations and retries that exist because a contract was never fixed</td><td>Hours per month and the incidents when the workaround meets an edge case</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h2>The debt budget that funds nothing in particular</h2>
+      <p>Allocating twenty percent of capacity to debt without a ranked list produces twenty percent of capacity spent on whatever each team finds annoying.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Every sprint has a debt allocation. Engineers use it to refactor code they touch anyway. The unsupported database, which nobody enjoys working on, is untouched for three years. The allocation is visible in the roadmap, so leadership believes debt is being managed. The breach, when it comes, is on the database.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>The debt allocation funds the ranked list, top down, and nothing else. Local refactoring is part of normal delivery, not the debt budget. The list is reviewed quarterly, new items need the three numbers to get on it, and the annual cost of doing nothing for the unfunded tail is reported alongside the items funded. See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the delivery signals that tell you whether the carry cost estimates were right.</p></div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var tbl=document.getElementById('td-table');
+  var N=8;
+  var sample=[
+    ['Unsupported database version (v11, EOL)',20,48000,20,750000,240,25000],
+    ['Integration workaround: nightly retry job',40,0,5,60000,80,0],
+    ['Manual certificate renewal across 30 hosts',12,0,15,120000,60,0],
+    ['Duplicate CRM after partial migration',30,180000,2,50000,900,40000],
+    ['Monolith order service rewrite',120,60000,8,400000,6000,150000],
+    ['Deferred pen test findings (Q1)',4,0,12,500000,120,0],
+    ['Single-owner billing reconciliation script',10,0,10,300000,200,0],
+    ['Legacy VPN appliance out of support',6,36000,10,250000,160,45000]
+  ];
+  for(var i=0;i<N;i++){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><input type="text" id="td-n'+i+'" placeholder="Item '+(i+1)+'" style="width:220px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>'+
+      ['h','c','p','e','rh','rc'].map(function(k){return '<td><input type="number" id="td-'+k+i+'" style="width:110px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>';}).join('');
+    tbl.appendChild(tr);
+  }
+  function v(id){var e=document.getElementById(id);var x=parseFloat(e.value);return isNaN(x)?0:x;}
+  function fmt(n){return '$'+Math.round(n).toLocaleString();}
+  document.getElementById('td-sample').addEventListener('click',function(){
+    sample.forEach(function(s,i){
+      document.getElementById('td-n'+i).value=s[0];
+      ['h','c','p','e','rh','rc'].forEach(function(k,j){document.getElementById('td-'+k+i).value=s[j+1];});
+    });
+  });
+  document.getElementById('td-clear').addEventListener('click',function(){
+    for(var i=0;i<N;i++){document.getElementById('td-n'+i).value='';['h','c','p','e','rh','rc'].forEach(function(k){document.getElementById('td-'+k+i).value='';});}
+    document.getElementById('td-result').style.display='none';
+  });
+  document.getElementById('td-calc').addEventListener('click',function(){
+    var rate=v('td-rate'),budget=v('td-budget'),years=Math.max(1,Math.min(6,Math.round(v('td-years'))||3));
+    var items=[];
+    for(var i=0;i<N;i++){
+      var name=document.getElementById('td-n'+i).value.trim();
+      var rh=v('td-rh'+i),rc=v('td-rc'+i);
+      if(!name&&rh===0&&rc===0)continue;
+      var carry=v('td-h'+i)*12*rate+v('td-c'+i);
+      var risk=(v('td-p'+i)/100)*v('td-e'+i);
+      var rem=rh*rate+rc;
+      var nothing=carry+risk;
+      items.push({name:name||('Item '+(i+1)),carry:carry,risk:risk,rem:rem,nothing:nothing,ratio:rem>0?nothing/rem:Infinity,payback:nothing>0?rem/nothing:Infinity,year:null});
+    }
+    var out=document.getElementById('td-result');
+    if(!items.length){out.style.display='block';out.innerHTML='Enter at least one item, or load the sample portfolio.';return;}
+    items.sort(function(a,b){return b.ratio-a.ratio;});
+    var remaining=[],carried=0;
+    for(var y=1;y<=years;y++){
+      var cap=budget;
+      items.forEach(function(it){
+        if(it.year===null&&it.rem<=cap){it.year=y;cap-=it.rem;}
+      });
+      items.forEach(function(it){if(it.year===null||it.year>y)carried+=it.nothing;});
+    }
+    var totalNothing=items.reduce(function(s,i){return s+i.nothing;},0);
+    var totalRem=items.reduce(function(s,i){return s+i.rem;},0);
+    var h='<p><b>Annual cost of doing nothing across the portfolio: '+fmt(totalNothing)+'</b> against a one-time remediation cost of '+fmt(totalRem)+'. Cost paid over the '+years+'-year horizon on items not yet remediated: '+fmt(carried)+'.</p>';
+    h+='<table class="matrix-table" style="margin-top:8px;"><tr><th>Rank</th><th>Item</th><th>Carry / yr</th><th>Risk / yr</th><th>Do nothing / yr</th><th>Remediate</th><th>Payback</th><th>Fund in</th></tr>';
+    items.forEach(function(it,i){
+      var pb=isFinite(it.payback)?(it.payback<1?(Math.round(it.payback*12)+' months'):(it.payback.toFixed(1)+' years')):'n/a';
+      var fy=it.year?('Year '+it.year):'<span style="color:var(--b)">Unfunded in horizon</span>';
+      h+='<tr><td>'+(i+1)+'</td><td>'+it.name.replace(/</g,'&lt;')+'</td><td>'+fmt(it.carry)+'</td><td>'+fmt(it.risk)+'</td><td>'+fmt(it.nothing)+'</td><td>'+fmt(it.rem)+'</td><td>'+pb+'</td><td>'+fy+'</td></tr>';
+    });
+    h+='</table>';
+    var unf=items.filter(function(i){return !i.year;});
+    if(unf.length){var un=unf.reduce(function(s,i){return s+i.nothing;},0);h+='<p style="margin-top:10px;">Items unfunded within the horizon carry '+fmt(un)+' per year. That number belongs in the board report as accepted risk, or in the next budget conversation as the case for a larger allocation.</p>';}
+    out.style.display='block';out.innerHTML=h;
+  });
+})();
+</script>
+
+<footer>
+  Reference and working tool. The full optimizer with dependency handling, capacity constraints, and facilitation is available through direct engagement.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

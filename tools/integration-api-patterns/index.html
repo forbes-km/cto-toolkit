@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integration &amp; API Patterns</title>
+<meta name="description" content="A selection guide and catalog for integration patterns: the three questions that narrow the choice, synchronous, asynchronous, and data integration patterns with the rule that keeps each healthy, the combinations that recur in healthy estates, the rules an architecture review should enforce, and the enterprise service bus mistake that keeps returning under new names.">
+<meta property="og:title" content="Integration &amp; API Patterns | CTO Toolkit">
+<meta property="og:description" content="A selection guide and catalog for integration patterns: the three questions that narrow the choice, synchronous, asynchronous, and data integration patterns with the rule that keeps each healthy, the combinations that recur in healthy estates, the rules an architecture review should enforce, and the enterprise service bus mistake that keeps returning under new names.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/integration-api-patterns/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Integration &amp; API Patterns | CTO Toolkit">
+<meta name="twitter:description" content="A selection guide and catalog for integration patterns: the three questions that narrow the choice, synchronous, asynchronous, and data integration patterns with the rule that keeps each healthy, the combinations that recur in healthy estates, the rules an architecture review should enforce, and the enterprise service bus mistake that keeps returning under new names.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .btn { padding: 9px 18px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .field:last-child { border-bottom: none; }
+  .field input, .field select { font-family: var(--ui); font-size: 13px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); width: 150px; }
+  .result { margin-top: 14px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); margin-right: 4px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+    .field input, .field select { width: 110px; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Integration &amp; API Patterns</h1>
+  <p>Integration is chosen by habit more than by design, and the habit is usually whatever the last project did. This page is a selection guide first and a catalog second: three questions that narrow the field, then the patterns with the rule that keeps each one from decaying, then the combinations that work, then the small set of rules worth enforcing across teams.</p>
+  <div class="caveat">Pattern names are stable; product names are not. Where a cloud provider's messaging, streaming, or gateway service is needed, use the <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> to find the equivalent across AWS, Azure, GCP, and OCI.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h2>Three questions before any pattern</h2>
+      <p>Integration patterns are chosen by habit: whatever the last project used, or whatever the vendor's platform makes easy. Three questions, answered honestly, narrow the field to one or two patterns almost every time.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Question</th><th>If the answer is</th><th>It points toward</th></tr>
+        <tr><td>Does the caller need the answer to proceed</td><td>Yes, right now, and it changes what the caller does next</td><td>Synchronous: REST, gRPC, GraphQL</td></tr>
+        <tr><td></td><td>No, the caller only needs to know it will happen</td><td>Asynchronous: message queue, event stream, or a command with a callback</td></tr>
+        <tr><td>What happens if the other side is down</td><td>The caller must fail too, visibly</td><td>Synchronous, with a circuit breaker and an honest error</td></tr>
+        <tr><td></td><td>The work should wait and complete later</td><td>Queue with durable storage and retry; the caller is decoupled from the consumer's availability</td></tr>
+        <tr><td>How many consumers, and do they know each other</td><td>One known consumer</td><td>Point-to-point call or queue</td></tr>
+        <tr><td></td><td>Many, changing, not all known to the producer</td><td>Event stream with a published schema; producers do not know who listens</td></tr>
+        <tr><td>Is this a request, a fact, or a bulk movement of data</td><td>A request to do something</td><td>API call or command message</td></tr>
+        <tr><td></td><td>A fact that something happened</td><td>Domain event</td></tr>
+        <tr><td></td><td>A large dataset moving on a schedule</td><td>Batch, ELT into a warehouse or lakehouse, or change data capture; not an API</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Pattern catalog</span>
+      <h2>Synchronous patterns</h2>
+      <p>Use when the caller needs the answer to proceed. The cost is coupling to the callee's availability and latency; the benefit is simplicity and immediate consistency.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Pattern</th><th>Use it for</th><th>Do not use it for</th><th>The rule that keeps it healthy</th></tr>
+        <tr><td>REST over HTTP</td><td>Resource-oriented APIs consumed by many clients, public or partner APIs, anything a browser calls</td><td>High-frequency internal service-to-service calls where payload overhead matters, streaming</td><td>Version in the URL or header from day one; never break a published contract, add a new version</td></tr>
+        <tr><td>gRPC</td><td>Internal service-to-service calls with strict contracts, low latency, polyglot teams, streaming</td><td>Browser clients without a gateway, partner APIs where the consumer will not adopt protobuf</td><td>The proto file is the contract; it lives in one repository and is reviewed like code</td></tr>
+        <tr><td>GraphQL</td><td>A single front-end aggregating many back-end sources, mobile clients that need to control payload size</td><td>A general replacement for REST between services, anything where callers can craft arbitrarily expensive queries unchecked</td><td>Depth and complexity limits enforced at the gateway; persisted queries for production clients</td></tr>
+        <tr><td>API gateway</td><td>One entry point for authentication, rate limiting, routing, and observability across many services</td><td>A place to put business logic; a gateway with transformations nobody can find is the next legacy system</td><td>Cross-cutting concerns only; if a rule references a specific business entity, it belongs in a service</td></tr>
+        <tr><td>Backend for frontend</td><td>Each client type (web, mobile, partner) gets its own thin aggregation layer</td><td>Sharing one BFF across clients with different needs, which recreates the problem it solves</td><td>Owned by the client team that needs it, not by a central integration team</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Pattern catalog</span>
+      <h2>Asynchronous patterns</h2>
+      <p>Use when the caller does not need the answer now, when the other side may be down, or when many consumers should react to one fact. The cost is eventual consistency and harder debugging; the benefit is resilience and decoupling.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Pattern</th><th>Use it for</th><th>Do not use it for</th><th>The rule that keeps it healthy</th></tr>
+        <tr><td>Message queue (point-to-point)</td><td>Work that must be done exactly once by one consumer: order fulfillment, email sending, background jobs</td><td>Broadcasting a fact to many consumers</td><td>Dead-letter queue with an owner and an alert; idempotent consumers, because at-least-once delivery is the reality</td></tr>
+        <tr><td>Publish and subscribe</td><td>One fact, many independent reactions, consumers added without touching the producer</td><td>Request-reply disguised as events, where the producer secretly waits for a specific subscriber</td><td>The producer never knows or cares who listens; if it does, the pattern is wrong</td></tr>
+        <tr><td>Event streaming (log)</td><td>High-volume ordered event history, replayable by new consumers, the backbone of event-driven architecture</td><td>Simple job queues where a stream's operational cost is unjustified</td><td>Schema registry with compatibility rules enforced at publish time; retention decided by the business need to replay, not by default</td></tr>
+        <tr><td>Change data capture</td><td>Getting data out of a database into analytics, search, or another system without touching the application</td><td>A substitute for a domain event, because a row change is not a business fact</td><td>Treat the captured change as an internal feed; translate to a domain event before other teams consume it</td></tr>
+        <tr><td>Saga (choreography or orchestration)</td><td>A business transaction spanning several services where a distributed transaction is not available</td><td>Anything that could be a single service with a local transaction</td><td>Every step has a compensating action written and tested before the saga goes live</td></tr>
+        <tr><td>Outbox</td><td>Publishing an event reliably in the same transaction as the database write</td><td>Nothing; it is the correct way to do this and the alternative is lost events</td><td>The relay that reads the outbox is monitored for lag like any other consumer</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Pattern catalog</span>
+      <h2>Data integration patterns</h2>
+      <p>Moving data in bulk is not an integration problem to solve with APIs. Most systems that try end up with a nightly job that calls an endpoint a million times.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Pattern</th><th>Use it for</th><th>Trade-off</th></tr>
+        <tr><td>Scheduled batch, file or bulk export</td><td>Large periodic movements between systems that tolerate hours of latency: finance close, regulatory extracts, partner feeds</td><td>Simple and cheap; latency and the operational fragility of schedules and file formats</td></tr>
+        <tr><td>ELT into a warehouse or lakehouse</td><td>Analytics, reporting, and anything that needs a joined view across many sources</td><td>Decouples producers from consumers entirely; the platform becomes a dependency and the data has an owner problem, covered in <a href="../data-strategy/index.html">Data Strategy</a></td></tr>
+        <tr><td>Streaming ingestion</td><td>Near-real-time analytics and operational dashboards</td><td>Cost and complexity are much higher than batch; justify the latency requirement with a business decision that changes at that latency</td></tr>
+        <tr><td>Data virtualization or federation</td><td>Querying across sources without moving data, for low-volume exploratory use</td><td>Performance and the illusion of a single system; not a substitute for a real integration layer</td></tr>
+        <tr><td>Managed file transfer</td><td>Regulated B2B exchange where the counterparty will only do SFTP</td><td>Old, boring, and still correct for that case; wrap it with monitoring and a retention policy</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>Common combinations that work</h2>
+      <p>Real architectures combine patterns. These are the combinations that recur in healthy estates.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ol class="num-list">
+        <li><div><b>Command in, events out</b>A service accepts synchronous commands over REST or gRPC, writes to its own database, and publishes domain events through an outbox. Consumers subscribe. The service never calls other services synchronously to complete a write.</div></li>
+        <li><div><b>Gateway plus BFF plus internal gRPC</b>Public traffic enters through a gateway that handles auth and rate limits, hits a client-specific BFF, which calls internal services over gRPC. Nothing internal is reachable from outside.</div></li>
+        <li><div><b>Event stream plus CDC plus lakehouse</b>Operational events flow through a stream; CDC captures the database changes that predate the event design; both land in the lakehouse for analytics. The lakehouse never feeds an operational decision back synchronously.</div></li>
+        <li><div><b>Queue plus saga for long-running business processes</b>An order, a claim, a loan application: a saga orchestrator steps through services via queues, each step idempotent, each with a compensating action, with the state of every in-flight process visible in one place.</div></li>
+        <li><div><b>Strangler with an anti-corruption layer</b>New services sit behind the same gateway as the legacy system; an anti-corruption layer translates between the legacy model and the new domain model so the new services never inherit the old shape. See <a href="../modernization-execution/index.html">Legacy Modernization Execution</a>.</div></li>
+      </ol>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Governance</span>
+      <h2>The rules an architecture review should enforce</h2>
+      <p>Pattern choice is a team decision. These rules are the small set an <a href="../architecture-review-board/index.html">Architecture Review Board</a> should hold across teams, because violating them is expensive for everyone else.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ul class="checklist">
+        <li>Every published contract (OpenAPI, proto, event schema) is versioned, in a repository, reviewed, and never broken in place</li>
+        <li>No service reads another service's database; the only path is the contract</li>
+        <li>Every asynchronous consumer is idempotent and has a dead-letter path with an owner</li>
+        <li>Every synchronous call across a network boundary has a timeout, a retry policy with backoff, and a circuit breaker</li>
+        <li>Every integration is observable end to end: a correlation identifier propagates through calls and messages, and a trace exists for a single business transaction</li>
+        <li>Domain events describe business facts in business language, not table changes</li>
+        <li>Internal integration does not go through a vendor iPaaS unless the vendor owns both ends; iPaaS is for SaaS-to-SaaS</li>
+        <li>Any integration that runs on a schedule has an alert when it does not run, not only when it fails</li>
+      </ul>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h2>The enterprise service bus reborn as a platform</h2>
+      <p>Every decade the same mistake arrives under a new name: a central integration team owning a central integration product through which everything must pass.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The integration team owns the bus, the iPaaS, or the event platform, and every new integration is a ticket to that team. Transformations accumulate inside the product where no product team can see them. The team becomes the bottleneck for every delivery, the product becomes the system nobody dares upgrade, and the business logic that leaked into it is the next modernization project.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>A central team owns the platform (the broker, the gateway, the schema registry, the observability) and the rules above. Product teams own their contracts, their consumers, their transformations, and their on-call. The platform team's success metric is how little any team needs to talk to them. See <a href="../platform-engineering/index.html">Platform Engineering</a> for the operating model.</p></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Reference only. The full integration patterns catalog with worked selection examples is part of the private methodology.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

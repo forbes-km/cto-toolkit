@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identity &amp; Access Architecture</title>
+<meta name="description" content="The identity layer as a control plane: workforce, privileged, workload, and customer populations, a reference architecture mapped across Entra, AWS, Google Cloud, and independent platforms, joiner-mover-leaver lifecycle, non-human and agent identity, sequencing by risk reduced, and the one export that reveals how seriously identity has been taken.">
+<meta property="og:title" content="Identity &amp; Access Architecture | CTO Toolkit">
+<meta property="og:description" content="The identity layer as a control plane: workforce, privileged, workload, and customer populations, a reference architecture mapped across Entra, AWS, Google Cloud, and independent platforms, joiner-mover-leaver lifecycle, non-human and agent identity, sequencing by risk reduced, and the one export that reveals how seriously identity has been taken.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/identity-access-architecture/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Identity &amp; Access Architecture | CTO Toolkit">
+<meta name="twitter:description" content="The identity layer as a control plane: workforce, privileged, workload, and customer populations, a reference architecture mapped across Entra, AWS, Google Cloud, and independent platforms, joiner-mover-leaver lifecycle, non-human and agent identity, sequencing by risk reduced, and the one export that reveals how seriously identity has been taken.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .btn { padding: 9px 18px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .field:last-child { border-bottom: none; }
+  .field input, .field select { font-family: var(--ui); font-size: 13px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); width: 150px; }
+  .result { margin-top: 14px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); margin-right: 4px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+    .field input, .field select { width: 110px; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Identity &amp; Access Architecture</h1>
+  <p>Identity is the first-move recommendation in the <a href="../zero-trust-maturity/index.html">Zero-Trust Maturity</a> model and the control every other control depends on. This page is the standalone treatment: the populations most programs forget, a reference architecture across the major platforms, the lifecycle process that decides whether the architecture works, and the sequence to follow when everything is weak.</p>
+  <div class="caveat">Provider feature names change frequently. The layer structure is stable; verify the current product name and capability against the provider's documentation before designing to it. See <a href="../security-program/index.html">Building a Security Program</a> for where identity sits in the wider sequence and <a href="../data-governance/index.html">Data Governance &amp; Privacy</a> for the access-to-data side of the same problem.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h2>Identity is the control plane, not a service</h2>
+      <p>Every other security control assumes the request came from who it says it did. If that assumption is weak, segmentation, detection, and encryption are all decorating an open door.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>Most estates have at least four identity populations, and most identity programs are built for only the first. The others are where the breaches happen.</p>      <table class="matrix-table">
+        <tr><th>Population</th><th>What it covers</th><th>Where it usually is</th><th>Where it needs to be</th></tr>
+        <tr><td>Workforce</td><td>Employees and contractors signing in to SaaS, VPN, and internal apps</td><td>SSO for the big apps, local accounts for everything else, MFA on the VPN only</td><td>One directory, every app federated, phishing-resistant MFA everywhere, no local accounts left standing</td></tr>
+        <tr><td>Privileged</td><td>Admins of cloud tenants, directories, databases, network, and the identity platform itself</td><td>Standing global admin held by six people, shared break-glass account in a password manager</td><td>No standing privilege. Just-in-time elevation with approval, time-bound, logged, and reviewed. Break-glass accounts monitored, tested quarterly</td></tr>
+        <tr><td>Workload</td><td>Service principals, managed identities, IAM roles, API keys, CI runners, agents</td><td>Long-lived secrets in config, keys created by whoever needed one, nobody knows how many exist</td><td>Managed identities or short-lived federated tokens wherever the platform supports them, secrets in a vault with rotation, an inventory with owners</td></tr>
+        <tr><td>Customer and partner</td><td>External users of your products and B2B partners reaching internal systems</td><td>Built into each product separately, partner access through a shared VPN account</td><td>A dedicated customer identity platform with its own risk policy, partners federated to their own directory with scoped, expiring access</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference architecture</span>
+      <h2>The layers a mature identity estate has</h2>
+      <p>Provider names differ; the structure does not. The table maps each layer to what it looks like on the major platforms so an architecture review can ask whether each layer exists, not which product it uses.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Layer</th><th>Purpose</th><th>Microsoft Entra</th><th>AWS</th><th>Google Cloud</th><th>Independent</th></tr>
+        <tr><td>Authoritative source</td><td>One system of record for who exists, in what role, reporting to whom</td><td>HR system feeding Entra ID via provisioning</td><td>HR system feeding IAM Identity Center via an external IdP</td><td>HR system feeding Cloud Identity via an external IdP</td><td>Workday, SAP SuccessFactors, or similar as source; Okta or Entra as the directory</td></tr>
+        <tr><td>Directory and federation</td><td>Single identity, federated to every application</td><td>Entra ID with SAML and OIDC apps, Enterprise Apps gallery</td><td>IAM Identity Center for AWS accounts, external IdP for everything else</td><td>Cloud Identity plus an external IdP</td><td>Okta, Ping</td></tr>
+        <tr><td>Authentication policy</td><td>Decide per request whether to allow, step up, or block, based on risk</td><td>Conditional Access with sign-in and user risk from Identity Protection</td><td>IdP-side policy; AWS does not own workforce authentication policy</td><td>IdP-side policy; Context-Aware Access for Google resources</td><td>Okta Adaptive MFA, Ping policy engine</td></tr>
+        <tr><td>Privileged access</td><td>Time-bound elevation with approval and audit</td><td>Privileged Identity Management for roles and groups, Administrative Units for scope</td><td>Permission sets in IAM Identity Center with short session durations; no standing admin in the management account</td><td>IAM Conditions with time bounds, Privileged Access Manager</td><td>CyberArk, BeyondTrust, or the IdP's own JIT feature</td></tr>
+        <tr><td>Workload identity</td><td>Services authenticate without long-lived secrets</td><td>Managed identities, workload identity federation for GitHub and Kubernetes</td><td>IAM roles, IRSA and Pod Identity for EKS, OIDC federation for CI</td><td>Service accounts with workload identity federation, no downloaded keys</td><td>SPIFFE and SPIRE for cross-platform workloads</td></tr>
+        <tr><td>Secrets</td><td>The credentials that cannot be eliminated, held once, rotated, audited</td><td>Key Vault</td><td>Secrets Manager, Parameter Store</td><td>Secret Manager</td><td>HashiCorp Vault</td></tr>
+        <tr><td>Governance</td><td>Access reviews, entitlement packages, separation of duties, certifications</td><td>Entra ID Governance: access packages, access reviews, lifecycle workflows</td><td>IAM Access Analyzer for unused access, external IGA for reviews</td><td>Policy Analyzer, external IGA for reviews</td><td>SailPoint, Saviynt</td></tr>
+        <tr><td>Device and session</td><td>Trust the device as well as the user</td><td>Intune compliance signal into Conditional Access</td><td>IdP device trust signal</td><td>Endpoint Verification into Context-Aware Access</td><td>Jamf, CrowdStrike, or the IdP device trust integration</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Lifecycle</span>
+      <h2>Joiner, mover, leaver: the process that decides whether the architecture works</h2>
+      <p>The most sophisticated Conditional Access policy in the world does nothing about the contractor who left eight months ago and still has a working account.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">Where it fails</span><p>Access is granted by ticket, on request, by whoever is asked. Nobody removes access when someone changes role, so tenure equals entitlement. Offboarding disables the directory account but not the twelve SaaS apps with local accounts, the shared service credential the person knew, or the API key they created. The access review is an annual spreadsheet that every manager approves in full because rejecting anything means explaining it.</p></div>
+      <div class="stage-cell"><span class="env-label b">What good looks like</span><p>Birthright access is defined per role and granted automatically from the HR event. Anything beyond birthright is requested through an access package with a named approver and an expiry. A mover event triggers removal of the old role's entitlements, not just addition of the new. A leaver event is a single action that cascades to every federated app within minutes, and there is a report of what could not be cascaded, which is the list of local accounts still to be eliminated. Access reviews are quarterly, scoped to privileged and sensitive entitlements, and the default on no response is removal.</p></div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Non-human identity</span>
+      <h2>The population that is now larger than the workforce</h2>
+      <p>In most cloud estates service principals, roles, keys, and automation identities outnumber people three to one and nobody owns the inventory. AI agents are adding to this fast, and they act with whatever identity they are given.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>The questions to ask, in order:</p>      <ol class="num-list">
+        <li><div><b>How many exist</b>Pull the full list of service principals, IAM roles, service accounts, and API keys from every cloud tenant and the CI system. If the number is a surprise, that is the finding.</div></li>
+        <li><div><b>Which have an owner</b>Every non-human identity needs a named human owner and a purpose. Anything without one is a candidate for disablement after a quarantine period.</div></li>
+        <li><div><b>Which use long-lived secrets</b>A client secret or access key that does not expire is a credential that will eventually be in a repository, a log, or a former employee's laptop. Migrate to managed identity or federated tokens; where impossible, vault and rotate.</div></li>
+        <li><div><b>Which are over-privileged</b>Most workload identities were granted Contributor or PowerUser because it worked. Use the platform's unused-access analysis to shrink them to what they call.</div></li>
+        <li><div><b>Which can reach production from outside it</b>CI runners and developer tooling that hold production credentials are the standard path from a compromised laptop to a production breach.</div></li>
+        <li><div><b>What identity do agents act with</b>An AI agent that calls tools does so as something. If that something is a broadly-scoped service principal, the agent's judgment is now a security control. Give agents their own scoped identities, short-lived, with the same review cadence as privileged humans.</div></li>
+      </ol>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Sequencing</span>
+      <h2>Where to start when everything is weak</h2>
+      <p>Identity programs fail by trying to do all of this at once and finishing none of it. The order below is by risk reduced per unit of effort.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Order</th><th>Move</th><th>Why first</th><th>Evidence it is done</th></tr>
+        <tr><td>1</td><td>Phishing-resistant MFA for all privileged accounts, then everyone</td><td>Credential theft is the entry point in most breaches; this closes it for the accounts that matter most</td><td>Sign-in logs show no privileged authentication without FIDO2, passkey, or certificate</td></tr>
+        <tr><td>2</td><td>Eliminate standing privileged access</td><td>Turns a stolen admin credential from a catastrophe into a logged, time-bound event</td><td>Zero permanent assignments to global or account-level admin roles; PIM or equivalent activation history exists</td></tr>
+        <tr><td>3</td><td>Federate every application, kill local accounts</td><td>Offboarding cannot work while apps hold their own passwords</td><td>Application inventory with a federation status per app and a shrinking count of exceptions</td></tr>
+        <tr><td>4</td><td>Automate joiner, mover, leaver from the HR source</td><td>Removes the human step that fails, and makes the directory trustworthy as an inventory of people</td><td>Leaver-to-disabled time measured in minutes; mover events remove old entitlements</td></tr>
+        <tr><td>5</td><td>Inventory and shrink non-human identities</td><td>The largest and least-governed population</td><td>An owned inventory, no non-expiring secrets for new identities, a rotation report</td></tr>
+        <tr><td>6</td><td>Risk-based authentication policy and device trust</td><td>Moves from static rules to per-request decisions</td><td>Policies in report-only mode first, then enforced, with an exception register</td></tr>
+        <tr><td>7</td><td>Governance: reviews, packages, separation of duties</td><td>Keeps the estate clean after the cleanup</td><td>Quarterly review completion with a non-zero removal rate</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Week one</span>
+      <h2>The single artifact that tells you the most</h2>
+      <p>For a new CTO, an acquirer, or an auditor, one export answers most of the question of how seriously identity has been taken.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What to pull</span><p>The list of every account holding a privileged role in each cloud tenant and the directory, with whether the assignment is permanent or eligible, when it was last used, and whether the account has phishing-resistant MFA registered. Then the same for service principals with owner-level rights. It takes an hour and requires no tooling beyond what the platform provides.</p></div>
+      <div class="stage-cell"><span class="env-label b">How to read it</span><p>More than a handful of permanent global admins, any of them shared or belonging to people who have left, any without strong MFA, or any service principal with tenant-wide write access and a non-expiring secret: each is a finding in its own right, and together they say the identity layer has been administered rather than architected. That reading should shape the first quarter's security priorities regardless of what the security roadmap deck says.</p></div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h2>Buying the identity platform and calling it done</h2>
+      <p>Most organizations that fail on identity already own the right products. The failure is in the process, the scope, and the exceptions.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ul class="checklist">
+        <li>MFA is enforced, but the legacy authentication protocols that bypass it are still enabled</li>
+        <li>Conditional Access exists, but the policy has forty exclusions and the exclusion group is the one everyone ends up in</li>
+        <li>PIM is deployed for global admin, but the subscription and resource-group owners are still permanent</li>
+        <li>The HR feed is connected, but contractors are not in HR, so the largest leaver risk is unmanaged</li>
+        <li>Access reviews run, but the approval rate is 100 percent, which means nobody is reviewing</li>
+        <li>The break-glass account exists and has never been tested, or has been tested and used routinely because it is convenient</li>
+        <li>Secrets are in a vault, but the application also has a copy in an environment variable that was never removed</li>
+      </ul>
+    </div></div>
+  </div>
+</main>
+
+<footer>
+  Reference only. The full identity target-state architecture and assessment workbook are part of the private methodology.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

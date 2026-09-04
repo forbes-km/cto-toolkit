@@ -4,14 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Company Is Growing Rapidly</title>
-<meta name="description" content="A common pattern in what breaks first as headcount multiplies, architecture, then organization, then the platform and hiring underneath both, not a fixed sequence every company follows.">
+<meta name="description" content="A situational entry point for the technology leader of a company that is scaling fast: the decisions that have to be made before the org doubles, the questions that reveal what will break next, the hiring-as-a-fix trap, and what should exist at 30, 90, and 180 days.">
 <meta property="og:title" content="The Company Is Growing Rapidly | CTO Toolkit">
-<meta property="og:description" content="A common pattern in what breaks first as headcount multiplies, architecture, then organization, then the platform and hiring underneath both, not a fixed sequence every company follows. Every link below points to a full page elsewhere on this site.">
+<meta property="og:description" content="A situational entry point for the technology leader of a company that is scaling fast: the decisions that have to be made before the org doubles, the questions that reveal what will break next, the hiring-as-a-fix trap, and what should exist at 30, 90, and 180 days.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/situation-growth/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Company Is Growing Rapidly | CTO Toolkit">
+<meta name="twitter:description" content="A situational entry point for the technology leader of a company that is scaling fast: the decisions that have to be made before the org doubles, the questions that reveal what will break next, the hiring-as-a-fix trap, and what should exist at 30, 90, and 180 days.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <style>
   :root {
     --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
     --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
     --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
     --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -27,9 +34,19 @@
   .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
   .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
   .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
-  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-head a { color: var(--accent); }
   .stage-cell { padding: 8px 20px 16px; }
+  .stage-cell p { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+  .stage-cell a { color: var(--accent); }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid .stage-cell { padding: 16px 20px; }
+  .stage-grid .stage-cell p { margin: 0; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
   .situation-list { list-style: none; margin: 0; padding: 0; counter-reset: sit; }
   .situation-list li { counter-increment: sit; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
   .situation-list li:last-child { border-bottom: none; }
@@ -37,7 +54,22 @@
   .situation-list a { color: var(--ink); font-weight: 600; text-decoration: none; font-size: 13.5px; }
   .situation-list a:hover { color: var(--accent); }
   .situation-list span { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 2px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .matrix-table td a { color: var(--accent); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  footer a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -45,34 +77,109 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>The Company Is Growing Rapidly</h1>
-  <p>A common pattern in what breaks first as headcount multiplies: architecture, then organization, then the platform and hiring underneath both. A pattern seen often enough to be worth planning around, not a fixed sequence every company follows in this exact order. Every link below points to a full page elsewhere on this site.</p>
+  <p>Growth hides problems until it does not. Structures, processes, and systems that were fine at fifty people or a thousand customers fail non-linearly, and they fail at the moment the organization can least afford it. The job is to see which constraint breaks next and to change it before it does, without building the bureaucracy of a company three times the current size. This page sequences the decisions and links to the pages that hold the detail.</p>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reading order</span>
-      <h3>Where to start</h3>
-      <p>Get the architecture and org structure decisions right before scale makes them expensive to unwind.</p>
+      <h2>Where to start</h2>
+      <p>The systems lens first, because growth problems are constraint problems. Then structure and people, then the platform and architecture decisions that stop ten teams from becoming ten companies.</p>
     </div>
     <div class="stage-cell">
       <ol class="situation-list">
-        <li><div><a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a><span>The capability model and operating structure that has to hold as headcount multiplies.</span></div></li>
-        <li><div><a href="../org-design/index.html">Org Design</a><span>Team topology and the span-of-control question that comes up in nearly every reorg conversation.</span></div></li>
-        <li><div><a href="../agile-and-safe/index.html">Agile and SAFe</a><span>Where real coordination overhead starts to be earned as team count grows, and where it becomes ceremony instead.</span></div></li>
-        <li><div><a href="../architecture-review-board/index.html">Architecture Review Board</a><span>Stand up a real review function before informal hallway coordination stops scaling.</span></div></li>
-        <li><div><a href="../engineering-culture/index.html">Engineering Culture</a><span>Whose culture wins as headcount multiplies isn't automatic; decide deliberately what's worth preserving.</span></div></li>
-        <li><div><a href="../platform-engineering/index.html">Platform Engineering</a><span>Self-service infrastructure and golden paths, before every new team reinvents its own.</span></div></li>
-        <li><div><a href="../technical-hiring-leveling/index.html">Technical Hiring &amp; Leveling</a><span>Leveling by scope and ambiguity, so hiring bar doesn't quietly erode as volume increases.</span></div></li>
-        <li><div><a href="../engineering-metrics/index.html">Engineering Metrics</a><span>DORA metrics and the distribution behind them, before the averages start hiding real problems.</span></div></li>
-        <li><div><a href="../security-program/index.html">Security Program</a><span>Build it deliberately before scale forces a rushed retrofit.</span></div></li>
+        <li><div><a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a><span>Growth is a systems problem. Which constraint binds next is the question, and this is the lens for finding it.</span></div></li>
+        <li><div><a href="../org-design/index.html">Org Design</a><span>Team topology, span of control, and the point at which the structure that got you here starts costing you.</span></div></li>
+        <li><div><a href="../technical-hiring-leveling/index.html">Technical Hiring &amp; Leveling</a><span>A leveling framework before the headcount doubles, or every new hire is negotiated from scratch and the existing team notices.</span></div></li>
+        <li><div><a href="../engineering-culture/index.html">Engineering Culture</a><span>What gets rewarded changes as the company grows, usually without anyone deciding it should.</span></div></li>
+        <li><div><a href="../platform-engineering/index.html">Platform Engineering</a><span>The moment team count outgrows the ability of every team to run its own infrastructure, and what to build instead.</span></div></li>
+        <li><div><a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a><span>Decide who is on call and what the reliability function owns before the team count doubles.</span></div></li>
+        <li><div><a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a><span>The small set of integration rules that stop ten teams from becoming ten incompatible systems.</span></div></li>
+        <li><div><a href="../architecture-review-board/index.html">Architecture Review Board</a><span>Lightweight, evidence-based review before ten teams make ten incompatible decisions about the same thing.</span></div></li>
+        <li><div><a href="../engineering-metrics/index.html">Engineering Metrics</a><span>The handful of numbers that tell you delivery is degrading before the customers do.</span></div></li>
+        <li><div><a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a><span>When to stand up an EA function, at what size, and the ways it fails if stood up too early or too heavily.</span></div></li>
+        <li><div><a href="../agile-and-safe/index.html">Agile and SAFe</a><span>Whether scaled frameworks help, and the point at which adopting one is a substitute for making decisions.</span></div></li>
+        <li><div><a href="../security-program/index.html">Building a Security Program</a><span>Customers, auditors, and regulators arrive with growth. The security program has to be ahead of them, not behind.</span></div></li>
+        <li><div><a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a><span>Joiner, mover, leaver automated from the HR source before the hiring wave, or offboarding fails silently at scale.</span></div></li>
+        <li><div><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a><span>The reliability the business needs at ten times the volume is a different number, and it has a price.</span></div></li>
       </ol>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Decisions with a date</span>
+      <h2>What has to be decided, and by when</h2>
+      <p>Growth makes every deferred structural decision more expensive. These are sequenced by when they start to cost you if left unmade.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>By when</th><th>Decision</th><th>Who owns it</th><th>What it looks like when it goes wrong</th></tr>
+        <tr><td>Day 14</td><td>The leveling framework and compensation bands, agreed with the CEO and CHRO, before the next hiring wave</td><td>CTO</td><td>Every hire negotiates a title and salary independently, the existing team finds out, and the best of them leave</td></tr>
+        <tr><td>Day 30</td><td>The team structure for the next doubling, not the current size: what splits, what stays, who leads the new teams</td><td>CTO</td><td>Teams grow to fifteen people, a manager has twelve reports, and delivery slows while everyone is technically busy</td></tr>
+        <tr><td>Day 45</td><td>The engineering metrics the leadership team will watch, and the thresholds that trigger action</td><td>CTO with engineering managers</td><td>Delivery degrades for two quarters and the first signal is a customer escalation</td></tr>
+        <tr><td>Day 60</td><td>Whether to fund a platform team now, and what it owns versus what stays with product teams</td><td>CTO with the CFO</td><td>Every team runs its own CI, infra, and on-call, and the third outage of the quarter is caused by drift between them</td></tr>
+        <tr><td>Day 90</td><td>The architecture decisions that must be made once, centrally: identity, data model boundaries, service standards, and the review path for exceptions</td><td>CTO with the architecture function</td><td>Ten teams, four languages, three message buses, and an integration problem that costs a year to unwind</td></tr>
+        <tr><td>Day 120</td><td>The security and compliance posture the next tier of customers will require, and the timeline to get there</td><td>CTO with the CISO and sales leadership</td><td>A seven-figure deal stalls on a security questionnaire the company cannot answer honestly</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Questions to ask</span>
+      <h2>Questions that reveal what breaks next</h2>
+      <p>Growth failures are predictable if someone is looking. These are what to look at.</p>
+    </div>
+    <div class="stage-cell">
+      <ul class="checklist">
+        <li>Which single system, team, or person is the constraint on delivery today, and what is the next one after it</li>
+        <li>How many people report to each engineering manager, and how many managers have never managed before</li>
+        <li>What is the ratio of new hires to people who have been here more than a year, per team</li>
+        <li>Which of the current processes exist because someone decided, and which exist because nobody did</li>
+        <li>How long does it take a new engineer to ship to production, and what is that number's trend</li>
+        <li>What is the change failure rate and recovery time, and is anyone looking at them weekly</li>
+        <li>Which architectural decisions have already been made three different ways by three different teams</li>
+        <li>What breaks first at ten times the current volume, and has anyone tested it</li>
+        <li>What does the next tier of customers or the next market require in security, compliance, or residency that the company does not have today</li>
+        <li>Which of the founders' informal roles need to become someone's actual job</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The trap</span>
+      <h2>Hiring as the fix for every constraint</h2>
+      <p>When the company is growing, the default response to any delivery problem is headcount. It is the fix that requires no structural decision, and it makes most structural problems worse.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Delivery slows. Twenty engineers are hired. Onboarding consumes the senior engineers, span of control passes ten, the architecture drifts because nobody has time to review anything, and delivery per engineer halves. The headcount doubled and the output did not move. The board sees a cost line that grew faster than revenue.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Find the binding constraint before hiring into it, using the approach in <a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a> and <a href="../seeing-the-system-before-changing-it/index.html">Understanding the System Before Changing It</a>. Fix structure first: leveling, team boundaries, a platform layer, a review path. Then hire into a shape that can absorb people. Watch delivery per engineer as a leading indicator, and be willing to slow hiring when it falls.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Outputs</span>
+      <h2>What should exist at 30, 90, and 180 days</h2>
+      <p>Structure that is ready before the people arrive, and numbers that show whether it is working.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Checkpoint</th><th>What exists</th></tr>
+        <tr><td>Day 30</td><td>A leveling framework and bands published internally. A team structure for the next doubling, with named leads and a hiring plan against it. A one-page list of the current binding constraints, ranked. The four or five engineering metrics that will be reviewed weekly, with a baseline.</td></tr>
+        <tr><td>Day 90</td><td>A platform team funded or a recorded decision not to, with the trigger that would change it. The Architecture Review Board running, lightly. The architecture decisions that must be made once recorded as ADRs. A first-line manager development path, because most of the new managers have never done it.</td></tr>
+        <tr><td>Day 180</td><td>Delivery per engineer stable or improving through the hiring wave. The security and compliance roadmap the next customer tier requires, funded and underway. Onboarding time to first production change measured and falling. An honest culture read, because what the company rewards has changed and someone should have decided how.</td></tr>
+      </table>
     </div>
   </div>
 </main>
 
 <footer>
-  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html" style="color:var(--accent);">CTO Toolkit</a> home page.
+  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html">CTO Toolkit</a> home page.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

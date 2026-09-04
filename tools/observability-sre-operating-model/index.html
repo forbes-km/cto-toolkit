@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observability &amp; SRE Operating Model</title>
+<meta name="description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations actually run, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
+<meta property="og:title" content="Observability &amp; SRE Operating Model | CTO Toolkit">
+<meta property="og:description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations actually run, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/observability-sre-operating-model/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Observability &amp; SRE Operating Model | CTO Toolkit">
+<meta name="twitter:description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations actually run, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .btn { padding: 9px 18px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .field:last-child { border-bottom: none; }
+  .field input, .field select { font-family: var(--ui); font-size: 13px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); width: 150px; }
+  .result { margin-top: 14px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); margin-right: 4px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+    .field input, .field select { width: 110px; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Observability &amp; SRE Operating Model</h1>
+  <p><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a> answers how much reliability the business can afford. This page answers how the function that delivers it is organized, what it owns, and how to stand it up without a reorganization that changes titles and nothing else.</p>
+  <div class="caveat">Tool and vendor names change; the responsibilities and the operating model do not. Where a platform-specific observability service is needed, the <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> lists equivalents across providers.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h2>Four models, and the one most organizations are actually running</h2>
+      <p><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a> answers how much reliability to buy. This page answers how the function that delivers it is organized, because the same reliability budget produces very different outcomes under different operating models.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Model</th><th>Who is on call</th><th>Who owns reliability work</th><th>Fits when</th><th>Fails when</th></tr>
+        <tr><td>Ops team owns production</td><td>A central operations team</td><td>The ops team, reactively</td><td>Small estates, few changes, a product team that cannot be paged</td><td>Change volume rises; the ops team cannot understand what it is paging on, and the product team has no incentive to build operable software</td></tr>
+        <tr><td>You build it, you run it</td><td>Each product team, for its own services</td><td>Each product team</td><td>Autonomous teams with the platform support to be self-sufficient</td><td>Teams lack observability tooling, on-call is unfunded, and reliability work loses every prioritization to features</td></tr>
+        <tr><td>Embedded SRE</td><td>Product team, with an SRE embedded in it</td><td>Shared; the SRE drives standards and the team executes</td><td>Critical services that justify a dedicated reliability engineer</td><td>The SRE becomes the team's ops person and the standards work never happens</td></tr>
+        <tr><td>Central SRE with a platform</td><td>Product teams for their services; SRE for the platform and for a defined set of critical services</td><td>SRE owns the platform, the standards, the tooling, and error budget policy; teams own their services within it</td><td>Ten or more teams and a shared platform, which is most enterprises</td><td>The SRE team is treated as a rename of the ops team and is paged for everything</td></tr>
+      </table>      <p>Most organizations claiming the second model are running the first with extra steps: product teams are nominally on call, but escalate to a central team that does the actual restoration and owns none of the fixes. Naming the model that is actually running is the first honest step.</p>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>What the function owns</h2>
+      <p>An SRE or reliability function that owns only incident response is an operations team. The list below is what distinguishes a reliability function from a rename.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Responsibility</th><th>What it looks like when owned</th><th>What it looks like when nobody owns it</th></tr>
+        <tr><td>Service level objectives</td><td>Every customer-facing service has an SLO agreed with its product owner, measured from the user's perspective, reviewed quarterly</td><td>A 99.9 percent target inherited from a contract, measured at the load balancer, that nobody can explain</td></tr>
+        <tr><td>Error budget policy</td><td>A written rule for what happens when a service exhausts its budget: feature work pauses, reliability work is prioritized, the product owner signs off</td><td>The budget is reported and ignored</td></tr>
+        <tr><td>Observability standards</td><td>A required minimum for any service in production: structured logs, metrics with defined names, traces with propagated correlation, dashboards from a template, alerts tied to SLOs</td><td>Each team instruments what it thinks of; the incident reveals the gap</td></tr>
+        <tr><td>Alert hygiene</td><td>Every page maps to a user-visible symptom and has a runbook; pages per shift are measured and capped</td><td>Hundreds of alerts, most ignored, the important one lost among them</td></tr>
+        <tr><td>Incident management</td><td>A defined severity scale, an incident commander role that rotates, a communications role, a timeline kept live, and postmortem follow-through tracked as in <a href="../incident-response/index.html">Incident Response</a></td><td>Whoever is loudest runs the bridge; the timeline is reconstructed from chat logs afterwards</td></tr>
+        <tr><td>Capacity and performance</td><td>Forecasts for the services that matter, load tests before known peaks, headroom policy</td><td>Capacity is discovered when it runs out</td></tr>
+        <tr><td>Production readiness</td><td>A checklist a service passes before it takes traffic: SLO, on-call, runbook, dashboards, backup and restore tested, dependencies declared</td><td>Services go live when the feature is done</td></tr>
+        <tr><td>Toil reduction</td><td>Measured hours of manual operational work per service, with a budget and a backlog to eliminate it</td><td>The same restore run by hand every month by the same person</td></tr>
+        <tr><td>Reliability investment case</td><td>Incident cost and toil cost turned into the numbers in <a href="../reliability-economics/index.html">Reliability as an Economic Decision</a> and <a href="../technical-debt-economics/index.html">Technical Debt Economics</a></td><td>Reliability requests presented as engineering preference</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>Observability architecture that survives scale and cost</h2>
+      <p>Observability platforms are now one of the largest line items in many cloud bills, and the cost usually grows faster than the value because nobody decided what to collect.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ol class="num-list">
+        <li><div><b>Decide the signals and their purpose first</b>Logs for forensic detail, metrics for state over time and alerting, traces for request flow across services. A signal with no consumer is cost. Most estates over-collect logs and under-instrument traces.</div></li>
+        <li><div><b>Standardize the instrumentation, not the vendor</b>Use a vendor-neutral instrumentation standard (OpenTelemetry has become the default) so the collection layer is portable and the backend can be changed at a renewal. The backend is a <a href="../saas-contract-negotiation/index.html">SaaS renewal</a> problem; the instrumentation should not be.</div></li>
+        <li><div><b>Put a cost owner on telemetry</b>Ingest volume by service, with a budget per service and an alert when it is exceeded. Sampling for traces, retention tiers for logs, cardinality limits for metrics. The observability bill is a FinOps problem and belongs in <a href="../cloud-cost-management/index.html">Cloud FinOps</a>.</div></li>
+        <li><div><b>Alert on symptoms, not causes</b>Alerts derive from SLOs: error rate, latency, availability as the user sees them. Cause-level signals (CPU, disk, queue depth) feed dashboards and the investigation, not the pager.</div></li>
+        <li><div><b>Make the correlation identifier non-negotiable</b>One identifier propagates through every request, message, and log line. Without it, distributed debugging is guesswork, and the integration patterns in <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> depend on it.</div></li>
+        <li><div><b>Include the AI layer</b>Model calls, token usage, latency, cost, and output quality signals are telemetry too. An AI system in production without them is not observable; see <a href="../ai-architecture-map/index.html">AI Architecture</a>.</div></li>
+      </ol>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>On-call that people will keep doing</h2>
+      <p>The failure mode of every reliability model is an on-call rota that burns out the people who know the most. It is a design problem, not a resilience problem.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ul class="checklist">
+        <li>Rotations are at least six people deep; fewer means someone is on call one week in four or worse</li>
+        <li>On-call is paid, either as an allowance or as time off, and the policy is written down</li>
+        <li>Pages per shift are measured; a shift with more than a handful of pages triggers a review of the alerts, not of the person</li>
+        <li>Every page has a runbook; a page without one is a bug filed against the service, not a test of the responder</li>
+        <li>Escalation is defined by service and by severity, with a named second line, so the first responder is never alone by default</li>
+        <li>Follow-the-sun is used where the organization spans time zones; if it does not, night pages are minimized by design, not endured</li>
+        <li>Toil discovered on call goes to a backlog with a budget, and the team sees it shrink</li>
+        <li>New engineers shadow before they respond, and nobody is on the rota for a service they have never deployed</li>
+      </ul>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Sequencing</span>
+      <h2>Standing the function up</h2>
+      <p>For an organization moving from an ops team to a reliability model, in the order that produces visible results without a reorganization.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Step</th><th>Move</th><th>Evidence it is done</th></tr>
+        <tr><td>1</td><td>Define severity levels and an incident commander rotation; run the next three incidents that way</td><td>Incident timelines exist; postmortems have owners and dates</td></tr>
+        <tr><td>2</td><td>Set SLOs for the five most important customer-facing services, measured from the user's side</td><td>Five SLO dashboards; product owners can state their service's target</td></tr>
+        <tr><td>3</td><td>Cut the alert list to the ones tied to those SLOs; delete or demote the rest</td><td>Pages per shift drop; every remaining page has a runbook</td></tr>
+        <tr><td>4</td><td>Publish a production readiness checklist and apply it to the next new service</td><td>One service has gone live through the checklist; the gaps it revealed are in a backlog</td></tr>
+        <tr><td>5</td><td>Adopt a vendor-neutral instrumentation standard and a telemetry cost budget per service</td><td>Ingest by service is visible; the observability bill is flat or falling as coverage rises</td></tr>
+        <tr><td>6</td><td>Write the error budget policy and get the CEO or CPO to sign it</td><td>A feature release has been delayed once because a budget was exhausted, and the organization survived</td></tr>
+        <tr><td>7</td><td>Decide the operating model explicitly, fund it, and name what SRE owns versus what teams own</td><td>An org design decision recorded in an ADR, with the on-call model and the funding that goes with it</td></tr>
+      </table>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h2>Renaming the ops team</h2>
+      <p>The most common SRE adoption is a change of job title. It produces a team with the same reactive workload, a new set of expectations, and no authority to change either.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The operations team becomes the SRE team. Product teams are told they are now on call, escalate every page to SRE within minutes, and ship services with no SLO and no runbook because the checklist has no teeth. SRE is paged for everything, owns nothing, and attrits. Leadership concludes that SRE does not work here.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>The function owns standards and the platform, with a production readiness gate that product teams must pass and an error budget policy signed by the executive who owns the roadmap. Teams that meet the standard run their own services; the reliability function's success measure is how rarely it is paged for something it does not own. See <a href="../platform-engineering/index.html">Platform Engineering</a> for the platform side of the same operating model and <a href="../org-design/index.html">Org Design</a> for where the function reports.</p></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Reference only. The production readiness checklist, SLO workshop, and error budget policy template are part of the private methodology.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>
