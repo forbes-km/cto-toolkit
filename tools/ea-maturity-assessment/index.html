@@ -216,11 +216,71 @@
     <div class="same-note">The overall average is the least interesting number in the assessment, useful for trending year over year, not for conclusions in any single pass. Individual indicators scored 1 or 2 are what a roadmap should be built around.</div>
   </div>
 
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Diagnostic patterns the calculator flags</h3>
+      <p>The average hides the finding. These are the score shapes that recur, what each usually means, and what to do about it before building a roadmap.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table" style="margin-bottom:0;">
+        <tr><th>Pattern</th><th>What it usually means</th><th>First move</th></tr>
+        <tr><td>Artifacts &amp; Tooling high, Delivery Integration low</td><td>A documentation function. The models are beautiful and delivery teams do not consult them</td><td>Stop producing artifacts for a quarter; embed architects in the two most important delivery streams and measure whether decisions change</td></tr>
+        <tr><td>Strategy Alignment high, everything else low</td><td>The EA leader is trusted by executives and the function has no machinery beneath that trust</td><td>Governance first: a lightweight review path with a written exception process, so the trust converts into decisions that stick</td></tr>
+        <tr><td>Governance high, Delivery Integration low</td><td>A gate. Reviews happen, delivery teams route around them, and the exception log is where the real architecture lives</td><td>Move review earlier and make it evidence-based; see <a href="../architecture-review-board/index.html">Architecture Review Board</a></td></tr>
+        <tr><td>Domain Coverage low, all else moderate</td><td>A strong application architecture group called EA. Data, security, and business architecture are uncovered</td><td>Name the uncovered domains explicitly and decide whether to staff them, partner for them, or state that they are out of scope</td></tr>
+        <tr><td>Talent &amp; Operating Model at 1 or 2 with anything at 4</td><td>Key-person risk. The function's maturity is one resignation away from a 2</td><td>Succession and demand management before any further capability investment</td></tr>
+        <tr><td>Uniform 3s</td><td>Either an honest, balanced, mid-maturity function or a single scorer who did not want to commit. The multi-scorer process tells you which</td><td>Run the reconciliation session before drawing any conclusion</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Reading one real score pattern</h3>
+      <p>The score that most often surprises the EA leader who runs it on their own function.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">The scores</span><p>Strategy Alignment 2, Governance 3, Domain Coverage 3, Delivery Integration 2, Talent &amp; Operating Model 2, Artifacts &amp; Tooling 4. Average 2.7. The EA leader's own pre-assessment estimate was 3.5. The function has a mature capability model, a current application catalog, and a well-maintained standards library. Delivery leaders, asked in the reconciliation session, could not name a decision the function had changed in the past year.</p></div>
+      <div class="stage-cell"><span class="env-label b">The reading</span><p>This is the library pattern: the highest-scoring dimension is the one that is easiest to over-invest in, and the two lowest are the ones that determine whether the function matters. The artifacts are not the problem, but the next dollar should not go to them. The twelve-month roadmap that came out of it moved one architect into the payments modernization program full time, replaced the monthly architecture forum with a review attached to real design work, and set one measurable target: three documented decisions per quarter where a delivery team changed course because of an EA input. A year later the artifact score had not moved and the function's budget had been protected in a cost cut, which is the outcome that matters.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>Turning the result into a twelve-month roadmap</h3>
+      <p>The assessment produces a baseline. The roadmap is what justifies having run it.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table" style="margin-bottom:0;">
+        <tr><th>Quarter</th><th>Focus</th><th>Evidence at quarter end</th></tr>
+        <tr><td>Q1</td><td>The single lowest-scoring dimension that determines relevance, almost always Delivery Integration or Strategy Alignment</td><td>One delivery stream with an architect embedded; one strategic initiative with an EA-authored options paper that executives used</td></tr>
+        <tr><td>Q2</td><td>Governance that delivery teams experience as help: review path, exception process, decision records</td><td>Reviews happening on real design work, exception log with owners, first ADRs published</td></tr>
+        <tr><td>Q3</td><td>Operating model: demand intake, roles, succession, sponsor cadence</td><td>A written demand process, a named successor for the EA lead, a quarterly sponsor review on the calendar</td></tr>
+        <tr><td>Q4</td><td>Domain coverage decision and re-score with the same scorers</td><td>An explicit statement of which domains EA covers; a second assessment showing movement in the dimensions targeted and, ideally, no movement in Artifacts</td></tr>
+      </table>      <p style="margin-bottom:8px;">Re-score annually with the same scorers where possible. The trend across two or three years is the first point at which the average becomes meaningful; in any single year, the individual indicators at 1 and 2 are the whole story.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h3>Scoring on intent</h3>
+      <p>The assessment is only as good as the honesty of the scoring, and the scorer with the most at stake is usually the EA leader.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Governance is scored a 4 because a review process is documented and a board meets monthly. Nobody checks how many designs went through it, how many exceptions were granted, or whether any decision was ever reversed by it. The score reflects the process that exists on paper, and the roadmap built on it fixes the wrong dimension.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Every score of 3 or above needs an artifact: the review log, the exception register, the decision that changed, the sponsor's own words. If the artifact cannot be produced in the reconciliation session, the score drops to a 2 and the missing artifact becomes a roadmap item. This is the same discipline the <a href="../zero-trust-maturity/index.html">Zero-Trust Maturity</a> and <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> assessments apply, for the same reason.</p></div>
+    </div>
+  </div>
 </main>
 
 <footer>
   Reference only. A single-scorer pass is a starting point, not a substitute for the multi-evaluator process described above.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 
