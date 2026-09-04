@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regulatory Map for Technology Leaders</title>
-<meta name="description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK regimes, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
+<meta name="description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK rules, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
 <meta property="og:title" content="Regulatory Map for Technology Leaders | CTO Toolkit">
-<meta property="og:description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK regimes, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
+<meta property="og:description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK rules, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/regulatory-map/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Regulatory Map for Technology Leaders | CTO Toolkit">
-<meta name="twitter:description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK regimes, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
+<meta name="twitter:description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK rules, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <style>
   :root {
@@ -84,32 +84,32 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Regulatory Map for Technology Leaders</h1>
-  <p><a href="../data-governance/index.html">Data Governance</a> covers privacy and <a href="../ai-governance-map/index.html">AI Governance</a> covers AI; nothing ties the regimes together or says who owns which clock. This page does. It is organized by what each regime regulates, because that is how ownership falls out, and it ends with the mistake that turns a manageable set of obligations into six parallel processes.</p>
-  <div class="caveat">This is a map, not advice. Dates here were checked against primary and legal-firm sources in September 2026, and several regimes were still moving at that point: the EU AI Act high-risk deadlines had just been deferred, the CIRCIA final rule was still pending, and Colorado's act was under a court stay. Confirm current status with counsel before acting on any row.</div>
+  <p><a href="../data-governance/index.html">Data Governance</a> covers privacy and <a href="../ai-governance-map/index.html">AI Governance</a> covers AI; nothing ties the regulations together or says who owns which clock. This page does. It is organized by what each one governs, because that is how ownership falls out, and it ends with the mistake that turns a manageable set of obligations into six parallel processes.</p>
+  <div class="caveat">This is a map, not advice. Dates here were checked against primary and legal-firm sources in September 2026, and several of these were still moving at that point: the EU AI Act high-risk deadlines had just been deferred, the CIRCIA final rule was still pending, and Colorado's act was under a court stay. Confirm current status with counsel before acting on any row.</div>
 </header>
 
 <main>
   <div class="stage-card" id="filter">
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
-      <h2>Which regimes apply to us</h2>
-      <p>Tick what describes the organization. The list below narrows to the regimes most likely in scope, with the clock and the owner for each. This is a starting point for a conversation with counsel, not a determination. Runs in your browser; nothing is sent or stored.</p>
+      <h2>Which rules apply to us</h2>
+      <p>Tick what describes the organization. The list below narrows to the rules most likely in scope, with the clock and the owner for each. This is a starting point for a conversation with counsel, not a determination. Runs in your browser; nothing is sent or stored.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <div id="rm-filters" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:6px 16px; font-size:13px;"></div>
-      <div style="margin-top:12px;"><button class="btn" id="rm-apply">Show applicable regimes</button> <button class="btn secondary" id="rm-all">Show all</button></div>
+      <div style="margin-top:12px;"><button class="btn" id="rm-apply">Show what applies</button> <button class="btn secondary" id="rm-all">Show all</button></div>
       <div id="rm-result" class="result" style="display:none;"></div>
     </div></div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reference</span>
-      <h2>The regimes, by what they regulate</h2>
-      <p>Grouped by the thing they govern, because that is how ownership falls out. Dates are as enacted or as last amended; several are still moving and the caveat at the top applies to every row.</p>
+      <h2>The regulations, by what they govern</h2>
+      <p>Grouped by what they govern, because that is how ownership falls out. Dates are as enacted or as last amended; several are still moving and the caveat at the top applies to every row.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
-        <tr><th>Regime</th><th>Who it reaches</th><th>What it requires of technology</th><th>The clock</th><th>Status note</th></tr>
+        <tr><th>Regulation</th><th>Who it reaches</th><th>What it requires of technology</th><th>The clock</th><th>Status note</th></tr>
         <tr><td><b>GDPR</b> (EU) and <b>UK GDPR</b></td><td>Anyone processing personal data of people in the EU or UK, wherever the organization sits</td><td>Lawful basis, data minimization, records of processing, DPIAs, transfer mechanisms, subject rights made operational, security appropriate to risk</td><td>Breach notification to the supervisory authority within 72 hours of awareness; to individuals without undue delay where high risk</td><td>Stable. A separate EU digital omnibus proposing GDPR simplifications is in progress; verify before relying on it</td></tr>
         <tr><td><b>US state privacy laws</b> (CCPA/CPRA and roughly twenty comprehensive state acts)</td><td>Businesses meeting per-state revenue or volume thresholds with residents' data</td><td>Rights requests, opt-outs, data inventories, contracts with processors, and in California automated decision-making technology rules</td><td>Rights request response typically 45 days; breach notification per state breach statute, often 30 to 60 days</td><td>New states add laws most years; California's ADMT regulations phase in through 2027. Track per state</td></tr>
         <tr><td><b>HIPAA</b> (US)</td><td>Covered entities and business associates handling protected health information</td><td>Security Rule safeguards, risk analysis, BAAs with every vendor touching PHI, minimum necessary access</td><td>Breach notification to individuals and HHS within 60 days of discovery; large breaches also to media</td><td>A proposed Security Rule update (published January 2025) would make many addressable safeguards required, including MFA and encryption; check whether it has been finalized</td></tr>
@@ -149,7 +149,7 @@
     <div class="stage-head">
       <span class="stage-num">Ownership</span>
       <h2>Who owns which clock</h2>
-      <p>Regulatory failures are usually ownership failures. Every regime needs a named owner for the determination (does this apply, did this event trigger it), a named owner for the notification, and a named owner for the ongoing obligations. These are rarely the same person.</p>
+      <p>Regulatory failures are usually ownership failures. Every regulation needs a named owner for the determination (does this apply, did this event trigger it), a named owner for the notification, and a named owner for the ongoing obligations. These are rarely the same person.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
@@ -160,7 +160,7 @@
         <tr><td>Operational resilience and testing</td><td>CTO or CIO, with the CISO</td><td>DR testing evidence, RTO and RPO, and threat-led testing under DORA. See <a href="../disaster-recovery/index.html">Disaster Recovery</a></td></tr>
         <tr><td>Third-party and supply chain</td><td>Procurement with the CISO</td><td>The register of ICT providers, the contractual terms on security and exit, and concentration risk</td></tr>
         <tr><td>AI system obligations</td><td>Whoever owns the AI portfolio, usually the CTO or CDO</td><td>Classification of every AI use against the high-risk categories, logging, human oversight, and the technical documentation</td></tr>
-        <tr><td>Board reporting on all of the above</td><td>CISO and CTO, jointly</td><td>One consolidated view of which regimes apply, the open obligations, and the incidents notified. See <a href="../board-reporting/index.html">Board Reporting</a></td></tr>
+        <tr><td>Board reporting on all of the above</td><td>CISO and CTO, jointly</td><td>One consolidated view of which rules apply, the open obligations, and the incidents notified. See <a href="../board-reporting/index.html">Board Reporting</a></td></tr>
       </table>
     </div></div>
   </div>
@@ -168,11 +168,11 @@
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
       <h2>Building one process per regulation</h2>
-      <p>Organizations that treat each regime as its own project end up with six incident procedures, four data inventories, and no idea which one is current.</p>
+      <p>Organizations that treat each regulation as its own project end up with six incident procedures, four data inventories, and no idea which one is current.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The GDPR breach process lives with the DPO, the SEC materiality process with the general counsel, the NYDFS notification with the compliance team, and the HIPAA process with the privacy officer. An incident occurs. Four teams run four assessments in parallel with four timelines, none of them share a fact base, and the 72-hour clock expires while the materiality committee is being scheduled.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>One incident process with one fact base and one timeline, with a regulatory overlay that maps the facts to each applicable clock. One control library mapped to every framework once, as in <a href="../grc-operating-model/index.html">Governance, Risk &amp; Compliance</a>. One data inventory serving privacy, security, AI classification, and diligence. The regimes differ in their thresholds and their clocks, not in what they need to know.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>One incident process with one fact base and one timeline, with a regulatory overlay that maps the facts to each applicable clock. One control library mapped to every framework once, as in <a href="../grc-operating-model/index.html">Governance, Risk &amp; Compliance</a>. One data inventory serving privacy, security, AI classification, and diligence. The regulations differ in their thresholds and their clocks, not in what they need to know.</p></div>
     </div>
   </div>
 </main>
@@ -215,9 +215,9 @@ var fEl=document.getElementById('rm-filters');
 filters.forEach(function(f){var l=document.createElement('label');l.style.cssText='display:flex;gap:8px;align-items:flex-start;line-height:1.4;';l.innerHTML='<input type="checkbox" value="'+f[0]+'" style="margin-top:3px;"> <span>'+f[1]+'</span>';fEl.appendChild(l);});
 function render(list,note){
   var out=document.getElementById('rm-result');out.style.display='block';
-  if(!list.length){out.innerHTML='Nothing selected matches a regime in this map. That is unusual; check the jurisdiction boxes.';return;}
+  if(!list.length){out.innerHTML='Nothing selected matches a rule in this map. That is unusual; check the jurisdiction boxes.';return;}
   var h=note?'<p>'+note+'</p>':'';
-  h+='<table class="matrix-table"><tr><th>Regime</th><th>The clock</th><th>Typical owner</th></tr>';
+  h+='<table class="matrix-table"><tr><th>Regulation</th><th>The clock</th><th>Typical owner</th></tr>';
   list.forEach(function(r){h+='<tr><td>'+r.n+'</td><td>'+r.c+'</td><td>'+r.o+'</td></tr>';});
   h+='</table><p style="margin-top:10px;">Confirm scope with counsel. Jurisdictional reach, thresholds, and sector definitions decide applicability, and this filter only approximates them.</p>';
   out.innerHTML=h;
@@ -235,7 +235,7 @@ document.getElementById('rm-apply').addEventListener('click',function(){
   });
   render(list,'Likely in scope given what you ticked ('+list.length+' of '+regimes.length+'):');
 });
-document.getElementById('rm-all').addEventListener('click',function(){render(regimes,'All regimes in this map:');});
+document.getElementById('rm-all').addEventListener('click',function(){render(regimes,'Everything in this map:');});
 })();
 </script>
 
