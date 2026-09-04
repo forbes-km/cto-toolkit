@@ -39,7 +39,7 @@ Three pages explain the whole: **Epistemology and Research Methods** is the thin
 
 Pages range from focused reference material to full frameworks with worked examples, calculators, and templates. Several state where they are a preview of a fuller instrument, with the complete version, scoring, and facilitation available through direct engagement rather than published here.
 
-The frameworks, judgment, and conclusions are original. AI was used as a synthesis tool to compress a much larger private corpus into shareable pages, not to generate the thinking. Regulatory dates and provider feature names are checked at review time and stated as of that date; verify against primary sources before relying on them.
+The synthesis, judgment, and conclusions are original; where a page builds on a published framework (Gartner's TIME, McKinsey's Three Horizons, DORA, NIST, Team Topologies, the FinOps Framework, and others) it names the source. AI was used as a synthesis tool to compress a much larger private corpus into shareable pages, not to generate the thinking. Regulatory dates and provider feature names are checked at review time and stated as of that date; verify against primary sources before relying on them.
 
 ## Contributing
 
