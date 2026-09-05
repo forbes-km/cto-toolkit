@@ -202,6 +202,34 @@
       </ol>
     </div></div>
   </div>
+  <div class="stage-card" id="dd-scorer">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h2>Diligence scoring: eight domains and seven integration dimensions</h2>
+      <p>Score each domain from 1 (excellent) to 5 (critical) against the guidance that appears when you choose, weight the domains to the deal thesis, then score integration complexity. The summary assembles itself. Runs in your browser; nothing is sent or stored.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p style="margin-bottom:6px;"><b>Domain assessment</b> <span style="color:var(--ink-soft);font-size:12px;">Weights should total 100%.</span></p>
+      <div style="overflow-x:auto;max-width:100%;">
+      <table class="matrix-table" id="dd-dom">
+        <tr><th style="min-width:200px;">Domain</th><th>Score</th><th>Weight %</th><th style="min-width:260px;">What that score means</th></tr>
+      </table>
+      </div>
+      <p style="margin:14px 0 6px;"><b>Integration complexity</b> <span style="color:var(--ink-soft);font-size:12px;">1 is low complexity, 5 is high. Even weights.</span></p>
+      <div style="overflow-x:auto;max-width:100%;">
+      <table class="matrix-table" id="dd-int">
+        <tr><th style="min-width:200px;">Dimension</th><th>Score</th><th>Risk level</th></tr>
+      </table>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn" id="dd-calc">Assemble the summary</button>
+        <button class="btn secondary" id="dd-even">Reset to even weights</button>
+        <button class="btn secondary" id="dd-clear">Clear scores</button>
+      </div>
+      <div id="dd-result" class="result" style="display:none;"></div>
+    </div></div>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Download</span>
@@ -228,6 +256,60 @@
     </div>
   </div>
 </main>
+
+<script>
+(function(){
+  var DOM=[["Architecture and technology", ["Modern, documented, scalable", "Solid with minor improvement needs", "Functional with modernization needs", "Significant architectural concerns", "End of life or incompatible with the deal thesis"]], ["Security posture", ["Mature program, current attestations, clean history", "Solid with minor gaps", "Functional with material gaps", "Significant security concerns", "Critical posture or active incidents"]], ["Regulatory compliance", ["Current certifications, clean history", "Solid with minor gaps", "Functional with material gaps", "Significant compliance concerns", "Critical exposure or active proceedings"]], ["Data and data management", ["Mature management, clear governance", "Solid with minor improvements", "Functional with gaps", "Significant data concerns", "Critical data integrity issues"]], ["Operations and reliability", ["Elite delivery metrics, proven reliability", "Solid with minor improvements", "Functional with gaps", "Significant operational concerns", "Critical operational issues"]], ["Engineering organization and talent", ["Deep bench, low key-person risk, healthy attrition", "Solid with minor concentration", "Functional; a few critical single owners", "Significant key-person and retention risk", "Critical: the platform depends on people who may leave at close"]], ["Intellectual property and third party", ["Clean assignments, licensed components inventoried", "Solid with minor documentation gaps", "Functional with material gaps in assignments or SBOM", "Significant IP or license exposure", "Critical: ownership of core code is in question"]], ["Industry-specific obligations", ["Clean history, current certifications, no investigations", "Solid with minor gaps", "Functional with material scope gaps", "Significant concerns or recent breaches", "Critical: active investigation or major breach"]]];
+  var DIM=["Architecture compatibility", "Data model compatibility", "Identity and access management", "Security and compliance", "Integration surface area", "Operational compatibility", "Team and cultural compatibility"];
+  var CONV=["No action required; a potential strength","Minor attention in integration planning","Material investment in integration or remediation","Substantial investment; consider adjusting deal structure","May affect deal viability; needs deal-team attention"];
+  var dom=document.getElementById('dd-dom'), intg=document.getElementById('dd-int');
+  function sel(id){var s='<select id="'+id+'" style="font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"><option value="">--</option>';for(var i=1;i<=5;i++)s+='<option value="'+i+'">'+i+'</option>';return s+'</select>';}
+  DOM.forEach(function(d,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+d[0]+'</td><td>'+sel('dd-s'+i)+'</td><td><input type="number" id="dd-w'+i+'" value="12.5" step="0.5" min="0" max="100" style="width:70px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td><td id="dd-g'+i+'" style="color:var(--ink-soft);font-size:12.5px;">Choose a score</td>';
+    dom.appendChild(tr);
+  });
+  DIM.forEach(function(d,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+d+'</td><td>'+sel('dd-i'+i)+'</td><td id="dd-r'+i+'" style="font-size:12.5px;"></td>';
+    intg.appendChild(tr);
+  });
+  function lvl(v){return v>=4?'<span style="color:var(--b);font-weight:600;">HIGH</span>':(v==3?'<span style="color:#8A6D1A;font-weight:600;">MEDIUM</span>':(v>0?'<span style="color:var(--accent);font-weight:600;">LOW</span>':''));}
+  DOM.forEach(function(d,i){document.getElementById('dd-s'+i).addEventListener('change',function(){var v=parseInt(this.value);document.getElementById('dd-g'+i).innerHTML=v?d[1][v-1]:'Choose a score';});});
+  DIM.forEach(function(d,i){document.getElementById('dd-i'+i).addEventListener('change',function(){document.getElementById('dd-r'+i).innerHTML=lvl(parseInt(this.value)||0);});});
+  document.getElementById('dd-even').addEventListener('click',function(){DOM.forEach(function(d,i){document.getElementById('dd-w'+i).value='12.5';});});
+  document.getElementById('dd-clear').addEventListener('click',function(){DOM.forEach(function(d,i){document.getElementById('dd-s'+i).value='';document.getElementById('dd-g'+i).innerHTML='Choose a score';});DIM.forEach(function(d,i){document.getElementById('dd-i'+i).value='';document.getElementById('dd-r'+i).innerHTML='';});document.getElementById('dd-result').style.display='none';});
+  document.getElementById('dd-calc').addEventListener('click',function(){
+    var out=document.getElementById('dd-result'); out.style.display='block';
+    var ws=0,wsum=0,scored=0,rows=[],missing=[];
+    DOM.forEach(function(d,i){
+      var v=parseInt(document.getElementById('dd-s'+i).value)||0, w=parseFloat(document.getElementById('dd-w'+i).value)||0;
+      if(v){ws+=v*w;wsum+=w;scored++;rows.push([d[0],v,w]);} else missing.push(d[0]);
+    });
+    var wtot=0;DOM.forEach(function(d,i){wtot+=parseFloat(document.getElementById('dd-w'+i).value)||0;});
+    if(!scored){out.innerHTML='Score at least one domain.';return;}
+    var dscore=wsum>0?ws/wsum:0;
+    var dlabel=dscore<2?'Low risk':(dscore<3?'Moderate':(dscore<4?'Material concerns':'Critical'));
+    var isum=0,icount=0;DIM.forEach(function(d,i){var v=parseInt(document.getElementById('dd-i'+i).value)||0;if(v){isum+=v;icount++;}});
+    var iscore=icount?isum/icount:0;
+    var ilabel=!icount?'Not scored':(iscore<2?'Straightforward':(iscore<3?'Standard':(iscore<4?'Complex':'Highly complex')));
+    var h='<p><b>Overall domain score: '+dscore.toFixed(2)+' ('+dlabel+')</b>'+(Math.abs(wtot-100)>0.01?' <span style="color:var(--b);">Weights total '+wtot.toFixed(1)+'%, not 100%; the score is normalized to the weights entered.</span>':'')+'</p>';
+    h+='<p><b>Integration complexity: '+(icount?iscore.toFixed(2):'n/a')+' ('+ilabel+')</b>'+(icount&&icount<DIM.length?' <span style="color:var(--ink-soft);">'+(DIM.length-icount)+' dimension(s) unscored.</span>':'')+'</p>';
+    h+='<table class="matrix-table"><tr><th>Domain</th><th>Score</th><th>Weight</th><th>Risk level</th><th>Implication</th></tr>';
+    rows.sort(function(a,b){return b[1]-a[1];}).forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'%</td><td>'+lvl(r[1])+'</td><td>'+CONV[r[1]-1]+'</td></tr>';});
+    h+='</table>';
+    var high=rows.filter(function(r){return r[1]>=4;}).map(function(r){return r[0];});
+    var crit=rows.filter(function(r){return r[1]==5;}).map(function(r){return r[0];});
+    h+='<p style="margin-top:10px;">';
+    if(crit.length)h+='<b>Deal-team attention:</b> '+crit.join(', ')+' scored 5, which the scoring conventions treat as potentially affecting deal viability. Each needs a stop, reprice, or integration-cost classification before price is agreed. ';
+    else if(high.length)h+='<b>Price and terms:</b> '+high.join(', ')+' scored 4. These are candidates for reps, warranties, escrow, or a price adjustment rather than for the integration plan alone. ';
+    else h+='No domain scored above 3. The findings belong in the integration plan and the 100-day sequence rather than in the price. ';
+    if(missing.length)h+='<span style="color:var(--ink-soft);">Unscored: '+missing.join(', ')+'. A domain left unscored is a domain the buyer will assume was not examined.</span>';
+    h+='</p><p style="color:var(--ink-soft);font-size:12px;margin-top:8px;">Weights here are yours to set. The full scoring workbook adds calibrated weights by deal type, the red flag library, and the integration cost bands; see the download below.</p>';
+    out.innerHTML=h;
+  });
+})();
+</script>
 
 <footer>
   Reference only. The full question bank with 300 questions, the response tracker, and the healthcare M&A technology reference are part of the private methodology.
