@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Technology Operations</title>
+<meta name="description" content="Running technology across multiple regions: data residency and cross-border transfer, follow-the-sun staffing and handoff design, regional compliance divergence, and the architecture decisions that change once a system stops being single-region.">
+<meta property="og:title" content="Global Technology Operations | CTO Toolkit">
+<meta property="og:description" content="Running technology across multiple regions: data residency and cross-border transfer, follow-the-sun staffing and handoff design, regional compliance divergence, and the architecture decisions that change once a system stops being single-region.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/global-technology-operations/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Global Technology Operations | CTO Toolkit">
+<meta name="twitter:description" content="Running technology across multiple regions: data residency and cross-border transfer, follow-the-sun staffing and handoff design, regional compliance divergence, and the architecture decisions that change once a system stops being single-region.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Global Technology Operations</h1>
+  <p>What changes once technology operations stop fitting in one region: data residency and cross-border transfer, staffing coverage across time zones, compliance requirements that diverge by jurisdiction rather than apply uniformly, and the architecture decisions that a single-region system never had to make.</p>
+  <div class="caveat">Jurisdiction-specific regulatory detail (GDPR, sector rules, state and national AI and privacy law) is covered on <a href="../regulatory-map/index.html">Regulatory Map</a> and kept current there rather than restated here. This page covers the operating model questions that sit on top of that legal landscape.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>What actually changes at global scale</h3>
+      <p>Four dimensions that a single-region operation doesn't have to think about explicitly, and that a global one cannot avoid.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Dimension</th><th>The single-region default</th><th>What changes globally</th></tr>
+        <tr><td>Data residency</td><td>Data lives wherever is operationally convenient</td><td>Some jurisdictions require certain data classes to be stored, and sometimes processed, within their borders; architecture has to support storing the same data differently by region rather than one global data layer</td></tr>
+        <tr><td>Cross-border transfer</td><td>Not a distinct question; data moves freely inside one legal environment</td><td>Moving data between regions needs a lawful transfer basis (an adequacy determination, a transfer mechanism such as the EU's Standard Contractual Clauses, or in-region processing that avoids the transfer entirely)</td></tr>
+        <tr><td>Staffing coverage</td><td>One time zone, one on-call rotation, business hours mean the same thing to everyone</td><td>Coverage has to be designed deliberately across time zones, described below, or incident response and support both degrade overnight in whichever region is asleep</td></tr>
+        <tr><td>Regulatory divergence</td><td>One compliance program covers the whole operation</td><td>Requirements diverge by jurisdiction and sector, so a single global compliance posture either overbuilds for regions that don't need it or underbuilds for the ones that do; see <a href="../regulatory-map/index.html">Regulatory Map</a></td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Data residency as an architecture constraint, not a policy statement</h3>
+      <p>A residency requirement written into a policy document does nothing until it's expressed in where data lives in practice and how it's replicated.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Working pattern</span>
+        <p>Data classification drives storage location: a field or record is tagged with its residency requirement at creation, and the storage and backup layer enforces where copies can exist, rather than relying on every engineer to remember the rule for every dataset. Disaster recovery and backup, covered generally on <a href="../disaster-recovery/index.html">Disaster Recovery</a>, has to respect the same residency boundary; a backup replicated to the wrong region defeats the entire control.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Residency is treated as a legal and policy question, satisfied by a signed data processing agreement, while the infrastructure itself replicates everything to a global backup region by default because that's how the platform was originally built for a single-region company. The gap surfaces during an audit or, worse, during the first cross-border incident.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Follow-the-sun staffing and the handoff itself</h3>
+      <p>Round-the-clock coverage across regions solves the time-zone problem. The handoff between regions is where it actually succeeds or fails.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a working handoff needs</span>
+        <p>A structured handoff document, not a verbal summary, covering active incidents, anything in a degraded state, and anything scheduled during the incoming region's shift. A defined overlap window, even 30 to 60 minutes, where both regions are live and can talk directly rather than relying entirely on the written handoff. One clearly named owner per active issue at any moment, so accountability doesn't quietly diffuse across three regions over 24 hours.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>An issue survives multiple handoffs because each region assumes the previous one is still tracking it, or picks it up fresh without the earlier context, and progress resets every eight hours instead of compounding. This is the multi-region version of the same failure the <a href="../incident-response/index.html">Incident Response</a> page describes for a single incident command handoff, just recurring on a daily cycle instead of once per incident.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>What breaks when architecture stops being single-region</h3>
+      <p>Decisions that a single-region system gets to make once, and a multi-region one has to make explicitly and keep re-checking.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Decision</th><th>What it forces</th></tr>
+        <tr><td>Where is the system of record</td><td>Either one region holds authoritative data with others reading a replica (simpler, adds latency for the non-primary regions), or data is multi-master in practice (harder, avoids the latency cost, adds conflict resolution as a real engineering problem)</td></tr>
+        <tr><td>What happens on a regional outage</td><td>Whether the system fails over to another region automatically, and if so, whether that failover crosses a residency boundary that the failover plan has to respect, not just the technical plan on <a href="../disaster-recovery/index.html">Disaster Recovery</a></td></tr>
+        <tr><td>Identity and access across regions</td><td>Whether a single global identity provider serves every region, or region-specific instances are required by a residency rule; see <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a></td></tr>
+        <tr><td>Which region owns an incident that spans two</td><td>A named tiebreak rule, so an incident that spans both regions doesn't stall while two on-call teams each assume the other has command</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>An incident that crossed a handoff and a residency boundary</h3>
+      <p>A single incident that touches most of what this page covers.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>A database performance issue in the EU region degraded response times starting late in the EU team's shift, 40 minutes before the scheduled handoff to the US region. The EU on-call engineer opened an incident, started the standard triage from <a href="../incident-response/index.html">Incident Response</a>, and had not yet identified a root cause when the shift boundary arrived. Because the handoff document requirement was enforced rather than optional, the incoming US engineer received a written state: symptoms, what had been ruled out, current mitigation attempts, and the fact that resolving it might involve replicating a diagnostic dataset outside the EU, which required a residency check before anyone touched it.</p>
+      <p>The US engineer, working from the handoff document rather than starting from zero, escalated the residency question immediately rather than after already exporting the data, confirmed a valid transfer mechanism was in place for diagnostic data specifically because that had been decided in advance as part of the data classification work, and continued the investigation without the delay a fresh discovery would have cost. The incident resolved two hours into the US shift. The postmortem's only finding was that the overlap window between regions was 15 minutes, shorter than the standard, and had nearly not been enough for a real-time handoff on an active incident; it was extended to 45 minutes afterward.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs global operations are running on assumptions rather than design</h3>
+      <p>Patterns that show up when an organization has expanded into multiple regions without deliberately redesigning for it.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No documented data classification maps residency requirements to where data actually lives and replicates</li>
+          <li>Shift handoffs between regions are verbal or informal, with no structured document and no defined overlap window</li>
+          <li>No named tiebreak rule exists for who owns an incident that spans two regions</li>
+          <li>Disaster recovery and backup plans were designed before residency requirements existed and have never been re-checked against them</li>
+          <li>Regional compliance posture is a single global policy rather than a mapped set of requirements by jurisdiction</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Data residency and cross-border transfer requirements vary by jurisdiction and change; verify current requirements against <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> and counsel before architecture decisions are finalized.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

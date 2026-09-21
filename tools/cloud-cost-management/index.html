@@ -291,6 +291,26 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Allocation methods for multi-account, multi-BU estates</h3>
+      <p>Section 3 covers tagging discipline as the prerequisite. Once tagging is reliable, the question becomes which allocation method to run on top of it, and shared infrastructure that no single team's tags can attribute cleanly is where most multi-BU chargeback programs stall.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Method</th><th>How it splits shared cost</th><th>Where it fits</th></tr>
+          <tr><td>Direct allocation</td><td>Cost attributed to the team or BU whose tag is on the resource, no splitting required</td><td>Dedicated compute, storage, and services with clean tagging; the majority of spend in a mature program</td></tr>
+          <tr><td>Even split</td><td>Shared cost (a common network egress bill, a shared database cluster) divided equally across consuming teams regardless of actual usage</td><td>A fast starting point when metering shared usage isn't built yet; crude, and worth replacing with proportional splitting once the metering exists</td></tr>
+          <tr><td>Proportional (metered)</td><td>Shared cost split by actual measured consumption, requests served, data volume, compute-seconds against the shared resource</td><td>The target state for anything shared and material; requires usage metering per consumer, which is the real cost of running this method rather than even split</td></tr>
+          <tr><td>Fixed or negotiated</td><td>A pre-agreed percentage split, set by governance rather than derived from either headcount or metered usage</td><td>Joint infrastructure where no consumption metric fairly represents the benefit each BU gets, decided once by the same forum that owns the funding model on <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td></tr>
+        </table>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">The FinOps Foundation's own Allocation capability, under the Inform phase, covers this same problem in more depth; treat the table above as the working version rather than a substitute for reading it at finops.org when the shared-cost picture gets complicated.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs cost governance isn't working</h3>
       <p>Not exhaustive, but the patterns that show up consistently when a cost program looks good on paper and isn't changing behavior.</p>

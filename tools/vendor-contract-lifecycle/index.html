@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Contract Lifecycle Management</title>
+<meta name="description" content="Managing the full vendor book as a standing portfolio rather than one renewal at a time: the lifecycle stages, exit clause types, the portfolio-level renewal calendar, and the concentration picture across every active contract.">
+<meta property="og:title" content="Vendor Contract Lifecycle Management | CTO Toolkit">
+<meta property="og:description" content="Managing the full vendor book as a standing portfolio rather than one renewal at a time: the lifecycle stages, exit clause types, the portfolio-level renewal calendar, and the concentration picture across every active contract.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/vendor-contract-lifecycle/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vendor Contract Lifecycle Management | CTO Toolkit">
+<meta name="twitter:description" content="Managing the full vendor book as a standing portfolio rather than one renewal at a time: the lifecycle stages, exit clause types, the portfolio-level renewal calendar, and the concentration picture across every active contract.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Vendor Contract Lifecycle Management</h1>
+  <p><a href="../vendor-evaluation/index.html">Vendor Evaluation</a> covers picking a vendor. <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a> covers one contract's renewal. This page covers the full book: every active vendor contract managed as a single portfolio with a shared calendar, a shared risk view, and a consistent exit discipline, the layer that's missing once the vendor count passes what any one person can track from memory.</p>
+  <div class="caveat">This is the enterprise-scale companion to the two pages above. A single-digit vendor count rarely needs a portfolio layer; once it's in the dozens or hundreds, per-contract discipline without a portfolio view is how concentration risk and expiring exit rights go unnoticed until they're expensive.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h2>The lifecycle stages</h2>
+      <p>Every vendor contract moves through the same stages regardless of size. Treating them as a single continuous process, owned end to end, is what a lifecycle discipline adds over managing each stage in isolation.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Stage</th><th>What happens</th><th>Where it's covered on this site</th></tr>
+        <tr><td>Intake</td><td>A request for a new vendor or tool is raised, checked against existing contracts for overlap before evaluation starts</td><td>The duplicate-tools leak on <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
+        <tr><td>Selection</td><td>Weighted, multi-evaluator scoring against functional fit, security, financial stability, integration, support, and exit cost</td><td><a href="../vendor-evaluation/index.html">Vendor Evaluation</a></td></tr>
+        <tr><td>Contracting</td><td>The clauses negotiated at signing that determine how every renewal after it will go</td><td><a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a>, clause table</td></tr>
+        <tr><td>Onboarding</td><td>The vendor enters the risk register, the relationship gets a named owner, and the contract's key dates enter the portfolio calendar below</td><td>This page</td></tr>
+        <tr><td>Performance management</td><td>Standing review against the criteria scored at selection: uptime, support responsiveness, security posture drift, whether the integration is still fit for purpose</td><td><a href="../vendor-evaluation/index.html">Vendor Evaluation</a>, after-signing section, and the risk register</td></tr>
+        <tr><td>Renewal</td><td>The 180-day sequence run against the vendor's own sales playbook, using the performance history accumulated above as leverage</td><td><a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a>, renewal calendar</td></tr>
+        <tr><td>Offboarding</td><td>Data export executed against the contract's exit clause, access revoked, the vendor removed from active spend and the risk register updated</td><td>This page, exit clause table below</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>The exit clause types worth knowing apart</h2>
+      <p>Exit terms get negotiated once, at signing, and then not read again until the relationship is already ending, at which point they're a fact rather than a negotiation. Knowing what each type guarantees changes what gets pushed for the first time.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Clause type</th><th>What it guarantees</th><th>What it doesn't</th></tr>
+        <tr><td>Termination for convenience</td><td>The right to end the contract before the term expires, usually with a notice period, without needing to prove the vendor did anything wrong</td><td>A favorable exit cost; some agreements pair this with an early-termination fee that offsets the flexibility</td></tr>
+        <tr><td>Termination for cause</td><td>The right to exit for a defined breach (an SLA failure pattern, a security incident, insolvency) without the fee that a for-convenience exit might carry</td><td>Speed; proving cause and following the contract's notice-and-cure sequence usually takes longer than a for-convenience exit would</td></tr>
+        <tr><td>Data portability and export</td><td>A defined format, a defined window, and (ideally) no charge for exporting your own data after termination</td><td>Usability; &quot;a documented, non-proprietary format&quot; still needs to be checked against what your next system can actually ingest</td></tr>
+        <tr><td>Transition assistance</td><td>A defined period, sometimes 30 to 90 days, during which the outgoing vendor continues limited support to ease cutover to a replacement</td><td>Free; transition assistance is very often billed at a rate specified in the contract, and that rate is worth negotiating at signing rather than discovering at exit</td></tr>
+        <tr><td>Deletion and retention</td><td>A commitment on when and how the vendor deletes your data after the transition period ends</td><td>Verification; few contracts include an audit right to confirm deletion happened, which matters more for regulated data under <a href="../regulatory-map/index.html">Regulatory Map</a></td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Portfolio view</span>
+      <h2>The renewal calendar, scaled to the whole book</h2>
+      <p>The single-contract renewal calendar on <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a> works for one contract at a time. At portfolio scale it becomes a dashboard, and the dashboard needs a few fields the single-contract version doesn't.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ol class="num-list">
+        <li><div><b>A rolling 12-month view, not a per-contract reminder</b>Every contract's notice deadline plotted on one timeline, so a cluster of five renewals landing the same quarter is visible months in advance instead of discovered five times separately.</div></li>
+        <li><div><b>Criticality tier attached to every row</b>Pulled from the same tiering used in the vendor risk register on <a href="../vendor-evaluation/index.html">Vendor Evaluation</a>, so the portfolio owner can prioritize renewal planning time toward the contracts where getting it wrong actually matters.</div></li>
+        <li><div><b>A named owner per contract, visible on the dashboard itself</b>Not inferred from who signed it originally; ownership changes as people move roles, and a stale owner field is how a renewal gets missed even with a calendar in place.</div></li>
+        <li><div><b>Concentration flags computed automatically</b>Any vendor crossing the concentration ceiling described on <a href="../vendor-evaluation/index.html">Vendor Evaluation</a> surfaces on the dashboard without anyone having to remember to check it contract by contract.</div></li>
+        <li><div><b>A quarterly portfolio review, distinct from any single renewal conversation</b>Where the concentration picture, the upcoming renewal cluster, and any vendor with a performance flag get reviewed together, at the cadence described in <a href="../technology-budget-management/index.html">Running the Technology Budget</a>.</div></li>
+      </ol>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>What the portfolio view catches that the per-contract view doesn't</h2>
+      <p>The same organization, before and after the lifecycle discipline is applied at portfolio scale.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">Per-contract discipline only</span><p>Each of 40 active vendor contracts has a diligent owner running the 180-day renewal sequence correctly, one contract at a time. In Q3, six major renewals land in the same six-week window because none of the individual owners had visibility into anyone else's calendar. Three get rushed, one renews on the vendor's terms rather than the organization's because there wasn't time to run the full sequence, and nobody notices until the following year that the cloud-identity vendor and the SSO vendor together now represent 34 percent of total vendor spend, above the concentration ceiling nobody was tracking at the portfolio level.</p></div>
+      <div class="stage-cell"><span class="env-label b">With the portfolio layer</span><p>The same 40 contracts feed one dashboard. The Q3 cluster is visible in Q1, and two of the six renewals get pulled forward or pushed to spread the load, each still inside its own valid negotiation window. The concentration flag on the identity vendors fires automatically at 32 percent, six points before any single contract's renewal was due, giving the technology governance forum time to decide on an exit path deliberately rather than discovering the number during an unrelated renewal crunch.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h2>Signs the vendor book is managed contract by contract only</h2>
+      <p>Patterns that show up when individual renewals are handled well but nobody owns the portfolio.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ul class="checklist">
+        <li>No single view shows every contract's renewal date in one place; each owner tracks their own</li>
+        <li>Vendor concentration is discovered during a specific renewal negotiation rather than monitored continuously</li>
+        <li>Two or more vendors doing substantially the same thing were each evaluated and contracted independently, with no intake check against the existing book</li>
+        <li>Exit clause terms are unknown for most of the active portfolio until a specific contract is already ending</li>
+        <li>No quarterly review exists that looks at the vendor book as a whole rather than one relationship at a time</li>
+      </ul>
+    </div></div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. The lifecycle staging follows common vendor and third-party risk management practice, including the structure reflected in NIST SP 800-161 and ISO 27036. The portfolio calendar design and worked example are this site's.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

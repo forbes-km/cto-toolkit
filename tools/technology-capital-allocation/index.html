@@ -369,6 +369,37 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Allocating across multiple business units</h3>
+      <p>Everything above assumes one budget and one owner. Once technology spend is split across business units with separate P&amp;Ls, the categories still apply but the allocation mechanism has to be chosen deliberately, because the wrong one for the organization's structure produces the same fights every cycle.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Funding model</th><th>How it works</th><th>Where it fits</th></tr>
+          <tr><td>Corporate-funded core</td><td>Platform, security, and shared infrastructure are funded centrally and treated as a fixed cost of doing business; BUs are not billed for them</td><td>A small number of BUs, or a company where the center wants to standardize the platform and is willing to eat the cost of doing so</td></tr>
+          <tr><td>Chargeback</td><td>BUs are billed for what they consume, at a defined rate per unit (compute, seats, transactions); the bill lands on the BU's own P&amp;L</td><td>Consumption varies a lot by BU and the center wants that variance to show up as a cost the BU owner manages directly</td></tr>
+          <tr><td>Showback</td><td>BUs see the same consumption-based cost figure as chargeback, but it is not billed; it stays informational</td><td>Building the metering and cost-allocation muscle before making it binding, or a culture where a hard chargeback fight would cost more political capital than it's worth yet</td></tr>
+          <tr><td>Federal (shared core, funded local)</td><td>A small centrally funded platform layer plus BU-funded local spend on top of it, with an explicit split of what's core versus local</td><td>Several BUs of meaningfully different size and maturity, where full centralization would slow the larger ones down and full chargeback would starve the smaller ones of the shared platform they can't yet afford alone</td></tr>
+        </table>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">This maps onto the governance archetypes in Weill and Ross's <em>IT Governance</em> (MIT CISR, 2004): a business monarchy or IT monarchy tends toward corporate-funded core, a federal arrangement tends toward the federal funding model, and a duopoly of business and IT leadership usually lands on chargeback or showback depending on how much friction the relationship can absorb. Picking the funding model without first agreeing on the governance archetype is why the same allocation fight recurs every cycle under a different name. See <a href="../technology-governance-federation/index.html">Technology Governance Across Business Units</a> for the decision-rights layer this funding choice sits on top of.</p>
+      </div>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Question</th><th>What a working multi-BU allocation answers</th></tr>
+          <tr><td>Who funds the shared platform</td><td>Named explicitly as corporate, a lead BU, or a pooled contribution formula, not left as an assumption each BU makes differently</td></tr>
+          <tr><td>What happens when a BU wants a platform exception</td><td>A standing exception-request path with a named approver, rather than a one-off negotiation each time</td></tr>
+          <tr><td>How a new BU or an acquired company gets onboarded to the funding model</td><td>A defined ramp, since a newly acquired BU rarely has metering or budget discipline in place on day one; see <a href="../technology-ma-integration/index.html">Technology &amp; M&amp;A Integration</a></td></tr>
+          <tr><td>Who arbitrates when two BUs disagree on a shared cost allocation</td><td>A named forum with a decision deadline, not an open-ended email thread that resolves by whoever has the most patience</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Download</span>
       <h3>Capital allocation workbook</h3>
       <p>Seven linked tabs: the allocation summary above made live, a pre-ranked cut list and funding list with running totals, a zero-based review tracker, a real-options tracker for Horizon 3 bets, and a three-year projection. Every formula recalculates when you change an input; nothing is hardcoded.</p>

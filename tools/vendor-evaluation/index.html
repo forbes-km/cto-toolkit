@@ -278,6 +278,29 @@
 
   <div class="stage-card">
     <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>The vendor risk register</h3>
+      <p>Above a materiality threshold, a vendor is a standing risk, not a one-time purchase decision. Enterprise risk management treats it that way; a vendor scorecard that ends at signing does not.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Field</th><th>What it tracks</th></tr>
+          <tr><td>Criticality tier</td><td>Whether the vendor is on the critical path for revenue or compliance, important but replaceable, or low-impact; sets the review cadence below</td></tr>
+          <tr><td>Concentration</td><td>Share of category spend, share of total technology spend, and whether the vendor sits behind more than one internal system, so the real blast radius is visible rather than assumed</td></tr>
+          <tr><td>Financial health</td><td>Last checked date and source (funding round, public filings, a credit check for a private vendor); refreshed at each renewal at minimum, sooner for an early-stage vendor</td></tr>
+          <tr><td>Security posture drift</td><td>Current SOC 2 or ISO status against what was true at signing; certifications lapse and breach histories accumulate after the initial evaluation</td></tr>
+          <tr><td>Named exit path</td><td>The migration plan and its estimated cost and duration, reviewed rather than assumed still valid as the vendor's product and your integration with it both keep changing</td></tr>
+          <tr><td>Owner</td><td>A named individual accountable for the vendor relationship, not a team or a function; see the same pattern in <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
+        </table>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">This is the same register discipline that underlies third-party risk management frameworks such as NIST SP 800-161 and ISO 27036; a formal certification against either is unnecessary for most organizations, but the register they describe, one row per material vendor, reviewed on a fixed cadence rather than only at renewal, is worth running regardless of whether the paperwork ever gets audited.</p>
+      </div>
+    </div>
+    <div class="same-note">Feed the criticality tier and concentration fields from here directly into the vendor concentration checklist on <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a>; the two pages track the same underlying risk from different angles and should use the same numbers.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
       <span class="stage-num">Download</span>
       <h3>Vendor evaluation scorecard</h3>
       <p>The six weighted dimensions above in a fillable format, with per-dimension guidance and a place to log key risks and mitigations. Markdown for pasting into your own docs system, or a formatted Word doc.</p>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology Governance Across Business Units</title>
+<meta name="description" content="Who decides platform, architecture, and investment questions when a technology function serves several business units: the governance archetypes, what each one decides, and the escalation path for when two BUs disagree.">
+<meta property="og:title" content="Technology Governance Across Business Units | CTO Toolkit">
+<meta property="og:description" content="Who decides platform, architecture, and investment questions when a technology function serves several business units: the governance archetypes, what each one decides, and the escalation path for when two BUs disagree.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technology-governance-federation/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technology Governance Across Business Units | CTO Toolkit">
+<meta name="twitter:description" content="Who decides platform, architecture, and investment questions when a technology function serves several business units: the governance archetypes, what each one decides, and the escalation path for when two BUs disagree.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technology Governance Across Business Units</h1>
+  <p>Who gets to decide the platform, the architecture, the investment split, and the exception, once a technology function serves more than one business unit with its own P&amp;L. A single CTO running a single org rarely needs this page; a CTO running a portfolio of BUs that disagree needs it on day one.</p>
+  <div class="caveat">See <a href="../technology-decision-rights/index.html">Technology Decision Rights</a> for decision ownership within a single organization, and <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a> for the funding models this page's archetypes each tend toward.</div>
+</header>
+
+<main>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The governance archetypes</h3>
+      <p>Peter Weill and Jeanne Ross, in <em>IT Governance</em> (MIT CISR / Harvard Business School Press, 2004), named the patterns organizations use to make IT decisions across business units. Most multi-BU technology conflict is one of these patterns operating without anyone having chosen it.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <div class="grid4">
+        <div class="type-card">
+          <h4>Business monarchy</h4>
+          <p>A small group of senior business executives, not IT, makes technology decisions for everyone, usually the CEO and direct reports.</p>
+          <p class="anti">Fails when the group lacks the technical grounding to weigh a real architecture tradeoff and defaults to whoever presents most confidently.</p>
+        </div>
+        <div class="type-card">
+          <h4>IT monarchy</h4>
+          <p>Technology executives make the decision, informed by business input but not requiring BU sign-off.</p>
+          <p class="anti">Fails when it produces standardization the BUs experience as the platform team ignoring their actual constraints.</p>
+        </div>
+        <div class="type-card">
+          <h4>Feudal</h4>
+          <p>Each BU leader decides for their own unit independently, with no enterprise-wide coordination expected or enforced.</p>
+          <p class="anti">Fails by construction at anything that needs a shared platform: every BU ends up with its own version of the same capability.</p>
+        </div>
+        <div class="type-card">
+          <h4>Federal</h4>
+          <p>The center and the BUs share decision rights explicitly: a defined core is centrally governed, a defined local layer is BU-governed.</p>
+          <p class="anti">Fails when the split between core and local is never written down, so every decision becomes a negotiation over which layer it belongs to.</p>
+        </div>
+        <div class="type-card">
+          <h4>IT duopoly</h4>
+          <p>Technology leadership and business leadership decide jointly, two parties who each hold veto power rather than one party consulting the other.</p>
+          <p class="anti">Fails when one side's veto is informal and gets overridden under deadline pressure, which teaches both sides the duopoly isn't real.</p>
+        </div>
+        <div class="type-card">
+          <h4>Anarchy</h4>
+          <p>No consistent pattern; each decision is made by whoever happens to be in the room, and the pattern changes by topic and by year.</p>
+          <p class="anti">Not a real archetype so much as the default state before one of the five above is deliberately chosen. Most struggling multi-BU technology functions are here.</p>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">None of the first five is universally correct. The finding from Weill and Ross's research across roughly 250 enterprises was that organizations with any one archetype applied deliberately and consistently outperformed those without a consistent pattern, regardless of which one they picked. Consistency mattered more than the specific choice.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>What each decision domain needs, not one answer for everything</h3>
+      <p>The archetype does not have to be the same across every kind of technology decision. Weill and Ross treat five decision domains separately, and most working governance models mix archetypes across them.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Decision domain</th><th>What it covers</th><th>Archetype that most often fits</th></tr>
+        <tr><td>IT principles</td><td>The high-level statements about how technology should be used across the enterprise (build versus buy defaults, cloud-first, security posture)</td><td>Business monarchy or duopoly; needs enterprise-wide buy-in, not just IT's view</td></tr>
+        <tr><td>Enterprise architecture</td><td>Standards, shared data models, integration patterns, the technical core described in <a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a></td><td>IT monarchy or federal; mostly a technical judgment with real consequences for BU autonomy</td></tr>
+        <tr><td>Infrastructure strategy</td><td>Shared platforms: identity, cloud landing zones, the observability stack, anything with strong economies of scale</td><td>Federal; a centrally governed core that every BU funds into, per the funding models on <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td></tr>
+        <tr><td>Business application needs</td><td>Which applications a given BU builds or buys to run its own business</td><td>Feudal or duopoly; the BU knows its own business best, and a centrally imposed answer here is usually wrong</td></tr>
+        <tr><td>IT investment and prioritization</td><td>How much gets spent where, across the shared portfolio described on <a href="../technology-portfolio-management/index.html">Technology Portfolio Management</a></td><td>Duopoly; needs both the enterprise view and each BU's view represented with real weight</td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">The common failure is applying one archetype, usually whichever one the loudest recent conflict resolved toward, to all five domains. A federal core with feudal application ownership is a coherent, common pattern; a business monarchy deciding application-level detail for every BU usually is not.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Writing the split down</h3>
+      <p>The single highest-leverage document in a federal model, and the one most organizations never produce.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What it contains</span>
+        <p>One page per decision domain: which archetype governs it, who specifically holds the decision right (a named role or forum, not a department), and what counts as core versus local for infrastructure and architecture decisions. Reviewed annually alongside the capital allocation cycle, since a BU's status (growing fast, newly acquired, being divested) changes what governance model fits it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What happens without it</span>
+        <p>Every decision becomes two arguments: the substantive question, and a prior, unresolved argument about who gets to decide it. The second argument is the one that burns the political capital, and it recurs every time because nothing was written down the first time it was settled informally.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>The escalation path when two BUs disagree</h3>
+      <p>A federal or duopoly model still produces real disagreements between BUs of similar size and leverage. What resolves it is a defined path, not a strong document.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">A working path</span>
+        <p>A standing technology governance forum, meeting on a fixed cadence, with named voting members from each BU and the center, and a stated tiebreak rule (the CTO decides, or the forum escalates to the CEO with a recommendation) for when the forum itself deadlocks. The forum's decisions are written down and referenced the next time a similar question comes up, so precedent accumulates instead of every case starting from zero.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The failure mode</span>
+        <p>No standing forum, so a disagreement escalates through whichever executives happen to have a relationship, resolved by whoever is more persistent or more senior rather than by the substance of the decision domain. The BU that escalates loudest wins this quarter, and every BU learns that lesson and escalates loudly next time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>A platform standoff, resolved</h3>
+      <p>A recurring pattern at a multi-BU technology organization, worked through end to end.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>Three business units, each with its own P&amp;L and its own history of acquisition into the parent company, ran three separate identity providers. Each BU's engineering leader argued their system was better suited to their own customer base, and each was, in isolation, correct. The center had no standing authority to force consolidation, because no governance archetype had ever been chosen for infrastructure strategy; it had defaulted to feudal by inertia, one BU per decision.</p>
+      <p>The CTO convened a governance forum with a voting member from each BU and a stated tiebreak: the CTO decides if the forum deadlocks after two sessions. The forum classified identity as core infrastructure under a federal model, meaning centrally governed, centrally funded through the shared-platform line on the capital allocation portfolio, with each BU's specific integration needs handled as a local requirement against the shared core rather than a reason to run a separate system. Two of three BUs agreed within the first session, citing the audit and breach-notification burden of maintaining three separate identity postures under <a href="../regulatory-map/index.html">Regulatory Map</a>. The third BU's system, tied to a recent acquisition with a contractual migration deadline already in the M&amp;A integration plan, was allowed an 18-month exception with a named end date rather than an indefinite one.</p>
+      <p>What made the resolution stick was not the technical argument, which had been available for two years before this forum existed. It was that the decision now had a named owner, a written classification, and a forum that would apply the same reasoning the next time a BU proposed running its own version of a shared capability.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs governance is undefined rather than federal</h3>
+      <p>Patterns that show up when an organization believes it has a governance model and actually has anarchy with a name.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No document states which archetype governs which of the five decision domains; anyone asked would describe it differently</li>
+          <li>The same category of cross-BU disagreement has recurred more than once with no reference to how it was resolved last time</li>
+          <li>A BU maintains its own version of a shared capability (identity, observability, a data platform) for reasons nobody has revisited in over a year</li>
+          <li>Escalations are resolved by executive relationship and seniority rather than by a standing forum with named members</li>
+          <li>The funding model for shared infrastructure was never explicitly tied to the governance archetype that decides it, so the two keep drifting out of alignment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. The governance archetypes are Weill and Ross's, from <em>IT Governance: How Top Performers Manage IT Decision Rights for Superior Results</em> (Harvard Business School Press, 2004), based on MIT Center for Information Systems Research fieldwork. The decision-domain mapping, escalation path design, and worked example are this site's.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+</footer>
+
+</body>
+</html>

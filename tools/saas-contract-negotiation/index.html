@@ -187,6 +187,58 @@
       <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Every contract has a business owner who answers three questions at 180 days: are we using it, do we still need it, and what is it worth. Procurement then negotiates the terms for the answer. Tie the owner's answer to the utilization data rather than their preference, and make the total contract value by owner visible in the <a href="../technology-budget-management/index.html">technology budget</a> so that shelfware has a name attached to it.</p></div>
     </div>
   </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>Enterprise license agreements</h2>
+      <p>Large vendors offer a different structure once spend crosses a threshold, usually seven figures: a single multi-year agreement bundling several products at a discount off list, in exchange for a volume or spend commitment. The math changes the negotiation.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>What an ELA offers</th><th>What it costs you</th></tr>
+        <tr><td>A meaningful discount off list, often 15 to 30 percent, for committing to the vendor's full platform rather than buying products individually</td><td>The commitment is usually a dollar or unit floor for the term; underconsuming it does not reduce the bill, so an ELA sized to a growth forecast that doesn't materialize becomes forced overspend</td></tr>
+        <tr><td>Price predictability across a 3 to 5 year term, insulating you from the per-product renewal cycle above</td><td>Bundling raises switching cost across every product in the agreement at once, not just one; exiting one underperforming product means unwinding the whole ELA's discount basis</td></tr>
+        <tr><td>Simplified administration: one contract, one renewal date, one relationship owner, instead of a dozen separate SaaS renewals with a single vendor</td><td>It concentrates spend and dependency with one vendor, which is the concentration risk covered below</td></tr>
+        <tr><td>Access to products outside the current footprint at the bundled rate, useful if adoption is already planned</td><td>It also makes shelfware easier to hide, since usage of any one bundled product is a rounding error against the total commitment rather than a line item that gets scrutinized on its own</td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">The test before signing: build the true consumption forecast product by product, sum it, and compare that number, not the vendor's proposed commitment level, against the discounted price. An ELA is worth signing when the forecast clears the commitment floor with margin to spare. It is a trap when the floor is set to a growth case the sales team built for you.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Governance</span>
+      <h2>Multi-year renewal governance</h2>
+      <p>A single-year renewal is one decision made once. A three-to-five year ELA or master agreement needs a governance rhythm across the term, or the discipline built at signing decays by year two.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Cadence</th><th>Who</th><th>What gets reviewed</th></tr>
+        <tr><td>Quarterly</td><td>Vendor relationship owner (named at signing, not left implicit)</td><td>Consumption against the committed floor, by product; flags any product tracking toward significant under- or overconsumption before it becomes a year-end surprise</td></tr>
+        <tr><td>Annually</td><td>Technology finance and the relationship owner jointly</td><td>Total spend against the budget line in <a href="../technology-budget-management/index.html">Technology Budget Management</a>, and whether the original business case for the agreement still holds</td></tr>
+        <tr><td>Mid-term (year 2 of a 3 to 5 year term)</td><td>The relationship owner, with procurement and counsel</td><td>Whether current terms are still competitive against the market rate for the same products today, since a rate locked in at signing does not track the market on its own, and whether an early renegotiation is worth opening given how the vendor's own product and pricing have moved</td></tr>
+        <tr><td>180 days before term end</td><td>Same cadence as the single-contract renewal calendar above</td><td>The full renewal process, using the actual multi-year consumption history as leverage rather than the projection the vendor sold against originally</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Risk</span>
+      <h2>Vendor concentration risk</h2>
+      <p>The flip side of an ELA's discount is dependency. A vendor book with one supplier holding a large share of spend, or holding a system of record no alternative can replace quickly, is a risk that belongs on the same register as a security or operational risk, not left as a footnote to the contract.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ul class="checklist">
+        <li>No single vendor holds more than a defined ceiling of total technology spend (a common working threshold is 15 to 20 percent) without an explicit, named executive sign-off on the concentration</li>
+        <li>For any vendor above that ceiling, a documented realistic exit path exists, including estimated migration time and cost, reviewed at least annually rather than assumed</li>
+        <li>Critical-path vendors (identity, cloud infrastructure, payments, core data platform) are identified explicitly and reviewed against <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a> and <a href="../disaster-recovery/index.html">Disaster Recovery</a> for what a vendor-side outage or insolvency does downstream</li>
+        <li>Vendor financial health is checked before a multi-year commitment, not assumed; a vendor's own funding or acquisition risk becomes your continuity risk for the length of the term</li>
+        <li>The concentration picture is reviewed at the same board or risk-committee cadence as other enterprise risk, per <a href="../board-reporting/index.html">Board Reporting</a>, rather than living only in a procurement spreadsheet nobody outside the function sees</li>
+      </ul>
+    </div></div>
+  </div>
+
 </main>
 
 <footer>
