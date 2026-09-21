@@ -73,8 +73,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Incident Response</h1>
-  <p>A blameless, repeatable incident process: detection through postmortem follow-through, with the specific failure modes that turn a manageable incident into a chaotic one.</p>
-  <div class="caveat">General incident response practice. For AI-specific failures, see the <a href="../ai-governance-map/index.html">AI Governance Map</a> for the AI-specific incident triage extension, which builds on this process rather than replacing it.</div>
+  <p>A blameless, repeatable incident process from detection through postmortem follow-through: the roles, the severity scale, the communication cadence, the resolution bar, the postmortem method, and the metrics that tell you whether any of it is working. Two worked incidents run end to end, one availability and one security, because the two diverge in ways a single process document usually hides.</p>
+  <div class="caveat">General incident response practice. For AI-specific failures, see the <a href="../ai-governance-map/index.html">AI Governance Map</a>, which extends this process rather than replacing it. For the notification clocks an incident starts, see the <a href="../regulatory-map/index.html">Regulatory Map</a>. For the on-call model that has to sustain all of this, see <a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a>.</div>
 </header>
 
 <main>
@@ -82,20 +82,76 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Severity classification</h3>
-      <p>Defined ahead of time rather than decided in the moment, when judgment is already under pressure.</p>
+      <p>Defined ahead of time rather than decided in the moment, when judgment is already under pressure. The definitions below are a starting point; the table that matters is the one your on-call engineers can recite.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Severity</th><th>Definition</th><th>Response</th></tr>
-          <tr><td>SEV1</td><td>Full outage or data breach affecting all or most customers</td><td>Immediate all-hands, incident commander assigned within minutes, executive notification immediate</td></tr>
-          <tr><td>SEV2</td><td>Significant degradation or a subset of customers fully affected</td><td>Incident commander assigned, core responders paged, executive notification within the hour</td></tr>
-          <tr><td>SEV3</td><td>Minor degradation, workaround available, limited customer impact</td><td>Owning team handles it, tracked but no incident command structure invoked</td></tr>
-          <tr><td>SEV4</td><td>No customer impact, internal-only issue caught before it mattered</td><td>Logged, addressed in normal workflow, no incident process needed</td></tr>
+          <tr><th>Severity</th><th>Definition</th><th>Response</th><th>Who is told, and when</th></tr>
+          <tr><td>SEV1</td><td>Full outage, data loss, or confirmed breach affecting all or most customers, or any incident with regulatory or public-disclosure consequence</td><td>Incident commander within 5 minutes, all relevant responders paged, dedicated bridge and channel opened</td><td>CTO and CEO immediately; counsel and CISO if data is involved; customers within 30 minutes via status page</td></tr>
+          <tr><td>SEV2</td><td>Significant degradation, a subset of customers fully affected, or a core internal system down during business hours</td><td>Incident commander assigned, core responders paged, channel opened</td><td>CTO within the hour; customers when impact is confirmed customer-visible</td></tr>
+          <tr><td>SEV3</td><td>Minor degradation with a workaround, limited customer impact, or elevated error rates below the SLO threshold</td><td>Owning team handles it in business hours; tracked as an incident, no command structure</td><td>Engineering leadership in the weekly review</td></tr>
+          <tr><td>SEV4</td><td>No customer impact; an internal issue caught before it mattered, or a near miss worth recording</td><td>Logged and addressed in normal workflow</td><td>Nobody outside the team, but it goes in the incident log so near-miss patterns are visible</td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Two rules that keep the scale useful. First, severity is set by impact rather than by cause, so a one-line config error that takes down checkout is a SEV1. Second, when in doubt, declare high and downgrade later. Downgrading costs nothing; upgrading an hour late costs the hour.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>How this maps to the published standards</h3>
+      <p>The process on this page is a working synthesis of three sources most auditors, insurers, and enterprise customers will recognize by name. Knowing the mapping matters when a customer questionnaire or a regulator asks which framework you follow.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>What it contributes</th><th>Where it appears on this page</th></tr>
+          <tr><td>NIST SP 800-61 Rev. 3 (2025), Incident Response Recommendations</td><td>The lifecycle: preparation; detection and analysis; containment, eradication and recovery; post-incident activity. Rev. 3 aligns the lifecycle to the CSF 2.0 functions, so a security incident program can be evidenced against the same ladder as <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a></td><td>Preparation (final reference card), detection and triage (1), containment and recovery (4 and the security variant), post-incident (5 and 6)</td></tr>
+          <tr><td>Incident Command System, via Google SRE (2016) and PagerDuty's published response process</td><td>A single commander, defined roles, span of control, and a fixed communication cadence, adapted from emergency services to software</td><td>The four roles, incident command (2), communication cadence (3)</td></tr>
+          <tr><td>Blameless postmortems (Etsy, 2012) and SRE's postmortem culture</td><td>Contributing factors over a single root cause, first-person accounts without sanction, action items tracked to closure</td><td>Postmortem (5), follow-through (6)</td></tr>
+          <tr><td>ISO/IEC 27035 and SOC 2 CC7.3 to CC7.5</td><td>What an auditor expects to see evidenced: classification criteria, a documented process, a record per incident, and remediation tracked</td><td>Severity table, scribe's timeline, action item close rate</td></tr>
         </table>
       </div>
     </div>
   </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The four roles</h3>
+      <p>A SEV1 or SEV2 needs four jobs filled, by four different people where headcount allows. The most common failure is one senior engineer holding all four at once.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div class="grid4">
+          <div class="type-card">
+            <h4>Incident commander</h4>
+            <p>Owns coordination and decisions: what is being tried, in what order, who is doing it, when to escalate, and when the incident is over. Keeps the bridge focused. Does no debugging.</p>
+            <div class="anti">Anti-pattern: the IC opens a terminal. The moment they do, nobody is running the incident.</div>
+          </div>
+          <div class="type-card">
+            <h4>Operations lead</h4>
+            <p>Owns the technical investigation and the fix. Directs the responders, proposes actions to the IC, executes once approved. There may be several, one per affected system.</p>
+            <div class="anti">Anti-pattern: three engineers making uncoordinated changes to production at once, each hoping theirs is the fix.</div>
+          </div>
+          <div class="type-card">
+            <h4>Communications lead</h4>
+            <p>Owns every message leaving the bridge: status page, customer notices, executive updates, internal announcements. Keeps the cadence whether or not there is news.</p>
+            <div class="anti">Anti-pattern: the IC is also writing customer updates, so both the updates and the response slow down.</div>
+          </div>
+          <div class="type-card">
+            <h4>Scribe</h4>
+            <p>Keeps the live timeline: every action, decision, observation, and time, as it happens. This is the postmortem's raw material and the answer to any regulator's "when did you know."</p>
+            <div class="anti">Anti-pattern: reconstructing the timeline from chat scrollback two days later, with the minutes that matter most missing.</div>
+          </div>
+        </div>
+        <div class="same-note">Under 30 engineers, the IC and comms lead are often the same person and the scribe is a bot capturing the channel. That works for SEV2. For SEV1 pull a second person in even if they are only writing updates; the cost of a confused communications thread during an outage is higher than one interrupted evening.</div>
+      </div>
+    </div>
+  </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
@@ -105,14 +161,16 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A single, unambiguous entry point for declaring an incident: one command or one button, so nobody debates which Slack channel to post in while the outage continues. Whoever notices first declares; severity gets assigned or corrected within minutes rather than negotiated at length before response starts.</p>
+        <p>A single, unambiguous entry point for declaring an incident: one command or one button that opens the channel, pages the on-call, and starts the timeline, so nobody debates which Slack channel to post in while the outage continues. Whoever notices first declares. Severity gets assigned or corrected within minutes rather than negotiated at length before response starts. The first three questions on the bridge, in order: what is the customer impact, what changed recently, and what is the fastest way to stop the bleeding even if it isn't the fix.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Multiple people independently investigating the same issue in different channels, duplicating effort and fragmenting the picture of what's happening, because there was no single place established ahead of time to converge on.</p>
+        <p>Multiple people independently investigating the same issue in different channels, duplicating effort and fragmenting the picture, because there was no single place established ahead of time to converge on. The second failure is the opposite: an engineer who is fairly sure something is wrong waits for certainty before declaring, and the incident is twenty minutes old before anyone is coordinating it.</p>
       </div>
     </div>
+    <div class="same-note">Mitigate before you diagnose. Rolling back the last deploy, failing over to the standby, or shedding load restores service in most incidents long before the cause is understood. The investigation continues afterward, on a running system, with the timeline intact.</div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
@@ -122,14 +180,15 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>The incident commander's job is coordination and communication; someone else does the debugging. They track the timeline, decide when to escalate, and are the single point deciding when the incident is resolved. This role rotates and is trained in advance rather than improvised by whoever happens to be senior and available.</p>
+        <p>The incident commander's job is coordination and communication; someone else does the debugging. They track the timeline, decide when to escalate, approve any change to production during the incident, and are the single point deciding when the incident is resolved. The role rotates through a trained pool and is staffed from a rota rather than improvised by whoever happens to be senior and available. A good IC runs the bridge with a loop: current impact, current theory, current action, next check-in time.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>The most senior engineer in the room becomes both incident commander and lead debugger simultaneously. Both jobs suffer: the fix takes longer because they're context-switching to answer status questions, and communication suffers because they're heads-down in logs.</p>
+        <p>The most senior engineer in the room becomes both incident commander and lead debugger simultaneously. Both jobs suffer: the fix takes longer because they're context-switching to answer status questions, and communication suffers because they're heads-down in logs. The second failure is an executive joining the bridge and starting to direct it. The IC's authority during the incident has to be explicit and has to include the CTO.</p>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
@@ -139,14 +198,26 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A fixed cadence (every 15 to 30 minutes for a SEV1) with an update even when the update is &quot;still investigating, no new information.&quot; Silence is worse than an uninformative update, since stakeholders fill silence with worse assumptions than reality usually warrants.</p>
+        <p>A fixed cadence (every 15 to 30 minutes for a SEV1, hourly for a SEV2) with an update even when the update is &quot;still investigating, no new information, next update at 14:30.&quot; Silence is worse than an uninformative update, since stakeholders fill silence with worse assumptions than reality usually warrants. Each audience gets a different message from the same facts: customers get impact, workaround, and next update time; executives get impact in business terms, what is being tried, and whether a decision is needed from them; the internal company gets enough to answer customer calls.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Going quiet while &quot;working the problem,&quot; which is defensible engineering instinct and terrible stakeholder management. The absence of updates reads as either incompetence or a bigger problem than what's happening.</p>
+        <p>Going quiet while &quot;working the problem,&quot; which is defensible engineering instinct and terrible stakeholder management. The absence of updates reads as either incompetence or a bigger problem than what's happening. The other failure is over-sharing theories: a customer update that says &quot;we believe the database is corrupted&quot; is remembered long after it turns out to be a full disk.</p>
+      </div>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Audience</th><th>Cadence (SEV1)</th><th>What goes in it</th><th>What stays out</th></tr>
+          <tr><td>Status page and customers</td><td>Within 30 minutes of declaration, then every 30 to 60 minutes</td><td>What is affected, in product terms; any workaround; the time of the next update</td><td>Cause theories, internal system names, blame, promises of a fix time you cannot keep</td></tr>
+          <tr><td>Executives</td><td>Every 30 minutes, or immediately on a change in impact</td><td>Customer and revenue impact, current action, decisions needed, notification clocks that may be running</td><td>Technical detail beyond one sentence; anything the comms lead has not said to customers first</td></tr>
+          <tr><td>Internal company</td><td>At declaration, at resolution, and on any major change</td><td>What to tell customers who call, what not to promise</td><td>The bridge link; the incident channel stays responders-only</td></tr>
+          <tr><td>Regulators and counsel</td><td>As soon as data or a reportable category is plausibly involved</td><td>Facts and times, from the scribe's timeline</td><td>Speculation; anything not yet in the timeline</td></tr>
+        </table>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">4</span>
@@ -156,31 +227,47 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Resolution requires the incident commander's explicit call, based on a defined bar (metrics back to baseline for a sustained period rather than a momentary dip back to normal), and a documented rollback or mitigation. &quot;It seems to have stopped&quot; is neither.</p>
+        <p>Resolution requires the incident commander's explicit call, against a bar defined before the incident: customer-facing metrics back within SLO for a sustained window (30 minutes is common for a SEV1), any backlog or queue drained, a documented mitigation in place with a named owner for the permanent fix, and the timeline complete. Resolution and recovery are separate states: resolved means customers are no longer affected; recovered means the system is back to its pre-incident posture, with the failover reversed, the shed load restored, and the standby rebuilt.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Calling it resolved the moment the immediate symptom disappears, then having it recur an hour later because the underlying cause was never addressed, only its most visible symptom.</p>
+        <p>Calling it resolved the moment the immediate symptom disappears, then having it recur an hour later because the underlying cause was never addressed, only its most visible symptom. The recurrence is worse than the original: the responders have gone home, the customers who were told it was fixed are now angrier, and the second timeline starts from cold.</p>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
       <h3>Blameless postmortem</h3>
-      <p>The written record that turns an incident into an organizational asset instead of just a bad memory.</p>
+      <p>The written record that turns an incident into an organizational asset instead of a bad memory. Held within five working days, while the timeline is still fresh and before the action items get negotiated down.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A timeline of what happened, what was known at each decision point (not what's known now in hindsight), contributing factors framed as systemic rather than individual, and concrete action items with owners and due dates. &quot;Blameless&quot; means analyzing the system that allowed the error; it never means avoiding naming what happened.</p>
+        <p>A timeline of what happened, what was known at each decision point (as opposed to what's known now in hindsight), contributing factors framed as systemic rather than individual, and concrete action items with owners and due dates. &quot;Blameless&quot; means analyzing the system that allowed the error; it never means avoiding naming what happened. The person who ran the command that caused the outage is in the room and describes it in the first person, because the interesting question is why a reasonable engineer with the information available at the time made that call, and only they can answer it.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>A postmortem that either assigns individual blame (which teaches people to hide problems rather than surface them next time) or is so carefully blame-free it avoids naming any specific decision point, producing generic action items nobody's accountable for finishing.</p>
+        <p>A postmortem that either assigns individual blame (which teaches people to hide problems rather than surface them next time) or is so carefully blame-free it avoids naming any specific decision point, producing generic action items nobody's accountable for finishing. The third failure is stopping at a single root cause. Serious incidents almost always have several contributing conditions, and a postmortem that finds one and stops leaves the others in place for the next one.</p>
       </div>
     </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Section</th><th>What it should contain</th><th>What a weak one looks like</th></tr>
+          <tr><td>Summary</td><td>Three sentences: what broke, who was affected and for how long, how it was resolved</td><td>A paragraph of context before the impact is stated</td></tr>
+          <tr><td>Impact</td><td>Customers affected, duration of customer-visible impact, revenue or SLA consequence, notifications made</td><td>&quot;Some customers experienced errors&quot;</td></tr>
+          <tr><td>Timeline</td><td>Detection, declaration, each action and decision, mitigation, resolution, in minutes, from the scribe's record</td><td>Times reconstructed from memory; a gap where the critical forty minutes were</td></tr>
+          <tr><td>Contributing factors</td><td>The triggering change, the condition that let it cause impact, and why detection or recovery took as long as it did. Usually three to five</td><td>One root cause, typically the last thing anyone touched</td></tr>
+          <tr><td>What went well</td><td>Specific things that limited the damage, so they get reinforced</td><td>Left blank, or filled with platitudes</td></tr>
+          <tr><td>Action items</td><td>Each with an owner, a date, and a category: prevent recurrence, detect faster, recover faster, or reduce impact</td><td>&quot;Improve monitoring&quot; with no owner</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">Five Whys is a fine facilitation technique and a poor model of causation. Ask why repeatedly, but expect the answers to branch. The correlation-versus-causation trap that produces confident, wrong postmortems is covered on <a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a>; the worked deployment example there is a postmortem that blamed the wrong thing.</div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">6</span>
@@ -190,11 +277,145 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Action items from postmortems tracked in the same system as normal engineering work, with a review cadence (monthly is common) checking which ones shipped versus which quietly died in a backlog. An incident review process without a follow-through audit is theater.</p>
+        <p>Action items from postmortems tracked in the same system as normal engineering work, with a review cadence (monthly is common) checking which ones shipped versus which quietly died in a backlog. Each item gets a funding decision at the postmortem, not later: done now from the team's capacity, done from the reserve in <a href="../technology-capital-allocation/index.html">Capital Allocation</a>, or consciously deferred with a date and a named risk owner. An incident review process without a follow-through audit is theater.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Action items live only in the postmortem document itself, never entered into the team's work tracking system, and six months later nobody remembers they existed when the same failure mode recurs.</p>
+        <p>Action items live only in the postmortem document itself, never entered into the team's work tracking system, and six months later nobody remembers they existed when the same failure mode recurs. The tell: ask for the close rate on postmortem actions older than 90 days. If nobody can produce the number, the answer is low.</p>
+      </div>
+    </div>
+    <div class="same-note">One question in every postmortem, asked by the CTO personally: where else in the estate does this same condition exist. The answer becomes its own item with its own owner. Fixing the incident is table stakes; fixing the class of incident is the leadership output. The <a href="../situation-incident/index.html">major incident situation page</a> sequences this over the thirty days after a serious one.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Security incidents run on the same process with three differences</h3>
+      <p>An availability incident and a security incident share the roles, the bridge, the timeline, and the postmortem. They diverge on evidence, on who is in the room, and on the clock.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Difference</th><th>Availability incident</th><th>Security incident</th></tr>
+          <tr><td>First instinct</td><td>Restore service as fast as possible; roll back, fail over, restart</td><td>Contain first and preserve evidence. Restarting the host or rotating the credential before capturing state can destroy the answer to &quot;what did they access&quot;</td></tr>
+          <tr><td>Who joins the bridge</td><td>Engineering responders and the comms lead</td><td>The CISO or security lead as operations lead, counsel from the first hour, and a separate privileged channel because the attacker may be reading the normal one</td></tr>
+          <tr><td>The clock</td><td>The SLO and the customer's patience</td><td>Statutory: 72 hours under GDPR from awareness, four business days from an SEC materiality determination, 24 hours for a ransom payment under CIRCIA once the rule is in force. The scribe's timeline is the evidence of when awareness began</td></tr>
+          <tr><td>Communication</td><td>Status page in near real time</td><td>Every external statement reviewed by counsel; the comms lead drafts, counsel clears</td></tr>
+          <tr><td>Resolution bar</td><td>Metrics within SLO for a sustained window</td><td>Attacker access confirmed removed, scope of data exposure established, credentials rotated, and a forensic record retained</td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Rehearse the security variant separately. Most organizations have run an availability incident in the last quarter and a security one never, which is why the first real one is chaotic. A two-hour tabletop with counsel present, twice a year, is the cheapest insurance on this page.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>An availability incident, end to end</h3>
+      <p>A checkout outage at a mid-size commerce platform, roughly $40,000 an hour in lost orders, told from the timeline. The times are illustrative; the shape recurs.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Time</th><th>What happened</th><th>What the process did, or should have</th></tr>
+          <tr><td>14:02</td><td>A deploy to the pricing service ships a config change that raises the connection pool timeout</td><td>Nothing yet. The change passed review and CI</td></tr>
+          <tr><td>14:11</td><td>Checkout p95 latency climbs past 6 seconds; error rate reaches 4 percent</td><td>SLO alert pages the on-call at 14:12. Detection time: 9 minutes</td></tr>
+          <tr><td>14:14</td><td>On-call engineer sees the alert, starts looking at dashboards, suspects the database</td><td>Not yet declared. This is the gap: the engineer wanted to be sure before paging anyone</td></tr>
+          <tr><td>14:26</td><td>A support lead posts in the engineering channel that customers are calling</td><td>Engineer declares SEV1 at 14:27. IC and comms lead paged. Declaration delay: 15 minutes after the page</td></tr>
+          <tr><td>14:31</td><td>IC opens the bridge and asks the three questions: impact, what changed, fastest mitigation</td><td>&quot;What changed&quot; surfaces the 14:02 deploy inside two minutes</td></tr>
+          <tr><td>14:33</td><td>Comms lead posts the first status page update: checkout degraded, investigating, next update 15:00</td><td>31 minutes after impact began; the target was 30 minutes after declaration and it was met, but declaration was late</td></tr>
+          <tr><td>14:36</td><td>Ops lead proposes rollback of the pricing deploy; IC approves</td><td>Mitigate before diagnose. The rollback takes 7 minutes to propagate</td></tr>
+          <tr><td>14:44</td><td>Error rate drops to baseline; latency recovers</td><td>IC does not resolve yet; the bar is 30 minutes within SLO</td></tr>
+          <tr><td>15:15</td><td>Metrics stable for 30 minutes; the order queue that backed up has drained; IC declares resolved</td><td>Customer-visible impact: 14:11 to 14:44, 33 minutes, roughly $22,000 in lost orders plus recovery effort</td></tr>
+          <tr><td>Day 3</td><td>Postmortem</td><td>Contributing factors found: the timeout change was reasonable in isolation but interacted with a retry policy in checkout to multiply connections; the SLO alert fired correctly; the 15-minute declaration delay was the largest avoidable cost; the pricing service had no canary stage</td></tr>
+        </table>
+        <p style="margin:12px 0 0;"><strong>The action items, with their categories:</strong> canary deploys for the pricing service (prevent, platform team, 30 days); a rule that any SLO page is declared as at least SEV2 immediately and downgraded later (detect faster, IC pool, immediate); a retry budget on the checkout client so a slow dependency cannot multiply load (reduce impact, checkout team, 45 days); and the class-of-incident question, which found two other services with the same retry pattern and produced a fourth item. The postmortem also recorded what went well: the &quot;what changed&quot; question found the cause in two minutes, and the rollback path worked first time because it had been exercised the month before.</p>
+        <p style="margin:8px 0 0;"><strong>What the numbers said afterward:</strong> time to detect 9 minutes, time to declare 16 minutes, time to mitigate 33 minutes. The nine minutes were the monitoring working; the sixteen were a person waiting for certainty. That single behavioral change, declare on the page, was worth more than any of the engineering items.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>A security incident, and where the same process bends</h3>
+      <p>A leaked cloud credential at a healthcare SaaS company, told the same way, to show the three differences in practice.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Time</th><th>What happened</th><th>What the process did</th></tr>
+          <tr><td>Tuesday 09:40</td><td>Cloud provider emails the account owner that an access key appears in a public repository</td><td>The email sits in an inbox. The account owner is on leave</td></tr>
+          <tr><td>Wednesday 08:15</td><td>Cost anomaly alert fires: compute spend up 300 percent overnight in a region the company does not use</td><td>On-call declares SEV2 as a cost incident. The IC's &quot;what changed&quot; question turns up the provider email at 08:40. Upgraded to SEV1 security incident. Awareness, for regulatory purposes, is argued later to be 08:40 Wednesday; counsel notes a regulator may say Tuesday 09:40</td></tr>
+          <tr><td>08:45</td><td>Security lead becomes ops lead; counsel and the CISO join; a new private channel is opened and the original one is treated as possibly observed</td><td>The engineer's first instinct was to delete the key. The ops lead stops that until the key's activity log is exported and the instances are snapshotted. Evidence first, then containment</td></tr>
+          <tr><td>09:30</td><td>Key disabled, rogue instances snapshotted then terminated, all keys in the account rotated</td><td>Containment. Service unaffected throughout; this incident has no customer-facing outage</td></tr>
+          <tr><td>09:30 to Friday</td><td>Investigation of what the key could reach and what it touched</td><td>The key had read access to a storage bucket holding de-identified analytics extracts. Logs show the attacker enumerated the bucket and downloaded two files. Whether they contain PHI decides whether HIPAA's 60-day notification clock is running; the privacy officer and counsel own that determination, with the timeline as evidence</td></tr>
+          <tr><td>Friday</td><td>Determination: the extracts were de-identified to the safe-harbor standard; no PHI, no notifiable breach. Board informed under the out-of-cycle path anyway, because the cost of a wrong call here is high</td><td>Resolved. Recovered once the key inventory is complete and the non-expiring keys it found are gone</td></tr>
+          <tr><td>Week 2</td><td>Postmortem</td><td>Contributing factors: a long-lived key with broad read scope; no ownership for provider security emails; a public repository push with no secret scanning; and a 23-hour gap between the provider's notice and anyone acting on it</td></tr>
+        </table>
+        <p style="margin:12px 0 0;"><strong>Where it bent.</strong> The instinct to fix fast was overruled to preserve evidence; a second channel was opened because the first might be compromised; counsel was on the bridge from the first hour; the resolution bar was about access and scope rather than metrics; and the postmortem's biggest finding was organizational (nobody owned the provider's security mailbox) rather than technical. The class-of-incident question produced the item that mattered most: an inventory of every non-expiring key across every account, which is the fifth question on <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The numbers that tell you the process works</h3>
+      <p>Five measures, reviewed monthly, each with the question it answers. Track them by severity; a blended average hides everything.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Measure</th><th>The question it answers</th><th>What a bad trend looks like</th></tr>
+          <tr><td>Time to detect</td><td>Is monitoring finding incidents before customers do</td><td>A rising share of incidents first reported by a customer or the support desk</td></tr>
+          <tr><td>Time to declare</td><td>Are people acting on the signal, or waiting for certainty</td><td>A consistent gap between the first page and the declaration; this is behavioral and fixable in a week</td></tr>
+          <tr><td>Time to mitigate</td><td>How fast can the team stop customer impact, regardless of cause</td><td>Mitigation time tracking investigation time, which means the team is diagnosing before mitigating</td></tr>
+          <tr><td>Incidents per month by severity, and repeat rate</td><td>Is the estate getting more or less fragile, and are postmortems working</td><td>The same class of incident recurring within a quarter; SEV3s climbing while SEV1s are flat, which usually precedes a SEV1</td></tr>
+          <tr><td>Action item close rate at 90 days</td><td>Does the organization finish what the postmortem decided</td><td>Below 70 percent, or nobody able to produce the number</td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">The incident's cost in dollars belongs in this review too, because it is the input to <a href="../reliability-economics/index.html">Reliability as an Economic Decision</a> and the strongest argument for the next reliability investment. The board sees the trend, in the form <a href="../board-reporting/index.html">Board Reporting</a> describes, twice a year and after any SEV1.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Preparing before the incident</h3>
+      <p>Most of what makes a response calm was done months earlier. The list is short and none of it is optional past a certain size.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li><strong>Runbooks for the top ten failure modes</strong>, each with the rollback or failover command written out, tested in the last quarter, and linked from the alert that fires for it</li>
+          <li><strong>A trained IC pool</strong> of at least four people, with the role written down, so a SEV1 at 3am has a commander who has done it before</li>
+          <li><strong>Status page and customer templates</strong> pre-written for the common cases (degraded, outage, resolved), so the comms lead edits rather than composes</li>
+          <li><strong>A pre-agreed escalation threshold</strong> for the CEO and board, and a named contact at counsel, so nobody is deciding at 3am whether this is board-worthy</li>
+          <li><strong>Game days</strong>: a scheduled, announced exercise twice a year that injects a failure and runs the full process, including the status page, with the postmortem treated as real</li>
+          <li><strong>A tabletop for the security variant</strong>, with counsel in the room, on the same cadence</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the process exists on paper only</h3>
+      <p>Patterns that show up when incident response is documented and unrehearsed.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>The last SEV1 was run by whoever was most senior, with no named incident commander and no scribe</li>
+          <li>The timeline for the last serious incident was reconstructed afterward from chat history</li>
+          <li>Customers learned about the last outage before the status page did</li>
+          <li>The postmortem named one root cause and one owner, and the same class of incident has recurred since</li>
+          <li>Nobody can state the action item close rate for the last quarter's postmortems</li>
+          <li>The security variant has never been rehearsed, and counsel has never been on a bridge</li>
+          <li>Time to declare is longer than time to detect, and nobody has noticed</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -203,7 +424,7 @@
     <div class="stage-head">
       <span class="stage-num">Download</span>
       <h3>Postmortem template</h3>
-      <p>A blameless incident report structure: summary, impact, timeline, root cause, and action items with owners. Markdown for pasting into your own docs system, or a formatted Word doc.</p>
+      <p>A blameless incident report structure: summary, impact, timeline, contributing factors, and action items with owners. Markdown for pasting into your own docs system, or a formatted Word doc.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -216,9 +437,8 @@
 </main>
 
 <footer>
-  Reference only. Adapt severity definitions and cadence to your organization's scale and customer commitments before treating this as a runbook. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for which notification clocks an incident starts.
+  Reference only. Adapt severity definitions and cadence to your organization's scale and customer commitments before treating this as a runbook. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for which notification clocks an incident starts. The incident command roles descend from the Incident Command System used by emergency services and adapted for software by Google's Site Reliability Engineering (O'Reilly, 2016); the blameless postmortem practice was popularized by Etsy's engineering team (John Allspaw, 2012). The worked examples, metrics, and sequencing are this site's.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
-
 </footer>
 
 </body>

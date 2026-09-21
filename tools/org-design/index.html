@@ -68,107 +68,221 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Org Design</h1>
-  <p>Team topology patterns and interaction modes for structuring engineering organizations, plus the span-of-control question that comes up in nearly every reorg conversation.</p>
-  <div class="caveat">Team Topologies concepts adapted and condensed here; the original book by Matthew Skelton and Manuel Pais goes considerably deeper and is worth reading directly before a full reorganization.</div>
+  <p>How to structure an engineering organization so the structure helps rather than fights the work: the four team types and three interaction modes, the constraint that should drive every boundary decision, how big a team and a manager's span should be, which top-level shape fits which stage, when to split a team, and how to run a reorg without paying for it twice. Two worked cases, one growth and one repair.</p>
+  <div class="caveat">The team types and interaction modes are from Matthew Skelton and Manuel Pais, <em>Team Topologies</em> (IT Revolution, 2019), condensed; read the book before a full reorganization. Conway's law is Mel Conway's (1968). The sizing heuristics, the stage table, the reorg sequence, and the worked cases are this site's. See <a href="../platform-engineering/index.html">Platform Engineering</a> for the platform team in depth, <a href="../technical-hiring-leveling/index.html">Technical Hiring &amp; Leveling</a> for the people filling the boxes, and <a href="../engineering-culture/index.html">Engineering Culture</a> for what the boxes cannot fix.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h3>Four team types</h3>
-      <p>Adapted from the Team Topologies model. Most organizational dysfunction traces back to a team playing a type it wasn't set up to play rather than to the people in it.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <div class="grid4">
-          <div class="type-card">
-            <h4>Stream-aligned</h4>
-            <p>Owns a full slice of a business capability end to end, from code to production, with minimal dependency on other teams for a normal change.</p>
-            <div class="anti">Anti-pattern: a &quot;stream-aligned&quot; team that still needs three other teams' sign-off to ship, which means it isn't stream-aligned yet.</div>
-          </div>
-          <div class="type-card">
-            <h4>Platform</h4>
-            <p>Provides internal services (infrastructure, deployment tooling, shared data platforms) that stream-aligned teams consume as a product, reducing their cognitive load.</p>
-            <div class="anti">Anti-pattern: a platform team that requires a ticket and a two-week wait for anything, which just relocates the bottleneck instead of removing it.</div>
-          </div>
-          <div class="type-card">
-            <h4>Enabling</h4>
-            <p>Temporary, specialist expertise (security, a new technology adoption) that works itself out of a job by teaching stream-aligned teams the skill, then moves on.</p>
-            <div class="anti">Anti-pattern: an enabling team that becomes a permanent dependency because it never transfers the capability, just keeps doing the work itself.</div>
-          </div>
-          <div class="type-card">
-            <h4>Complicated subsystem</h4>
-            <p>Owns a piece of the system that requires deep specialist knowledge (a pricing engine, a matching algorithm) that most stream-aligned engineers shouldn't need to hold in their heads.</p>
-            <div class="anti">Anti-pattern: labeling a team &quot;complicated subsystem&quot; to justify a silo that formed for organizational-politics reasons rather than technical complexity.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Interaction modes</span>
-      <h3>How teams work together</h3>
-      <p>The team type tells you what a team owns. The interaction mode tells you how two teams should work together, and mismatched modes are where coordination breaks down.</p>
+      <h3>The constraint that drives everything: cognitive load</h3>
+      <p>Most org design conversations start with the org chart. The better starting point is a question about each team: can the people on it hold everything they are responsible for in their heads at once. When the answer is no, the boundary is wrong, whatever the chart says.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Collaboration</span>
-        <p>Two teams working closely together for a bounded period, typically to discover something neither could figure out alone. High communication overhead by design; should have a defined end date rather than becoming the permanent operating mode.</p>
+        <span class="env-label a">What the constraint means in practice</span>
+        <p>A team's cognitive load is the sum of the domains, systems, and tools it has to understand to do its normal work. Team Topologies splits it into intrinsic load (the skill itself), extraneous load (the tooling and process friction), and germane load (the business domain, where you want the attention to go). Org design's job is to shrink the first two so the third has room. A team that owns a product, its database, its Kubernetes config, its CI pipeline, its compliance evidence, and its on-call is over capacity before a single feature is planned. The platform and enabling team types exist to take the first two kinds of load off it.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">X-as-a-Service</span>
-        <p>One team consumes another's output through a clean, well-documented interface with minimal ongoing communication needed, the way you'd consume a well-run internal API. This is the default target state for a platform team's relationship with stream-aligned teams.</p>
-      </div>
-    </div>
-    <div class="same-note">A team stuck permanently in collaboration mode with another team it should be consuming as a service is a strong signal the interface between them was never built. That's usually a platform maturity gap rather than a people problem.</div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Span of control</span>
-      <h3>How many people report to a manager, and when that number stops working</h3>
-      <p>There is no single right number, but the failure modes on either side are predictable.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Too wide</span>
-        <p>A manager with 12 or more direct reports typically cannot do meaningful one-on-ones, career development, or performance calibration for each person. Reports get triaged rather than managed, and the manager becomes a bottleneck for any decision requiring context on a specific person's work.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Too narrow</span>
-        <p>A manager with 2 or 3 reports for an extended period is usually a sign of an org chart built around a person rather than a function, and it adds a coordination layer that produces slower decisions without a corresponding benefit in depth of support.</p>
-      </div>
-    </div>
-    <div class="same-note">6 to 8 direct reports is a reasonable default for a working manager who still does some individual contribution; 8 to 10 for a manager who doesn't. Adjust down for teams with junior engineers needing more development time, up for a team of senior staff who mostly need to be unblocked rather than developed.</div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Interaction modes</span>
-      <h3>Facilitating: the third mode, and the one most often skipped</h3>
-      <p>Team Topologies defines three interaction modes. Facilitating gets left out of most summaries, including shorter versions of this one, but it fills a gap between the other two.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <p>One team temporarily helps another improve a specific capability, test automation discipline, incident response practice, a particular technique, without doing the work for them and without the open-ended, multi-month commitment an Enabling team makes. The distinction from Enabling is scope and duration: Enabling is a team type working itself out of a job over months against a broad skill gap; Facilitating is a lighter, often single-practice coaching interaction, sometimes just weeks, that any team type can engage in when needed.</p>
+        <span class="env-label b">Conway's law, and the maneuver</span>
+        <p>Systems end up mirroring the communication structure of the organization that builds them. Four teams building a compiler produce a four-pass compiler. The practical consequence: decide the architecture you want, then shape the teams to match, because the reverse will happen by default. That deliberate version is the inverse Conway maneuver, and it is why <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> and this page have to be read together. A team boundary is a future API boundary whether or not anyone intended it.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Reorg discipline</span>
-      <h3>How often, and why most reorgs fail anyway</h3>
-      <p>Reorg cost is easy to underestimate: lost context, relationships rebuilt from scratch, a temporary productivity dip that shows up on every team, well beyond the ones directly restructured.</p>
+      <span class="stage-num">Framework</span>
+      <h3>Four team types</h3>
+      <p>Most organizational dysfunction traces back to a team playing a type it wasn't set up to play rather than to the people in it. In a healthy organization the large majority of teams are stream-aligned; the other three exist to keep it that way.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div class="grid4">
+          <div class="type-card">
+            <h4>Stream-aligned</h4>
+            <p>Owns a full slice of a business capability end to end, from code to production, with minimal dependency on other teams for a normal change. Aligned to a product, a customer journey, a segment, or a user persona.</p>
+            <div class="anti">Anti-pattern: a &quot;stream-aligned&quot; team that still needs three other teams' sign-off to ship, which means it isn't stream-aligned yet.</div>
+          </div>
+          <div class="type-card">
+            <h4>Platform</h4>
+            <p>Provides internal services (infrastructure, deployment tooling, shared data platforms) that stream-aligned teams consume as a product, reducing their cognitive load. Success is measured by adoption and by how rarely anyone needs to talk to them.</p>
+            <div class="anti">Anti-pattern: a platform team that requires a ticket and a two-week wait for anything, which relocates the bottleneck instead of removing it.</div>
+          </div>
+          <div class="type-card">
+            <h4>Enabling</h4>
+            <p>Temporary, specialist expertise (security, a new technology adoption, test automation) that works itself out of a job by teaching stream-aligned teams the skill, then moves on.</p>
+            <div class="anti">Anti-pattern: an enabling team that becomes a permanent dependency because it never transfers the capability and keeps doing the work itself.</div>
+          </div>
+          <div class="type-card">
+            <h4>Complicated subsystem</h4>
+            <p>Owns a piece of the system that requires deep specialist knowledge (a pricing engine, a matching algorithm, a codec) that most stream-aligned engineers shouldn't need to hold in their heads. Rare by design.</p>
+            <div class="anti">Anti-pattern: labeling a team &quot;complicated subsystem&quot; to justify a silo that formed for organizational-politics reasons rather than technical complexity.</div>
+          </div>
+        </div>
+        <div class="same-note">A sanity check for any org chart: count the teams of each type. A 200-engineer organization with twelve platform teams and eight stream-aligned ones has inverted the model and will feel it as every feature needing six handoffs. Roughly one platform engineer per eight to twelve product engineers is a common working ratio; past one in five, ask what the platform is for.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Three interaction modes</h3>
+      <p>The team type tells you what a team owns. The interaction mode tells you how two teams should work together, and mismatched modes are where coordination breaks down. Every pair of teams that touch should be able to name which mode they are in.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Mode</th><th>What it is</th><th>When it fits</th><th>How it goes wrong</th></tr>
+          <tr><td>Collaboration</td><td>Two teams working closely together for a bounded period, typically to discover something neither could figure out alone</td><td>Early in a new platform capability, or when the interface between two systems has not been designed yet</td><td>It becomes permanent. Collaboration has high communication overhead by design and should have a defined end date</td></tr>
+          <tr><td>X-as-a-Service</td><td>One team consumes another's output through a clean, documented interface with minimal ongoing communication, the way you'd consume a well-run internal API</td><td>The default target for a platform team's relationship with stream-aligned teams, and for any mature internal dependency</td><td>The interface was never built, so the relationship is collaboration wearing a service label, with the platform team fielding questions all day</td></tr>
+          <tr><td>Facilitating</td><td>One team temporarily helps another improve a specific capability (test automation discipline, incident response practice) without doing the work for them</td><td>A narrow skill gap, weeks rather than months, that does not justify an enabling team</td><td>It gets left out. Most summaries name two modes, and the gap between collaboration and pure service then has no name, so it gets filled with tickets</td></tr>
+        </table>
+        <div class="same-note">A team stuck permanently in collaboration mode with another team it should be consuming as a service is a strong signal the interface between them was never built. That's usually a platform maturity gap rather than a people problem.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Team size and span of control</h3>
+      <p>Two numbers that come up in every reorg conversation, with the reasoning behind them rather than a single right answer.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">What works</span>
-        <p>A reorg announced with the specific structural problem it's solving stated explicitly. Evaluated no more often than every 12 to 18 months barring a structural failure forcing an earlier change, since the cost compounds with frequency in a way the benefit rarely does.</p>
+        <span class="env-label a">Team size</span>
+        <p>Five to nine people is the range that holds up across Amazon's two-pizza rule, Team Topologies, and the small-group research it draws on. Below five, a single departure or vacation breaks the on-call rota and the team loses the ability to review its own work. Above nine, communication paths grow faster than headcount (36 pairs at nine, 66 at twelve) and the team starts forming sub-teams informally, usually along the lines of whatever it will eventually be split into anyway. Long-lived teams matter more than the exact number: a stable eight outperforms a rotating five.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">What backfires</span>
-        <p>Reorganizing reactively every time a specific friction surfaces, without first asking whether it's a team-boundary problem or the normal coordination cost any structure carries. Frequent reorgs teach people to disengage from wherever they're currently placed, since it won't last long enough to be worth investing in.</p>
+        <span class="env-label b">Span of control</span>
+        <p>Six to eight direct reports is a reasonable default for a working manager who still does some individual contribution; eight to ten for a manager who doesn't. Adjust down for teams with junior engineers needing more development time, up for a team of senior staff who mostly need to be unblocked rather than developed. Past twelve, one-on-ones, career development, and performance calibration become triage. Below three for an extended period, the manager layer is adding latency without adding support, and the chart was probably built around a person rather than a function.</p>
+      </div>
+    </div>
+    <div class="same-note">Manager-to-engineer ratio is a different number from span of control and worth tracking separately. Around one manager per seven to nine engineers is typical; when it drifts toward one in four, the organization has usually been promoting into management to solve retention, which creates a layer of managers with nobody to manage.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Which top-level shape fits which stage</h3>
+      <p>The team types describe the leaves of the chart. The trunk, how engineering is grouped at the top, changes with size, and each shape has a characteristic failure that signals it is time for the next one.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Stage</th><th>Typical shape</th><th>Why it works there</th><th>The signal it has been outgrown</th></tr>
+          <tr><td>Under 15 engineers</td><td>One team, or two, reporting to the CTO or a single lead</td><td>Everyone knows everything; structure would add cost and remove nothing</td><td>Two people are arguing about who owns a decision and there is no answer</td></tr>
+          <tr><td>15 to 50</td><td>Three to six stream-aligned teams, each with a lead, reporting to the CTO or a head of engineering; infrastructure owned by one of them or a single platform engineer</td><td>Product areas are distinct enough to own; a full platform team is not yet justified</td><td>Every team has built its own deploy pipeline, and an outage traced to drift between them</td></tr>
+          <tr><td>50 to 150</td><td>Product-aligned groups of two to four teams under a director or senior manager, one platform team, an architecture function starting</td><td>Groups match product lines or customer segments, so priority conflicts are resolved one level down from the CTO</td><td>The CTO has more than eight reports and is the escalation path for every cross-group dependency</td></tr>
+          <tr><td>150 to 500</td><td>Product divisions or tribes, each with its own stream-aligned teams and an embedded platform or enablement presence; a central platform organization; a reliability function</td><td>Divisions can plan and staff semi-independently; the center owns the shared foundation and standards</td><td>Divisions have diverged on tooling and architecture far enough that moving an engineer between them is a re-onboarding</td></tr>
+          <tr><td>500 plus</td><td>Business-unit engineering with a central platform, architecture, and security organization; matrixed specialists where the business units are unequal in size</td><td>Local speed with a shared foundation; the classic trade the operating model example on <a href="../seeing-the-system-before-changing-it/index.html">Understanding the System Before Changing It</a> works through</td><td>The center becomes a bottleneck or the units become separate companies; the correction is a deliberate rebalancing of what is central, per <a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a></td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Functional grouping (all backend engineers under one manager, all front-end under another) is the one shape on no row of this table. It optimizes for skill development and against delivery, and every organization that runs it eventually reorganizes to product alignment once cross-team handoffs become the dominant cost. Matrixing a small guild structure across product teams keeps the skill development without the handoffs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>When to split a team, and along what line</h3>
+      <p>Splitting too early creates coordination cost for no reason; splitting too late means the split happens informally first and formally later, with the friction of both. These are the signals and the seams.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Signals it is time</span>
+        <ul>
+          <li>Headcount past nine, or a hiring plan that will get there within two quarters</li>
+          <li>Two distinct backlogs sharing one board, with different stakeholders asking for each</li>
+          <li>Standups where half the team has no reason to listen to the other half</li>
+          <li>Code review consistently routed to the same three people because only they know that part</li>
+          <li>On-call pages that half the rota cannot act on without escalating to the other half</li>
+        </ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where to cut</span>
+        <p>Along a seam that already exists in the system or the customer base: a bounded context in the domain model, a customer segment with distinct needs, a user journey with its own entry point. The wrong seams are by technical layer (front-end and back-end) or by seniority. The test for a proposed boundary: after the split, can each team ship a normal change to production without a ticket to the other. If the answer requires a shared database that both will write to, the seam is wrong or the data needs an owner first, per <a href="../data-strategy/index.html">Data Strategy</a>.</p>
+      </div>
+    </div>
+    <div class="same-note">The mirror of a split is a merge, and it is neglected. Two three-person teams that share a backlog and page each other are one team with two managers. Merging is cheaper than splitting and almost never proposed, because it costs someone a title.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>Running the reorg</h3>
+      <p>Reorg cost is easy to underestimate: lost context, relationships rebuilt from scratch, a temporary productivity dip that shows up on every team, well beyond the ones directly restructured. The sequence below keeps the cost to one payment.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Step</th><th>What happens</th><th>What it prevents</th></tr>
+          <tr><td>1. Name the structural problem</td><td>One sentence, written down: the specific coordination failure or overload the new structure fixes, with evidence (handoff counts, lead time, the dependency map)</td><td>A reorg justified after the fact, or one that is really about a person</td></tr>
+          <tr><td>2. Run the systems diagnostic</td><td>The ten questions on <a href="../seeing-the-system-before-changing-it/index.html">Understanding the System Before Changing It</a>, with particular weight on actors, incentives, and delays</td><td>The indirect effect nobody modeled, discovered in month four</td></tr>
+          <tr><td>3. Design teams before boxes</td><td>Team types, boundaries, and interaction modes first; reporting lines and titles second; names last</td><td>An org chart drawn around the current people rather than the work</td></tr>
+          <tr><td>4. Pressure-test with the affected leads</td><td>Every manager whose team changes sees the design before it is final and is asked what breaks</td><td>The dependency only the team lead knew about</td></tr>
+          <tr><td>5. Announce once, completely</td><td>The problem, the design, who reports where, what changes on Monday, what does not change, and the review date. Same day for everyone affected; individual conversations for anyone whose role narrows, before the announcement</td><td>Rumor filling the gap between a partial announcement and the details; people learning about their own change in a group meeting</td></tr>
+          <tr><td>6. Hold structure for a cycle</td><td>No further changes for two quarters barring a structural failure. Track the metric from step 1</td><td>Reorg fatigue: people disengaging from wherever they are placed because it won't last</td></tr>
+          <tr><td>7. Review at the stated date</td><td>Did the metric move; what did the design get wrong; what is the next smallest correction</td><td>The structure calcifying past its usefulness because nobody scheduled the question</td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Evaluate structure no more often than every 12 to 18 months barring a structural failure forcing an earlier change, since the cost compounds with frequency in a way the benefit rarely does. Reorganizing reactively every time a specific friction surfaces, without first asking whether it's a team-boundary problem or the normal coordination cost any structure carries, teaches people to disengage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Growth: 40 to 120 engineers in eighteen months</h3>
+      <p>A B2B SaaS company after a funding round, with a hiring plan that triples engineering. The structure that got them to 40 was four teams reporting to the CTO, infrastructure owned by whoever touched it last.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The design</span>
+        <p>The CTO named the structural problem before the first hire: at 120, the four-team flat structure would put thirteen teams on one person, and infrastructure ownership by accident would produce thirteen deploy pipelines. The design: three product groups aligned to the three customer journeys (onboarding, core workflow, billing and admin), each planned at three to four stream-aligned teams under a group lead, with the group leads hired or promoted in the first quarter before their teams existed. One platform team of six, funded from day one and told its customers were the product teams. An enabling pairing of two senior engineers to bring test automation to each new team for its first two months, then move on. Team boundaries followed the domain model's bounded contexts, which forced a decision about the shared customer table that had been deferred for two years; the onboarding group got ownership and everyone else consumed it through an API.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What happened</span>
+        <p>The group leads were in place by month three, which meant new engineers joined a team with a lead rather than a pool waiting for one. The platform team had a golden path for a new service by month five; teams formed after that never built their own pipeline. The customer-table decision cost six weeks and one heated ARB review and turned out to be the single most valuable call of the eighteen months, because nine teams built against a contract instead of a table. Two things went wrong. The enabling pair got captured by the billing group, which had the hardest testing problem, and the CTO had to pull them out at month eight with the capability half-transferred. And span of control on one group lead reached eleven because two hires landed early; delivery in that group visibly slowed until a fourth team was split out. Delivery per engineer at month eighteen was within ten percent of the month-zero figure, which for a tripling is the win.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Repair: the shared-services team that became the bottleneck</h3>
+      <p>A 220-engineer organization that had reorganized twice in three years and was about to do it a third time.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The diagnosis</span>
+        <p>The presenting complaint was slow delivery, and the proposed fix was another reorg. The systems diagnostic found something narrower. A &quot;shared services&quot; team of eighteen owned integration, reporting, authentication, and the data warehouse, and had grown by absorbing whatever no product team wanted. Every product feature of any size needed a ticket to it. The team was working flat out, its queue was four months deep, and the previous two reorgs had each moved it under a different executive without changing what it owned. Measured: 70 percent of product initiatives had a shared-services dependency; the team's median ticket age was 61 days. The structural problem, written in one sentence: one team is in collaboration mode with every other team at once and has never had an interface built for any of it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The correction</span>
+        <p>The fix touched one team and no reporting lines. Authentication and the deployment tooling became a platform team of seven with an explicit X-as-a-Service mandate and a self-service target for the three most common requests. Reporting moved to the product group that generated most of its demand, as a stream-aligned team. The data warehouse got a named owner in the data organization per <a href="../data-strategy/index.html">Data Strategy</a>. Integration, the piece every other team's data flowed through, stayed central but as a platform product with a schema registry and published contracts, per <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a>, so teams could build integrations themselves. Four people moved. Six months later, median ticket age on the platform team was nine days, the share of initiatives blocked on a central team was under 20 percent, and the third reorg never happened. The lesson the leadership team took: the previous reorgs had moved the box; this one changed the interaction mode.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Distributed teams change the defaults</h3>
+      <p>The team types and modes hold across locations. What changes is how much explicit structure replaces what proximity used to do for free.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li><strong>Keep a team within about four hours of overlap.</strong> A single team split across non-overlapping time zones is two teams with one backlog and a 24-hour review cycle. Split by time zone before splitting by domain if you must choose</li>
+          <li><strong>Written interfaces matter more.</strong> X-as-a-Service works remotely because the interface is documented; collaboration mode across time zones is expensive enough that it should be rare and short</li>
+          <li><strong>Span of control drops.</strong> A remote manager needs more one-on-one time per report to see what an office manager sees in passing; six is a better ceiling than eight</li>
+          <li><strong>Enabling engagements need a defined artifact.</strong> Skill transfer that happens by sitting together in an office has to become a written playbook and paired sessions remotely, or it doesn't happen</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -186,7 +300,10 @@
           <li>A platform team requires a ticket and a multi-week wait for routine, low-risk requests</li>
           <li>An enabling engagement has run for over a year with no stated plan to transfer the capability and disengage</li>
           <li>Two teams have been in collaboration mode for months with no defined end date or transition to a service relationship</li>
+          <li>A team is above nine people, or a manager above ten reports, and nobody has proposed a split</li>
+          <li>Two teams share a backlog and page each other, and nobody has proposed a merge</li>
           <li>The org has reorganized more than once in the past year without a clearly stated structural problem each time</li>
+          <li>Nobody can name the metric the last reorg was supposed to move, or whether it moved</li>
         </ul>
       </div>
     </div>
@@ -195,7 +312,7 @@
 </main>
 
 <footer>
-  Reference only. Organizational structure decisions depend heavily on company stage, culture, and specific team composition; treat this as a starting vocabulary rather than a template to apply mechanically.
+  Reference only. Organizational structure decisions depend heavily on company stage, culture, and specific team composition; treat this as a starting vocabulary rather than a template to apply mechanically. Team types, interaction modes, and the cognitive load framing are from Skelton and Pais, <em>Team Topologies</em> (IT Revolution, 2019); the load categories draw on John Sweller's cognitive load theory; Conway's law is from Melvin Conway, &quot;How Do Committees Invent?&quot; (1968); the two-pizza team rule is Amazon's. Sizing heuristics, the stage table, the reorg sequence, and both worked cases are this site's.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

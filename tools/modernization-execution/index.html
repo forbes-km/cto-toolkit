@@ -63,22 +63,50 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Legacy Modernization Execution</h1>
-  <p>How a migration gets run once the decision to modernize has been made. Deciding what to modernize is the Application Portfolio Management question; this page is about the execution mechanics that determine whether the migration succeeds or stalls.</p>
-  <div class="caveat">This covers execution mechanics. See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for deciding what to modernize in the first place, and <a href="../technology-diligence-map/index.html">Technology Diligence</a> for assessing what's being inherited in an acquisition.</div>
+  <p>How a migration gets run once the decision to modernize has been made. Deciding what to modernize is the Application Portfolio Management question; this page is about the execution mechanics that determine whether the migration succeeds or stalls: choosing the seam, the strangler fig and the routing layer that makes it work, cutover and rollback, parallel-run validation, data migration sequencing, the program structure that keeps a two-year effort honest, sunsetting, and the two ways it usually goes wrong. Two worked cases, one that worked and one that was rescued.</p>
+  <div class="caveat">This covers execution mechanics. See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for deciding what to modernize in the first place, <a href="../technology-diligence-map/index.html">Technology Diligence</a> for assessing what's being inherited in an acquisition, and <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> for the anti-corruption layer and contracts a strangler migration depends on. The strangler fig pattern is Martin Fowler's (2004); the migration strategies follow the widely used "R" taxonomy (rehost, replatform, refactor, repurchase, retire, retain) that Gartner introduced and AWS extended.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h3>The strangler fig pattern</h3>
-      <p>The dominant strategy for modernizing a live system without a high-risk, high-visibility cutover: grow the new system around the edges of the old one until the old one can be safely retired.</p>
+      <h3>Which kind of migration this is</h3>
+      <p>&quot;Modernize&quot; covers six different projects with different risk profiles. Naming which one you are running is the first execution decision, and the one most often skipped, because a program that starts as a rehost drifts into a refactor without anyone approving the change.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>New functionality is built in the new system and routed to it, while remaining functionality continues running in the old system, with a routing layer (a proxy, a facade, a feature flag) directing each request to whichever system currently owns it. Over time, more capability migrates to the new system until the old system handles nothing and can be decommissioned. The old system shrinks gradually instead of being replaced in a single event, which is what makes this the lower-risk default over a full rewrite and cutover.</p>
+        <table class="matrix-table">
+          <tr><th>Strategy</th><th>What changes</th><th>Typical duration</th><th>Where the risk sits</th><th>Use when</th></tr>
+          <tr><td>Rehost</td><td>The infrastructure; the application is moved as-is</td><td>Weeks to a few months per system</td><td>Network, latency, licensing, and everything that assumed the old data center</td><td>The application is fine and the platform is the problem, or a data center lease is ending</td></tr>
+          <tr><td>Replatform</td><td>Runtime components (managed database, container packaging) with the code largely intact</td><td>Months</td><td>Behavioral differences in the managed service; the cutover</td><td>Operational cost and reliability are the drivers and the code is sound</td></tr>
+          <tr><td>Refactor or rearchitect</td><td>The code and its structure, usually toward services and a new data model</td><td>One to three years</td><td>Everywhere; this is where the strangler fig and everything below applies</td><td>The application blocks the business and buying is not an option</td></tr>
+          <tr><td>Repurchase</td><td>The application is replaced with a commercial product</td><td>Six to eighteen months</td><td>Data migration and the processes the old system quietly encoded</td><td>The capability is commodity; see <a href="../build-vs-buy/index.html">Build vs Buy</a></td></tr>
+          <tr><td>Retire</td><td>The application is switched off</td><td>Weeks, plus the time to find who still uses it</td><td>The user nobody knew about</td><td>The TIME map says Eliminate; often a third of an estate qualifies</td></tr>
+          <tr><td>Retain</td><td>Nothing, deliberately, with a date to revisit</td><td>None</td><td>Drift; the system ages while attention is elsewhere</td><td>Low value, low risk, and the migration cost exceeds the carry cost</td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Most of this page is about the third row, because that is the one that fails. Rehost and replatform fail on cutover mechanics, covered in section 2. Repurchase fails on data migration, covered in section 4. Retire fails on the sunset discipline in section 6, which is why estates carry so many systems that were &quot;retired&quot; years ago.</p>
       </div>
     </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The strangler fig pattern, and the layer that makes it work</h3>
+      <p>The dominant strategy for modernizing a live system without a high-risk, high-visibility cutover: grow the new system around the edges of the old one until the old one can be safely retired.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The mechanism</span>
+        <p>New functionality is built in the new system and routed to it, while remaining functionality continues running in the old system, with a routing layer (a proxy, an API gateway, a facade, a feature flag) directing each request to whichever system currently owns it. Over time, more capability migrates to the new system until the old system handles nothing and can be decommissioned. The old system shrinks gradually instead of being replaced in a single event, which is what makes this the lower-risk default over a full rewrite and cutover. Two supporting pieces are load-bearing: the routing layer has to exist before the first capability moves, and an anti-corruption layer translates between the old model and the new domain model so the new services never inherit the old shape.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Choosing the seam</span>
+        <p>The strangler works capability by capability, and the order matters. Start with a capability that is valuable enough to prove the approach, self-contained enough that it does not drag the whole data model with it, and low enough in blast radius that a failure is recoverable. Candidates ranked by seam quality: a read-only capability (reporting, search) first, because it can be shadowed and compared at no risk; then a capability with its own data (notifications, a document store); then transactional capabilities in order of decreasing isolation; the shared core (accounts, orders, the ledger) last. Cutting by customer segment or by traffic percentage is the alternative axis, useful when the capabilities cannot be separated but the customers can.</p>
+      </div>
+    </div>
+    <div class="same-note">The first capability moved should take a quarter, produce visible value, and exercise every mechanism on this page (routing, parallel run, cutover, rollback, and a small data migration) at small scale. Programs that start with the hardest capability because it is the most valuable discover the mechanics under maximum pressure.</div>
   </div>
 
   <div class="stage-card">
@@ -90,11 +118,23 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Specific, pre-agreed rollback criteria (error rate above X percent, latency above Y, a defined list of critical functions that must work correctly) checked immediately after cutover, with the rollback mechanism tested in advance rather than assumed to work when it's needed under pressure.</p>
+        <p>Specific, pre-agreed rollback criteria (error rate above X percent, latency above Y, a defined list of critical functions that must work correctly) checked immediately after cutover, with the rollback mechanism tested in advance rather than assumed to work when it's needed under pressure. The cutover itself is run as an incident, with an incident commander, a timeline, and the roles from <a href="../incident-response/index.html">Incident Response</a>, because it is a planned incident and the same discipline applies. The go/no-go decision has a named owner and a checklist, and the checklist includes the rollback rehearsal date.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>&quot;We'll roll back if it looks bad&quot; as the entire rollback plan, which under pressure becomes a debate about whether it's bad enough yet, while customer impact accumulates during the debate.</p>
+        <p>&quot;We'll roll back if it looks bad&quot; as the entire rollback plan, which under pressure becomes a debate about whether it's bad enough yet, while customer impact accumulates during the debate. The second failure is a rollback that was never rehearsed and turns out to require a data step nobody scripted, so the team is now writing a migration backward at 2am.</p>
+      </div>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Cutover pattern</th><th>How it works</th><th>Rollback cost</th><th>Fits when</th></tr>
+          <tr><td>Canary</td><td>Route a small share of traffic (1 percent, then 5, then 25) to the new path, watch, widen</td><td>Trivial: route back</td><td>Stateless or read paths; anything where a small blast radius is acceptable</td></tr>
+          <tr><td>Blue/green</td><td>Two complete environments; switch the router, keep the old one warm</td><td>Low, until data diverges; then the data step from section 4 applies</td><td>Whole-service cutovers where a fast switch matters and data can be reconciled</td></tr>
+          <tr><td>Dark launch</td><td>The new path runs on live traffic with its output discarded; only its telemetry is used</td><td>None; nothing customer-visible changed</td><td>Validating a new implementation before any customer sees it; the first step of a parallel run</td></tr>
+          <tr><td>Segment cutover</td><td>Move a customer cohort (internal users, then a friendly segment, then all) rather than a traffic percentage</td><td>Moderate; the cohort's data is now on the new system</td><td>Where behavior differs by customer and a percentage would split one customer's experience</td></tr>
+          <tr><td>Big bang</td><td>Everything switches at once, usually over a weekend</td><td>High, and usually untested</td><td>Almost never by choice; occasionally forced by a contract end or a regulatory date, in which case it gets rehearsed at least twice in full</td></tr>
+        </table>
       </div>
     </div>
   </div>
@@ -103,16 +143,16 @@
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>Parallel-run validation</h3>
-      <p>Before fully trusting the new system, run it alongside the old one and compare outputs on real traffic.</p>
+      <p>Before fully trusting the new system, run it alongside the old one and compare outputs on live traffic.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Shadow traffic sent to both systems, with outputs compared automatically and discrepancies flagged, for long enough to build confidence: weeks for a low-volume system, potentially longer for something with meaningful seasonal or cyclical variation in the data it processes.</p>
+        <p>Shadow traffic sent to both systems, with outputs compared automatically and discrepancies flagged, for long enough to build confidence: weeks for a low-volume system, potentially longer for something with meaningful seasonal or cyclical variation in the data it processes. The comparison needs a defined tolerance (exact match for a ledger, a rounding tolerance for a pricing engine, a semantic match for search results) and a defined exit criterion (discrepancy rate below X for Y consecutive days including a period end) agreed before the run starts. Every discrepancy is triaged into one of three buckets: new system wrong, old system wrong, or both acceptable. The second bucket is more common than anyone expects and is one of the quiet benefits of the exercise.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>A parallel run cut short because it's &quot;looking fine so far,&quot; which misses the edge case that only shows up during month-end processing, a holiday traffic spike, or some other pattern the shortened window never covered.</p>
+        <p>A parallel run cut short because it's &quot;looking fine so far,&quot; which misses the edge case that only shows up during month-end processing, a holiday traffic spike, or some other pattern the shortened window never covered. The second failure is a parallel run with no tolerance defined, so the team argues about whether a discrepancy matters instead of whether it exists, and the run never has an end condition it can meet.</p>
       </div>
     </div>
   </div>
@@ -121,16 +161,20 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Data migration sequencing</h3>
-      <p>Moving the data is usually harder and riskier than moving the code, and it's where migrations most often go over budget and over timeline.</p>
+      <p>Moving the data is usually harder and riskier than moving the code, and it's where migrations most often go over budget and over timeline. The sequence below is the one that survives contact with a live system.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Migrate data incrementally where possible, validated in batches with reconciliation checks against the source, rather than one large migration event. Keep the old system's data as the system of record until the new system has been validated against it.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>A single large migration event scheduled for a weekend, with no realistic way to validate correctness at that scale before Monday's traffic arrives and problems become customer-visible.</p>
+        <table class="matrix-table">
+          <tr><th>Step</th><th>What happens</th><th>The check before moving on</th></tr>
+          <tr><td>1. Backfill</td><td>Historical data copied into the new store in batches, transformed through the anti-corruption layer, with the old system still the system of record</td><td>Row counts and checksums reconcile per batch; a sample of records compared field by field</td></tr>
+          <tr><td>2. Change data capture</td><td>Ongoing changes in the old system streamed to the new store, so the copy stays current while validation runs</td><td>Replication lag measured and bounded; a reconciliation job runs nightly and reports drift</td></tr>
+          <tr><td>3. Dual-read validation</td><td>The new system serves reads in shadow, compared against the old, per the parallel run above</td><td>Discrepancy rate under the agreed tolerance across a full business cycle</td></tr>
+          <tr><td>4. Dual-write, old system primary</td><td>Writes go to both; the old system remains the source of truth and the new one is checked against it</td><td>Write reconciliation clean; the rollback path (stop writing to new) rehearsed</td></tr>
+          <tr><td>5. Cutover, new system primary</td><td>Writes go to the new system first; the old system receives them via reverse replication so it remains a valid rollback target</td><td>Reverse replication verified; the rollback (flip primary back) rehearsed once in a lower environment and once for real on a low-risk segment</td></tr>
+          <tr><td>6. Stop reverse replication</td><td>The old system is now stale by design. This is the point of no return and is a dated, signed decision</td><td>Rollback window declared closed; the decommission clock in section 6 starts</td></tr>
+        </table>
+        <div class="same-note">Keep the old system's data as the system of record until the new system has been validated against it. Dual-write without a reconciliation job is the most common way a migration silently corrupts data: both stores accept writes, they diverge, and nobody notices until a customer does. The reconciliation job is the migration's most important piece of code and is usually the last one written.</div>
       </div>
     </div>
   </div>
@@ -138,17 +182,29 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">4</span>
-      <h3>The big-bang trap</h3>
-      <p>The single decision that most reliably turns a modernization effort into a multi-year, over-budget program.</p>
+      <h3>The program structure that keeps a two-year effort honest</h3>
+      <p>A refactor of a core system outlasts most executives' attention span and at least one budget cycle. The mechanics above handle risk per cutover; this handles the risk that the program itself drifts.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What works</span>
-        <p>Incremental migration, capability by capability or customer segment by customer segment, with value delivered and risk retired at each step, so a stalled migration still leaves something usable rather than two half-finished systems and no working whole.</p>
+        <p>A migration tracker with one row per capability, showing its strategy, its seam, its percentage of traffic on the new path, its cutover date, and its decommission date, reviewed monthly by the sponsor. Value delivered at each step: every capability moved either retires something, unblocks a feature, or removes a cost, and the tracker records which. A fixed cadence for the go/no-go decisions, with the same checklist each time. A named business sponsor who is not the CTO, because a migration with only an engineering sponsor gets cut in the first downturn per <a href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a>. And an explicit budget line for the double-running cost, which peaks in the middle of the program and surprises every CFO who was not told about it in year one.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What backfires</span>
-        <p>A full rewrite planned as a single release after 18 months of development, betting the entire program on one cutover event. If it fails, there's no partial progress to fall back on, just a large sunk cost and a system still running on the platform everyone agreed needed to go.</p>
+        <p>A program reported as percent complete, which is a number nobody can verify and which sits at 80 percent for a year. A scope that grows because the new system is where every new feature wants to be built, so the team modernizing the old system is also the team shipping the roadmap, and the migration becomes the thing that happens when there is time. And a sponsor change: the executive who approved the program leaves, the replacement did not choose it, and the program has no artifact that shows what it has already delivered.</p>
+      </div>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Measure</th><th>What it tells the sponsor</th></tr>
+          <tr><td>Share of traffic (or transactions) served by the new path, per capability</td><td>Real progress, as opposed to percent complete; it can only be gamed by moving traffic</td></tr>
+          <tr><td>Capabilities decommissioned, and run cost removed</td><td>Whether the old system is shrinking or the estate is growing</td></tr>
+          <tr><td>Double-run cost this month, against the plan</td><td>Whether the program is on its cost curve; this number should start falling by the midpoint</td></tr>
+          <tr><td>Defect and incident rate on migrated capabilities versus the old path</td><td>Whether the new system is better, and whether the parallel run was long enough</td></tr>
+          <tr><td>Features unblocked or delivered because of the migration</td><td>The value story for the board, in the terms of <a href="../board-reporting/index.html">Board Reporting</a></td></tr>
+        </table>
       </div>
     </div>
   </div>
@@ -156,14 +212,78 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
+      <h3>The big-bang trap</h3>
+      <p>The single decision that most reliably turns a modernization effort into a multi-year, over-budget program.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What works</span>
+        <p>Incremental migration, capability by capability or customer segment by customer segment, with value delivered and risk retired at each step, so a stalled migration still leaves something usable rather than two half-finished systems and no working whole. The routing layer is what makes incremental possible; the tracker is what makes it visible.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What backfires</span>
+        <p>A full rewrite planned as a single release after 18 months of development, betting the entire program on one cutover event. If it fails, there's no partial progress to fall back on, only a large sunk cost and a system still running on the platform everyone agreed needed to go. The rewrite also has to reproduce every behavior of the old system, including the ones nobody documented and the ones that are bugs customers depend on, before it can ship anything, which is why the 18 months becomes 30.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
       <h3>Sunsetting the old system</h3>
       <p>The step most migrations quietly skip, leaving the legacy system running indefinitely in a reduced but never fully retired state.</p>
     </div>
-    <div class="stage-grid single">
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Decommissioning needs to be a scheduled, owned step with its own completion criteria rather than an assumed eventual outcome once migration is &quot;basically done.&quot; The checklist: no traffic for 30 days, confirmed from the routing layer's logs rather than assumed; every integration and scheduled job that called it identified and repointed or retired; data archived to the retention schedule the <a href="../data-governance/index.html">Data Governance</a> page describes, with the legal hold check done; licenses, hosting, monitoring, and support contracts cancelled with dates; credentials and service accounts removed per <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a>; and the run-cost saving recorded against the program so it appears in the budget rather than in a slide.</p>
+      </div>
       <div class="stage-cell">
-        <p>Decommissioning needs to be a scheduled, owned step with its own completion criteria rather than an assumed eventual outcome once migration is &quot;basically done.&quot; Without an explicit sunset date and owner, the old system keeps running for the small residual traffic nobody prioritized migrating, and the organization ends up maintaining two systems indefinitely instead of the one it planned for.</p>
+        <span class="env-label b">Common failure mode</span>
+        <p>Without an explicit sunset date and owner, the old system keeps running for the small residual traffic nobody prioritized migrating, and the organization ends up maintaining two systems indefinitely instead of the one it planned for. The residual traffic is usually a nightly report, a partner integration, and one internal team's spreadsheet macro, none of which anyone will own moving, all of which cost less to move than a year of running the old system.</p>
       </div>
     </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>A billing platform, strangled over fourteen months</h3>
+      <p>A subscription business with a twelve-year-old billing monolith, 400 tables, two engineers who understood the invoicing job, and a roadmap blocked on usage-based pricing the old system could not represent. Sequence, numbers, and what the tracker showed.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Month</th><th>What moved</th><th>Mechanics used</th><th>What the tracker showed</th></tr>
+          <tr><td>0 to 2</td><td>Nothing. The routing layer (an API gateway in front of the monolith) and the anti-corruption layer for the customer and subscription model were built. Charter signed by the CFO as sponsor, with the double-run cost budgeted at $35k a month peak</td><td>Inverse Conway: a new billing team of six formed around the target architecture</td><td>0 percent on the new path; program cost $180k; nothing to show and the CFO was told to expect that</td></tr>
+          <tr><td>3 to 5</td><td>Invoice rendering and the customer-facing invoice history (read-only) moved first</td><td>Backfill of invoice history, CDC from the monolith, dark launch, then a six-week parallel run across a month end with exact-match tolerance</td><td>Parallel run found 212 discrepancies; 190 were the old system rounding tax differently from its own documentation. Two were new-system bugs. 20 were both acceptable. 100 percent of invoice reads cut over in month 5 by canary</td></tr>
+          <tr><td>6 to 8</td><td>Subscription management (create, change, cancel) as the first transactional capability</td><td>Segment cutover: internal test accounts, then a friendly cohort of 40 customers, then all. Dual-write with the monolith primary for five weeks, reconciliation nightly</td><td>One rollback: a plan-change edge case in week two of the cohort, caught by the reconciliation job before any customer noticed; flipped back in eleven minutes, fixed, re-cut a week later. The rehearsal had been done twice</td></tr>
+          <tr><td>9 to 11</td><td>Usage-based pricing, the capability the roadmap was waiting for, built only in the new system</td><td>No migration; new capability on the new path. The first revenue-bearing feature the program delivered</td><td>Three enterprise deals closed on usage pricing in the quarter; the program's value story for the board became concrete</td></tr>
+          <tr><td>12 to 13</td><td>The invoicing job itself: the ledger, payment application, dunning</td><td>Reverse replication so the monolith stayed a valid rollback target; cutover by segment over three weeks; point of no return signed by the CFO in month 13</td><td>Double-run cost peaked at $41k a month in month 12, over the $35k plan, and was reported as such rather than absorbed</td></tr>
+          <tr><td>14</td><td>Decommission</td><td>Routing logs showed one nightly report and one partner webhook still hitting the monolith; both moved in a fortnight. Licenses and hosting cancelled; data archived to a seven-year retention</td><td>Run cost removed: $310k a year. Program cost: $1.9M. Two engineers who understood the old invoicing job are now two of six who understand the new one</td></tr>
+        </table>
+        <p style="margin:12px 0 0;"><strong>What made it work:</strong> the routing layer first, a read-only capability as the proof, a parallel run that spanned a month end, rehearsed rollbacks, a sponsor outside engineering, a tracker measuring traffic rather than percent complete, and a revenue-bearing feature delivered before the hardest cutover so the program had earned its second year. What it cost that the plan missed: the double-run overshoot, and a quarter of the new team's capacity spent characterizing undocumented behavior in the old tax logic.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>The rewrite that stalled, and how it was rescued</h3>
+      <p>A logistics company's order management system, rewritten from scratch by a separate team, planned for 18 months, at month 26 with nothing in production.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The situation at month 26</span>
+        <p>The new system had roughly 70 percent of the old one's features by the team's own estimate, a figure that had been between 60 and 80 for a year. The old system had kept evolving, because the business could not stop for two years, so the target kept moving. No routing layer existed; the plan had always been a weekend cutover once the new system reached parity. The rewrite team and the legacy team were different people who disagreed about what parity meant. Cost to date: $4.2M. The CEO's question to the new CTO was whether to cancel it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The rescue</span>
+        <p>Neither cancel nor continue. The CTO stopped feature work on the new system for six weeks and used the time to build the missing routing layer in front of the old one and an anti-corruption layer over its order model. Then the parity goal was abandoned: instead of finishing the rewrite, the 70 percent that existed was carved into capabilities and each one was strangled in, starting with order tracking (read-only, low risk), using the parallel-run and cutover mechanics above. The two teams were merged into one owning both paths. Six months later, 55 percent of order traffic ran on the new path, three capabilities of the old system had been decommissioned, and the program was reporting traffic share and cost removed instead of percent complete. Total cost ended at $6.1M against an original $3M plan, which is the price of the first 26 months; the last two capabilities were retired eleven months after the rescue began. The two-year rewrite with nothing in production became a strangler migration that had been running, unknowingly, all along.</p>
+      </div>
+    </div>
+    <div class="same-note">The general lesson: a stalled rewrite is almost always rescuable by adding the routing layer it skipped and shipping what exists incrementally. The sunk cost is real; the question at month 26 is only whether the next dollar is better spent finishing a big bang or starting to strangle, and it is nearly always the latter.</div>
   </div>
 
   <div class="stage-card">
@@ -175,9 +295,14 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li>No defined rollback criteria, or rollback has never been tested</li>
+          <li>Nobody can say which of the six strategies the program is, or it has changed without a decision</li>
+          <li>No routing layer exists, and the plan depends on reaching parity before anything ships</li>
+          <li>No defined rollback criteria, or rollback has never been rehearsed</li>
           <li>The cutover plan is a single large event rather than an incremental sequence</li>
-          <li>Data migration validation is manual spot-checking rather than systematic reconciliation</li>
+          <li>The parallel run has no tolerance or exit criterion, or did not span a period end</li>
+          <li>Data migration validation is manual spot-checking rather than a reconciliation job</li>
+          <li>Progress is reported as percent complete rather than as traffic on the new path and systems decommissioned</li>
+          <li>The only sponsor is in engineering, and the double-run cost was never put in front of the CFO</li>
           <li>No decommission date exists for the legacy system, even informally</li>
           <li>The old system's remaining traffic keeps getting deprioritized in favor of new feature work on the new system</li>
         </ul>
@@ -188,7 +313,7 @@
 </main>
 
 <footer>
-  Reference only. Migration risk and appropriate pace depend heavily on system criticality, data volume, and organizational capacity; adapt accordingly. See <a href="../integration-api-patterns/index.html" style="color:var(--accent);">Integration &amp; API Patterns</a> for the anti-corruption layer and the patterns a strangler migration depends on. The strangler fig pattern was named and described by Martin Fowler (2004). The execution guidance around it is this site's.
+  Reference only. Migration risk and appropriate pace depend heavily on system criticality, data volume, and organizational capacity; adapt accordingly. See <a href="../integration-api-patterns/index.html" style="color:var(--accent);">Integration &amp; API Patterns</a> for the anti-corruption layer and the patterns a strangler migration depends on. The strangler fig pattern was named and described by Martin Fowler (2004); the anti-corruption layer is from Eric Evans, <em>Domain-Driven Design</em> (2003); the migration strategy taxonomy is Gartner's five Rs (2011) as extended to seven by AWS; canary and blue/green deployment are standard continuous delivery practice as described in Humble and Farley, <em>Continuous Delivery</em> (2010). The sequencing, program structure, measures, and both worked cases are this site's.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

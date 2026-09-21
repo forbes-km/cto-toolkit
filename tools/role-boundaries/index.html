@@ -66,8 +66,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Role Boundaries: CTO, CIO, CISO, CPO</h1>
-  <p>Where these roles typically split, and why the boundaries are organizational choices rather than universal truths, ones that still need to be stated explicitly so the same decision doesn't get fought over by two people who each assumed it was theirs.</p>
-  <div class="caveat">This feeds directly into <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>, which formalizes the boundaries this page describes into an explicit decision model.</div>
+  <p>Where these roles typically split, why the boundaries move by company type, how to write them down so the same decision doesn't get fought over by two people who each assumed it was theirs, and what to do with the newer titles (CDO, CAIO, CDAO) that keep arriving. Includes a decision-by-decision split, the CISO reporting question with its tradeoffs, a one-page charter template, and two worked disagreements.</p>
+  <div class="caveat">This feeds directly into <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>, which formalizes the boundaries this page describes into an explicit decision model, and into <a href="../org-design/index.html">Org Design</a>, which covers the structure beneath the executive layer. Where a boundary crosses into the CEO relationship, <a href="../ceo-cto-relationship/index.html">Working with the CEO</a> covers it.</div>
 </header>
 
 <main>
@@ -75,16 +75,44 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Typical scope by role</h3>
-      <p>Illustrative rather than universal. Many organizations don't have all four roles distinctly, and that's often the right call at their size.</p>
+      <p>Illustrative rather than universal. Many organizations don't have all four roles distinctly, and that's often the right call at their size. What each role is optimizing for matters more than the list of things it owns, because that is what predicts where two of them will collide.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Role</th><th>Typical scope</th></tr>
-          <tr><td>CTO</td><td>Technology strategy, engineering, architecture, technology-enabled competitive advantage</td></tr>
-          <tr><td>CIO</td><td>Internal technology estate, enterprise systems, business technology, IT operations</td></tr>
-          <tr><td>CISO</td><td>Security risk, cyber controls, security governance</td></tr>
-          <tr><td>CPO</td><td>Product strategy, product outcomes</td></tr>
+          <tr><th>Role</th><th>Typical scope</th><th>Optimizes for</th><th>Collides most often with</th></tr>
+          <tr><td>CTO</td><td>Technology strategy, engineering, architecture, technology-enabled competitive advantage</td><td>Capability the business can sell or defend with</td><td>CPO on sequencing, CIO on platform ownership</td></tr>
+          <tr><td>CIO</td><td>Internal technology estate, enterprise systems, business technology, IT operations, often the technology budget process</td><td>Reliability and cost of the systems that run the business</td><td>CTO on shared infrastructure and cloud, CISO on control friction</td></tr>
+          <tr><td>CISO</td><td>Security risk, cyber controls, security governance, incident response, compliance evidence</td><td>Risk reduced per dollar and per unit of friction</td><td>Everyone whose bonus depends on shipping; the board on what is material</td></tr>
+          <tr><td>CPO</td><td>Product strategy, roadmap, discovery, product outcomes</td><td>Customer and market outcomes per engineering hour</td><td>CTO on how much capacity goes to platform and debt versus features</td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">The last column is the useful one. Each pair collides on a predictable category of decision, which means the collision can be settled in advance by writing down who is Accountable for that category. That is the whole method on this page.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The decisions that fall between roles</h3>
+      <p>The org chart names the roles. It rarely names who owns the fifteen or so decisions that sit on the seams. This table is the one to fill in for your own organization; the entries are common defaults, and every one of them moves by company type.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Decision</th><th>Common owner</th><th>Consulted</th><th>Why it is contested</th></tr>
+          <tr><td>Cloud platform and account structure</td><td>CTO where the product runs on it; CIO where it is mostly enterprise workloads</td><td>CISO, CFO</td><td>Both product and internal systems land on it; whoever owns it owns the landing zone and the bill</td></tr>
+          <tr><td>Identity provider and access policy</td><td>CISO for policy; CIO or platform team for the directory</td><td>CTO</td><td>The control every other control depends on, and the source of most user friction complaints</td></tr>
+          <tr><td>Security tooling budget</td><td>CISO</td><td>CTO, CIO, CFO</td><td>Spent on other people's systems; friction lands on teams the CISO does not manage</td></tr>
+          <tr><td>Security risk acceptance</td><td>CISO recommends; the executive whose system carries the risk accepts, per <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a></td><td>CTO, counsel</td><td>The CISO can name the risk but should not be the only one who can accept it, or every acceptance becomes their liability</td></tr>
+          <tr><td>Product roadmap sequencing</td><td>CPO</td><td>CTO on feasibility and technical consequence</td><td>Platform and debt work has no product sponsor and loses every trade unless a capacity floor is agreed</td></tr>
+          <tr><td>Engineering capacity split (features, platform, debt)</td><td>CTO, against the allocation on <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td><td>CPO, CFO</td><td>The CPO experiences the platform floor as capacity taken away</td></tr>
+          <tr><td>Enterprise applications (ERP, CRM, HR systems)</td><td>CIO</td><td>CTO on integration, CISO on access</td><td>Product engineers build integrations against them and inherit their constraints</td></tr>
+          <tr><td>Data platform and data ownership</td><td>CDO or CDAO where one exists; otherwise CTO</td><td>CIO, CISO, CPO</td><td>Analytics, product features, and AI all want the same data with different quality bars; see <a href="../data-strategy/index.html">Data Strategy</a></td></tr>
+          <tr><td>AI use cases and governance</td><td>Whoever owns the AI portfolio, usually CTO or CDO; a CAIO where one exists</td><td>CISO, counsel, CPO</td><td>Newest seam; the one most likely to have no owner today</td></tr>
+          <tr><td>Vendor selection for shared platforms</td><td>The role that will operate it</td><td>CISO, procurement, CFO</td><td>The buyer and the operator are often different people</td></tr>
+          <tr><td>Technology budget process</td><td>CIO in enterprises; CTO in product companies</td><td>CFO, all of the above</td><td>Whoever runs the process controls the framing of every other decision here</td></tr>
+          <tr><td>Incident command for a security incident</td><td>CISO as operations lead; the IC pool per <a href="../incident-response/index.html">Incident Response</a></td><td>CTO, counsel</td><td>Availability incidents and security incidents share a process and diverge on who leads</td></tr>
         </table>
       </div>
     </div>
@@ -99,11 +127,32 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Where the split makes sense</span>
-        <p>A hardware or deep-tech company often has the CTO own product direction fully, with no separate CPO, because the product and the technology are close to the same thing. A SaaS company usually splits CTO (how it's built) from CPO (what gets built) cleanly, because those really are separable questions there.</p>
+        <p>A hardware or deep-tech company often has the CTO own product direction fully, with no separate CPO, because the product and the technology are close to the same thing. A SaaS company usually splits CTO (how it's built) from CPO (what gets built) cleanly, because those really are separable questions there. A bank or insurer usually has a CIO running the estate and a CTO who is closer to a chief architect, because the technology is an operating cost rather than the product.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The mistake</span>
-        <p>Importing a role-boundary model from a different kind of company without checking whether the underlying business maps onto it, which produces two people with overlapping mandates and neither fully accountable for the outcome.</p>
+        <p>Importing a role-boundary model from a different kind of company without checking whether the underlying business maps onto it, which produces two people with overlapping mandates and neither fully accountable for the outcome. The most common version is a newly hired executive bringing the structure from their last company, which was a different kind of company.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Role structure by company archetype</h3>
+      <p>What the boundaries above look like assembled into an org, at six points. The archetypes are common patterns rather than prescriptions; the useful exercise is finding the row closest to yours and noting where you differ, and why.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Archetype</th><th>CTO</th><th>CPO</th><th>CIO</th><th>CISO</th><th>Data and AI</th></tr>
+          <tr><td>Early-stage startup (under 50 engineers)</td><td>Owns strategy, engineering, and product direction together</td><td>Doesn't exist yet; folded into the CTO role</td><td>Doesn't exist; IT handled by a generalist or outsourced</td><td>Doesn't exist; security owned by the CTO directly, with a fractional advisor</td><td>Owned by the CTO; a first data hire around 30 engineers</td></tr>
+          <tr><td>Mid-scale SaaS (200 to 1,000 engineers)</td><td>Owns how the product is built: architecture, engineering, platform</td><td>Owns what gets built: roadmap, discovery, customer research</td><td>A light IT function, often still reporting through the CTO or COO</td><td>Dedicated hire, reporting per the guidance below</td><td>A head of data under the CTO or CPO; AI portfolio owned by the CTO</td></tr>
+          <tr><td>Hardware or deep-tech</td><td>Owns both product and technology direction; no separate CPO</td><td>Doesn't exist; folded into the CTO role, sometimes a VP Product Management under the CTO</td><td>May exist for internal systems, separate from the product itself</td><td>Often folded into engineering leadership until the company reaches scale or a customer demands it</td><td>Usually inside engineering</td></tr>
+          <tr><td>Enterprise, non-tech (bank, insurer, manufacturer)</td><td>Chief architect in practice: standards, platform direction, modernization; reports to the CIO or alongside</td><td>Product leadership sits in the business units</td><td>Owns the estate, the budget process, operations, and vendor management; the largest technology role</td><td>Reports to the CIO, the COO, or the CEO; regulators increasingly want a line to the board</td><td>A CDO or CDAO, often reporting to the COO or CFO rather than technology</td></tr>
+          <tr><td>Regulated healthcare (provider or payer)</td><td>Product and platform engineering where there is a digital product; otherwise architecture</td><td>Digital product lead, if any</td><td>Owns clinical and administrative systems, the EHR relationship, and integration; usually the senior technology role</td><td>Dedicated, with a privacy officer as a peer; HIPAA makes the security officer role a named requirement</td><td>A clinical informatics or CDO role; AI governance heavily shared with clinical leadership and compliance</td></tr>
+          <tr><td>PE-backed portfolio company</td><td>Often the only technology executive, wearing all four hats with the operating partner as the fifth</td><td>Sometimes; often the CEO</td><td>Rarely separate</td><td>Fractional or shared across the portfolio, with a hard line to the deal team on diligence findings</td><td>Owned by the CTO; value-creation plan usually names a data or AI workstream</td></tr>
+        </table>
       </div>
     </div>
   </div>
@@ -117,11 +166,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">When it's earned</span>
-        <p>At scale, the CTO owns what makes the product differentiated and the CIO owns what makes the business run, ERP, internal tools, IT operations. The split lets each focus without the other's priorities crowding it out, and both jobs are full-time at that size.</p>
+        <p>At scale, the CTO owns what makes the product differentiated and the CIO owns what makes the business run: ERP, internal tools, IT operations, the employee technology experience. The split lets each focus without the other's priorities crowding it out, and both jobs are full-time at that size. The working agreement that makes it hold is a written answer to who owns shared infrastructure (cloud, identity, network), because both need it and each will assume the other is paying for it.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">When it isn't</span>
-        <p>Most companies below a certain size never need both roles. Forcing the split prematurely creates two half-empowered leaders instead of one fully accountable one, and the resulting turf questions cost more than the specialization is worth at that stage.</p>
+        <p>Most companies below a certain size never need both roles. Forcing the split prematurely creates two half-empowered leaders instead of one fully accountable one, and the resulting turf questions cost more than the specialization is worth at that stage. The tell: two executives each with a cloud budget, two identity providers, or a product team that files tickets to an IT team for infrastructure it could self-serve.</p>
       </div>
     </div>
   </div>
@@ -135,11 +184,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">When it's earned</span>
-        <p>Once &quot;how to build it&quot; and &quot;what to build&quot; are full-time, separate cognitive loads, with enough product surface area that no single person can hold both the technical architecture and the full market and customer picture in their head at once.</p>
+        <p>Once &quot;how to build it&quot; and &quot;what to build&quot; are full-time, separate cognitive loads, with enough product surface area that no single person can hold both the technical architecture and the full market and customer picture in their head at once. The working agreement that makes it hold: the CPO is Accountable for roadmap priority, the CTO is Accountable for the capacity split, and both sign the capacity floor for platform and debt work at the annual allocation so it is never relitigated feature by feature.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">When it isn't</span>
-        <p>Hiring a CPO before there's enough product complexity to justify it adds a translation layer between what customers need and what gets built, a layer a single technically fluent, product-minded CTO could have held directly, and often held better, with no handoff loss.</p>
+        <p>Hiring a CPO before there's enough product complexity to justify it adds a translation layer between what customers need and what gets built, a layer a single technically fluent, product-minded CTO could have held directly, and often held better, with no handoff loss. The tell: the CPO's roadmap and the CTO's roadmap are two documents, and engineers are asked which one is real.</p>
       </div>
     </div>
   </div>
@@ -147,17 +196,20 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">4</span>
-      <h3>Role structure by company archetype, worked</h3>
-      <p>What the boundaries above look like assembled into an org, at three different points.</p>
+      <h3>The CISO reporting line</h3>
+      <p>The most consequential structural decision in this group. Security reporting into a role whose other incentives directly compete with security priorities creates a structural conflict every time a security requirement would slow a release. There is no clean answer, only tradeoffs, and the trend in regulation is toward the board seeing the CISO directly regardless of the solid line.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Archetype</th><th>CTO</th><th>CPO</th><th>CIO</th><th>CISO</th></tr>
-          <tr><td>Early-stage startup (under 50 engineers)</td><td>Owns strategy, engineering, and product direction together</td><td>Doesn't exist yet; folded into the CTO role</td><td>Doesn't exist; IT handled by a generalist or outsourced</td><td>Doesn't exist; security owned by the CTO directly</td></tr>
-          <tr><td>Mid-scale SaaS (200 to 1,000 engineers)</td><td>Owns how the product is built: architecture, engineering</td><td>Owns what gets built: roadmap, customer research</td><td>A light IT function, often still reporting through the CTO or COO</td><td>Dedicated hire, reporting per the guidance on <a href="../security-program/index.html">Security Program</a></td></tr>
-          <tr><td>Hardware or deep-tech</td><td>Owns both product and technology direction; no separate CPO</td><td>Doesn't exist; folded into the CTO role</td><td>May exist for internal systems, separate from the product itself</td><td>Often folded into engineering leadership until the company reaches scale</td></tr>
+          <tr><th>CISO reports to</th><th>What it buys</th><th>What it costs</th><th>Fits when</th></tr>
+          <tr><td>CEO</td><td>Independence; security is visibly a business risk rather than a technology sub-function</td><td>The CEO rarely has the context to arbitrate technical tradeoffs; the CISO can become isolated from engineering</td><td>Regulated industries, public companies post-incident, anywhere the board has asked for it</td></tr>
+          <tr><td>CTO</td><td>Closest to the systems and the engineers; security controls get built into the platform rather than bolted on</td><td>The structural conflict: the CTO's delivery incentives can override security when the two collide, and the CISO knows it</td><td>Product companies where the product is the attack surface, with a written escalation path to the CEO or audit committee for disagreements</td></tr>
+          <tr><td>CIO</td><td>Natural fit for enterprise IT security; controls and operations sit together</td><td>Product security can be an afterthought; same delivery-versus-control conflict as the CTO line</td><td>Enterprises where most risk is in the internal estate</td></tr>
+          <tr><td>General counsel or chief risk officer</td><td>Aligns security with legal and regulatory risk; strong for privacy-heavy businesses</td><td>Distance from engineering; controls can become paper-first</td><td>Financial services and healthcare, often paired with a dotted line to the CTO</td></tr>
+          <tr><td>COO</td><td>Operational independence from both technology executives</td><td>Depends entirely on the COO's appetite for the subject</td><td>Companies where operations is the dominant risk surface (logistics, manufacturing)</td></tr>
         </table>
+        <div class="same-note">Whatever the solid line, three things should be true: the CISO presents to the board or its audit or risk committee at least twice a year without the CTO or CIO in the chair; the CISO can escalate a risk acceptance they disagree with to the CEO without asking permission; and the CISO's compensation is not tied to the delivery metrics of the function they report into. NYDFS Part 500 and the SEC's 2023 disclosure rules both push toward the first of these in regulated and public companies. See <a href="../security-program/index.html">Building a Security Program</a> for the rest of the argument.</div>
       </div>
     </div>
   </div>
@@ -165,26 +217,93 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
-      <h3>The CISO reporting line</h3>
-      <p>The single most consequential structural decision in this group, and it deserves more depth than fits here.</p>
+      <h3>The newer titles: CDO, CDAO, CAIO</h3>
+      <p>Chief data, chief data and analytics, chief AI. Each arrived to fill a gap the four classic roles left, and each creates a new seam if its boundary is not written down on the day it is created.</p>
     </div>
-    <div class="stage-grid single">
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What they own when they work</span>
+        <p>A CDO or CDAO owns data governance, the data platform's product direction, data quality, and analytics enablement, and is the named owner the <a href="../data-governance/index.html">Data Governance</a> and <a href="../data-strategy/index.html">Data Strategy</a> pages keep asking for. A CAIO owns the AI portfolio, the intake and risk-tiering process on the <a href="../ai-governance-map/index.html">AI Governance Map</a>, and the model inventory. In both cases the platform engineering underneath usually stays with the CTO, and the role is a product owner and governor of the capability rather than its builder.</p>
+      </div>
       <div class="stage-cell">
-        <p>See <a href="../security-program/index.html">Security Program</a> for the full argument: security reporting into a role whose other incentives directly compete with security priorities creates a structural conflict every time a security requirement would slow a release.</p>
+        <span class="env-label b">Where they fail</span>
+        <p>Created as a reaction (a board asked about AI; a data breach embarrassed someone) with a title and no decision rights, so the new executive owns a strategy document and no budget, platform, or veto. Or created with everything, so the CTO now has a peer who owns the data platform's roadmap but none of the engineers building it. The test before creating the role: name the three decisions it will be Accountable for that nobody is Accountable for today. If the list is empty, the gap is coordination rather than ownership, and a role will not fix it.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">6</span>
-      <h3>A worked disagreement</h3>
+      <span class="stage-num">Template</span>
+      <h3>The role charter: one page per executive</h3>
+      <p>A written charter is what turns a boundary from an assumption into a document two people can point at. One page, reviewed annually and after any reorg, signed by the CEO. The sections below are the whole thing.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Section</th><th>What goes in it</th><th>What a weak entry looks like</th></tr>
+          <tr><td>Purpose</td><td>One sentence: the outcome this role exists to produce for the company</td><td>A list of responsibilities with no outcome</td></tr>
+          <tr><td>Owns (Accountable)</td><td>The categories of decision this role has final say on, drawn from the decisions table above and the RACI on <a href="../technology-decision-rights/index.html">Technology Decision Rights</a></td><td>&quot;Technology&quot;</td></tr>
+          <tr><td>Consulted on</td><td>The decisions this role must be heard on before they are made, and by whom</td><td>Left blank, so the role finds out afterward</td></tr>
+          <tr><td>Does not own</td><td>The adjacent decisions explicitly assigned elsewhere, named, so the boundary is visible from both sides</td><td>Omitted, which is where every turf dispute starts</td></tr>
+          <tr><td>Budget and headcount</td><td>What this role controls directly, and what it draws from a shared pool through which process</td><td>A number with no process for changing it</td></tr>
+          <tr><td>Escalation</td><td>Who arbitrates a disagreement with each peer role, and how fast</td><td>&quot;Escalate as needed&quot;</td></tr>
+          <tr><td>Measures</td><td>Three to five outcomes this role is judged on, at least one of which a peer role also cares about</td><td>Activity measures, or measures that reward winning turf</td></tr>
+          <tr><td>Review date</td><td>When the charter is next reviewed, and the events that trigger an earlier one (reorg, new peer role, acquisition)</td><td>None, so the charter describes the company as it was two reorgs ago</td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Write the four charters in the same room, in the same afternoon. The value is in the &quot;does not own&quot; sections lining up: every decision one charter excludes should appear in another charter's &quot;owns.&quot; Anything that appears in neither is the gap, and finding it on a whiteboard is cheaper than finding it in a budget meeting.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>A disagreement the boundary resolves: CPO and CTO</h3>
       <p>What the boundary resolves when two roles disagree in practice.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p>The CPO wants to ship a feature fast to close a specific enterprise deal. The CTO says the underlying data model needs to change first, or the shortcut will block three roadmap items next quarter and become unmaintainable.</p>
-        <p>Checking <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>: product roadmap priorities have the CPO Accountable, the CTO Consulted, engineering Responsible. The CTO doesn't get a veto, but the CPO has to weigh the technical input rather than note it and proceed. In this case, the negotiated outcome is a scoped-down version that closes the deal on time without the risky shortcut, with the full feature and the data model fix shipping together next quarter. Nobody has to relitigate who had final say, because the boundary already answered that before the disagreement started.</p>
+        <p>Checking the RACI: product roadmap priorities have the CPO Accountable, the CTO Consulted, engineering Responsible. The CTO doesn't get a veto, but the CPO has to weigh the technical input rather than note it and proceed. In this case, the negotiated outcome is a scoped-down version that closes the deal on time without the risky shortcut, with the full feature and the data model fix shipping together next quarter. Nobody has to relitigate who had final say, because the boundary already answered that before the disagreement started. The one addition that keeps this from recurring: the CTO records the shortcut's carry cost as a debt item with the three numbers from <a href="../technical-debt-economics/index.html">Technical Debt Economics</a>, so the next time the same trade comes up it is priced rather than argued.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>A disagreement the boundary did not resolve: CTO and CIO over the cloud</h3>
+      <p>The more instructive case, because the charter had a gap and the gap cost money before anyone noticed it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What happened</span>
+        <p>A 3,000-person insurer with a CIO running the estate and a CTO hired three years earlier to build a digital product organization. The CTO's teams built on a cloud account the CTO's platform team stood up, because the CIO's cloud program was two years behind and gated on enterprise architecture review. The CIO's program then landed with a landing zone, a security baseline, and a mandate from the CISO that all cloud workloads move into it. By then the product organization had 40 services, its own identity federation, and a cloud bill of $2.4M a year in an account the CIO's cost tooling could not see. The CISO's audit flagged two identity providers and no consolidated logging. Both executives had a charter. Neither charter mentioned cloud, because when they were written the company had none.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it was settled</span>
+        <p>The CEO arbitrated, using the decisions table on this page as the agenda. Cloud platform and account structure went to the CIO, on the grounds that it was shared infrastructure and the CIO owned the rest of the shared estate; the CTO's platform team moved under a joint platform organization with a dotted line to the CTO and an explicit X-as-a-Service mandate to product teams. Identity policy went to the CISO, with the directory operated by the platform organization. The product accounts migrated into the landing zone over nine months rather than being rebuilt, with the migration funded from the CIO's program because the program's delay had created the situation. Both charters were amended the same week with a &quot;does not own&quot; entry for cloud, and a review trigger was added for any new shared platform. The migration cost roughly $600k. The three years of two executives assuming the other owned cloud cost considerably more, mostly in the form of a product organization that could not pass the customer security questionnaires the insurer's own enterprise clients sent.</p>
+      </div>
+    </div>
+    <div class="same-note">The lesson is about charters rather than cloud. A boundary document describes the company on the day it is written. New shared platforms (cloud then, AI now) arrive on the seam between roles and belong to nobody until someone asks. The review trigger, any new shared platform, is the cheapest line in the template.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>Splitting a role: the transition</h3>
+      <p>When a CPO or CIO is hired out of what was the CTO's scope, the six months after the hire decide whether the split works. The pattern that works is the same as an executive handover.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li><strong>Charters written before the offer goes out.</strong> The new executive accepts a scope, and the CTO agrees to give it up, in writing. Negotiating the boundary after arrival puts the new hire in a turf fight in week one</li>
+          <li><strong>The CTO transfers relationships personally.</strong> Introductions to the board, key customers, and the CEO's staff for the domains moving, per <a href="../cto-succession/index.html">CTO Leadership &amp; Succession</a>, rather than leaving the new executive to build them cold</li>
+          <li><strong>Decision rights move on a date.</strong> A named day when the CPO becomes Accountable for the roadmap, announced to engineering, so there is no period where both are answering</li>
+          <li><strong>One shared measure.</strong> A metric both executives are judged on (delivery lead time, a revenue outcome) so the split does not create two people optimizing against each other</li>
+          <li><strong>A 90-day review of the charter</strong>, because the first draft will have missed at least one decision, and finding it on schedule is better than finding it in a conflict</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -199,11 +318,13 @@
       <div class="stage-cell">
         <ul>
           <li>Two of these roles both believe they own the same category of decision</li>
+          <li>A decision in the table above has no owner anyone can name, and the most likely candidates are cloud, data, or AI</li>
           <li>The boundary was set once at founding and never revisited despite the company changing shape significantly since</li>
-          <li>The CISO reports into a role whose incentives conflict with security priorities</li>
+          <li>The CISO reports into a role whose incentives conflict with security priorities, with no independent path to the board</li>
           <li>No one outside the four roles could explain where one's authority ends and another's begins</li>
           <li>A new hire into one of these roles has to guess at their own scope because it's never been written down</li>
-          <li>A CPO or CIO was hired before the underlying business complexity justified splitting the role from the CTO's</li>
+          <li>A CPO, CIO, CDO, or CAIO was created before the underlying complexity justified splitting the role from the CTO's, or was created with a title and no decision rights</li>
+          <li>There are two identity providers, two cloud bills, or two roadmaps, and each executive assumes the other is responsible for reconciling them</li>
         </ul>
       </div>
     </div>
@@ -212,7 +333,7 @@
 </main>
 
 <footer>
-  Reference only. Role structure should reflect your organization's size, business model, and history rather than a template borrowed from a different kind of company.
+  Reference only. Role structure should reflect your organization's size, business model, and history rather than a template borrowed from a different kind of company. The RACI vocabulary is standard responsibility-assignment practice; the CISO reporting analysis draws on NYDFS Part 500 (as amended 2023) and the SEC's 2023 cybersecurity disclosure rules for the board-visibility expectations. The decisions table, archetypes, charter template, and worked cases are this site's.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
