@@ -85,7 +85,7 @@
   <h1>Understanding the System Before Changing It</h1>
   <p>A ten-question diagnostic for understanding a system before intervening in it.</p>
   <p>A system can be a team, a process, an operating model, a software platform, a technology architecture, or the network of people, processes, technology, incentives, constraints, and dependencies that interact to produce an outcome.</p>
-  <p>The principle is simple: before changing a system, understand enough of its structure and behavior to anticipate how it's likely to respond. That doesn't mean understanding every detail, an impossible bar in a system of any real size. It means understanding the boundaries, actors, incentives, feedback loops, delays, constraints, and measures that could cause the intervention to behave differently from the plan.</p>
+  <p>The principle is simple: before changing a system, understand enough of its structure and behavior to anticipate how it's likely to respond. Understanding every detail is an impossible bar in a system of any size. What it means is understanding the boundaries, actors, incentives, feedback loops, delays, constraints, and measures that could cause the intervention to behave differently from the plan.</p>
   <p>This matters most when the system crosses organizational or technical boundaries. A change that appears local can alter behavior elsewhere, sometimes immediately and sometimes months later.</p>
   <div class="caveat">Pairs with <a href="../systems-thinking-for-ctos/index.html">Systems Thinking for CTOs</a> for the underlying concepts, <a href="../decision-architecture/index.html">Decision Architecture</a> for where this sits relative to everything else, and <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for where the answers should get written down.</div>
 
@@ -109,30 +109,30 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Define the system</h3>
-      <p>What you're changing, stated at the level where the real behavior lives, not the level where the budget line sits.</p>
+      <p>What you're changing, stated at the level where the behavior lives rather than the level where the budget line sits.</p>
     </div>
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Name the system being changed, not just the artifact being removed or added. The artifact is the visible trigger. The system is everything whose behavior depends on it.</p>
+        <p>Name the system being changed, and go beyond the artifact being removed or added. The artifact is the visible trigger. The system is everything whose behavior depends on it.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Not "we're changing four reporting lines." The system being changed is every business unit president's direct influence over what used to be their own technology priorities, and the speed that came from a technology leader who sat in that president's own staff meeting every week.</p>
+        <p>The artifact is four reporting lines. The system being changed is every business unit president's direct influence over what used to be their own technology priorities, and the speed that came from a technology leader who sat in that president's own staff meeting every week.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>Not "we're adding an event bus." The system being changed is every point-to-point contract between the five systems, the implicit timing and ordering assumptions baked into each one, and every downstream report or reconciliation process that quietly depends on those assumptions holding.</p>
+        <p>The artifact is an event bus. The system being changed is every point-to-point contract between the five systems, the implicit timing and ordering assumptions baked into each one, and every downstream report or reconciliation process that quietly depends on those assumptions holding.</p>
       </div>
     </div>
-    <div class="same-note">The technique for finding the system instead of stopping at the artifact is root cause analysis: ask why the artifact is the proposed fix, then why that answer is true, and repeat until the answer isn't itself caused by something further upstream. Toyota's 5 Whys is the simplest version of this. Stop after one round and you've defined the artifact, not the system.</div>
+    <div class="same-note">The technique for finding the system instead of stopping at the artifact is root cause analysis: ask why the artifact is the proposed fix, then why that answer is true, and repeat until the answer isn't itself caused by something further upstream. Toyota's 5 Whys is the simplest version of this. Stop after one round and you've defined the artifact and missed the system.</div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>Define the boundary</h3>
-      <p>What you're excluding, and whether that exclusion makes the analysis easier or just makes it wrong.</p>
+      <p>What you're excluding, and whether that exclusion makes the analysis easier or makes it wrong.</p>
     </div>
     <div class="stage-grid triple">
       <div class="stage-cell a">
@@ -155,7 +155,7 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Identify actors</h3>
-      <p>Who behaves differently because of the intervention, not just who signs off on it.</p>
+      <p>Who behaves differently because of the intervention, beyond who signs off on it.</p>
     </div>
     <div class="stage-grid triple">
       <div class="stage-cell a">
@@ -164,11 +164,11 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Not just the four technology leaders now reporting to the CTO. Every business unit president who loses direct authority over what used to be their own roadmap. Every business stakeholder who now routes a request through a shared enterprise queue instead of a direct relationship with an embedded technology leader.</p>
+        <p>The four technology leaders now reporting to the CTO are the obvious actors. Beyond them: every business unit president who loses direct authority over what used to be their own roadmap. Every business stakeholder who now routes a request through a shared enterprise queue instead of a direct relationship with an embedded technology leader.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>Not just the team building the event bus. Every system owner who now has to instrument their system to publish events instead of just responding to direct calls. Every analyst whose report assumed CRM updates arrive before billing updates, an order the bus doesn't guarantee.</p>
+        <p>The team building the event bus is the obvious actor. Beyond it: every system owner who now has to instrument their system to publish events instead of just responding to direct calls. Every analyst whose report assumed CRM updates arrive before billing updates, an order the bus doesn't guarantee.</p>
       </div>
     </div>
   </div>
@@ -184,7 +184,7 @@
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Every system rewards something whether anyone designed it to or not. Find the actual reward structure before assuming the intervention only changes what it was aimed at.</p>
+        <p>Every system rewards something whether anyone designed it to or not. Find the reward structure that operates in practice before assuming the intervention only changes what it was aimed at.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
@@ -206,7 +206,7 @@
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>An intervention rarely just adds a new behavior. It usually strengthens one existing loop and weakens another, and the weakened loop was often doing quiet, unglamorous work.</p>
+        <p>An intervention rarely adds a new behavior in isolation. It usually strengthens one existing loop and weakens another, and the weakened loop was often doing quiet, unglamorous work.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
@@ -232,11 +232,11 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>For the first two quarters, the four technology leaders keep making the same calls they always did out of habit and relationship, so almost nothing visibly changes. The real effect, roadmap decisions increasingly reflecting enterprise tradeoffs instead of any one unit's priorities, shows up nine to twelve months later, once the centralized budget cycle runs its first full round.</p>
+        <p>For the first two quarters, the four technology leaders keep making the same calls they always did out of habit and relationship, so almost nothing visibly changes. The effect that matters, roadmap decisions increasingly reflecting enterprise tradeoffs instead of any one unit's priorities, shows up nine to twelve months later, once the centralized budget cycle runs its first full round.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>The event bus goes live and every system publishes correctly on day one. The real cost shows up months later, when the warehouse's nightly reports start silently running on stale data during any week event delivery lags by even a few minutes, a failure mode the old synchronous calls never had.</p>
+        <p>The event bus goes live and every system publishes correctly on day one. The cost shows up months later, when the warehouse's nightly reports start silently running on stale data during any week event delivery lags by even a few minutes, a failure mode the old synchronous calls never had.</p>
       </div>
     </div>
   </div>
@@ -269,20 +269,20 @@
     <div class="stage-head">
       <span class="stage-num">8</span>
       <h3>Identify constraints</h3>
-      <p>Which constraints are real, physics or contract or regulation, and which are organizational habits nobody has re-examined lately.</p>
+      <p>Which constraints are binding (physics, contract, regulation) and which are organizational habits nobody has re-examined lately.</p>
     </div>
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Every plan runs into "we can't do that because X." Half of those X's are load-bearing. The other half are just how it's always been done, restated as if it were a law of physics.</p>
+        <p>Every plan runs into "we can't do that because X." Half of those X's are load-bearing. The other half are how it's always been done, restated as if it were a law of physics.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Real constraint: one business unit operates under a regulatory requirement that mandates a separately governed technology function, that unit can't be fully centralized without a real compliance problem. Not real, just never questioned: the assumption that every unit needs its own full technology leadership stack rather than shared platform capability with unit-specific product ownership.</p>
+        <p>Binding constraint: one business unit operates under a regulatory requirement that mandates a separately governed technology function, so that unit can't be fully centralized without a compliance problem. Habit, never questioned: the assumption that every unit needs its own full technology leadership stack rather than shared platform capability with unit-specific product ownership.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>Real constraint: billing's downstream finance reporting requires transactional consistency an eventually-consistent bus can't provide without extra work. Not real, just never questioned: the assumption that every integration needs to be real-time, when several of the five systems only ever needed daily reconciliation.</p>
+        <p>Binding constraint: billing's downstream finance reporting requires transactional consistency an eventually-consistent bus can't provide without extra work. Habit, never questioned: the assumption that every integration needs to be real-time, when several of the five systems only ever needed daily reconciliation.</p>
       </div>
     </div>
   </div>
@@ -300,11 +300,11 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>If the measure is "total technology headcount reduced," the cuts land hardest on whichever unit documented its context the least, not on genuine duplication. The metric that matters is duplicate capability eliminated without loss of unit-specific delivery speed, not headcount alone.</p>
+        <p>If the measure is "total technology headcount reduced," the cuts land hardest on whichever unit documented its context the least rather than on duplication. The metric that matters is duplicate capability eliminated without loss of unit-specific delivery speed; headcount alone measures the wrong thing.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>If the measure is "point-to-point integrations removed," teams migrate the easy ones first and leave the fragile, high-risk ones for later, the opposite of where the real risk lives. The metric that matters is risk-weighted fragility reduced, not integration count.</p>
+        <p>If the measure is "point-to-point integrations removed," teams migrate the easy ones first and leave the fragile, high-risk ones for later, the opposite of where the risk lives. The metric that matters is risk-weighted fragility reduced; integration count measures the wrong thing.</p>
       </div>
     </div>
   </div>
@@ -315,23 +315,23 @@
     <div class="stage-head">
       <span class="stage-num">10</span>
       <h3>Design the intervention, then observe the response</h3>
-      <p>The intervention that changes the system behavior you want with the least unnecessary disruption, not the largest change that feels decisive.</p>
+      <p>The intervention that changes the system behavior you want with the least unnecessary disruption, rather than the largest change that feels decisive.</p>
     </div>
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Everything above exists to inform this design choice. A sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them, though a real structural problem sometimes needs a real structural fix, not a smaller version of the same mistake. Either way, the intervention isn't the last step. Watch what the system does in response, and update the answers above if it's not what questions 4 through 9 predicted.</p>
+        <p>Everything above exists to inform this design choice. A sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them, though a structural problem sometimes needs a structural fix rather than a smaller version of the same mistake. Either way, the intervention is never the last step. Watch what the system does in response, and update the answers above if it's not what questions 4 through 9 predicted.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Not centralizing all four units in one reorg announcement. A phased centralization starting with the shared services duplicated identically across all four units, common infrastructure, security, while each unit keeps a dedicated technology lead in their president's staff meeting for at least two more budget cycles. Afterward, check whether presidents still report technology as represented at their leadership table, not just assume the org chart change was fine because nobody complained in month one.</p>
+        <p>Instead of centralizing all four units in one reorg announcement: a phased centralization starting with the shared services duplicated identically across all four units, common infrastructure, security, while each unit keeps a dedicated technology lead in their president's staff meeting for at least two more budget cycles. Afterward, check whether presidents still report technology as represented at their leadership table, rather than assuming the org chart change was fine because nobody complained in month one.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>Not cutting all five systems over in one release. A phased migration starting with the two systems least sensitive to ordering, with the old point-to-point path kept running in parallel until event delivery is proven reliable under real load. Afterward, the warehouse's report accuracy gets checked against the old baseline, not assumed fine because the bus is technically delivering events.</p>
+        <p>Instead of cutting all five systems over in one release: a phased migration starting with the two systems least sensitive to ordering, with the old point-to-point path kept running in parallel until event delivery is proven reliable under production load. Afterward, the warehouse's report accuracy gets checked against the old baseline rather than assumed fine because the bus is technically delivering events.</p>
       </div>
     </div>
-    <div class="same-note">This is where the loop closes back into the rest of the toolkit: <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> records the decision, and whatever gets measured afterward feeds back into the Measurement stage of <a href="../decision-architecture/index.html">Decision Architecture</a>, which feeds back into Strategy. This diagnostic doesn't end at the decision.</div>
+    <div class="same-note">This is where the loop closes back into the rest of the toolkit: <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> records the decision, and whatever gets measured afterward feeds back into the Measurement stage of <a href="../decision-architecture/index.html">Decision Architecture</a>, which feeds back into Strategy. This diagnostic continues past the decision.</div>
   </div>
 
   <div class="stage-card">
@@ -344,10 +344,10 @@
       <div class="stage-cell">
         <ul>
           <li>You can name at least two actors, beyond the team proposing the change, who will behave differently once it ships</li>
-          <li>You can name the current incentive the change removes or reverses, not just the goal it's meant to achieve</li>
-          <li>You've written down an indirect effect you expect, not just the intended one the proposal is optimized for</li>
-          <li>The success metric measures the outcome you want, not the easiest thing to measure by the deadline</li>
-          <li>You've stated which constraints are real and which are just how it's always been done, out loud, in the room</li>
+          <li>You can name the current incentive the change removes or reverses, as well as the goal it's meant to achieve</li>
+          <li>You've written down an indirect effect you expect, alongside the intended one the proposal is optimized for</li>
+          <li>The success metric measures the outcome you want rather than the easiest thing to measure by the deadline</li>
+          <li>You've stated which constraints are binding and which are how it's always been done, out loud, in the room</li>
         </ul>
       </div>
     </div>
@@ -356,7 +356,7 @@
 </main>
 
 <footer>
-  Reference only. This diagnostic surfaces the interactions worth examining before a decision, it doesn't replace the judgment call once you've examined them. The 5 Whys technique in card 1 originates at Toyota, credited to Sakichi Toyoda; MECE in card 2 is a McKinsey &amp; Company problem-structuring principle.
+  Reference only. This diagnostic surfaces the interactions worth examining before a decision; the judgment call once you've examined them is still yours. The 5 Whys technique in card 1 originates at Toyota, credited to Sakichi Toyoda; MECE in card 2 is a McKinsey &amp; Company problem-structuring principle.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

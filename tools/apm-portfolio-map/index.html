@@ -97,7 +97,7 @@
     <div class="stage-head">
       <span class="stage-num">In the full toolkit</span>
       <h3>What exists behind this preview</h3>
-      <p>A working spreadsheet instrument, not a static framework: three linked sheets feeding one dashboard, with the same scoring logic reused for standing portfolio governance and for scoring an acquisition target's stack under diligence.</p>
+      <p>A working spreadsheet instrument rather than a static framework: three linked sheets feeding one dashboard, with the same scoring logic reused for standing portfolio governance and for scoring an acquisition target's stack under diligence.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -126,7 +126,7 @@
             <ul>
               <li>Business Value built from five factors: strategic alignment, business criticality, user reach, differentiation, regulatory necessity</li>
               <li>Technical Health built from five factors: technology currency, architecture quality, integration complexity, data architecture fit, technical debt</li>
-              <li>Composite Portfolio Score, cost score, and risk score sit alongside the classification as informational overlays, not inputs to it</li>
+              <li>Composite Portfolio Score, cost score, and risk score sit alongside the classification as informational overlays and are kept out of its inputs</li>
             </ul>
           </div>
           <div class="type-card">
@@ -151,7 +151,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">The four quadrants</span>
-        <p><strong>Invest</strong>: high value, high health &mdash; fund it. <strong>Tolerate</strong>: low value, high health &mdash; leave it alone, don't over-invest. <strong>Migrate</strong>: high value, low health &mdash; the modernization backlog, ranked by value at risk. <strong>Eliminate</strong>: low value, low health &mdash; the retirement candidates most portfolios are carrying more of than anyone admits.</p>
+        <p><strong>Invest</strong>: high value, high health. Fund it. <strong>Tolerate</strong>: low value, high health. Leave it alone and don't over-invest. <strong>Migrate</strong>: high value, low health. This is the modernization backlog, ranked by value at risk. <strong>Eliminate</strong>: low value, low health. These are the retirement candidates most portfolios carry more of than anyone admits.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where it breaks down</span>
@@ -163,7 +163,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
-      <h3>Risk as an independent axis, not a TIME input</h3>
+      <h3>Risk as an independent axis, kept out of the TIME inputs</h3>
       <p>A system can be a clean Invest on the TIME grid and still be the one that takes the company down. Risk is scored and reported separately on purpose.</p>
     </div>
     <div class="stage-grid">
@@ -182,16 +182,16 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Turning individual scores into a portfolio signal</h3>
-      <p>One application's score is a data point. The value is in the aggregate: how many Eliminate candidates are still costing real money, how concentrated the high-risk applications are, whether Migrate is growing or shrinking quarter over quarter.</p>
+      <p>One application's score is a data point. The value is in the aggregate: how many Eliminate candidates are still costing money, how concentrated the high-risk applications are, whether Migrate is growing or shrinking quarter over quarter.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What to track over time</span>
-        <p>Average Composite Portfolio Score by quadrant, count of high-risk applications, count of high-cost applications relative to their Business Value, and the ratio of Eliminate-classified applications still consuming a meaningful share of total run cost. Movement in these over two or three quarters tells you whether governance is changing behavior or just producing a nicer chart.</p>
+        <p>Average Composite Portfolio Score by quadrant, count of high-risk applications, count of high-cost applications relative to their Business Value, and the ratio of Eliminate-classified applications still consuming a meaningful share of total run cost. Movement in these over two or three quarters tells you whether governance is changing behavior or only producing a nicer chart.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap</span>
-        <p>Treating this as a one-time inventory exercise. A TIME classification from eighteen months ago is closer to fiction than data; technical health decays continuously even when business value hasn't moved, so the cadence matters as much as the scoring model itself.</p>
+        <p>Treating this as a one-time inventory exercise. A TIME classification from eighteen months ago is closer to fiction than to data; technical health decays continuously even when business value hasn't moved, so the cadence matters as much as the scoring model itself.</p>
       </div>
     </div>
   </div>
@@ -220,7 +220,7 @@
       <div class="stage-cell">
         <div style="display:flex; align-items:center; gap:14px; background:var(--accent-soft); border:1px solid var(--line); border-radius:8px; padding:12px 16px; margin-bottom:18px; font-size:12.5px;">
           <span style="font-family:var(--mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); white-space:nowrap;">Score key</span>
-          <span style="color:var(--ink);"><strong>Every slider below works the same way, no exceptions:</strong> 1 is always low (low value, or low health, or lots of debt / a highly complex, brittle integration), 5 is always high (high value, or high health, or minimal debt / a clean, well-abstracted integration).</span>
+          <span style="color:var(--ink);"><strong>Every slider below works the same way:</strong> 1 is always low (low value, or low health, or lots of debt / a highly complex, brittle integration), 5 is always high (high value, or high health, or minimal debt / a clean, well-abstracted integration).</span>
         </div>
         <div class="axis-label">Business value</div>
         <div id="apm-bv-dims"></div>
@@ -289,8 +289,8 @@
     const highBV = bv >= 3.0;
     const highTH = th >= 3.0;
     let quadrant, quadId, read;
-    if (highBV && highTH) { quadrant = 'Invest'; quadId = 'q-invest'; read = 'High value, healthy platform. Fund it and protect it; this is not where remediation budget is scarce.'; }
-    else if (highBV && !highTH) { quadrant = 'Migrate'; quadId = 'q-migrate'; read = 'High value sitting on a deteriorating platform. This is the modernization backlog, and it should be ranked by value at risk, not by ticket age.'; }
+    if (highBV && highTH) { quadrant = 'Invest'; quadId = 'q-invest'; read = 'High value, healthy platform. Fund it and protect it.'; }
+    else if (highBV && !highTH) { quadrant = 'Migrate'; quadId = 'q-migrate'; read = 'High value sitting on a deteriorating platform. This is the modernization backlog, and it should be ranked by value at risk rather than ticket age.'; }
     else if (!highBV && highTH) { quadrant = 'Tolerate'; quadId = 'q-tolerate'; read = 'Healthy but not strategically important. Leave it running; resist the urge to over-invest here just because it is easy to improve.'; }
     else { quadrant = 'Eliminate'; quadId = 'q-eliminate'; read = 'Low value, low health. A retirement candidate; every quarter it stays live is quiet cost with no strategic return.'; }
 
@@ -308,9 +308,9 @@
 </script>
 
 <footer>
-  Reference only. Treat quadrant placement as a starting point for a governance conversation, not a mandate; a single low score on one factor is a reason to look closer, not an automatic verdict. See <a href="../technical-debt-economics/index.html" style="color:var(--accent);">Technical Debt Economics</a> for turning the debt backlog into carry cost and a funded sequence. TIME (Tolerate, Invest, Migrate, Eliminate) is Gartner's application portfolio model; the risk layer, debt backlog, and calculator are this site's.
+  Reference only. Treat quadrant placement as a starting point for a governance conversation rather than a mandate; a single low score on one factor is a reason to look closer, never an automatic verdict. See <a href="../technical-debt-economics/index.html" style="color:var(--accent);">Technical Debt Economics</a> for turning the debt backlog into carry cost and a funded sequence. TIME (Tolerate, Invest, Migrate, Eliminate) is Gartner's application portfolio model; the risk layer, debt backlog, and calculator are this site's.
   <br>The source-bias caution above (owners inflate their own Business Value scores) is one example of a broader discipline: <a href="../epistemology-research-methods/index.html" style="color:var(--accent);">Epistemology &amp; Research Methods</a>.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

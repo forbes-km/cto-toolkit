@@ -79,18 +79,18 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Six dimensions, scored independently</h3>
-      <p>Most organizations are unevenly mature across these six; that unevenness is itself the most useful output of the assessment, not a flaw in it.</p>
+      <p>Most organizations are unevenly mature across these six; that unevenness is itself the most useful output of the assessment.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Dimension</th><th>Level 1: Ad hoc</th><th>Level 3: Defined</th><th>Level 5: Optimized</th></tr>
           <tr><td>Identity &amp; access</td><td>Standing broad access, no consistent least-privilege policy across systems</td><td>Documented access policy applied through a defined onboarding/offboarding process</td><td>Just-in-time, continuously verified access with no standing privilege by default</td></tr>
-          <tr><td>Segmentation &amp; blast radius</td><td>Flat network, one compromised credential reaches most of the environment</td><td>Defined network segments with controlled points between them</td><td>Micro-segmented to the workload level; a single compromise is contained by design, not by luck</td></tr>
+          <tr><td>Segmentation &amp; blast radius</td><td>Flat network, one compromised credential reaches most of the environment</td><td>Defined network segments with controlled points between them</td><td>Micro-segmented to the workload level; a single compromise is contained by design rather than by luck</td></tr>
           <tr><td>Detection &amp; response</td><td>Reliant on external reports to learn about a problem</td><td>Centralized logging and defined alerting on known threat patterns</td><td>Behavioral anomaly detection catching novel patterns, with a tested response plan behind it</td></tr>
           <tr><td>Vulnerability management</td><td>Scanning inconsistent, patching reactive and undocumented</td><td>Regular scanning cadence, patching SLA defined and mostly met</td><td>Continuous scanning integrated into deployment, patching SLA consistently met with evidence</td></tr>
           <tr><td>Third-party risk</td><td>Vendor access granted with no ongoing review</td><td>Vendor risk assessed at onboarding, reviewed periodically</td><td>Continuous vendor risk monitoring, access scoped and reviewed on the same cadence as internal identity</td></tr>
-          <tr><td>Governance &amp; culture</td><td>Security treated as a separate team's job, not embedded in delivery</td><td>Defined security requirements built into the delivery process</td><td>Security ownership distributed to delivery teams, with a lightweight central function, not a gate</td></tr>
+          <tr><td>Governance &amp; culture</td><td>Security treated as a separate team's job, outside delivery</td><td>Defined security requirements built into the delivery process</td><td>Security ownership distributed to delivery teams, with a lightweight central function rather than a gate</td></tr>
         </table>
       </div>
     </div>
@@ -153,7 +153,7 @@
         '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
         '<strong>Overall average: ' + avg.toFixed(1) + ' of 5.</strong><br>' +
         'Weakest dimension: <strong>' + weakest.dim + '</strong> at Level ' + weakest.val + '. ' +
-        'Fund this one first regardless of the overall average, since a single weak dimension is where an attacker goes, not the average across all six.' +
+        'Fund this one first regardless of the overall average, since an attacker goes for the single weakest dimension rather than the average across all six.' +
         '</div>';
     });
   </script>
@@ -213,7 +213,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">The highest-leverage starting point</span>
-        <p>Identity and access almost always comes first. Segmentation, detection, and even third-party risk all assume you can trust who's making a request in the first place; building micro-segmentation on top of standing broad access just adds complexity around a foundation that's still weak.</p>
+        <p>Identity and access almost always comes first. Segmentation, detection, and even third-party risk all assume you can trust who's making a request in the first place; building micro-segmentation on top of standing broad access adds complexity around a foundation that's still weak.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap</span>
@@ -225,13 +225,13 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
-      <h3>Reading a real score pattern, not just the average</h3>
+      <h3>Reading a score pattern instead of the average</h3>
       <p>What the six-dimension breakdown reveals when it's uneven, which it almost always is.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Scores:</strong> Identity &amp; access 2, Segmentation &amp; blast radius 2, Detection &amp; response 4, Vulnerability management 3, Third-party risk 2, Governance &amp; culture 3. Average: 2.7.</p>
-        <p><strong>The diagnosis the average hides:</strong> strong detection sitting on top of weak identity and segmentation is a specific, dangerous pattern. This organization can see an attacker after they're already in, but the foundational controls that would have made getting in hard, or limited what they could reach once inside, are still weak. The instinct this score pattern usually triggers, buy more detection tooling since it's already the strongest area, is exactly backwards. More visibility into a wide-open environment doesn't reduce how wide open it is. Identity and segmentation need the next dollar, not detection.</p>
+        <p><strong>The diagnosis the average hides:</strong> strong detection sitting on top of weak identity and segmentation is a specific, dangerous pattern. This organization can see an attacker after they're already in, but the foundational controls that would have made getting in hard, or limited what they could reach once inside, are still weak. The instinct this score pattern usually triggers, buy more detection tooling since it's already the strongest area, is exactly backwards. More visibility into a wide-open environment doesn't reduce how wide open it is. Identity and segmentation need the next dollar; detection can wait.</p>
       </div>
     </div>
   </div>
@@ -239,17 +239,17 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">How to use this</span>
-      <h3>Scoring honestly, and what to do with the result</h3>
-      <p>The assessment only has value if the scoring is honest, which is harder than it sounds when the person scoring it is also accountable for the result.</p>
+      <h3>Scoring on evidence, and what to do with the result</h3>
+      <p>The assessment only has value if the scoring holds up, which is harder than it sounds when the person scoring it is also accountable for the result.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">How to score it</span>
-        <p>Score against evidence, not intention. &quot;We have a policy&quot; is not Level 3 if the policy isn't followed; it's evidence of intent, not practice. Ask for the artifact (the actual access review log, the actual segmentation diagram, the actual vendor review record) before accepting a self-reported level.</p>
+        <p>Score against evidence rather than intention. &quot;We have a policy&quot; is evidence of intent, and it does not reach Level 3 unless the policy is followed. Ask for the artifact (the access review log, the segmentation diagram, the vendor review record) before accepting a self-reported level.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What to do with a low score</span>
-        <p>A Level 1 or 2 in any dimension is not itself an emergency; it's a prioritization input. Rank dimensions by business impact if that dimension fails, not by how uncomfortable the low score is, and fund the highest-impact gap first rather than the easiest one to fix.</p>
+        <p>A Level 1 or 2 in any dimension is a prioritization input rather than an emergency in itself. Rank dimensions by business impact if that dimension fails, rather than by how uncomfortable the low score is, and fund the highest-impact gap first rather than the easiest one to fix.</p>
       </div>
     </div>
   </div>
@@ -267,10 +267,10 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it doesn't confirm</span>
-        <p>That the scope covered every system that matters, that the maturity level is sustained rather than a point-in-time snapshot assembled for the audit, or that a novel attack pattern outside the certified controls would be caught. Treat certification as a floor, not a ceiling.</p>
+        <p>That the scope covered every system that matters, that the maturity level is sustained rather than a point-in-time snapshot assembled for the audit, or that a novel attack pattern outside the certified controls would be caught. Treat certification as a floor.</p>
       </div>
     </div>
-    <div class="same-note">See <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> for the broader NIST CSF-based governance ladder this architecture-specific model complements; the two are meant to disagree sometimes, not tell the same story twice.</div>
+    <div class="same-note">See <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> for the broader NIST CSF-based governance ladder this architecture-specific model complements; the two are meant to disagree sometimes rather than tell the same story twice.</div>
   </div>
 
 </main>

@@ -88,24 +88,24 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Technical Debt Economics</h1>
-  <p>Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a real budget.</p>
-  <div class="caveat">The calculator is a transparent, simplified version of the debt carry-cost optimizer in the private methodology. It ignores dependencies, team capacity, and partial remediation on purpose, so every ranking it produces can be explained. Inputs are estimates; the value is in the ranking, not the decimals.</div>
+  <p>Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a fixed budget.</p>
+  <div class="caveat">The calculator is a transparent, simplified version of the debt carry-cost optimizer in the private methodology. It ignores dependencies, team capacity, and partial remediation on purpose, so every ranking it produces can be explained. Inputs are estimates; the value is in the ranking rather than the decimals.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h2>Three numbers per item, or it is not a debt conversation</h2>
-      <p>Technical debt discussions fail because they are conducted in adjectives. An item is not fundable until it has a carry cost, a remediation cost, and a risk exposure, each stated in dollars per year. Rough is fine. Absent is not.</p>
+      <h2>Three numbers per item, or it is a complaint rather than a debt conversation</h2>
+      <p>Technical debt discussions fail because they are conducted in adjectives. An item becomes fundable once it has a carry cost, a remediation cost, and a risk exposure, each stated in dollars per year. Rough is fine. Absent is the problem.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Number</th><th>What it is</th><th>How to estimate it in an hour</th></tr>
         <tr><td>Carry cost</td><td>What the debt costs every year it stays: slower delivery, extra operational toil, licensing for the thing you should have retired, the workaround everyone maintains</td><td>Engineering hours per month spent working around it, times a loaded hourly rate, times twelve, plus any hard costs (licenses, hosting, support contracts) that exist only because of it</td></tr>
-        <tr><td>Risk exposure</td><td>The expected annual cost of the incident, breach, or outage the debt makes more likely</td><td>Probability of a material event in a year, times the cost of that event (revenue, recovery, credits, regulatory). A 20 percent chance of a $500k event is $100k a year. Precision is not the point; the order of magnitude is</td></tr>
+        <tr><td>Risk exposure</td><td>The expected annual cost of the incident, breach, or outage the debt makes more likely</td><td>Probability of a material event in a year, times the cost of that event (revenue, recovery, credits, regulatory). A 20 percent chance of a $500k event is $100k a year. The order of magnitude is what matters, well ahead of precision</td></tr>
         <tr><td>Remediation cost</td><td>What it costs to make it go away, once</td><td>Engineering hours to fix, migrate, or retire, times the loaded rate, plus any one-time hard costs. Include the cost of the parallel run or cutover if there is one</td></tr>
-      </table>      <p>Carry cost plus risk exposure is the annual cost of doing nothing. Divided into remediation cost it gives the payback period. Items with a payback under a year are not debt decisions; they are operating decisions that have been avoided. Items with a payback over five years are usually not worth doing unless the risk exposure is dominated by a tail event that the organization has said it will not accept, which is what <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a> is for.</p>
+      </table>      <p>Carry cost plus risk exposure is the annual cost of doing nothing. Divided into remediation cost it gives the payback period. Items with a payback under a year are operating decisions that have been avoided rather than debt decisions. Items with a payback over five years are usually not worth doing unless the risk exposure is dominated by a tail event that the organization has said it will not accept, which is what <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a> is for.</p>
     </div></div>
   </div>
   <div class="stage-card" id="calculator">
@@ -154,8 +154,8 @@
       <p>Load the sample portfolio above. The ranking usually surprises people in the same way.</p>
     </div>
     <div class="stage-grid">
-      <div class="stage-cell a"><span class="env-label a">What the ranking shows</span><p>The item everyone talks about, the large monolith rewrite, ranks low: a large remediation cost against a carry cost that is real but diffuse. The item nobody talks about, an unsupported database version with a meaningful breach probability, ranks first because its risk exposure dominates and its remediation is cheap. A small integration workaround that costs one engineer a week a month ranks second. Two of the top four items cost less than $50k to fix.</p></div>
-      <div class="stage-cell"><span class="env-label b">What to do with it</span><p>Fund the top of the list this quarter without a further business case; the numbers are the case. Take the monolith to the <a href="../technology-capital-allocation/index.html">capital allocation</a> conversation as a transform investment, not a debt item, because that is what it is. Report the annual cost of doing nothing for the unfunded remainder to the board as a number, once a year, so nobody can later say the risk was hidden.</p></div>
+      <div class="stage-cell a"><span class="env-label a">What the ranking shows</span><p>The item everyone talks about, the large monolith rewrite, ranks last: a large remediation cost against a carry cost that is substantial but diffuse. The item nobody talks about, a nightly retry workaround that costs one engineer a week a month, ranks first because it is nearly free to fix. The unsupported database with a meaningful breach probability sits in the top four with a payback under three months, because its risk exposure dominates its carry cost. Three of the top four items cost less than $15k to fix.</p></div>
+      <div class="stage-cell"><span class="env-label b">What to do with it</span><p>Fund the top of the list this quarter without a further business case; the numbers are the case. Take the monolith to the <a href="../technology-capital-allocation/index.html">capital allocation</a> conversation as a transform investment rather than a debt item, because that is what it is. Report the annual cost of doing nothing for the unfunded remainder to the board as a number, once a year, so nobody can later say the risk was hidden.</p></div>
     </div>
   </div>
   <div class="stage-card">
@@ -200,7 +200,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Every sprint has a debt allocation. Engineers use it to refactor code they touch anyway. The unsupported database, which nobody enjoys working on, is untouched for three years. The allocation is visible in the roadmap, so leadership believes debt is being managed. The breach, when it comes, is on the database.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>The debt allocation funds the ranked list, top down, and nothing else. Local refactoring is part of normal delivery, not the debt budget. The list is reviewed quarterly, new items need the three numbers to get on it, and the annual cost of doing nothing for the unfunded tail is reported alongside the items funded. See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the delivery signals that tell you whether the carry cost estimates were right.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>The debt allocation funds the ranked list, top down, and nothing else. Local refactoring is part of normal delivery and stays out of the debt budget. The list is reviewed quarterly, new items need the three numbers to get on it, and the annual cost of doing nothing for the unfunded tail is reported alongside the items funded. See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the delivery signals that tell you whether the carry cost estimates were right.</p></div>
     </div>
   </div>
 </main>

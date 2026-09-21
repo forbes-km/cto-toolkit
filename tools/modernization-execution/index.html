@@ -63,7 +63,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Legacy Modernization Execution</h1>
-  <p>How a migration gets run once the decision to modernize has been made. Distinct from deciding what to modernize, that's the Application Portfolio Management question, this is about the execution mechanics that determine whether the migration succeeds or stalls.</p>
+  <p>How a migration gets run once the decision to modernize has been made. Deciding what to modernize is the Application Portfolio Management question; this page is about the execution mechanics that determine whether the migration succeeds or stalls.</p>
   <div class="caveat">This covers execution mechanics. See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for deciding what to modernize in the first place, and <a href="../technology-diligence-map/index.html">Technology Diligence</a> for assessing what's being inherited in an acquisition.</div>
 </header>
 
@@ -85,16 +85,16 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Cutover planning and rollback criteria</h3>
-      <p>Every cutover, whether a full system swap or a single capability moving to the new system, needs a defined rollback trigger decided before the cutover happens, not improvised during it.</p>
+      <p>Every cutover, whether a full system swap or a single capability moving to the new system, needs a defined rollback trigger decided before the cutover happens rather than improvised during it.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Specific, pre-agreed rollback criteria (error rate above X percent, latency above Y, a defined list of critical functions that must work correctly) checked immediately after cutover, with the rollback mechanism tested in advance, not assumed to work when it's needed under pressure.</p>
+        <p>Specific, pre-agreed rollback criteria (error rate above X percent, latency above Y, a defined list of critical functions that must work correctly) checked immediately after cutover, with the rollback mechanism tested in advance rather than assumed to work when it's needed under pressure.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>&quot;We'll roll back if it looks bad&quot; as the entire rollback plan, which under real pressure becomes a debate about whether it's bad enough yet, while customer impact accumulates during the debate.</p>
+        <p>&quot;We'll roll back if it looks bad&quot; as the entire rollback plan, which under pressure becomes a debate about whether it's bad enough yet, while customer impact accumulates during the debate.</p>
       </div>
     </div>
   </div>
@@ -108,7 +108,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Shadow traffic sent to both systems, with outputs compared automatically and discrepancies flagged, for long enough to build genuine confidence, weeks for a low-volume system, potentially longer for something with meaningful seasonal or cyclical variation in the data it processes.</p>
+        <p>Shadow traffic sent to both systems, with outputs compared automatically and discrepancies flagged, for long enough to build confidence: weeks for a low-volume system, potentially longer for something with meaningful seasonal or cyclical variation in the data it processes.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -126,7 +126,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Migrate data incrementally where possible, validated in batches with reconciliation checks against the source, rather than one large migration event. Keep the old system's data as the system of record until the new system has been validated against it, not the other way around.</p>
+        <p>Migrate data incrementally where possible, validated in batches with reconciliation checks against the source, rather than one large migration event. Keep the old system's data as the system of record until the new system has been validated against it.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -161,7 +161,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>Decommissioning needs to be a scheduled, owned step with its own completion criteria, not an assumed eventual outcome once migration is &quot;basically done.&quot; Without an explicit sunset date and owner, the old system keeps running for the small residual traffic nobody prioritized migrating, and the organization ends up maintaining two systems indefinitely instead of the one it planned for.</p>
+        <p>Decommissioning needs to be a scheduled, owned step with its own completion criteria rather than an assumed eventual outcome once migration is &quot;basically done.&quot; Without an explicit sunset date and owner, the old system keeps running for the small residual traffic nobody prioritized migrating, and the organization ends up maintaining two systems indefinitely instead of the one it planned for.</p>
       </div>
     </div>
   </div>
@@ -189,7 +189,7 @@
 
 <footer>
   Reference only. Migration risk and appropriate pace depend heavily on system criticality, data volume, and organizational capacity; adapt accordingly. See <a href="../integration-api-patterns/index.html" style="color:var(--accent);">Integration &amp; API Patterns</a> for the anti-corruption layer and the patterns a strangler migration depends on. The strangler fig pattern was named and described by Martin Fowler (2004). The execution guidance around it is this site's.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

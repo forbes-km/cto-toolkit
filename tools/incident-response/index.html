@@ -74,7 +74,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Incident Response</h1>
   <p>A blameless, repeatable incident process: detection through postmortem follow-through, with the specific failure modes that turn a manageable incident into a chaotic one.</p>
-  <div class="caveat">General incident response practice, not incident response for AI-specific failures. See the <a href="../ai-governance-map/index.html">AI Governance Map</a> for the AI-specific incident triage extension, which builds on this process rather than replacing it.</div>
+  <div class="caveat">General incident response practice. For AI-specific failures, see the <a href="../ai-governance-map/index.html">AI Governance Map</a> for the AI-specific incident triage extension, which builds on this process rather than replacing it.</div>
 </header>
 
 <main>
@@ -82,7 +82,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Severity classification</h3>
-      <p>Defined ahead of time, not decided in the moment of an actual incident when judgment is already under pressure.</p>
+      <p>Defined ahead of time rather than decided in the moment, when judgment is already under pressure.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -105,7 +105,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A single, unambiguous entry point for declaring an incident, one command or one button, not a debate about which Slack channel to post in while the outage continues. Whoever notices first declares; severity gets assigned or corrected within minutes, not negotiated at length before response starts.</p>
+        <p>A single, unambiguous entry point for declaring an incident: one command or one button, so nobody debates which Slack channel to post in while the outage continues. Whoever notices first declares; severity gets assigned or corrected within minutes rather than negotiated at length before response starts.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -122,7 +122,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>The incident commander's job is coordination and communication, not debugging. They track the timeline, decide when to escalate, and are the single point deciding when the incident is resolved. This role rotates and is trained in advance, not improvised by whoever happens to be senior and available.</p>
+        <p>The incident commander's job is coordination and communication; someone else does the debugging. They track the timeline, decide when to escalate, and are the single point deciding when the incident is resolved. This role rotates and is trained in advance rather than improvised by whoever happens to be senior and available.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -151,12 +151,12 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Resolution &amp; recovery</h3>
-      <p>Declaring an incident over is a decision, not a moment that happens automatically when the graphs look normal again.</p>
+      <p>Declaring an incident over is a decision. It does not happen automatically when the graphs look normal again.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Resolution requires the incident commander's explicit call, based on a defined bar (metrics back to baseline for a sustained period, not just a momentary dip back to normal), and a documented rollback or mitigation, not just &quot;it seems to have stopped.&quot;</p>
+        <p>Resolution requires the incident commander's explicit call, based on a defined bar (metrics back to baseline for a sustained period rather than a momentary dip back to normal), and a documented rollback or mitigation. &quot;It seems to have stopped&quot; is neither.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -173,7 +173,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A timeline of what happened, what was known at each decision point (not what's known now in hindsight), contributing factors framed as systemic rather than individual, and concrete action items with owners and due dates. &quot;Blameless&quot; means analyzing the system that allowed the error, not avoiding naming what happened.</p>
+        <p>A timeline of what happened, what was known at each decision point (not what's known now in hindsight), contributing factors framed as systemic rather than individual, and concrete action items with owners and due dates. &quot;Blameless&quot; means analyzing the system that allowed the error; it never means avoiding naming what happened.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -194,7 +194,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Action items live only in the postmortem document itself, never entered into the team's actual work tracking system, and six months later nobody remembers they existed when the same failure mode recurs.</p>
+        <p>Action items live only in the postmortem document itself, never entered into the team's work tracking system, and six months later nobody remembers they existed when the same failure mode recurs.</p>
       </div>
     </div>
   </div>
@@ -216,8 +216,8 @@
 </main>
 
 <footer>
-  Reference only. Adapt severity definitions and cadence to your organization's actual scale and customer commitments before treating this as a runbook. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for which notification clocks an incident starts.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. Adapt severity definitions and cadence to your organization's scale and customer commitments before treating this as a runbook. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for which notification clocks an incident starts.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

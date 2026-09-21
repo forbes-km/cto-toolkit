@@ -71,7 +71,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Data Strategy</h1>
   <p>Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, metadata and lineage, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.</p>
-  <div class="caveat">General data strategy patterns, not a specific technology recommendation. The right architecture and operating model depend on organizational structure and data maturity more than on which pattern is currently trending.</div>
+  <div class="caveat">General data strategy patterns rather than a specific technology recommendation. The right architecture and operating model depend on organizational structure and data maturity more than on which pattern is currently trending.</div>
 </header>
 
 <main>
@@ -79,7 +79,7 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Warehouse, lakehouse, or mesh</h3>
-      <p>The architectural choice most data strategy conversations start with, one of eleven topics on this page, not the whole strategy. Definitions first, then the tradeoff.</p>
+      <p>The architectural choice most data strategy conversations start with. It is one of eleven topics on this page, and far from the whole strategy. Definitions first, then the tradeoff.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -96,7 +96,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
-      <h3>Data as a product, not a project</h3>
+      <h3>Data as a product rather than a project</h3>
       <p>The mindset shift underneath data mesh, applicable even in organizations not adopting the full mesh architecture.</p>
     </div>
     <div class="stage-grid">
@@ -133,13 +133,13 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
-      <h3>Data literacy and self-service, not just engineering access</h3>
+      <h3>Data literacy and self-service for everyone beyond engineering</h3>
       <p>Most data strategies are written for the people building the pipelines. This is about everyone else.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What works</span>
-        <p>A defined, curated set of self-service tools and pre-modeled datasets a non-technical analyst can query directly with guardrails, paired with genuine training investment, not just a BI tool license handed out and called self-service.</p>
+        <p>A defined, curated set of self-service tools and pre-modeled datasets a non-technical analyst can query directly with guardrails, paired with training investment. A BI tool license handed out on its own is access, and access alone is not self-service.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -161,7 +161,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What works</span>
-        <p>A defined source-of-truth mapping at the field level, not the entity level: billing system is authoritative for payment status, CRM is authoritative for account ownership, product database is authoritative for usage data. Merge logic follows the mapping rather than picking one system to trust for everything.</p>
+        <p>A defined source-of-truth mapping at the field level rather than the entity level: billing system is authoritative for payment status, CRM is authoritative for account ownership, product database is authoritative for usage data. Merge logic follows the mapping rather than picking one system to trust for everything.</p>
       </div>
     </div>
   </div>
@@ -178,11 +178,11 @@
         <p>A catalog and lineage graph don't show up in a quarterly roadmap the way a new pipeline or dashboard does, and the pain of not having them is diffuse: a slow, five-hop manual trace when a report breaks, a schema change shipped without knowing which six downstream jobs depend on it, an analyst who can't tell if a dataset is still owned or safe to trust. None of that shows up as a single dramatic incident, so it stays permanently below the cutline.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">What it actually buys you</span>
-        <p>A catalog makes data discoverable and answers who owns it and whether it's still trustworthy. Lineage traces the path from source system to final dashboard or model, so a schema change or a broken pipeline can be traced to every downstream consumer in minutes instead of hours of tribal-knowledge archaeology. Both compound directly into the migration work further down this page, you can't safely run old and new in parallel if you don't know what depends on what, and into the AI grounding problem below, an agent that can't see schema, lineage, and ownership will guess.</p>
+        <span class="env-label b">What it buys you</span>
+        <p>A catalog makes data discoverable and answers who owns it and whether it's still trustworthy. Lineage traces the path from source system to final dashboard or model, so a schema change or a broken pipeline can be traced to every downstream consumer in minutes instead of hours of tribal-knowledge archaeology. Both compound directly into the migration work further down this page (you can't safely run old and new in parallel if you don't know what depends on what) and into the AI grounding problem below (an agent that can't see schema, lineage, and ownership will guess).</p>
       </div>
     </div>
-    <div class="same-note">Buy here almost without exception, this is the same mature, competitive market referenced in Build versus buy below. The strategic decision isn't build-versus-buy, it's making metadata active from day one (tagged, enforced, and surfaced where people already work) rather than a static wiki page that's stale within a quarter.</div>
+    <div class="same-note">Buy here almost without exception; this is the same mature, competitive market referenced in Build versus buy below. The strategic decision is how to make metadata active from day one (tagged, enforced, and surfaced where people already work) instead of a static wiki page that's stale within a quarter.</div>
   </div>
 
   <div class="stage-card">
@@ -198,7 +198,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">The practical implication</span>
-        <p>Data quality and ownership work is not a prerequisite project to finish before starting AI work, it's the same foundational investment either way; an organization with strong data product discipline has most of what AI governance's Layer 1 requires already in place.</p>
+        <p>Data quality and ownership work is the same foundational investment whether or not AI is on the roadmap, so it doesn't need to be framed as a prerequisite project to finish first. An organization with strong data product discipline has most of what AI governance's Layer 1 requires already in place.</p>
       </div>
     </div>
   </div>
@@ -230,11 +230,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Where buying usually wins</span>
-        <p>ETL and ELT tooling, data catalogs, and BI platforms are mature, competitive markets. Building these in-house rarely produces a genuine competitive advantage and usually just recreates a worse version of what's commercially available.</p>
+        <p>ETL and ELT tooling, data catalogs, and BI platforms are mature, competitive markets. Building these in-house rarely produces a competitive advantage and usually recreates a worse version of what's commercially available.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where building can be justified</span>
-        <p>A novel data product that is itself the company's competitive differentiation, not the infrastructure underneath it. The same differentiation test from Build vs Buy applies directly: would the company lose deals or margin without owning this specifically.</p>
+        <p>A novel data product that is itself the company's competitive differentiation. The infrastructure underneath it still gets bought. The same differentiation test from Build vs Buy applies directly: would the company lose deals or margin without owning this specifically.</p>
       </div>
     </div>
   </div>
@@ -248,7 +248,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What works</span>
-        <p>Run the new pattern alongside the old one for specific domains first, proving value on a bounded scope before cutting anything over globally. The same strangler-fig discipline covered on <a href="../modernization-execution/index.html">Legacy Modernization Execution</a> applies directly here: incremental migration, not a single rip-and-replace event.</p>
+        <p>Run the new pattern alongside the old one for specific domains first, proving value on a bounded scope before cutting anything over globally. The same strangler-fig discipline covered on <a href="../modernization-execution/index.html">Legacy Modernization Execution</a> applies directly here: incremental migration instead of a single rip-and-replace event.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What backfires</span>
@@ -265,8 +265,8 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">What a real contract specifies</span>
-        <p>The schema, a freshness commitment (how current the data is guaranteed to be), the meaning of each field in plain language, and a deprecation policy for breaking changes, published somewhere consumers can find and reference it, not buried in a single engineer's memory.</p>
+        <span class="env-label a">What a usable contract specifies</span>
+        <p>The schema, a freshness commitment (how current the data is guaranteed to be), the meaning of each field in plain language, and a deprecation policy for breaking changes, published somewhere consumers can find and reference it rather than carried in a single engineer's memory.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What passes for a contract but isn't</span>
@@ -283,7 +283,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>For some organizations, the data itself, aggregated, anonymized, or offered directly, is a real monetization opportunity distinct from its internal analytical use. This isn't relevant to every company, but it's worth asking deliberately rather than never considering it at all: does this organization sit on data that would be valuable to someone else, and if so, is productizing it worth the privacy, security, and packaging investment that would require. The honest answer for most companies is no, but it should be a considered no, not a question nobody asked.</p>
+        <p>For some organizations, the data itself, aggregated, anonymized, or offered directly, is a monetization opportunity distinct from its internal analytical use. This isn't relevant to every company, but it's worth asking deliberately: does this organization sit on data that would be valuable to someone else, and if so, is productizing it worth the privacy, security, and packaging investment that would require. The answer for most companies is no, but it should be a considered no rather than a question nobody asked.</p>
       </div>
     </div>
   </div>
@@ -313,8 +313,8 @@
 </main>
 
 <footer>
-  Reference only. Architectural pattern choice depends on organizational structure and data maturity; treat this as a starting framework, not a recommendation for your specific environment.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. Architectural pattern choice depends on organizational structure and data maturity; treat this as a starting framework rather than a recommendation for your specific environment.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

@@ -72,8 +72,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Security &amp; Compliance Maturity</h1>
-  <p>A maturity ladder across the six NIST Cybersecurity Framework 2.0 functions, Govern included, scored on evidence rather than stated policy, plus the common trap of mistaking a compliance certification for actual maturity.</p>
-  <div class="caveat">A self-assessment framework, not a substitute for an independent audit. Internal scoring is useful for prioritization; external validation is what an auditor, customer, or regulator will rely on.</div>
+  <p>A maturity ladder across the six NIST Cybersecurity Framework 2.0 functions, Govern included, scored on evidence rather than stated policy, plus the common trap of mistaking a compliance certification for maturity.</p>
+  <div class="caveat">A self-assessment framework. It does not replace an independent audit. Internal scoring is useful for prioritization; external validation is what an auditor, customer, or regulator will rely on.</div>
 </header>
 
 <main>
@@ -81,15 +81,15 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Maturity ladder, mapped to NIST CSF 2.0 functions</h3>
-      <p>Five levels across the six NIST Cybersecurity Framework 2.0 functions. Score each function separately; most organizations are unevenly mature across them, which is itself useful information. Govern provides the organizational context and direction for the other five, added in CSF 2.0 specifically because a technically mature program with no executive-level ownership or risk strategy is a real and common gap, not a hypothetical one.</p>
+      <p>Five levels across the six NIST Cybersecurity Framework 2.0 functions. Score each function separately; most organizations are unevenly mature across them, which is itself useful information. Govern provides the organizational context and direction for the other five, added in CSF 2.0 because a technically mature program with no executive-level ownership or risk strategy is a common gap.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Function</th><th>Level 1: Ad hoc</th><th>Level 3: Defined</th><th>Level 5: Optimized</th></tr>
-          <tr><td>Govern</td><td>No documented cybersecurity risk strategy at the leadership level; security reports up as a technical status update, not a business risk</td><td>Named executive accountability, a documented risk management strategy, and defined reporting cadence to leadership or the board</td><td>Cybersecurity risk is a standing item in enterprise risk management, with roles, policy, and supply chain risk expectations reviewed on a defined schedule, not only after an incident forces it</td></tr>
+          <tr><td>Govern</td><td>No documented cybersecurity risk strategy at the leadership level; security reports up as a technical status update rather than a business risk</td><td>Named executive accountability, a documented risk management strategy, and defined reporting cadence to leadership or the board</td><td>Cybersecurity risk is a standing item in enterprise risk management, with roles, policy, and supply chain risk expectations reviewed on a defined schedule rather than only after an incident forces it</td></tr>
           <tr><td>Identify</td><td>No current asset inventory; risk assessment happens reactively after an incident</td><td>Documented asset inventory, periodic risk assessments on a defined schedule</td><td>Continuous, automated asset discovery feeding a live risk register tied to business impact</td></tr>
-          <tr><td>Protect</td><td>Access controls inconsistent across systems; no formal least-privilege policy</td><td>Documented access control policy, applied through a defined onboarding and offboarding process</td><td>Least-privilege enforced automatically, access reviewed continuously, not just at audit time</td></tr>
+          <tr><td>Protect</td><td>Access controls inconsistent across systems; no formal least-privilege policy</td><td>Documented access control policy, applied through a defined onboarding and offboarding process</td><td>Least-privilege enforced automatically, access reviewed continuously rather than only at audit time</td></tr>
           <tr><td>Detect</td><td>Reliant on external reports or customer complaints to learn about a problem</td><td>Centralized logging and defined alerting rules for known threat patterns</td><td>Behavioral anomaly detection running alongside signature-based rules, catching a wider range of patterns than either alone, though no detection approach guarantees catching a novel attack</td></tr>
           <tr><td>Respond</td><td>No defined incident process; response improvised each time</td><td>Documented incident response plan with defined roles, tested annually at minimum</td><td>Response plan tested quarterly via tabletop or live drill, refined from each real incident's postmortem</td></tr>
           <tr><td>Recover</td><td>Backups exist but restoration has never been tested</td><td>Documented recovery procedures, restoration tested annually</td><td>Recovery time objectives defined per system criticality and verified against actual tested restoration times</td></tr>
@@ -100,17 +100,17 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">How to use this</span>
-      <h3>Scoring honestly, and what to do with the result</h3>
-      <p>The assessment only has value if the scoring is honest, which is harder than it sounds when the person scoring it is also accountable for the result.</p>
+      <h3>Scoring on evidence, and what to do with the result</h3>
+      <p>The assessment only has value if the scoring holds up, which is harder than it sounds when the person scoring it is also accountable for the result.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">How to score it</span>
-        <p>Score against evidence, not intention. &quot;We have a policy&quot; is not Level 3 if the policy isn't followed; it's evidence of intent, not practice. Ask for the artifact, the access review log, the tested restore record, the tabletop exercise notes, before accepting a self-reported level.</p>
+        <p>Score against evidence rather than intention. &quot;We have a policy&quot; is evidence of intent, and it does not reach Level 3 unless the policy is followed. Ask for the artifact, the access review log, the tested restore record, the tabletop exercise notes, before accepting a self-reported level.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What to do with a low score</span>
-        <p>A Level 1 or 2 in any function is not itself an emergency; it's a prioritization input. Rank functions by business impact if that function fails, not by how uncomfortable the low score is, and fund the highest-impact gap first rather than the easiest one to fix.</p>
+        <p>A Level 1 or 2 in any function is a prioritization input rather than an emergency in itself. Rank functions by business impact if that function fails, rather than by how uncomfortable the low score is, and fund the highest-impact gap first rather than the easiest one to fix.</p>
       </div>
     </div>
   </div>
@@ -123,11 +123,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What a certification confirms</span>
-        <p>SOC 2 or ISO 27001 provides assurance over a defined scope and a defined audit period: that the specific controls in that scope existed and operated as described during that window. That's a narrower, bounded claim than &quot;maturity&quot; as this page uses the term, this ladder describes an ongoing, evolving posture across an entire function, not a point-in-time assurance statement about a specific control set the organization itself proposed for audit.</p>
+        <p>SOC 2 or ISO 27001 provides assurance over a defined scope and a defined audit period: that the specific controls in that scope existed and operated as described during that window. That's a narrower, bounded claim than &quot;maturity&quot; as this page uses the term. This ladder describes an ongoing, evolving posture across an entire function, whereas a certification is a point-in-time assurance statement about a control set the organization itself proposed for audit.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it doesn't confirm</span>
-        <p>That the scope covered every system that matters, that the posture is sustained after the audit period ends rather than a snapshot assembled for it, or that a novel attack pattern outside the certified controls would be caught. Treat certification as evidence for one point on the ladder, not a substitute for scoring the rest of it.</p>
+        <p>That the scope covered every system that matters, that the posture is sustained after the audit period ends rather than a snapshot assembled for it, or that a novel attack pattern outside the certified controls would be caught. Treat certification as evidence for one point on the ladder; the rest of it still has to be scored.</p>
       </div>
     </div>
   </div>
@@ -190,7 +190,7 @@
         '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
         '<strong>Overall average: ' + avg.toFixed(1) + ' of 5.</strong><br>' +
         'Weakest function: <strong>' + weakest.dim + '</strong> at Level ' + weakest.val + '. ' +
-        'Rank funding by business impact if that function fails, not by the discomfort of the low score, and treat this as your first prioritization input for the framework the organization operates against.' +
+        'Rank funding by business impact if that function fails rather than by the discomfort of the low score, and treat this as your first prioritization input for the framework the organization operates against.' +
         '</div>';
     });
   </script>
@@ -208,7 +208,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where the crosswalk breaks down</span>
-        <p>A healthcare or payments-specific regulation has requirements that don't map cleanly onto any single CSF function, a specific breach notification timeline, a specific cardholder data handling rule. The crosswalk gets you most of the way, not all the way; the remaining gap has to be checked directly against the specific regulation's text.</p>
+        <p>A healthcare or payments-specific regulation has requirements that don't map cleanly onto any single CSF function, a specific breach notification timeline, a specific cardholder data handling rule. The crosswalk gets you most of the way; the remaining gap has to be checked directly against the specific regulation's text.</p>
       </div>
     </div>
   </div>
@@ -221,7 +221,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>This page scores a broad governance and lifecycle posture using a widely recognized standard, useful for board conversations, audit readiness, and mapping against specific regulatory obligations. <a href="../zero-trust-maturity/index.html">Zero-Trust Maturity</a> scores a specific architectural posture across six dimensions purpose-built around identity, segmentation, and blast radius, useful for engineering and security architecture decisions. The two should tell different stories about the same organization, not duplicate the same story in different language. A team scoring well on this page's Protect function can still score poorly on zero-trust segmentation, and that gap is exactly the kind of thing worth knowing rather than averaging away.</p>
+        <p>This page scores a broad governance and lifecycle posture using a widely recognized standard, useful for board conversations, audit readiness, and mapping against specific regulatory obligations. <a href="../zero-trust-maturity/index.html">Zero-Trust Maturity</a> scores a specific architectural posture across six dimensions purpose-built around identity, segmentation, and blast radius, useful for engineering and security architecture decisions. The two should tell different stories about the same organization rather than duplicate the same story in different language. A team scoring well on this page's Protect function can still score poorly on zero-trust segmentation, and that gap is exactly the kind of thing worth knowing rather than averaging away.</p>
       </div>
     </div>
   </div>
@@ -230,7 +230,7 @@
 
 <footer>
   Reference only. NIST CSF 2.0 function definitions summarized here; consult the current NIST framework documentation directly for the full, authoritative control catalog.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

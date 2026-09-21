@@ -73,7 +73,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Build vs Buy</h1>
   <p>The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often, and the maintenance cost that rarely makes it into the initial proposal.</p>
-  <div class="caveat">A decision framework the calculator below helps you apply, not a replacement for figuring out your own honest numbers. The scores you enter (real maintenance capacity, real vendor fit, real differentiation) are specific to your business and need honest internal debate, not a template answer.</div>
+  <div class="caveat">A decision framework the calculator below helps you apply. The scores you enter (maintenance capacity, vendor fit, differentiation) are specific to your business and deserve internal debate before they go into the calculator.</div>
 </header>
 
 <main>
@@ -81,15 +81,15 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>The criteria that decide it</h3>
-      <p>Most build-versus-buy debates get stuck arguing cost in isolation. Cost matters, but it's rarely the deciding factor once these are answered honestly.</p>
+      <p>Most build-versus-buy debates get stuck arguing cost in isolation. Cost matters, but it's rarely the deciding factor once these have been answered.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Question</th><th>Leans build</th><th>Leans buy</th></tr>
-          <tr><td>Is this a differentiator?</td><td>Yes, this is part of what customers pay for versus competitors</td><td>No, it's necessary but not something customers choose you for</td></tr>
-          <tr><td>Does a mature vendor solution exist?</td><td>No, or existing options are a poor fit for the actual requirement</td><td>Yes, and it's been production-hardened by many other customers already</td></tr>
-          <tr><td>Time to value</td><td>You have runway to spend months getting it right</td><td>You need it working in weeks, not quarters</td></tr>
+          <tr><td>Is this a differentiator?</td><td>Yes, this is part of what customers pay for versus competitors</td><td>No, it's necessary but customers don't choose you for it</td></tr>
+          <tr><td>Does a mature vendor solution exist?</td><td>No, or existing options are a poor fit for the requirement</td><td>Yes, and it's been production-hardened by many other customers already</td></tr>
+          <tr><td>Time to value</td><td>You have runway to spend months getting it right</td><td>You need it working in weeks rather than quarters</td></tr>
           <tr><td>Ongoing maintenance capacity</td><td>You have, or are willing to build, a team that will own this indefinitely</td><td>You don't want a permanent internal team dedicated to this domain</td></tr>
           <tr><td>Vendor lock-in risk if you buy</td><td>Switching cost would be unacceptably high later</td><td>Data portability and exit path are reasonable if the vendor relationship sours</td></tr>
         </table>
@@ -114,7 +114,7 @@
 
   <script>
     const bvbDims = [
-      { id: "diff", label: "Differentiation", hint: "1 = commodity, not a differentiator, 5 = core differentiator customers cite", def: 4 },
+      { id: "diff", label: "Differentiation", hint: "1 = commodity, 5 = core differentiator customers cite", def: 4 },
       { id: "vendor", label: "Vendor fit", hint: "1 = a mature, well-fitting vendor exists, 5 = no good option exists", def: 4 },
       { id: "time", label: "Time-to-value pressure", hint: "1 = need it in weeks, 5 = have runway for months", def: 3 },
       { id: "maint", label: "Maintenance capacity", hint: "1 = don't want a permanent team on this, 5 = have or will build one", def: 4 },
@@ -165,20 +165,20 @@
       let verdict = '';
 
       if (scores.diff <= 2) {
-        verdict += 'Differentiation scored low. Whatever the average says below, re-run the differentiation test from section 1 honestly before leaning build, a weak differentiation score dragged up by the other four criteria is exactly the pattern that produces a build decision made to justify a preference rather than a real one.<br><br>';
+        verdict += 'Differentiation scored low. Whatever the average says below, re-run the differentiation test from section 1 before leaning build. A weak differentiation score dragged up by the other four criteria is the pattern that produces a build decision made to justify a preference.<br><br>';
       }
 
       if (lean === 'PARTNER OR EXTEND') {
-        verdict += 'This score sits in the range where the middle option from section 3, buying the undifferentiated majority and building a thin, differentiated layer on top, is usually the actual right answer, not a compromise between the other two.';
+        verdict += 'This score sits in the range where the middle option from section 3, buying the undifferentiated majority and building a thin, differentiated layer on top, is usually the right answer in its own right rather than a compromise between the other two.';
       } else if (lean === 'BUILD') {
-        verdict += 'A build lean. Before committing, make sure a five-year total cost of ownership estimate exists, not just the initial build cost, section 2\u2019s rule of thumb: commonly two to four times the initial estimate once maintenance and opportunity cost are included honestly.';
+        verdict += 'A build lean. Before committing, make sure a five-year total cost of ownership estimate exists alongside the initial build cost. Section 2\u2019s rule of thumb: commonly two to four times the initial estimate once maintenance and opportunity cost are included.';
       } else {
         verdict += 'A buy lean. Check vendor concentration before signing, per section 5, this decision in isolation may look fine while quietly adding to a pattern of dependency on the same handful of vendors across other decisions.';
       }
 
       resultEl.innerHTML =
         '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Average: ' + avg.toFixed(1) + ' of 5 &mdash; ' + lean + '</strong><br><br>' +
+        '<strong>Average: ' + avg.toFixed(1) + ' of 5: ' + lean + '</strong><br><br>' +
         verdict +
         '</div>';
     });
@@ -187,17 +187,17 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
-      <h3>The differentiation test, asked honestly</h3>
+      <h3>The differentiation test</h3>
       <p>The single most misapplied criterion, usually stretched to justify a decision already made for other reasons.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Genuine differentiation</span>
+        <span class="env-label a">Differentiation</span>
         <p>A capability customers explicitly cite as why they chose you over an alternative, or one that materially changes your unit economics versus using a vendor. If you removed it, you'd lose deals or margin specifically because of its absence.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Not real differentiation</span>
-        <p>&quot;We want more control&quot; or &quot;the vendor's roadmap doesn't match ours exactly&quot; are real preferences, but they aren't differentiation, and building an entire internal system to solve a preference is usually a worse trade than living with 90 percent fit from a vendor.</p>
+        <span class="env-label b">Preference dressed as differentiation</span>
+        <p>&quot;We want more control&quot; or &quot;the vendor's roadmap doesn't match ours exactly&quot; are legitimate preferences. They aren't differentiation, and building an entire internal system to solve a preference is usually a worse trade than living with 90 percent fit from a vendor.</p>
       </div>
     </div>
   </div>
@@ -214,10 +214,10 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What gets missed</span>
-        <p>Security patching indefinitely, keeping pace with a changing regulatory or integration landscape, the bus-factor risk when the one engineer who deeply understands it leaves, and the opportunity cost of the team's attention being split across build-and-maintain instead of focused on the actual differentiator.</p>
+        <p>Security patching indefinitely, keeping pace with a changing regulatory or integration landscape, the bus-factor risk when the one engineer who deeply understands it leaves, and the opportunity cost of the team's attention being split across build-and-maintain instead of focused on the differentiator.</p>
       </div>
     </div>
-    <div class="same-note">A rough rule of thumb worth stress-testing against your own data: total five-year cost of ownership for a build is commonly two to four times the initial build estimate once maintenance, incident response, and opportunity cost are included honestly.</div>
+    <div class="same-note">A rough rule of thumb worth stress-testing against your own data: total five-year cost of ownership for a build is commonly two to four times the initial build estimate once maintenance, incident response, and opportunity cost are included.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
@@ -232,7 +232,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">When to reach for it</span>
-        <p>When the differentiation is narrow and specific (a particular workflow, a particular integration, a particular scoring model) rather than the whole domain. This is very often the actual right answer and gets dismissed early because the binary framing never surfaced it as an option.</p>
+        <p>When the differentiation is narrow and specific (a particular workflow, a particular integration, a particular scoring model) rather than the whole domain. This is very often the right answer and gets dismissed early because the binary framing never surfaced it as an option.</p>
       </div>
     </div>
   </div>
@@ -245,7 +245,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Buy first, build later if it proves out</span>
-        <p>Start with a vendor to get to market fast. If the capability proves out as differentiation worth owning, build a deliberate replacement once you understand the real requirements from having lived with the vendor's version, rather than guessing at them upfront.</p>
+        <p>Start with a vendor to get to market fast. If the capability proves out as differentiation worth owning, build a deliberate replacement once you understand the requirements from having lived with the vendor's version, rather than guessing at them upfront.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap of building first to keep optionality</span>
@@ -276,7 +276,7 @@
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the decision wasn't tested</h3>
-      <p>Patterns that show up when a build-versus-buy call was made to justify a preference rather than worked through honestly.</p>
+      <p>Patterns that show up when a build-versus-buy call was made to justify a preference rather than worked through.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -294,8 +294,8 @@
 </main>
 
 <footer>
-  Reference only. Apply the criteria against your own real cost and capability data, not the illustrative numbers on this page.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. Apply the criteria against your own cost and capability data rather than the illustrative numbers on this page.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

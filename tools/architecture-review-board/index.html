@@ -66,7 +66,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Architecture Review Board</h1>
-  <p>How to stand up a review board that examines evidence from real engineering work, not diagrams produced specifically for the meeting, and how to keep it running as a genuine forcing function for years after the founding energy fades.</p>
+  <p>How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.</p>
   <div class="caveat">See <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for the record a review should produce, <a href="../architecture-principles/index.html">Architecture Principles Library</a> for what a board is applying, and <a href="../technology-decision-rights/index.html">Technology Decision Rights</a> for where the board's authority ends and a named individual's begins.</div>
 </header>
 
@@ -98,12 +98,12 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">What a real review looks at</span>
-        <p>The actual running system, real traffic patterns, real incident history, a working prototype or spike, existing code. Evidence that was produced by doing the engineering work, not evidence produced to satisfy the meeting.</p>
+        <span class="env-label a">What a working review looks at</span>
+        <p>The running system, observed traffic patterns, incident history, a working prototype or spike, existing code. Evidence produced by doing the engineering work rather than evidence produced to satisfy the meeting.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The theater version</span>
-        <p>A polished architecture diagram produced in the days before the review, disconnected from the actual codebase, that nobody consults again once the meeting ends. The tell: check the diagram file's last-modified date six months later. If it's the review date, it was never a working artifact.</p>
+        <p>A polished architecture diagram produced in the days before the review, disconnected from the codebase, that nobody consults again once the meeting ends. The tell: check the diagram file's last-modified date six months later. If it's the review date, it was never a working artifact.</p>
       </div>
     </div>
   </div>
@@ -112,7 +112,7 @@
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>Setting it up: composition and authority</h3>
-      <p>Two decisions made once, at founding, that determine whether the board has real standing or just a name.</p>
+      <p>Two decisions made once, at founding, that determine whether the board has standing or only a name.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -121,7 +121,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Authority, stated explicitly</span>
-        <p>See <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>: the board should be Consulted, rarely Accountable. A named individual, the CTO or a delegate, is accountable for architecture standards and can be persuaded by a strong board recommendation, but the board's vote is input, not a decision no one can override.</p>
+        <p>See <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>: the board should be Consulted, rarely Accountable. A named individual, the CTO or a delegate, is accountable for architecture standards and can be persuaded by a strong board recommendation, but the board's vote is input to that person's decision and can be overridden.</p>
       </div>
     </div>
   </div>
@@ -135,11 +135,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>The proposing team walks through the actual tradeoffs they considered and rejected, the same alternatives-considered discipline covered on the ADR page, with real numbers behind claims (this handles X load, this costs Y) rather than assertions. The review produces a decision and its reasoning captured in an ADR, not a verbal thumbs-up that disappears when the meeting ends.</p>
+        <p>The proposing team walks through the tradeoffs they considered and rejected, the same alternatives-considered discipline covered on the ADR page, with numbers behind claims (this handles X load, this costs Y) rather than assertions. The review produces a decision and its reasoning captured in an ADR. A verbal thumbs-up disappears when the meeting ends.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>The review becomes a presentation the team already knows how to pass: confident language and a clean diagram calibrated to satisfy the audience rather than stress-test the reasoning. At that point the board is a rubber stamp with theater added, arguably worse than no review, since it spends real time producing a false signal of scrutiny.</p>
+        <p>The review becomes a presentation the team already knows how to pass: confident language and a clean diagram calibrated to satisfy the audience rather than stress-test the reasoning. At that point the board is a rubber stamp with theater added, arguably worse than no review, since it spends time producing a false signal of scrutiny.</p>
       </div>
     </div>
   </div>
@@ -165,7 +165,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
-      <h3>Empty slots: turn them into innovation salons, not canceled meetings</h3>
+      <h3>Empty slots: turn them into innovation salons instead of canceling</h3>
       <p>What to do with a scheduled review slot that has nothing queued for it, which happens regularly once a board is running well and teams aren't manufacturing proposals just to fill the docket.</p>
     </div>
     <div class="stage-grid">
@@ -175,7 +175,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Why this works better than canceling</span>
-        <p>It keeps the room's habit and rhythm intact, the same people, the same regular slot, the same expectation of showing up prepared to think carefully, without wasting the time when nothing formal needs review. It also creates a low-stakes on-ramp: an idea that gets genuine interest in a salon session is exactly the kind of thing ready to become a real pitch at the next <a href="../innovation-portfolio/index.html">innovation tournament</a>.</p>
+        <p>It keeps the room's habit and rhythm intact, the same people, the same regular slot, the same expectation of showing up prepared to think carefully, without wasting the time when nothing formal needs review. It also creates a low-stakes on-ramp: an idea that draws interest in a salon session is the kind of thing ready to become a formal pitch at the next <a href="../innovation-portfolio/index.html">innovation tournament</a>.</p>
       </div>
     </div>
     <div class="same-note">The board and the tournament are the same room used two different ways: one evaluates evidence against a decision that needs to be made, the other surfaces ideas that don't have evidence yet. Keeping both on the same cadence, in the same room, with the same people, is what makes the salon slot feel like a natural extension rather than a separate initiative competing for calendar space.</div>
@@ -185,12 +185,12 @@
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the board has become theater</h3>
-      <p>Patterns that show up when a review board exists on the calendar but isn't functioning as a real forcing function anymore.</p>
+      <p>Patterns that show up when a review board exists on the calendar but has stopped functioning as a forcing function.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li>Reviews consistently approve with no real pushback or requested changes</li>
+          <li>Reviews consistently approve with no pushback or requested changes</li>
           <li>No one can name a decision the board changed its mind about after seeing how it played out</li>
           <li>Board membership hasn't rotated in over a year</li>
           <li>Decisions aren't captured anywhere durable, no ADR, no written record, once the meeting ends</li>
@@ -203,8 +203,8 @@
 </main>
 
 <footer>
-  Reference only. Board size, cadence, and authority should reflect your organization's actual scale and decision-rights model, not a fixed template.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. Board size, cadence, and authority should reflect your organization's scale and decision-rights model rather than a fixed template.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

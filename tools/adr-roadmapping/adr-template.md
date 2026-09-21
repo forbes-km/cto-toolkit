@@ -11,7 +11,7 @@ What is the issue we're seeing that is motivating this decision? Describe the fo
 
 ## Decision
 
-What are we actually proposing or have agreed to do? State it in one or two sentences, active voice: "We will..."
+What are we proposing or have agreed to do? State it in one or two sentences, active voice: "We will..."
 
 ## Consequences
 

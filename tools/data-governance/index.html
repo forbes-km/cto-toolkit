@@ -72,7 +72,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Which regulation applies, and when</h3>
-      <p>A starting map, not a legal determination. Actual applicability depends on where customers are located, what data is collected, and industry-specific rules; confirm with counsel.</p>
+      <p>A starting map rather than a legal determination. Applicability depends on where customers are located, what data is collected, and industry-specific rules; confirm with counsel.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -96,11 +96,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A classification scheme with a small number of clear tiers, public, internal, confidential, restricted or regulated, applied at the point data is created or collected, not retrofitted later through an audit. Every system holding data above the lowest tier has a named owner accountable for it.</p>
+        <p>A classification scheme with a small number of clear tiers, public, internal, confidential, restricted or regulated, applied at the point data is created or collected rather than retrofitted later through an audit. Every system holding data above the lowest tier has a named owner accountable for it.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>A classification policy that exists on paper but was never applied to real systems, so nobody can answer a basic question like &quot;where does our customer PII live&quot; without a multi-week investigation.</p>
+        <p>A classification policy that exists on paper but was never applied to the systems in production, so nobody can answer a basic question like &quot;where does our customer PII live&quot; without a multi-week investigation.</p>
       </div>
     </div>
   </div>
@@ -114,7 +114,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A documented, at least partially automated process for locating and exporting or deleting an individual's data across every system that holds it, tested against a real request rather than assumed to work. A tracked SLA against the regulatory deadline, with an owner accountable for meeting it.</p>
+        <p>A documented, at least partially automated process for locating and exporting or deleting an individual's data across every system that holds it, tested against a live request rather than assumed to work. A tracked SLA against the regulatory deadline, with an owner accountable for meeting it.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -127,12 +127,12 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>A worked example: a request end to end</h3>
-      <p>What the practice above looks like against a real request, including where it commonly breaks.</p>
+      <p>What the practice above looks like against an incoming request, including where it commonly breaks.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p>A request arrives through a web form and gets logged against the SLA clock immediately. The response process checks it against the data inventory: CRM, product database, support ticketing, and email marketing tool are all on the list, get queried, and the results get compiled into a portable export within the regulatory window.</p>
-        <p><strong>Where it commonly breaks:</strong> the analytics warehouse isn't on the inventory, because nobody classified it as holding personal data even though it has user IDs joinable back to a real identity through the product database. The request gets marked complete while a meaningful chunk of what the organization holds on that person was never touched. This is exactly why the inventory in section 1 has to be built by mapping real data flows, not by asking each team what they think they hold.</p>
+        <p><strong>Where it commonly breaks:</strong> the analytics warehouse isn't on the inventory, because nobody classified it as holding personal data even though it has user IDs joinable back to an identity through the product database. The request gets marked complete while a meaningful chunk of what the organization holds on that person was never touched. This is why the inventory in section 1 has to be built by mapping data flows rather than by asking each team what they think they hold.</p>
       </div>
     </div>
   </div>
@@ -158,7 +158,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
-      <h3>Privacy by design, not privacy as review gate</h3>
+      <h3>Privacy by design rather than privacy as a review gate</h3>
       <p>Where privacy consideration enters the development process changes how much friction it creates and how much risk it catches.</p>
     </div>
     <div class="stage-grid">
@@ -176,17 +176,17 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">6</span>
-      <h3>Breach notification, the actual mechanics</h3>
+      <h3>Breach notification, the mechanics</h3>
       <p>The 72-hour clock most people have heard of, and the specific way organizations usually miss it despite meaning to comply.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What has to happen</span>
-        <p>The 72-hour window starts when the organization becomes aware of a breach, not when it's fully understood. A preliminary notification with known facts, followed by updates as the investigation progresses, is compliant. Waiting for a complete picture before notifying anything is not.</p>
+        <p>The 72-hour window starts when the organization becomes aware of a breach, well before it's fully understood. A preliminary notification with known facts, followed by updates as the investigation progresses, is compliant. Waiting for a complete picture before notifying anyone is a violation.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Treating the deadline as something to hit only once the full scope is understood, which routinely blows past 72 hours since a real investigation almost always takes longer than that, when a partial, honest, updated notification would have been compliant from day one.</p>
+        <p>Treating the deadline as something to hit only once the full scope is understood, which routinely blows past 72 hours since an investigation almost always takes longer than that, when a partial, updated notification would have been compliant from day one.</p>
       </div>
     </div>
   </div>
@@ -200,7 +200,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What's required</span>
-        <p>Standard Contractual Clauses or an equivalent mechanism for transferring EU personal data outside the EEA, documented per vendor, not assumed to be covered by a vendor's general terms of service.</p>
+        <p>Standard Contractual Clauses or an equivalent mechanism for transferring EU personal data outside the EEA, documented per vendor. A vendor's general terms of service do not cover it by default.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -213,7 +213,7 @@
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Governance red flags</h3>
-      <p>Patterns that show up when data governance exists as policy but not as practice.</p>
+      <p>Patterns that show up when data governance exists as policy and stops there.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -232,8 +232,8 @@
 </main>
 
 <footer>
-  Reference only, not legal advice. Applicable regulations depend on jurisdiction, industry, and the specific data involved; confirm obligations with qualified counsel. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for the full set of regimes, clocks, and owners.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only; this is not legal advice. Applicable regulations depend on jurisdiction, industry, and the specific data involved; confirm obligations with qualified counsel. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for the full set of regimes, clocks, and owners.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

@@ -73,8 +73,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Technology Strategy</h1>
-  <p>What a technology strategy is, as distinct from a roadmap or a tech stack decision, the three-horizon investment split, the test that ties an initiative to a real business outcome, and why tradeoffs, not initiatives, are what make a strategy usable.</p>
-  <div class="caveat">A framework for thinking through strategy formulation, not a substitute for the strategic analysis specific to your business, market, and competitive position.</div>
+  <p>What a technology strategy is, as distinct from a roadmap or a tech stack decision, the three-horizon investment split, the test that ties an initiative to a business outcome, and why a strategy is only usable once it states its tradeoffs.</p>
+  <div class="caveat">A framework for thinking through strategy formulation. The strategic analysis specific to your business, market, and competitive position still has to be done.</div>
 </header>
 
 <main>
@@ -82,7 +82,7 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>What a technology strategy is</h3>
-      <p>Not a roadmap, not a list of tools, and not a tech stack decision. A frequent source of confusion worth resolving before anything else.</p>
+      <p>A frequent source of confusion worth resolving before anything else, because a roadmap, a list of tools, and a tech stack decision each get mistaken for it.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -91,7 +91,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it gets confused with</span>
-        <p>A roadmap is the sequenced execution of a strategy, not the strategy itself. A tech stack decision is an implementation detail below the strategy. A wish list of every capability engineering would like to build, with nothing prioritized against anything else, isn't a strategy at all.</p>
+        <p>A roadmap is the sequenced execution of a strategy, one level below it. A tech stack decision is an implementation detail below the strategy. A wish list of every capability engineering would like to build, with nothing prioritized against anything else, fails the definition entirely.</p>
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@
           <tr><th>Horizon</th><th>Focus</th><th>Typical investment share</th></tr>
           <tr><td>Horizon 1</td><td>Optimize and defend the core: keep what's working reliable, fast, and cheap to run</td><td>Roughly 60 to 70 percent</td></tr>
           <tr><td>Horizon 2</td><td>Extend into adjacent, emerging opportunities with a clearer but not yet proven path to value</td><td>Roughly 20 to 30 percent</td></tr>
-          <tr><td>Horizon 3</td><td>Genuine bets: unproven, high-uncertainty, high-potential-payoff exploration</td><td>Roughly 5 to 10 percent</td></tr>
+          <tr><td>Horizon 3</td><td>Bets: unproven, high-uncertainty, high-potential-payoff exploration</td><td>Roughly 5 to 10 percent</td></tr>
         </table>
       </div>
     </div>
@@ -137,8 +137,8 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">A real strategy document</span>
-        <p>States explicit tradeoffs: we are prioritizing reliability over feature velocity this year, we are building this capability in-house rather than buying because it's a genuine differentiator, we are accepting this specific technical risk rather than remediating it now because the cost of remediation exceeds its near-term impact.</p>
+        <span class="env-label a">A strategy document that gets used</span>
+        <p>States explicit tradeoffs: we are prioritizing reliability over feature velocity this year, we are building this capability in-house rather than buying because it's a differentiator, we are accepting this specific technical risk rather than remediating it now because the cost of remediation exceeds its near-term impact.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">A document that gets ignored</span>
@@ -151,7 +151,7 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>A worked example</h3>
-      <p>A compressed real scenario showing the method end to end: strategic priority through horizon allocation through a stated tradeoff.</p>
+      <p>A compressed scenario showing the method end to end: strategic priority through horizon allocation through a stated tradeoff.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -160,8 +160,8 @@
         <table class="matrix-table">
           <tr><th>Horizon</th><th>What's in it this year</th><th>The &quot;so that&quot; test applied</th></tr>
           <tr><td>Horizon 1 (65%)</td><td>Infrastructure cost reduction, on-call load reduction, the two highest-defect legacy modules stabilized</td><td>&quot;We will invest in cost reduction, so that gross margin improves 4 points without a price increase, measured monthly&quot;</td></tr>
-          <tr><td>Horizon 2 (25%)</td><td>The two integrations sales has flagged, built on a shared integration platform rather than one-off connectors</td><td>&quot;We will invest in a shared integration layer, so that the next five integration requests ship in weeks not quarters, measured by integration lead time&quot;</td></tr>
-          <tr><td>Horizon 3 (10%)</td><td>A single exploratory bet: whether usage-based pricing is technically feasible on the current billing system</td><td>&quot;We will invest in a pricing model spike, so that the leadership team has a real answer before the next pricing conversation, measured by a working prototype, not a slide deck&quot;</td></tr>
+          <tr><td>Horizon 2 (25%)</td><td>The two integrations sales has flagged, built on a shared integration platform rather than one-off connectors</td><td>&quot;We will invest in a shared integration layer, so that the next five integration requests ship in weeks rather than quarters, measured by integration lead time&quot;</td></tr>
+          <tr><td>Horizon 3 (10%)</td><td>A single exploratory bet: whether usage-based pricing is technically feasible on the current billing system</td><td>&quot;We will invest in a pricing model spike, so that the leadership team has an answer before the next pricing conversation, measured by a working prototype rather than a slide deck&quot;</td></tr>
         </table>
         <p><strong>The stated tradeoff:</strong> no new customer-facing features outside the two flagged integrations ship this year. That line is what makes the document usable; it's the sentence a product manager points to when a stakeholder asks for a third integration in March.</p>
       </div>
@@ -181,7 +181,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">The engineering version</span>
-        <p>The same priorities, expanded with the technical approach, sequencing dependencies, and named owners. Engineers need to know how, not just why; a strategy document that stays at board-level abstraction throughout gives a team nothing to plan against.</p>
+        <p>The same priorities, expanded with the technical approach, sequencing dependencies, and named owners. Engineers need to know how as well as why; a strategy document that stays at board-level abstraction throughout gives a team nothing to plan against.</p>
       </div>
     </div>
     <div class="same-note">Maintain one underlying document and generate both views from it, the same discipline as the roadmap split, rather than maintaining two documents that drift out of sync within a quarter.</div>
@@ -196,11 +196,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Revisit formally on the annual cadence described in <a href="../cto-operating-system/index.html">The CTO Operating System</a>, and out of cycle the moment a stated assumption breaks: a competitor ships the thing Horizon 3 was betting against, a key hire who owned a priority leaves, the market shifts underneath the plan. A strategy that hasn't been checked against reality in six months is being followed on faith, not evidence.</p>
+        <p>Revisit formally on the annual cadence described in <a href="../cto-operating-system/index.html">The CTO Operating System</a>, and out of cycle the moment a stated assumption breaks: a competitor ships the thing Horizon 3 was betting against, a key hire who owned a priority leaves, the market shifts underneath the plan. A strategy that hasn't been checked against reality in six months is being followed on faith.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Last year's strategy document quietly stays the reference point because writing a new one feels like admitting the old one failed. It didn't fail; circumstances changed, which is what strategies are supposed to respond to. An unrevised strategy is a bigger tell than a revised one.</p>
+        <p>Last year's strategy document quietly stays the reference point because writing a new one feels like admitting the old one failed. Circumstances changed, which is what strategies are supposed to respond to, and revising it is the strategy working. An unrevised strategy is a bigger tell than a revised one.</p>
       </div>
     </div>
   </div>
@@ -223,7 +223,7 @@
 
 <footer>
   Reference only. Investment share percentages are illustrative starting points; the right split depends heavily on company stage, market position, and competitive pressure.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

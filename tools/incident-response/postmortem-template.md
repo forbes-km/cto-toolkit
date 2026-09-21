@@ -7,7 +7,7 @@
 **Author(s):**
 **Duration:** [start] to [end], total customer-facing impact time
 
-*This document is blameless. The goal is understanding what happened and how to prevent recurrence, not assigning fault to an individual.*
+*This document is blameless. The goal is understanding what happened and how to prevent recurrence. It does not assign fault to an individual.*
 
 ## Summary
 

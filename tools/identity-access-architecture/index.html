@@ -92,7 +92,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h2>Identity is the control plane, not a service</h2>
+      <h2>Identity is the control plane</h2>
       <p>Every other security control assumes the request came from who it says it did. If that assumption is weak, segmentation, detection, and encryption are all decorating an open door.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
@@ -170,7 +170,7 @@
 <line x1="761.5" y1="224" x2="761.5" y2="250" stroke="var(--ink-soft)" stroke-width="1.3" marker-end="url(#idn-arrow)" stroke-dasharray="4 3"/>
 <rect x="30" y="252" width="197" height="56" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
 <text x="128.5" y="276.4" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Device and session trust</text>
-<text x="128.5" y="291.4" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">the device, not only the user</text>
+<text x="128.5" y="291.4" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">the device as well as the user</text>
 <rect x="241" y="252" width="197" height="56" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
 <text x="339.5" y="276.4" text-anchor="middle" font-size="11" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Just-in-time elevation</text>
 <text x="339.5" y="291.4" text-anchor="middle" font-size="10" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">time-bound, approved, logged</text>
@@ -185,7 +185,7 @@
 <text x="46" y="376" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Every account holding a privileged role: permanent or eligible, last used, phishing-resistant MFA registered.</text>
 <text x="46" y="392" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Then every service principal with owner-level rights and a non-expiring secret.</text>
 <text x="46" y="414" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">More than a handful of permanent admins, any shared or departed, any without strong MFA, any tenant-wide service principal with a</text>
-<text x="46" y="430" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">non-expiring secret: the identity layer has been administered, not architected. That reading shapes the first quarter.</text>
+<text x="46" y="430" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">non-expiring secret: the identity layer has been administered rather than architected. That reading shapes the first quarter.</text>
 </svg>
       <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Dashed arrows lead from each population to the supporting service it depends on most. Authentication policy sits in the middle of the layer chain but applies to every population; the horizontal line makes that explicit. The privileged population is the smallest and the one where the week-one export tells you the most.</p>
     </div></div>
@@ -195,7 +195,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference architecture</span>
       <h2>The layers a mature identity estate has</h2>
-      <p>Provider names differ; the structure does not. The table maps each layer to what it looks like on the major platforms so an architecture review can ask whether each layer exists, not which product it uses.</p>
+      <p>Provider names differ; the structure does not. The table maps each layer to what it looks like on the major platforms so an architecture review can ask whether each layer exists rather than which product it uses.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
@@ -219,7 +219,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">Where it fails</span><p>Access is granted by ticket, on request, by whoever is asked. Nobody removes access when someone changes role, so tenure equals entitlement. Offboarding disables the directory account but not the twelve SaaS apps with local accounts, the shared service credential the person knew, or the API key they created. The access review is an annual spreadsheet that every manager approves in full because rejecting anything means explaining it.</p></div>
-      <div class="stage-cell"><span class="env-label b">What good looks like</span><p>Birthright access is defined per role and granted automatically from the HR event. Anything beyond birthright is requested through an access package with a named approver and an expiry. A mover event triggers removal of the old role's entitlements, not just addition of the new. A leaver event is a single action that cascades to every federated app within minutes, and there is a report of what could not be cascaded, which is the list of local accounts still to be eliminated. Access reviews are quarterly, scoped to privileged and sensitive entitlements, and the default on no response is removal.</p></div>
+      <div class="stage-cell"><span class="env-label b">What good looks like</span><p>Birthright access is defined per role and granted automatically from the HR event. Anything beyond birthright is requested through an access package with a named approver and an expiry. A mover event triggers removal of the old role's entitlements as well as addition of the new. A leaver event is a single action that cascades to every federated app within minutes, and there is a report of what could not be cascaded, which is the list of local accounts still to be eliminated. Access reviews are quarterly, scoped to privileged and sensitive entitlements, and the default on no response is removal.</p></div>
     </div>
   </div>
   <div class="stage-card">

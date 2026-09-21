@@ -304,7 +304,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Cloud Service Mapper</h1>
-  <p>A working reference for translating capabilities and services across AWS, Azure, GCP, and OCI, plus a side-by-side landing zone and foundational best-practices guide. Naming and feature parity shift as providers evolve their catalogs; treat this as a starting point for a conversation, not a guarantee of equivalence.</p>
+  <p>A working reference for translating capabilities and services across AWS, Azure, GCP, and OCI, plus a side-by-side landing zone and foundational best-practices guide. Naming and feature parity shift as providers evolve their catalogs; treat this as a starting point for a conversation rather than a guarantee of equivalence.</p>
   <div class="tabs">
     <button class="tab active" data-view="mapper">Service mapper</button>
     <button class="tab" data-view="landing-zone">Landing zone &amp; best practices</button>
@@ -332,7 +332,7 @@
 
 <footer>
   Reference only. Provider service catalogs and landing zone tooling change frequently; verify current naming, tiering, and feature parity directly against provider documentation before relying on this for a design or migration decision.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 <script>
@@ -363,7 +363,7 @@ const data = [
   { category: "Database", capability: "Managed relational (general)", sub: "Managed MySQL / PostgreSQL / SQL Server", aws: "RDS", azure: "Azure SQL / Flexible Server", gcp: "Cloud SQL", oci: "Base Database Service" },
   { category: "Database", capability: "Distributed relational", sub: "Globally distributed, horizontally scalable SQL", aws: "Aurora", azure: "Cosmos DB for PostgreSQL (Citus)", gcp: "Spanner", oci: "Autonomous Database" },
   { category: "Database", capability: "Managed NoSQL / document", sub: "Schema-flexible document store", aws: "DynamoDB", azure: "Cosmos DB", gcp: "Firestore", oci: "NoSQL Database" },
-  { category: "Database", capability: "In-memory cache", sub: "Managed Redis / Memcached", aws: "ElastiCache", azure: "Azure Cache for Redis", gcp: "Memorystore", oci: "Cache with Redis" },
+  { category: "Database", capability: "In-memory cache", sub: "Managed Redis / Memcached", aws: "ElastiCache", azure: "Azure Managed Redis / Azure Cache for Redis", gcp: "Memorystore", oci: "OCI Cache (Redis and Valkey compatible)" },
   { category: "Database", capability: "Data warehouse", sub: "Managed analytical / columnar warehouse", aws: "Redshift", azure: "Synapse Analytics", gcp: "BigQuery", oci: "Autonomous Data Warehouse" },
   { category: "Database", capability: "Graph database", sub: "Managed graph query engine", aws: "Neptune", azure: "Cosmos DB (Gremlin API)", gcp: "Spanner Graph", oci: "Graph Studio (on Autonomous DB)" },
   { category: "Database", capability: "Time-series database", sub: "Optimized for time-stamped metric data", aws: "Timestream", azure: "Data Explorer (Kusto)", gcp: "Bigtable (common time-series pattern)", oci: "No dedicated native service" },
@@ -372,8 +372,8 @@ const data = [
   // Networking
   { category: "Networking", capability: "Virtual network", sub: "Isolated software-defined network", aws: "VPC", azure: "Virtual Network", gcp: "VPC", oci: "VCN" },
   { category: "Networking", capability: "Load balancing", sub: "L4/L7 traffic distribution", aws: "ELB / ALB", azure: "Load Balancer / App Gateway", gcp: "Cloud Load Balancing", oci: "Load Balancer" },
-  { category: "Networking", capability: "CDN", sub: "Edge content delivery", aws: "CloudFront", azure: "Azure CDN / Front Door", gcp: "Cloud CDN", oci: "OCI CDN" },
-  { category: "Networking", capability: "Edge compute functions", sub: "Code execution at CDN edge locations", aws: "CloudFront Functions / Lambda@Edge", azure: "Front Door + Functions", gcp: "Cloud Run at the edge (limited)", oci: "No dedicated edge-compute product" },
+  { category: "Networking", capability: "CDN", sub: "Edge content delivery", aws: "CloudFront", azure: "Front Door (Azure CDN classic tiers retiring)", gcp: "Cloud CDN", oci: "OCI CDN" },
+  { category: "Networking", capability: "Edge compute functions", sub: "Code execution at CDN edge locations", aws: "CloudFront Functions / Lambda@Edge", azure: "Front Door + Functions", gcp: "Service Extensions (Wasm plugins on Cloud Load Balancing / Media CDN)", oci: "No dedicated edge-compute product" },
   { category: "Networking", capability: "DNS", sub: "Managed authoritative DNS", aws: "Route 53", azure: "Azure DNS", gcp: "Cloud DNS", oci: "DNS" },
   { category: "Networking", capability: "NAT gateway", sub: "Outbound-only internet access for private subnets", aws: "NAT Gateway", azure: "NAT Gateway", gcp: "Cloud NAT", oci: "NAT Gateway" },
   { category: "Networking", capability: "Private connectivity", sub: "Dedicated network link to on-prem", aws: "Direct Connect", azure: "ExpressRoute", gcp: "Cloud Interconnect", oci: "FastConnect" },
@@ -389,9 +389,9 @@ const data = [
   { category: "Messaging & Integration", capability: "Event streaming (Kafka-compatible)", sub: "High-throughput distributed log", aws: "MSK", azure: "Event Hubs", gcp: "Managed Service for Apache Kafka", oci: "Streaming" },
   { category: "Messaging & Integration", capability: "Workflow orchestration", sub: "Durable state machines / orchestration", aws: "Step Functions", azure: "Durable Functions / Logic Apps", gcp: "Workflows", oci: "OCI Functions + Workflows" },
   { category: "Messaging & Integration", capability: "iPaaS / enterprise integration", sub: "Low-code app and data integration", aws: "AppFlow / EventBridge Pipes", azure: "Logic Apps", gcp: "Application Integration", oci: "Integration (OIC)" },
-  { category: "Messaging & Integration", capability: "Managed Apache Airflow", sub: "Orchestrating multi-step data pipelines as DAGs", aws: "MWAA (Managed Workflows for Apache Airflow)", azure: "Data Factory (Managed Airflow)", gcp: "Cloud Composer", oci: "No native managed Airflow" },
+  { category: "Messaging & Integration", capability: "Managed Apache Airflow", sub: "Orchestrating multi-step data pipelines as DAGs", aws: "MWAA (Managed Workflows for Apache Airflow)", azure: "Data Factory Workflow Orchestration Manager / Apache Airflow job in Fabric", gcp: "Cloud Composer", oci: "No native managed Airflow" },
   { category: "Messaging & Integration", capability: "Transactional email", sub: "Programmatic outbound email delivery", aws: "SES", azure: "Communication Services (Email)", gcp: "No native service; partner (e.g. SendGrid)", oci: "Email Delivery" },
-  { category: "Messaging & Integration", capability: "Push notifications", sub: "Mobile and web push delivery", aws: "SNS Mobile Push / Pinpoint", azure: "Notification Hubs", gcp: "Firebase Cloud Messaging", oci: "Notifications" },
+  { category: "Messaging & Integration", capability: "Push notifications", sub: "Mobile and web push delivery", aws: "SNS Mobile Push / End User Messaging (Pinpoint retiring 2026)", azure: "Notification Hubs", gcp: "Firebase Cloud Messaging", oci: "Notifications" },
 
   // Identity & Security
   { category: "Identity & Security", capability: "Identity and access management", sub: "Roles, policies, permission boundaries", aws: "IAM", azure: "Entra ID (Azure AD)", gcp: "Cloud IAM", oci: "IAM" },
@@ -427,10 +427,10 @@ const data = [
 
   // AI / ML
   { category: "AI & ML", capability: "Managed ML platform", sub: "End-to-end model build, train, deploy", aws: "SageMaker", azure: "Azure Machine Learning", gcp: "Vertex AI", oci: "Data Science" },
-  { category: "AI & ML", capability: "Foundation model / generative AI access", sub: "Hosted LLM and generative model access", aws: "Bedrock", azure: "Azure OpenAI Service", gcp: "Vertex AI (Model Garden)", oci: "Generative AI" },
-  { category: "AI & ML", capability: "Document intelligence / OCR", sub: "Structured extraction from documents", aws: "Textract", azure: "Document Intelligence", gcp: "Document AI", oci: "Document Understanding" },
-  { category: "AI & ML", capability: "Vision AI", sub: "Image classification, detection, moderation", aws: "Rekognition", azure: "Computer Vision", gcp: "Vision AI", oci: "Vision" },
-  { category: "AI & ML", capability: "Speech-to-text / text-to-speech", sub: "Speech recognition and synthesis", aws: "Transcribe / Polly", azure: "Speech Service", gcp: "Speech-to-Text / Text-to-Speech", oci: "Speech" },
+  { category: "AI & ML", capability: "Foundation model / generative AI access", sub: "Hosted LLM and generative model access", aws: "Bedrock", azure: "Azure AI Foundry (Azure OpenAI models)", gcp: "Vertex AI (Model Garden)", oci: "Generative AI" },
+  { category: "AI & ML", capability: "Document intelligence / OCR", sub: "Structured extraction from documents", aws: "Textract", azure: "Azure AI Document Intelligence", gcp: "Document AI", oci: "Document Understanding" },
+  { category: "AI & ML", capability: "Vision AI", sub: "Image classification, detection, moderation", aws: "Rekognition", azure: "Azure AI Vision", gcp: "Vision AI", oci: "Vision" },
+  { category: "AI & ML", capability: "Speech-to-text / text-to-speech", sub: "Speech recognition and synthesis", aws: "Transcribe / Polly", azure: "Azure AI Speech", gcp: "Speech-to-Text / Text-to-Speech", oci: "Speech" },
 
   // Governance & Cost
   { category: "Governance & Cost", capability: "Policy enforcement / guardrails", sub: "Preventive and detective policy controls", aws: "Organizations SCPs / Config Rules", azure: "Azure Policy", gcp: "Organization Policy Service", oci: "Policies (IAM) + Tagging" },
@@ -474,7 +474,7 @@ const lzData = [
   },
   {
     title: "Security guardrails",
-    sub: "Preventive and detective controls enforced org-wide, not per team",
+    sub: "Preventive and detective controls enforced org-wide rather than per team",
     aws: "Service control policies at the organizational-unit level for preventive guardrails, paired with Config Rules and Security Hub for detective controls.",
     azure: "Azure Policy assigned at the management group level, with initiative definitions covering the regulatory frameworks the organization must meet.",
     gcp: "Organization Policy constraints enforced at the folder or org level, paired with Security Command Center for detective coverage.",

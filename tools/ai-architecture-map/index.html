@@ -241,7 +241,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Architecture Map</h1>
-  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle, click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product names and service naming reflect 2026 offerings; verify current service names against primary sources before relying on any of this for a design decision, this space moves fast.</p>
+  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.</p>
   <div class="caveat">Not every stage differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere; where that's true, it's called out as a single statement rather than padded into five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
 </header>
 
@@ -251,7 +251,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Managed platform equivalents, all four clouds</h3>
-      <p>The same six capabilities the toggle below covers in full depth, summarized here across all four providers at a glance. This is a rosetta stone for translating a design conversation across clouds, not a substitute for the depth that follows.</p>
+      <p>The same six capabilities the toggle below covers in full depth, summarized here across all four providers at a glance. Use it as a rosetta stone for translating a design conversation across clouds. The depth is in the stages that follow.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -315,7 +315,7 @@
           </div>
         </div>
 
-        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Model family availability by provider changes fast and sometimes contradicts itself across sources within the same few months, confirm current model catalog and licensing directly with the provider rather than trusting a cached comparison, including this one.</p>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Model family availability by provider changes fast, and sources published a few months apart often disagree. Confirm the current model catalog and licensing directly with the provider rather than trusting a cached comparison, including this one.</p>
       </div>
     </div>
   </div>
@@ -365,7 +365,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <span class="env-label oss">Same across every environment</span>
-        <p>Chunking is orchestration-layer logic, not a cloud primitive, so this one doesn't change when you switch the toggle above. LangChain's <code>RecursiveCharacterTextSplitter</code>, embedding-similarity-based semantic chunking, or a managed index's built-in chunking step (Azure AI Search's integrated vectorization skillset is one example) all run identically regardless of which provider or self-hosted stack sits downstream. The choice of algorithm matters far more than the choice of cloud.</p>
+        <p>Chunking is orchestration-layer logic that runs in your own code, so this one doesn't change when you switch the toggle above. LangChain's <code>RecursiveCharacterTextSplitter</code>, embedding-similarity-based semantic chunking, or a managed index's built-in chunking step (Azure AI Search's integrated vectorization skillset is one example) all run identically regardless of which provider or self-hosted stack sits downstream. The choice of algorithm matters far more than the choice of cloud.</p>
       </div>
     </div>
   </div>
@@ -434,7 +434,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>No first-party managed reranker; Cohere Rerank is available as a Bedrock marketplace model, called as an explicit extra step, same pattern as self-hosting one.</p>
+      <p>Bedrock's Rerank API offers Amazon Rerank 1.0 and Cohere Rerank 3.5 as managed models, and Bedrock Knowledge Bases can apply reranking inside the retrieval call. Outside Knowledge Bases it's an explicit extra step in your retrieval code, the same pattern as self-hosting one.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -446,7 +446,7 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>Native Cohere Rerank models (Rerank 3.5, and Rerank 4 as of 2026) built into the Generative AI service itself, called directly via the RerankText API, available both on-demand and through dedicated clusters. Unlike AWS, this is first-party, not a marketplace add-on.</p>
+      <p>Cohere Rerank models built into the Generative AI service itself, called directly through the RerankText API, available both on-demand and through dedicated clusters. Check the service's current model list for which Rerank version is offered in your region.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -506,7 +506,7 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>Identical MCP server code across every environment; MCP is a transport protocol, not a cloud primitive. The real dependency is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so verify per model rather than assuming.</p>
+      <p>Identical MCP server code across every environment, since MCP is a protocol rather than a cloud service. The dependency that bites is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so verify per model rather than assuming.</p>
     </div>
     <div class="same-note">The protocol layer is the same everywhere. What changes across all five environments is only whether the serving stack in question has tool-calling support wired up for the specific model you chose.</div>
   </div>
@@ -537,14 +537,14 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>Postgres for the queue, Slack webhook for notification, Temporal (self-hostable) for durable orchestration. Functionally the same architecture as every column above, different concrete products.</p>
     </div>
-    <div class="same-note">This entire stage sits above the model, at the application layer. The tiering logic (reversibility/blast-radius, not confidence alone) and the queue-overload failure mode are identical across all five environments. See the deep HITL reference for the full design detail.</div>
+    <div class="same-note">This entire stage sits above the model, at the application layer. The tiering logic (route by reversibility and blast radius, with model confidence as a secondary input) and the queue-overload failure mode are identical across all five environments. The full HITL design detail sits outside this page.</div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Stage 9 &middot; cross-cutting</span>
       <h3>Security &amp; threat model</h3>
-      <p>Prompt injection, tool-call authorization, and the model supply chain. This isn't a stage the data passes through once, it applies to every stage above.</p>
+      <p>Prompt injection, tool-call authorization, and the model supply chain. Data doesn't pass through this once; it applies to every stage above.</p>
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
@@ -566,14 +566,14 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>No managed prompt-shield equivalent. Typically an open guard model (Llama Guard, or a policy layer like NeMo Guardrails) run as a pre and post filter in your own pipeline, tuned and maintained by you. Tool-call authorization is your own implementation at the MCP server layer, commonly OAuth2 or mTLS between the agent runtime and each tool server. Model and weight supply chain matters here specifically: verify checksums and provenance of downloaded weights against the publisher's signed release. Network isolation is your own VPC or on-prem segmentation around the GPU serving cluster.</p>
     </div>
-    <div class="same-note">RAG poisoning, malicious content planted in a source document that later gets retrieved and treated as trusted context, targets the retrieval layer, not the model host. Access control and validation on what gets indexed matters equally across every environment.</div>
+    <div class="same-note">RAG poisoning, malicious content planted in a source document that later gets retrieved and treated as trusted context, targets the retrieval layer rather than the model host. Access control and validation on what gets indexed matter equally across every environment.</div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Stage 10 &middot; cross-cutting</span>
       <h3>PHI &amp; PII data protection</h3>
-      <p>The technical control layer, not the compliance program. Policy, accountability, and audit ownership for regulated data live on the <a href="../ai-governance-map/index.html">AI Governance Map</a>; this is what enforces it in the pipeline.</p>
+      <p>The technical control layer. Policy, accountability, and audit ownership for regulated data live on the <a href="../ai-governance-map/index.html">AI Governance Map</a>; this is what enforces it in the pipeline.</p>
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
@@ -595,7 +595,7 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>De-identification via an open tool (Microsoft Presidio, or a PHI-tuned open NER model) run as the same kind of pipeline step, self-maintained. Disk and transport encryption are your own responsibility; nothing is on by default the way it is in a managed cloud service. No BAA applies since there's no third-party processor, but that shifts the entire compliance burden onto your own controls and audit evidence rather than removing the requirement.</p>
     </div>
-    <div class="same-note">Minimum necessary access and an immutable audit trail of who or what touched PHI are HIPAA requirements regardless of hosting. Hosting choice changes who implements the control, not whether it's required.</div>
+    <div class="same-note">Minimum necessary access and an immutable audit trail of who or what touched PHI are HIPAA requirements regardless of hosting. Hosting choice changes who implements the control. The requirement stays.</div>
   </div>
 
   <div class="stage-card">
@@ -624,7 +624,7 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>OpenTelemetry instrumentation exported to a self-hosted or managed backend (Grafana, Jaeger). Langfuse or Arize Phoenix for LLM-specific tracing and evaluation. Prometheus and Grafana for GPU utilization, queue depth, and serving-stack metrics; vLLM exposes Prometheus metrics natively.</p>
     </div>
-    <div class="same-note">Logs and traces are themselves a PHI exposure surface if you're not careful. A stack trace or a debug log that captures the full prompt will capture any PHI that was in it. Redaction policy for observability data needs to match redaction policy for the data itself, across every environment.</div>
+    <div class="same-note">Logs and traces are themselves a PHI exposure surface. A stack trace or a debug log that captures the full prompt will capture any PHI that was in it. Redaction policy for observability data needs to match redaction policy for the data itself, across every environment.</div>
   </div>
 
   <div class="stage-card">
@@ -635,11 +635,11 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>OpenSearch and most managed vector stores lack point-in-time index restore; re-indexing from the source document store is the real recovery path. Bedrock-hosted models inherit AWS's regional redundancy; multi-region endpoint deployment is a separate decision.</p>
+      <p>OpenSearch and most managed vector stores lack point-in-time index restore; re-indexing from the source document store is the recovery path. Bedrock-hosted models inherit AWS's regional redundancy; multi-region endpoint deployment is a separate decision.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>AI Search has no built-in point-in-time restore for the index itself; re-indexing from the source document store is the actual recovery path. Foundry-hosted models inherit Azure's regional redundancy; multi-region deployment is a separate decision.</p>
+      <p>AI Search has no built-in point-in-time restore for the index itself; re-indexing from the source document store is the recovery path. Foundry-hosted models inherit Azure's regional redundancy; multi-region deployment is a separate decision.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -647,7 +647,7 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>Oracle Database 23ai's native backup and point-in-time recovery covers vector data stored in-database, a genuine difference from the other three, since the vectors live inside the database rather than a separate index.</p>
+      <p>Oracle Database 23ai's native backup and point-in-time recovery covers vector data stored in-database. That is a real difference from the other three, because the vectors live inside the database rather than in a separate index.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -663,11 +663,11 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Provisioned Throughput reserves capacity ahead of time; on-demand avoids that but comes with TPM/RPM rate quotas requiring an increase request well ahead of launch. Cross-region inference routes traffic across regions to dodge regional capacity limits at no added charge, a genuine differentiator here.</p>
+      <p>Provisioned Throughput reserves capacity ahead of time; on-demand avoids that but comes with TPM/RPM rate quotas requiring an increase request well ahead of launch. Cross-region inference routes traffic across regions to dodge regional capacity limits at no added charge, which matters more than it sounds during a capacity crunch.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability, not budget, is often the actual constraint. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas needing an increase request well ahead of launch. Foundry deployments are provisioned capacity, not elastic by default.</p>
+      <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability is often a tighter constraint than budget. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas needing an increase request well ahead of launch. Foundry deployments are provisioned capacity and do not scale elastically by default.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -679,9 +679,9 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>GPU procurement lead time is the real constraint here. Buying or leasing H100/H200-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, not raw compute, is usually the actual ceiling on concurrent requests per node.</p>
+      <p>GPU procurement lead time is the constraint here. Buying or leasing H100/H200-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, rather than raw compute, is usually the ceiling on concurrent requests per node.</p>
     </div>
-    <div class="same-note">Capacity planning has to happen months before a launch across every environment. What changes is the actual bottleneck: quota approval on a managed cloud, GPU hardware availability if self-hosting.</div>
+    <div class="same-note">Capacity planning has to happen months before a launch across every environment. What changes is the bottleneck: quota approval on a managed cloud, GPU hardware availability if self-hosting.</div>
   </div>
 
   <div class="stage-card">
@@ -710,14 +710,14 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>No managed lineage catalog. Typically DVC (Data Version Control) or a plain metadata table alongside the vector store, recording source document hash, ingestion timestamp, and which embedding model version produced each chunk's vector. Same alias-swap pattern as every managed cloud above for the vector store itself, just self-implemented: build a new collection, swap the pointer, retain the old collection for rollback.</p>
     </div>
-    <div class="same-note">This is what ties disaster recovery and observability together. It's tempting to treat lineage as optional right up until an incident needs an answer to "which version produced this" and there isn't one.</div>
+    <div class="same-note">This ties disaster recovery and observability together. Lineage looks optional right up until an incident needs an answer to "which version produced this" and there isn't one.</div>
   </div>
 
 </main>
 
 <footer>
   Reference only. Vendor service names, open-weight model rankings, and serving-stack capabilities change quickly, so verify current details against primary sources before relying on this for a design decision.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

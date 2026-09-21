@@ -84,15 +84,15 @@
     <div class="stage-head">
       <span class="stage-num">In the full toolkit</span>
       <h3>Named artifacts this page previews</h3>
-      <p>Four specific templates, not just the general practice below.</p>
+      <p>Four specific templates, beyond the general practice described below.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
           <li><strong>Architecture Decision Record Template</strong>, a durable format for hard-to-reverse decisions plus the conventions that keep the practice alive rather than decorative</li>
-          <li><strong>Target-State Narrative Template</strong>, a prose-first structure for describing a future operating model to executive audiences, built on the idea that diagrams illustrate but shouldn't replace clear writing</li>
+          <li><strong>Target-State Narrative Template</strong>, a prose-first structure for describing a future operating model to executive audiences, built on the principle that diagrams illustrate clear writing and cannot replace it</li>
           <li><strong>Capability-Driven Roadmap Method</strong>, building multi-year roadmaps rooted in capability gaps rather than technology initiatives, with traceability from strategy to initiative</li>
-          <li><strong>Business Case Template and Narrative</strong>, a financial model paired with the narrative structure that makes it defensible to executives and finance reviewers, including an honest options analysis and named benefit owners</li>
+          <li><strong>Business Case Template and Narrative</strong>, a financial model paired with the narrative structure that makes it defensible to executives and finance reviewers, including a candid options analysis and named benefit owners</li>
         </ul>
       </div>
     </div>
@@ -107,10 +107,10 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Section</th><th>What it should contain</th></tr>
-          <tr><td>Context</td><td>The situation and constraints as understood at decision time, not with the benefit of hindsight. This is the section that goes stale fastest and matters most.</td></tr>
-          <tr><td>Decision</td><td>What was decided, stated as a single clear sentence, not buried in a paragraph of qualifications.</td></tr>
+          <tr><td>Context</td><td>The situation and constraints as understood at decision time, written before hindsight sets in. This section goes stale fastest and matters most.</td></tr>
+          <tr><td>Decision</td><td>What was decided, stated in a single clear sentence rather than buried in a paragraph of qualifications.</td></tr>
           <tr><td>Alternatives considered</td><td>What else was on the table and why it was rejected. Absence of this section is the most common ADR failure; it's what lets someone later ask &quot;why didn't we just do X&quot; and get a real answer instead of a re-litigation.</td></tr>
-          <tr><td>Consequences</td><td>What this decision makes harder later, stated honestly. Every real architecture decision has a cost; an ADR that lists only benefits wasn't written honestly.</td></tr>
+          <tr><td>Consequences</td><td>What this decision makes harder later. Every architecture decision has a cost; an ADR that lists only benefits is incomplete.</td></tr>
         </table>
       </div>
     </div>
@@ -124,7 +124,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Write one</span>
-        <p>When the decision is expensive to reverse, when it affects more than one team, or when you can already predict someone will ask &quot;why did we do it this way&quot; in six months. What counts as expensive to reverse scales with the team, a change that's a quick fix for a three-person startup might be a multi-quarter migration for a five-hundred-engineer org, so weigh it against your own team's actual capacity, not a fixed unit of time.</p>
+        <p>When the decision is expensive to reverse, when it affects more than one team, or when you can already predict someone will ask &quot;why did we do it this way&quot; in six months. What counts as expensive to reverse scales with the team, a change that's a quick fix for a three-person startup might be a multi-quarter migration for a five-hundred-engineer org, so weigh it against your own team's capacity rather than a fixed unit of time.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Skip it</span>
@@ -136,7 +136,7 @@
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>Roadmaps for two different audiences</h3>
-      <p>The single most common roadmap mistake: one document trying to serve both an engineering audience and a business audience, serving neither well.</p>
+      <p>The most common roadmap mistake is one document trying to serve both an engineering audience and a business audience, and serving neither well.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -177,11 +177,11 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li><strong>Numbers are never reused</strong>, even for deprecated or superseded ADRs. The number is an identifier, not a priority.</li>
+          <li><strong>Numbers are never reused</strong>, even for deprecated or superseded ADRs. The number identifies the record; it says nothing about priority.</li>
           <li><strong>Once accepted, the decision is immutable.</strong> Circumstances change, a new ADR supersedes it. Editing the original to reflect current understanding destroys the record.</li>
           <li><strong>One decision per ADR.</strong> A compound ADR is a sign the team is avoiding the harder work of separating decisions.</li>
           <li><strong>One to two pages.</strong> Longer usually means design work leaking in that belongs elsewhere; shorter usually means the alternatives section is missing.</li>
-          <li><strong>Author by role, not just name.</strong> &quot;Lead Architect, Payments&quot; carries context that survives staff changes.</li>
+          <li><strong>Author by role as well as name.</strong> &quot;Lead Architect, Payments&quot; carries context that survives staff changes.</li>
         </ul>
       </div>
     </div>
@@ -205,7 +205,7 @@
         </table>
       </div>
     </div>
-    <div class="same-note">What the example demonstrates: three initiatives, all traceable to one strategic priority, sequenced by genuine dependency rather than organizational convenience, each owned by a named business sponsor. The technology choices support the story; they don't constitute it.</div>
+    <div class="same-note">What the example demonstrates: three initiatives, all traceable to one strategic priority, sequenced by real dependency rather than organizational convenience, each owned by a named business sponsor. The technology choices support the story; they don't constitute it.</div>
   </div>
 
   <div class="stage-card">
@@ -225,8 +225,8 @@
 </main>
 
 <footer>
-  Reference only. Adapt template depth and roadmap cadence to your organization's actual planning rhythm and decision-making culture.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. Adapt template depth and roadmap cadence to your organization's planning rhythm and decision-making culture.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

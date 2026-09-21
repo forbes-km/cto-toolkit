@@ -124,15 +124,15 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Questions to ask</span>
-      <h2>Questions to ask before the postmortem, not during it</h2>
+      <h2>Questions to ask before the postmortem</h2>
       <p>Answers the CTO should have before sitting in the room. The postmortem is for the team to learn; these are for the CTO to understand what kind of organization had this incident.</p>
     </div>
     <div class="stage-cell">
       <ul class="checklist">
         <li>How long between the failure beginning and someone knowing, and was that someone a customer</li>
-        <li>How many people could have run this response, and how many actually did</li>
+        <li>How many people could have run this response, and how many did</li>
         <li>Was any part of the recovery dependent on a single person's knowledge, credentials, or access</li>
-        <li>Did the runbook exist, was it current, and was it actually used</li>
+        <li>Did the runbook exist, was it current, and was it used</li>
         <li>Did any monitoring fire before the impact, and if so, why was it not acted on</li>
         <li>Which contributing conditions were known and previously deprioritized, and where is that decision recorded</li>
         <li>What did the response cost in engineering time, cloud spend, credits, and customer concessions, in dollars</li>
@@ -150,7 +150,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The database failover that did not work gets tested and fixed. The fact that no failover in the estate has been tested in two years is not raised, because the postmortem's scope was the incident. Six months later a different failover fails, and this time the board asks why the first one did not prompt the question.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>One question in every postmortem, asked by the CTO personally: where else in the estate does this same condition exist. The answer becomes a separate item with its own owner, funded from the reserve in <a href="../technology-capital-allocation/index.html">Capital Allocation</a>, and reported to the board as the real remediation. The specific fix is table stakes; the class-level answer is the leadership output.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>One question in every postmortem, asked by the CTO personally: where else in the estate does this same condition exist. The answer becomes a separate item with its own owner, funded from the reserve in <a href="../technology-capital-allocation/index.html">Capital Allocation</a>, and reported to the board as the remediation that matters. The specific fix is table stakes; the class-level answer is the leadership output.</p></div>
     </div>
   </div>
 
@@ -163,7 +163,7 @@
     <div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Checkpoint</th><th>What exists</th></tr>
-        <tr><td>Day 7</td><td>A written timeline with detection, escalation, and recovery times stated in minutes, not adjectives. A completed regulatory and contractual notification log. A one-page summary for the board in the form the <a href="../board-reporting/index.html">Board Reporting</a> page describes. The postmortem scheduled with the right attendees, including someone from outside the owning team.</td></tr>
+        <tr><td>Day 7</td><td>A written timeline with detection, escalation, and recovery times stated in minutes rather than adjectives. A completed regulatory and contractual notification log. A one-page summary for the board in the form the <a href="../board-reporting/index.html">Board Reporting</a> page describes. The postmortem scheduled with the right attendees, including someone from outside the owning team.</td></tr>
         <tr><td>Day 30</td><td>The postmortem published internally, with actions that have owners, dates, and funding decisions. The class-of-incident question answered with a list. A recorded decision on whether the risk appetite or DR posture changes. If detection or response depended on too few people, an operating model change proposed with a cost attached.</td></tr>
         <tr><td>Day 90</td><td>The funded actions closed or visibly progressing against their dates. A restore or failover test run on the class of system that failed. The incident's cost stated in dollars and used in the next <a href="../reliability-economics/index.html">reliability investment</a> conversation. The board updated once more, unprompted, which is what turns a bad quarter into evidence of control.</td></tr>
       </table>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology Portfolio Management</title>
-<meta name="description" content="Ranking and sequencing competing initiatives across categories, not within one, plus a WSJF calculator that ranks your own list.">
+<meta name="description" content="Ranking and sequencing competing initiatives across categories rather than within one, plus a WSJF calculator that ranks your own list.">
 <meta property="og:title" content="Technology Portfolio Management | CTO Toolkit">
 <meta property="og:description" content="How to decide what makes the cut when an AI pilot, a tech-debt paydown, and a compliance mandate are all fighting for the same engineering capacity.">
 <meta property="og:type" content="article">
@@ -82,8 +82,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Technology Portfolio Management</h1>
-  <p>Not the application estate, not AI specifically, not innovation specifically, not the budget. This is the narrower, missing piece: ranking and sequencing every initiative competing for the same engineering capacity, regardless of category, plus a working WSJF calculator that ranks a list you build yourself.</p>
-  <div class="caveat">This page assumes you already know your available capacity. It doesn't estimate it. If capacity itself is the uncertain number, that's a separate, prior problem this framework can't solve for you.</div>
+  <p>The application estate, AI initiatives, innovation bets, and the budget each have their own page. This is the narrower piece missing between them: ranking and sequencing every initiative competing for the same engineering capacity, regardless of category, plus a working WSJF calculator that ranks a list you build yourself.</p>
+  <div class="caveat">This page assumes you already know your available capacity and makes no attempt to estimate it. If capacity itself is the uncertain number, that's a separate, prior problem.</div>
 </header>
 
 <main>
@@ -92,7 +92,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>How this relates to the other four portfolio pages</h3>
-      <p>Four different lenses on four different things, not four competing answers to the same question.</p>
+      <p>Four different lenses on four different things rather than four competing answers to the same question.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -100,9 +100,9 @@
           <tr><th>Page</th><th>What it scores</th><th>What it doesn't do</th></tr>
           <tr><td><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a></td><td>The existing application estate: Tolerate, Invest, Migrate, Eliminate</td><td>Doesn't rank new initiatives against each other, or against running applications</td></tr>
           <tr><td><a href="../ai-portfolio-management/index.html">AI Portfolio Management</a></td><td>AI initiatives specifically, gated on feasibility and data readiness first</td><td>Doesn't compare an AI initiative's priority against a non-AI one competing for the same sprint capacity</td></tr>
-          <tr><td><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a></td><td>Exploratory bets specifically, across the three horizons</td><td>Doesn't cover run-the-business work, which is most of the actual portfolio at most companies</td></tr>
+          <tr><td><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a></td><td>Exploratory bets specifically, across the three horizons</td><td>Doesn't cover run-the-business work, which is most of the portfolio at most companies</td></tr>
           <tr><td><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td><td>The dollars, split across Run, Grow, Transform, Security, Debt, and Reserve as one portfolio</td><td>Allocates budget to buckets; doesn't rank individual competing initiatives within or across those buckets</td></tr>
-          <tr><td><strong>This page</strong></td><td>Every competing initiative, any category, ranked and sequenced on one list against the same capacity constraint</td><td>Doesn't replace the category-specific scoring above, a project still needs its AI-readiness or innovation-stage evaluation before it lands here</td></tr>
+          <tr><td><strong>This page</strong></td><td>Every competing initiative, any category, ranked and sequenced on one list against the same capacity constraint</td><td>Doesn't replace the category-specific scoring above; a project still needs its AI-readiness or innovation-stage evaluation before it lands here</td></tr>
         </table>
       </div>
     </div>
@@ -111,17 +111,17 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
-      <h3>The default is a de facto portfolio, not a deliberate one</h3>
+      <h3>The default is a de facto portfolio rather than a deliberate one</h3>
       <p>Most organizations never decide their portfolio. It accumulates.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What a deliberate portfolio looks like</span>
-        <p>Every active initiative sits on one list, ranked against every other active initiative, regardless of which team or category proposed it. The list is re-ranked on a fixed cadence, not just when something new shows up. Items get removed, not just added.</p>
+        <p>Every active initiative sits on one list, ranked against every other active initiative, regardless of which team or category proposed it. The list is re-ranked on a fixed cadence, whether or not something new has shown up. Items get removed as well as added.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">The tell that it's not deliberate</span>
-        <p>The roadmap has never had an item removed, only added. Nobody can say, without checking three different documents, what the fourth-highest-priority initiative in the company is right now. Prioritization happens by whoever escalates loudest, not by a comparable score.</p>
+        <span class="env-label b">The tell that it accumulated</span>
+        <p>The roadmap has never had an item removed, only added. Nobody can say, without checking three different documents, what the fourth-highest-priority initiative in the company is right now. Prioritization happens by whoever escalates loudest rather than by a comparable score.</p>
       </div>
     </div>
   </div>
@@ -137,7 +137,7 @@
         <p>WSJF = Cost of Delay &divide; Job Size. Cost of Delay is the sum of three components, each scored on a relative Fibonacci scale (1, 2, 3, 5, 8, 13, 20): <strong>User-Business Value</strong> (the direct economic or customer benefit), <strong>Time Criticality</strong> (does the value decay if this waits), and <strong>Risk Reduction / Opportunity Enablement</strong> (does this unlock or de-risk other work). Divide that sum by relative <strong>Job Size</strong>, and the result ranks a moderately valuable two-week job above a highly valuable six-month one, because value delivered sooner compounds and value delayed decays. An AI pilot, a compliance mandate, and a technical debt paydown all get scored on the same four inputs, which is exactly what makes this usable across categories where the other four portfolio pages can't reach.</p>
       </div>
     </div>
-    <div class="same-note">The scores are relative, not precise measurements. Anchor the smallest, most obvious item on your list at 1 for each component, then size everything else against it. The ranking is the useful output, not the individual numbers.</div>
+    <div class="same-note">The scores are relative rather than precise measurements. Anchor the smallest, most obvious item on your list at 1 for each component, then size everything else against it. The ranking is the useful output; the individual numbers are scaffolding.</div>
   </div>
 
   <div class="stage-card" id="calculator">
@@ -212,7 +212,7 @@
       let html = '<table class="wsjf-table"><tr><th>Rank</th><th>Initiative</th><th>Value</th><th>Time crit.</th><th>Risk/opp.</th><th>Cost of Delay</th><th>Job size</th><th>WSJF</th><th></th></tr>';
       scored.forEach((item, i) => {
         const origIndex = wsjfItems.indexOf(item);
-        html += `<tr><td class="rank">${i + 1}</td><td>${item.name}</td><td>${item.ubv}</td><td>${item.tc}</td><td>${item.rroe}</td><td>${item.cod}</td><td>${item.size}</td><td class="score">${item.score.toFixed(2)}</td><td><button class="wsjf-remove" data-index="${origIndex}">Remove</button></td></tr>`;
+        html += `<tr><td class="rank">${i + 1}</td><td>${String(item.name).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</td><td>${item.ubv}</td><td>${item.tc}</td><td>${item.rroe}</td><td>${item.cod}</td><td>${item.size}</td><td class="score">${item.score.toFixed(2)}</td><td><button class="wsjf-remove" data-index="${origIndex}">Remove</button></td></tr>`;
       });
       html += '</table>';
       resultEl.innerHTML = html;
@@ -250,12 +250,12 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Category-blind ranking vs. reserved capacity</h3>
-      <p>A real tension, not a solved problem. Pure WSJF ranking can starve categories that never win on pure economic score.</p>
+      <p>An unresolved tension. Pure WSJF ranking can starve categories that never win on pure economic score.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Pure ranking</span>
-        <p>Every initiative competes on the same list, highest WSJF wins the next slot regardless of category. Simple, defensible, and honest about tradeoffs. The risk: technical debt and security work, which rarely score high on Time Criticality until something breaks, permanently lose to visible, revenue-attached features.</p>
+        <p>Every initiative competes on the same list, highest WSJF wins the next slot regardless of category. Simple, defensible, and explicit about tradeoffs. The risk: technical debt and security work, which rarely score high on Time Criticality until something breaks, permanently lose to visible, revenue-attached features.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Reserved capacity by category</span>
@@ -269,11 +269,11 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Sequencing and dependencies</h3>
-      <p>A ranked list isn't a schedule. Value-order ignores what blocks what.</p>
+      <p>A ranked list is a different thing from a schedule. Value-order ignores what blocks what.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>A high-WSJF initiative that depends on a lower-ranked one still has to wait, running it first just produces rework or a stalled effort waiting on its own dependency. Before finalizing sequence, check the top ten items against each other for blocking relationships, not just against the full backlog. The common failure: nobody maps this until two teams have already started conflicting work, which is a coordination cost the ranking itself was supposed to prevent.</p>
+        <p>A high-WSJF initiative that depends on a lower-ranked one still has to wait; running it first produces rework or a stalled effort waiting on its own dependency. Before finalizing sequence, check the top ten items against each other for blocking relationships, in addition to checking them against the full backlog. The common failure: nobody maps this until two teams have already started conflicting work, which is a coordination cost the ranking itself was supposed to prevent.</p>
       </div>
     </div>
   </div>
@@ -287,11 +287,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">The failure mode</span>
-        <p>An initiative that scored well six months ago keeps running on inertia, re-scoring it against today's list would rank it below several things that didn't exist when it started, but nobody re-runs the comparison because it's already funded and staffed.</p>
+        <p>An initiative that scored well six months ago keeps running on inertia. Re-scoring it against today's list would rank it below several things that didn't exist when it started, but nobody re-runs the comparison because it's already funded and staffed.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The discipline</span>
-        <p>Every re-ranking cycle scores in-flight work against new proposals on the same list, not a separate "already committed" list exempt from comparison. Money and time already spent are gone regardless of the decision now; the only real question is whether finishing beats every current alternative for the capacity remaining.</p>
+        <p>Every re-ranking cycle scores in-flight work against new proposals on the same list, with no separate "already committed" list exempt from comparison. Money and time already spent are gone regardless of the decision now; the only question is whether finishing beats every current alternative for the capacity remaining.</p>
       </div>
     </div>
   </div>
@@ -304,7 +304,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>Quarterly re-ranking of the full list is the common floor, monthly for organizations moving fast enough that a quarter is a long time. Between formal cycles, a time-critical item can force an out-of-cycle re-rank, but that path should be visibly rare, if it's not, the formal cadence is too slow for the business it's serving.</p>
+        <p>Quarterly re-ranking of the full list is the common floor, monthly for organizations moving fast enough that a quarter is a long time. Between formal cycles, a time-critical item can force an out-of-cycle re-rank, but that path should be visibly rare; if it's common, the formal cadence is too slow for the business it's serving.</p>
       </div>
     </div>
   </div>
@@ -312,8 +312,8 @@
 </main>
 
 <footer>
-  Reference only. WSJF weights and Fibonacci scoring are illustrative; the framework's value is in relative comparison, not the specific numbers.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. WSJF weights and Fibonacci scoring are illustrative; the framework's value is in relative comparison rather than the specific numbers.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

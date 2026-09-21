@@ -66,7 +66,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Epistemology &amp; Research Methods</h1>
-  <p>How we know what we know, and how to know enough, fast enough, to make a real decision. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, made explicit here instead of left implicit.</p>
+  <p>How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, made explicit here instead of left implicit.</p>
   <div class="caveat">This borders on academic epistemology, but it isn't taught as theory here. It's the applied version already embedded in this toolkit: the "Confidence: High/Medium/Low" tags in <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>'s technical debt scoring, the evidence-requirements lists in <a href="../technology-diligence-map/index.html">Technology Diligence</a>, the "what was assessed, what wasn't" sections in every diligence memo template. This page names the pattern and shows where else it applies.</div>
 </header>
 
@@ -81,11 +81,11 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Concept</th><th>Practical translation</th><th>Where it shows up</th></tr>
-          <tr><td>Justified true belief</td><td>A finding needs stated evidence and reasoning behind it, not just confident assertion</td><td>Every "Evidence Requirements" list across the diligence frameworks</td></tr>
-          <tr><td>Degrees of belief</td><td>State how sure you are, not just what you think is true. Certainty is rarely binary.</td><td>Confidence tags (High/Medium/Low) on every dollar figure in technical debt assessment</td></tr>
+          <tr><td>Justified true belief</td><td>A finding needs stated evidence and reasoning behind it; confident assertion on its own doesn't qualify</td><td>Every "Evidence Requirements" list across the diligence frameworks</td></tr>
+          <tr><td>Degrees of belief</td><td>State how sure you are along with what you think is true. Certainty is rarely binary.</td><td>Confidence tags (High/Medium/Low) on every dollar figure in technical debt assessment</td></tr>
           <tr><td>Falsifiability</td><td>A claim only means something if some piece of evidence could have proven it wrong</td><td>Red-flag pattern libraries naming what specifically would change a finding</td></tr>
-          <tr><td>Evidence hierarchy</td><td>Not all sources deserve equal trust; rank them before you rely on them</td><td>Management representation ranked below direct system access in every diligence checklist</td></tr>
-          <tr><td>Bounded rationality</td><td>Perfect information isn't available; the goal is the best decision achievable given real constraints</td><td>Time-boxed diligence phases, quick-win prioritization in the 100-day assessment</td></tr>
+          <tr><td>Evidence hierarchy</td><td>Sources deserve unequal trust; rank them before you rely on them</td><td>Management representation ranked below direct system access in every diligence checklist</td></tr>
+          <tr><td>Bounded rationality</td><td>Perfect information isn't available; the goal is the best decision achievable within the constraints you have</td><td>Time-boxed diligence phases, quick-win prioritization in the 100-day assessment</td></tr>
         </table>
       </div>
     </div>
@@ -94,26 +94,26 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
-      <h3>Why the research window should be bounded, not exhaustive</h3>
+      <h3>Why the research window should be bounded</h3>
       <p>The instinct that more research is always better is wrong for organizational decisions in a way it isn't for a dissertation.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">The actual question</span>
-        <p>Not &quot;have we learned everything,&quot; but &quot;have we learned enough to decide better than we would with no research at all, relative to what more research costs in time and opportunity.&quot; Confidence gains follow a diminishing curve: the fifth independent data point usually moves a conclusion more than the fiftieth does, once the pattern has already stabilized.</p>
+        <span class="env-label a">The question that matters</span>
+        <p>&quot;Have we learned enough to decide better than we would with no research at all, relative to what more research costs in time and opportunity.&quot; That is a different question from &quot;have we learned everything.&quot; Confidence gains follow a diminishing curve: the fifth independent data point usually moves a conclusion more than the fiftieth does, once the pattern has already stabilized.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where open-ended research fails</span>
-        <p>Academic research optimizes for near-total certainty over a timeframe measured in years, because the currency is being right, not being timely. A business decision has a clock the underlying situation doesn't wait for. A diligence report finished after the deal has already closed has close to zero value, no matter how thorough it is.</p>
+        <p>Academic research optimizes for near-total certainty over a timeframe measured in years, because the currency is being right rather than being timely. A business decision has a clock the underlying situation doesn't wait for. A diligence report finished after the deal has already closed has close to zero value, no matter how thorough it is.</p>
       </div>
     </div>
-    <div class="same-note">This is why confirmatory diligence runs 2-4 weeks and exclusivity diligence runs 4-8 weeks elsewhere on this site, not because more time wouldn't produce marginally more certainty, but because the decision has a deadline, and every framework here separates &quot;what was assessed&quot; from &quot;what wasn't&quot; rather than pretending the boundary doesn't exist.</div>
+    <div class="same-note">This is why confirmatory diligence runs 2-4 weeks and exclusivity diligence runs 4-8 weeks elsewhere on this site. More time would produce marginally more certainty, but the decision has a deadline, and every framework here separates &quot;what was assessed&quot; from &quot;what wasn't&quot; rather than pretending the boundary doesn't exist.</div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
-      <h3>Research methods, the actual toolkit</h3>
+      <h3>Research methods, the working toolkit</h3>
       <p>None of these require formal training. They're habits of checking a claim before treating it as settled.</p>
     </div>
     <div class="stage-grid single">
@@ -121,9 +121,9 @@
         <table class="matrix-table">
           <tr><th>Method</th><th>What it does</th><th>Where it applies</th></tr>
           <tr><td>Triangulation</td><td>Cross-check a claim against at least two independent sources before treating it as fact</td><td>A claim made in one interview versus the same claim confirmed by system access or a second interviewee who wasn't in the room for the first</td></tr>
-          <tr><td>Primary versus secondary evidence</td><td>Direct observation outranks a secondhand account of the observation</td><td>Reviewing the actual codebase versus accepting a description of the codebase's quality</td></tr>
-          <tr><td>Sampling logic</td><td>A convenience sample, whoever happens to be available and willing, is not a representative sample</td><td>Interview subject selection; reference customers a vendor hand-picks versus a broader, independently chosen set</td></tr>
-          <tr><td>Disconfirmation-seeking</td><td>Actively look for evidence against the working conclusion, not just more evidence for it</td><td>Testing whether an alternative explanation survives contact with the same evidence</td></tr>
+          <tr><td>Primary versus secondary evidence</td><td>Direct observation outranks a secondhand account of the observation</td><td>Reviewing the codebase itself versus accepting a description of the codebase's quality</td></tr>
+          <tr><td>Sampling logic</td><td>A convenience sample, whoever happens to be available and willing, is rarely a representative sample</td><td>Interview subject selection; reference customers a vendor hand-picks versus a broader, independently chosen set</td></tr>
+          <tr><td>Disconfirmation-seeking</td><td>Actively look for evidence against the working conclusion, and weigh it at least as heavily as the evidence for it</td><td>Testing whether an alternative explanation survives contact with the same evidence</td></tr>
           <tr><td>Correlation versus causation</td><td>A pattern in the data isn't automatically an explanation of the pattern</td><td>Distinguishing a triggering event from the underlying condition it merely exposed, in incident root-cause analysis</td></tr>
         </table>
       </div>
@@ -131,11 +131,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What correlation shows</span>
-        <p>Two things moved together, or one happened right before the other. That's an observation, not an explanation. The pattern could come from a genuine causal link, a third factor driving both, plain coincidence in a small sample, or a pattern noticed after the fact and mistaken for meaningful because someone went looking for one.</p>
+        <p>Two things moved together, or one happened right before the other. That's an observation, and an explanation still has to be found. The pattern could come from a causal link, a third factor driving both, plain coincidence in a small sample, or a pattern noticed after the fact and mistaken for meaningful because someone went looking for one.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What causation requires</span>
-        <p>A mechanism: if the first thing had been different, the second thing would have been different as a direct result, not just statistically less likely to appear alongside it. Establishing that usually takes more than the one data point that prompted the question, ideally a case where the suspected cause was absent and the effect still didn't happen.</p>
+        <p>A mechanism: if the first thing had been different, the second thing would have been different as a direct result, rather than merely less likely to appear alongside it. Establishing that usually takes more than the one data point that prompted the question, ideally a case where the suspected cause was absent and the effect still didn't happen.</p>
       </div>
     </div>
     <div class="same-note"><strong>Worked example.</strong> A deployment goes out at 2:14pm. Error rates spike five minutes later. The natural read: the deploy caused the spike, since it's the thing sitting right next to it in time. Rolling the deploy back doesn't fix anything. Investigation finds a database connection pool that had been slowly exhausting for three days because of a slow query introduced earlier that week; the deploy's restart briefly reset open connections, masking the problem for a few minutes before the pool hit its ceiling anyway, on a schedule that had nothing to do with the deploy. The deploy correlates with the spike. The slow query, running unnoticed for three days, is what caused it.</div>
@@ -144,8 +144,8 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
-      <h3>Confirmation bias is structural in discovery work, not a personal failing</h3>
-      <p>It isn't a character flaw that shows up occasionally. The shape of discovery work invites it by default.</p>
+      <h3>Confirmation bias is structural in discovery work</h3>
+      <p>Treating it as an occasional character flaw misses the point. The shape of discovery work invites it by default.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -168,11 +168,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Pair every material number with a confidence tag and a one-line reason: what would need to be true, or what evidence would need to arrive, for that confidence to move up or down. A range with a stated confidence level is more useful and more honest than a single unqualified figure.</p>
+        <p>Pair every material number with a confidence tag and a one-line reason: what would need to be true, or what evidence would need to arrive, for that confidence to move up or down. A range with a stated confidence level is more useful than a single unqualified figure, and easier to defend later.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Dropping the confidence tag because an unqualified number feels more authoritative in a report or a board deck. This trades honesty for the appearance of certainty, and the decision built on top of it inherits precision the underlying research never supported.</p>
+        <p>Dropping the confidence tag because an unqualified number feels more authoritative in a report or a board deck. This trades accuracy for the appearance of certainty, and the decision built on top of it inherits precision the underlying research never supported.</p>
       </div>
     </div>
   </div>
@@ -200,7 +200,7 @@
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs research quality is weak, regardless of how long it took</h3>
-      <p>Time spent is not the same thing as rigor. These patterns show up in reports that took weeks and reports that took an afternoon alike.</p>
+      <p>Time spent and rigor are different things. These patterns show up in reports that took weeks and reports that took an afternoon alike.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -218,8 +218,8 @@
 </main>
 
 <footer>
-  Reference only. This is a practical translation of research discipline, not a formal epistemology course; treat it as a set of habits worth building into any discovery process, not a complete theory.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. This is a practical translation of research discipline rather than a formal epistemology course; treat it as a set of habits worth building into any discovery process.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

@@ -103,7 +103,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI FinOps Map</h1>
   <p>Cost modeling stage by stage, the same shape as the <a href="../ai-architecture-map/index.html">Architecture Map</a> it follows. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage below switches to that environment's cost model. Includes a break-even calculator and the two cost levers, prompt caching and batch processing, most teams leave unused.</p>
-  <div class="caveat">Cost modeling here is directional, not a substitute for building your own model with your actual volume, region, and negotiated pricing. Vendor pricing changes frequently; verify current rates before using specific numbers in a budget decision.</div>
+  <div class="caveat">Cost modeling here is directional. Build your own model with your volume, region, and negotiated pricing before committing budget. Vendor pricing changes frequently; verify current rates before using specific numbers in a budget decision.</div>
 </header>
 
 <main>
@@ -132,7 +132,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Vertex AI bills per character for most Gemini models rather than per token, input and output metered separately. A real, easy-to-miss cost multiplier here: Gemini's internal reasoning tokens are billed as output, and can inflate a request's real cost five to tenfold beyond what the visible response length would suggest.</p>
+      <p>Vertex AI bills current Gemini models per token, input and output metered separately; older model generations were metered per character, so check which meter applies to the model you pick. An easy-to-miss cost multiplier: Gemini's internal reasoning (thinking) tokens are billed as output, and on reasoning-heavy requests they can inflate cost several times beyond what the visible response length suggests.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -142,7 +142,7 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>Cost is amortized GPU time (purchase or lease depreciation, power, cooling, ops staff), largely fixed regardless of query volume until you hit a capacity ceiling and need to add hardware. Marginal cost per additional query approaches zero until that ceiling, then jumps in a large step when you provision another node.</p>
     </div>
-    <div class="same-note">The break-even point is a real number, not a vibe. Calculate it: (fixed self-hosted cost per month) divided by (per-query managed cost) gives the query volume where self-hosting starts winning. Below that volume, pay-as-you-go almost always wins on total cost.</div>
+    <div class="same-note">The break-even point is a number you can calculate, so calculate it: (fixed self-hosted cost per month) divided by (per-query managed cost) gives the query volume where self-hosting starts winning. Below that volume, pay-as-you-go almost always wins on total cost.</div>
   </div>
 
   <div class="stage-card" id="calculator">
@@ -207,7 +207,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Provisioned Throughput reserves dedicated capacity in model units, billed hourly whether used or not, at roughly $24 to $200 per hour depending on model. Only pays off above sustained utilization; buying a 6-month commitment before traffic is stable is the single fastest way to overspend here. Custom or fine-tuned models require Provisioned Throughput; they can't run on-demand at all.</p>
+      <p>Provisioned Throughput reserves dedicated capacity in model units, billed hourly whether used or not, at roughly $24 to $200 per hour depending on model. Only pays off above sustained utilization; buying a 6-month commitment before traffic is stable is the single fastest way to overspend here. Some custom and fine-tuned models still require Provisioned Throughput rather than on-demand billing; check the deployment options for the specific model before assuming pay-as-you-go is available.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -230,7 +230,7 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Chargeback &amp; unit economics</h3>
-      <p>Making AI spend attributable to the team or product that generated it, not a single opaque line item.</p>
+      <p>Making AI spend attributable to the team or product that generated it instead of leaving it as one opaque line item.</p>
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
@@ -246,13 +246,13 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>Compartment structure plus tag-based attribution in OCI Cost Analysis, with FOCUS 1.2 exports increasingly the default pipeline for feeding a chargeback model, falls back to a tagless mode when tag coverage is incomplete.</p>
+      <p>Compartment structure plus tag-based attribution in OCI Cost Analysis, with FOCUS-format billing exports increasingly the default pipeline for feeding a chargeback model. Cost Analysis falls back to a tagless view when tag coverage is incomplete.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>No managed billing hierarchy to lean on; attribution requires your own request-tagging at the application layer (which team or product initiated the call) correlated against GPU-hour cost allocated proportionally to usage. This is meaningfully more engineering work to build.</p>
     </div>
-    <div class="same-note">The metric that matters across every environment is cost per unit of business value, cost per resolved support ticket, cost per underwriting decision, not cost per token or cost per GPU-hour. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
+    <div class="same-note">The metric that matters across every environment is cost per unit of business value: cost per resolved support ticket, cost per underwriting decision. Cost per token and cost per GPU-hour are inputs to that number and poor substitutes for it. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
@@ -274,11 +274,11 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>OCI Cost Analysis with budget-based alerts, increasingly paired with FOCUS 1.2 billing exports for teams that have moved off the native dashboard onto a broader FinOps pipeline.</p>
+      <p>OCI Cost Analysis with budget-based alerts, increasingly paired with FOCUS-format billing exports for teams that have moved off the native dashboard onto a broader FinOps pipeline.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>No native billing-anomaly alerting since there's no per-token bill to watch. The equivalent signal is GPU utilization and request-rate anomalies via Prometheus alerting, an unusual spike in request volume or output length is the leading indicator you have.</p>
+      <p>No native billing-anomaly alerting since there's no per-token bill to watch. The equivalent signal is GPU utilization and request-rate anomalies via Prometheus alerting. An unusual spike in request volume or output length is the leading indicator you have.</p>
     </div>
   </div>
   <div class="stage-card">
@@ -335,7 +335,7 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>GPU nodes provisioned for a launch that never reached expected volume, or a dev cluster left running after the project wound down. Same failure mode, higher absolute cost per incident since GPU hardware commitments are larger and stickier than a cloud service you can just delete.</p>
     </div>
-    <div class="same-note">Run a quarterly audit matching every deployed model endpoint or reserved capacity allocation, on any provider, against an active, named use case. Anything without one gets decommissioned, not just flagged.</div>
+    <div class="same-note">Run a quarterly audit matching every deployed model endpoint or reserved capacity allocation, on any provider, against an active, named use case. Anything without one gets decommissioned. Flagging it and moving on is how the next audit finds the same list.</div>
   </div>
 
   <div class="stage-card">
@@ -358,13 +358,13 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>A direct, targeted search of current OCI documentation and pricing found no general-purpose prompt caching tier, unlike the other three clouds, this does not appear to exist as a standing feature today. Treat OCI as the one cloud where this specific lever isn't available yet, not just unconfirmed.</p>
+      <p>As of this review, OCI does not document a general-purpose prompt caching discount comparable to the other three clouds. Treat this lever as unavailable on OCI until Oracle publishes one, and re-check before a renewal.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>vLLM and most modern serving stacks support prefix caching (often called automatic prefix caching or APC) natively, the same discipline applies: stable content first, dynamic content last. The saving shows up as GPU time not spent recomputing the same prefix, rather than a line-item discount on a bill, so it has to be measured through throughput and latency metrics instead of a cost dashboard.</p>
+      <p>vLLM and most modern serving stacks support prefix caching (often called automatic prefix caching or APC) natively, and the same discipline applies: stable content first, dynamic content last. The saving shows up as GPU time not spent recomputing the same prefix, rather than a line-item discount on a bill, so it has to be measured through throughput and latency metrics instead of a cost dashboard.</p>
     </div>
-    <div class="same-note">Pricing subsidies on caching are not permanent. Azure's own pricing page has already moved from free cache writes to billed cache writes; treat any specific caching discount, on any provider, as something to re-verify against current pricing before it's built into a budget, not a fixed assumption.</div>
+    <div class="same-note">Caching discounts are not permanent. Providers have already changed how cached tokens are priced more than once, so re-verify any specific caching discount against current pricing before it goes into a budget.</div>
   </div>
 
   <div class="stage-card">
@@ -375,7 +375,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Batch Inference processes a submitted job asynchronously at 50 percent off standard on-demand pricing; Amazon Nova models additionally offer a Flex tier at the same discount. Batch doesn't support tool calling, structured output, or multi-turn conversation, so it's a different execution model, not just a slower one, don't move an agent loop to Batch just because the token price is lower.</p>
+      <p>Batch Inference processes a submitted job asynchronously at 50 percent off standard on-demand pricing. Batch doesn't support tool calling, structured output, or multi-turn conversation, so it is a different execution model rather than a slower version of the same one. Don't move an agent loop to Batch because the token price is lower.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -383,24 +383,24 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Batch Prediction runs non-urgent jobs asynchronously at roughly 50 percent off standard rates within a 24-hour SLA. One genuine gotcha: Google bills for the full provisioned cluster runtime, not just active processing time, so under-filled batch jobs can cost more per prediction than expected; batching requests into larger groups is the fix.</p>
+      <p>Gemini batch prediction runs non-urgent jobs asynchronously at roughly 50 percent off standard token rates within a 24-hour target. One gotcha applies to batch prediction on custom-trained models rather than Gemini: Google bills for the provisioned cluster runtime rather than active processing time, so under-filled jobs cost more per prediction than expected. Batching requests into larger groups is the fix.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>A direct, targeted search of current OCI documentation and pricing found no asynchronous batch-discount tier, unlike the other three clouds, this does not appear to exist as a standing feature today. Treat OCI as the one cloud where this specific lever isn't available yet, not just unconfirmed.</p>
+      <p>As of this review, OCI does not document an asynchronous batch-discount tier comparable to the other three clouds. Treat this lever as unavailable on OCI until Oracle publishes one, and re-check before a renewal.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>The equivalent move is scheduling batch workloads for off-peak GPU capacity, or running them through the same continuous-batching serving stack at a lower priority queue than interactive traffic. There's no separate billed rate to point to, the saving comes from higher GPU utilization on hardware that would otherwise sit idle overnight, which still has to be measured to know it's happening.</p>
+      <p>The equivalent move is scheduling batch workloads for off-peak GPU capacity, or running them through the same continuous-batching serving stack at a lower priority queue than interactive traffic. There's no separate billed rate to point to. The saving comes from higher GPU utilization on hardware that would otherwise sit idle overnight, which still has to be measured to know it's happening.</p>
     </div>
-    <div class="same-note">The same discipline applies across every environment: anything without a hard latency requirement is a batch candidate. Auditing which workloads are still running on the interactive path out of habit, not necessity, is a real and recurring source of avoidable spend.</div>
+    <div class="same-note">The same discipline applies across every environment: anything without a hard latency requirement is a batch candidate. Auditing which workloads still run on the interactive path out of habit is a recurring source of avoidable spend.</div>
   </div>
 
 </main>
 
 <footer>
   Reference only. Pricing, reservation models, and hardware costs change quickly; verify current numbers against primary sources before relying on this for a budget or investment decision.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

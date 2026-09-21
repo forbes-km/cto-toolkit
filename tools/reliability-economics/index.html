@@ -93,8 +93,8 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
-      <h3>The cost of downtime has to be a real number</h3>
-      <p>Not a slogan. A specific figure, or the investment decision that follows from it can't be evaluated at all.</p>
+      <h3>The cost of downtime has to be a number</h3>
+      <p>A specific figure, or the investment decision that follows from it can't be evaluated at all.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -103,7 +103,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>&quot;Downtime is unacceptable&quot; applied as an unexamined default to every system regardless of whether the math supports the investment that belief implies, which is how reliability spending ends up disconnected from actual business impact.</p>
+        <p>&quot;Downtime is unacceptable&quot; applied as an unexamined default to every system regardless of whether the math supports the investment that belief implies, which is how reliability spending ends up disconnected from business impact.</p>
       </div>
     </div>
   </div>
@@ -129,13 +129,13 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
-      <h3>Overengineering is a cost, not a virtue</h3>
-      <p>Redundancy protects against downtime, and it also has a real, ongoing operational tax of its own.</p>
+      <h3>Overengineering is a cost</h3>
+      <p>Redundancy protects against downtime, and it also carries an ongoing operational tax of its own.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Match redundancy investment to the tier a system needs, not the highest tier available. A system that doesn't need five nines shouldn't be built to that standard just because the pattern exists elsewhere in the estate.</p>
+        <p>Match redundancy investment to the tier a system needs rather than the highest tier available. A system that doesn't need five nines shouldn't be built to that standard just because the pattern exists elsewhere in the estate.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -209,7 +209,7 @@
 
       let verdict;
       if (net > 0) {
-        verdict = 'JUSTIFIED. Expected downtime-cost avoidance exceeds the investment by $' + Math.round(net).toLocaleString() + ' a year, assuming downtime is reduced to the target tier, not just budgeted for.';
+        verdict = 'JUSTIFIED. Expected downtime-cost avoidance exceeds the investment by $' + Math.round(net).toLocaleString() + ' a year, assuming downtime is in fact reduced to the target tier rather than merely budgeted for.';
       } else {
         verdict = 'NOT JUSTIFIED AT THESE NUMBERS. The investment costs $' + Math.round(Math.abs(net)).toLocaleString() + ' more than the downtime it is expected to prevent. Either the cost-per-hour figure is understated, or this tier isn\'t worth building to yet.';
       }
@@ -226,8 +226,8 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Method</span>
-      <h3>Tiering the estate, not the system</h3>
-      <p>The calculator above evaluates one system. The decision that actually saves money is made once, across the estate: which systems get which tier, and why.</p>
+      <h3>Tiering the estate</h3>
+      <p>The calculator above evaluates one system. The decision that saves money is made once, across the estate: which systems get which tier, and why.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table" style="margin-bottom:0;">
@@ -236,7 +236,7 @@
         <tr><td>Tier 2: business critical</td><td>99.9%</td><td>Internal systems that stop work when down: identity, CI, core data pipelines, customer support tooling</td><td>Multi-zone, tested restore, business-hours on-call with escalation, an SLO with a dashboard</td></tr>
         <tr><td>Tier 3: important</td><td>99.5%</td><td>Reporting, internal tools, anything with a manual workaround</td><td>Single region with backups, restore tested annually, best-effort response</td></tr>
         <tr><td>Tier 4: everything else</td><td>No commitment</td><td>Experiments, sandboxes, deprecated systems awaiting retirement</td><td>Backups if the data matters; otherwise nothing</td></tr>
-      </table>      <p style="margin-bottom:8px;">The assignment is a product decision with an engineering cost attached, made by the business owner of each system against the cost-of-downtime number, not by engineering against what feels safe. Most estates that do this exercise find they have been paying Tier 1 costs on Tier 3 systems and running a Tier 1 system on Tier 3 infrastructure, at the same time.</p>
+      </table>      <p style="margin-bottom:8px;">The assignment is a product decision with an engineering cost attached, made by the business owner of each system against the cost-of-downtime number rather than by engineering against what feels safe. Most estates that do this exercise find they have been paying Tier 1 costs on Tier 3 systems and running a Tier 1 system on Tier 3 infrastructure, at the same time.</p>
     </div></div>
   </div>
 
@@ -244,7 +244,7 @@
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
       <h3>A checkout service, from 99.9% to 99.99%</h3>
-      <p>The arithmetic is simple. What matters is that it gets done before the architecture is chosen, not after.</p>
+      <p>The arithmetic is simple. What matters is that it gets done before the architecture is chosen.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">The numbers</span><p>An hour of checkout downtime costs $40,000 in lost orders and recovery effort. At 99.9% the annual downtime budget is about 8.7 hours, or roughly $350,000 of expected loss. At 99.99% it is about 53 minutes, roughly $35,000. The next nine is worth about $315,000 a year in avoided loss. Reaching it means a second region, automated failover, and a deeper on-call rota: about $220,000 a year in infrastructure and people. The investment clears by roughly $95,000 a year, and it is approved.</p></div>
@@ -264,7 +264,7 @@
         <tr><td>The infrastructure (host up, container running)</td><td>Whether the platform is alive</td><td>Every failure above the platform: a deployed bug, a dependency timeout, a full disk that returns errors from a running process</td></tr>
         <tr><td>The load balancer (HTTP 200 rate)</td><td>Whether requests are being answered</td><td>Slow responses that time out on the client, correct-looking errors, and the customers who could not reach the load balancer at all</td></tr>
         <tr><td>A synthetic transaction (a scripted checkout every minute from outside)</td><td>Whether the journey works end to end from the outside</td><td>Real user diversity: regions, devices, the edge case only real traffic hits</td></tr>
-        <tr><td>Real user monitoring (success rate of actual customer journeys)</td><td>What customers experienced</td><td>Nothing that matters, at the cost of more instrumentation; this is the number an SLO should be built on</td></tr>
+        <tr><td>Real user monitoring (success rate of customer journeys as experienced)</td><td>What customers experienced</td><td>Nothing that matters, at the cost of more instrumentation; this is the number an SLO should be built on</td></tr>
       </table>      <p style="margin-bottom:8px;">A defensible availability claim states the measurement point and the window. Five nines at the load balancer over a good quarter is not the same claim as four nines on real customer journeys over three years, and anyone doing diligence will ask which one you mean.</p>
     </div></div>
   </div>
@@ -273,7 +273,7 @@
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
       <h3>The availability number that measures the wrong thing</h3>
-      <p>The most common failure in reliability economics is not the arithmetic; it is doing the arithmetic on a number that does not reflect the customer's experience.</p>
+      <p>The most common failure in reliability economics is doing the arithmetic on a number that does not reflect the customer's experience. The arithmetic itself is rarely the problem.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The board deck reports 99.98% availability, measured as the percentage of minutes the load balancer returned a 200. Customer churn analysis shows that a meaningful share of cancellations cite reliability. Both are true: the checkout took nine seconds to respond for two weeks after a database change, every request returned 200, and no alert fired. The reliability investment case, built on the 99.98%, concluded no further spending was needed.</p></div>
@@ -290,12 +290,12 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li>No system has a stated availability target tied to an actual cost-of-downtime calculation</li>
+          <li>No system has a stated availability target tied to a cost-of-downtime calculation</li>
           <li>Error budgets don't exist, so every incident is treated with the same severity regardless of whether targets were met</li>
-          <li>Redundancy investment is uniform across the estate rather than tiered to real criticality</li>
+          <li>Redundancy investment is uniform across the estate rather than tiered to criticality</li>
           <li>The cost of the current reliability posture has never been compared to the cost of the downtime it prevents</li>
           <li>&quot;We need to be more reliable&quot; gets stated with no number attached to what that would cost or save</li>
-          <li>The next nine gets pursued because it's technically achievable, not because the math above says it's worth it</li>
+          <li>The next nine gets pursued because it's technically achievable rather than because the math above says it's worth it</li>
         </ul>
       </div>
     </div>
@@ -304,7 +304,7 @@
 </main>
 
 <footer>
-  Reference only. Downtime-budget figures are illustrative estimates; actual availability calculations depend on the exact SLA definition and measurement window used. See <a href="../observability-sre-operating-model/index.html" style="color:var(--accent);">Observability &amp; SRE Operating Model</a> for how the function that delivers reliability is organized. Error budgets and service level objectives as practiced here originate in Google's Site Reliability Engineering (O'Reilly, 2016). The economic framing and calculator are this site's.
+  Reference only. Downtime-budget figures are illustrative estimates; availability calculations depend on the exact SLA definition and measurement window used. See <a href="../observability-sre-operating-model/index.html" style="color:var(--accent);">Observability &amp; SRE Operating Model</a> for how the function that delivers reliability is organized. Error budgets and service level objectives as practiced here originate in Google's Site Reliability Engineering (O'Reilly, 2016). The economic framing and calculator are this site's.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

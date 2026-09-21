@@ -75,7 +75,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Governance Map</h1>
   <p>Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them. Includes the standards and credentials landscape, AIGP, ISO/IEC 42001, NIST AI RMF, and where each applies.</p>
-  <div class="caveat">This is the technical and organizational governance layer. Legal review of applicable regulation for your specific jurisdiction and use case is not a substitute this page provides; treat the regulatory mapping table as a starting point for that conversation, not the conversation itself.</div>
+  <div class="caveat">This is the technical and organizational governance layer. It does not replace legal review of the regulation that applies to your jurisdiction and use case; treat the regulatory mapping table as the starting point for that conversation.</div>
 </header>
 
 <main>
@@ -88,7 +88,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Source registry covering every system feeding the AI pipeline</li><li>Data dictionary defining what each field means and where it originated</li><li>Lineage and provenance tracking from source document to retrieved chunk</li><li>Clear data ownership assigned per source system, not left implicit</li></ul>
+        <ul><li>Source registry covering every system feeding the AI pipeline</li><li>Data dictionary defining what each field means and where it originated</li><li>Lineage and provenance tracking from source document to retrieved chunk</li><li>Clear data ownership assigned per source system</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
@@ -105,7 +105,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Definition locks: agreed, versioned definitions for terms the system reasons about, not left to drift between teams</li><li>Retrieval boundaries: which sources an agent or index is allowed to draw from for a given use case</li><li>Input validation on both user prompts and any document entering the ingestion pipeline</li><li>A named data steward with actual authority to change what's retrievable</li></ul>
+        <ul><li>Definition locks: agreed, versioned definitions for terms the system reasons about, so they stop drifting between teams</li><li>Retrieval boundaries: which sources an agent or index is allowed to draw from for a given use case</li><li>Input validation on both user prompts and any document entering the ingestion pipeline</li><li>A named data steward with the authority to change what's retrievable</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
@@ -122,11 +122,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Confidence thresholds tied to the human-in-the-loop tiering model (see the <a href="../ai-architecture-map/index.html">Architecture Map</a>)</li><li>Output guardrails: schema validation, citation requirements, forbidden-content checks before a response ships</li><li>Bias and fairness checks on outputs for any use case touching people (hiring, credit, care recommendations)</li><li>Explainability sufficient to answer &quot;why did it say that&quot; after the fact, not just at design time</li></ul>
+        <ul><li>Confidence thresholds tied to the human-in-the-loop tiering model (see the <a href="../ai-architecture-map/index.html">Architecture Map</a>)</li><li>Output guardrails: schema validation, citation requirements, forbidden-content checks before a response ships</li><li>Bias and fairness checks on outputs for any use case touching people (hiring, credit, care recommendations)</li><li>Explainability sufficient to answer &quot;why did it say that&quot; after the fact, as well as at design time</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>A confidence score without a documented threshold policy is not a control, it's a number nobody acts on consistently. This layer is what regulators and auditors ask to see evidence of; it needs to produce artifacts (logs, rubric scores), not just exist as a design intention.</p>
+        <p>A confidence score without a documented threshold policy is a number nobody acts on consistently, and no auditor will accept it as a control. This layer is what regulators and auditors ask to see evidence of, so it has to produce artifacts (logs, rubric scores) rather than exist only as a design intention.</p>
       </div>
     </div>
   </div>
@@ -139,11 +139,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Formal classification of which use cases count as high-risk under applicable frameworks</li><li>Documented incident response plan specific to AI failures, not a generic IT incident process</li><li>Human oversight for high-risk decisions, implemented as the Tier 2 gate described on the <a href="../ai-architecture-map/index.html">Architecture Map</a>, not a policy statement with no technical enforcement</li><li>Hallucination and groundedness checks running continuously, not only at initial launch</li></ul>
+        <ul><li>Formal classification of which use cases count as high-risk under applicable frameworks</li><li>Documented incident response plan specific to AI failures, separate from the generic IT incident process</li><li>Human oversight for high-risk decisions, implemented as the Tier 2 gate described on the <a href="../ai-architecture-map/index.html">Architecture Map</a> and enforced in code rather than by policy statement alone</li><li>Hallucination and groundedness checks running continuously in production, beyond the initial launch evaluation</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>Credit scoring, employment screening, and medical decisioning fall within the EU AI Act's Annex III high-risk use cases when the specific system matches the listed criteria there, not automatically because it operates in one of those domains generally. Article 14 requires human oversight for systems that do qualify. The high-risk obligations were deferred by the Digital Omnibus on AI adopted in June 2026: Annex III stand-alone systems, including employment and credit uses, now apply from December 2027, and AI embedded in Annex I regulated products from August 2028. Transparency duties still apply from August 2026. Confirm the current date for your specific use case; the Commission retains the ability to bring the high-risk dates forward once harmonised standards are ready.</p>
+        <p>Credit scoring, employment screening, and medical decisioning fall within the EU AI Act's Annex III high-risk use cases when the specific system matches the criteria listed there; operating in one of those domains does not by itself make a system high-risk. Article 14 requires human oversight for systems that do qualify. The high-risk obligations were deferred by the Digital Omnibus on AI, adopted in June 2026 and in force from 27 July 2026: Annex III stand-alone systems, including employment and credit uses, now apply from 2 December 2027, and AI embedded in Annex I regulated products from 2 August 2028. Article 50 transparency duties still apply from 2 August 2026. The final text set fixed dates and dropped the Commission's earlier proposal to tie them to the readiness of harmonised standards, so confirm the current date for your specific use case against the published regulation.</p>
       </div>
     </div>
   </div>
@@ -151,12 +151,12 @@
     <div class="stage-head">
       <span class="stage-num">Cross-cutting</span>
       <h3>Model risk management</h3>
-      <p>Treating the model itself, not just its outputs, as something with a lifecycle that needs governing.</p>
+      <p>Treating the model itself, and not only its outputs, as something with a lifecycle that needs governing.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <p>A model inventory listing every deployed model, its version, what it's used for, and who owns the decision to keep using it. Pre-deployment evaluation against a defined rubric before a new model version replaces an old one. Ongoing drift monitoring in production, tied to the observability stage on the <a href="../ai-architecture-map/index.html">Architecture Map</a>, not a one-time evaluation at launch.</p>
+        <p>A model inventory listing every deployed model, its version, what it's used for, and who owns the decision to keep using it. Pre-deployment evaluation against a defined rubric before a new model version replaces an old one. Ongoing drift monitoring in production, tied to the observability stage on the <a href="../ai-architecture-map/index.html">Architecture Map</a>, in place of a one-time evaluation at launch.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
@@ -175,30 +175,30 @@
         <table class="matrix-table">
           <tr><th>Name</th><th>What it is</th><th>Who or what it applies to</th></tr>
           <tr><td>AIGP (IAPP)</td><td>An individual professional credential, the AI-governance equivalent of IAPP's CIPP privacy certifications. 100-question exam across four domains: AI governance foundations, applicable laws and standards, governing AI development, governing AI deployment and use.</td><td>A person. Validates that someone can run an AI governance program; doesn't certify the organization or any specific system.</td></tr>
-          <tr><td>ISO/IEC 42001</td><td>A certifiable AI management system standard, the AI equivalent of ISO 27001 for information security. Third-party audited (Stage 1 and Stage 2), valid three years with annual surveillance audits, roughly 38 Annex A controls selected and justified against your own risk assessment, not a fixed checklist.</td><td>An organization's AI management system. Already held by AWS, Anthropic, and Microsoft. Doesn't by itself satisfy EU AI Act obligations, but the risk assessment and governance structure it requires feeds directly into the technical documentation the Act does require.</td></tr>
-          <tr><td>NIST AI RMF</td><td>A voluntary US framework (Govern, Map, Measure, Manage), guidance to structure a program against, not a certification anyone audits you to.</td><td>An organization's practice, self-assessed. Already referenced throughout this page's layer structure.</td></tr>
-          <tr><td>ISO/IEC 23894</td><td>Risk management guidance specific to AI, meant to be used alongside ISO 31000's general risk management approach.</td><td>An organization's risk process. Guidance, not a certifiable standard on its own.</td></tr>
+          <tr><td>ISO/IEC 42001</td><td>A certifiable AI management system standard, the AI equivalent of ISO 27001 for information security. Third-party audited (Stage 1 and Stage 2), valid three years with annual surveillance audits, 38 Annex A controls selected and justified against your own risk assessment rather than applied as a fixed checklist.</td><td>An organization's AI management system. Already held by AWS, Anthropic, and Microsoft. Doesn't by itself satisfy EU AI Act obligations, but the risk assessment and governance structure it requires feeds directly into the technical documentation the Act does require.</td></tr>
+          <tr><td>NIST AI RMF</td><td>A voluntary US framework (Govern, Map, Measure, Manage). It is guidance to structure a program against; nobody audits you to it.</td><td>An organization's practice, self-assessed. Already referenced throughout this page's layer structure.</td></tr>
+          <tr><td>ISO/IEC 23894</td><td>Risk management guidance specific to AI, meant to be used alongside ISO 31000's general risk management approach.</td><td>An organization's risk process. Guidance rather than a certifiable standard on its own.</td></tr>
           <tr><td>OECD AI Principles</td><td>High-level international principles (inclusive growth, human-centered values, transparency, robustness, accountability), adopted by dozens of governments as policy language.</td><td>National policy and regulation that draws on these principles; not something an organization implements or gets certified against directly.</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">The practical distinction that matters most: AIGP tells you something about a person you might hire or promote into an AI governance role. ISO 42001 tells a customer or regulator something about your organization, backed by an independent audit. Neither substitutes for the other, and neither substitutes for the technical controls described in the four layers above; a certified management system with no enforced technical controls underneath it is a real and common failure pattern.</div>
+    <div class="same-note">The practical distinction that matters most: AIGP tells you something about a person you might hire or promote into an AI governance role. ISO 42001 tells a customer or regulator something about your organization, backed by an independent audit. Neither substitutes for the other, and neither substitutes for the technical controls described in the four layers above; a certified management system with no enforced technical controls underneath it is a common failure pattern.</div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Judgment call</span>
       <h3>Is ISO 42001 certification worth pursuing</h3>
-      <p>A real decision with a real cost, not something to default into because the standard exists.</p>
+      <p>A decision with a cost attached. Don't default into it because the standard exists.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Worth it</span>
-        <p>Enterprise customers or regulators are asking for independent evidence of AI governance maturity, not just a policy document. Selling into procurement processes where a competitor's ISO 42001 badge is becoming a checkbox. The organization already holds ISO 27001, since the incremental cost and timeline drop substantially when the management-system muscle already exists.</p>
+        <p>Enterprise customers or regulators are asking for independent evidence of AI governance maturity and a policy document no longer satisfies them. Selling into procurement processes where a competitor's ISO 42001 badge is becoming a checkbox. The organization already holds ISO 27001, since the incremental cost and timeline drop substantially when the management-system muscle already exists.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Not worth it yet</span>
-        <p>A small AI footprint with a handful of internal use cases and no customer demanding third-party evidence. The four layers above aren't solidly in place yet, certifying a management system before the underlying technical controls exist produces a certificate that doesn't reflect reality, and an auditor will eventually find that gap. NIST AI RMF, applied honestly and evidenced internally, covers most of the same ground without the $20,000 to $60,000 audit cost and multi-year commitment.</p>
+        <p>A small AI footprint with a handful of internal use cases and no customer demanding third-party evidence. The four layers above aren't solidly in place yet. Certifying a management system before the underlying technical controls exist produces a certificate that doesn't reflect reality, and an auditor will eventually find that gap. NIST AI RMF, applied seriously and evidenced internally, covers most of the same ground without the $20,000 to $60,000 audit cost and multi-year commitment.</p>
       </div>
     </div>
   </div>
@@ -231,7 +231,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <p>A named accountable owner per AI use case, not a committee with no single decision-maker. Decision logging: every promotion of a new model or index version recorded with who approved it and what evaluation evidence supported the approval.</p>
+        <p>A named accountable owner per AI use case. A committee with no single decision-maker does not count. Decision logging: every promotion of a new model or index version recorded with who approved it and what evaluation evidence supported the approval.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
@@ -252,7 +252,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>A general incident response process (see <a href="../incident-response/index.html">Incident Response</a>) usually isn't built to ask &quot;was this the model's fault, the retrieval's fault, or the underlying data's fault,&quot; and that triage question determines the fix. Build this as an extension of the general process, not a replacement for it.</p>
+        <p>A general incident response process (see <a href="../incident-response/index.html">Incident Response</a>) usually isn't built to ask &quot;was this the model's fault, the retrieval's fault, or the underlying data's fault,&quot; and that triage question determines the fix. Build this as an extension of the general process rather than a replacement for it.</p>
       </div>
     </div>
   </div>
@@ -261,7 +261,7 @@
 
 <footer>
   Reference only. Regulatory requirements and enforcement postures change; verify current obligations against primary sources and counsel before relying on this for a compliance decision. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for the EU AI Act timeline after the 2026 deferral and the US state picture.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

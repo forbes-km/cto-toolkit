@@ -83,17 +83,17 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Mechanic</span>
-      <h3>Why multi-evaluator, not single-decision-maker</h3>
-      <p>The scorecard's real value isn't the criteria list, it's forcing the score itself to survive more than one perspective before it becomes a decision.</p>
+      <h3>Why multi-evaluator rather than single-decision-maker</h3>
+      <p>The scorecard's value is in forcing the score itself to survive more than one perspective before it becomes a decision. The criteria list is the smaller part.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">How it works</span>
-        <p>Each stakeholder category, technical, security, finance, the actual end users, scores the vendor independently against the same criteria before anyone compares notes. Independent scoring first prevents the most senior or most vocal evaluator's opinion from anchoring everyone else's.</p>
+        <p>Each stakeholder category (technical, security, finance, the end users) scores the vendor independently against the same criteria before anyone compares notes. Independent scoring first prevents the most senior or most vocal evaluator's opinion from anchoring everyone else's.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where it earns its keep</span>
-        <p>The interesting result usually isn't the average score, it's the variance. A vendor scored a 4 by security and a 9 by the business sponsor is a conversation the scorecard forces to happen explicitly, before a contract is signed, rather than as a surprise after go-live.</p>
+        <p>The interesting result is usually the variance rather than the average score. A vendor scored a 2 by security and a 5 by the business sponsor is a conversation the scorecard forces to happen explicitly, before a contract is signed, rather than as a surprise after go-live.</p>
       </div>
     </div>
   </div>
@@ -107,12 +107,12 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Category</th><th>What to check</th><th>Common mistake</th></tr>
-          <tr><td>Functional fit</td><td>Score against your actual top ten requirements, not the vendor's feature list</td><td>Scoring against the demo instead of a trial with your own real data</td></tr>
-          <tr><td>Security &amp; compliance posture</td><td>Current SOC 2 or ISO certification, not an expired one; actual pen test summary if available</td><td>Accepting a security questionnaire response at face value with no artifact requested</td></tr>
+          <tr><td>Functional fit</td><td>Score against your own top ten requirements rather than the vendor's feature list</td><td>Scoring against the demo instead of a trial with your own data</td></tr>
+          <tr><td>Security &amp; compliance posture</td><td>A current SOC 2 or ISO certification rather than an expired one; the pen test summary if available</td><td>Accepting a security questionnaire response at face value with no artifact requested</td></tr>
           <tr><td>Financial stability</td><td>Funding stage or profitability, customer concentration risk, runway if it's an early-stage vendor</td><td>Skipping this for anything that isn't a large, obviously stable vendor</td></tr>
-          <tr><td>Integration complexity</td><td>Actual API quality and documentation, tested against a real integration spike, not a sales engineer's assurance</td><td>Estimating integration effort from a slide deck instead of a technical spike</td></tr>
-          <tr><td>Support &amp; SLA</td><td>Actual historical response time from reference customers, not the SLA document's stated target</td><td>Trusting the SLA document without checking whether it's ever enforced against the vendor</td></tr>
-          <tr><td>Exit &amp; data portability</td><td>Can you export your data in a usable format, and what does contract termination require</td><td>Not asking this question until the relationship is already ending</td></tr>
+          <tr><td>Integration complexity</td><td>API quality and documentation, tested in an integration spike rather than taken from a sales engineer's assurance</td><td>Estimating integration effort from a slide deck instead of a technical spike</td></tr>
+          <tr><td>Support &amp; SLA</td><td>Historical response time from reference customers rather than the SLA document's stated target</td><td>Trusting the SLA document without checking whether it's ever enforced against the vendor</td></tr>
+          <tr><td>Exit &amp; data portability</td><td>Can you export your data in a usable format, and what does contract termination require</td><td>Leaving this question until the relationship is already ending</td></tr>
         </table>
       </div>
     </div>
@@ -170,9 +170,9 @@
       if (weighted >= 4.0) {
         verdict = 'STRONG CANDIDATE. Scores well across the board; proceed to reference calls and the lock-in questions before signing.';
       } else if (weighted >= 3.0) {
-        verdict = 'PROCEED WITH CONDITIONS. Workable overall, but check which specific dimensions pulled the score down, those are the terms to push on before signing, not after.';
+        verdict = 'PROCEED WITH CONDITIONS. Workable overall, but check which specific dimensions pulled the score down, those are the terms to push on before signing.';
       } else {
-        verdict = 'SIGNIFICANT CONCERNS. This vendor is a weak fit as scored; treat a low score on any single dimension as a real finding, not noise to average away.';
+        verdict = 'SIGNIFICANT CONCERNS. This vendor is a weak fit as scored; treat a low score on any single dimension as a finding rather than noise to average away.';
       }
 
       const weakest = breakdown.reduce((a, b) => (b.score < a.score ? b : a));
@@ -196,7 +196,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What works</span>
-        <p>Asking the vendor for a reference in a similar situation to yours (similar scale, similar use case), then asking that reference one specific question: &quot;what would you do differently if you were choosing again today.&quot; That question surfaces real friction far more reliably than &quot;are you happy with them.&quot;</p>
+        <p>Asking the vendor for a reference in a similar situation to yours (similar scale, similar use case), then asking that reference one specific question: &quot;what would you do differently if you were choosing again today.&quot; That question surfaces friction far more reliably than &quot;are you happy with them.&quot;</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What backfires</span>
@@ -208,16 +208,16 @@
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>The lock-in question, asked before signing</h3>
-      <p>Exit cost is far easier to evaluate honestly before a contract exists than after switching costs have already accumulated.</p>
+      <p>Exit cost is far easier to evaluate before a contract exists than after switching costs have already accumulated.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Questions to answer now</span>
-        <p>What format can data be exported in, is there a contractual data portability clause, what's the actual notice period and any early termination penalty, and how much custom integration work exists that would need to be rebuilt for a different vendor.</p>
+        <p>What format can data be exported in, is there a contractual data portability clause, what's the notice period and any early termination penalty, and how much custom integration work exists that would need to be rebuilt for a different vendor.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The cost of skipping this</span>
-        <p>Discovering the actual exit cost during a renewal negotiation, at exactly the moment the vendor has the least incentive to make leaving easy and the most leverage to raise price, since they know switching now looks expensive.</p>
+        <p>Discovering the exit cost during a renewal negotiation, at exactly the moment the vendor has the least incentive to make leaving easy and the most leverage to raise price, since they know switching now looks expensive.</p>
       </div>
     </div>
   </div>
@@ -232,9 +232,9 @@
       <div class="stage-cell">
         <ul>
           <li><strong>Auto-renewal terms.</strong> How much notice is required to opt out, and does the notice window open before or after the price for the next term is disclosed. A short window that closes before the new price is revealed is a structural risk to you regardless of the vendor's intent, and worth negotiating out of the contract either way.</li>
-          <li><strong>Liability caps.</strong> What the vendor is on the hook for if their product causes a breach or an outage, often capped at fees paid, which can be a small fraction of the actual damage.</li>
-          <li><strong>SLA penalty structure.</strong> Whether missing the SLA produces a real, automatic credit or requires the customer to notice, document, and formally claim it, which most SLAs quietly rely on nobody doing.</li>
-          <li><strong>Most-favored-nation and price-lock clauses.</strong> Whether the contract protects against a price increase at renewal, and whether it's enforceable or just a stated intention.</li>
+          <li><strong>Liability caps.</strong> What the vendor is on the hook for if their product causes a breach or an outage, often capped at fees paid, which can be a small fraction of the damage.</li>
+          <li><strong>SLA penalty structure.</strong> Whether missing the SLA produces an automatic credit or requires the customer to notice, document, and formally claim it, which most SLAs quietly rely on nobody doing.</li>
+          <li><strong>Most-favored-nation and price-lock clauses.</strong> Whether the contract protects against a price increase at renewal, and whether it's enforceable or only a stated intention.</li>
         </ul>
       </div>
     </div>
@@ -244,16 +244,16 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Negotiation leverage, and when to use it</h3>
-      <p>Leverage in a vendor negotiation is real but time-bound. Knowing when it exists changes what's worth pushing for.</p>
+      <p>Leverage in a vendor negotiation exists but is time-bound. Knowing when it exists changes what's worth pushing for.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Where leverage exists</span>
-        <p>The vendor's fiscal quarter-end or year-end, when a sales rep needs the deal to close on their timeline, not yours. A genuine competitive alternative already evaluated, not bluffed. A multi-year commitment offered in exchange for a real discount, since the vendor values the certainty more than the marginal revenue from staying month-to-month.</p>
+        <p>The vendor's fiscal quarter-end or year-end, when a sales rep needs the deal to close on their timeline rather than yours. A competitive alternative already evaluated rather than bluffed. A multi-year commitment offered in exchange for a meaningful discount, since the vendor values the certainty more than the marginal revenue from staying month-to-month.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where it doesn't</span>
-        <p>Threatening to walk with no real alternative lined up gets tested and lost quickly. A vendor negotiation team that's dealt with the bluff before will call it, and the next negotiation starts from a weaker position because the threat is no longer credible.</p>
+        <p>Threatening to walk with no alternative lined up gets tested and lost quickly. A vendor negotiation team that's dealt with the bluff before will call it, and the next negotiation starts from a weaker position because the threat is no longer credible.</p>
       </div>
     </div>
   </div>
@@ -261,13 +261,13 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
-      <h3>After signing: performance management, not filing it away</h3>
+      <h3>After signing: performance management</h3>
       <p>A vendor evaluation that stops at the signature misses the half of the relationship that determines whether the choice was right.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A standing quarterly business review for any vendor above a materiality threshold, tracking the same dimensions scored during evaluation, support responsiveness, uptime against the SLA, whether the integration is still fit for purpose. This is what turns the next renewal negotiation from a cold restart into a conversation grounded in a real track record.</p>
+        <p>A standing quarterly business review for any vendor above a materiality threshold, tracking the same dimensions scored during evaluation, support responsiveness, uptime against the SLA, whether the integration is still fit for purpose. This is what turns the next renewal negotiation from a cold restart into a conversation grounded in a track record.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -294,7 +294,7 @@
 
 <footer>
   Reference only. Weight each category to the specific decision's criticality and reversibility rather than applying a fixed formula. See <a href="../saas-contract-negotiation/index.html" style="color:var(--accent);">SaaS Contract &amp; Renewal Negotiation</a> for the renewal, where most of the money goes.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

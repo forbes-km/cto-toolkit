@@ -105,11 +105,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Interconnectedness</span>
-        <p>Every stock and flow in a technology organization feeds or drains others across whatever boundary a team or org chart draws. A dependency on an architecture diagram is a channel this travels through, not a documentation artifact. A change to authentication latency doesn't stay inside the identity team's service, it slows every login-gated feature across the product, and shows up as a conversion drop on a dashboard the identity team never looks at.</p>
+        <p>Every stock and flow in a technology organization feeds or drains others across whatever boundary a team or org chart draws. A dependency on an architecture diagram is a channel this travels through, well beyond a documentation artifact. A change to authentication latency doesn't stay inside the identity team's service; it slows every login-gated feature across the product, and shows up as a conversion drop on a dashboard the identity team never looks at.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Emergence</span>
-        <p>Some properties belong to the system as a whole and don't exist at the level of any single component: reliability, delivery speed, and security posture aren't owned by one team, they're produced by how every team's work interacts. A postmortem that traces an outage to "the database team's mistake" is looking at one component. The outage was produced by how the database, the retry logic three services away, and a five-minute alerting delay interacted together. None of the three was broken on its own.</p>
+        <p>Some properties belong to the system as a whole and don't exist at the level of any single component: reliability, delivery speed, and security posture belong to no single team; they're produced by how every team's work interacts. A postmortem that traces an outage to "the database team's mistake" is looking at one component. The outage was produced by how the database, the retry logic three services away, and a five-minute alerting delay interacted together. None of the three was broken on its own.</p>
       </div>
     </div>
   </div>
@@ -127,10 +127,10 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Synthesis</span>
-        <p>Understands a system by its role in the larger system that contains it, not by taking it apart. A platform team isn't understood by cataloging its services, it's understood by what the product organization needs from it that no other team provides. Synthesis explains why the boundary was drawn where it was.</p>
+        <p>Understands a system by its role in the larger system that contains it rather than by taking it apart. A platform team is understood by what the product organization needs from it that no other team provides, and cataloging its services tells you little about that. Synthesis explains why the boundary was drawn where it was.</p>
       </div>
     </div>
-    <div class="same-note">Synthesis is also how you find a system's real purpose: not what a team's charter says, but what the larger system gets from it, revealed by what happens when the team is slow, understaffed, or removed. A security team whose real purpose, by that test, is "produce an audit-passing paper trail" behaves nothing like one whose real purpose is "reduce breach risk," even when both teams' charters say the same thing.</div>
+    <div class="same-note">Synthesis is also how you find a system's operative purpose: what the larger system gets from it, revealed by what happens when the team is slow, understaffed, or removed, as opposed to what the team's charter says. A security team whose operative purpose, by that test, is "produce an audit-passing paper trail" behaves nothing like one whose operative purpose is "reduce breach risk," even when both teams' charters say the same thing.</div>
   </div>
 
   <div class="stage-card">
@@ -179,7 +179,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Below the threshold</span>
-        <p>A growing stock, queue depth, technical debt, on-call fatigue, can grow for months with no visible symptom at all, because the system still has enough slack to absorb it. The growth looks free. It isn't; it's using up a buffer nobody's watching.</p>
+        <p>A growing stock, queue depth, technical debt, on-call fatigue, can grow for months with no visible symptom at all, because the system still has enough slack to absorb it. The growth looks free. It is using up a buffer nobody's watching.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Past the threshold</span>
@@ -200,7 +200,7 @@
           <tr><th>Local optimization looks like</th><th>System optimization looks like</th></tr>
           <tr><td>Each team hits its own velocity and cost targets</td><td>The end-to-end delivery pipeline gets faster, even if one team's metrics look worse</td></tr>
           <tr><td>A platform team ships features for its biggest internal customer first</td><td>A platform team ships the golden path that reduces total organizational toil</td></tr>
-          <tr><td>Security reviews every change with equal rigor</td><td>Security calibrates rigor to blast radius, so low-risk changes move fast and high-risk ones get real scrutiny</td></tr>
+          <tr><td>Security reviews every change with equal rigor</td><td>Security calibrates rigor to blast radius, so low-risk changes move fast and high-risk ones get close scrutiny</td></tr>
           <tr><td>Cost is optimized service by service</td><td>Cost is optimized against the business outcome the services jointly produce</td></tr>
         </table>
       </div>
@@ -217,7 +217,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Technical debt taken on during a growth push doesn't slow anything down immediately, that's the point of taking it on. The cost shows up eighteen months later as declining delivery velocity that gets diagnosed as a hiring problem or a process problem, because the original decision is long forgotten and the delay severed the visible link between cause and effect.</p>
+        <p>Technical debt taken on during a growth push doesn't slow anything down immediately; that's the point of taking it on. The cost shows up eighteen months later as declining delivery velocity that gets diagnosed as a hiring problem or a process problem, because the original decision is long forgotten and the delay severed the visible link between cause and effect.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Worked example</span>
@@ -240,9 +240,9 @@
           <tr><td>Buffers and capacity</td><td>Changing how much slack a stock holds</td><td>Raising reserved cloud capacity so a traffic spike doesn't page anyone</td></tr>
           <tr><td>Delays</td><td>Changing how fast a loop gets feedback</td><td>Cutting CI pipeline time from 45 minutes to 5, so a broken build gets caught the same hour instead of the next morning</td></tr>
           <tr><td>Information flow</td><td>Changing who sees a signal, and how fast</td><td>Putting each team's own cloud bill on their own dashboard instead of a quarterly finance report</td></tr>
-          <tr><td>Rules and incentives</td><td>Changing what's rewarded or permitted</td><td>Tying a team's sprint capacity explicitly to error-budget consumption, not just feature velocity</td></tr>
+          <tr><td>Rules and incentives</td><td>Changing what's rewarded or permitted</td><td>Tying a team's sprint capacity explicitly to error-budget consumption as well as feature velocity</td></tr>
           <tr><td>Goals</td><td>Changing what the system is organized to produce</td><td>Replacing "ship features fast" with "ship features that don't page anyone" as the stated team goal</td></tr>
-          <tr><td>Mindset</td><td>Changing the shared, usually unstated assumption everyone is already operating from</td><td>The assumption that engineering time is free and only cloud spend is a real cost, changing that changes every budget conversation downstream of it, without anyone having to approve each one</td></tr>
+          <tr><td>Mindset</td><td>Changing the shared, usually unstated assumption everyone is already operating from</td><td>The assumption that engineering time is free and only cloud spend counts as a cost. Changing that changes every budget conversation downstream of it, without anyone having to approve each one</td></tr>
         </table>
       </div>
     </div>
@@ -259,9 +259,9 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Stage</th><th>What systems thinking adds</th></tr>
-          <tr><td><a href="../technology-strategy/index.html">1 &middot; Strategy</a></td><td>A portfolio bet is also a claim about which loops get stronger and which get starved of resource. State that claim in the business case, not just the return.</td></tr>
+          <tr><td><a href="../technology-strategy/index.html">1 &middot; Strategy</a></td><td>A portfolio bet is also a claim about which loops get stronger and which get starved of resource. State that claim in the business case alongside the return.</td></tr>
           <tr><td><a href="../technology-decision-rights/index.html">2 &middot; Operating Model</a></td><td>Two teams can each run their own component well and still let the feedback between them fall through the gap. Decision rights put a named owner at exactly that gap.</td></tr>
-          <tr><td><a href="../architecture-principles/index.html">3 &middot; Architecture</a></td><td>Coupling is a system property. Every dependency on an architecture diagram is a channel a delay or a reinforcing loop travels through, not just a technical relationship.</td></tr>
+          <tr><td><a href="../architecture-principles/index.html">3 &middot; Architecture</a></td><td>Coupling is a system property. Every dependency on an architecture diagram is a channel a delay or a reinforcing loop travels through, on top of being a technical relationship.</td></tr>
           <tr><td><a href="../grc-operating-model/index.html">4 &middot; Governance</a></td><td>A control scoped to one component misses the system-level cost it creates. This is the same gap Governance, Risk &amp; Compliance calls a cross-cutting risk falling through every function's boundary at once.</td></tr>
           <tr><td><a href="../engineering-culture/index.html">5 &middot; Execution</a></td><td>The team shipping fastest under a reinforcing loop, more praise, more speed, is often borrowing from a balancing loop nobody's watching: on-call capacity, review rigor, onboarding time.</td></tr>
           <tr><td><a href="../reliability-economics/index.html">6 &middot; Measurement</a></td><td>A metric improving at the component level while the system degrades is the local-optimization trap from card 7. Check what the metric is trading away before reporting it as a win.</td></tr>
@@ -292,7 +292,7 @@
 </main>
 
 <footer>
-  Reference only. The vocabulary and the leverage-points ranking (card 9) are adapted from Donella H. Meadows, <em>Thinking in Systems: A Primer</em> (Chelsea Green Publishing, 2008), including her hierarchy of twelve places to intervene in a system, condensed here to seven for practical use. The analysis/synthesis distinction (card 3) draws on Russell L. Ackoff's writing on systems thinking. Systems thinking surfaces interactions worth examining before an intervention; it doesn't guarantee the intervention chosen afterward is correct.
+  Reference only. The vocabulary and the leverage-points ranking (card 9) are adapted from Donella H. Meadows, <em>Thinking in Systems: A Primer</em> (Chelsea Green Publishing, 2008), including her hierarchy of twelve places to intervene in a system, condensed here to seven for practical use. The analysis/synthesis distinction (card 3) draws on Russell L. Ackoff's writing on systems thinking. Systems thinking surfaces interactions worth examining before an intervention; the intervention chosen afterward still has to be right on its own merits.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

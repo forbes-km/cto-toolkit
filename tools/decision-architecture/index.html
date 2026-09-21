@@ -6,7 +6,7 @@
 <title>Decision Architecture</title>
 <meta name="description" content="The actual shape underneath the 52 pages: six interconnected domains, a feedback loop, and a foundational layer that doesn't fit a sequence.">
 <meta property="og:title" content="Decision Architecture | CTO Toolkit">
-<meta property="og:description" content="Strategy, operating model, architecture, governance, execution, measurement, and why the honest version of this isn't a straight line.">
+<meta property="og:description" content="Strategy, operating model, architecture, governance, execution, measurement, and why the shape is a loop rather than a straight line.">
 <meta property="og:type" content="article">
 <style>
   :root {
@@ -79,8 +79,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Decision Architecture</h1>
-  <p>The structure behind the 68 pages: six interconnected domains, plus the pages that don't fit a domain at all.</p>
-  <div class="philosophy">Technology leadership isn't the optimization of technology. It's the design of an organizational system that lets technology create business value while controlling risk, complexity, cost, and friction. That system has a shape: strategy sets direction, an operating model establishes how decisions get made, architecture shapes what gets built and how, governance establishes the constraints and control mechanisms, execution is where it happens, and measurement tells you whether any of it worked, then feeds back into strategy. The loop back to strategy follows Deming's plan-do-check-act cycle; the split between governance and operating model follows COBIT's separation of governing from managing. Every page below sits somewhere in that shape, or explains why it doesn't.</div>
+  <p>The structure behind the 68 pages: six interconnected domains, plus the pages that don't fit a domain at all. The six situational entry points and the <a href="../toolkit-reference-map/index.html">Toolkit Reference Map</a> are navigation aids over this structure rather than part of it.</p>
+  <div class="philosophy">Technology leadership is the design of an organizational system that lets technology create business value while controlling risk, complexity, cost, and friction. That system has a shape: strategy sets direction, an operating model establishes how decisions get made, architecture shapes what gets built and how, governance establishes the constraints and control mechanisms, execution is where it happens, and measurement tells you whether any of it worked, then feeds back into strategy. The loop back to strategy follows Deming's plan-do-check-act cycle; the split between governance and operating model follows COBIT's separation of governing from managing. Every page below sits somewhere in that shape, or explains why it doesn't.</div>
 </header>
 
 <main>
@@ -106,9 +106,9 @@
       <div class="flow-arrow">&rarr;</div>
       <div class="flow-stage"><span class="num">6</span><span class="name">Measurement</span></div>
     </div>
-    <div class="feedback-note">&#8635; Measurement feeds back into Strategy, this isn't a one-way line, it's a loop</div>
+    <div class="feedback-note">&#8635; Measurement feeds back into Strategy. The line is a loop.</div>
     <div class="foundation">
-      <div class="foundation-label">Lens &middot; Foundational, cross-cutting, not a domain in the sequence</div>
+      <div class="foundation-label">Lens &middot; Foundational and cross-cutting, outside the sequence</div>
       <div class="foundation-items">
         <span class="foundation-item">Epistemology &amp; Research Methods</span>
         <span class="foundation-item">Systems Thinking for CTOs</span>
@@ -169,7 +169,7 @@
 <text x="471" y="290" text-anchor="start" font-size="10.5" fill="var(--accent)" font-weight="600" letter-spacing="0.05em" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">LENS</text>
 <text x="471" y="306" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Foundational: evidence, systems, relationships; active in every stage</text>
 </svg>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">The green loop is Deming's plan-do-check-act applied to the whole function: measurement is not the end of the sequence, it is the input to the next strategy. The dashed bracket is COBIT's separation of governing from managing, which is why operating model and governance are different stages.</p>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">The green loop is Deming's plan-do-check-act applied to the whole function: measurement is the input to the next strategy rather than the end of the sequence. The dashed bracket is COBIT's separation of governing from managing, which is why operating model and governance are different stages.</p>
     </div></div>
   </div>
 
@@ -185,6 +185,7 @@
         <a class="page-link" href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a>
         <a class="page-link" href="../data-strategy/index.html">Data Strategy</a>
         <a class="page-link" href="../innovation-portfolio/index.html">Innovation Portfolio Management</a>
+        <a class="page-link" href="../transformation-and-innovation/index.html">Transformation and Innovation</a>
         <a class="page-link" href="../ai-portfolio-management/index.html">AI Portfolio Management</a>
         <a class="page-link" href="../build-vs-buy/index.html">Build vs Buy</a>
         <a class="page-link" href="../business-case-calculator/index.html">Business Case Calculator</a>
@@ -194,7 +195,7 @@
         <a class="page-link hybrid" href="../technology-risk-appetite/index.html">Technology Risk Appetite</a>
         <a class="page-link hybrid" href="../technology-capital-allocation/index.html">Technology Capital Allocation</a>
       </div>
-      <div class="hybrid-note">Highlighted links are hybrid, listed here and in a second domain below, not a filing error.</div>
+      <div class="hybrid-note">Highlighted links are hybrid: listed here and in a second domain below, on purpose.</div>
     </div>
   </div>
 
@@ -248,7 +249,7 @@
     <div class="stage-head">
       <span class="stage-num">4 &middot; Governance</span>
       <h3>Where the constraints and control mechanisms live</h3>
-      <p>Not centralization for its own sake, the specific decisions worth constraining and why.</p>
+      <p>The specific decisions worth constraining and why. Centralization for its own sake is a different thing.</p>
     </div>
     <div class="stage-body">
       <div class="page-list">
@@ -320,7 +321,7 @@
         <tr><th>PrOACT step</th><th>What it looks like</th><th>Where it lives here</th></tr>
         <tr><td>Frame the Problem</td><td>State what's being decided, and what's explicitly out of scope</td><td>Strategy, <a href="../technology-strategy/index.html">Technology Strategy</a></td></tr>
         <tr><td>Objectives</td><td>State what you're optimizing for before you look at options, so the options don't retroactively define the goal</td><td>Strategy, <a href="../business-case-calculator/index.html">Business Case Calculator</a></td></tr>
-        <tr><td>Alternatives</td><td>Real options on the table, not the one you already prefer plus a straw man</td><td>Governance, <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
+        <tr><td>Alternatives</td><td>Options that could each win, rather than the one you already prefer plus a straw man</td><td>Governance, <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
         <tr><td>Consequences</td><td>Confidence-graded evidence for what each alternative produces</td><td>Foundational, <a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a></td></tr>
         <tr><td>Tradeoffs</td><td>Explicit scoring against the same criteria, so the tradeoff is visible instead of hidden inside a gut call</td><td>Strategy, <a href="../vendor-evaluation/index.html">Vendor Evaluation</a></td></tr>
         <tr><td>Choose</td><td>A named, accountable owner makes the call</td><td>Operating Model, <a href="../technology-decision-rights/index.html">Technology Decision Rights</a></td></tr>
@@ -333,8 +334,8 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Lens &middot; Foundational</span>
-      <h3>What doesn't fit the sequence, and why forcing it would be dishonest</h3>
-      <p>Six pages that aren't a step you pass through once. They're either underneath every domain or running continuously alongside all of them.</p>
+      <h3>What doesn't fit the sequence, and why forcing it would mislead</h3>
+      <p>Six pages that are never a step you pass through once. They sit underneath every domain or run continuously alongside all of them.</p>
     </div>
     <div class="stage-body">
       <div class="page-list">
@@ -346,13 +347,13 @@
         <a class="page-link" href="../stakeholder-engagement/index.html">Stakeholder Engagement</a>
       </div>
     </div>
-    <div class="same-note">Epistemology is about how you evaluate claims across every domain above, not a domain itself. Systems Thinking is the lens, and Seeing the System Before Changing It is the diagnostic that lens produces, both apply regardless of which domain the decision sits in. The relationship pages aren't a phase you complete, they're continuously active regardless of which domain the actual work is in.</div>
+    <div class="same-note">Epistemology is about how you evaluate claims across every domain above. Systems Thinking is the lens, and Seeing the System Before Changing It is the diagnostic that lens produces; both apply regardless of which domain the decision sits in. The relationship pages are never a phase you complete. They stay active regardless of which domain the work is in.</div>
   </div>
 
 </main>
 
 <footer>
-  Reference only. This mapping describes how the toolkit's own content relates, not a universal framework every organization should adopt as-is. The strategy-to-measurement feedback loop draws on W. Edwards Deming's plan-do-check-act cycle; the governance/operating-model split draws on ISACA's COBIT framework; the decision-process table draws on Hammond, Keeney, and Raiffa, <em>Smart Choices: A Practical Guide to Making Better Decisions</em> (Harvard Business School Press, 1999).
+  Reference only. This mapping describes how the toolkit's own content relates; it is not offered as a universal framework every organization should adopt as-is. The strategy-to-measurement feedback loop draws on W. Edwards Deming's plan-do-check-act cycle; the governance/operating-model split draws on ISACA's COBIT framework; the decision-process table draws on Hammond, Keeney, and Raiffa, <em>Smart Choices: A Practical Guide to Making Better Decisions</em> (Harvard Business School Press, 1999).
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

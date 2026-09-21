@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Observability &amp; SRE Operating Model</title>
-<meta name="description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations actually run, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
+<meta name="description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations end up running, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
 <meta property="og:title" content="Observability &amp; SRE Operating Model | CTO Toolkit">
-<meta property="og:description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations actually run, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
+<meta property="og:description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations end up running, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/observability-sre-operating-model/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Observability &amp; SRE Operating Model | CTO Toolkit">
-<meta name="twitter:description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations actually run, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
+<meta name="twitter:description" content="How a reliability function is run rather than how much reliability to buy: four operating models and the one most organizations end up running, what the function owns (SLOs, error budget policy, observability standards, alert hygiene, production readiness, toil), an observability architecture that survives scale and cost, an on-call design people will keep doing, a sequence for standing the function up, and the rename-the-ops-team pitfall.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <style>
   :root {
@@ -92,7 +92,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h2>Four models, and the one most organizations are actually running</h2>
+      <h2>Four models, and the one most organizations end up running</h2>
       <p><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a> answers how much reliability to buy. This page answers how the function that delivers it is organized, because the same reliability budget produces very different outcomes under different operating models.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
@@ -102,7 +102,7 @@
         <tr><td>You build it, you run it</td><td>Each product team, for its own services</td><td>Each product team</td><td>Autonomous teams with the platform support to be self-sufficient</td><td>Teams lack observability tooling, on-call is unfunded, and reliability work loses every prioritization to features</td></tr>
         <tr><td>Embedded SRE</td><td>Product team, with an SRE embedded in it</td><td>Shared; the SRE drives standards and the team executes</td><td>Critical services that justify a dedicated reliability engineer</td><td>The SRE becomes the team's ops person and the standards work never happens</td></tr>
         <tr><td>Central SRE with a platform</td><td>Product teams for their services; SRE for the platform and for a defined set of critical services</td><td>SRE owns the platform, the standards, the tooling, and error budget policy; teams own their services within it</td><td>Ten or more teams and a shared platform, which is most enterprises</td><td>The SRE team is treated as a rename of the ops team and is paged for everything</td></tr>
-      </table>      <p>Most organizations claiming the second model are running the first with extra steps: product teams are nominally on call, but escalate to a central team that does the actual restoration and owns none of the fixes. Naming the model that is actually running is the first honest step.</p>
+      </table>      <p>Most organizations claiming the second model are running the first with extra steps: product teams are nominally on call, but escalate to a central team that does the restoration and owns none of the fixes. Naming the model that is running is the first step.</p>
     </div></div>
   </div>
 
@@ -176,7 +176,7 @@
 <rect x="30" y="316" width="830" height="80" rx="8" fill="var(--paper)" stroke="var(--line)"/>
 <text x="46" y="337" text-anchor="start" font-size="10.5" fill="var(--accent)" font-weight="600" letter-spacing="0.05em" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">TWO RULES</text>
 <text x="46" y="356" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Only symptoms page a human; causes go to dashboards and the investigation.</text>
-<text x="46" y="372" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Standardize the instrumentation, not the backend, so the backend stays a renewal decision rather than a hostage.</text>
+<text x="46" y="372" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Standardize the instrumentation rather than the backend, so the backend stays a renewal decision rather than a hostage.</text>
 </svg>
       <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">The producers on the left include the AI layer and the customer's own view, which most estates leave uninstrumented. The collector is the one place cost is controlled; if there is no owner there, the bill grows with coverage.</p>
     </div></div>
@@ -212,9 +212,9 @@
     <div class="stage-grid single"><div class="stage-cell">
       <ol class="num-list">
         <li><div><b>Decide the signals and their purpose first</b>Logs for forensic detail, metrics for state over time and alerting, traces for request flow across services. A signal with no consumer is cost. Most estates over-collect logs and under-instrument traces.</div></li>
-        <li><div><b>Standardize the instrumentation, not the vendor</b>Use a vendor-neutral instrumentation standard (OpenTelemetry has become the default) so the collection layer is portable and the backend can be changed at a renewal. The backend is a <a href="../saas-contract-negotiation/index.html">SaaS renewal</a> problem; the instrumentation should not be.</div></li>
+        <li><div><b>Standardize the instrumentation rather than the vendor</b>Use a vendor-neutral instrumentation standard (OpenTelemetry has become the default) so the collection layer is portable and the backend can be changed at a renewal. The backend is a <a href="../saas-contract-negotiation/index.html">SaaS renewal</a> problem; the instrumentation should not be.</div></li>
         <li><div><b>Put a cost owner on telemetry</b>Ingest volume by service, with a budget per service and an alert when it is exceeded. Sampling for traces, retention tiers for logs, cardinality limits for metrics. The observability bill is a FinOps problem and belongs in <a href="../cloud-cost-management/index.html">Cloud FinOps</a>.</div></li>
-        <li><div><b>Alert on symptoms, not causes</b>Alerts derive from SLOs: error rate, latency, availability as the user sees them. Cause-level signals (CPU, disk, queue depth) feed dashboards and the investigation, not the pager.</div></li>
+        <li><div><b>Alert on symptoms</b>Alerts derive from SLOs: error rate, latency, availability as the user sees them. Cause-level signals (CPU, disk, queue depth) feed dashboards and the investigation and stay off the pager.</div></li>
         <li><div><b>Make the correlation identifier non-negotiable</b>One identifier propagates through every request, message, and log line. Without it, distributed debugging is guesswork, and the integration patterns in <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> depend on it.</div></li>
         <li><div><b>Include the AI layer</b>Model calls, token usage, latency, cost, and output quality signals are telemetry too. An AI system in production without them is not observable; see <a href="../ai-architecture-map/index.html">AI Architecture</a>.</div></li>
       </ol>
@@ -224,16 +224,16 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h2>On-call that people will keep doing</h2>
-      <p>The failure mode of every reliability model is an on-call rota that burns out the people who know the most. It is a design problem, not a resilience problem.</p>
+      <p>The failure mode of every reliability model is an on-call rota that burns out the people who know the most. It is a design problem, and treating it as a resilience problem blames the wrong thing.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <ul class="checklist">
         <li>Rotations are at least six people deep; fewer means someone is on call one week in four or worse</li>
         <li>On-call is paid, either as an allowance or as time off, and the policy is written down</li>
-        <li>Pages per shift are measured; a shift with more than a handful of pages triggers a review of the alerts, not of the person</li>
-        <li>Every page has a runbook; a page without one is a bug filed against the service, not a test of the responder</li>
+        <li>Pages per shift are measured; a shift with more than a handful of pages triggers a review of the alerts rather than of the person</li>
+        <li>Every page has a runbook; a page without one is a bug filed against the service rather than a test of the responder</li>
         <li>Escalation is defined by service and by severity, with a named second line, so the first responder is never alone by default</li>
-        <li>Follow-the-sun is used where the organization spans time zones; if it does not, night pages are minimized by design, not endured</li>
+        <li>Follow-the-sun is used where the organization spans time zones; if it does not, night pages are minimized by design rather than endured</li>
         <li>Toil discovered on call goes to a backlog with a budget, and the team sees it shrink</li>
         <li>New engineers shadow before they respond, and nobody is on the rota for a service they have never deployed</li>
       </ul>

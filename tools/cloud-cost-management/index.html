@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud FinOps</title>
-<meta name="description" content="Managing general infrastructure spend as a standing discipline, not a quarterly panic when finance asks why the cloud bill jumped.">
+<meta name="description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped.">
 <meta property="og:title" content="Cloud FinOps | CTO Toolkit">
-<meta property="og:description" content="Managing general infrastructure spend as a standing discipline, not a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta property="og:description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
 <meta property="og:type" content="article">
 <style>
   :root {
@@ -69,8 +69,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Cloud FinOps</h1>
-  <p>Managing general infrastructure spend as a standing discipline, not a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.</p>
-  <div class="caveat">This covers general cloud infrastructure cost, compute, storage, networking, data services, using the FinOps Foundation's own framework. For token-based pricing, PTU and reserved capacity, and GPU amortization on AI workloads, see the <a href="../ai-finops-map/index.html">AI FinOps Map</a>, a separate recognized Scope under the same Foundation framework, not an ad hoc extension of it. The Foundation itself publishes the full framework, certifications, and the FOCUS specification at <a href="https://www.finops.org" target="_blank" rel="noopener">finops.org</a>.</div>
+  <p>Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.</p>
+  <div class="caveat">This covers general cloud infrastructure cost, compute, storage, networking, data services, using the FinOps Foundation's own framework. For token-based pricing, PTU and reserved capacity, and GPU amortization on AI workloads, see the <a href="../ai-finops-map/index.html">AI FinOps Map</a>. AI is a separate recognized Scope under the same Foundation framework. The Foundation itself publishes the full framework, certifications, and the FOCUS specification at <a href="https://www.finops.org" target="_blank" rel="noopener">finops.org</a>.</div>
 </header>
 
 <main>
@@ -78,7 +78,7 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Phases: one building block of a larger framework</h3>
-      <p>Not an invented framework, these are the FinOps Foundation's own Phases, the industry body (under the Linux Foundation) that maintains the full FinOps Framework and the FOCUS billing specification referenced throughout this page. The complete framework also includes Principles, Personas, Domains and Capabilities, and Scopes, and the Foundation's current definition centers on maximizing the business value of technology spend broadly, not cloud specifically. Cloud, SaaS, AI, data center, and licensing are all recognized Scopes; this page covers the cloud infrastructure scope, which is why AI cost modeling gets its own page rather than folding into this one.</p>
+      <p>These are the FinOps Foundation's own Phases. The Foundation is the industry body (under the Linux Foundation) that maintains the full FinOps Framework and the FOCUS billing specification referenced throughout this page. The complete framework also includes Principles, Personas, Domains and Capabilities, and Scopes, and the Foundation's current definition centers on maximizing the business value of technology spend broadly rather than cloud alone. Cloud, SaaS, AI, data center, and licensing are all recognized Scopes; this page covers the cloud infrastructure scope, which is why AI cost modeling gets its own page rather than folding into this one.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -158,7 +158,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>A mandatory tagging policy enforced at resource creation, not applied retroactively by a cleanup script, with showback reporting that puts each team's actual spend in front of that team monthly. Chargeback, where teams' budgets are directly debited, is a stronger lever but works only once tagging discipline is already solid.</p>
+        <p>A mandatory tagging policy enforced at resource creation rather than applied retroactively by a cleanup script, with showback reporting that puts each team's spend in front of that team monthly. Chargeback, where teams' budgets are directly debited, is a stronger lever but works only once tagging discipline is already solid.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -171,7 +171,7 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Governance without becoming a bottleneck</h3>
-      <p>The tension every cost program eventually hits: enough control to prevent waste, not so much that provisioning something new takes a week of approvals.</p>
+      <p>The tension every cost program eventually hits: enough control to prevent waste, without so much that provisioning something new takes a week of approvals.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -180,7 +180,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>A approval queue that becomes the default path for routine provisioning, which teaches engineers to over-request once to avoid asking twice, producing the exact oversizing the governance process was meant to prevent.</p>
+        <p>An approval queue that becomes the default path for routine provisioning, which teaches engineers to over-request once to avoid asking twice, producing the exact oversizing the governance process was meant to prevent.</p>
       </div>
     </div>
   </div>
@@ -198,7 +198,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it doesn't solve</span>
-        <p>FOCUS standardizes the data format, not the underlying pricing or discount structures. A normalized bill still requires the same rightsizing and commitment discipline covered above; FOCUS removes the translation tax from the reporting layer, it doesn't remove the need for the practice itself.</p>
+        <p>FOCUS standardizes the data format and leaves the underlying pricing and discount structures untouched. A normalized bill still requires the same rightsizing and commitment discipline covered above. FOCUS removes the translation tax from the reporting layer; the practice itself still has to happen.</p>
       </div>
     </div>
   </div>
@@ -212,7 +212,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What distinguishes each stage</span>
-        <p><strong>Crawl:</strong> tagging exists but is inconsistent, cost visibility is monthly and reactive, no forecasting. <strong>Walk:</strong> tagging enforced at creation, showback running, budgets set proactively, rightsizing is a recurring practice, not a one-time sweep. <strong>Run:</strong> chargeback in place, unit economics tracked (cost per customer or transaction), anomaly detection automated, cost is a first-class input to architecture decisions rather than an afterthought.</p>
+        <p><strong>Crawl:</strong> tagging exists but is inconsistent, cost visibility is monthly and reactive, no forecasting. <strong>Walk:</strong> tagging enforced at creation, showback running, budgets set proactively, rightsizing is a recurring practice with an owner. <strong>Run:</strong> chargeback in place, unit economics tracked (cost per customer or transaction), anomaly detection automated, cost is a first-class input to architecture decisions rather than an afterthought.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap</span>
@@ -284,7 +284,7 @@
         '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
         '<strong>Overall average: ' + avg.toFixed(1) + ' of 5 (' + stage + ')</strong><br>' +
         'Weakest domain: <strong>' + weakest.dom + '</strong> at Level ' + weakest.val + '. ' +
-        'Fund the weakest domain first, not the one that\'s easiest to improve; a Run-level rate optimization practice sitting on top of Crawl-level allocation is still Crawl overall, since nobody can act on savings they can\'t attribute.' +
+        'Fund the weakest domain first rather than the one that\'s easiest to improve; a Run-level rate optimization practice sitting on top of Crawl-level allocation is still Crawl overall, since nobody can act on savings they can\'t attribute.' +
         '</div>';
     });
   </script>
@@ -298,7 +298,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li>The last optimization effort was a one-time project, not a recurring practice with an owner</li>
+          <li>The last optimization effort was a one-time project with no recurring owner</li>
           <li>Untagged or misattributed spend is a growing percentage of the bill rather than shrinking</li>
           <li>Reserved capacity utilization is below 80 percent, meaning committed spend is going unused</li>
           <li>Non-production environments run around the clock with no automated schedule</li>
@@ -313,7 +313,7 @@
     <div class="stage-head">
       <span class="stage-num">Download</span>
       <h3>Cloud FinOps workbook</h3>
-      <p>Six linked tabs: a rightsizing tracker, a reserved capacity break-even calculator, showback and chargeback allocation, the maturity assessment above made live, and a savings opportunity log. Every formula recalculates when you change an input.</p>
+      <p>Six linked tabs: instructions, a rightsizing tracker, a reserved capacity break-even calculator, showback and chargeback allocation, the maturity assessment above made live, and a savings opportunity log. Every formula recalculates when you change an input.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -326,7 +326,7 @@
 
 <footer>
   Reference only. Cloud pricing models, discount structures, and vendor tooling change frequently; verify current mechanics against your provider's documentation before committing budget.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
 </body>

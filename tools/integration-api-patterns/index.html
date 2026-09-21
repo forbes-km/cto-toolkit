@@ -93,20 +93,20 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h2>Three questions before any pattern</h2>
-      <p>Integration patterns are chosen by habit: whatever the last project used, or whatever the vendor's platform makes easy. Three questions, answered honestly, narrow the field to one or two patterns almost every time.</p>
+      <p>Integration patterns are chosen by habit: whatever the last project used, or whatever the vendor's platform makes easy. Three questions narrow the field to one or two patterns almost every time.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Question</th><th>If the answer is</th><th>It points toward</th></tr>
         <tr><td>Does the caller need the answer to proceed</td><td>Yes, right now, and it changes what the caller does next</td><td>Synchronous: REST, gRPC, GraphQL</td></tr>
         <tr><td></td><td>No, the caller only needs to know it will happen</td><td>Asynchronous: message queue, event stream, or a command with a callback</td></tr>
-        <tr><td>What happens if the other side is down</td><td>The caller must fail too, visibly</td><td>Synchronous, with a circuit breaker and an honest error</td></tr>
+        <tr><td>What happens if the other side is down</td><td>The caller must fail too, visibly</td><td>Synchronous, with a circuit breaker and a clear error</td></tr>
         <tr><td></td><td>The work should wait and complete later</td><td>Queue with durable storage and retry; the caller is decoupled from the consumer's availability</td></tr>
         <tr><td>How many consumers, and do they know each other</td><td>One known consumer</td><td>Point-to-point call or queue</td></tr>
         <tr><td></td><td>Many, changing, not all known to the producer</td><td>Event stream with a published schema; producers do not know who listens</td></tr>
         <tr><td>Is this a request, a fact, or a bulk movement of data</td><td>A request to do something</td><td>API call or command message</td></tr>
         <tr><td></td><td>A fact that something happened</td><td>Domain event</td></tr>
-        <tr><td></td><td>A large dataset moving on a schedule</td><td>Batch, ELT into a warehouse or lakehouse, or change data capture; not an API</td></tr>
+        <tr><td></td><td>A large dataset moving on a schedule</td><td>Batch, ELT into a warehouse or lakehouse, or change data capture. An API is the wrong tool here</td></tr>
       </table>
     </div></div>
   </div>
@@ -123,7 +123,7 @@
         <tr><td>gRPC</td><td>Internal service-to-service calls with strict contracts, low latency, polyglot teams, streaming</td><td>Browser clients without a gateway, partner APIs where the consumer will not adopt protobuf</td><td>The proto file is the contract; it lives in one repository and is reviewed like code</td></tr>
         <tr><td>GraphQL</td><td>A single front-end aggregating many back-end sources, mobile clients that need to control payload size</td><td>A general replacement for REST between services, anything where callers can craft arbitrarily expensive queries unchecked</td><td>Depth and complexity limits enforced at the gateway; persisted queries for production clients</td></tr>
         <tr><td>API gateway</td><td>One entry point for authentication, rate limiting, routing, and observability across many services</td><td>A place to put business logic; a gateway with transformations nobody can find is the next legacy system</td><td>Cross-cutting concerns only; if a rule references a specific business entity, it belongs in a service</td></tr>
-        <tr><td>Backend for frontend</td><td>Each client type (web, mobile, partner) gets its own thin aggregation layer</td><td>Sharing one BFF across clients with different needs, which recreates the problem it solves</td><td>Owned by the client team that needs it, not by a central integration team</td></tr>
+        <tr><td>Backend for frontend</td><td>Each client type (web, mobile, partner) gets its own thin aggregation layer</td><td>Sharing one BFF across clients with different needs, which recreates the problem it solves</td><td>Owned by the client team that needs it rather than by a central integration team</td></tr>
       </table>
     </div></div>
   </div>
@@ -138,7 +138,7 @@
         <tr><th>Pattern</th><th>Use it for</th><th>Do not use it for</th><th>The rule that keeps it healthy</th></tr>
         <tr><td>Message queue (point-to-point)</td><td>Work that must be done exactly once by one consumer: order fulfillment, email sending, background jobs</td><td>Broadcasting a fact to many consumers</td><td>Dead-letter queue with an owner and an alert; idempotent consumers, because at-least-once delivery is the reality</td></tr>
         <tr><td>Publish and subscribe</td><td>One fact, many independent reactions, consumers added without touching the producer</td><td>Request-reply disguised as events, where the producer secretly waits for a specific subscriber</td><td>The producer never knows or cares who listens; if it does, the pattern is wrong</td></tr>
-        <tr><td>Event streaming (log)</td><td>High-volume ordered event history, replayable by new consumers, the backbone of event-driven architecture</td><td>Simple job queues where a stream's operational cost is unjustified</td><td>Schema registry with compatibility rules enforced at publish time; retention decided by the business need to replay, not by default</td></tr>
+        <tr><td>Event streaming (log)</td><td>High-volume ordered event history, replayable by new consumers, the backbone of event-driven architecture</td><td>Simple job queues where a stream's operational cost is unjustified</td><td>Schema registry with compatibility rules enforced at publish time; retention decided by the business need to replay rather than left at the default</td></tr>
         <tr><td>Change data capture</td><td>Getting data out of a database into analytics, search, or another system without touching the application</td><td>A substitute for a domain event, because a row change is not a business fact</td><td>Treat the captured change as an internal feed; translate to a domain event before other teams consume it</td></tr>
         <tr><td>Saga (choreography or orchestration)</td><td>A business transaction spanning several services where a distributed transaction is not available</td><td>Anything that could be a single service with a local transaction</td><td>Every step has a compensating action written and tested before the saga goes live</td></tr>
         <tr><td>Outbox</td><td>Publishing an event reliably in the same transaction as the database write</td><td>Nothing; it is the correct way to do this and the alternative is lost events</td><td>The relay that reads the outbox is monitored for lag like any other consumer</td></tr>
@@ -157,7 +157,7 @@
         <tr><td>Scheduled batch, file or bulk export</td><td>Large periodic movements between systems that tolerate hours of latency: finance close, regulatory extracts, partner feeds</td><td>Simple and cheap; latency and the operational fragility of schedules and file formats</td></tr>
         <tr><td>ELT into a warehouse or lakehouse</td><td>Analytics, reporting, and anything that needs a joined view across many sources</td><td>Decouples producers from consumers entirely; the platform becomes a dependency and the data has an owner problem, covered in <a href="../data-strategy/index.html">Data Strategy</a></td></tr>
         <tr><td>Streaming ingestion</td><td>Near-real-time analytics and operational dashboards</td><td>Cost and complexity are much higher than batch; justify the latency requirement with a business decision that changes at that latency</td></tr>
-        <tr><td>Data virtualization or federation</td><td>Querying across sources without moving data, for low-volume exploratory use</td><td>Performance and the illusion of a single system; not a substitute for a real integration layer</td></tr>
+        <tr><td>Data virtualization or federation</td><td>Querying across sources without moving data, for low-volume exploratory use</td><td>Performance and the illusion of a single system; it cannot stand in for an integration layer</td></tr>
         <tr><td>Managed file transfer</td><td>Regulated B2B exchange where the counterparty will only do SFTP</td><td>Old, boring, and still correct for that case; wrap it with monitoring and a retention policy</td></tr>
       </table>
     </div></div>
@@ -166,7 +166,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h2>Common combinations that work</h2>
-      <p>Real architectures combine patterns. These are the combinations that recur in healthy estates.</p>
+      <p>Working architectures combine patterns. These are the combinations that recur in healthy estates.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <ol class="num-list">
@@ -265,9 +265,9 @@
         <li>Every asynchronous consumer is idempotent and has a dead-letter path with an owner</li>
         <li>Every synchronous call across a network boundary has a timeout, a retry policy with backoff, and a circuit breaker</li>
         <li>Every integration is observable end to end: a correlation identifier propagates through calls and messages, and a trace exists for a single business transaction</li>
-        <li>Domain events describe business facts in business language, not table changes</li>
+        <li>Domain events describe business facts in business language rather than table changes</li>
         <li>Internal integration does not go through a vendor iPaaS unless the vendor owns both ends; iPaaS is for SaaS-to-SaaS</li>
-        <li>Any integration that runs on a schedule has an alert when it does not run, not only when it fails</li>
+        <li>Any integration that runs on a schedule has an alert when it does not run, in addition to one when it fails</li>
       </ul>
     </div></div>
   </div>

@@ -93,7 +93,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Reading it</span>
-        <p>NPV positive and B/C above roughly 1.5x reads as a strong case, NPV positive but B/C under 1.2x as worth funding but not a slam dunk, worth watching the sensitivity. These are illustrative reference points, not universal thresholds, your organization's actual bar depends on its cost of capital and risk appetite, and should be set deliberately rather than borrowed from this page. NPV negative at base case doesn't automatically kill an initiative with strategic value that doesn't show up in the numbers, but it does mean the strategic argument has to carry the case explicitly, not hide behind an inflated financial one.</p>
+        <p>NPV positive and B/C above roughly 1.5x reads as a strong case. NPV positive with B/C under 1.5x is worth funding, with the sensitivity checked before committing. These are illustrative reference points; your organization's bar depends on its cost of capital and risk appetite and should be set deliberately rather than borrowed from this page. NPV negative at base case doesn't automatically kill an initiative with strategic value that doesn't show up in the numbers, but it does mean the strategic argument has to carry the case explicitly instead of hiding behind an inflated financial one.</p>
       </div>
     </div>
   </div>
@@ -167,8 +167,10 @@
       const netCashflowsAfterTax = netCashflowsPreTax.map(cf => cf > 0 ? cf * (1 - taxRate) : cf);
 
       const npv = bcCalcNPV(discountRate, netCashflowsAfterTax);
-      const irr = bcCalcIRR(netCashflowsAfterTax);
-      const bcRatio = totalBenefits / totalCosts;
+      const hasNeg = netCashflowsAfterTax.some(cf => cf < 0);
+      const hasPos = netCashflowsAfterTax.some(cf => cf > 0);
+      const irr = (hasNeg && hasPos) ? bcCalcIRR(netCashflowsAfterTax) : null;
+      const bcRatio = totalCosts > 0 ? totalBenefits / totalCosts : 0;
 
       let cumulative = 0;
       let paybackYear = null;
@@ -195,7 +197,7 @@
         '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
         '<strong>NPV: $' + Math.round(npv).toLocaleString() + '</strong><br>' +
         'Benefit-to-cost ratio: ' + bcRatio.toFixed(2) + 'x<br>' +
-        'IRR: ' + (irr * 100).toFixed(1) + '%<br>' +
+        'IRR: ' + (irr !== null ? (irr * 100).toFixed(1) + '%' : 'undefined (cashflows never change sign)') + '<br>' +
         'Payback period: ' + (paybackYear !== null ? paybackYear.toFixed(2) + ' years' : 'beyond analysis period') + '<br>' +
         '<br><strong>' + verdict + '</strong>' +
         '</div>';
@@ -205,7 +207,7 @@
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>What the pre-filled example represents</h3>
-      <p>The default numbers loaded above are a representative modernization program, not a template to copy blindly.</p>
+      <p>The default numbers loaded above are a representative modernization program. They are there to show the shape, so replace them with your own.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -223,7 +225,7 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Sensitivity: what happens if you're wrong</h3>
-      <p>The single most common gap between a business case that survives real scrutiny and one that only looks solid under one set of assumptions.</p>
+      <p>The most common gap between a business case that survives scrutiny and one that only looks solid under one set of assumptions.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -232,7 +234,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Presenting only the base case with no sensitivity shown. Either it was never tested, a real gap, or it was tested, the pessimistic case failed, and it quietly got left out of the deck, which a CFO who's seen enough of these will assume by default even without being told.</p>
+        <p>Presenting only the base case with no sensitivity shown. Either it was never tested, or it was tested, the pessimistic case failed, and it quietly got left out of the deck, which a CFO who's seen enough of these will assume by default even without being told.</p>
       </div>
     </div>
   </div>
@@ -246,7 +248,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What it represents</span>
-        <p>The return the capital could earn elsewhere, the company's actual cost of capital if it tracks one, or a hurdle rate leadership has explicitly agreed represents good enough for a technology investment. 8 percent shows up often as an illustrative default for an established company, but it's not a universal correct answer, your own cost of capital is company-specific and should replace it rather than be assumed to match it. A deliberately higher rate, 15 percent or more, is often used for early-stage or higher-risk bets specifically because the higher bar forces only the strongest cases through.</p>
+        <p>The return the capital could earn elsewhere, the company's cost of capital if it tracks one, or a hurdle rate leadership has explicitly agreed represents good enough for a technology investment. 8 percent shows up often as an illustrative default for an established company, but it is only a placeholder. Your own cost of capital is company-specific and should replace it. A deliberately higher rate, 15 percent or more, is often used for early-stage or higher-risk bets specifically because the higher bar forces only the strongest cases through.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap</span>
@@ -259,7 +261,7 @@
     <div class="stage-head">
       <span class="stage-num">5</span>
       <h3>How business cases get gamed, and how to catch it</h3>
-      <p>A handful of specific patterns account for most inflated cases. Worth knowing what to look for, whether reviewing someone else's case or checking your own honestly.</p>
+      <p>A handful of specific patterns account for most inflated cases. Worth knowing what to look for, whether reviewing someone else's case or checking your own.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -290,8 +292,8 @@
 </main>
 
 <footer>
-  Reference only. A financial model is only as good as its inputs; treat the outputs as a starting point for review, not a final answer.
-  <br><span style="opacity:0.7">Last reviewed August 2026.</span>
+  Reference only. A financial model is only as good as its inputs; treat the outputs as a starting point for review rather than a final answer.
+  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>
 

@@ -7,11 +7,11 @@
 
 ## Strategic Context
 
-What business objectives does this technology strategy exist to serve? Name the one or two business outcomes this strategy is accountable to, not a general mission statement. If this strategy can't be traced back to something the business is trying to achieve, it's a roadmap wearing a strategy's name.
+What business objectives does this technology strategy exist to serve? Name the one or two business outcomes this strategy is accountable to, rather than a general mission statement. If this strategy can't be traced back to something the business is trying to achieve, it's a roadmap wearing a strategy's name.
 
 ## Where We Are Today
 
-A short, honest current-state summary: what's working, what's constrained, and the one or two structural limits that shape everything below. Two or three sentences, not an inventory.
+A short current-state summary: what's working, what's constrained, and the one or two structural limits that shape everything below. Two or three sentences rather than an inventory.
 
 ## Strategic Pillars
 
@@ -25,7 +25,7 @@ The small number of priorities this strategy is organized around. Three to five 
 
 ## Three-Horizon Investment Split
 
-How investment is allocated across time horizons, not just what's being built next quarter. Horizon 1 keeps the business running; Horizon 3 is where genuine strategic bets live. Most organizations over-invest in Horizon 1 by default and have to make that tradeoff explicit to correct it.
+How investment is allocated across time horizons, beyond what's being built next quarter. Horizon 1 keeps the business running; Horizon 3 is where the strategic bets live. Most organizations over-invest in Horizon 1 by default and have to make that tradeoff explicit to correct it.
 
 | Horizon | Time frame | Focus | Target % of investment | Actual % of investment |
 |---|---|---|---|---|
@@ -35,7 +35,7 @@ How investment is allocated across time horizons, not just what's being built ne
 
 ## The Tradeoffs
 
-What this strategy explicitly says no to, and why. This section is the actual strategy; a document that's only a list of things being built is a roadmap, not a strategy. A tradeoff without a stated cost isn't a real tradeoff.
+What this strategy explicitly says no to, and why. This section is the strategy; a document that's only a list of things being built is a roadmap. A tradeoff without a stated cost is a preference.
 
 | What we're not doing | Why | What it would have cost us to do it anyway |
 |---|---|---|

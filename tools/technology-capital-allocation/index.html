@@ -85,9 +85,9 @@
           <tr><th>Category</th><th>What it covers</th></tr>
           <tr><td>Run</td><td>The operational cost of keeping existing systems working: hosting, licensing, on-call, routine maintenance</td></tr>
           <tr><td>Grow</td><td>Proven initiatives extending existing capability into adjacent, validated opportunity</td></tr>
-          <tr><td>Transform</td><td>New bets with genuine uncertainty; the Horizon 3 work from the technology strategy</td></tr>
-          <tr><td>Security</td><td>Dedicated investment, evaluated on its own terms, not folded into run cost or treated as a rounding error</td></tr>
-          <tr><td>Technical debt remediation</td><td>A deliberate allocation, not whatever capacity happens to be left over after everything else is funded</td></tr>
+          <tr><td>Transform</td><td>New bets with unresolved uncertainty; the Horizon 3 work from the technology strategy</td></tr>
+          <tr><td>Security</td><td>Dedicated investment, evaluated on its own terms rather than folded into run cost or treated as a rounding error</td></tr>
+          <tr><td>Technical debt remediation</td><td>A deliberate allocation rather than whatever capacity happens to be left over after everything else is funded</td></tr>
           <tr><td>Headcount</td><td>People cost, tracked distinctly from tooling and infrastructure spend</td></tr>
           <tr><td>Vendors</td><td>Licensing and contracted services, reviewed against the criteria in Vendor Evaluation</td></tr>
           <tr><td>Reserve</td><td>Unallocated buffer for the unplanned; a budget with none is a budget that will blow through its total the first time reality doesn't match the plan</td></tr>
@@ -130,7 +130,7 @@
 <rect x="793.6" y="40" width="66.4" height="70" fill="var(--paper)" stroke="var(--ink-soft)" stroke-width="1.2"/>
 <text x="826.8" y="70" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Reserve</text>
 <text x="826.8" y="88" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">8%</text>
-<text x="30" y="130" text-anchor="start" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Headcount and vendors cut across every band; they are how each band is spent, not bands of their own. Percentages are placeholders.</text>
+<text x="30" y="130" text-anchor="start" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Headcount and vendors cut across every band; they are how each band is spent rather than bands of their own. Percentages are placeholders.</text>
 <rect x="30" y="156" width="405" height="94" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
 <text x="46" y="177" text-anchor="start" font-size="10.5" fill="var(--accent)" font-weight="600" letter-spacing="0.05em" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">PROTECTED BEFORE ANY LINE-ITEM REVIEW</text>
 <text x="46" y="197" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Security baseline. Regulatory obligations. The run cost of systems</text>
@@ -155,7 +155,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Run your own allocation</h3>
-      <p>Enter your total budget, current spend, and target percentage for each category. Runs entirely in your browser; nothing is sent anywhere or stored. The downloadable workbook below carries the same logic across seven linked tabs, this is the quick version.</p>
+      <p>Enter your total budget, current spend, and target percentage for each category. Runs entirely in your browser; nothing is sent anywhere or stored. The downloadable workbook below carries the same logic across seven linked tabs; this is the quick version.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -239,12 +239,12 @@
 
       let verdict = '';
       if (targetPctOff) {
-        verdict += 'Target percentages sum to ' + targetPctSum.toFixed(1) + '%, not 100%. This allocation isn\'t decided yet, just aspirational, fix the targets before treating this as a plan.<br>';
+        verdict += 'Target percentages sum to ' + targetPctSum.toFixed(1) + '% rather than 100%. This allocation is still aspirational; fix the targets before treating it as a plan.<br>';
       }
       if (currentOffBudget) {
         verdict += 'Current spend sums to $' + Math.round(currentSum).toLocaleString() + ' against a $' + Math.round(total).toLocaleString() + ' budget, a gap of $' + Math.round(currentSum - total).toLocaleString() + '. Confirm the total budget or the category figures.<br>';
       }
-      verdict += 'Largest gap: <strong>' + biggestGap.label + '</strong>, running $' + Math.round(Math.abs(biggestGap.varianceDollar)).toLocaleString() + (biggestGap.varianceDollar >= 0 ? ' over' : ' under') + ' its target. Start the reallocation conversation there, not with the smallest, easiest-to-argue line item.';
+      verdict += 'Largest gap: <strong>' + biggestGap.label + '</strong>, running $' + Math.round(Math.abs(biggestGap.varianceDollar)).toLocaleString() + (biggestGap.varianceDollar >= 0 ? ' over' : ' under') + ' its target. Start the reallocation conversation there rather than with the smallest, easiest-to-argue line item.';
 
       const resultEl = document.getElementById('ca-result');
       resultEl.innerHTML =
@@ -264,11 +264,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">How to answer it well</span>
-        <p>Have a pre-ranked list, before the question is asked, of what gets cut first, second, third, with the real consequence of each cut stated plainly, not &quot;we'll do more with less.&quot; This list should already exist; deriving it live under budget pressure produces worse decisions and reads as unprepared.</p>
+        <p>Have a pre-ranked list, before the question is asked, of what gets cut first, second, third, with the consequence of each cut stated plainly. &quot;We'll do more with less&quot; is a slogan, and the list is what replaces it. This list should already exist; deriving it live under budget pressure produces worse decisions and reads as unprepared.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">How it goes wrong</span>
-        <p>An across-the-board percentage cut applied uniformly to every team and category, which protects nothing that matters and reflects no actual prioritization, just avoids the discomfort of choosing.</p>
+        <p>An across-the-board percentage cut applied uniformly to every team and category, which protects nothing that matters and reflects no prioritization; it avoids the discomfort of choosing.</p>
       </div>
     </div>
   </div>
@@ -295,16 +295,16 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>What we'd stop if deciding again</h3>
-      <p>The question almost no organization asks explicitly, and the one most likely to surface a real reallocation opportunity.</p>
+      <p>The question almost no organization asks explicitly, and the one most likely to surface a reallocation opportunity.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Why it matters</span>
-        <p>Sunk cost is the most common distortion in capital allocation. An investment that made sense eighteen months ago, under assumptions that have since changed, doesn't automatically still make sense, and few organizations ever explicitly re-ask the question rather than just continuing to fund what's already funded.</p>
+        <p>Sunk cost is the most common distortion in capital allocation. An investment that made sense eighteen months ago, under assumptions that have since changed, doesn't automatically still make sense, and few organizations ever explicitly re-ask the question rather than continuing to fund what's already funded.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">How to run it</span>
-        <p>Annually, as part of the operating cadence's yearly review, walk the active portfolio and ask of each item: knowing what we know now, would we start this today. Anything that gets a no needs a stated wind-down plan, not just an uncomfortable silence that lets it keep running by default.</p>
+        <p>Annually, as part of the operating cadence's yearly review, walk the active portfolio and ask of each item: knowing what we know now, would we start this today. Anything that gets a no needs a stated wind-down plan; an uncomfortable silence lets it keep running by default.</p>
       </div>
     </div>
   </div>
@@ -312,16 +312,16 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Zero-based versus incremental budgeting</h3>
-      <p>Two real methodologies for building next year's number, with different effort and different discipline built in.</p>
+      <p>Two methodologies for building next year's number, with different effort and different discipline built in.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Incremental</span>
-        <p>Start from last year's number and adjust up or down by category. Fast, low-effort, and the default almost everywhere. The real cost: an investment that stopped earning its place three years ago keeps getting funded because nobody re-examines the base, only the delta.</p>
+        <p>Start from last year's number and adjust up or down by category. Fast, low-effort, and the default almost everywhere. The cost: an investment that stopped earning its place three years ago keeps getting funded because nobody re-examines the base, only the delta.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Zero-based</span>
-        <p>Every line starts at zero and has to be justified from scratch each cycle, the same discipline as &quot;what we'd stop if deciding again&quot; applied to the entire budget, not just flagged items. More rigorous and more expensive in time; most organizations can't sustain it annually, but running it once every few years catches what incremental budgeting has been quietly protecting.</p>
+        <p>Every line starts at zero and has to be justified from scratch each cycle, the same discipline as &quot;what we'd stop if deciding again&quot; applied to the entire budget rather than only flagged items. More rigorous and more expensive in time; most organizations can't sustain it annually, but running it once every few years catches what incremental budgeting has been quietly protecting.</p>
       </div>
     </div>
   </div>
@@ -329,17 +329,17 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
-      <h3>Allocating for uncertainty: options, not full commitments</h3>
-      <p>Not every Horizon 3 bet needs a full-year commitment on day one. Staging the commitment is itself a capital allocation decision.</p>
+      <h3>Allocating for uncertainty: options over full commitments</h3>
+      <p>Few Horizon 3 bets need a full-year commitment on day one. Staging the commitment is itself a capital allocation decision.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Fund the next decision point, not the whole initiative. A small spike that answers &quot;is this technically feasible&quot; preserves the option to scale up without committing the full budget before the uncertainty is resolved. This is real-options thinking applied to technology investment: the cost of the option is small, and it buys the right, not the obligation, to invest further.</p>
+        <p>Fund the next decision point rather than the whole initiative. A small spike that answers &quot;is this technically feasible&quot; preserves the option to scale up without committing the full budget before the uncertainty is resolved. This is real-options thinking applied to technology investment: the cost of the option is small, and it buys the right, without the obligation, to invest further.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Approving a full-year budget for an unproven bet because a partial commitment feels indecisive. It isn't; it's how you avoid discovering in month nine that the bet was wrong after spending twelve months of budget finding out.</p>
+        <p>Approving a full-year budget for an unproven bet because a partial commitment feels indecisive. A partial commitment is how you avoid discovering in month nine that the bet was wrong after spending twelve months of budget finding out.</p>
       </div>
     </div>
   </div>
@@ -356,13 +356,13 @@
           <tr><th>Category</th><th>Share</th><th>What's in it this year</th></tr>
           <tr><td>Run</td><td>45%</td><td>Hosting, licensing, on-call coverage, routine maintenance across the existing estate</td></tr>
           <tr><td>Grow</td><td>20%</td><td>Two validated adjacent-market initiatives with a stated business case each</td></tr>
-          <tr><td>Transform</td><td>8%</td><td>One staged option: a spike to test technical feasibility, not a full build</td></tr>
-          <tr><td>Security</td><td>10%</td><td>Evaluated on its own terms, not benchmarked against Grow's ROI bar</td></tr>
-          <tr><td>Technical debt</td><td>8%</td><td>A dedicated allocation, not whatever's left over after the categories above are funded</td></tr>
+          <tr><td>Transform</td><td>8%</td><td>One staged option: a spike to test technical feasibility rather than a full build</td></tr>
+          <tr><td>Security</td><td>10%</td><td>Evaluated on its own terms rather than benchmarked against Grow's ROI bar</td></tr>
+          <tr><td>Technical debt</td><td>8%</td><td>A dedicated allocation rather than whatever's left over after the categories above are funded</td></tr>
           <tr><td>Vendors</td><td>4%</td><td>Reviewed against the criteria on Vendor Evaluation, renewal timing staggered deliberately</td></tr>
           <tr><td>Reserve</td><td>5%</td><td>Untouched unless a specific, named trigger occurs</td></tr>
         </table>
-        <p>The specific percentages are illustrative, not a template to copy. What matters is that every category has a number and a reason, and the reserve line exists at all.</p>
+        <p>The specific percentages are illustrative rather than a template to copy. What matters is that every category has a number and a reason, and the reserve line exists at all.</p>
       </div>
     </div>
   </div>

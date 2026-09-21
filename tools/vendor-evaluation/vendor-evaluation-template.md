@@ -5,7 +5,7 @@
 **Date:**
 **Category / use case:**
 
-Score each dimension 1-5 (1 = poor fit or high risk, 5 = excellent fit or low risk). Multiply by weight for the weighted score. Adjust weights to reflect what actually matters for this decision; the defaults below are a reasonable starting point, not a fixed formula.
+Score each dimension 1-5 (1 = poor fit or high risk, 5 = excellent fit or low risk). Multiply by weight for the weighted score. Adjust weights to reflect what matters for this decision; the defaults below are a reasonable starting point rather than a fixed formula.
 
 | Dimension | Weight | Score (1-5) | Weighted Score | Notes |
 |---|---|---|---|---|
@@ -19,17 +19,17 @@ Score each dimension 1-5 (1 = poor fit or high risk, 5 = excellent fit or low ri
 
 ## Dimension Guidance
 
-**Functional fit** — Does it solve the actual problem without excessive customization? Score down for features that require significant workarounds to fit the real use case.
+**Functional fit**: Does it solve the problem without excessive customization? Score down for features that require significant workarounds to fit the use case.
 
-**Security posture** — Certifications held (SOC 2, ISO 27001, and similar), data handling practices, breach history, access control model.
+**Security posture**: Certifications held (SOC 2, ISO 27001, and similar), data handling practices, breach history, access control model.
 
-**Financial stability** — Company size, funding stage, revenue trajectory, and customer concentration risk on their side. A vendor that might not exist in two years is a risk regardless of product quality.
+**Financial stability**: Company size, funding stage, revenue trajectory, and customer concentration risk on their side. A vendor that might not exist in two years is a risk regardless of product quality.
 
-**Integration complexity** — API quality and documentation, authentication model compatibility, data format compatibility, and estimated integration effort.
+**Integration complexity**: API quality and documentation, authentication model compatibility, data format compatibility, and estimated integration effort.
 
-**Support & SLA** — Response time commitments, support channel quality, account management model, and uptime track record.
+**Support & SLA**: Response time commitments, support channel quality, account management model, and uptime track record.
 
-**Exit cost / lock-in** — Data portability, contract termination terms, proprietary format lock-in, and estimated cost and time to migrate away if needed.
+**Exit cost / lock-in**: Data portability, contract termination terms, proprietary format lock-in, and estimated cost and time to migrate away if needed.
 
 ## Recommendation
 

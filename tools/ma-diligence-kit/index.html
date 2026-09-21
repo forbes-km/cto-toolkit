@@ -102,7 +102,7 @@
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Tool</th><th>Buy-side use</th><th>Sell-side use</th></tr>
-        <tr><td>Question bank</td><td>The interview and document-request list, prioritized so a two-week confirmatory window covers what moves price first</td><td>The list to answer internally, honestly, six months before a buyer asks, so nothing in it is a surprise</td></tr>
+        <tr><td>Question bank</td><td>The interview and document-request list, prioritized so a two-week confirmatory window covers what moves price first</td><td>The list to answer internally, six months before a buyer asks, so nothing in it is a surprise</td></tr>
         <tr><td>Data room template</td><td>What to request if the seller's room is disorganized, and a checklist of what is missing</td><td>The folder structure to populate, with the four-tier access model that protects what should not be shown until late</td></tr>
         <tr><td>Sell-side preparation</td><td>The signals that a target prepared well, which correlates with fewer post-close surprises</td><td>The sequence of work from the decision to sell through the first buyer meeting</td></tr>
       </table>
@@ -117,7 +117,7 @@
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Priority</th><th>Question</th><th>Ask via</th><th>What a bad answer looks like</th></tr>
-        <tr><td>1</td><td>Draw the system as it runs today, not the target architecture, and mark what fewer than three people understand</td><td>Interview</td><td>A slide from the last investor deck; nobody in the room can draw the current state</td></tr>
+        <tr><td>1</td><td>Draw the system as it runs today rather than the target architecture, and mark what fewer than three people understand</td><td>Interview</td><td>A slide from the last investor deck; nobody in the room can draw the current state</td></tr>
         <tr><td>1</td><td>Which runtimes, databases, and frameworks are past vendor end of life, and what is the plan and cost to move</td><td>Doc</td><td>A list has to be compiled for the question; extended support contracts nobody mentioned</td></tr>
         <tr><td>1</td><td>What is the technical debt backlog, with a cost of remediation and a carry cost per item</td><td>Doc</td><td>A backlog of tickets with no costs, or a statement that debt is under control with no artifact</td></tr>
         <tr><td>1</td><td>How is the platform hosted, in which regions and accounts, and who holds the root credentials</td><td>Doc</td><td>A shared root account, a personal credit card on a cloud account, production in a region the buyer cannot operate in</td></tr>
@@ -198,7 +198,7 @@
         <li><div><b>Month 4: Build the artifacts that do not exist</b>A current-state architecture diagram. A technical debt register with costs, using <a href="../technical-debt-economics/index.html">Technical Debt Economics</a>. A software bill of materials. An inventory of privileged accounts and non-human identities. A run-cost history with variance explained. A buyer will produce these if you do not, and theirs will be less flattering.</div></li>
         <li><div><b>Month 3: Paper the people and the IP</b>IP assignment agreements for every current and former contributor. Retention agreements for the named key people, executed before they hear about the process from anyone else. A succession answer for each critical system, using <a href="../cto-succession/index.html">CTO Leadership &amp; Succession</a>.</div></li>
         <li><div><b>Month 2: Review the contracts</b>Every customer contract for SLA, residency, and security commitments the platform does not meet; every vendor contract for change-of-control and assignment clauses. Renegotiate or document the exposure. Do not let the buyer find it.</div></li>
-        <li><div><b>Month 1: Build the data room and rehearse the narrative</b>Populate tiers 1 and 2. Write the technology overview narrative as prose, not slides, describing the estate as it is, with its known weaknesses and their remediation plan stated plainly. A buyer who finds a weakness you disclosed treats you as credible; one who finds a weakness you omitted reprices everything.</div></li>
+        <li><div><b>Month 1: Build the data room and rehearse the narrative</b>Populate tiers 1 and 2. Write the technology overview narrative as prose rather than slides, describing the estate as it is, with its known weaknesses and their remediation plan stated plainly. A buyer who finds a weakness you disclosed treats you as credible; one who finds a weakness you omitted reprices everything.</div></li>
       </ol>
     </div></div>
   </div>
@@ -252,7 +252,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The overview shows microservices, event streaming, and a zero-trust network. The buyer's engineers find a monolith, a nightly batch, and a flat network with the target-state work six months from done. Every other representation in the data room is now suspect, the confirmatory window extends, and the price moves.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Show the current state, honestly labeled, alongside the target state, honestly dated and costed. Buyers expect debt; what they price is surprise. A credible current-state picture with a funded plan is worth more than an aspirational one, and it is the only version that survives the buyer's own engineers reading the code.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Show the current state, labeled as such, alongside the target state, dated and costed. Buyers expect debt; what they price is surprise. A credible current-state picture with a funded plan is worth more than an aspirational one, and it is the only version that survives the buyer's own engineers reading the code.</p></div>
     </div>
   </div>
 </main>
@@ -293,7 +293,7 @@
     var isum=0,icount=0;DIM.forEach(function(d,i){var v=parseInt(document.getElementById('dd-i'+i).value)||0;if(v){isum+=v;icount++;}});
     var iscore=icount?isum/icount:0;
     var ilabel=!icount?'Not scored':(iscore<2?'Straightforward':(iscore<3?'Standard':(iscore<4?'Complex':'Highly complex')));
-    var h='<p><b>Overall domain score: '+dscore.toFixed(2)+' ('+dlabel+')</b>'+(Math.abs(wtot-100)>0.01?' <span style="color:var(--b);">Weights total '+wtot.toFixed(1)+'%, not 100%; the score is normalized to the weights entered.</span>':'')+'</p>';
+    var h='<p><b>Overall domain score: '+dscore.toFixed(2)+' ('+dlabel+')</b>'+(Math.abs(wtot-100)>0.01?' <span style="color:var(--b);">Weights total '+wtot.toFixed(1)+'% rather than 100%; the score is normalized to the weights entered.</span>':'')+'</p>';
     h+='<p><b>Integration complexity: '+(icount?iscore.toFixed(2):'n/a')+' ('+ilabel+')</b>'+(icount&&icount<DIM.length?' <span style="color:var(--ink-soft);">'+(DIM.length-icount)+' dimension(s) unscored.</span>':'')+'</p>';
     h+='<table class="matrix-table"><tr><th>Domain</th><th>Score</th><th>Weight</th><th>Risk level</th><th>Implication</th></tr>';
     rows.sort(function(a,b){return b[1]-a[1];}).forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'%</td><td>'+lvl(r[1])+'</td><td>'+CONV[r[1]-1]+'</td></tr>';});
