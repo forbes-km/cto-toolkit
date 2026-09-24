@@ -241,7 +241,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own platform</h3>
-      <p>Five dimensions, one for each practice covered above. Score 1 to 5. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Score the five practices now and at target, then add three adoption facts. The tool ties the scores to the adoption numbers and flags the warning signs from the checklist below. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -251,71 +251,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const peDims = [
-      { id: "selfservice", label: "Self-service coverage", hint: "1 = nearly everything needs a ticket, 5 = routine provisioning is self-service" },
-      { id: "goldenpath", label: "Golden path adoption", hint: "1 = most teams build their own, 5 = the golden path is the default nearly everyone uses" },
-      { id: "funding", label: "Outcome-linked funding", hint: "1 = platform value is assumed, 5 = investment is tracked against delivery metrics" },
-      { id: "dx", label: "Developer experience measurement", hint: "1 = never measured, 5 = tracked as seriously as uptime" },
-      { id: "roadmap", label: "Roadmap traceability", hint: "1 = driven by what's technically interesting, 5 = every item traces to a specific request" },
-    ];
-
-    const peInputsEl = document.getElementById('pe-inputs');
-    peDims.forEach((dim) => {
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
-      const labelWrap = document.createElement('div');
-      const label = document.createElement('div');
-      label.textContent = dim.label;
-      label.style.cssText = 'font-size:13px; color:var(--ink); font-weight:600;';
-      const hint = document.createElement('div');
-      hint.textContent = dim.hint;
-      hint.style.cssText = 'font-size:11px; color:var(--ink-soft);';
-      labelWrap.appendChild(label);
-      labelWrap.appendChild(hint);
-      const select = document.createElement('select');
-      select.id = 'pe-' + dim.id;
-      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink); min-width:70px;';
-      [1,2,3,4,5].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = v;
-        if (v === 3) opt.selected = true;
-        select.appendChild(opt);
-      });
-      row.appendChild(labelWrap);
-      row.appendChild(select);
-      peInputsEl.appendChild(row);
-    });
-
-    document.getElementById('pe-calc').addEventListener('click', () => {
-      const scores = {};
-      peDims.forEach(dim => {
-        scores[dim.id] = parseInt(document.getElementById('pe-' + dim.id).value, 10);
-      });
-
-      const avg = peDims.reduce((sum, d) => sum + scores[d.id], 0) / peDims.length;
-      const weakest = peDims.reduce((a, b) => (scores[b.id] < scores[a.id] ? b : a));
-
-      let verdict;
-      if (avg >= 4.0) {
-        verdict = 'Strong across the board. The remaining work is protecting this; watch the weakest dimension below so it does not quietly slip while attention moves elsewhere.';
-      } else if (avg >= 3.0) {
-        verdict = 'A working platform practice with gaps. Fund the weakest dimension next rather than the one that is easiest or most interesting to fix.';
-      } else {
-        verdict = 'This is closer to a shared utility than a product team yet. Start with whichever dimension is weakest; it is very likely the reason teams are routing around the platform rather than adopting it.';
-      }
-
-      const resultEl = document.getElementById('pe-result');
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5</strong><br>' +
-        'Weakest dimension: <strong>' + weakest.label + '</strong> at ' + scores[weakest.id] + '/5<br>' +
-        '<br>' + verdict +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -343,5 +278,42 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/maturity-tool.js"></script>
+<script>
+MaturityTool.create({
+  id: 'pe', card: '#calculator', title: 'Platform engineering maturity',
+  columns: [{ key: 'current', label: 'Current' }, { key: 'target', label: 'Target' }],
+  dims: [
+    { name: 'Self-service coverage', hint: '1 = nearly everything needs a ticket, 5 = routine provisioning is self-service', next: 'Pick the three most common requests and make them self-service first.' },
+    { name: 'Golden path adoption', hint: '1 = most teams build their own, 5 = the golden path is the default', next: 'Find out why teams route around the path; fix the top reason before adding features.' },
+    { name: 'Outcome-linked funding', hint: '1 = value is assumed, 5 = investment tracked against delivery metrics', next: 'Tie the platform budget to two delivery metrics leadership already tracks.' },
+    { name: 'Developer experience measurement', hint: '1 = never measured, 5 = tracked as seriously as uptime', next: 'Run a short quarterly developer survey and publish the results.' },
+    { name: 'Roadmap traceability', hint: '1 = what is technically interesting, 5 = every item traces to a request', next: 'Tag every roadmap item with the team request or friction report behind it.' }
+  ],
+  defaults: { current: [2, 3, 2, 1, 3], target: [4, 4, 3, 3, 4] },
+  extras: [
+    { id: 'adopt', label: 'Share of product teams on the supported path (%)', type: 'number', min: 0, max: 100, value: 45 },
+    { id: 'lead', label: 'Median days for a common provisioning request', type: 'number', min: 0, step: 0.5, value: 4 },
+    { id: 'tickets', label: 'Platform tickets per month', type: 'number', min: 0, value: 120 }
+  ],
+  interpret: function (S) {
+    var out = [], x = S.extra, avg = S.avg.current;
+    out.push(avg >= 4 ? 'Strong across the board. Protect it; watch the weakest dimension so it does not slip.' : avg >= 3 ? 'A working platform practice with gaps. Fund the weakest dimension next, not the most interesting one.' : 'Closer to a shared utility than a product team yet. The weakest dimension is very likely why teams route around the platform.');
+    var flags = [];
+    if (x.adopt != null && x.adopt < 60) flags.push('Only ' + x.adopt + '% of teams use the supported path: product teams are maintaining workarounds or shadow infrastructure.');
+    if (x.lead != null && x.lead >= 2) flags.push('A common request takes ' + x.lead + ' days: provisioning still needs a ticket and a multi-day wait rather than self-service.');
+    if (x.tickets != null && x.tickets >= 50 && S.dims[0].vals.current <= 2) flags.push(x.tickets + ' tickets a month with low self-service coverage: the team is running a queue, not a product.');
+    if (S.dims[4].vals.current <= 2) flags.push('The roadmap is not traceable to requests from the teams it serves.');
+    if (S.dims[2].vals.current <= 2) flags.push('Platform investment cannot be tied to a measurable engineering outcome.');
+    if (S.dims[3].vals.current <= 1) flags.push('Developer satisfaction has never been measured, only assumed.');
+    if (flags.length) out.push('<strong>Warning signs present:</strong><ul>' + flags.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>');
+    if (x.adopt != null && x.adopt < 60 && avg >= 3.5) out.push('The scores are higher than adoption supports. If most teams avoid the platform, score from their view, not the platform team\'s.');
+    return out.join('<br><br>');
+  }
+});
+</script>
+<!-- /toolshare -->
 </body>
 </html>

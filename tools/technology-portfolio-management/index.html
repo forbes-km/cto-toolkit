@@ -152,7 +152,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Rank your own portfolio</h3>
-      <p>Add every initiative competing for capacity right now, regardless of category. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>List every initiative competing for capacity, regardless of category, and set the capacity you have in job-size points. The tool ranks by WSJF, draws the cut line where capacity runs out, and totals the cost of delay deferred below it. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -197,65 +197,7 @@
     </div>
   </div>
 
-  <script>
-    let wsjfItems = [
-      { name: 'AI support-ticket triage pilot', ubv: 8, tc: 5, rroe: 8, size: 5 },
-      { name: 'Pay down auth-service tech debt', ubv: 5, tc: 3, rroe: 13, size: 8 },
-      { name: 'SOC 2 evidence automation', ubv: 3, tc: 13, rroe: 5, size: 3 },
-      { name: 'New market data pipeline (innovation bet)', ubv: 13, tc: 2, rroe: 3, size: 20 },
-    ];
-
-    function renderWsjf() {
-      const resultEl = document.getElementById('wsjf-result');
-      if (wsjfItems.length === 0) {
-        resultEl.innerHTML = '<p style="font-size:13px; color:var(--ink-soft); padding:12px 0;">No initiatives yet. Add one above.</p>';
-        return;
-      }
-      const scored = wsjfItems.map(item => {
-        const cod = item.ubv + item.tc + item.rroe;
-        const score = cod / item.size;
-        return { ...item, cod, score };
-      }).sort((a, b) => b.score - a.score);
-
-      let html = '<table class="wsjf-table"><tr><th>Rank</th><th>Initiative</th><th>Value</th><th>Time crit.</th><th>Risk/opp.</th><th>Cost of Delay</th><th>Job size</th><th>WSJF</th><th></th></tr>';
-      scored.forEach((item, i) => {
-        const origIndex = wsjfItems.indexOf(item);
-        html += `<tr><td class="rank">${i + 1}</td><td>${String(item.name).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</td><td>${item.ubv}</td><td>${item.tc}</td><td>${item.rroe}</td><td>${item.cod}</td><td>${item.size}</td><td class="score">${item.score.toFixed(2)}</td><td><button class="wsjf-remove" data-index="${origIndex}">Remove</button></td></tr>`;
-      });
-      html += '</table>';
-      resultEl.innerHTML = html;
-
-      document.querySelectorAll('.wsjf-remove').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const idx = parseInt(btn.dataset.index, 10);
-          wsjfItems.splice(idx, 1);
-          renderWsjf();
-        });
-      });
-    }
-
-    document.getElementById('wsjf-add').addEventListener('click', () => {
-      const name = document.getElementById('wsjf-name').value.trim();
-      if (!name) return;
-      const num = id => { const x = parseInt(document.getElementById(id).value, 10); return isNaN(x) || x < 0 ? 0 : x; };
-      const ubv = num('wsjf-ubv');
-      const tc = num('wsjf-tc');
-      const rroe = num('wsjf-rroe');
-      const size = Math.max(1, num('wsjf-size'));
-      wsjfItems.push({ name, ubv, tc, rroe, size });
-      document.getElementById('wsjf-name').value = '';
-      renderWsjf();
-    });
-
-    document.getElementById('wsjf-clear').addEventListener('click', () => {
-      wsjfItems = [];
-      renderWsjf();
-    });
-
-    renderWsjf();
-  </script>
-
-    <div class="stage-card">
+  <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
       <h3>WSJF with three competing items</h3>
@@ -359,5 +301,59 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls, before) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; if (before) cell.insertBefore(d, before); else cell.appendChild(d); return d; }
+
+cell.innerHTML = '';
+var F = [['1', '1'], ['2', '2'], ['3', '3'], ['5', '5'], ['8', '8'], ['13', '13'], ['20', '20']];
+var cols = [
+  { key: 'name', label: 'Initiative', type: 'text', width: '180px', wide: true },
+  { key: 'owner', label: 'Owner', type: 'text', width: '100px' },
+  { key: 'ubv', label: 'Business value', type: 'select', options: F },
+  { key: 'tc', label: 'Time criticality', type: 'select', options: F },
+  { key: 'rroe', label: 'Risk reduction / opportunity', type: 'select', options: F },
+  { key: 'size', label: 'Job size', type: 'select', options: F }
+];
+var DEF = [
+  { name: 'AI support-ticket triage pilot', owner: 'Support', ubv: '8', tc: '5', rroe: '8', size: '5' },
+  { name: 'Pay down auth-service tech debt', owner: 'Platform', ubv: '5', tc: '3', rroe: '13', size: '8' },
+  { name: 'SOC 2 evidence automation', owner: 'Security', ubv: '3', tc: '13', rroe: '5', size: '3' },
+  { name: 'New market data pipeline (innovation bet)', owner: 'Data', ubv: '13', tc: '2', rroe: '3', size: '20' }
+];
+var DX = { cap: 20 };
+var ex = RowTable.extras(sec(), 'wsjf', [{ key: 'cap', label: 'Capacity this period (job-size points)', min: 0, step: 1 }]);
+ex.set(DX);
+var t = RowTable.create({ mount: sec(), id: 'wsjf', columns: cols, rows: DEF, blank: { name: '', owner: '', ubv: '5', tc: '5', rroe: '5', size: '5' }, addLabel: 'Add initiative', min: 0, max: 40, onChange: calc });
+var out = sec('div', 'tool-out');
+cell.addEventListener('input', function (e) { if (e.target.id === 'wsjf-x-cap') calc(); });
+function ranked() {
+  var cap = ex.get().cap || 0, used = 0, out = t.get().filter(function (r) { return r.name; }).map(function (r) { var cod = +r.ubv + +r.tc + +r.rroe, size = Math.max(1, +r.size); return { r: r, cod: cod, size: size, score: cod / size }; }).sort(function (a, b) { return b.score - a.score; });
+  out.forEach(function (x) { if (used + x.size <= cap) { x.fits = true; used += x.size; } else x.fits = false; });
+  return { list: out, used: used, cap: cap };
+}
+function calc() {
+  var R = ranked(), h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Rank</th><th>Initiative</th><th>Owner</th><th>Cost of delay</th><th>Job size</th><th>WSJF</th><th>Plan</th></tr>', cutShown = false;
+  R.list.forEach(function (x, i) {
+    if (!x.fits && !cutShown) { h += '<tr><td colspan="7" style="background:var(--accent-soft);font-weight:700;font-size:12px">Capacity line: ' + R.used + ' of ' + R.cap + ' points used. Items below wait.</td></tr>'; cutShown = true; }
+    h += '<tr' + (x.fits ? '' : ' style="color:var(--ink-soft)"') + '><td>' + (i + 1) + '</td><td>' + E(x.r.name) + '</td><td>' + E(x.r.owner) + '</td><td>' + x.cod + '</td><td>' + x.size + '</td><td><strong>' + x.score.toFixed(2) + '</strong></td><td>' + (x.fits ? '<span class="tag good">In</span>' : '<span class="tag mid">Deferred</span>') + '</td></tr>';
+  });
+  h += '</table></div>';
+  var def = R.list.filter(function (x) { return !x.fits; }), skipped = R.list.some(function (x, i) { return x.fits && R.list.slice(0, i).some(function (y) { return !y.fits; }); });
+  var s = '<div class="tool-sum"><strong>' + R.list.filter(function (x) { return x.fits; }).length + ' of ' + R.list.length + ' initiatives fit in ' + R.cap + ' points.</strong> ' +
+    (def.length ? 'Deferred: ' + E(def.map(function (x) { return x.r.name; }).join(', ')) + ', carrying ' + def.reduce(function (a, x) { return a + x.cod; }, 0) + ' points of cost of delay into the next period. Split the largest deferred item so its first slice can compete on its own size. ' : 'Everything fits; check that the capacity figure is real rather than hoped for. ') +
+    (skipped ? 'A smaller, lower-ranked item was pulled above the line to use the remaining capacity.' : '') + '</div>';
+  out.innerHTML = s + '<h4>Ranked by WSJF</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 'wsjf', root: card, title: 'WSJF portfolio ranking', getState: function () { return { rows: t.get(), x: ex.get() }; }, setState: function (s) { s = s || {}; t.set(Array.isArray(s.rows) ? s.rows : DEF); ex.set(s.x || DX); calc(); },
+  csv: function () { var R = ranked(), rows = [['Rank', 'Initiative', 'Owner', 'Business value', 'Time criticality', 'Risk/opportunity', 'Cost of delay', 'Job size', 'WSJF', 'Plan']];
+    R.list.forEach(function (x, i) { rows.push([i + 1, x.r.name, x.r.owner, x.r.ubv, x.r.tc, x.r.rroe, x.cod, x.size, x.score.toFixed(2), x.fits ? 'In' : 'Deferred']); }); rows.push([], ['Capacity', R.cap], ['Used', R.used]); return rows; } });
+</script>
+<!-- /toolshare -->
 </body>
 </html>

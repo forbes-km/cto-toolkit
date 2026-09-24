@@ -257,5 +257,29 @@ document.getElementById('rm-all').addEventListener('click',function(){render(reg
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script>
+(function () {
+  var boxes = function () { return Array.prototype.slice.call(document.querySelectorAll('#rm-filters input[type=checkbox]')); };
+  var mode = 'none';
+  document.getElementById('rm-apply').addEventListener('click', function () { mode = 'apply'; });
+  document.getElementById('rm-all').addEventListener('click', function () { mode = 'all'; });
+  ToolShare.register({ id: 'rm', root: '#filter', title: 'Regulations that apply', computeOnLoad: false,
+    getState: function () { return { on: boxes().filter(function (b) { return b.checked; }).map(function (b) { return b.value; }), mode: mode }; },
+    setState: function (s) {
+      var on = s.on || [];
+      boxes().forEach(function (b) { b.checked = on.indexOf(b.value) >= 0; });
+      if (s.mode === 'apply') document.getElementById('rm-apply').click();
+      else if (s.mode === 'all') document.getElementById('rm-all').click();
+      else { mode = 'none'; var r = document.getElementById('rm-result'); r.style.display = 'none'; r.innerHTML = ''; }
+    },
+    csv: function () {
+      var rows = [['Selected: ' + boxes().filter(function (b) { return b.checked; }).map(function (b) { return b.parentNode.innerText.trim(); }).join('; ')], []];
+      return rows.concat(ToolShare.tableRows('#rm-result'));
+    } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

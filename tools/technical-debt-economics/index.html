@@ -115,7 +115,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h2>Carry-cost calculator and multi-year sequencer</h2>
-      <p>Enter up to eight debt items and an annual remediation budget. The tool computes annual cost of doing nothing, payback, and a ranking, then sequences the items across years within the budget. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Enter up to eight debt items and an annual remediation budget. The tool computes annual cost of doing nothing, payback, and a ranking, then sequences the items across years within the budget. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <div class="field"><span>Loaded engineering cost per hour ($)</span><input type="number" id="td-rate" value="120"></div>
@@ -289,5 +289,26 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script>
+(function () {
+  if (!document.getElementById('td-n0').value) document.getElementById('td-sample').click();
+  var f = ToolShare.fields('#calculator', function () { document.getElementById('td-calc').click(); });
+  ToolShare.register({ id: 'td', root: '#calculator', title: 'Technical debt plan', getState: f.getState, setState: f.setState,
+    csv: function () {
+      var v = function (id) { return document.getElementById(id).value; };
+      var rows = [['Engineer hourly cost', v('td-rate')], ['Annual budget', v('td-budget')], ['Horizon (years)', v('td-years')], []];
+      rows.push(['Item', 'Hours lost per month', 'Direct cost per year', 'Incident probability (%)', 'Incident cost', 'Remediation hours', 'Remediation cost']);
+      for (var i = 0; i < 8; i++) {
+        if (!v('td-n' + i) && !v('td-rh' + i) && !v('td-rc' + i)) continue;
+        rows.push([v('td-n' + i), v('td-h' + i), v('td-c' + i), v('td-p' + i), v('td-e' + i), v('td-rh' + i), v('td-rc' + i)]);
+      }
+      rows.push([]);
+      return rows.concat(ToolShare.tableRows('#td-result', true));
+    } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

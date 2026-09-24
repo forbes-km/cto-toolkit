@@ -197,7 +197,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Is the faster recovery time worth its cost?</h3>
-      <p>The same cost-benefit logic as <a href="../reliability-economics/index.html">Reliability as an Economic Decision</a>, applied to recovery speed instead of uptime. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>List the systems you are deciding on. For each, the tool compares the expected annual value of a faster recovery (probability of an event, times hours saved, times downtime cost) with what the faster RTO costs, then ranks the systems. It is the same expected-value logic as before, applied across the estate. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -222,45 +222,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    document.getElementById('dr-calc').addEventListener('click', () => {
-      const costPerHour = parseFloat(document.getElementById('dr-cost').value) || 0;
-      const currentRTO = parseFloat(document.getElementById('dr-current-rto').value) || 0;
-      const targetRTO = parseFloat(document.getElementById('dr-target-rto').value) || 0;
-      const prob = (parseFloat(document.getElementById('dr-prob').value) || 0) / 100;
-      const invest = parseFloat(document.getElementById('dr-invest').value) || 0;
-
-      const resultEl = document.getElementById('dr-result');
-
-      if (targetRTO >= currentRTO) {
-        resultEl.innerHTML =
-          '<div style="background:var(--b-soft); border-left:3px solid var(--b); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-          'Target RTO isn\'t faster than the current RTO. Pick a target with less recovery time than what you already have.' +
-          '</div>';
-        return;
-      }
-
-      const hoursSaved = currentRTO - targetRTO;
-      const expectedAnnualSavings = prob * hoursSaved * costPerHour;
-      const net = expectedAnnualSavings - invest;
-
-      let verdict;
-      if (net > 0) {
-        verdict = 'JUSTIFIED, at this estimated probability. Expected annual value exceeds the investment by $' + Math.round(net).toLocaleString() + '. This is an expected value across many possible years rather than a guarantee for any single year. Treat it the way an insurance purchase gets treated.';
-      } else {
-        verdict = 'NOT JUSTIFIED AT THESE NUMBERS. Expected annual value is $' + Math.round(Math.abs(net)).toLocaleString() + ' short of the investment. Either the disaster probability is understated, the cost-per-hour figure is too low, or this RTO tier isn\'t worth building to yet.';
-      }
-
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Recovery time saved per event: ' + hoursSaved.toFixed(1) + ' hours</strong><br>' +
-        'Expected annual value of that improvement: $' + Math.round(expectedAnnualSavings).toLocaleString() + '<br>' +
-        'Investment required: $' + Math.round(invest).toLocaleString() + '/year<br>' +
-        '<br>' + verdict +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -344,5 +305,59 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+cell.innerHTML = '';
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
+function tag(v) { return '<span class="tag ' + (v === 'Worth it' ? 'good' : v === 'Not worth it' ? 'bad' : 'mid') + '">' + v + '</span>'; }
+function verdict(net, invest) { if (invest > 0 && Math.abs(net) <= 0.2 * invest) return 'Marginal'; return net > 0 ? 'Worth it' : 'Not worth it'; }
+
+var cols = [
+  { key: 'name', label: 'System', type: 'text', width: '150px', wide: true },
+  { key: 'cost', label: 'Downtime cost per hour ($)', type: 'number', min: 0, step: 1000 },
+  { key: 'cur', label: 'Current RTO (hours)', type: 'number', min: 0, step: 0.5 },
+  { key: 'tgt', label: 'Target RTO (hours)', type: 'number', min: 0, step: 0.5 },
+  { key: 'p', label: 'Event probability per year (%)', type: 'number', min: 0, max: 100, step: 1 },
+  { key: 'inv', label: 'Annual cost of target RTO ($)', type: 'number', min: 0, step: 5000 }
+];
+var DEF = [
+  { name: 'Claims processing', cost: 25000, cur: 24, tgt: 4, p: 20, inv: 150000 },
+  { name: 'Customer portal', cost: 15000, cur: 12, tgt: 2, p: 10, inv: 90000 },
+  { name: 'Order platform', cost: 40000, cur: 24, tgt: 4, p: 10, inv: 70000 },
+  { name: 'Internal reporting', cost: 2000, cur: 48, tgt: 8, p: 10, inv: 30000 }
+];
+var out;
+var t = RowTable.create({ mount: sec(), id: 'dr', columns: cols, rows: DEF, blank: { name: '', cost: 10000, cur: 24, tgt: 4, p: 10, inv: 50000 }, addLabel: 'Add system', min: 1, max: 25, onChange: calc });
+out = sec('div', 'tool-out');
+function rowsCalc() {
+  return t.get().map(function (r) {
+    var saved = Math.max(0, (r.cur || 0) - (r.tgt || 0)), val = (Math.min(100, r.p || 0) / 100) * saved * (r.cost || 0), inv = r.inv || 0, net = val - inv;
+    return { r: r, saved: saved, val: val, inv: inv, net: net, bad: (r.tgt || 0) >= (r.cur || 0), v: (r.tgt || 0) >= (r.cur || 0) ? 'Check RTOs' : verdict(net, inv) };
+  }).sort(function (a, b) { return b.net - a.net; });
+}
+function calc() {
+  var R = rowsCalc(), h = '', tv = 0, ti = 0, fund = 0, fundInv = 0;
+  h += '<div class="rt-wrap"><table class="matrix-table"><tr><th>System</th><th>Hours saved per event</th><th>Expected value / yr</th><th>Cost / yr</th><th>Net / yr</th><th>Verdict</th></tr>';
+  R.forEach(function (x) {
+    tv += x.val; ti += x.inv; if (x.v === 'Worth it') { fund += x.net; fundInv += x.inv; }
+    h += '<tr><td>' + E(x.r.name || '(unnamed)') + '</td><td>' + x.saved.toFixed(1) + '</td><td>' + $(x.val) + '</td><td>' + $(x.inv) + '</td><td>' + $(x.net) + '</td><td>' + (x.bad ? '<span class="tag mid">Target is not faster</span>' : tag(x.v)) + '</td></tr>';
+  });
+  h += '</table></div>';
+  var worth = R.filter(function (x) { return x.v === 'Worth it'; }).map(function (x) { return x.r.name; });
+  var s = '<div class="tool-sum"><strong>Fund: ' + (worth.length ? E(worth.join(', ')) : 'none at these numbers') + '.</strong><br>';
+  s += 'Funding only those systems costs ' + $(fundInv) + ' a year and returns ' + $(fund) + ' a year of expected value above its cost. Funding everything listed would cost ' + $(ti) + ' for ' + $(tv) + ' of expected value.<br><br>';
+  s += 'These are expected values across many possible years, not a promise for any one year; treat the decision the way an insurance purchase is treated. For systems marked Not worth it, check whether the probability or the downtime cost is understated before dropping them, and whether a cheaper step, such as a tested restore, closes most of the gap.</div>';
+  out.innerHTML = s + '<h4>By system, best return first</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 'dr', root: card, title: 'Disaster recovery investment', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && s.rows && s.rows.length ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['System', 'Downtime cost per hour', 'Current RTO (h)', 'Target RTO (h)', 'Probability (%)', 'Annual cost', 'Hours saved', 'Expected value per year', 'Net per year', 'Verdict']];
+    rowsCalc().forEach(function (x) { rows.push([x.r.name, x.r.cost, x.r.cur, x.r.tgt, x.r.p, x.inv, x.saved, Math.round(x.val), Math.round(x.net), x.v]); }); return rows; } });
+</script>
+<!-- /toolshare -->
 </body>
 </html>

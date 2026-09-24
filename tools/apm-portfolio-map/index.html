@@ -262,7 +262,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>TIME quadrant classifier</h3>
-      <p>Score one application on the same five-factor Business Value and Technical Health axes the full instrument uses. Runs entirely in your browser; nothing is sent anywhere or stored. Risk and cost scoring, and the multi-application portfolio view, are part of the full simulator.</p>
+      <p>Score one application on the same five-factor Business Value and Technical Health axes the full instrument uses. The tool shows which factors drive the result, how far the application sits from each threshold, what single change would move it to another quadrant, and produces a short decision record. Runs entirely in your browser; nothing is sent anywhere. Risk and cost scoring, and the multi-application portfolio view, are part of the full simulator.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -361,5 +361,54 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+(function () {
+  var card = document.getElementById('time-classifier'), cell = card.querySelector('.stage-cell'), E = RowTable.esc, $ = RowTable.money;
+  var BV = [['strat', 'Strategic alignment'], ['crit', 'Business criticality'], ['reach', 'User reach & dependency'], ['diff', 'Differentiation'], ['reg', 'Regulatory necessity']];
+  var TH = [['currency', 'Technology currency'], ['arch', 'Architecture quality'], ['integ', 'Integration complexity'], ['dataFit', 'Data architecture fit'], ['debt', 'Technical debt']];
+  var top = document.createElement('div'); cell.insertBefore(top, cell.firstChild);
+  function iso(d) { var x = new Date(); x.setDate(x.getDate() + d); return x.toISOString().slice(0, 10); }
+  var DX = { app: 'Customer portal', owner: 'VP Digital', cost: 1400000, review: iso(90) };
+  var ex = RowTable.extras(top, 'apm', [{ key: 'app', label: 'Application', type: 'text' }, { key: 'owner', label: 'Business owner', type: 'text' }, { key: 'cost', label: 'Annual run cost ($)', min: 0, step: 10000 }, { key: 'review', label: 'Review by', type: 'date' }]);
+  ex.set(DX);
+  var DEFS = { strat: 5, crit: 5, reach: 4, diff: 4, reg: 3, currency: 2, arch: 2, integ: 2, dataFit: 3, debt: 2 };
+  document.getElementById('apm-calc').style.display = 'none';
+  var more = document.createElement('div'); more.className = 'tool-out';
+  document.getElementById('apm-result').insertAdjacentElement('afterend', more);
+  function val(id) { return parseInt(document.getElementById('apm-' + id).value, 10); }
+  var ACTION = { Invest: 'Fund it and protect it. Keep the health score from sliding while value stays high.', Migrate: 'Put it on the modernization backlog, ranked by value at risk rather than ticket age. Freeze non-essential features until the platform plan is funded.', Tolerate: 'Leave it running with minimal spend. Resist improving it just because it is easy to improve.', Eliminate: 'Plan retirement: move remaining users and data, then switch it off. Every quarter it stays live is cost with no strategic return.' };
+  function flip(dims, label) {
+    var s = dims.map(function (d) { return val(d[0]); }), sum = s.reduce(function (a, b) { return a + b; }, 0), high = sum >= 15, opts = [];
+    dims.forEach(function (d, i) { if (high) { var need = sum - 14; if (s[i] - need >= 1) opts.push(d[1] + ' from ' + s[i] + ' to ' + (s[i] - need)); } else { var gain = 15 - sum; if (s[i] + gain <= 5) opts.push(d[1] + ' from ' + s[i] + ' to ' + (s[i] + gain)); } });
+    var dist = (sum / 5 - 3);
+    return '<li><strong>' + label + ' ' + (sum / 5).toFixed(1) + '</strong>, ' + Math.abs(dist).toFixed(1) + ' ' + (high ? 'above' : 'below') + ' the 3.0 threshold. ' + (opts.length ? 'A single change that would move it ' + (high ? 'below' : 'above') + ': ' + opts.slice(0, 2).join(', or ') + '.' : 'No single factor change moves it across; it would take changes on two or more factors.') + '</li>';
+  }
+  function contrib(dims) { var s = dims.map(function (d) { return [d[1], val(d[0])]; }), avg = s.reduce(function (a, x) { return a + x[1]; }, 0) / s.length;
+    return s.sort(function (a, b) { return b[1] - a[1]; }).map(function (x) { var dlt = x[1] - avg; return x[0] + ' ' + x[1] + (Math.abs(dlt) < 0.05 ? '' : (dlt > 0 ? ' (pulls up)' : ' (pulls down)')); }).join('; '); }
+  function calc() {
+    document.getElementById('apm-calc').click();
+    var bv = BV.reduce(function (a, d) { return a + val(d[0]); }, 0) / 5, th = TH.reduce(function (a, d) { return a + val(d[0]); }, 0) / 5;
+    var q = bv >= 3 ? (th >= 3 ? 'Invest' : 'Migrate') : (th >= 3 ? 'Tolerate' : 'Eliminate'), x = ex.get();
+    var rec = 'Application: ' + (x.app || '(unnamed)') + '\nQuadrant: ' + q + ' (Business Value ' + bv.toFixed(1) + ', Technical Health ' + th.toFixed(1) + ')\nAction: ' + ACTION[q] + '\nOwner: ' + (x.owner || 'unassigned') + (x.cost ? '\nAnnual run cost: ' + $(x.cost) : '') + '\nReview by: ' + (x.review || 'not set');
+    more.innerHTML = '<h4>What drives it</h4><ul><li>Business Value: ' + E(contrib(BV)) + '</li><li>Technical Health: ' + E(contrib(TH)) + '</li></ul>' +
+      '<h4>Distance to the thresholds</h4><ul>' + flip(BV, 'Business Value') + flip(TH, 'Technical Health') + '</ul>' +
+      '<h4>Decision record</h4><pre id="apm-record" style="white-space:pre-wrap;font-family:var(--mono);font-size:12px;background:var(--accent-soft);padding:12px 14px;border-radius:6px;margin:0">' + E(rec) + '</pre>' +
+      (q === 'Migrate' && x.cost ? '<p style="font-size:12.5px;margin-top:8px">' + $(x.cost) + ' a year of run cost is sitting on a platform the organization has decided not to keep as it is. That figure belongs in the budget conversation.</p>' : '');
+    return rec;
+  }
+  cell.addEventListener('input', calc); cell.addEventListener('change', calc);
+  var f = ToolShare.fields(card, calc);
+  Object.keys(DEFS).forEach(function (k) { var e = document.getElementById('apm-' + k); e.value = DEFS[k]; var v = document.getElementById('apm-' + k + '-val'); if (v) v.textContent = DEFS[k]; });
+  calc();
+  var set0 = f.setState;
+  f.setState = function (s) { set0(s); Object.keys(DEFS).forEach(function (k) { var v = document.getElementById('apm-' + k + '-val'); if (v) v.textContent = document.getElementById('apm-' + k).value; }); calc(); };
+  ToolShare.register({ id: 'apm', root: card, title: 'TIME classification', getState: f.getState, setState: f.setState,
+    csv: function () { var rows = [['Factor', 'Score']]; BV.concat(TH).forEach(function (d) { rows.push([d[1], val(d[0])]); }); rows.push([]); calc().split('\n').forEach(function (l) { var i = l.indexOf(': '); rows.push([l.slice(0, i), l.slice(i + 2)]); }); return rows; } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

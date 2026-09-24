@@ -182,7 +182,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score an initiative</h3>
-      <p>Score all nine dimensions 1 to 5. Feasibility and data readiness are hard gates; a low score on either kills the initiative regardless of everything else. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Score every initiative competing for AI investment, one row each, on the nine dimensions. Feasibility and data readiness are hard gates: a score below 3 on either kills the initiative regardless of everything else. The tool classifies each one as Scale, Incubate, Watch, or Kill, says why, and ranks the portfolio. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -193,91 +193,7 @@
     </div>
   </div>
 
-  <script>
-    const aipmDims = [
-      { id: "value", label: "Business value", hint: "1 = minimal impact, 5 = high impact" },
-      { id: "feasibility", label: "Feasibility (gate)", hint: "1 = not feasible now, 5 = highly feasible" },
-      { id: "data", label: "Data readiness (gate)", hint: "1 = data doesn't exist or unusable, 5 = fully ready" },
-      { id: "risk", label: "Risk", hint: "1 = high regulatory/model risk, 5 = low risk" },
-      { id: "adoption", label: "Adoption likelihood", hint: "1 = unlikely to be used, 5 = certain adoption" },
-      { id: "time", label: "Time to value", hint: "1 = very long, 5 = fast" },
-      { id: "cost", label: "Operating cost", hint: "1 = expensive to run, 5 = cheap to run" },
-      { id: "diff", label: "Differentiation", hint: "1 = easily copied, 5 = hard to copy" },
-      { id: "reversibility", label: "Reversibility", hint: "1 = hard to unwind, 5 = easy to unwind" },
-    ];
-
-    const aipmInputsEl = document.getElementById('aipm-inputs');
-    aipmDims.forEach((dim) => {
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
-      const labelWrap = document.createElement('div');
-      const label = document.createElement('div');
-      label.textContent = dim.label;
-      label.style.cssText = 'font-size:13px; color:var(--ink); font-weight:600;';
-      const hint = document.createElement('div');
-      hint.textContent = dim.hint;
-      hint.style.cssText = 'font-size:11px; color:var(--ink-soft);';
-      labelWrap.appendChild(label);
-      labelWrap.appendChild(hint);
-      const select = document.createElement('select');
-      select.id = 'aipm-' + dim.id;
-      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink); min-width:90px;';
-      [1,2,3,4,5].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = v;
-        if (v === 3) opt.selected = true;
-        select.appendChild(opt);
-      });
-      row.appendChild(labelWrap);
-      row.appendChild(select);
-      aipmInputsEl.appendChild(row);
-    });
-
-    document.getElementById('aipm-calc').addEventListener('click', () => {
-      const scores = {};
-      aipmDims.forEach(dim => {
-        scores[dim.id] = parseInt(document.getElementById('aipm-' + dim.id).value, 10);
-      });
-
-      const resultEl = document.getElementById('aipm-result');
-      const avg = aipmDims.reduce((sum, d) => sum + scores[d.id], 0) / aipmDims.length;
-
-      let tier, verdict;
-      const gateFailed = scores.feasibility < 3 || scores.data < 3;
-
-      if (gateFailed) {
-        tier = 'KILL';
-        const failedGates = [];
-        if (scores.feasibility < 3) failedGates.push('feasibility');
-        if (scores.data < 3) failedGates.push('data readiness');
-        verdict = 'This fails a gating dimension (' + failedGates.join(' and ') + '), so it does not reach the business-value conversation at all, regardless of the average score. Gating dimensions eliminate rather than average away.';
-      } else if (avg >= 4.0 && scores.reversibility <= 2) {
-        tier = 'INCUBATE';
-        verdict = 'The average score alone would suggest Scale, but reversibility is low: this bet is expensive to unwind if it does not work out. Fund a bounded pilot with a defined checkpoint rather than a full commitment; the downside asymmetry earns the extra caution.';
-      } else if (avg >= 4.0) {
-        tier = 'SCALE';
-        verdict = 'Proven value and feasibility, with a downside that is manageable if it does not work out. Fund it fully and remove obstacles.';
-      } else if (avg >= 3.0) {
-        tier = 'INCUBATE';
-        verdict = 'Promising but unproven on one or more dimensions. Fund a bounded pilot with a defined checkpoint rather than an open-ended commitment.';
-      } else {
-        tier = 'WATCH';
-        verdict = 'Not ready to fund at this score. Revisit on a set schedule rather than letting it quietly disappear or quietly keep spending.';
-      }
-
-      const weakest = aipmDims.reduce((a, b) => (scores[b.id] < scores[a.id] ? b : a));
-
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Classification: ' + tier + '</strong> (average score ' + avg.toFixed(1) + ' of 5)<br>' +
-        'Weakest dimension: <strong>' + weakest.label.replace(' (gate)', '') + '</strong> at ' + scores[weakest.id] + '/5<br>' +
-        '<br>' + verdict +
-        '</div>';
-    });
-  </script>
-
-    <div class="stage-card">
+  <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Stage gates with evidence, not enthusiasm</h3>
@@ -361,5 +277,57 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls, before) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; if (before) cell.insertBefore(d, before); else cell.appendChild(d); return d; }
+
+cell.innerHTML = '';
+var S = [['1','1'],['2','2'],['3','3'],['4','4'],['5','5']];
+var DIMS = [['value', 'Business value'], ['feasibility', 'Feasibility (gate)'], ['data', 'Data readiness (gate)'], ['risk', 'Risk (5 = low)'], ['adoption', 'Adoption likelihood'], ['time', 'Time to value'], ['cost', 'Operating cost (5 = cheap)'], ['diff', 'Differentiation'], ['reversibility', 'Reversibility']];
+var cols = [{ key: 'name', label: 'Initiative', type: 'text', width: '170px', wide: true }, { key: 'owner', label: 'Owner', type: 'text', width: '100px' }].concat(DIMS.map(function (d) { return { key: d[0], label: d[1], type: 'select', options: S }; }));
+function mk(n, o, v) { var r = { name: n, owner: o }; DIMS.forEach(function (d, i) { r[d[0]] = String(v[i]); }); return r; }
+var DEF = [
+  mk('Support ticket triage assistant', 'VP Support', [4, 4, 4, 4, 5, 4, 4, 3, 4]),
+  mk('Claims document extraction', 'Claims ops', [5, 4, 3, 3, 4, 3, 3, 4, 2]),
+  mk('Sales forecasting model', 'CRO', [4, 3, 2, 4, 3, 3, 4, 3, 4]),
+  mk('Internal policy chatbot', 'HR', [2, 5, 4, 4, 3, 5, 4, 1, 5])
+];
+var blank = mk('', '', [3, 3, 3, 3, 3, 3, 3, 3, 3]);
+var t = RowTable.create({ mount: sec(), id: 'aipm', columns: cols, rows: DEF, blank: blank, addLabel: 'Add initiative', min: 1, max: 30, onChange: calc });
+var out = sec('div', 'tool-out');
+function classify(r) {
+  var s = {}; DIMS.forEach(function (d) { s[d[0]] = parseInt(r[d[0]], 10) || 1; });
+  var avg = DIMS.reduce(function (a, d) { return a + s[d[0]]; }, 0) / DIMS.length, tier, why;
+  if (s.feasibility < 3 || s.data < 3) { var f = []; if (s.feasibility < 3) f.push('feasibility'); if (s.data < 3) f.push('data readiness'); tier = 'Kill'; why = 'Fails the ' + f.join(' and ') + ' gate. Gates eliminate rather than average away.'; }
+  else if (avg >= 4 && s.reversibility <= 2) { tier = 'Incubate'; why = 'Scores like Scale, but it is hard to unwind: fund a bounded pilot with a checkpoint.'; }
+  else if (avg >= 4) { tier = 'Scale'; why = 'Proven value and feasibility with a manageable downside: fund fully and remove obstacles.'; }
+  else if (avg >= 3) { tier = 'Incubate'; why = 'Promising but unproven on one or more dimensions: bounded pilot, defined checkpoint.'; }
+  else { tier = 'Watch'; why = 'Not ready to fund: revisit on a set schedule.'; }
+  var weak = DIMS.reduce(function (a, d) { return s[d[0]] < s[a[0]] ? d : a; }, DIMS[0]);
+  return { r: r, avg: avg, tier: tier, why: why, weak: weak[1].replace(' (gate)', '') + ' (' + s[weak[0]] + ')' };
+}
+var ORD = { Scale: 0, Incubate: 1, Watch: 2, Kill: 3 }, TG = { Scale: 'good', Incubate: 'mid', Watch: 'mid', Kill: 'bad' };
+function calc() {
+  var R = t.get().map(classify).sort(function (a, b) { return ORD[a.tier] - ORD[b.tier] || b.avg - a.avg; });
+  var n = { Scale: 0, Incubate: 0, Watch: 0, Kill: 0 }; R.forEach(function (x) { n[x.tier]++; });
+  var h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Rank</th><th>Initiative</th><th>Owner</th><th>Class</th><th>Average</th><th>Weakest</th><th>Why</th></tr>';
+  R.forEach(function (x, i) { h += '<tr><td>' + (i + 1) + '</td><td>' + E(x.r.name || '(unnamed)') + '</td><td>' + E(x.r.owner) + '</td><td><span class="tag ' + TG[x.tier] + '">' + x.tier + '</span></td><td>' + x.avg.toFixed(1) + '</td><td>' + E(x.weak) + '</td><td>' + x.why + '</td></tr>'; });
+  h += '</table></div>';
+  var s = '<div class="tool-sum"><strong>' + n.Scale + ' Scale, ' + n.Incubate + ' Incubate, ' + n.Watch + ' Watch, ' + n.Kill + ' Kill.</strong> ';
+  if (n.Kill) s += 'Killed initiatives failed a gate; do not let them back in through a higher value score. ';
+  if (!n.Scale && R.length >= 3) s += 'Nothing is ready to scale. That is normal early on, but check that pilots have dated checkpoints so Incubate does not become permanent. ';
+  if (n.Incubate > 3) s += 'More than three pilots at once usually means none gets enough attention; rank them and cap the number. ';
+  out.innerHTML = s + '</div><h4>Portfolio, ranked</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 'aipm', root: card, title: 'AI portfolio', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && s.rows && s.rows.length ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['Initiative', 'Owner'].concat(DIMS.map(function (d) { return d[1]; })).concat(['Average', 'Class', 'Reason'])];
+    t.get().map(classify).forEach(function (x) { rows.push([x.r.name, x.r.owner].concat(DIMS.map(function (d) { return x.r[d[0]]; })).concat([x.avg.toFixed(2), x.tier, x.why])); }); return rows; } });
+</script>
+<!-- /toolshare -->
 </body>
 </html>

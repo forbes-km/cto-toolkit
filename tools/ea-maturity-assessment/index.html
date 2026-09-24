@@ -129,7 +129,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own function</h3>
-      <p>Rate each dimension 1 to 5. Runs entirely in your browser; nothing is sent anywhere or stored. For a full assessment, score independently across 2 to 4 scorers before reconciling, per the facilitator guidance below; this calculator is for a single scorer's pass.</p>
+      <p>Score each dimension now and at target, and record the overall score you expected before you started. The tool flags the diagnostic patterns below, ranks the gaps, and shows the self-perception gap the worked example describes. For a full assessment, score independently across 2 to 4 scorers before reconciling, per the facilitator guidance below; this tool is a single scorer's pass. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -139,76 +139,6 @@
       </div>
     </div>
   </div>
-  <script>
-    const eamDimensions = [
-      "Strategy Alignment",
-      "Governance",
-      "Domain Coverage",
-      "Delivery Integration",
-      "Talent & Operating Model",
-      "Artifacts & Tooling"
-    ];
-    const eamInputsEl = document.getElementById('eam-inputs');
-    eamDimensions.forEach((dim, i) => {
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
-      const label = document.createElement('span');
-      label.textContent = dim;
-      label.style.cssText = 'font-size:13px; color:var(--ink);';
-      const select = document.createElement('select');
-      select.id = 'eam-dim-' + i;
-      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink);';
-      [1,2,3,4,5].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = 'Level ' + v;
-        if (v === 3) opt.selected = true;
-        select.appendChild(opt);
-      });
-      row.appendChild(label);
-      row.appendChild(select);
-      eamInputsEl.appendChild(row);
-    });
-
-    document.getElementById('eam-calc').addEventListener('click', () => {
-      const scores = {};
-      eamDimensions.forEach((dim, i) => {
-        scores[dim] = parseInt(document.getElementById('eam-dim-' + i).value, 10);
-      });
-      const vals = Object.values(scores);
-      const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-      const weakestDim = Object.keys(scores).reduce((a, b) => (scores[b] < scores[a] ? b : a));
-
-      // Diagnostic patterns from the facilitator guide
-      const patterns = [];
-      if (scores["Governance"] >= 4 && scores["Delivery Integration"] <= 2) {
-        patterns.push("Strong Governance, weak Delivery Integration: a common sign of mistaking an architecture review board for architecture practice. The fix is moving engagement earlier in the lifecycle.");
-      }
-      if (scores["Artifacts & Tooling"] >= 4 && scores["Strategy Alignment"] <= 2) {
-        patterns.push("Strong Artifacts, weak Strategy Alignment: common in functions that have been captured by IT. The fix is upstream sponsorship and deliberate work with business stakeholders.");
-      }
-      if (scores["Strategy Alignment"] >= 4 && scores["Talent & Operating Model"] <= 2) {
-        patterns.push("Strong Strategy Alignment, weak Talent and Operating Model: often means the function is carried by one or two talented individuals. That is a vulnerability. The fix is role definition and succession planning.");
-      }
-      if (vals.every(v => v <= 2)) {
-        patterns.push("Uniformly low scores: the function is still in formation. Focus the roadmap on establishing two or three practices well, rather than raising everything by half a point at once.");
-      }
-
-      let patternHtml = '';
-      if (patterns.length > 0) {
-        patternHtml = '<div style="margin-top:10px; font-size:13px; line-height:1.6;"><strong>Pattern detected:</strong><ul style="margin:6px 0 0; padding-left:18px;">' +
-          patterns.map(p => '<li>' + p + '</li>').join('') + '</ul></div>';
-      }
-
-      const resultEl = document.getElementById('eam-result');
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
-        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5.</strong> The average is the least interesting number here; the shape of the six scores carries the signal.<br>' +
-        'Lowest-scoring dimension: <strong>' + weakestDim + '</strong> at Level ' + scores[weakestDim] + '.' +
-        patternHtml +
-        '</div>';
-    });
-  </script>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
@@ -296,5 +226,35 @@
 
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/maturity-tool.js"></script>
+<script>
+MaturityTool.create({
+  id: 'eam', card: '#calculator', title: 'EA function maturity',
+  columns: [{ key: 'current', label: 'Current' }, { key: 'target', label: 'Target (12 months)' }],
+  noteLabel: 'Evidence',
+  dims: ['Strategy Alignment', 'Governance', 'Domain Coverage', 'Delivery Integration', 'Talent & Operating Model', 'Artifacts & Tooling'].map(function (n) { return { name: n }; }),
+  defaults: { current: [2, 3, 3, 2, 2, 4], target: [3, 3, 3, 4, 3, 4], note: ['', '', '', 'Reviews happen after design is done', 'Two people carry most engagements', 'Capability model and catalog current'] },
+  extras: [{ id: 'pre', label: 'Your overall score estimate before scoring (1 to 5)', type: 'number', min: 1, max: 5, step: 0.1, value: 3.5 }],
+  interpret: function (S) {
+    var sc = {}; S.dims.forEach(function (d) { sc[d.name] = d.vals.current; });
+    var out = ['The average is the least interesting number here; the shape of the six scores carries the signal.'];
+    var pre = S.extra.pre;
+    if (pre != null && !isNaN(pre)) {
+      var diff = pre - S.avg.current;
+      out.push('Self-perception gap: you expected <strong>' + pre.toFixed(1) + '</strong> and scored <strong>' + S.avg.current.toFixed(1) + '</strong>' + (Math.abs(diff) < 0.3 ? ', close enough that your view of the function matches the evidence.' : (diff > 0 ? ', ' + diff.toFixed(1) + ' higher than the scores support. Leaders usually rate the function by its artifacts; delivery teams rate it by whether it helped them.' : ', ' + (-diff).toFixed(1) + ' lower than the scores. Check you are not scoring on intent in the other direction.')));
+    }
+    var p = [];
+    if (sc['Governance'] >= 4 && sc['Delivery Integration'] <= 2) p.push('Strong Governance, weak Delivery Integration: a common sign of mistaking an architecture review board for architecture practice. Move engagement earlier in the lifecycle.');
+    if (sc['Artifacts & Tooling'] >= 4 && sc['Strategy Alignment'] <= 2) p.push('Strong Artifacts, weak Strategy Alignment: common in functions that have been captured by IT. The fix is upstream sponsorship and deliberate work with business stakeholders.');
+    if (sc['Strategy Alignment'] >= 4 && sc['Talent & Operating Model'] <= 2) p.push('Strong Strategy Alignment, weak Talent and Operating Model: the function is likely carried by one or two people. Define roles and plan succession.');
+    if (S.dims.every(function (d) { return d.vals.current <= 2; })) p.push('Uniformly low scores: the function is still in formation. Establish two or three practices well rather than raising everything by half a point.');
+    if (p.length) out.push('<strong>Pattern detected:</strong><ul>' + p.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>');
+    return out.join('<br><br>');
+  }
+});
+</script>
+<!-- /toolshare -->
 </body>
 </html>

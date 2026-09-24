@@ -167,7 +167,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Find your own break-even point</h3>
-      <p>The formula above, made concrete. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>The break-even formula above, projected forward. Enter the fixed monthly cost of self-hosting, the managed price per query, today's volume, and how fast volume grows. The tool finds the break-even volume, the month self-hosting starts to win, and the cumulative cost of each option over 24 months, with a price sensitivity check. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -191,32 +191,6 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById('fin-calc').addEventListener('click', () => {
-      const fixed = parseFloat(document.getElementById('fin-fixed').value) || 0;
-      const costPerQuery = parseFloat(document.getElementById('fin-cost').value) || 0;
-      const volume = parseFloat(document.getElementById('fin-volume').value) || 0;
-
-      const resultEl = document.getElementById('fin-result');
-
-      if (costPerQuery <= 0) {
-        resultEl.innerHTML = '<div style="background:var(--b-soft); border-left:3px solid var(--b); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px;">Enter a managed cost per query greater than zero to calculate a break-even point.</div>';
-        return;
-      }
-
-      const breakEvenVolume = fixed / costPerQuery;
-      const managedCost = volume * costPerQuery;
-      const diff = managedCost - fixed;
-      const winner = diff > 0 ? 'Self-hosting' : diff < 0 ? 'Pay-as-you-go' : 'Neither, this is exactly the break-even point';
-
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Break-even volume: ' + Math.round(breakEvenVolume).toLocaleString() + ' queries/month</strong><br>' +
-        'At ' + volume.toLocaleString() + ' queries/month: managed costs $' + Math.round(managedCost).toLocaleString() + ', self-hosted costs $' + Math.round(fixed).toLocaleString() + '<br>' +
-        '<br><strong>' + winner + '</strong>' + (diff !== 0 ? ' wins by $' + Math.abs(Math.round(diff)).toLocaleString() + '/month at this volume.' : '.') +
-        '</div>';
-    });
-  </script>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">2</span>
@@ -471,5 +445,51 @@
     document.querySelectorAll('.provider-content').forEach(c => c.classList.toggle('active', c.dataset.provider === provider));
   });
 </script>
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+(function () {
+  var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell'); cell.innerHTML = '';
+  var $ = RowTable.money, E = RowTable.esc;
+  var DX = { fixed: 18000, cost: 0.004, vol: 2500000, growth: 8, months: 24 };
+  var box = document.createElement('div'); cell.appendChild(box);
+  var ex = RowTable.extras(box, 'fin', [
+    { key: 'fixed', label: 'Fixed self-hosted cost per month ($)', min: 0, step: 500 },
+    { key: 'cost', label: 'Managed cost per query ($)', min: 0, step: 0.0005 },
+    { key: 'vol', label: 'Queries per month today', min: 0, step: 10000 },
+    { key: 'growth', label: 'Volume growth per month (%)', min: -50, max: 200, step: 0.5 },
+    { key: 'months', label: 'Horizon (months)', min: 1, max: 60, step: 1 }
+  ]);
+  ex.set(DX);
+  var out = document.createElement('div'); out.className = 'tool-out'; cell.appendChild(out);
+  function proj(x, priceMult) {
+    var p = (x.cost || 0) * priceMult, rows = [], cm = 0, cs = 0, cross = null, n = Math.max(1, Math.min(60, Math.round(x.months || 24)));
+    for (var m = 1; m <= n; m++) { var v = (x.vol || 0) * Math.pow(1 + (x.growth || 0) / 100, m - 1), mc = v * p; cm += mc; cs += (x.fixed || 0); if (cross === null && mc > (x.fixed || 0)) cross = m; rows.push({ m: m, v: v, mc: mc, sc: x.fixed || 0, cm: cm, cs: cs }); }
+    return { rows: rows, be: p > 0 ? (x.fixed || 0) / p : null, cross: cross, cm: cm, cs: cs, p: p };
+  }
+  function calc() {
+    var x = ex.get(), P = proj(x, 1);
+    if (!(x.cost > 0)) { out.innerHTML = '<div class="tool-sum">Enter a managed cost per query greater than zero.</div>'; return; }
+    var n = P.rows.length, now = P.rows[0], s = '<div class="tool-sum"><strong>Break-even volume: ' + Math.round(P.be).toLocaleString() + ' queries a month.</strong><br>';
+    s += 'Today: managed costs ' + $(now.mc) + ' a month against ' + $(now.sc) + ' self-hosted, so ' + (now.mc > now.sc ? 'self-hosting is already cheaper' : 'pay-as-you-go is cheaper') + ' at current volume.<br>';
+    s += P.cross === null ? 'At this growth rate, volume does not reach break-even within ' + n + ' months.<br>' : (P.cross === 1 ? '' : 'Volume crosses break-even in <strong>month ' + P.cross + '</strong>.<br>');
+    s += 'Cumulative over ' + n + ' months: managed ' + $(P.cm) + ', self-hosted ' + $(P.cs) + '. ' + (P.cm > P.cs ? 'Self-hosting saves ' + $(P.cm - P.cs) : 'Pay-as-you-go saves ' + $(P.cs - P.cm)) + ' over the period.<br><br>';
+    s += 'The fixed figure must include the people who run the self-hosted stack, not only hardware. Most self-hosting cases that fail, fail on that line.</div>';
+    var t = '<h4>Price sensitivity</h4><div class="rt-wrap"><table class="matrix-table"><tr><th>Managed price</th><th>Per query</th><th>Break-even volume / month</th><th>Break-even month</th><th>Cheaper over horizon</th></tr>';
+    [0.5, 0.75, 1, 1.25].forEach(function (k) { var Q = proj(x, k); t += '<tr><td>' + (k * 100) + '% of today</td><td>$' + Q.p.toFixed(5).replace(/0+$/, '') + '</td><td>' + (Q.be ? Math.round(Q.be).toLocaleString() : 'n/a') + '</td><td>' + (Q.cross === null ? 'Not within ' + n : (Q.cross === 1 ? 'Already' : 'Month ' + Q.cross)) + '</td><td>' + (Q.cm > Q.cs ? 'Self-hosted' : 'Managed') + '</td></tr>'; });
+    t += '</table></div><p style="font-size:12.5px;color:var(--ink-soft);margin-top:8px">Managed prices have tended to fall over time; if a 25 to 50 percent price cut flips the answer, the self-hosting case is fragile.</p>';
+    var q = '<h4>Projection</h4><div class="rt-wrap"><table class="matrix-table"><tr><th>Month</th><th>Queries</th><th>Managed / month</th><th>Self-hosted / month</th><th>Managed, cumulative</th><th>Self-hosted, cumulative</th></tr>';
+    P.rows.forEach(function (r) { if (r.m === 1 || r.m % 3 === 0 || r.m === P.cross) q += '<tr><td>' + r.m + '</td><td>' + Math.round(r.v).toLocaleString() + '</td><td>' + $(r.mc) + '</td><td>' + $(r.sc) + '</td><td>' + $(r.cm) + '</td><td>' + $(r.cs) + '</td></tr>'; });
+    q += '</table></div>';
+    out.innerHTML = s + t + q;
+  }
+  cell.addEventListener('input', calc); calc();
+  ToolShare.register({ id: 'fin', root: card, title: 'Self-hosting break-even', getState: function () { return ex.get(); }, setState: function (s) { ex.set(Object.assign({}, DX, s || {})); calc(); },
+    csv: function () { var x = ex.get(), P = proj(x, 1), rows = [['Fixed self-hosted cost per month', x.fixed], ['Managed cost per query', x.cost], ['Queries per month today', x.vol], ['Growth per month (%)', x.growth], ['Break-even volume', P.be ? Math.round(P.be) : ''], [], ['Month', 'Queries', 'Managed per month', 'Self-hosted per month', 'Managed cumulative', 'Self-hosted cumulative']];
+      P.rows.forEach(function (r) { rows.push([r.m, Math.round(r.v), r.mc.toFixed(2), r.sc.toFixed(2), r.cm.toFixed(2), r.cs.toFixed(2)]); }); return rows; } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

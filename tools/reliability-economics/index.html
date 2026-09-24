@@ -160,7 +160,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Is the next nine worth it?</h3>
-      <p>Enter what an hour of downtime costs, your current tier, the tier you're considering, and what reaching it would cost annually. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>List the systems whose availability target is in question. For each, the tool converts the current and target tier into hours of downtime a year, prices the difference, and compares it with the annual cost of reaching the target. The defaults are the two worked examples below plus one more. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -192,48 +192,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const RE_DOWNTIME_MINUTES = { "99": 5259.6, "99.9": 525.96, "99.95": 262.98, "99.99": 52.596 };
-
-    document.getElementById('re-calc').addEventListener('click', () => {
-      const costPerHour = parseFloat(document.getElementById('re-cost').value) || 0;
-      const current = document.getElementById('re-current').value;
-      const target = document.getElementById('re-target').value;
-      const invest = parseFloat(document.getElementById('re-invest').value) || 0;
-
-      const resultEl = document.getElementById('re-result');
-
-      if (parseFloat(target) <= parseFloat(current)) {
-        resultEl.innerHTML =
-          '<div style="background:var(--b-soft); border-left:3px solid var(--b); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-          'Target tier isn\'t higher than the current tier. Pick a target with less downtime than what you already have.' +
-          '</div>';
-        return;
-      }
-
-      const currentMinutes = RE_DOWNTIME_MINUTES[current];
-      const targetMinutes = RE_DOWNTIME_MINUTES[target];
-      const minutesSaved = currentMinutes - targetMinutes;
-      const hoursSaved = minutesSaved / 60;
-      const expectedSavings = hoursSaved * costPerHour;
-      const net = expectedSavings - invest;
-
-      let verdict;
-      if (net > 0) {
-        verdict = 'JUSTIFIED. Expected downtime-cost avoidance exceeds the investment by $' + Math.round(net).toLocaleString() + ' a year, assuming downtime is in fact reduced to the target tier rather than merely budgeted for.';
-      } else {
-        verdict = 'NOT JUSTIFIED AT THESE NUMBERS. The investment costs $' + Math.round(Math.abs(net)).toLocaleString() + ' more than the downtime it is expected to prevent. Either the cost-per-hour figure is understated, or this tier isn\'t worth building to yet.';
-      }
-
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Downtime avoided: ' + hoursSaved.toFixed(1) + ' hours/year, worth $' + Math.round(expectedSavings).toLocaleString() + '</strong><br>' +
-        'Investment required: $' + Math.round(invest).toLocaleString() + '/year<br>' +
-        '<br>' + verdict +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -320,5 +278,57 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+cell.innerHTML = '';
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
+function tag(v) { return '<span class="tag ' + (v === 'Worth it' ? 'good' : v === 'Not worth it' ? 'bad' : 'mid') + '">' + v + '</span>'; }
+function verdict(net, invest) { if (invest > 0 && Math.abs(net) <= 0.2 * invest) return 'Marginal'; return net > 0 ? 'Worth it' : 'Not worth it'; }
+
+var MIN = { '99': 5259.6, '99.9': 525.96, '99.95': 262.98, '99.99': 52.596 };
+var TIERS = [['99', '99%'], ['99.9', '99.9%'], ['99.95', '99.95%'], ['99.99', '99.99%']];
+var cols = [
+  { key: 'name', label: 'System', type: 'text', width: '150px', wide: true },
+  { key: 'cost', label: 'Downtime cost per hour ($)', type: 'number', min: 0, step: 1000 },
+  { key: 'cur', label: 'Current tier', type: 'select', options: TIERS },
+  { key: 'tgt', label: 'Target tier', type: 'select', options: TIERS },
+  { key: 'inv', label: 'Annual cost to reach target ($)', type: 'number', min: 0, step: 5000 }
+];
+var DEF = [
+  { name: 'Checkout', cost: 40000, cur: '99.9', tgt: '99.99', inv: 220000 },
+  { name: 'Internal reporting platform', cost: 2000, cur: '99.9', tgt: '99.99', inv: 180000 },
+  { name: 'Identity and single sign-on', cost: 30000, cur: '99.9', tgt: '99.95', inv: 90000 }
+];
+var t = RowTable.create({ mount: sec(), id: 're', columns: cols, rows: DEF, blank: { name: '', cost: 10000, cur: '99.9', tgt: '99.95', inv: 50000 }, addLabel: 'Add system', min: 1, max: 25, onChange: calc });
+var out = sec('div', 'tool-out');
+function rowsCalc() {
+  return t.get().map(function (r) {
+    var hc = MIN[r.cur] / 60, ht = MIN[r.tgt] / 60, avoided = Math.max(0, hc - ht) * (r.cost || 0), inv = r.inv || 0, net = avoided - inv, bad = parseFloat(r.tgt) <= parseFloat(r.cur);
+    return { r: r, hc: hc, ht: ht, avoided: avoided, inv: inv, net: net, bad: bad, v: bad ? 'Check tiers' : verdict(net, inv) };
+  }).sort(function (a, b) { return b.net - a.net; });
+}
+function calc() {
+  var R = rowsCalc(), h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>System</th><th>Downtime / yr now</th><th>At target</th><th>Loss avoided / yr</th><th>Cost / yr</th><th>Net / yr</th><th>Verdict</th></tr>';
+  R.forEach(function (x) {
+    h += '<tr><td>' + E(x.r.name || '(unnamed)') + '</td><td>' + x.hc.toFixed(1) + ' h</td><td>' + x.ht.toFixed(1) + ' h</td><td>' + $(x.avoided) + '</td><td>' + $(x.inv) + '</td><td>' + $(x.net) + '</td><td>' + (x.bad ? '<span class="tag mid">Target is not higher</span>' : tag(x.v)) + '</td></tr>';
+  });
+  h += '</table></div>';
+  var yes = R.filter(function (x) { return x.v === 'Worth it'; }), no = R.filter(function (x) { return x.v === 'Not worth it'; });
+  var s = '<div class="tool-sum"><strong>' + yes.length + ' of ' + R.length + (R.length === 1 ? ' upgrade' : ' upgrades') + (yes.length === 1 ? ' pays' : ' pay') + ' ' + (yes.length === 1 ? 'for itself' : 'for themselves') + '.</strong> ';
+  s += yes.length ? 'Approve: ' + E(yes.map(function (x) { return x.r.name; }).join(', ')) + ' (net ' + $(yes.reduce(function (a, x) { return a + x.net; }, 0)) + ' a year). ' : '';
+  s += no.length ? 'Decline or rescope: ' + E(no.map(function (x) { return x.r.name; }).join(', ')) + '. Ask what a cheaper step, such as a tested restore or a warm standby, would cost instead. ' : '';
+  s += '<br><br>This assumes downtime actually falls to the target tier rather than only being budgeted for. Measure availability from the user\'s side, not the load balancer\'s, or the avoided loss is overstated.</div>';
+  out.innerHTML = s + '<h4>By system, best return first</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 're', root: card, title: 'Reliability investment', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && s.rows && s.rows.length ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['System', 'Downtime cost per hour', 'Current tier (%)', 'Target tier (%)', 'Annual cost', 'Downtime now (h/yr)', 'Downtime at target (h/yr)', 'Loss avoided per year', 'Net per year', 'Verdict']];
+    rowsCalc().forEach(function (x) { rows.push([x.r.name, x.r.cost, x.r.cur, x.r.tgt, x.inv, x.hc.toFixed(2), x.ht.toFixed(2), Math.round(x.avoided), Math.round(x.net), x.v]); }); return rows; } });
+</script>
+<!-- /toolshare -->
 </body>
 </html>

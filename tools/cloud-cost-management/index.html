@@ -244,7 +244,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own FinOps maturity</h3>
-      <p>Six of the FinOps Framework's capabilities, the ones that most reliably separate stages of maturity, scored 1 to 5. The Foundation groups its capabilities into four domains; these six span all of them. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Six of the FinOps Framework's capabilities, the ones that most reliably separate stages of maturity, scored now and at target. The tool maps each score to Crawl, Walk, or Run, applies this page's rule that allocation caps everything else, and gives a next step for every gap. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -254,59 +254,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const cfDomains = [
-      "Cost allocation & tagging",
-      "Rate optimization (commitments, discounts)",
-      "Anomaly management",
-      "Forecasting & budgeting",
-      "Unit economics",
-      "Governance & accountability"
-    ];
-    const cfInputsEl = document.getElementById('cf-inputs');
-    cfDomains.forEach((dom, i) => {
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
-      const label = document.createElement('span');
-      label.textContent = dom;
-      label.style.cssText = 'font-size:13px; color:var(--ink);';
-      const select = document.createElement('select');
-      select.id = 'cf-dom-' + i;
-      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink);';
-      [1,2,3,4,5].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = 'Level ' + v;
-        if (v === 3) opt.selected = true;
-        select.appendChild(opt);
-      });
-      row.appendChild(label);
-      row.appendChild(select);
-      cfInputsEl.appendChild(row);
-    });
-
-    document.getElementById('cf-calc').addEventListener('click', () => {
-      let scores = [];
-      cfDomains.forEach((dom, i) => {
-        const val = parseInt(document.getElementById('cf-dom-' + i).value, 10);
-        scores.push({ dom, val });
-      });
-      const avg = scores.reduce((a, b) => a + b.val, 0) / scores.length;
-      const weakest = scores.reduce((a, b) => (b.val < a.val ? b : a));
-      let stage;
-      if (avg < 2.5) stage = 'Crawl';
-      else if (avg < 4.0) stage = 'Walk';
-      else stage = 'Run';
-      const resultEl = document.getElementById('cf-result');
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
-        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5 (' + stage + ')</strong><br>' +
-        'Weakest domain: <strong>' + weakest.dom + '</strong> at Level ' + weakest.val + '. ' +
-        'Fund the weakest domain first rather than the one that\'s easiest to improve; a Run-level rate optimization practice sitting on top of Crawl-level allocation is still Crawl overall, since nobody can act on savings they can\'t attribute.' +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -408,5 +355,28 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/maturity-tool.js"></script>
+<script>
+var CF_NEXT = {"Cost allocation & tagging": "Enforce tags at resource creation through infrastructure as code, then run showback so every team sees its own spend.", "Rate optimization (commitments, discounts)": "Commit only on the usage baseline that has been stable for six months, and ladder terms so renewals do not all land at once.", "Anomaly management": "Automate budget and anomaly alerts routed to the owning team, not a central inbox.", "Forecasting & budgeting": "Set budgets proactively per team and reforecast monthly from actual usage.", "Unit economics": "Agree one unit cost with finance (cost per customer or per transaction) and report it every month.", "Governance & accountability": "Replace approval queues with guardrails: automatic budget alerts and size policies in infrastructure as code."};
+function cfBand(v) { return v < 2.5 ? 'Crawl' : (v < 4 ? 'Walk' : 'Run'); }
+MaturityTool.create({
+  id: 'cf', card: '#calculator', title: 'FinOps maturity', dimLabel: 'Capability', band: cfBand,
+  columns: [{ key: 'current', label: 'Current' }, { key: 'target', label: 'Target' }],
+  dims: Object.keys(CF_NEXT).map(function (n) { return { name: n, next: CF_NEXT[n] }; }),
+  defaults: { current: [2, 4, 2, 3, 1, 3], target: [4, 4, 3, 4, 3, 4] },
+  interpret: function (S) {
+    var out = [], alloc = S.dims[0].vals.current, rate = S.dims[1].vals.current;
+    var stage = cfBand(S.avg.current);
+    if (alloc < 3 && stage !== 'Crawl') { out.push('<strong>Effective stage: Crawl.</strong> The average says ' + stage + ', but allocation is at ' + alloc + '. Nobody can act on savings they cannot attribute, so allocation caps the rest.'); }
+    else out.push('Effective stage: <strong>' + stage + '</strong>.');
+    if (rate >= 4 && alloc <= 2) out.push('Run-level rate optimization on top of Crawl-level allocation: discounts are being bought on usage nobody owns.');
+    if (S.dims[4].vals.current <= 2) out.push('Without a unit cost, a rising bill cannot be told apart from growth. See the unit economics example further down this page.');
+    return out.join('<br><br>');
+  }
+});
+</script>
+<!-- /toolshare -->
 </body>
 </html>

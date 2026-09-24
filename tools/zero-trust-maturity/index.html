@@ -121,7 +121,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own environment</h3>
-      <p>Rate each dimension 1 to 5 against the table above. This runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Score each dimension today and where it needs to be, with a line of evidence for each score. The tool applies this page's identity-first rule, ranks the gaps, and gives the sequence to close them. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -131,56 +131,6 @@
       </div>
     </div>
   </div>
-  <script>
-    const ztmDimensions = [
-      "Identity & access",
-      "Segmentation & blast radius",
-      "Detection & response",
-      "Vulnerability management",
-      "Third-party risk",
-      "Governance & culture"
-    ];
-    const inputsEl = document.getElementById('ztm-inputs');
-    ztmDimensions.forEach((dim, i) => {
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
-      const label = document.createElement('span');
-      label.textContent = dim;
-      label.style.cssText = 'font-size:13px; color:var(--ink);';
-      const select = document.createElement('select');
-      select.id = 'ztm-dim-' + i;
-      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink);';
-      [1,2,3,4,5].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = 'Level ' + v;
-        if (v === 3) opt.selected = true;
-        select.appendChild(opt);
-      });
-      row.appendChild(label);
-      row.appendChild(select);
-      inputsEl.appendChild(row);
-    });
-
-    document.getElementById('ztm-calc').addEventListener('click', () => {
-      let scores = [];
-      ztmDimensions.forEach((dim, i) => {
-        const val = parseInt(document.getElementById('ztm-dim-' + i).value, 10);
-        scores.push({ dim, val });
-      });
-      const avg = scores.reduce((a, b) => a + b.val, 0) / scores.length;
-      const weakest = scores.reduce((a, b) => (b.val < a.val ? b : a));
-      const resultEl = document.getElementById('ztm-result');
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
-        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5.</strong><br>' +
-        'Weakest dimension: <strong>' + weakest.dim + '</strong> at Level ' + weakest.val + '. ' +
-        'Fund this one first regardless of the overall average, since an attacker goes for the single weakest dimension rather than the average across all six.' +
-        '</div>';
-    });
-  </script>
-
-
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Diagram</span>
@@ -323,5 +273,52 @@
 
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/maturity-tool.js"></script>
+<script>
+var ZT_L3 = {
+  'Identity & access': 'Documented access policy applied through a defined onboarding and offboarding process',
+  'Segmentation & blast radius': 'Defined network segments with controlled points between them',
+  'Detection & response': 'Centralized logging and defined alerting on known threat patterns',
+  'Vulnerability management': 'Regular scanning cadence, patching SLA defined and mostly met',
+  'Third-party risk': 'Vendor risk assessed at onboarding, reviewed periodically',
+  'Governance & culture': 'Defined security requirements built into the delivery process'
+};
+var ZT_L5 = {
+  'Identity & access': 'Just-in-time, continuously verified access with no standing privilege by default',
+  'Segmentation & blast radius': 'Micro-segmented to the workload level, so one compromise is contained by design',
+  'Detection & response': 'Behavioral anomaly detection with a tested response plan behind it',
+  'Vulnerability management': 'Continuous scanning in deployment, patching SLA consistently met with evidence',
+  'Third-party risk': 'Continuous vendor monitoring, access reviewed on the same cadence as internal identity',
+  'Governance & culture': 'Security ownership distributed to delivery teams'
+};
+function ztNext(name) { return function (v) { return (v.current < 3 ? 'Reach Level 3: ' + ZT_L3[name] : 'Toward Level 5: ' + ZT_L5[name]) + '.'; }; }
+MaturityTool.create({
+  id: 'ztm', card: '#calculator', title: 'Zero-trust maturity',
+  columns: [{ key: 'current', label: 'Current' }, { key: 'target', label: 'Target' }],
+  noteLabel: 'Evidence', notePlaceholder: 'Artifact that proves the score',
+  dims: Object.keys(ZT_L3).map(function (n) { return { name: n, next: ztNext(n) }; }),
+  defaults: { current: [2, 2, 4, 3, 2, 3], target: [4, 3, 4, 4, 3, 3], note: ['Standing admin access on 40 accounts', 'Flat network in the main VPC', 'SIEM with tuned alerts, tested quarterly', '', 'No review after vendor onboarding', ''] },
+  interpret: function (S) {
+    var d = {}; S.dims.forEach(function (x) { d[x.name] = x; });
+    var id = d['Identity & access'].vals.current, out = [];
+    if (id < 3) out.push('<strong>Identity is below Level 3, so the other five scores are effectively capped.</strong> Segmentation, detection, and third-party controls all assume you can trust who is making a request. Put the next dollar into identity before anything else.');
+    var det = d['Detection & response'].vals.current;
+    if (det >= 4 && (id <= 2 || d['Segmentation & blast radius'].vals.current <= 2)) out.push('Strong detection on top of weak identity or segmentation: you can see an attacker once they are in, but getting in and moving around is still easy. More detection tooling is the wrong next purchase.');
+    var weakest = S.dims.slice().sort(function (a, b) { return a.vals.current - b.vals.current; })[0];
+    if (!out.length) out.push('Weakest dimension: <strong>' + weakest.name + '</strong> at Level ' + weakest.vals.current + '. An attacker goes for the weakest dimension, not the average.');
+    var seq = S.dims.filter(function (x) { return x.gap > 0; }).sort(function (a, b) {
+      var pa = a.name === 'Identity & access' ? -1 : 0, pb = b.name === 'Identity & access' ? -1 : 0;
+      return pa - pb || b.gap - a.gap;
+    }).map(function (x) { return x.name; });
+    if (seq.length) out.push('Sequence: ' + seq.join(', then ') + '. Identity goes first whenever it has a gap; after that, the largest gap.');
+    var unevidenced = S.dims.filter(function (x) { return x.vals.current >= 3 && !x.note; }).map(function (x) { return x.name; });
+    if (unevidenced.length) out.push('No evidence recorded for: ' + unevidenced.join(', ') + '. Scores of 3 or more without an artifact are usually intent, not practice.');
+    return out.join('<br><br>');
+  }
+});
+</script>
+<!-- /toolshare -->
 </body>
 </html>

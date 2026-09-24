@@ -312,7 +312,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Integration complexity scorer</h3>
-      <p>Score seven dimensions from 1 (clean, compatible) to 5 (deeply divergent, high-effort). Runs entirely in your browser; nothing is sent anywhere or stored. The full toolkit's version weights each dimension by deal thesis and layers on a dollar overlay; this preview uses an even weighting to keep the mechanics visible.</p>
+      <p>Score seven dimensions from 1 (clean, compatible) to 5 (deeply divergent, high-effort) and note the finding behind each score. Tick any red flags from the checklist below and label each one stop, reprice, or integration cost. The tool gives the complexity band, the three biggest drivers, and a findings memo you can print. Runs entirely in your browser; nothing is sent anywhere. The full toolkit's version weights each dimension by deal thesis and layers on a dollar overlay; this tool uses an even weighting to keep the mechanics visible.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -401,5 +401,57 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+(function () {
+  var card = document.getElementById('scorer'), cell = card.querySelector('.stage-cell'), E = RowTable.esc;
+  var FLAGS = ["No test coverage on the systems that generate the majority of revenue, discovered rather than disclosed", "A single named individual who is the only person capable of deploying or debugging a core system, with no stated transition plan", "An undisclosed prior security incident surfacing during diligence rather than in the seller's initial disclosure", "Customer contracts with data residency or security commitments the acquiring organization's own infrastructure can't currently meet", "A certification or attestation presented as current that has lapsed, or was never re-scoped to match how the business operates today", "A core dependency whose license doesn't survive a change of control, or a contractor engagement with no IP assignment on file", "Senior-engineer attrition trending up over the trailing year with no bench below the departing leaders"];
+  var DIMS = [['arch', 'Architecture compatibility'], ['data', 'Data model compatibility'], ['iam', 'Identity and access management'], ['sec', 'Security and compliance posture'], ['surface', 'Integration surface area'], ['ops', 'Operational compatibility'], ['culture', 'Team and cultural compatibility']];
+  DIMS.forEach(function (d) {
+    var row = document.getElementById('ics-' + d[0]).closest('.dim-row');
+    var n = document.createElement('input'); n.type = 'text'; n.id = 'ics-note-' + d[0]; n.placeholder = 'Finding behind this score'; n.setAttribute('aria-label', d[1] + ' finding');
+    n.style.cssText = 'grid-column:1/-1;width:100%;box-sizing:border-box;font-family:inherit;font-size:12.5px;padding:5px 7px;border:1px solid var(--line);border-radius:6px;margin:0 0 8px';
+    row.insertAdjacentElement('afterend', n);
+  });
+  var rf = document.createElement('div');
+  rf.innerHTML = '<h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:16px 0 6px">Red flags found</h4>' + FLAGS.map(function (f, i) {
+    return '<div style="display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--line);font-size:12.5px"><label style="display:flex;gap:8px;flex:1 1 280px;line-height:1.4"><input type="checkbox" id="ics-rf-' + i + '" style="margin-top:2px"> ' + E(f) + '</label>' +
+      '<select id="ics-rfl-' + i + '" aria-label="Treatment for red flag ' + (i + 1) + '" style="font-family:inherit;font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:6px"><option value="reprice">Reprice</option><option value="stop">Stop</option><option value="integration">Integration cost</option></select></div>'; }).join('');
+  document.getElementById('ics-calc').insertAdjacentElement('beforebegin', rf);
+  document.getElementById('ics-calc').style.display = 'none';
+  var more = document.createElement('div'); more.className = 'tool-out';
+  document.getElementById('ics-result').insertAdjacentElement('afterend', more);
+  var DEF = { arch: 4, data: 4, iam: 3, sec: 3, surface: 2, ops: 3, culture: 2 };
+  function memo() {
+    document.getElementById('ics-calc').click();
+    var sc = DIMS.map(function (d) { return { d: d, v: +document.getElementById('ics-' + d[0]).value, note: document.getElementById('ics-note-' + d[0]).value.trim() }; });
+    var avg = sc.reduce(function (a, x) { return a + x.v; }, 0) / sc.length;
+    var drivers = sc.slice().sort(function (a, b) { return b.v - a.v; }).slice(0, 3);
+    var fl = FLAGS.map(function (f, i) { return { f: f, on: document.getElementById('ics-rf-' + i).checked, l: document.getElementById('ics-rfl-' + i).value }; }).filter(function (x) { return x.on; });
+    var by = { stop: [], reprice: [], integration: [] }; fl.forEach(function (x) { by[x.l].push(x.f); });
+    var L = { stop: 'Stop the deal until resolved', reprice: 'Reprice', integration: 'Integration cost to model' };
+    var h = '<h4>Top drivers</h4><ul>' + drivers.map(function (x) { return '<li><strong>' + E(x.d[1]) + ' ' + x.v + '</strong>' + (x.note ? ': ' + E(x.note) : '') + '</li>'; }).join('') + '</ul>';
+    h += '<h4>Red flags</h4>' + (fl.length ? Object.keys(by).filter(function (k) { return by[k].length; }).map(function (k) { return '<p style="font-size:13px;margin:6px 0 2px"><span class="tag ' + (k === 'stop' ? 'bad' : k === 'reprice' ? 'mid' : 'good') + '">' + L[k] + '</span></p><ul>' + by[k].map(function (f) { return '<li>' + E(f) + '</li>'; }).join('') + '</ul>'; }).join('') : '<p style="font-size:13px">None ticked. Confirm each was actually checked, not assumed.</p>');
+    var verdict = by.stop.length ? 'Do not sign until the stop items are resolved or priced as a specific indemnity.' : by.reprice.length ? 'Proceed only with a price or structure that reflects the reprice items.' : 'No deal-level blockers found; carry the drivers into the integration plan.';
+    h += '<div class="tool-sum" style="margin-top:12px"><strong>Recommendation:</strong> ' + verdict + ' Composite complexity ' + avg.toFixed(1) + ' of 5.</div>';
+    more.innerHTML = h;
+    return { sc: sc, avg: avg, fl: fl, verdict: verdict };
+  }
+  cell.addEventListener('input', memo); cell.addEventListener('change', memo);
+  Object.keys(DEF).forEach(function (k) { document.getElementById('ics-' + k).value = DEF[k]; document.getElementById('ics-' + k + '-val').textContent = DEF[k]; });
+  document.getElementById('ics-note-arch').value = 'Target runs a monolith on a different cloud';
+  document.getElementById('ics-note-data').value = 'Customer model keyed differently; no shared identifiers';
+  document.getElementById('ics-rf-1').checked = true; document.getElementById('ics-rfl-1').value = 'integration';
+  memo();
+  var f = ToolShare.fields(card, memo), set0 = f.setState;
+  f.setState = function (s) { set0(s); DIMS.forEach(function (d) { document.getElementById('ics-' + d[0] + '-val').textContent = document.getElementById('ics-' + d[0]).value; }); memo(); };
+  ToolShare.register({ id: 'ics', root: card, title: 'Integration complexity findings', getState: f.getState, setState: f.setState,
+    csv: function () { var m = memo(), rows = [['Dimension', 'Score (1 clean to 5 divergent)', 'Finding']]; m.sc.forEach(function (x) { rows.push([x.d[1], x.v, x.note]); });
+      rows.push(['Composite', m.avg.toFixed(2)], [], ['Red flag', 'Treatment']); m.fl.forEach(function (x) { rows.push([x.f, x.l]); }); rows.push([], ['Recommendation', m.verdict]); return rows; } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

@@ -193,7 +193,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own organization</h3>
-      <p>Rate each NIST CSF function 1 to 5 against the ladder above. This runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Score each CSF 2.0 function three ways: what the team claims, what the evidence supports, and the target. The tool scores on evidence, shows the claimed-versus-evidence gap this page warns about, and ranks what to fund. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -203,55 +203,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const scmDimensions = [
-      "Govern",
-      "Identify",
-      "Protect",
-      "Detect",
-      "Respond",
-      "Recover"
-    ];
-    const scmInputsEl = document.getElementById('scm-inputs');
-    scmDimensions.forEach((dim, i) => {
-      const row = document.createElement('div');
-      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px;';
-      const label = document.createElement('span');
-      label.textContent = dim;
-      label.style.cssText = 'font-size:13px; color:var(--ink);';
-      const select = document.createElement('select');
-      select.id = 'scm-dim-' + i;
-      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:5px 8px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink);';
-      [1,2,3,4,5].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = 'Level ' + v;
-        if (v === 3) opt.selected = true;
-        select.appendChild(opt);
-      });
-      row.appendChild(label);
-      row.appendChild(select);
-      scmInputsEl.appendChild(row);
-    });
-
-    document.getElementById('scm-calc').addEventListener('click', () => {
-      let scores = [];
-      scmDimensions.forEach((dim, i) => {
-        const val = parseInt(document.getElementById('scm-dim-' + i).value, 10);
-        scores.push({ dim, val });
-      });
-      const avg = scores.reduce((a, b) => a + b.val, 0) / scores.length;
-      const weakest = scores.reduce((a, b) => (b.val < a.val ? b : a));
-      const resultEl = document.getElementById('scm-result');
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.6;">' +
-        '<strong>Overall average: ' + avg.toFixed(1) + ' of 5.</strong><br>' +
-        'Weakest function: <strong>' + weakest.dim + '</strong> at Level ' + weakest.val + '. ' +
-        'Rank funding by business impact if that function fails rather than by the discomfort of the low score, and treat this as your first prioritization input for the framework the organization operates against.' +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -291,5 +242,37 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/maturity-tool.js"></script>
+<script>
+var SCM = [
+  ['Govern', 'Named executive accountability, a documented risk strategy, and a defined reporting cadence to leadership'],
+  ['Identify', 'Documented asset inventory and risk assessments on a defined schedule'],
+  ['Protect', 'Documented access control policy applied through onboarding and offboarding'],
+  ['Detect', 'Centralized logging and defined alerting for known threat patterns'],
+  ['Respond', 'A documented and exercised incident response plan with named roles'],
+  ['Recover', 'Tested restores and recovery plans with recovery targets'],
+];
+MaturityTool.create({
+  id: 'scm', card: '#calculator', title: 'Security and compliance maturity (NIST CSF 2.0)', dimLabel: 'Function',
+  columns: [{ key: 'evidence', label: 'Evidence' }, { key: 'claimed', label: 'Claimed' }, { key: 'target', label: 'Target' }],
+  noteLabel: 'Artifact checked', notePlaceholder: 'e.g. last two access review logs',
+  dims: SCM.map(function (x) { return { name: x[0], next: 'Level 3 looks like: ' + x[1] + '.' }; }),
+  defaults: { evidence: [2, 3, 3, 3, 2, 2], claimed: [3, 3, 4, 3, 3, 3], target: [3, 4, 4, 3, 3, 3], note: ['', 'Asset inventory export, June', 'Access review logs (2 of 4 quarters)', 'Alert rules in SIEM', 'IR plan, never exercised', 'No restore test in 12 months'] },
+  interpret: function (S) {
+    var out = [];
+    var gap = S.avg.claimed - S.avg.evidence;
+    out.push('Claimed average is ' + S.avg.claimed.toFixed(1) + ' against ' + S.avg.evidence.toFixed(1) + ' on evidence, a gap of <strong>' + gap.toFixed(1) + '</strong>.' + (gap >= 0.75 ? ' That is large enough that any report to the board or an auditor should use the evidence score.' : ''));
+    var over = S.dims.filter(function (d) { return d.vals.claimed - d.vals.evidence >= 1; }).map(function (d) { return d.name + ' (' + d.vals.claimed + ' claimed, ' + d.vals.evidence + ' on evidence)'; });
+    if (over.length) out.push('Claims that the evidence does not support: ' + over.join('; ') + '.');
+    var gov = S.dims[0].vals.evidence, rest = S.dims.slice(1).reduce(function (s, d) { return s + d.vals.evidence; }, 0) / 5;
+    if (gov < rest) out.push('<strong>Govern (' + gov + ') is below the average of the other five (' + rest.toFixed(1) + ').</strong> Technical controls without executive ownership and a risk strategy tend to decay, and it is the first thing a regulator or acquirer asks about.');
+    out.push('Fund gaps by the business impact if that function fails, not by how uncomfortable the low score is.');
+    return out.join('<br><br>');
+  }
+});
+</script>
+<!-- /toolshare -->
 </body>
 </html>

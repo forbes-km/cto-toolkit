@@ -107,7 +107,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Plot your own stakeholders</h3>
-      <p>Add a name and score influence and interest 1 to 5 each. The quadrant and strategy are computed automatically, same thresholds as above: 1 to 2 is low, 3 to 5 is high on both axes. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>List your stakeholders with influence and interest scored 1 to 5, plus where each one stands today. The quadrant uses the same thresholds as above (1 to 2 is low, 3 to 5 is high on both axes), and the engagement plan below flags high-influence resisters and overdue touchpoints. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -139,40 +139,6 @@
       </div>
     </div>
   </div>
-  <script>
-    const shStakeholders = [];
-    function shQuadrant(influence, interest) {
-      const highInf = influence >= 3;
-      const highInt = interest >= 3;
-      if (highInf && highInt) return { key: 'manageclosely', label: 'Manage Closely' };
-      if (highInf && !highInt) return { key: 'keepsatisfied', label: 'Keep Satisfied' };
-      if (!highInf && highInt) return { key: 'keepinformed', label: 'Keep Informed' };
-      return { key: 'monitor', label: 'Monitor' };
-    }
-    function shRender() {
-      ['manageclosely','keepsatisfied','keepinformed','monitor'].forEach(key => {
-        document.getElementById('sh-q-' + key).innerHTML = '';
-      });
-      shStakeholders.forEach(s => {
-        const q = shQuadrant(s.influence, s.interest);
-        const el = document.getElementById('sh-q-' + q.key);
-        const chip = document.createElement('div');
-        chip.style.cssText = 'font-size:12px; padding:3px 0; color:var(--ink);';
-        chip.textContent = s.name + ' (I:' + s.influence + ' / In:' + s.interest + ')';
-        el.appendChild(chip);
-      });
-    }
-    document.getElementById('sh-add').addEventListener('click', () => {
-      const nameEl = document.getElementById('sh-name');
-      const name = nameEl.value.trim();
-      if (!name) return;
-      const influence = parseInt(document.getElementById('sh-influence').value, 10);
-      const interest = parseInt(document.getElementById('sh-interest').value, 10);
-      shStakeholders.push({ name, influence, interest });
-      nameEl.value = '';
-      shRender();
-    });
-  </script>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
@@ -296,5 +262,63 @@
 
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls, before) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; if (before) cell.insertBefore(d, before); else cell.appendChild(d); return d; }
+
+var form = document.getElementById('sh-name').parentNode; form.parentNode.removeChild(form);
+var grid = document.getElementById('sh-grid');
+function shQuadrant(inf, int) { var a = inf >= 3, b = int >= 3; return a && b ? { key: 'manageclosely', label: 'Manage Closely', p: 0 } : a ? { key: 'keepsatisfied', label: 'Keep Satisfied', p: 1 } : b ? { key: 'keepinformed', label: 'Keep Informed', p: 2 } : { key: 'monitor', label: 'Monitor', p: 3 }; }
+var S5 = [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']];
+var cols = [
+  { key: 'name', label: 'Name or role', type: 'text', width: '140px', wide: true },
+  { key: 'role', label: 'Role', type: 'text', width: '110px' },
+  { key: 'inf', label: 'Influence', type: 'select', options: S5 },
+  { key: 'int', label: 'Interest', type: 'select', options: S5 },
+  { key: 'stance', label: 'Stance', type: 'select', options: [['supportive', 'Supportive'], ['neutral', 'Neutral'], ['resistant', 'Resistant']] },
+  { key: 'owner', label: 'Relationship owner', type: 'text', width: '110px' },
+  { key: 'next', label: 'Next touchpoint', type: 'date' }
+];
+function iso(d) { var x = new Date(); x.setDate(x.getDate() + d); return x.toISOString().slice(0, 10); }
+var DEF = [
+  { name: 'CFO', role: 'Budget owner', inf: '5', int: '4', stance: 'neutral', owner: 'CTO', next: iso(7) },
+  { name: 'Head of Sales', role: 'Revenue', inf: '4', int: '2', stance: 'resistant', owner: 'CTO', next: iso(-5) },
+  { name: 'Support leads', role: 'Users', inf: '2', int: '5', stance: 'supportive', owner: 'Program lead', next: iso(14) },
+  { name: 'Legal', role: 'Contracts', inf: '3', int: '3', stance: 'neutral', owner: 'Program lead', next: '' }
+];
+var t = RowTable.create({ mount: sec(null, null, grid), id: 'sh', columns: cols, rows: DEF, blank: { name: '', role: '', inf: '3', int: '3', stance: 'neutral', owner: '', next: '' }, addLabel: 'Add stakeholder', min: 0, max: 40, onChange: calc });
+var out = sec('div', 'tool-out');
+function calc() {
+  var today = new Date().toISOString().slice(0, 10), R = t.get();
+  ['manageclosely', 'keepsatisfied', 'keepinformed', 'monitor'].forEach(function (k) { document.getElementById('sh-q-' + k).innerHTML = ''; });
+  R.forEach(function (s) {
+    if (!s.name) return;
+    var q = shQuadrant(+s.inf, +s.int), chip = document.createElement('div');
+    chip.style.cssText = 'font-size:12px; padding:3px 0; color:var(--ink);';
+    chip.textContent = s.name + ' (I:' + s.inf + ' / In:' + s.int + ')' + (s.stance === 'resistant' ? ' resistant' : '');
+    if (s.stance === 'resistant') chip.style.color = '#9B2C2C';
+    document.getElementById('sh-q-' + q.key).appendChild(chip);
+  });
+  var P = R.filter(function (s) { return s.name; }).map(function (s) { var q = shQuadrant(+s.inf, +s.int); return { s: s, q: q, risk: +s.inf >= 3 && s.stance === 'resistant', late: s.next && s.next < today, none: !s.next }; })
+    .sort(function (a, b) { return (b.risk - a.risk) || (a.q.p - b.q.p) || (+b.s.inf - +a.s.inf); });
+  var h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Stakeholder</th><th>Quadrant</th><th>Stance</th><th>Owner</th><th>Next touchpoint</th><th>Flag</th></tr>';
+  P.forEach(function (x) { h += '<tr><td>' + E(x.s.name) + (x.s.role ? '<br><span style="color:var(--ink-soft);font-size:12px">' + E(x.s.role) + '</span>' : '') + '</td><td>' + x.q.label + '</td><td>' + x.s.stance + '</td><td>' + E(x.s.owner || 'Unassigned') + '</td><td>' + (x.s.next || 'Not set') + '</td><td>' +
+    [x.risk ? '<span class="tag bad">Influential resister</span>' : '', x.late ? '<span class="tag bad">Overdue</span>' : '', x.none && x.q.p <= 1 ? '<span class="tag mid">No date</span>' : '', !x.s.owner ? '<span class="tag mid">No owner</span>' : ''].join(' ') + '</td></tr>'; });
+  h += '</table></div>';
+  var risk = P.filter(function (x) { return x.risk; }), late = P.filter(function (x) { return x.late; });
+  var s = '<div class="tool-sum"><strong>' + P.length + ' stakeholders mapped.</strong> ' + (risk.length ? 'Influential resisters: ' + E(risk.map(function (x) { return x.s.name; }).join(', ')) + '. Meet them one to one before any group forum, and find out what they would lose. ' : 'No influential resisters recorded. ') +
+    (late.length ? late.length + ' touchpoint' + (late.length > 1 ? 's are' : ' is') + ' overdue.' : '') + '</div>';
+  out.innerHTML = s + '<h4>Engagement plan, highest priority first</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 'sh', root: card, title: 'Stakeholder engagement plan', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && Array.isArray(s.rows) ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['Stakeholder', 'Role', 'Influence', 'Interest', 'Quadrant', 'Stance', 'Owner', 'Next touchpoint']];
+    t.get().forEach(function (s) { rows.push([s.name, s.role, s.inf, s.int, shQuadrant(+s.inf, +s.int).label, s.stance, s.owner, s.next]); }); return rows; } });
+</script>
+<!-- /toolshare -->
 </body>
 </html>

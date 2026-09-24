@@ -167,7 +167,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Run your own allocation</h3>
-      <p>Enter your total budget, current spend, and target percentage for each category. Attribute each cost to one line only: people and vendor cost goes in the band it serves, and the Headcount and Vendors lines hold only what is shared or unattributable. Runs entirely in your browser; nothing is sent anywhere or stored. The downloadable workbook below carries the same logic across seven linked tabs; this is the quick version.</p>
+      <p>Enter your total budget, current spend, and target percentage for each category. Attribute each cost to one line only: people and vendor cost goes in the band it serves, and the Headcount and Vendors lines hold only what is shared or unattributable. Runs entirely in your browser; nothing is sent anywhere. The downloadable workbook below carries the same logic across seven linked tabs; this is the quick version.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -450,5 +450,15 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script>
+(function () {
+  var f = ToolShare.fields('#calculator', function () { document.getElementById('ca-calc').click(); });
+  ToolShare.register({ id: 'ca', root: '#calculator', title: 'Capital allocation', getState: f.getState, setState: f.setState,
+    csv: function () { return ToolShare.inputRows('#calculator').concat([[]], ToolShare.tableRows('#ca-result', true)); } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

@@ -234,7 +234,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>PMI tracker: synergy realization and key-person retention</h3>
-      <p>The working dashboard Stage 3 and Stage 7 both argue you need. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>The working dashboard Stage 3 and Stage 7 both argue you need. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -440,5 +440,28 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script>
+(function () {
+  var st = document.createElement('style'); st.textContent = '#pmi-syn-result,#pmi-kp-result{overflow-x:auto;max-width:100%}#pmi-syn-result table,#pmi-kp-result table{min-width:420px}'; document.head.appendChild(st);
+  var clone = function (x) { return JSON.parse(JSON.stringify(x)); };
+  ToolShare.register({ id: 'pmi', root: '#calculator', title: 'PMI tracker',
+    getState: function () { return { syn: clone(pmiSynergies), kp: clone(pmiKeyPeople) }; },
+    setState: function (s) {
+      pmiSynergies = Array.isArray(s.syn) ? s.syn.map(function (x) { return { name: String(x.name || ''), promised: +x.promised || 0, realized: +x.realized || 0 }; }) : [];
+      pmiKeyPeople = Array.isArray(s.kp) ? s.kp.map(function (x) { return { name: String(x.name || ''), role: String(x.role || ''), status: ['Retained', 'At risk', 'Departed'].indexOf(x.status) >= 0 ? x.status : 'At risk' }; }) : [];
+      renderPmiSynergies(); renderPmiKeyPeople();
+    },
+    csv: function () {
+      var rows = [['Synergy', 'Promised ($)', 'Realized ($)', 'Realized (%)']];
+      pmiSynergies.forEach(function (x) { rows.push([x.name, x.promised, x.realized, x.promised ? Math.round(x.realized / x.promised * 100) : 0]); });
+      rows.push([], ['Key person', 'Role', 'Status']);
+      pmiKeyPeople.forEach(function (x) { rows.push([x.name, x.role, x.status]); });
+      return rows;
+    } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

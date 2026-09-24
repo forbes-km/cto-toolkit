@@ -367,5 +367,15 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script>
+(function () {
+  var f = ToolShare.fields('#dd-scorer', function () { document.getElementById('dd-calc').click(); });
+  ToolShare.register({ id: 'dd', root: '#dd-scorer', title: 'Diligence scoring', getState: f.getState, setState: f.setState,
+    csv: function () { return ToolShare.inputRows('#dd-scorer').concat([[]], ToolShare.tableRows(document.getElementById('dd-result') || '#dd-scorer', true)); } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

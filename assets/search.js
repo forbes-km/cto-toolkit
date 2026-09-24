@@ -1,4 +1,4 @@
-/* CTO Toolkit — site search
+/* CTO Toolkit: site search
    Self-contained: injects its own CSS and markup into #cto-search-root.
    Reads window.CTO_BASE (relative path back to site root) which each
    page sets before including this script:

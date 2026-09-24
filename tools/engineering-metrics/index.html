@@ -121,7 +121,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Classify your own numbers</h3>
-      <p>Enter your metrics and see which band each one falls in against the table above. Elite means daily or more frequent deploys, lead time under a day, change fail rate of 5 percent or less, and recovery under an hour. Low means deploying less than about once a month, lead time over a month, change fail rate of 30 percent or more, or recovery over a week. Anything between the Elite and Low thresholds is reported as Medium here; the 2024 report split that middle into High and Medium clusters. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Enter one row per team. Each metric is banded against the table above: Elite means daily or more frequent deploys, lead time under a day, change fail rate of 5 percent or less, and recovery under an hour. Low means deploying less than about once a month, lead time over a month, change fail rate of 30 percent or more, or recovery over a week. Anything between is reported as Medium here; the 2024 report split that middle into High and Medium clusters. The tool also flags teams whose speed is not matched by stability. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -152,43 +152,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const ONE_WEEK_HRS = 7 * 24;
-
-    function doraBand(value, eliteTest, lowTest) {
-      if (eliteTest(value)) return 'Elite';
-      if (lowTest(value)) return 'Low';
-      return 'Medium';
-    }
-
-    document.getElementById('dora-calc').addEventListener('click', () => {
-      const deploy = parseFloat(document.getElementById('dora-deploy').value) || 0;
-      const lead = parseFloat(document.getElementById('dora-lead').value) || 0;
-      const fail = parseFloat(document.getElementById('dora-fail').value) || 0;
-      const recovery = parseFloat(document.getElementById('dora-recovery').value) || 0;
-      const rework = parseFloat(document.getElementById('dora-rework').value) || 0;
-
-      const bands = {
-        deploy: doraBand(deploy, v => v >= 7, v => v < 12 / 52),
-        lead: doraBand(lead, v => v < 24, v => v > 30 * 24),
-        fail: doraBand(fail, v => v <= 5, v => v >= 30),
-        recovery: doraBand(recovery, v => v < 1, v => v > ONE_WEEK_HRS),
-      };
-
-      const bandColor = { Elite: 'var(--accent)', Medium: 'var(--b)', Low: '#C0392B' };
-
-      const resultEl = document.getElementById('dora-result');
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.9;">' +
-        'Deployment frequency: <strong style="color:' + bandColor[bands.deploy] + '">' + bands.deploy + '</strong><br>' +
-        'Change lead time: <strong style="color:' + bandColor[bands.lead] + '">' + bands.lead + '</strong><br>' +
-        'Change fail rate: <strong style="color:' + bandColor[bands.fail] + '">' + bands.fail + '</strong><br>' +
-        'Failed deployment recovery time: <strong style="color:' + bandColor[bands.recovery] + '">' + bands.recovery + '</strong><br>' +
-        'Deployment rework rate: <strong>' + rework.toFixed(1) + '%</strong> (no standardized band exists yet; compare this against your own trend over time)' +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -302,5 +265,63 @@
 
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+cell.innerHTML = '';
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
+function tag(v) { return '<span class="tag ' + (v === 'Worth it' ? 'good' : v === 'Not worth it' ? 'bad' : 'mid') + '">' + v + '</span>'; }
+function verdict(net, invest) { if (invest > 0 && Math.abs(net) <= 0.2 * invest) return 'Marginal'; return net > 0 ? 'Worth it' : 'Not worth it'; }
+
+var WEEK = 7 * 24;
+function band(v, elite, low) { return elite(v) ? 'Elite' : (low(v) ? 'Low' : 'Medium'); }
+function bands(r) {
+  return {
+    deploy: band(r.deploy || 0, function (v) { return v >= 7; }, function (v) { return v < 12 / 52; }),
+    lead: band(r.lead || 0, function (v) { return v < 24; }, function (v) { return v > 30 * 24; }),
+    fail: band(r.fail || 0, function (v) { return v <= 5; }, function (v) { return v >= 30; }),
+    rec: band(r.rec || 0, function (v) { return v < 1; }, function (v) { return v > WEEK; })
+  };
+}
+var cols = [
+  { key: 'name', label: 'Team', type: 'text', width: '130px', wide: true },
+  { key: 'deploy', label: 'Deploys per week', type: 'number', min: 0, step: 0.1 },
+  { key: 'lead', label: 'Lead time (hours)', type: 'number', min: 0, step: 0.1 },
+  { key: 'fail', label: 'Change fail rate (%)', type: 'number', min: 0, max: 100, step: 1 },
+  { key: 'rec', label: 'Recovery time (hours)', type: 'number', min: 0, step: 0.1 },
+  { key: 'rework', label: 'Rework rate (%)', type: 'number', min: 0, max: 100, step: 1 }
+];
+var DEF = [
+  { name: 'Checkout', deploy: 10, lead: 4, fail: 12, rec: 2, rework: 9 },
+  { name: 'Mobile', deploy: 2, lead: 72, fail: 8, rec: 6, rework: 6 },
+  { name: 'Platform', deploy: 8, lead: 10, fail: 4, rec: 0.5, rework: 3 },
+  { name: 'Billing', deploy: 0.2, lead: 900, fail: 35, rec: 200, rework: 20 }
+];
+var t = RowTable.create({ mount: sec(), id: 'dora', columns: cols, rows: DEF, blank: { name: '', deploy: 5, lead: 24, fail: 15, rec: 4, rework: 10 }, addLabel: 'Add team', min: 1, max: 30, onChange: calc });
+var out = sec('div', 'tool-out');
+var C = { Elite: 'good', Medium: 'mid', Low: 'bad' };
+function b(x) { return '<span class="tag ' + C[x] + '">' + x + '</span>'; }
+function calc() {
+  var R = t.get(), h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Team</th><th>Deploy frequency</th><th>Lead time</th><th>Change fail rate</th><th>Recovery</th><th>Rework</th></tr>', flags = [], low = [];
+  R.forEach(function (r) {
+    var x = bands(r);
+    h += '<tr><td>' + E(r.name || '(unnamed)') + '</td><td>' + b(x.deploy) + '</td><td>' + b(x.lead) + '</td><td>' + b(x.fail) + '</td><td>' + b(x.rec) + '</td><td>' + (r.rework != null ? r.rework + '%' : '') + '</td></tr>';
+    if ((x.deploy === 'Elite' || x.lead === 'Elite') && (x.fail !== 'Elite' || x.rec !== 'Elite')) flags.push(E(r.name) + ': fast (' + (x.lead === 'Elite' ? 'lead time' : 'deploy frequency') + ' Elite) but change fail rate is ' + x.fail + ' and recovery is ' + x.rec + '. Speed without stability shows up as customer-facing incidents; look at test coverage and change size before pushing for more throughput.');
+    if ([x.deploy, x.lead, x.fail, x.rec].filter(function (v) { return v === 'Low'; }).length >= 2) low.push(E(r.name));
+  });
+  h += '</table></div>';
+  var s = '<div class="tool-sum"><strong>' + R.length + ' teams classified.</strong> ' + (flags.length ? flags.length + (flags.length === 1 ? ' shows' : ' show') + ' throughput running ahead of stability. ' : 'No team shows throughput running ahead of stability. ') + (low.length ? 'Low on two or more measures: ' + low.join(', ') + '. Start with lead time and batch size there, not tooling.' : '') +
+    '<br><br>Compare each team against its own trend, not against the other teams. The bands describe the industry, not a target for any single team, and rework rate has no standard band yet.</div>';
+  out.innerHTML = s + (flags.length ? '<h4>Speed ahead of stability</h4><ul>' + flags.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' : '') + '<h4>Bands by team</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 'dora', root: card, title: 'Delivery metrics by team', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && s.rows && s.rows.length ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['Team', 'Deploys per week', 'Lead time (h)', 'Change fail rate (%)', 'Recovery (h)', 'Rework (%)', 'Deploy band', 'Lead time band', 'Fail rate band', 'Recovery band']];
+    t.get().forEach(function (r) { var x = bands(r); rows.push([r.name, r.deploy, r.lead, r.fail, r.rec, r.rework, x.deploy, x.lead, x.fail, x.rec]); }); return rows; } });
+</script>
+<!-- /toolshare -->
 </body>
 </html>

@@ -119,7 +119,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own decision</h3>
-      <p>Score each criterion from the table above, 1 to 5, high meaning it leans build. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Score each criterion from the table above, 1 to 5, high meaning it leans build, and weight them for this decision. Then compare five-year cost for Build, Buy, and Extend (buy the platform and build a thin custom layer); the defaults reproduce the worked example below. The tool tells you when the criteria and the cost point in different directions. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -129,78 +129,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const bvbDims = [
-      { id: "diff", label: "Differentiation", hint: "1 = commodity, 5 = core differentiator customers cite", def: 4 },
-      { id: "vendor", label: "Vendor fit", hint: "1 = a mature, well-fitting vendor exists, 5 = no good option exists", def: 4 },
-      { id: "time", label: "Time-to-value pressure", hint: "1 = need it in weeks, 5 = have runway for months", def: 3 },
-      { id: "maint", label: "Maintenance capacity", hint: "1 = don't want a permanent team on this, 5 = have or will build one", def: 4 },
-      { id: "lockin", label: "Lock-in risk if bought", hint: "1 = exit path is reasonable, 5 = switching cost would be unacceptable later", def: 3 },
-    ];
-
-    const bvbInputsEl = document.getElementById('bvb-inputs');
-    bvbInputsEl.style.cssText = 'display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px 20px;';
-    bvbDims.forEach((dim) => {
-      const box = document.createElement('div');
-      box.style.cssText = 'border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);';
-      const label = document.createElement('div');
-      label.textContent = dim.label;
-      label.style.cssText = 'font-size:13px; color:var(--ink); font-weight:600; margin-bottom:3px;';
-      const hint = document.createElement('div');
-      hint.textContent = dim.hint;
-      hint.style.cssText = 'font-size:11px; color:var(--ink-soft); margin-bottom:8px; line-height:1.4;';
-      const select = document.createElement('select');
-      select.id = 'bvb-' + dim.id;
-      select.style.cssText = 'font-family:var(--ui); font-size:13px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; background:white; color:var(--ink); width:100%;';
-      [1,2,3,4,5].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = v;
-        if (v === dim.def) opt.selected = true;
-        select.appendChild(opt);
-      });
-      box.appendChild(label);
-      box.appendChild(hint);
-      box.appendChild(select);
-      bvbInputsEl.appendChild(box);
-    });
-
-    document.getElementById('bvb-calc').addEventListener('click', () => {
-      const scores = {};
-      bvbDims.forEach(dim => {
-        scores[dim.id] = parseInt(document.getElementById('bvb-' + dim.id).value, 10);
-      });
-      const avg = bvbDims.reduce((sum, d) => sum + scores[d.id], 0) / bvbDims.length;
-
-      let lean;
-      if (avg >= 4) lean = 'BUILD';
-      else if (avg >= 3) lean = 'PARTNER OR EXTEND';
-      else if (avg >= 2) lean = 'BUY';
-      else lean = 'STRONGLY BUY';
-
-      const resultEl = document.getElementById('bvb-result');
-      let verdict = '';
-
-      if (scores.diff <= 2) {
-        verdict += 'Differentiation scored low. Whatever the average says below, re-run the differentiation test from section 1 before leaning build. A weak differentiation score dragged up by the other four criteria is the pattern that produces a build decision made to justify a preference.<br><br>';
-      }
-
-      if (lean === 'PARTNER OR EXTEND') {
-        verdict += 'This score sits in the range where the middle option from section 3, buying the undifferentiated majority and building a thin, differentiated layer on top, is usually the right answer in its own right rather than a compromise between the other two.';
-      } else if (lean === 'BUILD') {
-        verdict += 'A build lean. Before committing, make sure a five-year total cost of ownership estimate exists alongside the initial build cost. Section 2\u2019s rule of thumb: commonly two to four times the initial estimate once maintenance and opportunity cost are included.';
-      } else {
-        verdict += 'A buy lean. Check vendor concentration before signing, per section 5, this decision in isolation may look fine while quietly adding to a pattern of dependency on the same handful of vendors across other decisions.';
-      }
-
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Average: ' + avg.toFixed(1) + ' of 5: ' + lean + '</strong><br><br>' +
-        verdict +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -358,5 +286,53 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+(function () {
+  var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell'); cell.innerHTML = '';
+  var E = RowTable.esc;
+  var CR = [['diff', 'Differentiation', '1 = commodity, 5 = core differentiator customers cite'], ['vendor', 'Vendor fit', '1 = a mature, well-fitting vendor exists, 5 = no good option exists'], ['time', 'Time-to-value pressure', '1 = need it in weeks, 5 = have runway for months'], ['maint', 'Maintenance capacity', '1 = no permanent team wanted, 5 = have or will build one'], ['lockin', 'Lock-in risk if bought', '1 = exit path is reasonable, 5 = switching cost would be unacceptable']];
+  var OPT = [['build', 'Build'], ['buy', 'Buy'], ['extend', 'Extend']];
+  var F = [['init', 'Initial cost ($K)'], ['lic', 'Licensing, year 1 ($K)'], ['esc', 'Licensing increase per year (%)'], ['ppl', 'People per year ($K)'], ['infra', 'Infrastructure and compliance per year ($K)']];
+  var DEF = { s: { diff: 2, vendor: 2, time: 2, maint: 3, lockin: 3 }, w: { diff: 30, vendor: 25, time: 15, maint: 15, lockin: 15 },
+    c: { build: { init: 900, lic: 0, esc: 0, ppl: 500, infra: 100 }, buy: { init: 150, lic: 180, esc: 7, ppl: 100, infra: 0 }, extend: { init: 250, lic: 120, esc: 7, ppl: 200, infra: 0 } } };
+  var h = '<h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:0 0 6px">Criteria</h4><div class="rt-wrap"><table class="rt-table"><thead><tr><th style="min-width:200px">Criterion</th><th>Score (1 to 5)</th><th>Weight %</th></tr></thead><tbody>';
+  CR.forEach(function (c) { h += '<tr><td class="rt-wide" data-label="Criterion"><strong>' + c[1] + '</strong><br><span style="font-size:11px;color:var(--ink-soft)">' + c[2] + '</span></td><td data-label="Score"><select id="bvb-s-' + c[0] + '" aria-label="' + c[1] + ' score">' + [1, 2, 3, 4, 5].map(function (v) { return '<option>' + v + '</option>'; }).join('') + '</select></td><td data-label="Weight %"><input type="number" id="bvb-w-' + c[0] + '" min="0" max="100" aria-label="' + c[1] + ' weight"></td></tr>'; });
+  h += '</tbody></table></div><h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:18px 0 6px">Five-year cost of ownership</h4><div class="rt-wrap"><table class="rt-table"><thead><tr><th style="min-width:200px">Cost line</th>' + OPT.map(function (o) { return '<th>' + o[1] + '</th>'; }).join('') + '</tr></thead><tbody>';
+  F.forEach(function (f) { h += '<tr><td class="rt-wide" data-label="Cost line">' + f[1] + '</td>' + OPT.map(function (o) { return '<td data-label="' + o[1] + '"><input type="number" id="bvb-c-' + o[0] + '-' + f[0] + '" min="0" step="10" aria-label="' + o[1] + ', ' + f[1] + '"></td>'; }).join('') + '</tr>'; });
+  h += '</tbody></table></div><div class="tool-out" id="bvb-out"></div>';
+  cell.innerHTML = h;
+  function g(id) { return document.getElementById(id); } function n(id) { var v = parseFloat(g(id).value); return isNaN(v) || v < 0 ? 0 : v; }
+  function state() { var s = { s: {}, w: {}, c: {} }; CR.forEach(function (c) { s.s[c[0]] = +g('bvb-s-' + c[0]).value; s.w[c[0]] = n('bvb-w-' + c[0]); }); OPT.forEach(function (o) { s.c[o[0]] = {}; F.forEach(function (f) { s.c[o[0]][f[0]] = n('bvb-c-' + o[0] + '-' + f[0]); }); }); return s; }
+  function set(s) { s = s || {}; CR.forEach(function (c) { var v = s.s && s.s[c[0]]; g('bvb-s-' + c[0]).value = v >= 1 && v <= 5 ? v : DEF.s[c[0]]; var w = s.w && s.w[c[0]]; g('bvb-w-' + c[0]).value = w >= 0 ? w : DEF.w[c[0]]; });
+    OPT.forEach(function (o) { F.forEach(function (f) { var v = s.c && s.c[o[0]] && s.c[o[0]][f[0]]; g('bvb-c-' + o[0] + '-' + f[0]).value = v >= 0 ? v : DEF.c[o[0]][f[0]]; }); }); calc(); }
+  function tco(c) { var lic = 0; for (var y = 0; y < 5; y++) lic += c.lic * Math.pow(1 + c.esc / 100, y); return { init: c.init, lic: lic, ppl: c.ppl * 5, infra: c.infra * 5, total: c.init + lic + c.ppl * 5 + c.infra * 5 }; }
+  function model() { var s = state(), tw = CR.reduce(function (a, c) { return a + s.w[c[0]]; }, 0) || 1, avg = CR.reduce(function (a, c) { return a + s.s[c[0]] * s.w[c[0]]; }, 0) / tw;
+    var lean = avg >= 4 ? 'BUILD' : avg >= 3 ? 'PARTNER OR EXTEND' : avg >= 2 ? 'BUY' : 'STRONGLY BUY', leanOpt = avg >= 4 ? 'build' : avg >= 3 ? 'extend' : 'buy';
+    var T = {}; OPT.forEach(function (o) { T[o[0]] = tco(s.c[o[0]]); }); var cheap = OPT.map(function (o) { return o[0]; }).sort(function (a, b) { return T[a].total - T[b].total; })[0];
+    return { s: s, tw: tw, avg: avg, lean: lean, leanOpt: leanOpt, T: T, cheap: cheap }; }
+  function calc() {
+    var m = model(), s = m.s, L = { build: 'Build', buy: 'Buy', extend: 'Extend' }, k = function (v) { return '$' + Math.round(v).toLocaleString() + 'K'; };
+    var o = '<div class="tool-sum">';
+    if (Math.abs(m.tw - 100) > 0.5) o += '<strong>Weights sum to ' + m.tw + '%.</strong> The score is normalized, but fix the weights before sharing.<br><br>';
+    o += '<strong>Criteria lean: ' + m.lean + '</strong> (weighted ' + m.avg.toFixed(1) + ' of 5). <strong>Lowest five-year cost: ' + L[m.cheap] + '</strong> at ' + k(m.T[m.cheap].total) + '.<br><br>';
+    if (m.leanOpt === m.cheap) o += 'The criteria and the cost agree. ' + (m.cheap === 'buy' ? 'Check vendor concentration before signing: this decision may look fine alone while adding to dependency on the same few vendors.' : m.cheap === 'extend' ? 'Buying the undifferentiated majority and building a thin layer is the answer in its own right, not a compromise.' : 'Make sure the build estimate carries maintenance: the research this page cites puts it at 40 to 80 percent of lifecycle cost.');
+    else o += 'The criteria point to <strong>' + L[m.leanOpt] + '</strong>, which costs ' + k(m.T[m.leanOpt].total - m.T[m.cheap].total) + ' more over five years than ' + L[m.cheap] + '. The criteria have to justify that premium in terms the CFO will accept, such as revenue a differentiator protects, or the decision should follow the cost.';
+    if (s.s.diff <= 2 && m.avg >= 3) o += '<br><br>Differentiation scored low while the overall lean is not buy. Re-run the differentiation test before leaning build: a weak differentiation score carried by the other criteria is how preference-driven builds get approved.';
+    o += '</div><h4>Five-year totals</h4><div class="rt-wrap"><table class="matrix-table"><tr><th>Cost line</th><th>Build</th><th>Buy</th><th>Extend</th></tr>' +
+      [['Initial', 'init'], ['Licensing', 'lic'], ['People', 'ppl'], ['Infrastructure and compliance', 'infra'], ['<strong>Five-year total</strong>', 'total']].map(function (r) { return '<tr><td>' + r[0] + '</td>' + ['build', 'buy', 'extend'].map(function (x) { return '<td>' + (r[1] === 'total' ? '<strong>' + k(m.T[x][r[1]]) + '</strong>' : k(m.T[x][r[1]])) + '</td>'; }).join('') + '</tr>'; }).join('') + '</table></div>';
+    g('bvb-out').innerHTML = o;
+  }
+  cell.addEventListener('input', calc); cell.addEventListener('change', calc);
+  set(DEF);
+  ToolShare.register({ id: 'bvb', root: card, title: 'Build, buy, or extend', getState: state, setState: set,
+    csv: function () { var m = model(), rows = [['Criterion', 'Score', 'Weight %']]; CR.forEach(function (c) { rows.push([c[1], m.s.s[c[0]], m.s.w[c[0]]]); });
+      rows.push(['Weighted lean', m.avg.toFixed(2), m.lean], [], ['Five-year cost ($K)', 'Build', 'Buy', 'Extend']);
+      ['init', 'lic', 'ppl', 'infra', 'total'].forEach(function (x) { rows.push([x, m.T.build[x].toFixed(0), m.T.buy[x].toFixed(0), m.T.extend[x].toFixed(0)]); }); return rows; } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

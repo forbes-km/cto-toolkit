@@ -139,7 +139,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score a vendor</h3>
-      <p>Score one vendor across the same six weighted dimensions from the table above. Runs entirely in your browser; nothing is sent anywhere or stored. The full workbook supports multiple evaluators scoring independently and surfacing variance between them, which is where this framework earns its keep; this preview scores a single pass.</p>
+      <p>Compare up to four vendors side by side on the six weighted dimensions, scored by one evaluator. Weights are editable. A vendor with any dimension at 1 is knocked out whatever its average, and the tool checks whether the winner survives a switch to equal weights. The full workbook supports multiple evaluators scoring independently and surfacing the variance between them, which is where this framework earns its keep; this tool is a single evaluator's pass. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -149,64 +149,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const VE_DIMS = [
-      { id: 'functional', label: 'Functional fit', weight: 0.30 },
-      { id: 'security', label: 'Security &amp; compliance posture', weight: 0.20 },
-      { id: 'financial', label: 'Financial stability', weight: 0.15 },
-      { id: 'integration', label: 'Integration complexity', weight: 0.15 },
-      { id: 'support', label: 'Support &amp; SLA', weight: 0.10 },
-      { id: 'exit', label: 'Exit &amp; data portability', weight: 0.10 },
-    ];
-
-    const veEl = document.getElementById('ve-dims');
-    VE_DIMS.forEach(dim => {
-      const row = document.createElement('div');
-      row.style.cssText = 'display:grid; grid-template-columns: 230px 1fr 50px 60px; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--line);';
-      row.innerHTML =
-        '<label for="ve-' + dim.id + '" style="font-size:13px; color:var(--ink);">' + dim.label + '</label>' +
-        '<input type="range" id="ve-' + dim.id + '" min="1" max="5" step="1" value="3" style="accent-color:var(--accent); width:100%;">' +
-        '<span id="ve-' + dim.id + '-val" style="font-family:var(--mono); font-size:13px; text-align:center; color:var(--ink-soft);">3</span>' +
-        '<span style="font-family:var(--mono); font-size:11px; text-align:right; color:var(--ink-soft);">' + Math.round(dim.weight * 100) + '%</span>';
-      veEl.appendChild(row);
-      const slider = row.querySelector('input');
-      const valEl = row.querySelector('#ve-' + dim.id + '-val');
-      slider.addEventListener('input', () => { valEl.textContent = slider.value; });
-    });
-
-    document.getElementById('ve-calc').addEventListener('click', () => {
-      let weighted = 0;
-      const breakdown = VE_DIMS.map(dim => {
-        const score = parseInt(document.getElementById('ve-' + dim.id).value, 10);
-        const contribution = score * dim.weight;
-        weighted += contribution;
-        return { label: dim.label, score, contribution };
-      });
-
-      let verdict;
-      if (weighted >= 4.0) {
-        verdict = 'STRONG CANDIDATE. Scores well across the board; proceed to reference calls and the lock-in questions before signing.';
-      } else if (weighted >= 3.0) {
-        verdict = 'PROCEED WITH CONDITIONS. Workable overall, but check which specific dimensions pulled the score down, those are the terms to push on before signing.';
-      } else {
-        verdict = 'SIGNIFICANT CONCERNS. This vendor is a weak fit as scored; treat a low score on any single dimension as a finding rather than noise to average away.';
-      }
-
-      const weakest = breakdown.reduce((a, b) => (b.score < a.score ? b : a));
-      if (weakest.score <= 1 && weighted >= 3.0) {
-        verdict += ' Note: ' + weakest.label.replace('&amp;', '&') + ' scored 1 of 5. A floor-level score on a single dimension is a finding in its own right; resolve it before the weighted average is allowed to carry the decision.';
-      }
-
-      const resultEl = document.getElementById('ve-result');
-      resultEl.innerHTML =
-        '<div style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 6px 6px 0; font-size:13px; line-height:1.7;">' +
-        '<strong>Weighted score: ' + weighted.toFixed(2) + ' / 5</strong><br>' +
-        'Weakest dimension: ' + weakest.label + ' (' + weakest.score + '/5)<br>' +
-        '<br>' + verdict +
-        '</div>';
-    });
-  </script>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -320,24 +262,24 @@
     <div class="same-note">Feed the criticality tier and concentration fields from here directly into the vendor concentration checklist on <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a>; the two pages track the same underlying risk from different angles and should use the same numbers.</div>
   </div>
 
-    <div class="stage-card">
+      <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">7</span>
       <h3>Worked example: three vendors, one knockout</h3>
-      <p>Weights: functionality 30, security 20, total cost 20, viability 15, exit and lock-in 15. Scores are 1 to 5.</p>
+      <p>The six weighted dimensions from the table above: functional fit 30, security and compliance 20, financial stability 15, integration complexity 15, support and SLA 10, exit and data portability 10. Scores are 1 to 5. These are the default values in the tool above.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Vendor</th><th>Function</th><th>Security</th><th>Cost</th><th>Viability</th><th>Exit</th><th>Weighted</th><th>Outcome</th></tr>
-          <tr><td>Vendor 1</td><td>5</td><td>3</td><td>3</td><td>4</td><td>2</td><td>3.60</td><td>Viable; negotiate data export and termination assistance</td></tr>
-          <tr><td>Vendor 2</td><td>4</td><td>4</td><td>4</td><td>3</td><td>4</td><td>3.85</td><td>Selected</td></tr>
-          <tr><td>Vendor 3</td><td>4</td><td>1</td><td>5</td><td>4</td><td>4</td><td>3.60</td><td>Disqualified: a 1 on security is a knockout, whatever the average says</td></tr>
+          <tr><th>Vendor</th><th>Functional</th><th>Security</th><th>Financial</th><th>Integration</th><th>Support</th><th>Exit</th><th>Weighted</th><th>Outcome</th></tr>
+          <tr><td>Vendor A</td><td>5</td><td>3</td><td>4</td><td>3</td><td>3</td><td>2</td><td>3.65</td><td>Viable; negotiate data export and termination assistance</td></tr>
+          <tr><td>Vendor B</td><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td>4</td><td>3.85</td><td>Selected</td></tr>
+          <tr><td>Vendor C</td><td>4</td><td>1</td><td>4</td><td>5</td><td>4</td><td>4</td><td>3.55</td><td>Knocked out: a 1 on security disqualifies, whatever the average says</td></tr>
         </table>
       </div>
     </div>
   </div>
-  <div class="stage-card">
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">8</span>
       <h3>Third-party risk is now a regulated topic</h3>
@@ -376,5 +318,89 @@
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls, before) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; if (before) cell.insertBefore(d, before); else cell.appendChild(d); return d; }
+
+cell.innerHTML = '';
+var DIMS = [['functional', 'Functional fit', 30], ['security', 'Security & compliance posture', 20], ['financial', 'Financial stability', 15], ['integration', 'Integration complexity (5 = simple)', 15], ['support', 'Support & SLA', 10], ['exit', 'Exit & data portability', 10]];
+var DEF = { names: ['Vendor A', 'Vendor B', 'Vendor C'], w: DIMS.map(function (d) { return d[2]; }), s: [[5, 3, 4, 3, 3, 2], [4, 4, 3, 4, 4, 4], [4, 1, 4, 5, 4, 4]] };
+var MAXV = 4, state;
+var box = sec(), out = sec('div', 'tool-out'), ctl = sec();
+function draw() {
+  var n = state.names.length, h = '<div class="tool-extras" style="margin:0 0 12px">';
+  state.names.forEach(function (nm, j) { h += '<label>Vendor ' + (j + 1) + ' name<input type="text" data-name="' + j + '" value="' + E(nm) + '" aria-label="Vendor ' + (j + 1) + ' name"></label>'; });
+  h += '</div><div class="rt-wrap"><table class="rt-table ve-grid"><thead><tr><th style="min-width:170px">Dimension</th><th>Weight %</th>';
+  state.names.forEach(function (nm, j) { h += '<th data-vh="' + j + '">' + E(nm) + '</th>'; });
+  h += '</tr></thead><tbody>';
+  DIMS.forEach(function (d, i) {
+    h += '<tr><td data-label="Dimension"><strong>' + E(d[1]) + '</strong></td><td data-label="Weight %"><input type="number" min="0" max="100" data-w="' + i + '" value="' + state.w[i] + '" aria-label="' + E(d[1]) + ' weight"></td>';
+    state.names.forEach(function (nm, j) { h += '<td data-label="' + E(nm) + '"><select data-s="' + j + ',' + i + '" aria-label="' + E(nm + ', ' + d[1]) + '">' + [1, 2, 3, 4, 5].map(function (v) { return '<option' + (v === state.s[j][i] ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></td>'; });
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+  box.innerHTML = h;
+  ctl.innerHTML = '<button type="button" class="rt-add" id="ve-addv"' + (n >= MAXV ? ' disabled style="display:none"' : '') + '>+ Add vendor</button> ' + (n > 1 ? '<button type="button" class="rt-add" id="ve-delv">Remove last vendor</button>' : '');
+  var a = document.getElementById('ve-addv'), r = document.getElementById('ve-delv');
+  if (a) a.onclick = function () { state.names.push('Vendor ' + String.fromCharCode(65 + state.names.length)); state.s.push([3, 3, 3, 3, 3, 3]); draw(); calc(); ToolShare.changed(); };
+  if (r) r.onclick = function () { state.names.pop(); state.s.pop(); draw(); calc(); ToolShare.changed(); };
+  cell.appendChild(out);
+}
+box.addEventListener('input', function (e) {
+  var t = e.target;
+  if (t.dataset.name != null) {
+    var j = +t.dataset.name; state.names[j] = t.value;
+    var th = box.querySelector('[data-vh="' + j + '"]'); if (th) th.textContent = t.value;
+    box.querySelectorAll('select[data-s^="' + j + ',"]').forEach(function (sel) { sel.parentNode.setAttribute('data-label', t.value); });
+  }
+  if (t.dataset.w != null) state.w[+t.dataset.w] = Math.max(0, parseFloat(t.value) || 0);
+  if (t.dataset.s) { var p = t.dataset.s.split(','); state.s[+p[0]][+p[1]] = +t.value; }
+  calc();
+});
+box.addEventListener('change', function (e) { if (e.target.dataset.s) { var p = e.target.dataset.s.split(','); state.s[+p[0]][+p[1]] = +e.target.value; calc(); } });
+function score(w) {
+  var tw = w.reduce(function (a, b) { return a + b; }, 0) || 1;
+  return state.names.map(function (nm, j) {
+    var ws = state.s[j].reduce(function (a, v, i) { return a + v * w[i]; }, 0) / tw;
+    var ko = state.s[j].map(function (v, i) { return v <= 1 ? DIMS[i][1] : null; }).filter(Boolean);
+    return { name: nm, j: j, ws: ws, ko: ko };
+  }).sort(function (a, b) { return (a.ko.length ? 1 : 0) - (b.ko.length ? 1 : 0) || b.ws - a.ws; });
+}
+function calc() {
+  var wsum = state.w.reduce(function (a, b) { return a + b; }, 0), R = score(state.w), EQ = score(DIMS.map(function () { return 1; }));
+  var h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Rank</th><th>Vendor</th><th>Weighted score</th><th>Weakest</th><th>Status</th></tr>';
+  R.forEach(function (x, k) {
+    var weak = state.s[x.j].reduce(function (a, v, i) { return v < state.s[x.j][a] ? i : a; }, 0);
+    h += '<tr><td>' + (k + 1) + '</td><td>' + E(x.name) + '</td><td>' + x.ws.toFixed(2) + '</td><td>' + E(DIMS[weak][1]) + ' (' + state.s[x.j][weak] + ')</td><td>' + (x.ko.length ? '<span class="tag bad">Knocked out: ' + E(x.ko.join(', ')) + '</span>' : (x.ws >= 4 ? '<span class="tag good">Strong</span>' : x.ws >= 3 ? '<span class="tag mid">Proceed with conditions</span>' : '<span class="tag bad">Significant concerns</span>')) + '</td></tr>';
+  });
+  h += '</table></div>';
+  var win = R[0], s = '<div class="tool-sum">';
+  if (Math.abs(wsum - 100) > 0.5) s += '<strong>Weights sum to ' + wsum + '%, not 100%.</strong> Scores are normalized so the ranking still works, but fix the weights before sharing the result.<br><br>';
+  if (win.ko.length) s += '<strong>Every vendor has a dimension scored 1.</strong> None can be recommended until those findings are resolved.';
+  else {
+    s += '<strong>Leader: ' + E(win.name) + ' at ' + win.ws.toFixed(2) + ' of 5.</strong> ';
+    var ko = R.filter(function (x) { return x.ko.length && x.ws >= win.ws; });
+    if (ko.length) s += E(ko.map(function (x) { return x.name; }).join(', ')) + ' scored as high or higher on the weighted average but is knocked out by a score of 1; a floor-level score is a finding, not noise to average away. ';
+    s += EQ[0].name === win.name ? 'The leader holds under equal weights, so the result does not depend on the weighting.' : 'Under equal weights the leader would be ' + E(EQ[0].name) + ', so the result depends on the weighting; agree the weights before the scores are seen, not after.';
+    s += ' Next: reference calls and the lock-in questions below before signing.';
+  }
+  out.innerHTML = s + '</div><h4>Ranking</h4>' + h;
+}
+function setAll(s) {
+  s = s || {}; var n = Math.max(1, Math.min(MAXV, (s.names || DEF.names).length));
+  state = { names: (s.names || DEF.names).slice(0, n).map(String), w: DIMS.map(function (d, i) { var v = s.w && s.w[i]; return v >= 0 ? +v : d[2]; }), s: [] };
+  for (var j = 0; j < n; j++) state.s.push(DIMS.map(function (d, i) { var v = s.s && s.s[j] && s.s[j][i]; return v >= 1 && v <= 5 ? +v : 3; }));
+  draw(); calc();
+}
+setAll(DEF);
+ToolShare.register({ id: 've', root: card, title: 'Vendor comparison', getState: function () { return JSON.parse(JSON.stringify(state)); }, setState: setAll,
+  csv: function () { var rows = [['Dimension', 'Weight %'].concat(state.names)]; DIMS.forEach(function (d, i) { rows.push([d[1], state.w[i]].concat(state.s.map(function (v) { return v[i]; }))); });
+    rows.push([], ['Vendor', 'Weighted score', 'Knocked out']); score(state.w).forEach(function (x) { rows.push([x.name, x.ws.toFixed(2), x.ko.join('; ')]); }); return rows; } });
+</script>
+<!-- /toolshare -->
 </body>
 </html>
