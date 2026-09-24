@@ -71,6 +71,8 @@
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   footer a { color: var(--accent); }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
 </style>
 </head>
 <body>
@@ -160,7 +162,7 @@
     <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Levers</span>
-      <h3>Where the money comes from, and how fast it arrives</h3>
+      <h2>Where the money comes from, and how fast it arrives</h2>
       <p>Size and speed differ by an order of magnitude between levers. Ranges are illustrative starting points, not benchmarks.</p>
     </div>
     <div class="stage-grid single">
@@ -181,7 +183,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
-      <h3>Run-rate versus in-year: the number finance actually needs</h3>
+      <h2>Run-rate versus in-year: the number finance actually needs</h2>
       <p>A $40M technology budget with a 12 percent reduction target ($4.8M). Cuts start in month 3 of the fiscal year.</p>
     </div>
     <div class="stage-grid single">
@@ -201,7 +203,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">The conversation</span>
-      <h3>Present both numbers, every time</h3>
+      <h2>Present both numbers, every time</h2>
       <p>Most cost programs lose credibility in month six, when finance compares the promised figure with the ledger.</p>
     </div>
     <div class="stage-grid">

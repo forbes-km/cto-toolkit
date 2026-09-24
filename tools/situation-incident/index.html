@@ -71,6 +71,8 @@
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   footer a { color: var(--accent); }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
 </style>
 </head>
 <body>
@@ -158,7 +160,7 @@
     <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reporting clocks</span>
-      <h3>Which clocks may have started, and how long you have</h3>
+      <h2>Which clocks may have started, and how long you have</h2>
       <p>Deadlines as of September 2026. Several run in parallel, and most start when you become aware or determine materiality, not when the investigation ends. Counsel decides applicability.</p>
     </div>
     <div class="stage-grid single">
@@ -180,7 +182,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
-      <h3>The first 24 hours of a ransomware event</h3>
+      <h2>The first 24 hours of a ransomware event</h2>
       <p>A mid-size SaaS company, encryption detected on a file server at 02:10. Illustrative, but the sequence and owners are the ones that hold up in the postmortem.</p>
     </div>
     <div class="stage-grid single">
@@ -202,7 +204,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Current guidance</span>
-      <h3>NIST SP 800-61 Revision 3</h3>
+      <h2>NIST SP 800-61 Revision 3</h2>
       <p>NIST revised its incident response guidance in April 2025 and aligned it to the Cybersecurity Framework 2.0.</p>
     </div>
     <div class="stage-grid">

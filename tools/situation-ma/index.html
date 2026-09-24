@@ -71,6 +71,8 @@
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   footer a { color: var(--accent); }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
 </style>
 </head>
 <body>
@@ -161,7 +163,7 @@
     <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Legal clocks</span>
-      <h3>Deal-level rules that constrain technology work</h3>
+      <h2>Deal-level rules that constrain technology work</h2>
       <p>Status as of September 2026. Deal counsel owns these; technology needs to know where they limit what can be done and shared.</p>
     </div>
     <div class="stage-grid single">
@@ -180,7 +182,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
-      <h3>Turning diligence findings into price</h3>
+      <h2>Turning diligence findings into price</h2>
       <p>Every finding gets one of three labels before the model is updated. Figures are illustrative.</p>
     </div>
     <div class="stage-grid single">

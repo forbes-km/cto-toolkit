@@ -71,6 +71,8 @@
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   footer a { color: var(--accent); }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
 </style>
 </head>
 <body>
@@ -164,7 +166,7 @@
     <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Thresholds</span>
-      <h3>What tends to break, and at roughly what size</h3>
+      <h2>What tends to break, and at roughly what size</h2>
       <p>Engineering headcount bands are approximate. The pattern holds more reliably than the exact numbers.</p>
     </div>
     <div class="stage-grid single">
@@ -182,7 +184,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
-      <h3>Hiring math for doubling a team</h3>
+      <h2>Hiring math for doubling a team</h2>
       <p>Growing from 60 to 100 engineers in twelve months. Illustrative assumptions, stated so they can be challenged.</p>
     </div>
     <div class="stage-grid single">
@@ -202,7 +204,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">The implication</span>
-      <h3>Hiring is itself a delivery project</h3>
+      <h2>Hiring is itself a delivery project</h2>
       <p>Brooks observed in 1975 that adding people to a late project makes it later. The same arithmetic applies to a growing organization in the short run.</p>
     </div>
     <div class="stage-grid">
