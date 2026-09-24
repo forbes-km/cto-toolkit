@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud FinOps</title>
-<meta name="description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped.">
+<meta name="description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
 <meta property="og:title" content="Cloud FinOps | CTO Toolkit">
 <meta property="og:description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/cloud-cost-management/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cloud FinOps | CTO Toolkit">
+<meta name="twitter:description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/cloud-cost-management/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -78,7 +85,7 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Phases: one building block of a larger framework</h3>
-      <p>These are the FinOps Foundation's own Phases. The Foundation is the industry body (under the Linux Foundation) that maintains the full FinOps Framework and the FOCUS billing specification referenced throughout this page. The complete framework also includes Principles, Personas, Domains and Capabilities, and Scopes, and the Foundation's current definition centers on maximizing the business value of technology spend broadly rather than cloud alone. Cloud, SaaS, AI, data center, and licensing are all recognized Scopes; this page covers the cloud infrastructure scope, which is why AI cost modeling gets its own page rather than folding into this one.</p>
+      <p>These are the FinOps Foundation's own Phases. The Foundation is the industry body (under the Linux Foundation) that maintains the full FinOps Framework and the FOCUS billing specification referenced throughout this page. The complete framework also includes Principles, Personas, Domains and Capabilities, Technology Categories, and Scopes, and the Foundation's current definition centers on maximizing the business value of technology spend broadly rather than cloud alone. The 2026 framework names five Technology Categories, public cloud, SaaS, data center, data cloud platforms, and AI, and treats a Scope as a business-defined slice of spend across those categories, started because a business question needs answering. This page covers public cloud infrastructure, which is why AI cost modeling gets its own page rather than folding into this one.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -225,7 +232,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own FinOps maturity</h3>
-      <p>Six capability domains from the FinOps Foundation framework, scored 1 to 5. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Six of the FinOps Framework's capabilities, the ones that most reliably separate stages of maturity, scored 1 to 5. The Foundation groups its capabilities into four domains; these six span all of them. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -309,7 +316,44 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>What changed in the FinOps Framework, 2025 to 2026</h3>
+      <p>Worth knowing because tooling vendors, certifications, and job descriptions now use this vocabulary.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Change</th><th>What it means in practice</th></tr>
+          <tr><td>Scopes (2025, refined 2026)</td><td>Spend is analyzed in business-defined segments, a product line, an acquisition, an AI program, rather than only by account or service</td></tr>
+          <tr><td>Technology Categories (2026)</td><td>Dedicated guidance for public cloud, SaaS, data center, data cloud platforms such as Snowflake and Databricks, and AI</td></tr>
+          <tr><td>Executive Strategy Alignment (2026)</td><td>A new capability recognizing that technology value is a board-level conversation; FinOps output feeds strategy and capital allocation, not only engineering</td></tr>
+          <tr><td>Intersecting Disciplines (2026)</td><td>Formal overlap with IT asset management, IT financial management, sustainability, and security, which often own adjacent data</td></tr>
+          <tr><td>FOCUS 1.3 (December 2025)</td><td>The billing specification added a contract commitments dataset, columns that expose how shared costs such as Kubernetes are split, and metadata stating whether data is final or still subject to revision</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Unit economics, worked</h3>
+      <p>The measure that turns a rising bill from a spending question into an efficiency question. Figures are illustrative for a B2B SaaS product.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Quarter</th><th>Cloud spend</th><th>Active customers</th><th>Cost per customer per month</th><th>Reading</th></tr>
+          <tr><td>Q1</td><td>$1.20M</td><td>4,000</td><td>$100</td><td>Baseline</td></tr>
+          <tr><td>Q2</td><td>$1.38M</td><td>4,800</td><td>$96</td><td>Spend up 15 percent, efficiency improving: growth, not waste</td></tr>
+          <tr><td>Q3</td><td>$1.52M</td><td>4,900</td><td>$103</td><td>Spend up 10 percent on flat customers: investigate before the next commitment purchase</td></tr>
+          <tr><td>Q4</td><td>$1.45M</td><td>5,300</td><td>$91</td><td>Rightsizing and a savings plan on the stable baseline brought unit cost below Q1</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs cost governance isn't working</h3>
@@ -324,7 +368,9 @@
           <li>Non-production environments run around the clock with no automated schedule</li>
           <li>No one outside the finance or platform team can say what their own team's monthly cloud spend is</li>
           <li>The organization describes itself as FinOps &quot;mature&quot; but can't answer what a single team spent last month</li>
-        </ul>
+                  <li>Cost is reported only as total spend, with no unit cost agreed with finance</li>
+          <li>The program still uses pre-2025 FinOps vocabulary and cannot map spend to business-defined scopes</li>
+</ul>
       </div>
     </div>
   </div>
@@ -345,7 +391,7 @@
 </main>
 
 <footer>
-  Reference only. Cloud pricing models, discount structures, and vendor tooling change frequently; verify current mechanics against your provider's documentation before committing budget.
+  Reference only. Framework terms reflect the FinOps Foundation's 2025 and 2026 FinOps Framework updates and FOCUS 1.3 (December 2025). Cloud pricing models, discount structures, and vendor tooling change frequently; verify current mechanics against your provider's documentation before committing budget.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

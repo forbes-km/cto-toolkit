@@ -4,16 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regulatory Map for Technology Leaders</title>
-<meta name="description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK rules, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
+<meta name="description" content="Data Governance covers privacy and AI Governance covers AI; nothing ties the regulations together or says who owns which clock. This page does. It is organized by what each one governs, because that is how ownership falls out, and it ends with the mistake that turns a manageable set of obligations into six parallel processes.">
 <meta property="og:title" content="Regulatory Map for Technology Leaders | CTO Toolkit">
-<meta property="og:description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK rules, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
+<meta property="og:description" content="Data Governance covers privacy and AI Governance covers AI; nothing ties the regulations together or says who owns which clock. This page does. It is organized by what each one governs, because that is how ownership falls out, and it ends with the mistake that turns a manageable set of obligations into six parallel processes.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/regulatory-map/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Regulatory Map for Technology Leaders | CTO Toolkit">
-<meta name="twitter:description" content="Which regulations reach a technology organization and when: GDPR, US state privacy laws, HIPAA, GLBA, NYDFS Part 500, SEC cyber disclosure, PCI DSS, CIRCIA, NIS2, DORA, the EU AI Act after the 2026 omnibus deferral, the Cyber Resilience Act, the Data Act, Colorado&#x27;s AI Act, and UK rules, with the clock and the owner for each, an applicability filter, and the one-process-per-regulation pitfall.">
+<meta name="twitter:description" content="Data Governance covers privacy and AI Governance covers AI; nothing ties the regulations together or says who owns which clock. This page does. It is organized by what each one governs, because that is how ownership falls out, and it ends with the mistake that turns a manageable set of obligations into six parallel processes.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/regulatory-map/index.html">
 <style>
   :root {
     --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
@@ -112,7 +113,7 @@
         <tr><th>Regulation</th><th>Who it reaches</th><th>What it requires of technology</th><th>The clock</th><th>Status note</th></tr>
         <tr><td><b>GDPR</b> (EU) and <b>UK GDPR</b></td><td>Anyone processing personal data of people in the EU or UK, wherever the organization sits</td><td>Lawful basis, data minimization, records of processing, DPIAs, transfer mechanisms, subject rights made operational, security appropriate to risk</td><td>Breach notification to the supervisory authority within 72 hours of awareness; to individuals without undue delay where high risk</td><td>Stable. A separate EU digital omnibus proposing GDPR simplifications is in progress; verify before relying on it</td></tr>
         <tr><td><b>US state privacy laws</b> (CCPA/CPRA and roughly twenty comprehensive state acts)</td><td>Businesses meeting per-state revenue or volume thresholds with residents' data</td><td>Rights requests, opt-outs, data inventories, contracts with processors, and in California automated decision-making technology rules</td><td>Rights request response typically 45 days; breach notification per state breach statute, often 30 to 60 days</td><td>New states add laws most years; California's ADMT regulations phase in through 2027. Track per state</td></tr>
-        <tr><td><b>HIPAA</b> (US)</td><td>Covered entities and business associates handling protected health information</td><td>Security Rule safeguards, risk analysis, BAAs with every vendor touching PHI, minimum necessary access</td><td>Breach notification to individuals and HHS within 60 days of discovery; large breaches also to media</td><td>A proposed Security Rule update (published January 2025) would make many addressable safeguards required, including MFA and encryption; check whether it has been finalized</td></tr>
+        <tr><td><b>HIPAA</b> (US)</td><td>Covered entities and business associates handling protected health information</td><td>Security Rule safeguards, risk analysis, BAAs with every vendor touching PHI, minimum necessary access</td><td>Breach notification to individuals and HHS within 60 days of discovery; large breaches also to media</td><td>A proposed Security Rule update (published January 2025) would make many addressable safeguards required, including MFA and encryption; HHS has since moved the expected final rule to 2027, so build toward it now rather than waiting</td></tr>
         <tr><td><b>GLBA Safeguards Rule</b> (US, FTC)</td><td>Non-bank financial institutions: lenders, brokers, fintech, auto dealers, tax preparers</td><td>A written security program, qualified individual, risk assessment, MFA, encryption, vendor oversight</td><td>Notice to the FTC within 30 days of a breach affecting 500 or more consumers</td><td>Stable since the 2024 notification amendment</td></tr>
         <tr><td><b>NYDFS Part 500</b> (New York)</td><td>Entities licensed by the New York Department of Financial Services</td><td>CISO, annual certification, MFA universally, asset inventory, privileged access controls, annual pen testing</td><td>Notice within 72 hours of a cybersecurity incident; ransomware payment notice within 24 hours</td><td>Amended 2023; phased requirements completed November 2025</td></tr>
         <tr><td><b>SEC cybersecurity disclosure</b> (US public companies)</td><td>SEC registrants, including foreign private issuers</td><td>A process for determining materiality without unreasonable delay; annual disclosure of risk management, strategy, and governance</td><td>Form 8-K Item 1.05 within four business days of determining an incident is material</td><td>Stable. The clock starts at the materiality determination, which is why the determination process itself must be designed</td></tr>
@@ -228,12 +229,12 @@ document.getElementById('rm-apply').addEventListener('click',function(){
   var list=regimes.filter(function(r){
     var rj=r.t.filter(function(t){return t==='eu'||t==='uk'||t==='us';});
     var rt=r.t.filter(function(t){return t!=='eu'&&t!=='uk'&&t!=='us';});
-    var jOk=rj.length===0||rj.some(function(j){return juris.indexOf(j)>=0;});
+    var jOk=rj.length===0||juris.length===0||rj.some(function(j){return juris.indexOf(j)>=0;});
     var tOk=rt.length===0||rt.some(function(t){return sel.indexOf(t)>=0;});
     if(r.t.indexOf('personal')>=0&&rt.length===1)return jOk&&sel.indexOf('personal')>=0;
     return jOk&&tOk;
   });
-  render(list,'Likely in scope given what you ticked ('+list.length+' of '+regimes.length+'):');
+  render(list,(juris.length===0?'No jurisdiction was ticked, so every jurisdiction is included. ':'')+'Likely in scope given what you ticked ('+list.length+' of '+regimes.length+'):');
 });
 document.getElementById('rm-all').addEventListener('click',function(){render(regimes,'Everything in this map:');});
 })();

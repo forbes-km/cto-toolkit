@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Architecture Map</title>
-<meta name="description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response.">
+<meta name="description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
 <meta property="og:title" content="AI Architecture Map | CTO Toolkit">
-<meta property="og:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. Toggle between AWS, Azure, GCP, OCI, and self-hosted at every stage.">
+<meta property="og:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/ai-architecture-map/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Architecture Map | CTO Toolkit">
+<meta name="twitter:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/ai-architecture-map/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -259,7 +266,7 @@
           <div class="lz-card-head"><h4>Managed model access</h4></div>
           <div class="lz-grid">
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock, unified Converse API across model families (Claude, Titan, Llama, Mistral)</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Foundry, Azure OpenAI models plus the Foundry Model Catalog's open-weight options</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>Microsoft Foundry (formerly Azure AI Foundry), Azure OpenAI models plus the Foundry Model Catalog's open-weight options</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI, Gemini-first with third-party and open-weight models via Model Garden</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>OCI Generative AI, native and third-party models</p></div>
           </div>
@@ -279,7 +286,7 @@
           <div class="lz-card-head"><h4>Agent orchestration</h4></div>
           <div class="lz-grid">
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock Agents, AgentCore, and Flows</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Foundry Agent Service, built-in tool calling</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>Foundry Agent Service, built-in tool calling</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI Agent Builder</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>Generative AI Agents, tool and API orchestration built into the same service as RAG</p></div>
           </div>
@@ -466,7 +473,7 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>AI Foundry model deployment: Azure OpenAI models or the Foundry Model Catalog's open-weight options, on managed online endpoints. Provisioned Throughput Units (PTU) for predictable latency and cost at volume, or pay-as-you-go token billing for variable load.</p>
+      <p>Microsoft Foundry model deployment: Azure OpenAI models or the Foundry Model Catalog's open-weight options, on managed online endpoints. Provisioned Throughput Units (PTU) for predictable latency and cost at volume, or pay-as-you-go token billing for variable load.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -494,7 +501,7 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>AI Foundry Agent Service with built-in tool calling, or a self-built MCP server fronting enterprise systems, called from a Foundry-hosted agent.</p>
+      <p>Foundry Agent Service with built-in tool calling, or a self-built MCP server fronting enterprise systems, called from a Foundry-hosted agent.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -610,7 +617,7 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Monitor plus Application Insights for distributed tracing, with retrieval latency, generation latency, and per-tool-call latency broken out individually. AI Foundry's built-in evaluation and tracing for agent runs, with alerting when groundedness or relevance scores degrade.</p>
+      <p>Monitor plus Application Insights for distributed tracing, with retrieval latency, generation latency, and per-tool-call latency broken out individually. Microsoft Foundry's built-in evaluation and tracing for agent runs, with alerting when groundedness or relevance scores degrade.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>

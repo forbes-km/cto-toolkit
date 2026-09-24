@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology Portfolio Management</title>
-<meta name="description" content="Ranking and sequencing competing initiatives across categories rather than within one, plus a WSJF calculator that ranks your own list.">
+<meta name="description" content="The application estate, AI initiatives, innovation bets, and the budget each have their own page. This is the narrower piece missing between them: ranking and sequencing every initiative competing for the same engineering capacity, regardless of category, plus a working WSJF calculator that ranks a list you build yourself.">
 <meta property="og:title" content="Technology Portfolio Management | CTO Toolkit">
-<meta property="og:description" content="How to decide what makes the cut when an AI pilot, a tech-debt paydown, and a compliance mandate are all fighting for the same engineering capacity.">
+<meta property="og:description" content="The application estate, AI initiatives, innovation bets, and the budget each have their own page. This is the narrower piece missing between them: ranking and sequencing every initiative competing for the same engineering capacity, regardless of category, plus a working WSJF calculator that ranks a list you build yourself.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technology-portfolio-management/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technology Portfolio Management | CTO Toolkit">
+<meta name="twitter:description" content="The application estate, AI initiatives, innovation bets, and the budget each have their own page. This is the narrower piece missing between them: ranking and sequencing every initiative competing for the same engineering capacity, regardless of category, plus a working WSJF calculator that ranks a list you build yourself.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technology-portfolio-management/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -229,10 +236,11 @@
     document.getElementById('wsjf-add').addEventListener('click', () => {
       const name = document.getElementById('wsjf-name').value.trim();
       if (!name) return;
-      const ubv = parseInt(document.getElementById('wsjf-ubv').value, 10);
-      const tc = parseInt(document.getElementById('wsjf-tc').value, 10);
-      const rroe = parseInt(document.getElementById('wsjf-rroe').value, 10);
-      const size = parseInt(document.getElementById('wsjf-size').value, 10);
+      const num = id => { const x = parseInt(document.getElementById(id).value, 10); return isNaN(x) || x < 0 ? 0 : x; };
+      const ubv = num('wsjf-ubv');
+      const tc = num('wsjf-tc');
+      const rroe = num('wsjf-rroe');
+      const size = Math.max(1, num('wsjf-size'));
       wsjfItems.push({ name, ubv, tc, rroe, size });
       document.getElementById('wsjf-name').value = '';
       renderWsjf();

@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technical Hiring &amp; Leveling</title>
+<meta name="description" content="Leveling by scope and ambiguity rather than tenure, designing an interview loop that covers distinct signal instead of redundant algorithm questions, why independent scoring before group discussion matters, and the difference between culture fit and culture add.">
+<meta property="og:title" content="Technical Hiring &amp;amp; Leveling | CTO Toolkit">
+<meta property="og:description" content="Leveling by scope and ambiguity rather than tenure, designing an interview loop that covers distinct signal instead of redundant algorithm questions, why independent scoring before group discussion matters, and the difference between culture fit and culture add.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technical-hiring-leveling/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technical Hiring &amp;amp; Leveling | CTO Toolkit">
+<meta name="twitter:description" content="Leveling by scope and ambiguity rather than tenure, designing an interview loop that covers distinct signal instead of redundant algorithm questions, why independent scoring before group discussion matters, and the difference between culture fit and culture add.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technical-hiring-leveling/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -195,7 +206,64 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>What actually predicts job performance</h3>
+      <p>The largest recent re-analysis of selection research, Sackett and colleagues (2022), corrected a long-standing statistical overcorrection and reordered the list. The practical conclusion for engineering hiring is clear.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Method</th><th>Corrected validity (Sackett et al., 2022)</th><th>What it means for an engineering loop</th></tr>
+          <tr><td>Structured interviews</td><td>0.42, the highest of the common methods</td><td>Same questions for every candidate at a level, scored against written, anchored rubrics</td></tr>
+          <tr><td>Job knowledge tests</td><td>0.40</td><td>Questions about the actual stack and domain, not trivia unrelated to the role</td></tr>
+          <tr><td>Work sample tests</td><td>0.33</td><td>A realistic, time-boxed task that looks like the job: debugging, extending, or reviewing real-looking code</td></tr>
+          <tr><td>General cognitive ability tests</td><td>0.31, lower than the figure long cited</td><td>Puzzle-style and brainteaser questions add little beyond the three methods above</td></tr>
+          <tr><td>Unstructured conversation</td><td>Materially lower than any of the above</td><td>A friendly chat with no rubric mostly measures rapport, which is where bias hides</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>A loop that covers distinct signal</h3>
+      <p>Each stage owns one signal, with a rubric written before the first candidate. Anchored rubrics describe what a 1, 2, 3, and 4 look like at this level so interviewers score behavior, not impressions.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Stage</th><th>Signal</th><th>Format</th><th>Rubric anchors</th></tr>
+          <tr><td>Recruiter screen</td><td>Role fit, level range, logistics, compensation expectations</td><td>30 minutes, structured questions</td><td>Pass or hold, with notes</td></tr>
+          <tr><td>Work sample</td><td>Can they do the work</td><td>60 to 90 minutes, pair session or time-capped take-home on realistic code</td><td>Correctness, testing, reading unfamiliar code, communication while working</td></tr>
+          <tr><td>System design</td><td>Tradeoff reasoning at the right scale for the level</td><td>60 minutes; problem scoped to the level being hired</td><td>Requirements clarified, options compared, failure modes, cost awareness</td></tr>
+          <tr><td>Project deep dive</td><td>Scope and ambiguity handled, which is the leveling evidence</td><td>45 to 60 minutes on one project the candidate chose</td><td>Who defined the problem, what they decided, what they would change</td></tr>
+          <tr><td>Collaboration and values</td><td>How they handle disagreement, feedback, and mistakes</td><td>Structured behavioral questions</td><td>Specific past examples, not hypotheticals</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Pay transparency and AI screening rules, as of September 2026</h3>
+      <p>Hiring practice is now shaped by law in most places engineering teams recruit. Confirm specifics with employment counsel for each location you hire in.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Rule</th><th>What it requires</th><th>Practical effect</th></tr>
+          <tr><td>US state and city pay transparency laws (Colorado, California, Washington, New York, Illinois, and a growing number of others)</td><td>Good-faith pay ranges in job postings, with varying thresholds and coverage of remote roles</td><td>Leveling bands have to exist and be defensible before the requisition opens</td></tr>
+          <tr><td>EU Pay Transparency Directive</td><td>Pay range information to candidates before interview, a ban on asking about salary history, and gender pay gap reporting, first due by June 7, 2027 for employers with 150 or more staff. The transposition deadline was June 7, 2026; only a handful of member states met it</td><td>Treat the directive's requirements as the working standard across the EU even where local law is late</td></tr>
+          <tr><td>NYC Local Law 144</td><td>An independent bias audit and candidate notice before using an automated employment decision tool</td><td>Any AI resume screener or ranking tool used for New York City roles needs an annual audit</td></tr>
+          <tr><td>Colorado SB 26-189</td><td>From January 1, 2027, notice, explanation of adverse decisions, appeal, and human review for automated decisions affecting employment</td><td>The same obligations reach any AI-assisted hiring step for Colorado candidates</td></tr>
+          <tr><td>EU AI Act</td><td>AI used in recruitment and worker management is high-risk; after the 2026 AI Omnibus those obligations apply from December 2, 2027</td><td>Vendors and deployers of hiring AI need conformity work planned now</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the hiring and leveling process isn't working</h3>
@@ -209,7 +277,10 @@
           <li>Interviewers discuss impressions with each other before submitting independent scores</li>
           <li>The interview process screens for culture fit (similarity) rather than culture add (what's missing)</li>
           <li>No standing calibration mechanism exists to check whether &quot;senior&quot; means the same thing across different hiring managers or teams</li>
-        </ul>
+                  <li>Interview questions have no written, anchored rubric, so scores reflect each interviewer's personal bar</li>
+          <li>Postings go out without pay ranges in places that require them, or leveling bands do not exist to support the ranges</li>
+          <li>An AI screening or ranking tool is in use without the audit, notice, and human review that apply where you hire</li>
+</ul>
       </div>
     </div>
   </div>
@@ -217,7 +288,7 @@
 </main>
 
 <footer>
-  Reference only. Build specific leveling rubrics and interview scorecards with a calibration committee rather than applying this framework mechanically.
+  Reference only; not legal advice. Validity figures are from Sackett, Zhang, Berry, and Lievens (2022), Journal of Applied Psychology. Pay transparency and AI hiring rules reflect September 2026 and change often. Build specific rubrics and interview scorecards with a calibration committee rather than applying this framework mechanically.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>

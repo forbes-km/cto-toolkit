@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud Service Mapper</title>
+<meta name="description" content="A working reference for translating capabilities and services across AWS, Azure, GCP, and OCI, plus a side-by-side landing zone and foundational best-practices guide. Naming and feature parity shift as providers evolve their catalogs; treat this as a starting point for a conversation rather than a guarantee of equivalence.">
+<meta property="og:title" content="Cloud Service Mapper | CTO Toolkit">
+<meta property="og:description" content="A working reference for translating capabilities and services across AWS, Azure, GCP, and OCI, plus a side-by-side landing zone and foundational best-practices guide. Naming and feature parity shift as providers evolve their catalogs; treat this as a starting point for a conversation rather than a guarantee of equivalence.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/cloud-service-mapper/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cloud Service Mapper | CTO Toolkit">
+<meta name="twitter:description" content="A working reference for translating capabilities and services across AWS, Azure, GCP, and OCI, plus a side-by-side landing zone and foundational best-practices guide. Naming and feature parity shift as providers evolve their catalogs; treat this as a starting point for a conversation rather than a guarantee of equivalence.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/cloud-service-mapper/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -187,8 +198,12 @@
     font-family: var(--mono);
     font-size: 12.5px;
     white-space: nowrap;
+    max-width: 100%;
   }
   .svc.dim { opacity: 0.25; }
+  @media (max-width: 700px) {
+    .svc { white-space: normal; overflow-wrap: anywhere; }
+  }
 
   .dot {
     width: 7px;
@@ -342,7 +357,7 @@ const data = [
   { category: "Compute", capability: "Managed Kubernetes", sub: "Container orchestration", aws: "EKS", azure: "AKS", gcp: "GKE", oci: "OKE" },
   { category: "Compute", capability: "Serverless functions", sub: "Event-driven, consumption-billed compute", aws: "Lambda", azure: "Functions", gcp: "Cloud Run functions", oci: "Functions" },
   { category: "Compute", capability: "Container hosting (serverless)", sub: "Run containers without managing clusters", aws: "Fargate", azure: "Container Apps", gcp: "Cloud Run", oci: "Container Instances" },
-  { category: "Compute", capability: "PaaS web app hosting", sub: "Deploy code or a container to a managed web app platform", aws: "App Runner / Elastic Beanstalk", azure: "App Service", gcp: "App Engine", oci: "No direct equivalent; commonly Container Instances or OKE" },
+  { category: "Compute", capability: "PaaS web app hosting", sub: "Deploy code or a container to a managed web app platform", aws: "Elastic Beanstalk / ECS Express Mode (App Runner closed to new customers April 2026)", azure: "App Service", gcp: "App Engine", oci: "No direct equivalent; commonly Container Instances or OKE" },
   { category: "Compute", capability: "Static site / frontend hosting", sub: "Managed hosting for static sites and SPAs, often git-connected", aws: "Amplify Hosting", azure: "Static Web Apps", gcp: "Firebase Hosting", oci: "No direct equivalent; commonly Object Storage + CDN" },
   { category: "Compute", capability: "Batch processing", sub: "Scheduled or triggered batch jobs at scale", aws: "Batch", azure: "Batch", gcp: "Batch", oci: "Batch" },
   { category: "Compute", capability: "VM auto-scaling groups", sub: "Elastic scaling of VM fleets", aws: "Auto Scaling Groups", azure: "Virtual Machine Scale Sets", gcp: "Managed Instance Groups", oci: "Instance Pools" },
@@ -355,18 +370,18 @@ const data = [
   { category: "Storage", capability: "File storage", sub: "Managed network file systems", aws: "EFS", azure: "Azure Files", gcp: "Filestore", oci: "File Storage" },
   { category: "Storage", capability: "Archival / cold storage", sub: "Low-cost, high-latency retrieval tiers", aws: "S3 Glacier", azure: "Archive Storage tier", gcp: "Archive Storage class", oci: "Archive Storage" },
   { category: "Storage", capability: "Hybrid / on-prem gateway", sub: "Bridging on-prem storage to cloud", aws: "Storage Gateway", azure: "Azure File Sync / Stack Edge", gcp: "Storage Transfer Service", oci: "Storage Gateway" },
-  { category: "Storage", capability: "Bulk data transfer appliance", sub: "Physical device for large offline transfer", aws: "Snowball", azure: "Data Box", gcp: "Transfer Appliance", oci: "Data Transfer Appliance" },
+  { category: "Storage", capability: "Bulk data transfer appliance", sub: "Physical device for large offline transfer", aws: "DataSync / Data Transfer Terminal (Snowball Edge closed to new customers late 2025)", azure: "Data Box", gcp: "Transfer Appliance", oci: "Data Transfer Appliance" },
   { category: "Storage", capability: "Managed backup", sub: "Centralized, policy-driven backup across services", aws: "AWS Backup", azure: "Azure Backup", gcp: "Backup and DR Service", oci: "Backup Service (per-resource, no central console)" },
   { category: "Storage", capability: "Disaster recovery orchestration", sub: "Cross-region failover orchestration and testing", aws: "Elastic Disaster Recovery", azure: "Site Recovery", gcp: "Backup and DR Service", oci: "Full Stack Disaster Recovery" },
 
   // Database
   { category: "Database", capability: "Managed relational (general)", sub: "Managed MySQL / PostgreSQL / SQL Server", aws: "RDS", azure: "Azure SQL / Flexible Server", gcp: "Cloud SQL", oci: "Base Database Service" },
-  { category: "Database", capability: "Distributed relational", sub: "Globally distributed, horizontally scalable SQL", aws: "Aurora", azure: "Cosmos DB for PostgreSQL (Citus)", gcp: "Spanner", oci: "Autonomous Database" },
+  { category: "Database", capability: "Distributed relational", sub: "Globally distributed, horizontally scalable SQL", aws: "Aurora", azure: "Azure Database for PostgreSQL elastic clusters (Citus); Cosmos DB for PostgreSQL not offered for new projects", gcp: "Spanner", oci: "Autonomous Database" },
   { category: "Database", capability: "Managed NoSQL / document", sub: "Schema-flexible document store", aws: "DynamoDB", azure: "Cosmos DB", gcp: "Firestore", oci: "NoSQL Database" },
   { category: "Database", capability: "In-memory cache", sub: "Managed Redis / Memcached", aws: "ElastiCache", azure: "Azure Managed Redis / Azure Cache for Redis", gcp: "Memorystore", oci: "OCI Cache (Redis and Valkey compatible)" },
-  { category: "Database", capability: "Data warehouse", sub: "Managed analytical / columnar warehouse", aws: "Redshift", azure: "Synapse Analytics", gcp: "BigQuery", oci: "Autonomous Data Warehouse" },
+  { category: "Database", capability: "Data warehouse", sub: "Managed analytical / columnar warehouse", aws: "Redshift", azure: "Fabric Data Warehouse / Synapse Analytics", gcp: "BigQuery", oci: "Autonomous Data Warehouse" },
   { category: "Database", capability: "Graph database", sub: "Managed graph query engine", aws: "Neptune", azure: "Cosmos DB (Gremlin API)", gcp: "Spanner Graph", oci: "Graph Studio (on Autonomous DB)" },
-  { category: "Database", capability: "Time-series database", sub: "Optimized for time-stamped metric data", aws: "Timestream", azure: "Data Explorer (Kusto)", gcp: "Bigtable (common time-series pattern)", oci: "No dedicated native service" },
+  { category: "Database", capability: "Time-series database", sub: "Optimized for time-stamped metric data", aws: "Timestream for InfluxDB (LiveAnalytics closed to new customers June 2025)", azure: "Data Explorer (Kusto)", gcp: "Bigtable (common time-series pattern)", oci: "No dedicated native service" },
   { category: "Database", capability: "Database migration service", sub: "Managed heterogeneous/homogeneous DB migration", aws: "Database Migration Service", azure: "Database Migration Service", gcp: "Database Migration Service", oci: "Database Migration" },
 
   // Networking
@@ -389,12 +404,12 @@ const data = [
   { category: "Messaging & Integration", capability: "Event streaming (Kafka-compatible)", sub: "High-throughput distributed log", aws: "MSK", azure: "Event Hubs", gcp: "Managed Service for Apache Kafka", oci: "Streaming" },
   { category: "Messaging & Integration", capability: "Workflow orchestration", sub: "Durable state machines / orchestration", aws: "Step Functions", azure: "Durable Functions / Logic Apps", gcp: "Workflows", oci: "OCI Functions + Workflows" },
   { category: "Messaging & Integration", capability: "iPaaS / enterprise integration", sub: "Low-code app and data integration", aws: "AppFlow / EventBridge Pipes", azure: "Logic Apps", gcp: "Application Integration", oci: "Integration (OIC)" },
-  { category: "Messaging & Integration", capability: "Managed Apache Airflow", sub: "Orchestrating multi-step data pipelines as DAGs", aws: "MWAA (Managed Workflows for Apache Airflow)", azure: "Data Factory Workflow Orchestration Manager / Apache Airflow job in Fabric", gcp: "Cloud Composer", oci: "No native managed Airflow" },
+  { category: "Messaging & Integration", capability: "Managed Apache Airflow", sub: "Orchestrating multi-step data pipelines as DAGs", aws: "MWAA (Managed Workflows for Apache Airflow)", azure: "Apache Airflow job in Microsoft Fabric (ADF Workflow Orchestration Manager deprecated, existing customers only)", gcp: "Cloud Composer", oci: "No native managed Airflow" },
   { category: "Messaging & Integration", capability: "Transactional email", sub: "Programmatic outbound email delivery", aws: "SES", azure: "Communication Services (Email)", gcp: "No native service; partner (e.g. SendGrid)", oci: "Email Delivery" },
   { category: "Messaging & Integration", capability: "Push notifications", sub: "Mobile and web push delivery", aws: "SNS Mobile Push / End User Messaging (Pinpoint retiring 2026)", azure: "Notification Hubs", gcp: "Firebase Cloud Messaging", oci: "Notifications" },
 
   // Identity & Security
-  { category: "Identity & Security", capability: "Identity and access management", sub: "Roles, policies, permission boundaries", aws: "IAM", azure: "Entra ID (Azure AD)", gcp: "Cloud IAM", oci: "IAM" },
+  { category: "Identity & Security", capability: "Identity and access management", sub: "Roles, policies, permission boundaries", aws: "IAM", azure: "Microsoft Entra ID (formerly Azure AD)", gcp: "Cloud IAM", oci: "IAM" },
   { category: "Identity & Security", capability: "Secrets management", sub: "Centralized secret and key storage", aws: "Secrets Manager", azure: "Key Vault", gcp: "Secret Manager", oci: "Vault" },
   { category: "Identity & Security", capability: "Web application firewall", sub: "L7 application-layer protection", aws: "WAF", azure: "Azure WAF", gcp: "Cloud Armor", oci: "WAF" },
   { category: "Identity & Security", capability: "Key management / HSM", sub: "Encryption key lifecycle, hardware-backed", aws: "KMS / CloudHSM", azure: "Key Vault (Managed HSM)", gcp: "Cloud KMS / Cloud HSM", oci: "Vault (KMS + HSM)" },
@@ -421,13 +436,13 @@ const data = [
   { category: "Data & Analytics", capability: "Managed ETL / data pipeline", sub: "Serverless data transformation pipelines", aws: "Glue", azure: "Data Factory", gcp: "Dataflow", oci: "Data Integration" },
   { category: "Data & Analytics", capability: "Data lake storage + catalog", sub: "Structured metadata over object storage", aws: "Lake Formation", azure: "Purview + ADLS", gcp: "Dataplex", oci: "Data Catalog" },
   { category: "Data & Analytics", capability: "Big data / Spark processing", sub: "Managed Hadoop/Spark clusters", aws: "EMR", azure: "HDInsight", gcp: "Dataproc", oci: "Big Data Service" },
-  { category: "Data & Analytics", capability: "Business intelligence / dashboards", sub: "Self-service BI and reporting", aws: "QuickSight", azure: "Power BI", gcp: "Looker", oci: "Analytics Cloud" },
-  { category: "Data & Analytics", capability: "Unified analytics platform (SaaS)", sub: "Single SaaS surface spanning ingestion, warehousing, BI, and data science", aws: "No single equivalent; closest is combining Redshift, Glue, and QuickSight", azure: "Microsoft Fabric", gcp: "BigQuery (with Looker and Vertex AI integrated around it)", oci: "No single equivalent; closest is Autonomous Data Warehouse plus Analytics Cloud" },
+  { category: "Data & Analytics", capability: "Business intelligence / dashboards", sub: "Self-service BI and reporting", aws: "Quick Sight (part of Amazon Quick Suite, formerly QuickSight)", azure: "Power BI", gcp: "Looker", oci: "Analytics Cloud" },
+  { category: "Data & Analytics", capability: "Unified analytics platform (SaaS)", sub: "Single SaaS surface spanning ingestion, warehousing, BI, and data science", aws: "No single equivalent; closest is combining Redshift, Glue, and Quick Sight", azure: "Microsoft Fabric", gcp: "BigQuery (with Looker and Vertex AI integrated around it)", oci: "No single equivalent; closest is Autonomous Data Warehouse plus Analytics Cloud" },
   { category: "Data & Analytics", capability: "Managed search", sub: "Full-text and log search engine", aws: "OpenSearch Service", azure: "Azure AI Search (formerly Cognitive Search)", gcp: "No native equivalent; Vertex AI Search covers AI-driven search", oci: "OpenSearch Service" },
 
   // AI / ML
   { category: "AI & ML", capability: "Managed ML platform", sub: "End-to-end model build, train, deploy", aws: "SageMaker", azure: "Azure Machine Learning", gcp: "Vertex AI", oci: "Data Science" },
-  { category: "AI & ML", capability: "Foundation model / generative AI access", sub: "Hosted LLM and generative model access", aws: "Bedrock", azure: "Azure AI Foundry (Azure OpenAI models)", gcp: "Vertex AI (Model Garden)", oci: "Generative AI" },
+  { category: "AI & ML", capability: "Foundation model / generative AI access", sub: "Hosted LLM and generative model access", aws: "Bedrock", azure: "Microsoft Foundry (formerly Azure AI Foundry; Azure OpenAI and other models)", gcp: "Vertex AI (Model Garden)", oci: "Generative AI" },
   { category: "AI & ML", capability: "Document intelligence / OCR", sub: "Structured extraction from documents", aws: "Textract", azure: "Azure AI Document Intelligence", gcp: "Document AI", oci: "Document Understanding" },
   { category: "AI & ML", capability: "Vision AI", sub: "Image classification, detection, moderation", aws: "Rekognition", azure: "Azure AI Vision", gcp: "Vision AI", oci: "Vision" },
   { category: "AI & ML", capability: "Speech-to-text / text-to-speech", sub: "Speech recognition and synthesis", aws: "Transcribe / Polly", azure: "Azure AI Speech", gcp: "Speech-to-Text / Text-to-Speech", oci: "Speech" },

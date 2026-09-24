@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Engineering Metrics</title>
-<meta name="description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies.">
+<meta name="description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.">
 <meta property="og:title" content="Engineering Metrics | CTO Toolkit">
-<meta property="og:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average.">
+<meta property="og:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/engineering-metrics/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering Metrics | CTO Toolkit">
+<meta name="twitter:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/engineering-metrics/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -87,8 +94,8 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Metric</th><th>What it measures</th><th>Elite (2024 cluster)</th><th>Low (2024 cluster)</th></tr>
-          <tr><td>Deployment frequency</td><td>How often code reaches production</td><td>On demand, multiple times a day</td><td>Between once per week and once per month</td></tr>
-          <tr><td>Change lead time</td><td>Time from commit to running in production</td><td>Under one day</td><td>Between one week and one month</td></tr>
+          <tr><td>Deployment frequency</td><td>How often code reaches production</td><td>On demand, multiple times a day</td><td>Between once per month and once every six months</td></tr>
+          <tr><td>Change lead time</td><td>Time from commit to running in production</td><td>Under one day</td><td>Between one month and six months</td></tr>
           <tr><td>Change fail rate</td><td>Percentage of deployments requiring immediate intervention</td><td>Around 5 percent</td><td>Around 40 percent</td></tr>
           <tr><td>Failed deployment recovery time</td><td>How long it takes to recover from a failed deployment</td><td>Under one hour</td><td>Between one week and one month</td></tr>
           <tr><td>Deployment rework rate</td><td>Percentage of deployments that are unplanned rework fixing a previous release rather than new feature work</td><td colspan="2">No standardized industry band yet; track your own trend for this one</td></tr>
@@ -102,7 +109,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Classify your own numbers</h3>
-      <p>Enter your metrics and see which band each one falls in against the table above. Anything between the Elite and Low thresholds is reported as Medium here; the 2024 report split that middle into High and Medium clusters. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
+      <p>Enter your metrics and see which band each one falls in against the table above. Elite means daily or more frequent deploys, lead time under a day, change fail rate of 5 percent or less, and recovery under an hour. Low means deploying less than about once a month, lead time over a month, change fail rate of 30 percent or more, or recovery over a week. Anything between the Elite and Low thresholds is reported as Medium here; the 2024 report split that middle into High and Medium clusters. Runs entirely in your browser; nothing is sent anywhere or stored.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -151,8 +158,8 @@
       const rework = parseFloat(document.getElementById('dora-rework').value) || 0;
 
       const bands = {
-        deploy: doraBand(deploy, v => v >= 7, v => v < 1),
-        lead: doraBand(lead, v => v < 24, v => v > ONE_WEEK_HRS),
+        deploy: doraBand(deploy, v => v >= 7, v => v < 12 / 52),
+        lead: doraBand(lead, v => v < 24, v => v > 30 * 24),
         fail: doraBand(fail, v => v <= 5, v => v >= 30),
         recovery: doraBand(recovery, v => v < 1, v => v > ONE_WEEK_HRS),
       };

@@ -7,7 +7,14 @@
 <meta name="description" content="How to stand up a security function from little or nothing, sequenced by what reduces risk first, as distinct from scoring a program that already exists.">
 <meta property="og:title" content="Building a Security Program | CTO Toolkit">
 <meta property="og:description" content="How to stand up a security function from little or nothing, sequenced by what reduces risk first, as distinct from scoring a program that already exists.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/security-program/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Building a Security Program | CTO Toolkit">
+<meta name="twitter:description" content="How to stand up a security function from little or nothing, sequenced by what reduces risk first, as distinct from scoring a program that already exists.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/security-program/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -162,7 +169,7 @@
     <div class="stage-head">
       <span class="stage-num">5</span>
       <h3>Third-party and vendor risk as part of the program</h3>
-      <p>A large share of breaches now originate through a vendor rather than a direct attack on the company's own perimeter. A security program that stops at the company's own systems is scoped to the wrong boundary.</p>
+      <p>Verizon's 2025 Data Breach Investigations Report found a third party involved in 30 percent of breaches, double the year before. A security program that stops at the company's own systems is scoped to the wrong boundary.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -213,7 +220,64 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>What attackers are actually doing</h3>
+      <p>Sequence the program against how breaches happen, not against a framework's table of contents. Figures are from Verizon's 2025 Data Breach Investigations Report, based on more than 12,000 confirmed breaches.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Finding</th><th>What it means for sequencing</th></tr>
+          <tr><td>Credential abuse was the leading initial access vector, at about 22 percent of breaches</td><td>Phishing-resistant MFA and removing standing admin access belong in the first 30 days</td></tr>
+          <tr><td>Exploitation of vulnerabilities was about 20 percent, up roughly a third on the prior year, with edge devices and VPNs heavily targeted</td><td>An enforced patch deadline for known-exploited vulnerabilities on internet-facing systems, measured weekly</td></tr>
+          <tr><td>Third-party involvement doubled to 30 percent</td><td>Vendor inventory and access review before, not after, the certification effort</td></tr>
+          <tr><td>Ransomware was present in 44 percent of breaches, and in the large majority of breaches at smaller organizations</td><td>Offline or immutable backups with a tested restore are foundation-stage work, not resilience polish</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>The first 180 days, sequenced</h3>
+      <p>A concrete plan that follows the stages above. Days are guides; the order matters more than the pace.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Window</th><th>Deliverables</th></tr>
+          <tr><td>Days 0 to 30</td><td>Phishing-resistant MFA for administrators, email, and remote access; standing admin rights removed; asset and SaaS inventory started; endpoint detection deployed; backups verified offline or immutable, with one real restore</td></tr>
+          <tr><td>Days 31 to 90</td><td>Central logging with at least 12 months retention for security-relevant sources; external attack surface scanning; a 14-day deadline for known-exploited vulnerabilities on internet-facing systems; an incident response plan and one tabletop exercise; vendor inventory with data access mapped</td></tr>
+          <tr><td>Days 91 to 180</td><td>Secret scanning, dependency scanning, and static analysis in CI; quarterly access reviews with evidence; phishing simulation used for coaching; a risk register tied to the <a href="../technology-risk-appetite/index.html">risk appetite</a>; a gap assessment against NIST CSF 2.0 or CIS Controls IG1</td></tr>
+          <tr><td>After 180 days</td><td>Certification if customers require it, now documenting controls that already run; specialization of the team as described in section 7</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">10</span>
+      <h3>Frameworks, and what each one is for</h3>
+      <p>Choosing a framework is choosing an audience. Most organizations use one as the internal backbone and map the others to it, as described on <a href="../grc-operating-model/index.html">Governance, Risk &amp; Compliance</a>.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Framework</th><th>What it is</th><th>Use it when</th></tr>
+          <tr><td>NIST Cybersecurity Framework 2.0 (2024)</td><td>Outcome-based framework with six functions; 2.0 added Govern</td><td>You need a program backbone and a common language with the board</td></tr>
+          <tr><td>CIS Critical Security Controls v8.1</td><td>18 controls and 153 safeguards, grouped into three implementation groups; IG1 is essential cyber hygiene</td><td>You need a concrete, prioritized first-year checklist</td></tr>
+          <tr><td>ISO/IEC 27001:2022</td><td>A certifiable information security management system with 93 Annex A controls; 2013-version certificates expired on October 31, 2025</td><td>International or enterprise customers ask for certification</td></tr>
+          <tr><td>SOC 2 (AICPA Trust Services Criteria)</td><td>An auditor's report; Type II covers how controls operated over a period, commonly 6 to 12 months</td><td>US B2B customers ask for an attestation</td></tr>
+          <tr><td>HITRUST CSF</td><td>A healthcare-oriented harmonized framework with e1, i1, and r2 assessment levels</td><td>Health systems or payers are your customers</td></tr>
+          <tr><td>PCI DSS v4.0.1</td><td>Card data security standard; the future-dated requirements became mandatory on March 31, 2025</td><td>You store, process, or transmit card data</td></tr>
+          <tr><td>CMMC 2.0</td><td>US Department of Defense requirement, phased into contracts from November 10, 2025</td><td>You hold defense contracts involving controlled unclassified information</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the program is theater</h3>
@@ -228,7 +292,9 @@
           <li>No one can say when the last access review happened or produce evidence it occurred</li>
           <li>Security funding and headcount decisions are made by the same leader whose other priorities compete directly with security requirements</li>
           <li>Vendor security review happens for large platform contracts and gets skipped for anything signed up with a credit card</li>
-        </ul>
+                  <li>Administrator and email access use SMS or app codes rather than phishing-resistant MFA</li>
+          <li>No written deadline exists for patching known-exploited vulnerabilities on internet-facing systems, or nobody measures it</li>
+</ul>
       </div>
     </div>
   </div>
@@ -236,7 +302,7 @@
 </main>
 
 <footer>
-  Reference only. Security program requirements vary significantly by industry, regulatory exposure, and company scale; adapt sequencing accordingly.
+  Reference only. Breach statistics are from Verizon's 2025 Data Breach Investigations Report; framework details reflect NIST CSF 2.0, CIS Controls v8.1, ISO/IEC 27001:2022, the AICPA Trust Services Criteria, HITRUST CSF, PCI DSS v4.0.1, and the CMMC program as of September 2026. Security program requirements vary by industry, regulatory exposure, and company scale; adapt sequencing accordingly.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

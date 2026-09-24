@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data Strategy</title>
+<meta name="description" content="Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, metadata and lineage, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.">
+<meta property="og:title" content="Data Strategy | CTO Toolkit">
+<meta property="og:description" content="Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, metadata and lineage, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/data-strategy/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Data Strategy | CTO Toolkit">
+<meta name="twitter:description" content="Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, metadata and lineage, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/data-strategy/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -288,7 +299,26 @@
     </div>
   </div>
 
-  <div class="stage-card">
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">12</span>
+      <h3>Standards and open formats worth knowing</h3>
+      <p>The data stack has converged on a few open standards in the last three years. Choosing them lowers switching cost later, which is the build-versus-buy argument applied to formats.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Standard</th><th>What it is</th><th>Why it matters</th></tr>
+          <tr><td>Open table formats: Apache Iceberg, Delta Lake, Apache Hudi</td><td>Table layers over files in object storage that add transactions, schema evolution, and time travel</td><td>The same tables can be read by several engines, so the lakehouse is no longer tied to one vendor's compute</td></tr>
+          <tr><td>Open Data Contract Standard (ODCS), maintained by Bitol under the Linux Foundation</td><td>A YAML standard for data contracts: schema, quality rules, service levels, ownership, and terms</td><td>Makes section 10's contract definition machine-checkable in CI instead of a document nobody reads</td></tr>
+          <tr><td>OpenLineage</td><td>An open specification for emitting lineage events from pipelines and tools</td><td>Lineage collected from many tools into one graph without per-vendor integrations</td></tr>
+          <tr><td>DAMA-DMBOK (DAMA International)</td><td>The reference body of knowledge for data management disciplines</td><td>A shared vocabulary for governance, quality, metadata, and master data roles</td></tr>
+          <tr><td>DCAM (EDM Council)</td><td>A data management capability assessment model</td><td>A way to benchmark maturity that regulators and auditors in financial services recognize</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the data strategy isn't working</h3>
@@ -313,7 +343,7 @@
 </main>
 
 <footer>
-  Reference only. Architectural pattern choice depends on organizational structure and data maturity; treat this as a starting framework rather than a recommendation for your specific environment.
+  Reference only. Architectural pattern choice depends on organizational structure and data maturity; treat this as a starting framework rather than a recommendation for your specific environment. Named standards are current as of September 2026 and listed for orientation, not as endorsements.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 
 </footer>

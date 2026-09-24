@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology Capital Allocation</title>
+<meta name="description" content="The standing discipline of allocating scarce capital across run, grow, and transform, security, technical debt, headcount, vendors, and reserve, and being able to answer what gets cut or funded first without re-deriving the answer from scratch each time.">
+<meta property="og:title" content="Technology Capital Allocation | CTO Toolkit">
+<meta property="og:description" content="The standing discipline of allocating scarce capital across run, grow, and transform, security, technical debt, headcount, vendors, and reserve, and being able to answer what gets cut or funded first without re-deriving the answer from scratch each time.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technology-capital-allocation/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technology Capital Allocation | CTO Toolkit">
+<meta name="twitter:description" content="The standing discipline of allocating scarce capital across run, grow, and transform, security, technical debt, headcount, vendors, and reserve, and being able to answer what gets cut or funded first without re-deriving the answer from scratch each time.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technology-capital-allocation/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -88,8 +99,8 @@
           <tr><td>Transform</td><td>New bets with unresolved uncertainty; the Horizon 3 work from the technology strategy</td></tr>
           <tr><td>Security</td><td>Dedicated investment, evaluated on its own terms rather than folded into run cost or treated as a rounding error</td></tr>
           <tr><td>Technical debt remediation</td><td>A deliberate allocation rather than whatever capacity happens to be left over after everything else is funded</td></tr>
-          <tr><td>Headcount</td><td>People cost, tracked distinctly from tooling and infrastructure spend</td></tr>
-          <tr><td>Vendors</td><td>Licensing and contracted services, reviewed against the criteria in Vendor Evaluation</td></tr>
+          <tr><td>Headcount</td><td>People cost not already attributed to one of the purpose bands above, such as shared management and central functions. Engineers working on a Run system count in Run, not here, so nothing is counted twice</td></tr>
+          <tr><td>Vendors</td><td>Licensing and contracted services not already attributed to a purpose band, such as enterprise agreements shared across teams, reviewed against the criteria in Vendor Evaluation</td></tr>
           <tr><td>Reserve</td><td>Unallocated buffer for the unplanned; a budget with none is a budget that will blow through its total the first time reality doesn't match the plan</td></tr>
         </table>
       </div>
@@ -130,7 +141,7 @@
 <rect x="793.6" y="40" width="66.4" height="70" fill="var(--paper)" stroke="var(--ink-soft)" stroke-width="1.2"/>
 <text x="826.8" y="70" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Reserve</text>
 <text x="826.8" y="88" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">8%</text>
-<text x="30" y="130" text-anchor="start" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Headcount and vendors cut across every band; they are how each band is spent rather than bands of their own. Percentages are placeholders.</text>
+<text x="30" y="130" text-anchor="start" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Most people and vendor cost is how each band is spent, so it belongs inside the band. The Headcount and Vendors lines in the calculator and workbook hold only what cannot be attributed to a band, which keeps the total from counting anything twice. Percentages are placeholders.</text>
 <rect x="30" y="156" width="405" height="94" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
 <text x="46" y="177" text-anchor="start" font-size="10.5" fill="var(--accent)" font-weight="600" letter-spacing="0.05em" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">PROTECTED BEFORE ANY LINE-ITEM REVIEW</text>
 <text x="46" y="197" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Security baseline. Regulatory obligations. The run cost of systems</text>
@@ -155,7 +166,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Run your own allocation</h3>
-      <p>Enter your total budget, current spend, and target percentage for each category. Runs entirely in your browser; nothing is sent anywhere or stored. The downloadable workbook below carries the same logic across seven linked tabs; this is the quick version.</p>
+      <p>Enter your total budget, current spend, and target percentage for each category. Attribute each cost to one line only: people and vendor cost goes in the band it serves, and the Headcount and Vendors lines hold only what is shared or unattributable. Runs entirely in your browser; nothing is sent anywhere or stored. The downloadable workbook below carries the same logic across seven linked tabs; this is the quick version.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">

@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology M&amp;A Integration</title>
+<meta name="description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
+<meta property="og:title" content="Technology M&amp;amp;A Integration | CTO Toolkit">
+<meta property="og:description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technology-ma-integration/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technology M&amp;amp;A Integration | CTO Toolkit">
+<meta name="twitter:description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technology-ma-integration/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -364,7 +375,43 @@
     renderPmiKeyPeople();
   </script>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Before close: clean teams and Day 1 readiness</h3>
+      <p>Most Day 0 problems are decided in the weeks before signing, while the two companies still cannot share competitively sensitive information freely.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Use a clean team, a small group bound by a clean-team agreement and advised by counsel, to review sensitive items such as customer contracts, pricing, and detailed architecture before close. Build the Day 1 plan from its findings: identity bridging, email and collaboration access, finance system cutoffs, and the systems that must not be touched.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Gun-jumping in reverse: teams avoid all joint planning out of caution, then discover on Day 1 that nobody has admin access to the target's identity provider and the only person who does has already resigned.</p>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Transition service agreements (TSAs)</h3>
+      <p>In a carve-out, the buyer usually depends on the seller's systems for months after close. The TSA is where most carve-out cost overruns come from.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>TSA element</th><th>What good looks like</th><th>Common mistake</th></tr>
+          <tr><td>Service schedule</td><td>Every service listed with scope, service levels, and a named owner on each side</td><td>Vague descriptions such as IT support that nobody can hold to a standard</td></tr>
+          <tr><td>Duration</td><td>Sized to the realistic exit plan, commonly 6 to 18 months, with extension terms priced in advance</td><td>A 6-month term for an ERP separation that takes 15</td></tr>
+          <tr><td>Pricing</td><td>Cost-based, with step-ups that reward an early exit</td><td>Flat monthly fees that remove any incentive to move faster</td></tr>
+          <tr><td>Exit plan</td><td>A dated migration plan per service, reviewed monthly by a joint steering group</td><td>Treating the TSA as the plan rather than as the bridge to one</td></tr>
+          <tr><td>Data and security</td><td>Access boundaries, logging, and data segregation defined per service</td><td>Buyer staff left with broad access to the seller's environment for months</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs integration is drifting</h3>
@@ -379,7 +426,8 @@
           <li>Key people from the acquired company have left without the succession plan that was supposed to prevent it</li>
           <li>The acquired company's application portfolio has never been scored on the same terms as the acquirer's own</li>
           <li>The diligence team's findings never made it into the integration plan in any traceable way</li>
-        </ul>
+                  <li>A carve-out closed with TSA services that have no dated exit plan</li>
+</ul>
       </div>
     </div>
   </div>

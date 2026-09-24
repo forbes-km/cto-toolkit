@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CTO Leadership &amp; Succession</title>
+<meta name="description" content="Who runs things if the CTO disappears for ninety days, and more broadly, where institutional knowledge and leadership readiness sit versus where the org chart says they sit.">
+<meta property="og:title" content="CTO Leadership &amp;amp; Succession | CTO Toolkit">
+<meta property="og:description" content="Who runs things if the CTO disappears for ninety days, and more broadly, where institutional knowledge and leadership readiness sit versus where the org chart says they sit.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/cto-succession/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CTO Leadership &amp;amp; Succession | CTO Toolkit">
+<meta name="twitter:description" content="Who runs things if the CTO disappears for ninety days, and more broadly, where institutional knowledge and leadership readiness sit versus where the org chart says they sit.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/cto-succession/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -197,7 +208,55 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Measure key-person concentration from evidence</h3>
+      <p>A bus-factor conversation based on impressions misses the concentrations nobody talks about. These sources show them directly.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Where to look</th><th>What to measure</th><th>A red flag</th></tr>
+          <tr><td>Version control history</td><td>The truck factor: the fewest people whose departure would leave most of a codebase without anyone who has worked in it recently. Avelino and colleagues published a practical method in 2016</td><td>A revenue-critical service where one person authored most recent changes</td></tr>
+          <tr><td>Incident records</td><td>Who commanded each Sev1 and Sev2 over the last year</td><td>One person commanded more than half of major incidents</td></tr>
+          <tr><td>Privileged access</td><td>Holders of root, break-glass, domain registrar, and cloud organization owner credentials</td><td>A single holder, which is a security finding as well as a succession one</td></tr>
+          <tr><td>External relationships</td><td>Who the key customers, vendors, auditors, and board members actually call</td><td>Relationships that exist only through the CTO</td></tr>
+          <tr><td>Runbooks and documentation</td><td>Authorship and last-edit dates of operational documentation</td><td>Critical procedures written by one person and never exercised by anyone else</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>The emergency succession pack</h3>
+      <p>Prepared in advance, held by the CEO and general counsel, reviewed annually. It exists so the first 48 hours of an unplanned absence are execution, not discovery.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <ul><li><b>Interim authority letter.</b> The named interim leader and the scope of decisions they can make, pre-approved by the CEO</li><li><b>Access continuity.</b> How break-glass credentials are recovered, with at least two authorized holders and a tested procedure</li><li><b>In-flight commitments.</b> The top ten commitments with owners and dates: launches, contract renewals, audits, regulatory deadlines</li><li><b>Relationship map.</b> Key customers, vendors, auditors, and board members, with who should contact each and what they need to hear</li><li><b>Top risks.</b> The current top risks from the risk register and their owners</li><li><b>Communication drafts.</b> A holding message for the team, key customers, and the board, framed around continuity</li></ul>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Stretch assignments that actually build readiness</h3>
+      <p>Readiness is demonstrated, not declared. Each capability has an assignment that produces evidence.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Capability</th><th>Stretch assignment</th><th>Evidence of readiness</th></tr>
+          <tr><td>Represent technology to the board</td><td>Present one section at two consecutive board meetings</td><td>Board members ask the successor follow-up questions directly</td></tr>
+          <tr><td>Run a major incident</td><td>Command two Sev1 or Sev2 incidents with the incumbent shadowing, not leading</td><td>Clean timeline, decisive calls, a postmortem the team trusts</td></tr>
+          <tr><td>Own a budget</td><td>Own one portfolio line through a full planning cycle, including the CFO review</td><td>The number held, or the variance was flagged early with a derivation</td></tr>
+          <tr><td>Handle a transaction</td><td>Join the diligence or integration team for one deal</td><td>Findings written up that the deal team acted on</td></tr>
+          <tr><td>Hold external relationships</td><td>Lead an executive briefing with a key customer</td><td>The customer contacts the successor directly afterward</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs succession is assumed rather than planned</h3>
@@ -212,7 +271,9 @@
           <li>The heatmap, if it exists, hasn't been updated since the last reorg</li>
           <li>A single individual's departure would create a gap the organization has no plan for</li>
           <li>The board has never heard the succession plan discussed outside of a departure</li>
-        </ul>
+                  <li>Break-glass or organization-owner credentials have a single holder</li>
+          <li>No emergency succession pack exists, so an unplanned absence starts with a search for passwords and commitments</li>
+</ul>
       </div>
     </div>
   </div>
@@ -220,7 +281,7 @@
 </main>
 
 <footer>
-  Reference only. Succession depth should scale with organizational risk tolerance and the cost of a leadership gap rather than follow a fixed checklist.
+  Reference only. The truck factor method is from Avelino, Passos, Hora, and Valente, A novel approach for estimating truck factors (2016). Succession depth should scale with organizational risk tolerance and the cost of a leadership gap rather than follow a fixed checklist.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

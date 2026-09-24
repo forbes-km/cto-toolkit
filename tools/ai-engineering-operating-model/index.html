@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI and the Engineering Operating Model</title>
+<meta name="description" content="What AI-assisted coding is doing to how engineering work gets done: skill development, code review, and how to measure productivity when the tool itself is part of the output. Distinct from deciding which AI initiatives to build.">
+<meta property="og:title" content="AI and the Engineering Operating Model | CTO Toolkit">
+<meta property="og:description" content="What AI-assisted coding is doing to how engineering work gets done: skill development, code review, and how to measure productivity when the tool itself is part of the output. Distinct from deciding which AI initiatives to build.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/ai-engineering-operating-model/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI and the Engineering Operating Model | CTO Toolkit">
+<meta name="twitter:description" content="What AI-assisted coding is doing to how engineering work gets done: skill development, code review, and how to measure productivity when the tool itself is part of the output. Distinct from deciding which AI initiatives to build.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/ai-engineering-operating-model/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -162,7 +173,85 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>What the evidence says, as of September 2026</h3>
+      <p>The research is mixed in ways that matter. Gains are real on bounded tasks and harder to find on complex, familiar codebases, and quality and security do not improve on their own.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>Finding</th></tr>
+          <tr><td>GitHub controlled experiment (Peng and colleagues, 2023)</td><td>Developers finished a bounded, well-specified task about 55 percent faster with an AI assistant</td></tr>
+          <tr><td>DORA, 2024</td><td>Higher AI adoption was associated with slightly lower delivery throughput and noticeably lower delivery stability</td></tr>
+          <tr><td>DORA, 2025 State of AI-assisted Software Development</td><td>About 90 percent of respondents use AI and over 80 percent report productivity gains; AI adoption was now associated with higher throughput, but instability persisted, and only about a quarter reported high trust in AI output. The report's central finding is that AI amplifies a team's existing strengths and weaknesses</td></tr>
+          <tr><td>METR randomized trial (July 2025)</td><td>Experienced open-source maintainers working in their own large repositories took about 19 percent longer with AI tools, while believing they were faster</td></tr>
+          <tr><td>METR update (February 2026)</td><td>A follow-up could not produce a reliable new estimate because developers increasingly declined to work without AI; the authors think gains have likely grown since early 2025 but could not measure how much</td></tr>
+          <tr><td>Veracode GenAI Code Security reports (2025, spring 2026)</td><td>About 45 percent of AI-generated code samples failed security tests, with no material improvement from newer models; syntax correctness rose while security did not</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>The DORA AI Capabilities Model</h3>
+      <p>DORA's 2025 research identified seven capabilities that determine whether AI helps or hurts. Most are not about AI at all, which is the point.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Capability</th><th>What to do about it</th></tr>
+          <tr><td>A clear, communicated AI stance</td><td>Publish which tools are approved, what data may be used, and what is expected of engineers</td></tr>
+          <tr><td>A healthy data ecosystem</td><td>Quality, accessible internal data, per <a href="../data-strategy/index.html">Data Strategy</a></td></tr>
+          <tr><td>AI-accessible internal data</td><td>Connect assistants to internal documentation, code, and decision records, with access controls</td></tr>
+          <tr><td>Strong version control practices</td><td>Frequent commits, small reviewable changes, and the ability to roll back quickly</td></tr>
+          <tr><td>Working in small batches</td><td>Keep AI-generated changes small enough to review properly</td></tr>
+          <tr><td>A user-centric focus</td><td>Anchor work on user outcomes so faster output goes to the right things</td></tr>
+          <tr><td>A quality internal platform</td><td>Golden paths, fast pipelines, and guardrails, per <a href="../platform-engineering/index.html">Platform Engineering</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>An AI coding policy engineers will actually follow</h3>
+      <p>Short, specific, and enforced by tooling where possible. Anything that relies only on memory will not survive the first deadline.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Topic</th><th>Policy</th></tr>
+          <tr><td>Tools and data</td><td>Only approved tools under enterprise terms that exclude training on your code; no customer data, secrets, or regulated data in prompts to unapproved tools</td></tr>
+          <tr><td>Review</td><td>AI-assisted changes meet the same review bar as any other; very large generated diffs are split before review</td></tr>
+          <tr><td>Security</td><td>Secret scanning, dependency scanning, and static analysis run on every change, because roughly half of generated code fails security checks</td></tr>
+          <tr><td>Licensing</td><td>Use tools with duplicate-code filtering and IP indemnity; flag generated code that reproduces recognizable open-source code</td></tr>
+          <tr><td>Agents</td><td>Coding agents run with least privilege in sandboxed environments, never hold production credentials, and need human approval to merge or deploy</td></tr>
+          <tr><td>Measurement</td><td>Track change failure rate, rework rate, and review time before and after adoption, per <a href="../engineering-metrics/index.html">Engineering Metrics</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>A worked example: the first six months</h3>
+      <p>A 40-engineer product organization adopts AI coding assistants. Figures are illustrative but follow the pattern DORA describes.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Point</th><th>What the numbers showed</th><th>What the team did</th></tr>
+          <tr><td>Baseline</td><td>Change failure rate 12 percent; median review wait 6 hours</td><td>Recorded the baseline before rollout, the step most teams skip</td></tr>
+          <tr><td>Month 3</td><td>Pull requests up 35 percent; review wait up to 9 hours; change failure rate 16 percent</td><td>Capped change size, made security scanning blocking, added a review rotation</td></tr>
+          <tr><td>Month 6</td><td>Change failure rate 11 percent; lead time down about 20 percent from baseline</td><td>Kept the controls; moved freed capacity to the backlog of tests nobody had time to write</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs AI adoption is being measured or managed naively</h3>
@@ -176,7 +265,9 @@
           <li>No deliberate mechanism exists for junior engineers to build skills without AI assistance</li>
           <li>Change failure rate or defect rate hasn't been tracked before and after AI tooling adoption</li>
           <li>Headcount or timeline plans assume a productivity multiplier that was asserted rather than measured</li>
-        </ul>
+                  <li>There is no written AI coding policy, or it exists but nothing in the pipeline enforces it</li>
+          <li>Coding agents run with credentials that can reach production</li>
+</ul>
       </div>
     </div>
   </div>
@@ -184,7 +275,7 @@
 </main>
 
 <footer>
-  Reference only. AI-assisted development tooling and its effects on engineering work are evolving quickly; treat this as a set of questions to keep asking rather than a fixed conclusion.
+  Reference only. Draws on Peng and colleagues (2023), the DORA 2024 and 2025 reports including the DORA AI Capabilities Model, METR's July 2025 study and February 2026 update, and Veracode's GenAI Code Security reports through spring 2026. AI-assisted development is changing quickly; treat this as a set of questions to keep asking rather than a fixed conclusion.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

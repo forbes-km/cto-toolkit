@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agile and SAFe</title>
+<meta name="description" content="What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it becomes its own kind of theater.">
+<meta property="og:title" content="Agile and SAFe | CTO Toolkit">
+<meta property="og:description" content="What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it becomes its own kind of theater.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/agile-and-safe/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agile and SAFe | CTO Toolkit">
+<meta name="twitter:description" content="What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it becomes its own kind of theater.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/agile-and-safe/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -162,7 +173,62 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>The main frameworks, compared plainly</h3>
+      <p>Every framework below solves a real problem. The mistake is choosing one by reputation instead of by the coordination problem you actually have.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Framework</th><th>Scale and shape</th><th>Fits when</th><th>Costs</th></tr>
+          <tr><td>Scrum (Scrum Guide 2020)</td><td>One team of typically ten or fewer, fixed-length sprints</td><td>A single team building one product increment at a time</td><td>Sprint ceremonies; weak on cross-team dependencies</td></tr>
+          <tr><td>Kanban</td><td>Continuous flow with limits on work in progress</td><td>Ops, platform, and support teams with unpredictable arrival of work</td><td>Needs discipline on limits or it becomes a to-do list</td></tr>
+          <tr><td>SAFe 6.0</td><td>Agile Release Trains of about 50 to 125 people in 5 to 12 teams, planning increments of 8 to 12 weeks</td><td>Many teams with dense dependencies toward shared releases</td><td>The heaviest role and ceremony set; easy to over-install</td></tr>
+          <tr><td>LeSS</td><td>Up to about eight teams on one product with one product owner and one backlog; LeSS Huge beyond that</td><td>One large product where splitting ownership would create handoffs</td><td>Demands deep structural change and removal of roles</td></tr>
+          <tr><td>Nexus (Scrum.org)</td><td>Three to nine Scrum teams with an integration team</td><td>Organizations already running Scrum that need light scaling</td><td>Limited guidance beyond integration</td></tr>
+          <tr><td>Team Topologies (Skelton and Pais)</td><td>Not a process: team types and interaction modes that reduce the need for coordination</td><td>Dependency problems are structural and should be designed away</td><td>Requires reorganizing teams, not just adding meetings</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Measure flow and outcomes, not ceremony</h3>
+      <p>What gets reported upward determines what the framework becomes. Report the things agility is supposed to change.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Measure</th><th>Source</th><th>Replaces</th></tr>
+          <tr><td>Deployment frequency, lead time, change failure rate, failed deployment recovery time, rework rate</td><td>DORA metrics, per <a href="../engineering-metrics/index.html">Engineering Metrics</a></td><td>Velocity reported upward as if comparable across teams</td></tr>
+          <tr><td>Flow time, flow load, flow efficiency, and the mix of features, defects, risk, and debt</td><td>The Flow Framework (Mik Kersten, Project to Product, 2018)</td><td>Story points completed</td></tr>
+          <tr><td>Planned versus delivered objectives, with business value assessed after the fact</td><td>SAFe program predictability measure, used honestly</td><td>Ceremony attendance and on-time PI events</td></tr>
+          <tr><td>Customer and business outcomes for shipped work</td><td>Your own product analytics</td><td>Output counts of any kind</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>A worked example: right-sizing PI planning</h3>
+      <p>A nine-team train ran full two-day PI planning every quarter with about 90 people in the room. A dependency map showed the dependencies were real but clustered. Figures are illustrative.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Before</th><th>Change</th><th>After</th></tr>
+          <tr><td>Two days, about 90 people, every quarter: roughly 180 person-days of planning</td><td>Mapped actual cross-team dependencies from the previous two increments</td><td>Two clusters of three and four teams with dense dependencies; two teams nearly independent</td></tr>
+          <tr><td>Program predictability around 70 percent</td><td>Replaced full-train planning with one planning day per cluster, plus a monthly 60-minute dependency review</td><td>About 60 person-days of planning per quarter; predictability unchanged</td></tr>
+          <tr><td>Independent teams sitting through two days of other teams' planning</td><td>The two independent teams moved to their own quarterly planning</td><td>Those teams reported the most improvement in focus time</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs agile or SAFe has become theater</h3>
@@ -176,7 +242,8 @@
           <li>Story points or velocity get reported upward as if comparable across different teams</li>
           <li>SAFe ceremonies are followed without anyone able to name the specific coordination failure each one prevents</li>
           <li>&quot;Being agile&quot; and &quot;following the ceremony calendar&quot; are treated as the same thing by leadership</li>
-        </ul>
+                  <li>The framework was chosen without first mapping which teams actually depend on each other</li>
+</ul>
       </div>
     </div>
   </div>
@@ -184,7 +251,7 @@
 </main>
 
 <footer>
-  Reference only. The right level of process depends on team count, dependency density, and organizational maturity; there is no universally correct amount of ceremony. SAFe is a registered trademark of Scaled Agile, Inc.; the framework summary here is a condensed reading of their published material and the assessment of where it helps or hurts is this site's own view.
+  Reference only. The right level of process depends on team count, dependency density, and organizational maturity; there is no universally correct amount of ceremony. SAFe is a registered trademark of Scaled Agile, Inc.; LeSS, Nexus, Scrum, the Flow Framework, and Team Topologies are the work of their respective authors and organizations. The summaries here are condensed readings of their published material, and the assessment of where each helps or hurts is this site's own view.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

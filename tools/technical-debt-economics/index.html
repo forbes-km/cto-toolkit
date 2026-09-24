@@ -4,16 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technical Debt Economics</title>
-<meta name="description" content="Turning technical debt into three numbers per item (carry cost, risk exposure, remediation cost), a browser calculator that ranks a debt portfolio by return on the remediation dollar and sequences it across years within a budget, where high-ratio debt hides, and the debt-budget pitfall that funds nothing in particular.">
+<meta name="description" content="Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a fixed budget.">
 <meta property="og:title" content="Technical Debt Economics | CTO Toolkit">
-<meta property="og:description" content="Turning technical debt into three numbers per item (carry cost, risk exposure, remediation cost), a browser calculator that ranks a debt portfolio by return on the remediation dollar and sequences it across years within a budget, where high-ratio debt hides, and the debt-budget pitfall that funds nothing in particular.">
+<meta property="og:description" content="Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a fixed budget.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technical-debt-economics/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Technical Debt Economics | CTO Toolkit">
-<meta name="twitter:description" content="Turning technical debt into three numbers per item (carry cost, risk exposure, remediation cost), a browser calculator that ranks a debt portfolio by return on the remediation dollar and sequences it across years within a budget, where high-ratio debt hides, and the debt-budget pitfall that funds nothing in particular.">
+<meta name="twitter:description" content="Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a fixed budget.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technical-debt-economics/index.html">
 <style>
   :root {
     --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
@@ -142,6 +143,7 @@
         <li><div><b>Annual cost of doing nothing</b>Carry cost plus risk exposure, for each item.</div></li>
         <li><div><b>Ratio</b>Annual cost of doing nothing divided by remediation cost. This is the return on the remediation dollar. Items are ranked by it.</div></li>
         <li><div><b>Greedy allocation by year</b>Walk the ranked list. If an item fits in the current year's remaining budget, fund it that year. If it does not fit, carry it to the next year and keep walking so smaller items can use the remaining capacity. Repeat for the horizon.</div></li>
+        <li><div><b>Payback gate</b>An item is only funded in a year where the cost it avoids over the rest of the horizon exceeds its remediation cost. An item that would not pay back even if funded in year one is marked Accept: carry it knowingly, or take it to the capital allocation conversation as an investment in its own right. Items that pay back but do not fit the budget are shown as unfunded, which is a budget question rather than a merit question.</div></li>
         <li><div><b>Carry cost paid meanwhile</b>Every year an item is not yet remediated, its annual cost of doing nothing is paid. The total across the horizon is reported so the sequence can be compared against a different budget.</div></li>
         <li><div><b>What it does not do</b>It does not model dependencies between items, capacity constraints per team, or the option of partial remediation. The private version does; this is the transparent core. A sequencing decision that cannot be explained is one the CFO will not fund twice.</div></li>
       </ol>
@@ -225,7 +227,7 @@
       ['h','c','p','e','rh','rc'].map(function(k){return '<td><input type="number" id="td-'+k+i+'" style="width:88px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>';}).join('');
     tbl.appendChild(tr);
   }
-  function v(id){var e=document.getElementById(id);var x=parseFloat(e.value);return isNaN(x)?0:x;}
+  function v(id){var e=document.getElementById(id);var x=parseFloat(e.value);return (isNaN(x)||x<0)?0:x;}
   function fmt(n){return '$'+Math.round(n).toLocaleString();}
   document.getElementById('td-sample').addEventListener('click',function(){
     sample.forEach(function(s,i){
@@ -245,19 +247,20 @@
       var rh=v('td-rh'+i),rc=v('td-rc'+i);
       if(!name&&rh===0&&rc===0)continue;
       var carry=v('td-h'+i)*12*rate+v('td-c'+i);
-      var risk=(v('td-p'+i)/100)*v('td-e'+i);
+      var risk=(Math.min(100,v('td-p'+i))/100)*v('td-e'+i);
       var rem=rh*rate+rc;
       var nothing=carry+risk;
-      items.push({name:name||('Item '+(i+1)),carry:carry,risk:risk,rem:rem,nothing:nothing,ratio:rem>0?nothing/rem:Infinity,payback:nothing>0?rem/nothing:Infinity,year:null});
+      items.push({name:name||('Item '+(i+1)),carry:carry,risk:risk,rem:rem,nothing:nothing,ratio:rem>0?nothing/rem:Infinity,payback:nothing>0?rem/nothing:Infinity,year:null,accept:false});
     }
     var out=document.getElementById('td-result');
     if(!items.length){out.style.display='block';out.innerHTML='Enter at least one item, or load the sample portfolio.';return;}
     items.sort(function(a,b){return b.ratio-a.ratio;});
+    items.forEach(function(it){if(it.rem>0&&it.nothing*years<=it.rem)it.accept=true;});
     var remaining=[],carried=0;
     for(var y=1;y<=years;y++){
       var cap=budget;
       items.forEach(function(it){
-        if(it.year===null&&it.rem<=cap){it.year=y;cap-=it.rem;}
+        if(it.year===null&&!it.accept&&it.rem<=cap&&(it.rem===0||it.nothing*(years-y+1)>it.rem)){it.year=y;cap-=it.rem;}
       });
       items.forEach(function(it){if(it.year===null||it.year>y)carried+=it.nothing;});
     }
@@ -266,13 +269,14 @@
     var h='<p><b>Annual cost of doing nothing across the portfolio: '+fmt(totalNothing)+'</b> against a one-time remediation cost of '+fmt(totalRem)+'. Cost paid over the '+years+'-year horizon on items not yet remediated: '+fmt(carried)+'.</p>';
     h+='<div style="overflow-x:auto;max-width:100%;"><table class="matrix-table" style="margin-top:8px;"><tr><th>Rank</th><th>Item</th><th>Carry / yr</th><th>Risk / yr</th><th>Do nothing / yr</th><th>Remediate</th><th>Payback</th><th>Fund in</th></tr>';
     items.forEach(function(it,i){
-      var pb=isFinite(it.payback)?(it.payback<1?(Math.round(it.payback*12)+' months'):(it.payback.toFixed(1)+' years')):'n/a';
-      var fy=it.year?('Year '+it.year):'<span style="color:var(--b)">Unfunded in horizon</span>';
+      var pb=isFinite(it.payback)?(it.payback<1?(Math.max(1,Math.round(it.payback*12))+(Math.max(1,Math.round(it.payback*12))===1?' month':' months')):(it.payback.toFixed(1)+' years')):'n/a';
+      var fy=it.year?('Year '+it.year):(it.accept?'<span style="color:var(--ink-soft)">Accept: does not pay back in horizon</span>':'<span style="color:var(--b)">Unfunded in horizon</span>');
       h+='<tr><td>'+(i+1)+'</td><td>'+it.name.replace(/</g,'&lt;')+'</td><td>'+fmt(it.carry)+'</td><td>'+fmt(it.risk)+'</td><td>'+fmt(it.nothing)+'</td><td>'+fmt(it.rem)+'</td><td>'+pb+'</td><td>'+fy+'</td></tr>';
     });
     h+='</table></div>';
-    var unf=items.filter(function(i){return !i.year;});
-    if(unf.length){var un=unf.reduce(function(s,i){return s+i.nothing;},0);h+='<p style="margin-top:10px;">Items unfunded within the horizon carry '+fmt(un)+' per year. That number belongs in the board report as accepted risk, or in the next budget conversation as the case for a larger allocation.</p>';}
+    var unf=items.filter(function(i){return !i.year&&!i.accept;}),acc=items.filter(function(i){return i.accept;});
+    if(unf.length){var un=unf.reduce(function(s,i){return s+i.nothing;},0);h+='<p style="margin-top:10px;">Items that would pay back but did not fit the budget carry '+fmt(un)+' per year. That number belongs in the next budget conversation as the case for a larger allocation.</p>';}
+    if(acc.length){var ac=acc.reduce(function(s,i){return s+i.nothing;},0);h+='<p style="margin-top:10px;">Items marked Accept do not pay back within '+years+' years and carry '+fmt(ac)+' per year. Report them as knowingly accepted cost, or make the case for them as a transform investment with its own business case.</p>';}
     out.style.display='block';out.innerHTML=h;
   });
 })();

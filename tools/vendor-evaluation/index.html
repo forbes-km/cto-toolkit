@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vendor Evaluation</title>
-<meta name="description" content="A preview of the Vendor Evaluation Scorecard: weighted, multi-evaluator scoring across functional fit, security posture, financial stability.">
+<meta name="description" content="A preview of the Vendor Evaluation Scorecard: weighted, multi-evaluator scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost, built to produce a defensible recommendation rather than a gut call.">
 <meta property="og:title" content="Vendor Evaluation | CTO Toolkit">
-<meta property="og:description" content="A preview of the Vendor Evaluation Scorecard: weighted, multi-evaluator scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost.">
+<meta property="og:description" content="A preview of the Vendor Evaluation Scorecard: weighted, multi-evaluator scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost, built to produce a defensible recommendation rather than a gut call.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/vendor-evaluation/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vendor Evaluation | CTO Toolkit">
+<meta name="twitter:description" content="A preview of the Vendor Evaluation Scorecard: weighted, multi-evaluator scoring across functional fit, security posture, financial stability, integration complexity, support, and exit cost, built to produce a defensible recommendation rather than a gut call.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/vendor-evaluation/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -176,6 +183,9 @@
       }
 
       const weakest = breakdown.reduce((a, b) => (b.score < a.score ? b : a));
+      if (weakest.score <= 1 && weighted >= 3.0) {
+        verdict += ' Note: ' + weakest.label.replace('&amp;', '&') + ' scored 1 of 5. A floor-level score on a single dimension is a finding in its own right; resolve it before the weighted average is allowed to carry the decision.';
+      }
 
       const resultEl = document.getElementById('ve-result');
       resultEl.innerHTML =

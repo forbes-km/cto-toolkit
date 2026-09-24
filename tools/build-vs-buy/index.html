@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build vs Buy</title>
-<meta name="description" content="The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often.">
+<meta name="description" content="The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often, and the maintenance cost that rarely makes it into the initial proposal.">
 <meta property="og:title" content="Build vs Buy | CTO Toolkit">
 <meta property="og:description" content="The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often, and the maintenance cost that rarely makes it into the initial proposal.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/build-vs-buy/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build vs Buy | CTO Toolkit">
+<meta name="twitter:description" content="The criteria that decide a build-versus-buy debate, the differentiation test people misapply most often, and the maintenance cost that rarely makes it into the initial proposal.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/build-vs-buy/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -217,7 +224,7 @@
         <p>Security patching indefinitely, keeping pace with a changing regulatory or integration landscape, the bus-factor risk when the one engineer who deeply understands it leaves, and the opportunity cost of the team's attention being split across build-and-maintain instead of focused on the differentiator.</p>
       </div>
     </div>
-    <div class="same-note">A rough rule of thumb worth stress-testing against your own data: total five-year cost of ownership for a build is commonly two to four times the initial build estimate once maintenance, incident response, and opportunity cost are included.</div>
+    <div class="same-note">Maintenance is the dominant cost of owned software. The research summarized by Robert Glass in Facts and Fallacies of Software Engineering puts it at 40 to 80 percent of lifecycle cost, around 60 percent on average. A build proposal whose five-year view shows maintenance as a small line has left out most of the cost; the worked example below shows the effect.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
@@ -272,7 +279,47 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>A worked five-year cost of ownership</h3>
+      <p>A customer notification platform: email, SMS, and in-app messages with templates, preferences, and delivery tracking. Figures are illustrative, in thousands of dollars, loaded engineer cost of $200K a year.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Cost line</th><th>Build</th><th>Buy</th><th>Extend (platform plus thin custom layer)</th></tr>
+          <tr><td>Initial</td><td>900: six engineers for nine months</td><td>150: implementation and integration</td><td>250: platform setup plus a custom preference engine</td></tr>
+          <tr><td>Licensing over five years</td><td>None</td><td>1,035: $180K a year rising 7 percent annually</td><td>690: $120K a year rising 7 percent annually</td></tr>
+          <tr><td>People over five years</td><td>2,500: 2.5 engineers maintaining, patching, on call</td><td>500: half an engineer on integration</td><td>1,000: one engineer on the custom layer</td></tr>
+          <tr><td>Infrastructure and compliance</td><td>500</td><td>Included</td><td>Included</td></tr>
+          <tr><td>Five-year total</td><td>3,900</td><td>1,685</td><td>1,940</td></tr>
+          <tr><td>When it wins</td><td>Only if notifications are a differentiator customers pay for</td><td>The default for undifferentiated capability</td><td>When one narrow piece, here the preference engine, is genuinely differentiating</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Exit terms to negotiate before signing</h3>
+      <p>The cost of leaving is set at signature, when you have the most leverage and the least motivation to think about it. See <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a> for the full clause set.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Term</th><th>What to ask for</th></tr>
+          <tr><td>Data export</td><td>Complete export in a documented, machine-readable format, on request and at termination, at no additional fee</td></tr>
+          <tr><td>Transition assistance</td><td>A defined period after termination, commonly 30 to 90 days, with continued access and support at existing rates</td></tr>
+          <tr><td>Renewal price protection</td><td>A cap on renewal increases, tied to an index or a fixed percentage</td></tr>
+          <tr><td>Product end of life</td><td>Written notice well in advance, 12 months is common, if the product or a feature you depend on is discontinued</td></tr>
+          <tr><td>Change of control</td><td>The right to terminate or renegotiate if the vendor is acquired</td></tr>
+          <tr><td>Escrow</td><td>Source code escrow for self-hosted software that is critical to operations</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the decision wasn't tested</h3>
@@ -286,7 +333,8 @@
           <li>The partner-or-extend middle option was never evaluated, only a binary build-or-buy framing</li>
           <li>No plan exists for reversing the decision later if the underlying assumption turns out wrong</li>
           <li>Vendor concentration across other decisions wasn't considered, only this one decision's lock-in risk in isolation</li>
-        </ul>
+                  <li>The buy option was evaluated without negotiating exit terms: data export, transition assistance, and renewal caps</li>
+</ul>
       </div>
     </div>
   </div>
@@ -294,7 +342,7 @@
 </main>
 
 <footer>
-  Reference only. Apply the criteria against your own cost and capability data rather than the illustrative numbers on this page.
+  Reference only. The maintenance range is from Robert Glass, Facts and Fallacies of Software Engineering (2002), summarizing earlier studies. Apply the criteria against your own cost and capability data rather than the illustrative numbers on this page.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

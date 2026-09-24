@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Engineering Culture</title>
+<meta name="description" content="What shapes how an engineering organization behaves day to day, beyond org charts and values decks. The thing every other page under building the organization quietly assumes is healthy underneath it.">
+<meta property="og:title" content="Engineering Culture | CTO Toolkit">
+<meta property="og:description" content="What shapes how an engineering organization behaves day to day, beyond org charts and values decks. The thing every other page under building the organization quietly assumes is healthy underneath it.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/engineering-culture/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering Culture | CTO Toolkit">
+<meta name="twitter:description" content="What shapes how an engineering organization behaves day to day, beyond org charts and values decks. The thing every other page under building the organization quietly assumes is healthy underneath it.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/engineering-culture/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -212,7 +223,54 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>What the research actually says</h3>
+      <p>Culture is one of the few areas where the evidence is consistent across many years of studies. Leaning on it moves the conversation away from opinion.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>Finding worth using</th></tr>
+          <tr><td>Ron Westrum's typology of organizational cultures (2004)</td><td>Organizations fall into pathological, bureaucratic, or generative patterns, distinguished mainly by how information flows and how messengers are treated</td></tr>
+          <tr><td>DORA research program (Google Cloud, annual since 2014)</td><td>Generative culture, in Westrum's sense, repeatedly predicts better software delivery and organizational performance. The 2025 report found AI amplifies whatever culture and practices a team already has</td></tr>
+          <tr><td>Amy Edmondson on psychological safety (1999 onward)</td><td>Teams that feel safe to raise problems report more errors early and learn faster, which looks worse on a dashboard in the short run and better in outcomes</td></tr>
+          <tr><td>Google's Project Aristotle (2015 to 2016)</td><td>Psychological safety was the strongest of the factors that distinguished effective teams, ahead of team composition</td></tr>
+          <tr><td>SPACE framework (Forsgren, Storey, and others, 2021)</td><td>Productivity has several dimensions, including satisfaction and wellbeing; measuring output alone misreads it</td></tr>
+          <tr><td>DevEx research (Noda, Storey, Forsgren, Greiler, 2023)</td><td>Developer experience comes down to three things leaders can change: fast feedback loops, manageable cognitive load, and protected flow time</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Measuring it: a short team-level pulse</h3>
+      <p>A small, repeatable instrument beats an annual engagement survey for spotting drift. Run it quarterly at team level, report trends, and never tie it to an individual manager's rating.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>Ask each engineer to rate agreement from 1 to 7 with six statements built on Westrum's dimensions, paraphrased here:</p><ul><li>People on my team actively seek out the information they need, and get it</li><li>People who bring bad news or raise problems are not punished for it</li><li>Responsibilities are shared rather than pushed onto others</li><li>Working across team boundaries is encouraged</li><li>When something fails, the response is inquiry into the system, not a search for someone to blame</li><li>New ideas are welcomed, including from junior people</li></ul><p>Add two DevEx items, how often work is blocked waiting on someone else and how often the engineer gets two uninterrupted hours, and pair the results with regretted attrition and internal referral rates. The single most useful reading is the item that moved most since last quarter, not the average.</p>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">10</span>
+      <h3>A worked example: reading the pulse after a reorg</h3>
+      <p>Three teams, the same quarter, the same reorg. The averages look similar; the pattern underneath does not.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Team</th><th>Average before</th><th>Average after</th><th>Largest single change</th><th>What it pointed to</th></tr>
+          <tr><td>Payments</td><td>5.6</td><td>5.4</td><td>Cross-team work, down 0.4</td><td>Normal adjustment to a new neighbor team; no action beyond a joint planning session</td></tr>
+          <tr><td>Platform</td><td>5.8</td><td>4.1</td><td>Messengers not punished, down 2.3</td><td>A new manager had criticized an engineer in public for flagging a launch risk. Addressed directly with the manager within the week</td></tr>
+          <tr><td>Mobile</td><td>4.9</td><td>5.3</td><td>New ideas welcomed, up 1.1</td><td>The reorg removed an approval layer; worth protecting in the next org change</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs culture is deteriorating beneath a healthy-looking surface</h3>
@@ -227,7 +285,8 @@
           <li>Blameless postmortems exist as a stated policy, but the last serious incident produced visible blame anyway</li>
           <li>Pulse survey trends are flat or declining while leadership continues describing culture as strong in the same conversation</li>
           <li>Someone's individual work baseline has shifted noticeably and it's being treated as a performance issue rather than investigated as a possible culture symptom</li>
-        </ul>
+                  <li>Culture is measured only by an annual engagement score, never by team-level items on information flow and psychological safety</li>
+</ul>
       </div>
     </div>
   </div>
@@ -235,7 +294,7 @@
 </main>
 
 <footer>
-  Reference only. Culture work is slow, and none of this substitutes for leadership behavior sustained over time; a framework can describe the pattern, and only people can create the discipline.
+  Reference only. Draws on Ron Westrum's typology of organizational cultures, the DORA research program including the 2025 State of AI-assisted Software Development report, Amy Edmondson's work on psychological safety, Google's Project Aristotle, the SPACE framework, and published DevEx research. Pulse items are paraphrased, not the original survey wording. Culture work is slow, and none of this substitutes for leadership behavior sustained over time.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

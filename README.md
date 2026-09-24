@@ -1,6 +1,6 @@
 # CTO Toolkit
 
-A reference library for CTOs, enterprise architects, and other technology leaders: 68 pages of frameworks, decision guides, in-browser calculators, and downloadable templates, built from 20+ years of running and assessing enterprise technology platforms.
+A reference library for CTOs, enterprise architects, and other technology leaders: 71 pages of frameworks, decision guides, in-browser calculators, and downloadable templates, built from 20+ years of running and assessing enterprise technology platforms.
 
 Live site: https://forbes-km.github.io/cto-toolkit/
 

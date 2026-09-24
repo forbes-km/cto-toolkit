@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Architecture Review Board</title>
+<meta name="description" content="How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta property="og:title" content="Architecture Review Board | CTO Toolkit">
+<meta property="og:description" content="How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/architecture-review-board/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Architecture Review Board | CTO Toolkit">
+<meta name="twitter:description" content="How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/architecture-review-board/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -181,7 +192,82 @@
     <div class="same-note">The board and the tournament are the same room used two different ways: one evaluates evidence against a decision that needs to be made, the other surfaces ideas that don't have evidence yet. Keeping both on the same cadence, in the same room, with the same people, is what makes the salon slot feel like a natural extension rather than a separate initiative competing for calendar space.</div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Review tiers and turnaround commitments</h3>
+      <p>A board earns trust by being fast on the routine and thorough on the consequential. Publishing turnaround commitments is what stops teams from routing around it. Times are suggested starting points.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Tier</th><th>Triggers</th><th>Process</th><th>Turnaround</th></tr>
+          <tr><td>0. Self-serve</td><td>Uses a pattern the board already approved</td><td>Team writes a short ADR referencing the approved pattern; no meeting</td><td>None; the ADR is the record</td></tr>
+          <tr><td>1. Async review</td><td>New dependency, moderate cross-team impact, reversible within a quarter</td><td>Written ADR reviewed by two board members in the document itself</td><td>Three business days</td></tr>
+          <tr><td>2. Full board</td><td>New system of record, shared platform, principle deviation, or hard-to-reverse spend</td><td>Live session with evidence: prototype, load data, cost model, alternatives rejected</td><td>Scheduled within ten business days of request</td></tr>
+          <tr><td>Emergency</td><td>A production incident forced an unreviewed change</td><td>Change ships; the ADR and review follow</td><td>Retrospective review within two weeks</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Standards and practices worth borrowing</h3>
+      <p>Most of what makes a board work is already written down elsewhere. Borrow deliberately rather than inventing a process.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>What it contributes</th></tr>
+          <tr><td>Architecture Decision Records (Michael Nygard, 2011)</td><td>The short, immutable record of context, decision, and consequences that every review should produce</td></tr>
+          <tr><td>ISO/IEC/IEEE 42010:2022</td><td>A precise vocabulary for architecture descriptions: stakeholders, their concerns, and the viewpoints that address them. Useful for deciding what a proposal must show</td></tr>
+          <tr><td>C4 model (Simon Brown)</td><td>Four levels of diagram, context, containers, components, code, so reviewers see the right level of detail instead of one crowded picture</td></tr>
+          <tr><td>arc42</td><td>A free, widely used template for documenting a system; a good default for the evidence pack on tier 2 reviews</td></tr>
+          <tr><td>Architecture fitness functions (Ford, Parsons, Kua, Sadalage, Building Evolutionary Architectures, 2nd ed., 2022)</td><td>Turning an architecture decision into an automated check so it stays true after the meeting</td></tr>
+          <tr><td>The architecture advice process (Andrew Harmel-Law, Facilitating Software Architecture, 2024)</td><td>A decentralized alternative in which teams decide after seeking advice, with the board acting as an advisory forum and keeper of the decision log</td></tr>
+          <tr><td>TOGAF Standard, 10th Edition</td><td>The formal Architecture Board and compliance review concepts, useful for regulated enterprises that need an auditable governance trail</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Fitness functions: keep the decision true after the meeting</h3>
+      <p>A decision that exists only in an ADR decays as soon as the next deadline arrives. Encode the important ones.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>For each tier 2 decision, ask what automated check would fail if the decision were violated, then put it in the pipeline. Examples:</p><ul><li>Dependency rules that stop one domain calling another's database directly</li><li>A latency budget checked in a performance test</li><li>A cost ceiling alarm on a new service</li><li>A policy-as-code rule that blocks public storage buckets</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Treating the board's approval as the control. Six months later the system has drifted, nobody noticed, and the next review argues about a design that no longer exists in production.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Measure the board itself</h3>
+      <p>A board that never measures its own performance cannot tell whether it adds value or delay. These five numbers, reviewed quarterly, are enough.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Metric</th><th>What healthy looks like</th><th>What it warns about</th></tr>
+          <tr><td>Median days from request to decision</td><td>Within the published turnaround for each tier</td><td>Rising numbers mean teams will start routing around the board</td></tr>
+          <tr><td>Share of proposals changed by review</td><td>Somewhere between a fifth and a half</td><td>Near zero is a rubber stamp; very high means teams arrive unprepared or the principles are unclear</td></tr>
+          <tr><td>Decisions with a written ADR</td><td>All tier 1 and tier 2 decisions</td><td>Anything lower means the board's reasoning is lost when members rotate</td></tr>
+          <tr><td>Decisions revisited after 6 to 12 months</td><td>A sample reviewed every quarter, with a verdict on whether each held up</td><td>No review of outcomes means the board never learns whether its judgment is good</td></tr>
+          <tr><td>Bypass rate</td><td>Few or no systems in production that should have come to the board and did not</td><td>A high bypass rate is the clearest sign the board is seen as an obstacle</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the board has become theater</h3>
@@ -195,7 +281,9 @@
           <li>Board membership hasn't rotated in over a year</li>
           <li>Decisions aren't captured anywhere durable, no ADR, no written record, once the meeting ends</li>
           <li>Teams prepare a specific &quot;board-ready&quot; version of their architecture that differs from what's running in production</li>
-        </ul>
+                  <li>Nobody can say the median time from review request to decision</li>
+          <li>Important decisions exist only in ADRs, with no automated check to catch drift</li>
+</ul>
       </div>
     </div>
   </div>
@@ -203,7 +291,7 @@
 </main>
 
 <footer>
-  Reference only. Board size, cadence, and authority should reflect your organization's scale and decision-rights model rather than a fixed template.
+  Reference only. Draws on ADRs as described by Michael Nygard, ISO/IEC/IEEE 42010:2022, the C4 model, arc42, fitness functions from Building Evolutionary Architectures (2nd ed., 2022), and the architecture advice process described by Andrew Harmel-Law. Board size, tiers, cadence, and turnaround should reflect your organization's scale and decision-rights model.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

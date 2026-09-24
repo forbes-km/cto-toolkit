@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Portfolio Management</title>
-<meta name="description" content="Which AI initiatives should get built, scored and classified with the same discipline applied to the rest of the application estate.">
+<meta name="description" content="Which AI initiatives should get built, scored and classified with the same discipline applied to the rest of the application estate, rather than funded by enthusiasm or the fear of being left behind.">
 <meta property="og:title" content="AI Portfolio Management | CTO Toolkit">
 <meta property="og:description" content="Which AI initiatives should get built, scored and classified with the same discipline applied to the rest of the application estate, rather than funded by enthusiasm or the fear of being left behind.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/ai-portfolio-management/index.html">
 <meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Portfolio Management | CTO Toolkit">
+<meta name="twitter:description" content="Which AI initiatives should get built, scored and classified with the same discipline applied to the rest of the application estate, rather than funded by enthusiasm or the fear of being left behind.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/ai-portfolio-management/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -259,7 +266,62 @@
     });
   </script>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Stage gates with evidence, not enthusiasm</h3>
+      <p>Each gate asks for evidence that did not exist at the previous one. Durations are typical, not rules.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Gate</th><th>Evidence required to pass</th><th>Typical kill signal</th></tr>
+          <tr><td>1. Feasibility spike, 2 to 6 weeks</td><td>An offline evaluation on real, representative data with a written rubric; confirmed rights to use the data; a rough cost per task</td><td>Quality cannot beat the current manual baseline on the evaluation set</td></tr>
+          <tr><td>2. Pilot, 8 to 12 weeks</td><td>Real users on real work; measured outcome against a baseline; cost per successful task including human review; a named business owner</td><td>Users route around it, or the review burden eats the time saved</td></tr>
+          <tr><td>3. Scale</td><td>Service levels, monitoring for quality drift, a human escalation path, incident runbook, unit economics inside target</td><td>Cost per task grows with volume instead of falling</td></tr>
+          <tr><td>4. Operate and revisit</td><td>Quarterly re-scoring against the same nine dimensions; model and vendor changes re-evaluated</td><td>A cheaper or better option makes the build redundant</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Rules and standards that change the score</h3>
+      <p>The Risk dimension is where most scoring goes wrong, because the rules moved quickly. Status as of September 2026.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>What applies</th><th>Effect on the score</th></tr>
+          <tr><td>EU AI Act</td><td>General-purpose AI obligations have applied since August 2, 2025. The AI Omnibus, in force since July 27, 2026, moved obligations for high-risk systems in Annex III, such as hiring and credit, to December 2, 2027, and for AI in regulated products to August 2, 2028</td><td>Deferred, not removed; a high-risk use case still needs the conformity work planned into its cost</td></tr>
+          <tr><td>Colorado SB 26-189</td><td>Replaced the 2024 Colorado AI Act; from January 1, 2027 it requires notice, adverse-decision explanations, appeal, and human review for automated decisions in consequential areas including employment</td><td>Raises operating cost for AI in hiring, lending, housing, insurance, and similar decisions</td></tr>
+          <tr><td>NYC Local Law 144</td><td>Independent bias audits and candidate notice for automated employment decision tools used in New York City</td><td>Adds an annual audit cost to any hiring tool in scope</td></tr>
+          <tr><td>NIST AI Risk Management Framework and its Generative AI Profile (NIST AI 600-1, 2024)</td><td>A voluntary structure for mapping, measuring, and managing AI risk</td><td>A ready-made checklist for the Risk dimension</td></tr>
+          <tr><td>ISO/IEC 42001:2023</td><td>A certifiable AI management system standard</td><td>Increasingly asked for by enterprise buyers of AI products</td></tr>
+          <tr><td>Healthcare: FDA guidance on predetermined change control plans for AI-enabled device software (final, December 2024) and ONC's HTI-1 rule on decision support transparency</td><td>Rules for how AI in clinical and medical-device settings may change after clearance and what must be disclosed to users</td><td>Clinical-facing initiatives need regulatory review as a gate, not a later step</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Measure value, not usage</h3>
+      <p>The most common way AI portfolios lie to themselves is by reporting activity as if it were outcome.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to measure</span>
+        <p>Outcome per task against the pre-AI baseline, such as minutes per claim, first-contact resolution, or error rate, and the fully loaded cost per successful task, including human review, retries, and model spend. Report both monthly for anything past gate 2.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What misleads</span>
+        <p>Seats licensed, prompts sent, or share of employees who tried the tool. All of them rise while the outcome stays flat, and they are what most dashboards show by default.</p>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs AI portfolio governance isn't real</h3>
@@ -273,7 +335,9 @@
           <li>The same initiative has been described as close to proving itself for well over a year</li>
           <li>No one can name what's currently in Watch status or when it's due for reassessment</li>
           <li>AI investment decisions bypass the standard capital allocation process applied to everything else</li>
-        </ul>
+                  <li>Initiatives pass from pilot to scale without a measured outcome against a pre-AI baseline</li>
+          <li>The Risk score was set before checking which rules apply to the use case, including the revised EU AI Act dates and US state laws</li>
+</ul>
       </div>
     </div>
   </div>
@@ -281,7 +345,7 @@
 </main>
 
 <footer>
-  Reference only. Scoring weights should reflect your organization's risk tolerance and strategic priorities rather than a fixed formula.
+  Reference only. Regulatory dates reflect the EU AI Act as amended by the AI Omnibus (in force July 27, 2026), Colorado SB 26-189, and NYC Local Law 144 as of September 2026; verify against primary sources before relying on them. Scoring weights should reflect your organization's risk tolerance and strategic priorities rather than a fixed formula.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

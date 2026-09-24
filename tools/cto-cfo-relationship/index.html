@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Working with the CFO</title>
+<meta name="description" content="The relationship where every capital allocation debate gets litigated. Distinct from the CEO relationship in what it requires: the CEO extends trust to judgment, while the CFO needs numbers that hold up under scrutiny.">
+<meta property="og:title" content="Working with the CFO | CTO Toolkit">
+<meta property="og:description" content="The relationship where every capital allocation debate gets litigated. Distinct from the CEO relationship in what it requires: the CEO extends trust to judgment, while the CFO needs numbers that hold up under scrutiny.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/cto-cfo-relationship/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Working with the CFO | CTO Toolkit">
+<meta name="twitter:description" content="The relationship where every capital allocation debate gets litigated. Distinct from the CEO relationship in what it requires: the CEO extends trust to judgment, while the CFO needs numbers that hold up under scrutiny.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/cto-cfo-relationship/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -152,12 +163,84 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>Software development costs that qualify for capitalization under applicable accounting standards, versus costs that must be expensed immediately, materially change how a project's cost looks in a given quarter, independent of the project's actual value. Understanding this distinction, even at a high level, prevents a CTO from being caught off guard when a CFO cares more about the timing of a cost than its total, or pushes back on a schedule change that seems purely technical but carries a real capitalization consequence on the books.</p>
+        <p>Software development costs that qualify for capitalization, versus costs that must be expensed immediately, materially change how a project's cost looks in a given quarter, independent of the project's actual value. Understanding this distinction, even at a high level, prevents a CTO from being caught off guard when a CFO cares more about the timing of a cost than its total, or pushes back on a schedule change that seems purely technical but carries a real capitalization consequence on the books. The rules themselves changed in 2025 on both the book and the tax side; the next section sets out what applies now.</p>
       </div>
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>The rules that change how a project looks, as of September 2026</h3>
+      <p>Book accounting and tax treatment are separate systems with separate rules. A CTO does not need to apply them, but does need to know which one a CFO is talking about.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Area</th><th>Current rule</th><th>Why the CTO should care</th></tr>
+          <tr><td>Internal-use software, US GAAP (ASC 350-40)</td><td>ASU 2025-06, issued September 2025, removes the old preliminary, development, and post-implementation stages. Capitalization starts once management has authorized and committed funding and completion is probable, and cannot start while significant development uncertainty remains. Effective for annual periods beginning after December 15, 2027; early adoption is permitted</td><td>Agile teams no longer have to force work into waterfall stages to support capitalization, but novel or unproven work stays expensed until the uncertainty is resolved through coding and testing</td></tr>
+          <tr><td>Software sold or licensed to customers (ASC 985-20)</td><td>Costs are capitalized only after technological feasibility is established, which in practice leaves most development expensed</td><td>Hosted SaaS generally follows the internal-use guidance instead; confirm with finance which model applies to your product</td></tr>
+          <tr><td>Implementing SaaS you buy (ASU 2018-15)</td><td>Implementation costs of a cloud computing arrangement are capitalized and amortized over the hosting term, presented with the hosting fees as operating expense</td><td>A large SaaS implementation can be spread over the contract rather than hitting one quarter, which changes how a CFO views the timing</td></tr>
+          <tr><td>IFRS (IAS 38)</td><td>Research is expensed; development is capitalized only when six criteria are met, including technical feasibility and a reliable measure of cost. Configuration and customization of SaaS is generally expensed unless it creates a separate asset</td><td>Multinationals may report the same project differently under IFRS and US GAAP</td></tr>
+          <tr><td>US tax: research and experimental costs (Sections 174 and 174A)</td><td>The 2025 budget reconciliation law restored immediate deduction of domestic research costs, which include software development, for tax years beginning after December 31, 2024. Foreign research is still amortized over 15 years. Smaller businesses, with average gross receipts of $31M or less, could elect to apply it retroactively to 2022 through 2024</td><td>Where the engineering work is done now changes the tax cost: domestic development is deductible at once, offshore development is not</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>What to do with that as a CTO</h3>
+      <p>The practical consequences sit in how engineering tracks its work, not in the accounting itself.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Track time by project or initiative in the tool the team already uses, so finance can support capitalization and tax positions without a quarterly scramble. Tell the CFO early when a capitalized project is likely to be cancelled or fundamentally rescoped, because that can mean an impairment charge that has to be planned for, not discovered.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>A capitalized project is quietly abandoned, and finance learns about it at quarter close. The write-off is a surprise, the CFO concludes engineering does not understand the numbers, and every future capitalization request gets more scrutiny.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>A worked example: defending a cloud forecast</h3>
+      <p>The derivation made visible, so the disagreement lands on one assumption instead of on the total.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Line</th><th>Figure</th><th>Derivation</th></tr>
+          <tr><td>Current run rate</td><td>$4.20M a year</td><td>200M transactions a year at $0.021 each</td></tr>
+          <tr><td>Volume next year</td><td>236M transactions</td><td>Sales plan of 18 percent transaction growth, the assumption finance owns</td></tr>
+          <tr><td>Unit cost next year</td><td>$0.018</td><td>Commitment discounts on the stable baseline plus rightsizing already identified</td></tr>
+          <tr><td>Forecast</td><td>$4.25M</td><td>236M at $0.018; without the unit-cost work it would be $4.96M</td></tr>
+          <tr><td>Sensitivity</td><td>About $180K per 5 points of growth</td><td>The one number to hand the CFO: if the growth assumption moves, this is how the forecast moves with it</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Unit economics as the shared language</h3>
+      <p>The single change that most improves a CTO-CFO relationship is agreeing one or two unit costs and reporting them every month.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Pick a unit the business already counts: cost per transaction, per active customer, per claim processed, per patient encounter. Report infrastructure and tooling cost against it monthly. The FinOps Framework treats this as a core capability because it turns a growing bill into a question about efficiency rather than a question about spend.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The failure mode</span>
+        <p>Reporting total cloud spend alone. Total spend rises with success, so the CFO sees a number going up and the CTO argues it is fine, and neither can show who is right without a unit to divide by.</p>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the relationship is unhealthy</h3>
@@ -171,7 +254,9 @@
           <li>The CFO's first exposure to a priority ranking happens in a contentious budget meeting rather than before it</li>
           <li>The CTO can't explain, at a basic level, why a project's cost is phased the way it is on the books</li>
           <li>Disagreements about a number become personal rather than staying focused on a specific stated assumption</li>
-        </ul>
+                  <li>The CTO cannot say which current projects are capitalized or what happens to the books if one is cancelled</li>
+          <li>No unit cost has been agreed with finance, so every budget discussion is about total spend</li>
+</ul>
       </div>
     </div>
   </div>
@@ -179,7 +264,7 @@
 </main>
 
 <footer>
-  Reference only. Accounting treatment and capitalization rules vary by jurisdiction and applicable standard; confirm specifics with finance.
+  Reference only; not accounting or tax advice. Summarizes FASB ASU 2025-06 and ASU 2018-15, ASC 985-20, IAS 38, and the 2025 changes to Internal Revenue Code Sections 174 and 174A as in force in September 2026. Treatment depends on jurisdiction, entity type, and facts; confirm specifics with your finance and tax advisors.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 

@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Working with the CEO</title>
+<meta name="description" content="The relationship that determines whether everything else in this toolkit gets funded, listened to, or quietly ignored. The single most consequential relationship a CTO manages, and the one least often discussed explicitly.">
+<meta property="og:title" content="Working with the CEO | CTO Toolkit">
+<meta property="og:description" content="The relationship that determines whether everything else in this toolkit gets funded, listened to, or quietly ignored. The single most consequential relationship a CTO manages, and the one least often discussed explicitly.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/ceo-cto-relationship/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Working with the CEO | CTO Toolkit">
+<meta name="twitter:description" content="The relationship that determines whether everything else in this toolkit gets funded, listened to, or quietly ignored. The single most consequential relationship a CTO manages, and the one least often discussed explicitly.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/ceo-cto-relationship/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -208,7 +219,53 @@
     <div class="same-note">The full decision-rights model this escalation guidance points to lives on its own page: <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>.</div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>The monthly one-page technology narrative</h3>
+      <p>The single artifact that does most of the trust-building work, because it replaces ad hoc status with a predictable, readable account.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>One page, written, sent before the monthly one-on-one, no acronyms. Five sections, always in the same order:</p><ul><li><b>What changed in the business that affects technology.</b> A new market, a lost deal, a regulator's letter, and what it means for the plan</li><li><b>Three commitments, on or off track.</b> Each with a date and a number, and for anything off track the recovery option already worked out</li><li><b>Risk movement.</b> What moved relative to <a href="../technology-risk-appetite/index.html">the stated risk appetite</a>, in either direction</li><li><b>Decisions needed from the CEO.</b> Two at most, each with a recommendation and the tradeoff stated plainly</li><li><b>What I am not worried about, and why.</b> The section CEOs value most, because it tells them where they can stop spending attention</li></ul><p>The format matters less than the consistency. After three months the CEO knows where to look, and a surprise is rare enough that when it does come, it is taken seriously.</p>
+    </div></div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Translate the CEO's metrics into technology levers</h3>
+      <p>A CEO evaluates technology through a handful of business numbers. Knowing which technology levers move each one is most of what translation means in practice.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>What the CEO tracks</th><th>Technology lever</th><th>Leading indicator to report</th></tr>
+          <tr><td>Revenue growth and net revenue retention</td><td>Roadmap delivery, availability of revenue-critical paths</td><td>Committed roadmap items shipped on time; customer-facing incident minutes</td></tr>
+          <tr><td>Gross margin</td><td>Cloud and hosting unit cost, support automation</td><td>Infrastructure cost per transaction or per customer, trended monthly</td></tr>
+          <tr><td>Enterprise sales cycle</td><td>Security posture and evidence</td><td>Security questionnaire turnaround in days; current SOC 2, ISO 27001, or HITRUST status</td></tr>
+          <tr><td>Operating expense</td><td>Headcount mix, vendor portfolio, commitment discounts</td><td>Engineering cost as a share of revenue; vendor spend under active management</td></tr>
+          <tr><td>Exit or financing readiness</td><td>Diligence hygiene</td><td>Open diligence red flags: IP assignments, key-person concentration, unremediated critical findings</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">10</span>
+      <h3>The first 90 days with a new CEO</h3>
+      <p>A new CEO, or a new CTO joining an existing CEO, resets the relationship to zero. The first quarter decides whether it compounds or stalls.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Window</th><th>What to do</th><th>What to avoid</th></tr>
+          <tr><td>Weeks 1 to 2</td><td>Learn their top three priorities, how they like to receive information, and what they were told about technology before arriving</td><td>Presenting the technology strategy before understanding theirs</td></tr>
+          <tr><td>Weeks 3 to 6</td><td>Agree the escalation rules and cadence explicitly, in writing; send the first one-page narrative</td><td>Assuming the previous CEO's norms carry over</td></tr>
+          <tr><td>Weeks 7 to 12</td><td>Bring one well-framed recommendation with a real tradeoff; review the risk appetite together</td><td>Saving every hard conversation until trust feels established; trust is built by having them well</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs the relationship is unhealthy</h3>
@@ -223,7 +280,9 @@
           <li>Disagreements get resolved by whoever escalates loudest rather than by a stated decision-rights model</li>
           <li>The CEO has stopped asking the CTO's opinion before making technology-adjacent decisions</li>
           <li>Most contact between the two only happens when something is already wrong</li>
-        </ul>
+                  <li>There is no regular written account of technology from the CTO; the CEO's picture is assembled from meetings and hallway updates</li>
+          <li>The CEO's top business metrics have never been explicitly mapped to the technology levers that move them</li>
+</ul>
       </div>
     </div>
   </div>

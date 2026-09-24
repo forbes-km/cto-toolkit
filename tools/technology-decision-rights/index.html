@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology Decision Rights</title>
+<meta name="description" content="Making decision ownership explicit with a RACI-style model, because most executive conflict is an undefined decision right wearing a personality conflict&#x27;s clothes.">
+<meta property="og:title" content="Technology Decision Rights | CTO Toolkit">
+<meta property="og:description" content="Making decision ownership explicit with a RACI-style model, because most executive conflict is an undefined decision right wearing a personality conflict&#x27;s clothes.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technology-decision-rights/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technology Decision Rights | CTO Toolkit">
+<meta name="twitter:description" content="Making decision ownership explicit with a RACI-style model, because most executive conflict is an undefined decision right wearing a personality conflict&#x27;s clothes.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technology-decision-rights/index.html">
 <style>
   :root {
     --paper: #F6F5F1;
@@ -193,7 +204,54 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>RACI is one model among several; match the model to the decision</h3>
+      <p>RACI documents who does what. It is weakest at the moment of a contested decision, which is why several alternatives exist. Most organizations use more than one.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Model</th><th>Roles</th><th>Best for</th><th>Watch out for</th></tr>
+          <tr><td>RACI</td><td>Responsible, Accountable, Consulted, Informed</td><td>Standing, recurring decision categories and process ownership</td><td>Blurs who actually decides when Consulted parties disagree</td></tr>
+          <tr><td>RAPID (Bain)</td><td>Recommend, Agree, Perform, Input, Decide</td><td>High-stakes cross-functional decisions where one party holds a formal sign-off, such as legal or security</td><td>The Agree role quietly becomes a veto if its scope is not written down</td></tr>
+          <tr><td>DACI</td><td>Driver, Approver, Contributors, Informed</td><td>Project-level decisions with a clear driver and a deadline</td><td>Approver creep, where several people each believe they approve</td></tr>
+          <tr><td>Advice process</td><td>Anyone may decide after seeking advice from those affected and those with expertise</td><td>Architecture and team-level technical decisions in organizations with strong trust and a decision log</td><td>Fails without a visible log and a norm that advice is genuinely sought, not collected after the fact</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Classify by reversibility before assigning an owner</h3>
+      <p>The fastest way to cut executive decision load is to separate decisions that are expensive to undo from those that are not. Amazon popularized the one-way and two-way door framing; the idea is older and simpler than the label. Thresholds below are illustrative for a mid-size company.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Decision</th><th>Reversible (two-way door)</th><th>Hard to reverse (one-way door)</th></tr>
+          <tr><td>Default owner</td><td>The team closest to the work</td><td>A named senior owner, with the Consulted list honored in writing</td></tr>
+          <tr><td>Process</td><td>Decide, record in a line or two, move on</td><td>Written options with tradeoffs, an ADR or decision memo, a review date</td></tr>
+          <tr><td>Spend (illustrative)</td><td>Under $50K a year within approved budget: team lead. Under $250K: director</td><td>Over $1M or any multi-year commitment: CTO with CFO. Over $5M or a new strategic vendor: CEO, and the board if above its delegated limit</td></tr>
+          <tr><td>Architecture</td><td>Inside one team's boundary, following approved patterns</td><td>New system of record, new shared platform, or a deviation from a principle: through the <a href="../architecture-review-board/index.html">Architecture Review Board</a>, CTO accountable</td></tr>
+          <tr><td>Risk acceptance</td><td>Monitor-tier items within stated tolerance</td><td>Temporary acceptance or anything reaching board visibility, per <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>The decision log</h3>
+      <p>The artifact that turns a decision-rights model from a chart into a working system.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>A decision log is a single, searchable list of consequential decisions: what was decided, the date, who decided, which options were considered, who was consulted, the one-paragraph rationale, and when it will be revisited. Architecture decisions live as ADRs, described on <a href="../adr-roadmapping/index.html">ADRs and Roadmapping</a>; the log indexes them alongside commercial, organizational, and risk decisions.</p><p>Two practices make it pay for itself. First, link to the log entry whenever a settled question comes up again; that alone ends most relitigation. Second, review the log quarterly for decisions that were reversed or quietly ignored. A reversal is not a failure, but a pattern of reversals in one category usually means the wrong person holds the decision right, or the right person decided without the input they needed.</p>
+    </div></div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs decision rights are still effectively undefined</h3>
@@ -208,7 +266,9 @@
           <li>Decisions get made in hallway conversations that bypass the stated model entirely</li>
           <li>No one can locate the document when a live disagreement happens</li>
           <li>A Consulted party's input has been dismissed without explanation on the same category of decision more than once</li>
-        </ul>
+                  <li>No distinction is made between reversible and hard-to-reverse decisions, so both get the same slow process or the same casual one</li>
+          <li>Spend approval limits are not written down, so the same purchase is approved at different levels depending on who asks</li>
+</ul>
       </div>
     </div>
   </div>
@@ -216,7 +276,7 @@
 </main>
 
 <footer>
-  Reference only. Role names, boundaries, and decision rights vary by organization; treat the example table as illustrative rather than prescriptive.
+  Reference only. RAPID is a Bain &amp; Company framework, DACI originated in industry practice and is widely published by Atlassian, and the advice process is described in the organizational design literature and applied to architecture by Andrew Harmel-Law. Role names, thresholds, and boundaries vary by organization; treat the tables as illustrative.
   <br><span style="opacity:0.7">Last reviewed September 2026.</span>
 </footer>
 
