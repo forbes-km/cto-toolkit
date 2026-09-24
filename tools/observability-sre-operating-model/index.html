@@ -290,7 +290,41 @@
     </div>
   <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://sre.google/workbook/alerting-on-slos/" rel="noopener">Google, The Site Reliability Workbook, Alerting on SLOs</a></li></ol></div>
 </div>
-  <div class="stage-card">
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Diagram</span>
+      <h2>What the burn rates look like on the budget</h2>
+      <p>One month of error budget, with a fast incident and a slow leak.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
+<div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ebd-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="ebd-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="ebd-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="ebd-title">An error budget over a 30-day window, with the burn rates that page or ticket</title><line x1="70" y1="250" x2="820" y2="250" stroke="var(--ink-soft)" stroke-width="1"/>
+<line x1="70" y1="30" x2="70" y2="250" stroke="var(--ink-soft)" stroke-width="1"/>
+<text x="62.0" y="254.0" text-anchor="end" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">0%</text>
+<text x="62.0" y="144.0" text-anchor="end" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">50%</text>
+<text x="62.0" y="34.0" text-anchor="end" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">100%</text>
+<text x="70.0" y="266.0" text-anchor="middle" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">day 0</text>
+<text x="320.0" y="266.0" text-anchor="middle" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">day 10</text>
+<text x="570.0" y="266.0" text-anchor="middle" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">day 20</text>
+<text x="820.0" y="266.0" text-anchor="middle" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">day 30</text>
+<line x1="70.0" y1="30.0" x2="820.0" y2="250.0" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="682.5" y="189.2" text-anchor="start" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">sustainable pace (1x)</text>
+<polyline fill="none" stroke="var(--accent)" stroke-width="2.4" points="70.0,30.0 370.0,74.0 372.0,82.8 545.0,102.6 620.0,124.6 820.0,153.2"/>
+<circle cx="371.0" cy="78.4" r="6" fill="none" stroke="#B23B3B" stroke-width="2"/>
+<rect x="95.0" y="166.4" width="230" height="44" rx="8" fill="#F6E3E3" stroke="#B23B3B" stroke-width="1.2"/>
+<text x="210.0" y="183.4" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Page: 14.4x for 1 hour</text>
+<text x="210.0" y="198.4" text-anchor="middle" font-size="9.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">2% of the month gone in an hour</text>
+<line x1="325.0" y1="176.4" x2="366.0" y2="83.4" stroke="#B23B3B" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="582.5" cy="113.6" r="6" fill="none" stroke="#8A5A2E" stroke-width="2"/>
+<rect x="596.5" y="43.599999999999994" width="250" height="44" rx="8" fill="#F3E9DC" stroke="#8A5A2E" stroke-width="1.2"/>
+<text x="721.5" y="60.6" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Ticket: above 1x for 3 days</text>
+<text x="721.5" y="75.6" text-anchor="middle" font-size="9.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">a slow leak nobody would page on</text>
+<text x="816.0" y="143.2" text-anchor="end" font-size="11" font-weight="700" fill="var(--accent)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">44% left</text>
+<text x="440.0" y="300.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Fast burns wake someone up; slow burns open a ticket. Paging on the slow leak trains people to ignore pages.</text>
+<text x="440.0" y="320.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Thresholds follow the multiwindow approach in the SRE Workbook, as in the table above. The line is illustrative.</text></svg></div>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">An error budget policy says what happens when the line reaches zero: feature work pauses until reliability recovers. Agree that before the month starts, not during an incident.</p>
+    </div></div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h2>Standards worth building on</h2>
