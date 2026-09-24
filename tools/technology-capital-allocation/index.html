@@ -221,12 +221,12 @@
     });
 
     document.getElementById('ca-calc').addEventListener('click', () => {
-      const total = parseFloat(document.getElementById('ca-total').value) || 0;
+      const total = Math.max(0, parseFloat(document.getElementById('ca-total').value) || 0);
       let currentSum = 0;
       let targetPctSum = 0;
       const rows = CA_CATEGORIES.map(cat => {
-        const current = parseFloat(document.getElementById('ca-current-' + cat.id).value) || 0;
-        const targetPct = parseFloat(document.getElementById('ca-target-' + cat.id).value) || 0;
+        const current = Math.max(0, parseFloat(document.getElementById('ca-current-' + cat.id).value) || 0);
+        const targetPct = Math.max(0, parseFloat(document.getElementById('ca-target-' + cat.id).value) || 0);
         currentSum += current;
         targetPctSum += targetPct;
         const currentPct = total > 0 ? (current / total) * 100 : 0;
@@ -254,7 +254,7 @@
         verdict += 'Target percentages sum to ' + targetPctSum.toFixed(1) + '% rather than 100%. This allocation is still aspirational; fix the targets before treating it as a plan.<br>';
       }
       if (currentOffBudget) {
-        verdict += 'Current spend sums to $' + Math.round(currentSum).toLocaleString() + ' against a $' + Math.round(total).toLocaleString() + ' budget, a gap of $' + Math.round(currentSum - total).toLocaleString() + '. Confirm the total budget or the category figures.<br>';
+        verdict += 'Current spend sums to $' + Math.round(currentSum).toLocaleString() + ' against a $' + Math.round(total).toLocaleString() + ' budget, ' + (currentSum > total ? '$' + Math.round(currentSum - total).toLocaleString() + ' over' : '$' + Math.round(total - currentSum).toLocaleString() + ' under') + ' the budget. Confirm the total budget or the category figures.<br>';
       }
       verdict += 'Largest gap: <strong>' + biggestGap.label + '</strong>, running $' + Math.round(Math.abs(biggestGap.varianceDollar)).toLocaleString() + (biggestGap.varianceDollar >= 0 ? ' over' : ' under') + ' its target. Start the reallocation conversation there rather than with the smallest, easiest-to-argue line item.';
 
