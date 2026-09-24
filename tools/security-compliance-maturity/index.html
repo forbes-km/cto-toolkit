@@ -121,7 +121,46 @@
       </div>
     </div>
   </div>
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Framework status, September 2026</h3>
+      <p>Dates that change what an auditor, customer, or acquirer will ask for this year.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Framework</th><th>Current state</th><th>What it means</th></tr>
+          <tr><td>NIST CSF 2.0</td><td>Published February 2024; added a sixth function, Govern</td><td>Maturity scoring should cover governance, roles, and supply chain risk, not only technical controls</td></tr>
+          <tr><td>ISO/IEC 27001:2022</td><td>Certificates against the 2013 edition expired on October 31, 2025</td><td>Any 2013 certificate still cited by a vendor or target is no longer valid</td></tr>
+          <tr><td>PCI DSS 4.0.1</td><td>Requirements that were future-dated became mandatory on March 31, 2025</td><td>Targeted risk analyses, authenticated internal scanning, and payment page script controls are now assessed</td></tr>
+          <tr><td>CMMC 2.0</td><td>Phase 1 of the DoD rollout began November 10, 2025</td><td>Defense contractors see assessment requirements appear in new solicitations and contracts</td></tr>
+          <tr><td>CIS Controls v8.1</td><td>18 controls and 153 safeguards, with a Govern function added to match CSF 2.0</td><td>A practical control baseline for organizations without a mandated framework</td></tr>
+          <tr><td>SOC 2</td><td>AICPA Trust Services Criteria; points of focus revised in 2022</td><td>A Type II report covers a period of operation, so a new report says nothing about controls before its period began</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Scoring one function on evidence</h3>
+      <p>The Protect function for a 400-person SaaS company. The claimed score came from the security team's self-assessment; the evidence score came from artifacts.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Practice</th><th>Claimed</th><th>Evidence found</th><th>Evidence score</th></tr>
+          <tr><td>Phishing-resistant MFA for all staff</td><td>4</td><td>Enforced for employees; 38 service accounts and contractors exempt</td><td>3</td></tr>
+          <tr><td>Quarterly privileged access review</td><td>4</td><td>Two of the last four reviews completed; no record of revocations</td><td>2</td></tr>
+          <tr><td>Encryption at rest for customer data</td><td>5</td><td>Default provider encryption on all stores; keys customer-managed for two regulated tenants</td><td>4</td></tr>
+          <tr><td>Patch critical vulnerabilities within 15 days</td><td>4</td><td>Median 22 days; 11 criticals older than 60 days</td><td>2</td></tr>
+          <tr><td><strong>Function score</strong></td><td><strong>4.3</strong></td><td>Gap of 1.5 points driven by process controls, not technology</td><td><strong>2.8</strong></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
       <h3>Compliance certification as a false signal of maturity</h3>

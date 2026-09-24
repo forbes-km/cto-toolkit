@@ -403,6 +403,45 @@
     <div class="same-note">The same discipline applies across every environment: anything without a hard latency requirement is a batch candidate. Auditing which workloads still run on the interactive path out of habit is a recurring source of avoidable spend.</div>
   </div>
 
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Worked example: cost per resolved support ticket</h3>
+      <p>Unit cost is the number that decides whether an AI feature scales. Token prices are illustrative round numbers; substitute your contracted rates.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Line</th><th>Value</th><th>How it is derived</th></tr>
+          <tr><td>Input tokens per model call</td><td>3,000</td><td>Instructions, retrieved knowledge articles, and the conversation so far</td></tr>
+          <tr><td>Output tokens per call</td><td>500</td><td>Draft reply plus structured fields</td></tr>
+          <tr><td>Cost per call</td><td>$0.0165</td><td>3,000 at $3 per million input plus 500 at $15 per million output</td></tr>
+          <tr><td>Calls per ticket</td><td>4</td><td>Classification, retrieval query, draft, and self-check</td></tr>
+          <tr><td>Model cost per ticket</td><td>$0.066</td><td>4 calls at $0.0165</td></tr>
+          <tr><td>Share of tickets resolved without a person</td><td>60%</td><td>Measured over the pilot</td></tr>
+          <tr><td>Model cost per resolved ticket</td><td>$0.11</td><td>$0.066 divided by 0.6, since unresolved tickets still cost money</td></tr>
+          <tr><td>After prompt caching the fixed instructions</td><td>About $0.07</td><td>Assumes two-thirds of input tokens are cacheable and billed at a small fraction of the normal rate</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">10</span>
+      <h3>What the example leaves out</h3>
+      <p>The model bill is usually not the largest line once a feature is in production.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Costs to add</span>
+        <p>Retrieval infrastructure and embeddings, evaluation runs, logging and tracing, guardrail calls, human review of the escalated 40 percent, and the engineering time to maintain prompts as models change.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to report</span>
+        <p>Cost per resolved outcome next to the cost of the human alternative, and the trend month over month. Flexera's 2026 survey found waste growing on AI workloads even as overall cloud value improved, so an unmeasured pilot is where that waste starts.</p>
+      </div>
+    </div>
+  </div>
 </main>
 
 <footer>

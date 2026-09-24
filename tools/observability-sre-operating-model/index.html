@@ -259,7 +259,62 @@
       </table>
     </div></div>
   </div>
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>Error budgets in minutes, and alerts that page on burn rate</h2>
+      <p>A 30-day window. Burn-rate thresholds follow the multiwindow approach in Google's SRE Workbook (2018).</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>SLO</th><th>Error budget per 30 days</th><th>Page when</th><th>Ticket when</th></tr>
+          <tr><td>99.0%</td><td>432 minutes (7.2 hours)</td><td>Budget burning 14.4 times faster than sustainable over 1 hour, or 6 times over 6 hours</td><td>Burning faster than sustainable over 3 days</td></tr>
+          <tr><td>99.5%</td><td>216 minutes (3.6 hours)</td><td>Same multipliers</td><td>Same</td></tr>
+          <tr><td>99.9%</td><td>43.2 minutes</td><td>Same multipliers; at 14.4 times, 2 percent of the month's budget is gone in an hour</td><td>Same</td></tr>
+          <tr><td>99.95%</td><td>21.6 minutes</td><td>Same multipliers</td><td>Same</td></tr>
+          <tr><td>99.99%</td><td>4.3 minutes</td><td>Usually requires automated mitigation; a human page arrives too late to protect the budget</td><td>Same</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>Standards worth building on</h2>
+      <p>Choosing open standards keeps the telemetry portable when the vendor contract comes up for renewal.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Standard</th><th>Status</th><th>Why it matters</th></tr>
+          <tr><td>OpenTelemetry (CNCF)</td><td>Traces and metrics stable across the major languages; logs stable in most; check the status page for your language</td><td>Instrument once and send to any backend, which removes the largest switching cost in observability</td></tr>
+          <tr><td>W3C Trace Context</td><td>W3C Recommendation</td><td>Trace IDs survive hops between services, vendors, and cloud providers</td></tr>
+          <tr><td>Prometheus exposition format and OpenMetrics</td><td>Widely supported</td><td>The de facto format for pull-based metrics</td></tr>
+          <tr><td>SLO definitions in code (for example OpenSLO)</td><td>Community specification</td><td>SLOs reviewed and versioned like any other configuration</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h2>Operating model red flags</h2>
+      <p>Any two of these usually means the SRE function exists in name only.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No service has a written SLO that the product owner has agreed to</li>
+          <li>The error budget has been exhausted for three months and feature work continued unchanged</li>
+          <li>More than half of pages are not actionable, or the same few people take most of them</li>
+          <li>Toil is not measured, so nobody can show whether it is falling</li>
+          <li>Postmortem actions have no owner or due date, and nobody checks them</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
       <h2>Renaming the ops team</h2>

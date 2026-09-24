@@ -155,7 +155,68 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reporting clocks</span>
+      <h3>Which clocks may have started, and how long you have</h3>
+      <p>Deadlines as of September 2026. Several run in parallel, and most start when you become aware or determine materiality, not when the investigation ends. Counsel decides applicability.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Regime</th><th>Who it covers</th><th>Deadline</th></tr>
+          <tr><td>SEC Form 8-K, Item 1.05</td><td>US-listed public companies</td><td>Four business days after determining the incident is material; the materiality determination itself must be made without unreasonable delay</td></tr>
+          <tr><td>GDPR, Article 33</td><td>Controllers processing EU or UK personal data</td><td>72 hours after becoming aware, to the supervisory authority; affected individuals without undue delay when the risk to them is high</td></tr>
+          <tr><td>NIS2 Directive</td><td>EU essential and important entities</td><td>Early warning within 24 hours, incident notification within 72 hours, final report within one month</td></tr>
+          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>EU financial entities</td><td>Initial notice within 4 hours of classifying an incident as major and no later than 24 hours after detection; intermediate report within 72 hours; final report within one month</td></tr>
+          <tr><td>HIPAA Breach Notification Rule</td><td>US covered entities and business associates</td><td>Individuals without unreasonable delay and no later than 60 days after discovery; HHS and media as well when 500 or more people are affected</td></tr>
+          <tr><td>NYDFS Part 500</td><td>New York regulated financial services</td><td>72 hours after determining a reportable incident occurred; 24 hours after an extortion payment, with a written explanation within 30 days</td></tr>
+          <tr><td>US state breach laws</td><td>Any company holding residents' personal data</td><td>All 50 states have one; several set 30 days, others say without unreasonable delay. The affected residents' states govern, not yours</td></tr>
+          <tr><td>CIRCIA</td><td>US critical infrastructure</td><td>Proposed 72 hours for covered incidents and 24 hours for ransom payments to CISA; the final rule was still pending at this review, so check its status</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>The first 24 hours of a ransomware event</h3>
+      <p>A mid-size SaaS company, encryption detected on a file server at 02:10. Illustrative, but the sequence and owners are the ones that hold up in the postmortem.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Time</th><th>Action</th><th>Owner</th></tr>
+          <tr><td>T+0:20</td><td>On-call confirms encryption activity, isolates the affected segment, declares a major incident</td><td>On-call engineer</td></tr>
+          <tr><td>T+0:45</td><td>Incident commander named; separate channels opened for technical response and for executive and legal decisions</td><td>CTO or delegate</td></tr>
+          <tr><td>T+1:30</td><td>Outside counsel engaged so the forensic firm is retained through counsel; insurer notified per the policy</td><td>General counsel</td></tr>
+          <tr><td>T+3:00</td><td>Scope assessment: which systems, whether data left the network, whether backups are intact and isolated</td><td>Security lead</td></tr>
+          <tr><td>T+4:00</td><td>Reporting triage against the table above; clocks that may have started are logged with the time and the reasoning</td><td>Counsel with CISO</td></tr>
+          <tr><td>T+8:00</td><td>Holding statement to customers and staff, in one agreed wording, with a time for the next update</td><td>CEO, facts from CTO</td></tr>
+          <tr><td>T+12:00</td><td>Restore plan chosen: clean rebuild from known-good backups, prioritized by revenue impact</td><td>Incident commander</td></tr>
+          <tr><td>T+24:00</td><td>Board briefed: what is known, what is not, decisions taken, next decision and when</td><td>CEO and CTO</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Current guidance</span>
+      <h3>NIST SP 800-61 Revision 3</h3>
+      <p>NIST revised its incident response guidance in April 2025 and aligned it to the Cybersecurity Framework 2.0.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What changed</span>
+        <p>Incident response is framed as part of overall cyber risk management rather than a separate four-phase lifecycle. Preparation maps to Govern, Identify, and Protect; response and recovery map to the CSF functions of the same name; lessons learned feed back into every function.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to do with it</span>
+        <p>If your incident plan still cites Revision 2 (2012), update the reference and the structure. More usefully, check that postmortem actions land in the risk register and the roadmap, since that feedback loop is the point of the revision.</p>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Outputs</span>
       <h2>What should exist at 7, 30, and 90 days</h2>

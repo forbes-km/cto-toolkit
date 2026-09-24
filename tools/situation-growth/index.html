@@ -161,7 +161,62 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Thresholds</span>
+      <h3>What tends to break, and at roughly what size</h3>
+      <p>Engineering headcount bands are approximate. The pattern holds more reliably than the exact numbers.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Engineering size</th><th>What breaks</th><th>What to put in place before it does</th></tr>
+          <tr><td>Up to about 20</td><td>Very little; everyone knows everything</td><td>A written on-call rota, a basic leveling guide, and a habit of writing decisions down</td></tr>
+          <tr><td>About 20 to 50</td><td>Informal coordination; the founders or first engineers become the bottleneck for every decision</td><td>Team leads with named ownership, explicit <a href="../technology-decision-rights/index.html">decision rights</a>, and a first engineering manager layer</td></tr>
+          <tr><td>About 50 to 150</td><td>Shared infrastructure, onboarding, and cross-team dependencies</td><td>A platform team, a lightweight <a href="../architecture-review-board/index.html">architecture review</a>, stable teams of roughly five to nine people as Team Topologies suggests, and delivery metrics</td></tr>
+          <tr><td>Beyond about 150</td><td>Informal trust networks stop spanning the organization</td><td>A director layer, a portfolio process, written strategy, and deliberate internal communication</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Hiring math for doubling a team</h3>
+      <p>Growing from 60 to 100 engineers in twelve months. Illustrative assumptions, stated so they can be challenged.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Line</th><th>Value</th><th>Assumption</th></tr>
+          <tr><td>Net growth needed</td><td>40</td><td>Target minus starting headcount</td></tr>
+          <tr><td>Backfills for attrition</td><td>9</td><td>15 percent annual attrition on the starting 60</td></tr>
+          <tr><td>Gross hires required</td><td>49</td><td>About one hire a week, every week of the year</td></tr>
+          <tr><td>Candidates to reach final interview</td><td>About 150</td><td>Roughly three finalists per accepted offer</td></tr>
+          <tr><td>Interviewer hours</td><td>About 1,500</td><td>Ten interviewer hours per finalist, including debriefs</td></tr>
+          <tr><td>Effective added capacity in year one</td><td>About 15 to 20 engineer-years</td><td>Staggered start dates and a ramp of three to six months before new hires are fully productive</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The implication</span>
+      <h3>Hiring is itself a delivery project</h3>
+      <p>Brooks observed in 1975 that adding people to a late project makes it later. The same arithmetic applies to a growing organization in the short run.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Plan the roadmap on effective capacity, not headcount. Budget interviewer time as real work, protect the teams carrying the most onboarding, and hire managers and senior engineers ahead of the wave, not inside it.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Failure mode</span>
+        <p>The board plan assumes 100 engineers of output from month one, delivery slips while the team is busy interviewing and onboarding, and the slip is read as a performance problem.</p>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Outputs</span>
       <h2>What should exist at 30, 90, and 180 days</h2>

@@ -196,6 +196,9 @@
     border-top: 1px solid var(--line);
     padding-top: 24px;
   }
+  .card.flagship { border-left: 3px solid var(--accent); background: var(--accent-soft); }
+  .grid.flagship-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 560px) { .grid.flagship-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -232,6 +235,7 @@
 
 <div class="jump-nav">
   <div class="jump-nav-inner">
+    <a href="#sec-flagship">Flagship tools</a>
     <a href="#sec-ai">AI systems</a>
     <a href="#sec-cloud-ea">Cloud &amp; enterprise architecture</a>
     <a href="#sec-risk">Risk &amp; resilience</a>
@@ -242,6 +246,32 @@
 </div>
 
 <main>
+
+  <div class="section-label" id="sec-flagship">Flagship tools</div>
+  <p class="section-note">The four deepest tools on the site. Each one produces something you can take straight into a meeting.</p>
+  <div class="grid flagship-grid">
+    <a class="card flagship" href="tools/technical-debt-economics/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>Technical Debt Economics</h3>
+      <p>Rank a debt backlog by return on the remediation dollar, sequence it across years within a budget, and see which items to accept rather than fix. Includes the carry-cost preview workbook.</p>
+    </a>
+    <a class="card flagship" href="tools/apm-portfolio-map/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>Application Portfolio Management</h3>
+      <p>Classify every application on the Gartner TIME model and download the debt, risk, and portfolio simulator that links debt items and risks to the applications they sit on.</p>
+    </a>
+    <a class="card flagship" href="tools/ma-diligence-kit/index.html">
+      <span class="badge doc">Template</span>
+      <h3>M&amp;A Diligence Kit</h3>
+      <p>The technology question bank, data room structure, red flags that should move the price, and the sell-side preparation sequence.</p>
+    </a>
+    <a class="card flagship" href="tools/regulatory-map/index.html">
+      <span class="badge calc">Interactive</span>
+      <h3>Regulatory Map</h3>
+      <p>Filter the regimes that apply by sector and jurisdiction, with the reporting clocks and effective dates that matter this year.</p>
+    </a>
+  </div>
+
 
   <div class="section-label" id="sec-ai">AI systems: architecture, governance, cost</div>
   <p class="section-note">Several tools in this section are runnable, dependency-free calculators. Open them directly in a browser; there is no build step. Everything on this site, catalog content and code alike, is MIT licensed.</p>

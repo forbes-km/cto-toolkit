@@ -272,7 +272,45 @@
       </ul>
     </div></div>
   </div>
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h2>Specifications to standardize on, September 2026</h2>
+      <p>Pick these as defaults in the integration standards so teams only argue about the exceptions.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Specification</th><th>Current version or status</th><th>Use it for</th></tr>
+          <tr><td>OpenAPI</td><td>3.2, released September 2025</td><td>Synchronous HTTP APIs: contract first, generated clients, linting in CI</td></tr>
+          <tr><td>AsyncAPI</td><td>3.0, released December 2023</td><td>Event-driven interfaces: channels, messages, and bindings for Kafka, AMQP, MQTT, and others</td></tr>
+          <tr><td>CloudEvents (CNCF)</td><td>1.0; the project graduated in CNCF in January 2024</td><td>A common envelope for events so routing and tracing work across brokers and clouds</td></tr>
+          <tr><td>RFC 9457, Problem Details for HTTP APIs</td><td>IETF standard, July 2023; replaces RFC 7807</td><td>One machine-readable error format across every API</td></tr>
+          <tr><td>OWASP API Security Top 10</td><td>2023 edition</td><td>The review checklist; broken object-level authorization is still the top risk</td></tr>
+          <tr><td>Model Context Protocol (MCP)</td><td>Contributed to the Linux Foundation's Agentic AI Foundation in December 2025</td><td>Exposing tools and data to AI agents; treat each MCP server as an API with its own authentication, authorization, and rate limits</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>Choosing a pattern for three real integrations</h2>
+      <p>The same selection questions applied three times: who needs to know, how fast, and what happens if the other side is down.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Integration</th><th>Pattern chosen</th><th>Why</th></tr>
+          <tr><td>Checkout calls tax calculation</td><td>Synchronous API with a timeout and a cached fallback rate</td><td>The answer is needed before the order completes; an outage cannot be allowed to stop sales</td></tr>
+          <tr><td>Order placed, notify fulfilment, billing, and analytics</td><td>Published event, one topic, three subscribers</td><td>The producer should not know or wait for its consumers; each can fail and replay independently</td></tr>
+          <tr><td>Nightly load of 40 million rows to the warehouse</td><td>Batch file or change data capture, not an API</td><td>Volume and latency tolerance make request-response the wrong tool</td></tr>
+          <tr><td>Retries on any of the above</td><td>Idempotency keys on every write</td><td>At-least-once delivery is the realistic guarantee, so duplicates must be harmless</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
       <h2>The enterprise service bus reborn as a platform</h2>

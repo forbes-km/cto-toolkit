@@ -254,7 +254,41 @@
     renderWsjf();
   </script>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>WSJF with three competing items</h3>
+      <p>Cost of delay is the sum of business value, time criticality, and risk reduction or opportunity enablement, each scored on the modified Fibonacci scale. WSJF divides it by job size.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Item</th><th>Business value</th><th>Time criticality</th><th>Risk reduction</th><th>Cost of delay</th><th>Job size</th><th>WSJF</th><th>Rank</th></tr>
+          <tr><td>A. New pricing engine</td><td>8</td><td>5</td><td>3</td><td>16</td><td>8</td><td>2.0</td><td>2</td></tr>
+          <tr><td>B. Certificate automation before mass expiry</td><td>5</td><td>8</td><td>2</td><td>15</td><td>3</td><td>5.0</td><td>1</td></tr>
+          <tr><td>C. Data platform re-architecture</td><td>13</td><td>2</td><td>5</td><td>20</td><td>13</td><td>1.5</td><td>3</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reading it</span>
+      <h3>Why the smallest item wins</h3>
+      <p>C has the highest cost of delay but ranks last, because it takes four times as long as B.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What the ranking says</span>
+        <p>Do B first; it is urgent and small. Then A. Split C into increments so the first slice can compete on its own size rather than waiting behind everything.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it does not say</span>
+        <p>WSJF ranks within available capacity. It does not tell you whether C should be funded at all; that is the capital allocation decision, made before this ranking runs.</p>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Category-blind ranking vs. reserved capacity</h3>

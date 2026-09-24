@@ -269,7 +269,43 @@
     </div>
   </div>
 
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Standards and regulatory expectations</h3>
+      <p>Obligations differ by sector; this is where most auditors and examiners start.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>What it expects</th></tr>
+          <tr><td>ISO 22301:2019</td><td>A certifiable business continuity management system: impact analysis, strategies, exercises, and improvement</td></tr>
+          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>For EU financial entities since January 2025: tested ICT continuity and recovery plans, and threat-led penetration testing at least every three years for entities designated as significant</td></tr>
+          <tr><td>HIPAA Security Rule, 45 CFR 164.308(a)(7)</td><td>A contingency plan with data backup, disaster recovery, emergency mode operation, and testing</td></tr>
+          <tr><td>FFIEC Business Continuity Management booklet (2019)</td><td>US financial institutions: resilience across the whole organization, including third parties</td></tr>
+          <tr><td>NIST SP 800-34 Rev. 1</td><td>Contingency planning guide for information systems; widely used outside government</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Ransomware changes the recovery design</h3>
+      <p>Most DR plans assume the failure is an outage. Ransomware assumes the attacker has already reached the backups.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Design for it</span>
+        <p>Keep at least one backup copy immutable or offline, restore into an isolated clean environment, and rebuild identity systems first, since a compromised identity provider re-infects everything restored after it. The 3-2-1-1-0 rule summarizes it: three copies, two media, one offsite, one immutable or offline, zero errors on test restores.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Test for it</span>
+        <p>A tabletop that assumes backups are encrypted, and a timed restore of a critical system from the immutable copy alone. The time measured there, not the replication lag, is the realistic recovery time.</p>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>DR red flags</h3>
