@@ -75,6 +75,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -151,10 +161,11 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>Credit scoring, employment screening, and medical decisioning fall within the EU AI Act's Annex III high-risk use cases when the specific system matches the criteria listed there; operating in one of those domains does not by itself make a system high-risk. Article 14 requires human oversight for systems that do qualify. The high-risk obligations were deferred by the Digital Omnibus on AI, adopted in June 2026 and in force from 27 July 2026: Annex III stand-alone systems, including employment and credit uses, now apply from 2 December 2027, and AI embedded in Annex I regulated products from 2 August 2028. Article 50 transparency duties still apply from 2 August 2026. The final text set fixed dates and dropped the Commission's earlier proposal to tie them to the readiness of harmonised standards, so confirm the current date for your specific use case against the published regulation.</p>
+        <p>Credit scoring, employment screening, and medical decisioning fall within the EU AI Act's Annex III high-risk use cases when the specific system matches the criteria listed there; operating in one of those domains does not by itself make a system high-risk. Article 14 requires human oversight for systems that do qualify.<sup class="src"><a href="#src-1" title="Regulation (EU) 2024/1689 (AI Act)">[1]</a></sup> The high-risk obligations were deferred by the Digital Omnibus on AI, adopted in June 2026 and in force from 27 July 2026: Annex III stand-alone systems, including employment and credit uses, now apply from 2 December 2027, and AI embedded in Annex I regulated products from 2 August 2028. Article 50 transparency duties still apply from 2 August 2026. The final text set fixed dates and dropped the Commission's earlier proposal to tie them to the readiness of harmonised standards, so confirm the current date for your specific use case against the published regulation.</p>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" rel="noopener">Regulation (EU) 2024/1689 (AI Act)</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Cross-cutting</span>

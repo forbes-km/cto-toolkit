@@ -75,6 +75,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -221,13 +231,14 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>Finding</th><th>How to use it</th></tr>
-          <tr><td>Nagji and Tuff, Harvard Business Review, 2012</td><td>Firms that outperformed in their sample allocated roughly 70 percent to core, 20 percent to adjacent, and 10 percent to transformational initiatives</td><td>A starting point, adjusted for industry and stage</td></tr>
-          <tr><td>Same study</td><td>Returns ran roughly in reverse: about 70 percent of long-term return came from the transformational 10 percent</td><td>The reason the small bucket must be protected from being raided in a bad quarter</td></tr>
+          <tr><td>Nagji and Tuff, Harvard Business Review, 2012</td><td>Firms that outperformed in their sample allocated roughly 70 percent to core, 20 percent to adjacent, and 10 percent to transformational initiatives<sup class="src"><a href="#src-1" title="Nagji and Tuff, Managing Your Innovation Portfolio, HBR, May 2012">[1]</a></sup></td><td>A starting point, adjusted for industry and stage</td></tr>
+          <tr><td>Same study</td><td>Returns ran roughly in reverse: about 70 percent of long-term return came from the transformational 10 percent<sup class="src"><a href="#src-1" title="Nagji and Tuff, Managing Your Innovation Portfolio, HBR, May 2012">[1]</a></sup></td><td>The reason the small bucket must be protected from being raided in a bad quarter</td></tr>
           <tr><td>Same study</td><td>Technology firms tended to put more into transformational bets; consumer goods firms less</td><td>Your right split depends on how fast your market moves</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://hbr.org/2012/05/managing-your-innovation-portfolio" rel="noopener">Nagji and Tuff, Managing Your Innovation Portfolio, HBR, May 2012</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>

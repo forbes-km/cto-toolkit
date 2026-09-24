@@ -73,6 +73,16 @@
   footer a { color: var(--accent); }
   .stage-grid.single { grid-template-columns: 1fr; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -169,8 +179,8 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Lever</th><th>Time to first saving</th><th>What limits it</th></tr>
-          <tr><td>Cloud waste: idle resources, orphaned storage, oversized instances</td><td>Weeks</td><td>Engineering time to verify each change; organizations in Flexera's 2026 survey estimated roughly 29 percent of their cloud spend was wasted, the first rise in five years</td></tr>
-          <tr><td>Commitment coverage: savings plans, reserved capacity, committed-use discounts</td><td>One billing cycle</td><td>Only safe on the stable baseline; AWS quotes discounts of up to 72 percent against on-demand for the longest, least flexible terms</td></tr>
+          <tr><td>Cloud waste: idle resources, orphaned storage, oversized instances</td><td>Weeks</td><td>Engineering time to verify each change; organizations in Flexera's 2026 survey estimated roughly 29 percent of their cloud spend was wasted, the first rise in five years<sup class="src"><a href="#src-1" title="Flexera, 2026 State of the Cloud Report (release, March 2026)">[1]</a></sup></td></tr>
+          <tr><td>Commitment coverage: savings plans, reserved capacity, committed-use discounts</td><td>One billing cycle</td><td>Only safe on the stable baseline; AWS quotes discounts of up to 72 percent against on-demand for the longest, least flexible terms<sup class="src"><a href="#src-2" title="AWS, Savings Plans">[2]</a></sup></td></tr>
           <tr><td>SaaS seat reclamation and renewal negotiation</td><td>At each renewal date</td><td>Contract terms and notice windows; see <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
           <tr><td>Contractor and consultant reduction</td><td>Weeks to one quarter</td><td>Knowledge held only by contractors; plan the handover before the end date</td></tr>
           <tr><td>Pausing or killing projects</td><td>Immediate for spend, slower for people</td><td>Sunk-cost pressure, and write-offs on capitalized work</td></tr>
@@ -179,7 +189,8 @@
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.flexera.com/about-us/press-center/flexera-finds-cloud-value-is-rising-while-ai-waste-grows" rel="noopener">Flexera, 2026 State of the Cloud Report (release, March 2026)</a></li><li value="2" id="src-2"><a href="https://aws.amazon.com/savingsplans/" rel="noopener">AWS, Savings Plans</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>

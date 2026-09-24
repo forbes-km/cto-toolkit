@@ -78,6 +78,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -120,14 +130,15 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>What it contributes</th><th>Where it appears on this page</th></tr>
-          <tr><td>NIST SP 800-61 Rev. 3 (2025), Incident Response Recommendations</td><td>The lifecycle: preparation; detection and analysis; containment, eradication and recovery; post-incident activity. Rev. 3 aligns the lifecycle to the CSF 2.0 functions, so a security incident program can be evidenced against the same ladder as <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a></td><td>Preparation (final reference card), detection and triage (1), containment and recovery (4 and the security variant), post-incident (5 and 6)</td></tr>
+          <tr><td>NIST SP 800-61 Rev. 3 (2025), Incident Response Recommendations</td><td>The lifecycle: preparation; detection and analysis; containment, eradication and recovery; post-incident activity. Rev. 3 aligns the lifecycle to the CSF 2.0 functions<sup class="src"><a href="#src-1" title="NIST SP 800-61 Rev. 3, Incident Response Recommendations, April 2025">[1]</a></sup>, so a security incident program can be evidenced against the same ladder as <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a></td><td>Preparation (final reference card), detection and triage (1), containment and recovery (4 and the security variant), post-incident (5 and 6)</td></tr>
           <tr><td>Incident Command System, via Google SRE (2016) and PagerDuty's published response process</td><td>A single commander, defined roles, span of control, and a fixed communication cadence, adapted from emergency services to software</td><td>The four roles, incident command (2), communication cadence (3)</td></tr>
           <tr><td>Blameless postmortems (Etsy, 2012) and SRE's postmortem culture</td><td>Contributing factors over a single root cause, first-person accounts without sanction, action items tracked to closure</td><td>Postmortem (5), follow-through (6)</td></tr>
           <tr><td>ISO/IEC 27035 and SOC 2 CC7.3 to CC7.5</td><td>What an auditor expects to see evidenced: classification criteria, a documented process, a record per incident, and remediation tracked</td><td>Severity table, scribe's timeline, action item close rate</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" rel="noopener">NIST SP 800-61 Rev. 3, Incident Response Recommendations, April 2025</a></li></ol></div>
+</div>
 
   <div class="stage-card">
     <div class="stage-head">

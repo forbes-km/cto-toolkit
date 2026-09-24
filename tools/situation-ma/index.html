@@ -73,6 +73,16 @@
   footer a { color: var(--accent); }
   .stage-grid.single { grid-template-columns: 1fr; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -171,14 +181,15 @@
         <table class="matrix-table">
           <tr><th>Rule</th><th>What it does</th><th>Technology implication</th></tr>
           <tr><td>HSR Act premerger notification (US)</td><td>Deals above the annually adjusted threshold cannot close until a waiting period, normally 30 days, expires</td><td>No joint operation of systems, and no sharing of competitively sensitive data outside a clean team, before expiry. That is the gun-jumping risk</td></tr>
-          <tr><td>HSR filing form</td><td>The FTC's expanded form was vacated by a federal district court in February 2026 and the Fifth Circuit declined to stay that ruling in March 2026, so filers may use the prior, shorter form while the appeal continues</td><td>Less document preparation now, but the rule could return; keep diligence records organized either way</td></tr>
+          <tr><td>HSR filing form</td><td>The FTC's expanded form was vacated by a federal district court in February 2026 and the Fifth Circuit declined to stay that ruling in March 2026, so filers may use the prior, shorter form while the appeal continues<sup class="src"><a href="#src-1" title="FTC, HSR notification forms and guidance">[1]</a></sup></td><td>Less document preparation now, but the rule could return; keep diligence records organized either way</td></tr>
           <tr><td>CFIUS (US)</td><td>Review of foreign investment, particularly in critical technology, critical infrastructure, or sensitive personal data</td><td>Data residency, access controls, and who can see what can become formal mitigation conditions</td></tr>
           <tr><td>Data protection law</td><td>GDPR and similar laws follow the data across the transaction</td><td>A lawful basis for any transfer of customer or employee data, and a data map before integration begins</td></tr>
-          <tr><td>WARN Act and foreign consultation rules</td><td>Notice for mass layoffs, generally 60 days in the US</td><td>Integration headcount plans need HR and counsel before they are announced</td></tr>
+          <tr><td>WARN Act and foreign consultation rules</td><td>Notice for mass layoffs, generally 60 days in the US<sup class="src"><a href="#src-2" title="US Department of Labor, Plant Closings and Layoffs (WARN)">[2]</a></sup></td><td>Integration headcount plans need HR and counsel before they are announced</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.ftc.gov/enforcement/premerger-notification-program/hsr-notification-forms-instructions-guidance" rel="noopener">FTC, HSR notification forms and guidance</a></li><li value="2" id="src-2"><a href="https://www.dol.gov/general/topic/termination/plantclosings" rel="noopener">US Department of Labor, Plant Closings and Layoffs (WARN)</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>

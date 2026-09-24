@@ -68,6 +68,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -170,7 +180,7 @@
     <div class="stage-head">
       <span class="stage-num">5</span>
       <h3>Third-party and vendor risk as part of the program</h3>
-      <p>Verizon's 2025 Data Breach Investigations Report found a third party involved in 30 percent of breaches, double the year before. A security program that stops at the company's own systems is scoped to the wrong boundary.</p>
+      <p>Verizon's 2025 Data Breach Investigations Report found a third party involved in 30 percent of breaches, double the year before.<sup class="src"><a href="#src-1" title="Verizon, 2025 Data Breach Investigations Report (release, April 2025)">[1]</a></sup> A security program that stops at the company's own systems is scoped to the wrong boundary.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -182,7 +192,8 @@
         <p>Security review happens for major platform vendors and gets skipped for the small SaaS tool a team signed up for with a credit card, which is exactly the kind of vendor least likely to have a mature security program and most likely to be the entry point when something goes wrong.</p>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.verizon.com/about/news/2025-data-breach-investigations-report" rel="noopener">Verizon, 2025 Data Breach Investigations Report (release, April 2025)</a></li></ol></div>
+</div>
 
   <div class="stage-card">
     <div class="stage-head">
@@ -225,7 +236,7 @@
     <div class="stage-head">
       <span class="stage-num">8</span>
       <h3>What attackers are actually doing</h3>
-      <p>Sequence the program against how breaches happen, not against a framework's table of contents. Figures are from Verizon's 2025 Data Breach Investigations Report, based on more than 12,000 confirmed breaches.</p>
+      <p>Sequence the program against how breaches happen, not against a framework's table of contents. Figures are from Verizon's 2025 Data Breach Investigations Report, based on more than 12,000 confirmed breaches.<sup class="src"><a href="#src-1" title="Verizon, 2025 Data Breach Investigations Report (release, April 2025)">[1]</a></sup></p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -238,7 +249,8 @@
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1"><a href="https://www.verizon.com/about/news/2025-data-breach-investigations-report" rel="noopener">Verizon, 2025 Data Breach Investigations Report (release, April 2025)</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">9</span>
@@ -267,17 +279,18 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Framework</th><th>What it is</th><th>Use it when</th></tr>
-          <tr><td>NIST Cybersecurity Framework 2.0 (2024)</td><td>Outcome-based framework with six functions; 2.0 added Govern</td><td>You need a program backbone and a common language with the board</td></tr>
+          <tr><td>NIST Cybersecurity Framework 2.0 (2024)</td><td>Outcome-based framework with six functions; 2.0 added Govern<sup class="src"><a href="#src-2" title="NIST, release of Cybersecurity Framework 2.0, February 2024">[2]</a></sup></td><td>You need a program backbone and a common language with the board</td></tr>
           <tr><td>CIS Critical Security Controls v8.1</td><td>18 controls and 153 safeguards, grouped into three implementation groups; IG1 is essential cyber hygiene</td><td>You need a concrete, prioritized first-year checklist</td></tr>
-          <tr><td>ISO/IEC 27001:2022</td><td>A certifiable information security management system with 93 Annex A controls; 2013-version certificates expired on October 31, 2025</td><td>International or enterprise customers ask for certification</td></tr>
+          <tr><td>ISO/IEC 27001:2022</td><td>A certifiable information security management system with 93 Annex A controls; 2013-version certificates expired on October 31, 2025<sup class="src"><a href="#src-3" title="IAF MD 26:2022, transition requirements for ISO/IEC 27001:2022">[3]</a></sup></td><td>International or enterprise customers ask for certification</td></tr>
           <tr><td>SOC 2 (AICPA Trust Services Criteria)</td><td>An auditor's report; Type II covers how controls operated over a period, commonly 6 to 12 months</td><td>US B2B customers ask for an attestation</td></tr>
           <tr><td>HITRUST CSF</td><td>A healthcare-oriented harmonized framework with e1, i1, and r2 assessment levels</td><td>Health systems or payers are your customers</td></tr>
-          <tr><td>PCI DSS v4.0.1</td><td>Card data security standard; the future-dated requirements became mandatory on March 31, 2025</td><td>You store, process, or transmit card data</td></tr>
-          <tr><td>CMMC 2.0</td><td>US Department of Defense requirement, phased into contracts from November 10, 2025</td><td>You hold defense contracts involving controlled unclassified information</td></tr>
+          <tr><td>PCI DSS v4.0.1</td><td>Card data security standard; the future-dated requirements became mandatory on March 31, 2025<sup class="src"><a href="#src-4" title="PCI Security Standards Council, future-dated requirements of PCI DSS v4.x">[4]</a></sup></td><td>You store, process, or transmit card data</td></tr>
+          <tr><td>CMMC 2.0</td><td>US Department of Defense requirement, phased into contracts from November 10, 2025<sup class="src"><a href="#src-5" title="DFARS final rule on CMMC, Federal Register, September 10, 2025">[5]</a></sup></td><td>You hold defense contracts involving controlled unclassified information</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://www.nist.gov/news-events/news/2024/02/nist-releases-version-20-landmark-cybersecurity-framework" rel="noopener">NIST, release of Cybersecurity Framework 2.0, February 2024</a></li><li value="3" id="src-3"><a href="https://iaf.nu/iaf_system/uploads/documents/IAF_MD_26_Transition_requirements_for_ISOIEC_27001-2022_09082022.pdf" rel="noopener">IAF MD 26:2022, transition requirements for ISO/IEC 27001:2022</a></li><li value="4" id="src-4"><a href="https://blog.pcisecuritystandards.org/now-is-the-time-for-organizations-to-adopt-the-future-dated-requirements-of-pci-dss-v4-x" rel="noopener">PCI Security Standards Council, future-dated requirements of PCI DSS v4.x</a></li><li value="5" id="src-5"><a href="https://www.federalregister.gov/documents/2025/09/10/2025-17359/defense-federal-acquisition-regulation-supplement-assessing-contractor-implementation-of" rel="noopener">DFARS final rule on CMMC, Federal Register, September 10, 2025</a></li></ol></div>
+</div>
 <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>

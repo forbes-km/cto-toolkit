@@ -73,6 +73,16 @@
   footer a { color: var(--accent); }
   .stage-grid.single { grid-template-columns: 1fr; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -175,7 +185,7 @@
           <tr><th>Engineering size</th><th>What breaks</th><th>What to put in place before it does</th></tr>
           <tr><td>Up to about 20</td><td>Very little; everyone knows everything</td><td>A written on-call rota, a basic leveling guide, and a habit of writing decisions down</td></tr>
           <tr><td>About 20 to 50</td><td>Informal coordination; the founders or first engineers become the bottleneck for every decision</td><td>Team leads with named ownership, explicit <a href="../technology-decision-rights/index.html">decision rights</a>, and a first engineering manager layer</td></tr>
-          <tr><td>About 50 to 150</td><td>Shared infrastructure, onboarding, and cross-team dependencies</td><td>A platform team, a lightweight <a href="../architecture-review-board/index.html">architecture review</a>, stable teams of roughly five to nine people as Team Topologies suggests, and delivery metrics</td></tr>
+          <tr><td>About 50 to 150</td><td>Shared infrastructure, onboarding, and cross-team dependencies</td><td>A platform team, a lightweight <a href="../architecture-review-board/index.html">architecture review</a>, stable teams of roughly five to nine people, and delivery metrics</td></tr>
           <tr><td>Beyond about 150</td><td>Informal trust networks stop spanning the organization</td><td>A director layer, a portfolio process, written strategy, and deliberate internal communication</td></tr>
         </table>
       </div>
@@ -205,7 +215,7 @@
     <div class="stage-head">
       <span class="stage-num">The implication</span>
       <h2>Hiring is itself a delivery project</h2>
-      <p>Brooks observed in 1975 that adding people to a late project makes it later. The same arithmetic applies to a growing organization in the short run.</p>
+      <p>Brooks observed in 1975 that adding people to a late project makes it later.<sup class="src"><a href="#src-1" title="Frederick Brooks, The Mythical Man-Month, Addison-Wesley, 1975">[1]</a></sup> The same arithmetic applies to a growing organization in the short run.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -217,7 +227,8 @@
         <p>The board plan assumes 100 engineers of output from month one, delivery slips while the team is busy interviewing and onboarding, and the slip is read as a performance problem.</p>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1">Frederick Brooks, The Mythical Man-Month, Addison-Wesley, 1975</li></ol></div>
+</div>
 <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Outputs</span>

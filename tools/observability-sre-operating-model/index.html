@@ -79,6 +79,16 @@
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -264,7 +274,7 @@
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
       <h2>Error budgets in minutes, and alerts that page on burn rate</h2>
-      <p>A 30-day window. Burn-rate thresholds follow the multiwindow approach in Google's SRE Workbook (2018).</p>
+      <p>A 30-day window. Burn-rate thresholds follow the multiwindow approach in Google's SRE Workbook (2018).<sup class="src"><a href="#src-1" title="Google, The Site Reliability Workbook, Alerting on SLOs">[1]</a></sup></p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -278,7 +288,8 @@
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://sre.google/workbook/alerting-on-slos/" rel="noopener">Google, The Site Reliability Workbook, Alerting on SLOs</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reference</span>
@@ -289,14 +300,15 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Standard</th><th>Status</th><th>Why it matters</th></tr>
-          <tr><td>OpenTelemetry (CNCF)</td><td>Traces and metrics stable across the major languages; logs stable in most; check the status page for your language</td><td>Instrument once and send to any backend, which removes the largest switching cost in observability</td></tr>
-          <tr><td>W3C Trace Context</td><td>W3C Recommendation</td><td>Trace IDs survive hops between services, vendors, and cloud providers</td></tr>
+          <tr><td>OpenTelemetry (CNCF)</td><td>Traces and metrics stable in most major languages; logs stable in only a few so far (Java, .NET, C++, PHP at this review); check the status page for your language<sup class="src"><a href="#src-2" title="OpenTelemetry, language API and SDK status">[2]</a></sup></td><td>Instrument once and send to any backend, which removes the largest switching cost in observability</td></tr>
+          <tr><td>W3C Trace Context</td><td>W3C Recommendation<sup class="src"><a href="#src-3" title="W3C, Trace Context Recommendation">[3]</a></sup></td><td>Trace IDs survive hops between services, vendors, and cloud providers</td></tr>
           <tr><td>Prometheus exposition format and OpenMetrics</td><td>Widely supported</td><td>The de facto format for pull-based metrics</td></tr>
           <tr><td>SLO definitions in code (for example OpenSLO)</td><td>Community specification</td><td>SLOs reviewed and versioned like any other configuration</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://opentelemetry.io/docs/languages/" rel="noopener">OpenTelemetry, language API and SDK status</a></li><li value="3" id="src-3"><a href="https://www.w3.org/TR/trace-context/" rel="noopener">W3C, Trace Context Recommendation</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>

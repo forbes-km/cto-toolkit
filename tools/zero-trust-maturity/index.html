@@ -75,6 +75,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -258,15 +268,16 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>Date</th><th>What it contributes</th></tr>
-          <tr><td>NIST SP 800-207, Zero Trust Architecture</td><td>August 2020</td><td>The core definition: no implicit trust based on network location; per-request access decisions</td></tr>
-          <tr><td>CISA Zero Trust Maturity Model 2.0</td><td>April 2023</td><td>Five pillars (identity, devices, networks, applications and workloads, data) across four stages: traditional, initial, advanced, optimal</td></tr>
-          <tr><td>NIST SP 800-207A</td><td>September 2023</td><td>Zero trust for cloud-native applications across multiple locations</td></tr>
-          <tr><td>NIST SP 1800-35, Implementing a Zero Trust Architecture</td><td>June 2025</td><td>Nineteen example implementations built with commercial products at the National Cybersecurity Center of Excellence</td></tr>
-          <tr><td>OMB M-22-09</td><td>January 2022</td><td>US federal agency targets, useful as a public benchmark for sequencing</td></tr>
+          <tr><td>NIST SP 800-207, Zero Trust Architecture</td><td>August 2020</td><td>The core definition: no implicit trust based on network location; per-request access decisions<sup class="src"><a href="#src-1" title="NIST SP 800-207, Zero Trust Architecture, August 2020">[1]</a></sup></td></tr>
+          <tr><td>CISA Zero Trust Maturity Model 2.0</td><td>April 2023</td><td>Five pillars (identity, devices, networks, applications and workloads, data) across four stages: traditional, initial, advanced, optimal<sup class="src"><a href="#src-2" title="CISA, Zero Trust Maturity Model Version 2.0, April 2023">[2]</a></sup></td></tr>
+          <tr><td>NIST SP 800-207A</td><td>September 2023</td><td>Zero trust for cloud-native applications across multiple locations<sup class="src"><a href="#src-3" title="NIST SP 800-207A, September 2023">[3]</a></sup></td></tr>
+          <tr><td>NIST SP 1800-35, Implementing a Zero Trust Architecture</td><td>June 2025</td><td>Nineteen example implementations built with commercial products at the National Cybersecurity Center of Excellence<sup class="src"><a href="#src-4" title="NIST NCCoE, final SP 1800-35, June 2025">[4]</a></sup></td></tr>
+          <tr><td>OMB M-22-09</td><td>January 2022</td><td>US federal agency targets, useful as a public benchmark for sequencing<sup class="src"><a href="#src-5" title="OMB Memorandum M-22-09, January 2022">[5]</a></sup></td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://csrc.nist.gov/pubs/sp/800/207/final" rel="noopener">NIST SP 800-207, Zero Trust Architecture, August 2020</a></li><li value="2" id="src-2"><a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" rel="noopener">CISA, Zero Trust Maturity Model Version 2.0, April 2023</a></li><li value="3" id="src-3"><a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" rel="noopener">NIST SP 800-207A, September 2023</a></li><li value="4" id="src-4"><a href="https://www.nccoe.nist.gov/news-insights/nist-publishes-final-special-publication-1800-35-implementing-zero-trust-architecture" rel="noopener">NIST NCCoE, final SP 1800-35, June 2025</a></li><li value="5" id="src-5"><a href="https://www.whitehouse.gov/wp-content/uploads/2022/01/M-22-09.pdf" rel="noopener">OMB Memorandum M-22-09, January 2022</a></li></ol></div>
+</div>
 <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">How to use this</span>

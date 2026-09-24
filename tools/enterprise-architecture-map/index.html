@@ -75,6 +75,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -263,15 +273,16 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Standard</th><th>Current edition</th><th>Use it for</th></tr>
-          <tr><td>TOGAF Standard (The Open Group)</td><td>10th Edition, 2022, modular in structure</td><td>A reference method; adopt the parts you need rather than the whole</td></tr>
-          <tr><td>ArchiMate (The Open Group)</td><td>3.2, 2022</td><td>Enterprise-level models linking capabilities, applications, and technology</td></tr>
+          <tr><td>TOGAF Standard (The Open Group)</td><td>10th Edition, 2022, modular in structure<sup class="src"><a href="#src-1" title="The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022">[1]</a></sup></td><td>A reference method; adopt the parts you need rather than the whole</td></tr>
+          <tr><td>ArchiMate (The Open Group)</td><td>ArchiMate 4, released April 2026, succeeding 3.2 (2022)<sup class="src"><a href="#src-2" title="The Open Group, ArchiMate 4 Specification announcement, April 2026">[2]</a></sup>; check your modeling tool supports it before switching</td><td>Enterprise-level models linking capabilities, applications, and technology</td></tr>
           <tr><td>C4 model (Simon Brown)</td><td>Stable</td><td>Solution-level diagrams engineers will actually maintain</td></tr>
-          <tr><td>Architecture decision records (Michael Nygard, 2011)</td><td>Informal convention</td><td>Recording why a decision was made; see <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
+          <tr><td>Architecture decision records (Michael Nygard, 2011)<sup class="src"><a href="#src-3" title="Michael Nygard, Documenting Architecture Decisions, November 2011">[3]</a></sup></td><td>Informal convention</td><td>Recording why a decision was made; see <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
           <tr><td>BIZBOK Guide (Business Architecture Guild)</td><td>Periodically revised</td><td>Capability and value-stream mapping with business stakeholders</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.opengroup.org/open-group-announces-launch-togaf-standard-10th-edition" rel="noopener">The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022</a></li><li value="2" id="src-2"><a href="https://www.opengroup.org/The-Open-Group-Announces-ArchiMate%C2%AE-4-Specification" rel="noopener">The Open Group, ArchiMate 4 Specification announcement, April 2026</a></li><li value="3" id="src-3"><a href="https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions" rel="noopener">Michael Nygard, Documenting Architecture Decisions, November 2011</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">11</span>

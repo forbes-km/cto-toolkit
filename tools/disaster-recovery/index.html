@@ -68,6 +68,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -280,15 +290,16 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>What it expects</th></tr>
-          <tr><td>ISO 22301:2019</td><td>A certifiable business continuity management system: impact analysis, strategies, exercises, and improvement</td></tr>
-          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>For EU financial entities since January 2025: tested ICT continuity and recovery plans, and threat-led penetration testing at least every three years for entities designated as significant</td></tr>
-          <tr><td>HIPAA Security Rule, 45 CFR 164.308(a)(7)</td><td>A contingency plan with data backup, disaster recovery, emergency mode operation, and testing</td></tr>
-          <tr><td>FFIEC Business Continuity Management booklet (2019)</td><td>US financial institutions: resilience across the whole organization, including third parties</td></tr>
-          <tr><td>NIST SP 800-34 Rev. 1</td><td>Contingency planning guide for information systems; widely used outside government</td></tr>
+          <tr><td>ISO 22301:2019</td><td>A certifiable business continuity management system: impact analysis, strategies, exercises, and improvement<sup class="src"><a href="#src-1" title="ISO 22301:2019, Business continuity management systems">[1]</a></sup></td></tr>
+          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>For EU financial entities since January 2025: tested ICT continuity and recovery plans, and threat-led penetration testing at least every three years for entities designated as significant<sup class="src"><a href="#src-2" title="Regulation (EU) 2022/2554 (Digital Operational Resilience Act)">[2]</a></sup></td></tr>
+          <tr><td>HIPAA Security Rule, 45 CFR 164.308(a)(7)</td><td>A contingency plan with data backup, disaster recovery, emergency mode operation, and testing<sup class="src"><a href="#src-3" title="45 CFR 164.308(a)(7), contingency plan">[3]</a></sup></td></tr>
+          <tr><td>FFIEC Business Continuity Management booklet (2019)</td><td>US financial institutions: resilience across the whole organization, including third parties<sup class="src"><a href="#src-4" title="FFIEC, revised Business Continuity Management booklet, November 2019">[4]</a></sup></td></tr>
+          <tr><td>NIST SP 800-34 Rev. 1</td><td>Contingency planning guide for information systems; widely used outside government<sup class="src"><a href="#src-5" title="NIST SP 800-34 Rev. 1, Contingency Planning Guide">[5]</a></sup></td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.iso.org/standard/75106.html" rel="noopener">ISO 22301:2019, Business continuity management systems</a></li><li value="2" id="src-2"><a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" rel="noopener">Regulation (EU) 2022/2554 (Digital Operational Resilience Act)</a></li><li value="3" id="src-3"><a href="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C/section-164.308" rel="noopener">45 CFR 164.308(a)(7), contingency plan</a></li><li value="4" id="src-4"><a href="https://www.ffiec.gov/news/press-releases/2019/pr-11-14" rel="noopener">FFIEC, revised Business Continuity Management booklet, November 2019</a></li><li value="5" id="src-5"><a href="https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final" rel="noopener">NIST SP 800-34 Rev. 1, Contingency Planning Guide</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">8</span>

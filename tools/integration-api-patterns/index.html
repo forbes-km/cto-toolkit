@@ -79,6 +79,16 @@
   @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -283,16 +293,17 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Specification</th><th>Current version or status</th><th>Use it for</th></tr>
-          <tr><td>OpenAPI</td><td>3.2, released September 2025</td><td>Synchronous HTTP APIs: contract first, generated clients, linting in CI</td></tr>
-          <tr><td>AsyncAPI</td><td>3.0, released December 2023</td><td>Event-driven interfaces: channels, messages, and bindings for Kafka, AMQP, MQTT, and others</td></tr>
-          <tr><td>CloudEvents (CNCF)</td><td>1.0; the project graduated in CNCF in January 2024</td><td>A common envelope for events so routing and tracing work across brokers and clouds</td></tr>
-          <tr><td>RFC 9457, Problem Details for HTTP APIs</td><td>IETF standard, July 2023; replaces RFC 7807</td><td>One machine-readable error format across every API</td></tr>
-          <tr><td>OWASP API Security Top 10</td><td>2023 edition</td><td>The review checklist; broken object-level authorization is still the top risk</td></tr>
-          <tr><td>Model Context Protocol (MCP)</td><td>Contributed to the Linux Foundation's Agentic AI Foundation in December 2025</td><td>Exposing tools and data to AI agents; treat each MCP server as an API with its own authentication, authorization, and rate limits</td></tr>
+          <tr><td>OpenAPI</td><td>3.2, released September 2025<sup class="src"><a href="#src-1" title="OpenAPI Initiative, Announcing OpenAPI v3.2, September 2025">[1]</a></sup></td><td>Synchronous HTTP APIs: contract first, generated clients, linting in CI</td></tr>
+          <tr><td>AsyncAPI</td><td>3.0, released December 2023<sup class="src"><a href="#src-2" title="AsyncAPI Initiative, AsyncAPI 3.0.0 release notes, December 2023">[2]</a></sup></td><td>Event-driven interfaces: channels, messages, and bindings for Kafka, AMQP, MQTT, and others</td></tr>
+          <tr><td>CloudEvents (CNCF)</td><td>1.0; the project graduated in CNCF in January 2024<sup class="src"><a href="#src-3" title="CNCF, graduation of CloudEvents, January 2024">[3]</a></sup></td><td>A common envelope for events so routing and tracing work across brokers and clouds</td></tr>
+          <tr><td>RFC 9457, Problem Details for HTTP APIs</td><td>IETF standard, July 2023; replaces RFC 7807<sup class="src"><a href="#src-4" title="IETF, RFC 9457, Problem Details for HTTP APIs, July 2023">[4]</a></sup></td><td>One machine-readable error format across every API</td></tr>
+          <tr><td>OWASP API Security Top 10</td><td>2023 edition</td><td>The review checklist; broken object-level authorization is still the top risk<sup class="src"><a href="#src-5" title="OWASP, API Security Top 10, 2023 edition">[5]</a></sup></td></tr>
+          <tr><td>Model Context Protocol (MCP)</td><td>Contributed to the Linux Foundation's Agentic AI Foundation in December 2025<sup class="src"><a href="#src-6" title="Linux Foundation, formation of the Agentic AI Foundation, December 2025">[6]</a></sup></td><td>Exposing tools and data to AI agents; treat each MCP server as an API with its own authentication, authorization, and rate limits</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.openapis.org/blog/2025/09/23/announcing-openapi-v3-2" rel="noopener">OpenAPI Initiative, Announcing OpenAPI v3.2, September 2025</a></li><li value="2" id="src-2"><a href="https://www.asyncapi.com/blog/release-notes-3.0.0" rel="noopener">AsyncAPI Initiative, AsyncAPI 3.0.0 release notes, December 2023</a></li><li value="3" id="src-3"><a href="https://www.cncf.io/announcements/2024/01/25/cloud-native-computing-foundation-announces-the-graduation-of-cloudevents/" rel="noopener">CNCF, graduation of CloudEvents, January 2024</a></li><li value="4" id="src-4"><a href="https://www.rfc-editor.org/rfc/rfc9457" rel="noopener">IETF, RFC 9457, Problem Details for HTTP APIs, July 2023</a></li><li value="5" id="src-5"><a href="https://api-security.owasp.org/editions/2023/en/0x11-t10/" rel="noopener">OWASP, API Security Top 10, 2023 edition</a></li><li value="6" id="src-6"><a href="https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation" rel="noopener">Linux Foundation, formation of the Agentic AI Foundation, December 2025</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>

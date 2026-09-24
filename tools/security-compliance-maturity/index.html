@@ -73,6 +73,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -132,16 +142,17 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Framework</th><th>Current state</th><th>What it means</th></tr>
-          <tr><td>NIST CSF 2.0</td><td>Published February 2024; added a sixth function, Govern</td><td>Maturity scoring should cover governance, roles, and supply chain risk, not only technical controls</td></tr>
-          <tr><td>ISO/IEC 27001:2022</td><td>Certificates against the 2013 edition expired on October 31, 2025</td><td>Any 2013 certificate still cited by a vendor or target is no longer valid</td></tr>
-          <tr><td>PCI DSS 4.0.1</td><td>Requirements that were future-dated became mandatory on March 31, 2025</td><td>Targeted risk analyses, authenticated internal scanning, and payment page script controls are now assessed</td></tr>
-          <tr><td>CMMC 2.0</td><td>Phase 1 of the DoD rollout began November 10, 2025</td><td>Defense contractors see assessment requirements appear in new solicitations and contracts</td></tr>
-          <tr><td>CIS Controls v8.1</td><td>18 controls and 153 safeguards, with a Govern function added to match CSF 2.0</td><td>A practical control baseline for organizations without a mandated framework</td></tr>
+          <tr><td>NIST CSF 2.0</td><td>Published February 2024; added a sixth function, Govern<sup class="src"><a href="#src-1" title="NIST, release of Cybersecurity Framework 2.0, February 2024">[1]</a></sup></td><td>Maturity scoring should cover governance, roles, and supply chain risk, not only technical controls</td></tr>
+          <tr><td>ISO/IEC 27001:2022</td><td>Certificates against the 2013 edition expired on October 31, 2025<sup class="src"><a href="#src-2" title="IAF MD 26:2022, transition requirements for ISO/IEC 27001:2022">[2]</a></sup></td><td>Any 2013 certificate still cited by a vendor or target is no longer valid</td></tr>
+          <tr><td>PCI DSS 4.0.1</td><td>Requirements that were future-dated became mandatory on March 31, 2025<sup class="src"><a href="#src-3" title="PCI Security Standards Council, future-dated requirements of PCI DSS v4.x">[3]</a></sup></td><td>Targeted risk analyses, authenticated internal scanning, and payment page script controls are now assessed</td></tr>
+          <tr><td>CMMC 2.0</td><td>Phase 1 of the DoD rollout began November 10, 2025<sup class="src"><a href="#src-4" title="DFARS final rule on CMMC, Federal Register, September 10, 2025">[4]</a></sup></td><td>Defense contractors see assessment requirements appear in new solicitations and contracts</td></tr>
+          <tr><td>CIS Controls v8.1</td><td>18 controls and 153 safeguards, with a Govern function added to match CSF 2.0<sup class="src"><a href="#src-5" title="Center for Internet Security, CIS Controls v8.1">[5]</a></sup></td><td>A practical control baseline for organizations without a mandated framework</td></tr>
           <tr><td>SOC 2</td><td>AICPA Trust Services Criteria; points of focus revised in 2022</td><td>A Type II report covers a period of operation, so a new report says nothing about controls before its period began</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.nist.gov/news-events/news/2024/02/nist-releases-version-20-landmark-cybersecurity-framework" rel="noopener">NIST, release of Cybersecurity Framework 2.0, February 2024</a></li><li value="2" id="src-2"><a href="https://iaf.nu/iaf_system/uploads/documents/IAF_MD_26_Transition_requirements_for_ISOIEC_27001-2022_09082022.pdf" rel="noopener">IAF MD 26:2022, transition requirements for ISO/IEC 27001:2022</a></li><li value="3" id="src-3"><a href="https://blog.pcisecuritystandards.org/now-is-the-time-for-organizations-to-adopt-the-future-dated-requirements-of-pci-dss-v4-x" rel="noopener">PCI Security Standards Council, future-dated requirements of PCI DSS v4.x</a></li><li value="4" id="src-4"><a href="https://www.federalregister.gov/documents/2025/09/10/2025-17359/defense-federal-acquisition-regulation-supplement-assessing-contractor-implementation-of" rel="noopener">DFARS final rule on CMMC, Federal Register, September 10, 2025</a></li><li value="5" id="src-5"><a href="https://www.cisecurity.org/controls/v8-1" rel="noopener">Center for Internet Security, CIS Controls v8.1</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>

@@ -73,6 +73,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -211,7 +221,7 @@
     <div class="stage-head">
       <span class="stage-num">7</span>
       <h3>What actually predicts job performance</h3>
-      <p>The largest recent re-analysis of selection research, Sackett and colleagues (2022), corrected a long-standing statistical overcorrection and reordered the list. The practical conclusion for engineering hiring is clear.</p>
+      <p>The largest recent re-analysis of selection research, Sackett and colleagues (2022)<sup class="src"><a href="#src-1" title="Sackett, Zhang, Berry, Lievens, Journal of Applied Psychology, 2022">[1]</a></sup>, corrected a long-standing statistical overcorrection and reordered the list. The practical conclusion for engineering hiring is clear.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -225,7 +235,8 @@
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://doi.org/10.1037/apl0000994" rel="noopener">Sackett, Zhang, Berry, Lievens, Journal of Applied Psychology, 2022</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">8</span>
@@ -256,14 +267,15 @@
         <table class="matrix-table">
           <tr><th>Rule</th><th>What it requires</th><th>Practical effect</th></tr>
           <tr><td>US state and city pay transparency laws (Colorado, California, Washington, New York, Illinois, and a growing number of others)</td><td>Good-faith pay ranges in job postings, with varying thresholds and coverage of remote roles</td><td>Leveling bands have to exist and be defensible before the requisition opens</td></tr>
-          <tr><td>EU Pay Transparency Directive</td><td>Pay range information to candidates before interview, a ban on asking about salary history, and gender pay gap reporting, first due by June 7, 2027 for employers with 150 or more staff. The transposition deadline was June 7, 2026; only a handful of member states met it</td><td>Treat the directive's requirements as the working standard across the EU even where local law is late</td></tr>
+          <tr><td>EU Pay Transparency Directive</td><td>Pay range information to candidates before interview, a ban on asking about salary history, and gender pay gap reporting, first due by June 7, 2027 for employers with 150 or more staff. The transposition deadline was June 7, 2026; only a handful of member states met it<sup class="src"><a href="#src-2" title="Directive (EU) 2023/970, Pay Transparency">[2]</a></sup></td><td>Treat the directive's requirements as the working standard across the EU even where local law is late</td></tr>
           <tr><td>NYC Local Law 144</td><td>An independent bias audit and candidate notice before using an automated employment decision tool</td><td>Any AI resume screener or ranking tool used for New York City roles needs an annual audit</td></tr>
-          <tr><td>Colorado SB 26-189</td><td>From January 1, 2027, notice, explanation of adverse decisions, appeal, and human review for automated decisions affecting employment</td><td>The same obligations reach any AI-assisted hiring step for Colorado candidates</td></tr>
-          <tr><td>EU AI Act</td><td>AI used in recruitment and worker management is high-risk; after the 2026 AI Omnibus those obligations apply from December 2, 2027</td><td>Vendors and deployers of hiring AI need conformity work planned now</td></tr>
+          <tr><td>Colorado SB 26-189</td><td>From January 1, 2027, notice, explanation of adverse decisions, appeal, and human review for automated decisions affecting employment<sup class="src"><a href="#src-3" title="Seyfarth Shaw, Colorado enacts AI replacement law (SB 26-189), May 2026">[3]</a></sup></td><td>The same obligations reach any AI-assisted hiring step for Colorado candidates</td></tr>
+          <tr><td>EU AI Act</td><td>AI used in recruitment and worker management is high-risk; after the 2026 AI Omnibus those obligations apply from December 2, 2027<sup class="src"><a href="#src-4" title="European Commission, AI Omnibus enters into force, July 2026">[4]</a></sup></td><td>Vendors and deployers of hiring AI need conformity work planned now</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://eur-lex.europa.eu/eli/dir/2023/970/oj/eng" rel="noopener">Directive (EU) 2023/970, Pay Transparency</a></li><li value="3" id="src-3"><a href="https://www.seyfarth.com/news-insights/colorado-enacts-artificial-intelligence-replacement-law.html" rel="noopener">Seyfarth Shaw, Colorado enacts AI replacement law (SB 26-189), May 2026</a></li><li value="4" id="src-4"><a href="https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force" rel="noopener">European Commission, AI Omnibus enters into force, July 2026</a></li></ol></div>
+</div>
 <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>

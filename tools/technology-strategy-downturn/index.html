@@ -71,6 +71,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -224,13 +234,14 @@
           <tr><th>Constraint</th><th>What it does</th><th>What to do</th></tr>
           <tr><td>Cloud commitments</td><td>Reserved instances, savings plans, and committed-spend agreements are paid whether or not the capacity is used</td><td>Move workloads onto committed capacity first; cut on-demand spend before touching anything committed</td></tr>
           <tr><td>SaaS contract terms</td><td>Annual and multi-year contracts often cannot be reduced mid-term, and renewal notice windows can be 60 to 90 days</td><td>Pull the renewal calendar from <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a> before promising license savings</td></tr>
-          <tr><td>Layoff notice rules</td><td>In the US, the federal WARN Act generally requires 60 days' notice for mass layoffs and plant closings at employers with 100 or more employees, and several states require more. Other countries require consultation periods</td><td>Involve HR and employment counsel before the headcount number is fixed, and account for notice-period cost</td></tr>
+          <tr><td>Layoff notice rules</td><td>In the US, the federal WARN Act generally requires 60 days<sup class="src"><a href="#src-1" title="US Department of Labor, Plant Closings and Layoffs (WARN)">[1]</a></sup>' notice for mass layoffs and plant closings at employers with 100 or more employees, and several states require more. Other countries require consultation periods</td><td>Involve HR and employment counsel before the headcount number is fixed, and account for notice-period cost</td></tr>
           <tr><td>Compliance obligations</td><td>Certifications, audits, and regulatory controls carry dates that do not move with the budget</td><td>Treat them as protected, alongside the security baseline</td></tr>
           <tr><td>Capitalized projects</td><td>Cancelling a project with capitalized costs can trigger a write-off</td><td>Tell the CFO before the cut list is final, per <a href="../cto-cfo-relationship/index.html">Working with the CFO</a></td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.dol.gov/general/topic/termination/plantclosings" rel="noopener">US Department of Labor, Plant Closings and Layoffs (WARN)</a></li></ol></div>
+</div>
 <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>

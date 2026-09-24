@@ -71,6 +71,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -179,15 +189,16 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Area</th><th>Current rule</th><th>Why the CTO should care</th></tr>
-          <tr><td>Internal-use software, US GAAP (ASC 350-40)</td><td>ASU 2025-06, issued September 2025, removes the old preliminary, development, and post-implementation stages. Capitalization starts once management has authorized and committed funding and completion is probable, and cannot start while significant development uncertainty remains. Effective for annual periods beginning after December 15, 2027; early adoption is permitted</td><td>Agile teams no longer have to force work into waterfall stages to support capitalization, but novel or unproven work stays expensed until the uncertainty is resolved through coding and testing</td></tr>
+          <tr><td>Internal-use software, US GAAP (ASC 350-40)</td><td>ASU 2025-06, issued September 2025<sup class="src"><a href="#src-1" title="FASB, ASU 2025-06, Internal-Use Software, September 2025">[1]</a></sup>, removes the old preliminary, development, and post-implementation stages. Capitalization starts once management has authorized and committed funding and completion is probable, and cannot start while significant development uncertainty remains. Effective for annual periods beginning after December 15, 2027; early adoption is permitted</td><td>Agile teams no longer have to force work into waterfall stages to support capitalization, but novel or unproven work stays expensed until the uncertainty is resolved through coding and testing</td></tr>
           <tr><td>Software sold or licensed to customers (ASC 985-20)</td><td>Costs are capitalized only after technological feasibility is established, which in practice leaves most development expensed</td><td>Hosted SaaS generally follows the internal-use guidance instead; confirm with finance which model applies to your product</td></tr>
-          <tr><td>Implementing SaaS you buy (ASU 2018-15)</td><td>Implementation costs of a cloud computing arrangement are capitalized and amortized over the hosting term, presented with the hosting fees as operating expense</td><td>A large SaaS implementation can be spread over the contract rather than hitting one quarter, which changes how a CFO views the timing</td></tr>
+          <tr><td>Implementing SaaS you buy (ASU 2018-15)</td><td>Implementation costs of a cloud computing arrangement are capitalized and amortized over the hosting term<sup class="src"><a href="#src-2" title="FASB, ASU 2018-15, cloud computing implementation costs, August 2018">[2]</a></sup>, presented with the hosting fees as operating expense</td><td>A large SaaS implementation can be spread over the contract rather than hitting one quarter, which changes how a CFO views the timing</td></tr>
           <tr><td>IFRS (IAS 38)</td><td>Research is expensed; development is capitalized only when six criteria are met, including technical feasibility and a reliable measure of cost. Configuration and customization of SaaS is generally expensed unless it creates a separate asset</td><td>Multinationals may report the same project differently under IFRS and US GAAP</td></tr>
-          <tr><td>US tax: research and experimental costs (Sections 174 and 174A)</td><td>The 2025 budget reconciliation law restored immediate deduction of domestic research costs, which include software development, for tax years beginning after December 31, 2024. Foreign research is still amortized over 15 years. Smaller businesses, with average gross receipts of $31M or less, could elect to apply it retroactively to 2022 through 2024</td><td>Where the engineering work is done now changes the tax cost: domestic development is deductible at once, offshore development is not</td></tr>
+          <tr><td>US tax: research and experimental costs (Sections 174 and 174A)</td><td>The 2025 budget reconciliation law restored immediate deduction of domestic research costs, which include software development, for tax years beginning after December 31, 2024. Foreign research is still amortized over 15 years.<sup class="src"><a href="#src-3" title="IRS, Rev. Proc. 2025-28, Section 174A guidance">[3]</a></sup> Smaller businesses, with average gross receipts of $31M or less, could elect to apply it retroactively to 2022 through 2024</td><td>Where the engineering work is done now changes the tax cost: domestic development is deductible at once, offshore development is not</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://storage.fasb.org/ASU%202025-06.pdf" rel="noopener">FASB, ASU 2025-06, Internal-Use Software, September 2025</a></li><li value="2" id="src-2"><a href="https://storage.fasb.org/ASU%202018-15.pdf" rel="noopener">FASB, ASU 2018-15, cloud computing implementation costs, August 2018</a></li><li value="3" id="src-3"><a href="https://www.irs.gov/pub/irs-drop/rp-25-28.pdf" rel="noopener">IRS, Rev. Proc. 2025-28, Section 174A guidance</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">6</span>

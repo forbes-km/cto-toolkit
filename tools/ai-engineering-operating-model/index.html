@@ -71,6 +71,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -184,21 +194,22 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>Finding</th></tr>
-          <tr><td>GitHub controlled experiment (Peng and colleagues, 2023)</td><td>Developers finished a bounded, well-specified task about 55 percent faster with an AI assistant</td></tr>
-          <tr><td>DORA, 2024</td><td>Higher AI adoption was associated with slightly lower delivery throughput and noticeably lower delivery stability</td></tr>
-          <tr><td>DORA, 2025 State of AI-assisted Software Development</td><td>About 90 percent of respondents use AI and over 80 percent report productivity gains; AI adoption was now associated with higher throughput, but instability persisted, and only about a quarter reported high trust in AI output. The report's central finding is that AI amplifies a team's existing strengths and weaknesses</td></tr>
-          <tr><td>METR randomized trial (July 2025)</td><td>Experienced open-source maintainers working in their own large repositories took about 19 percent longer with AI tools, while believing they were faster</td></tr>
-          <tr><td>METR update (February 2026)</td><td>A follow-up could not produce a reliable new estimate because developers increasingly declined to work without AI; the authors think gains have likely grown since early 2025 but could not measure how much</td></tr>
-          <tr><td>Veracode GenAI Code Security reports (2025, spring 2026)</td><td>About 45 percent of AI-generated code samples failed security tests, with no material improvement from newer models; syntax correctness rose while security did not</td></tr>
+          <tr><td>GitHub controlled experiment (Peng and colleagues, 2023)</td><td>Developers finished a bounded, well-specified task about 55 percent faster with an AI assistant<sup class="src"><a href="#src-1" title="Peng and colleagues, The Impact of AI on Developer Productivity, 2023">[1]</a></sup></td></tr>
+          <tr><td>DORA, 2024</td><td>Higher AI adoption was associated with slightly lower delivery throughput and noticeably lower delivery stability<sup class="src"><a href="#src-2" title="DORA, 2024 Accelerate State of DevOps Report">[2]</a></sup></td></tr>
+          <tr><td>DORA, 2025 State of AI-assisted Software Development</td><td>About 90 percent of respondents use AI and over 80 percent report productivity gains<sup class="src"><a href="#src-3" title="DORA, 2025 State of AI-assisted Software Development">[3]</a></sup>; AI adoption was now associated with higher throughput, but instability persisted, and only about a quarter reported high trust in AI output. The report's central finding is that AI amplifies a team's existing strengths and weaknesses</td></tr>
+          <tr><td>METR randomized trial (July 2025)</td><td>Experienced open-source maintainers working in their own large repositories took about 19 percent longer with AI tools, while believing they were faster<sup class="src"><a href="#src-4" title="METR, early-2025 AI and experienced open-source developer productivity, July 2025">[4]</a></sup></td></tr>
+          <tr><td>METR update (February 2026)</td><td>A follow-up could not produce a reliable new estimate because developers increasingly declined to work without AI; the authors think gains have likely grown since early 2025 but could not measure how much<sup class="src"><a href="#src-5" title="METR, changes to the developer productivity experiment design, February 2026">[5]</a></sup></td></tr>
+          <tr><td>Veracode GenAI Code Security Report (2025)</td><td>About 45 percent of AI-generated code samples failed security tests, with no material improvement from newer models; syntax correctness rose while security did not<sup class="src"><a href="#src-6" title="Veracode, 2025 GenAI Code Security Report">[6]</a></sup></td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://doi.org/10.48550/arXiv.2302.06590" rel="noopener">Peng and colleagues, The Impact of AI on Developer Productivity, 2023</a></li><li value="2" id="src-2"><a href="https://dora.dev/research/2024/dora-report/" rel="noopener">DORA, 2024 Accelerate State of DevOps Report</a></li><li value="3" id="src-3"><a href="https://dora.dev/research/2025/dora-report/" rel="noopener">DORA, 2025 State of AI-assisted Software Development</a></li><li value="4" id="src-4"><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" rel="noopener">METR, early-2025 AI and experienced open-source developer productivity, July 2025</a></li><li value="5" id="src-5"><a href="https://metr.org/blog/2026-02-24-uplift-update/" rel="noopener">METR, changes to the developer productivity experiment design, February 2026</a></li><li value="6" id="src-6"><a href="https://www.veracode.com/blog/genai-code-security-report/" rel="noopener">Veracode, 2025 GenAI Code Security Report</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">6</span>
       <h3>The DORA AI Capabilities Model</h3>
-      <p>DORA's 2025 research identified seven capabilities that determine whether AI helps or hurts. Most are not about AI at all, which is the point.</p>
+      <p>DORA's 2025 research identified seven capabilities that determine whether AI helps or hurts.<sup class="src"><a href="#src-3" title="DORA, 2025 State of AI-assisted Software Development">[3]</a></sup> Most are not about AI at all, which is the point.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -214,7 +225,8 @@
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="3"><a href="https://dora.dev/research/2025/dora-report/" rel="noopener">DORA, 2025 State of AI-assisted Software Development</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">7</span>

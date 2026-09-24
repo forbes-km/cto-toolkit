@@ -71,6 +71,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -295,16 +305,17 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>What applies</th><th>Effect on the score</th></tr>
-          <tr><td>EU AI Act</td><td>General-purpose AI obligations have applied since August 2, 2025. The AI Omnibus, in force since July 27, 2026, moved obligations for high-risk systems in Annex III, such as hiring and credit, to December 2, 2027, and for AI in regulated products to August 2, 2028</td><td>Deferred, not removed; a high-risk use case still needs the conformity work planned into its cost</td></tr>
-          <tr><td>Colorado SB 26-189</td><td>Replaced the 2024 Colorado AI Act; from January 1, 2027 it requires notice, adverse-decision explanations, appeal, and human review for automated decisions in consequential areas including employment</td><td>Raises operating cost for AI in hiring, lending, housing, insurance, and similar decisions</td></tr>
+          <tr><td>EU AI Act</td><td>General-purpose AI obligations have applied since August 2, 2025. The AI Omnibus, in force since July 27, 2026, moved obligations for high-risk systems in Annex III, such as hiring and credit, to December 2, 2027, and for AI in regulated products to August 2, 2028<sup class="src"><a href="#src-1" title="European Commission, AI Omnibus enters into force, July 2026">[1]</a><a href="#src-2" title="Regulation (EU) 2024/1689 (AI Act)">[2]</a></sup></td><td>Deferred, not removed; a high-risk use case still needs the conformity work planned into its cost</td></tr>
+          <tr><td>Colorado SB 26-189</td><td>Replaced the 2024 Colorado AI Act; from January 1, 2027 it requires notice, adverse-decision explanations, appeal, and human review for automated decisions in consequential areas including employment<sup class="src"><a href="#src-3" title="Seyfarth Shaw, Colorado enacts AI replacement law (SB 26-189), May 2026">[3]</a></sup></td><td>Raises operating cost for AI in hiring, lending, housing, insurance, and similar decisions</td></tr>
           <tr><td>NYC Local Law 144</td><td>Independent bias audits and candidate notice for automated employment decision tools used in New York City</td><td>Adds an annual audit cost to any hiring tool in scope</td></tr>
-          <tr><td>NIST AI Risk Management Framework and its Generative AI Profile (NIST AI 600-1, 2024)</td><td>A voluntary structure for mapping, measuring, and managing AI risk</td><td>A ready-made checklist for the Risk dimension</td></tr>
-          <tr><td>ISO/IEC 42001:2023</td><td>A certifiable AI management system standard</td><td>Increasingly asked for by enterprise buyers of AI products</td></tr>
-          <tr><td>Healthcare: FDA guidance on predetermined change control plans for AI-enabled device software (final, December 2024) and ONC's HTI-1 rule on decision support transparency</td><td>Rules for how AI in clinical and medical-device settings may change after clearance and what must be disclosed to users</td><td>Clinical-facing initiatives need regulatory review as a gate, not a later step</td></tr>
+          <tr><td>NIST AI Risk Management Framework and its Generative AI Profile (NIST AI 600-1, 2024)<sup class="src"><a href="#src-4" title="NIST AI 600-1, Generative AI Profile, July 2024">[4]</a></sup></td><td>A voluntary structure for mapping, measuring, and managing AI risk</td><td>A ready-made checklist for the Risk dimension</td></tr>
+          <tr><td>ISO/IEC 42001:2023</td><td>A certifiable AI management system standard<sup class="src"><a href="#src-5" title="ISO/IEC 42001:2023, AI management system">[5]</a></sup></td><td>Increasingly asked for by enterprise buyers of AI products</td></tr>
+          <tr><td>Healthcare: FDA guidance on predetermined change control plans for AI-enabled device software (final, December 2024)<sup class="src"><a href="#src-6" title="FDA, predetermined change control plan guidance for AI-enabled device software">[6]</a></sup> and ONC's HTI-1 rule on decision support transparency</td><td>Rules for how AI in clinical and medical-device settings may change after clearance and what must be disclosed to users</td><td>Clinical-facing initiatives need regulatory review as a gate, not a later step</td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force" rel="noopener">European Commission, AI Omnibus enters into force, July 2026</a></li><li value="2" id="src-2"><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" rel="noopener">Regulation (EU) 2024/1689 (AI Act)</a></li><li value="3" id="src-3"><a href="https://www.seyfarth.com/news-insights/colorado-enacts-artificial-intelligence-replacement-law.html" rel="noopener">Seyfarth Shaw, Colorado enacts AI replacement law (SB 26-189), May 2026</a></li><li value="4" id="src-4"><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" rel="noopener">NIST AI 600-1, Generative AI Profile, July 2024</a></li><li value="5" id="src-5"><a href="https://www.iso.org/standard/42001" rel="noopener">ISO/IEC 42001:2023, AI management system</a></li><li value="6" id="src-6"><a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/marketing-submission-recommendations-predetermined-change-control-plan-artificial-intelligence" rel="noopener">FDA, predetermined change control plan guidance for AI-enabled device software</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">6</span>

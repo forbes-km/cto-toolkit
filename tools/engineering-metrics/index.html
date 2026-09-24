@@ -73,6 +73,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -101,10 +111,11 @@
           <tr><td>Failed deployment recovery time</td><td>How long it takes to recover from a failed deployment</td><td>Under one hour</td><td>Between one week and one month</td></tr>
           <tr><td>Deployment rework rate</td><td>Percentage of deployments that are unplanned rework fixing a previous release rather than new feature work</td><td colspan="2">No standardized industry band yet; track your own trend for this one</td></tr>
         </table>
-        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Deployment rework rate was added to the model in 2024 as a third stability signal alongside change fail rate. It's newer, and unlike the first four metrics, the industry hasn't converged on performance bands for it. That is a useful reminder that even a well-established framework keeps evolving, and that the confidence attached to a number should match how long it's been tested rather than how official it sounds.</p>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Deployment rework rate was added to the model in 2024<sup class="src"><a href="#src-1" title="DORA, 2024 Accelerate State of DevOps Report">[1]</a></sup> as a third stability signal alongside change fail rate. It's newer, and unlike the first four metrics, the industry hasn't converged on performance bands for it. That is a useful reminder that even a well-established framework keeps evolving, and that the confidence attached to a number should match how long it's been tested rather than how official it sounds.</p>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://dora.dev/research/2024/dora-report/" rel="noopener">DORA, 2024 Accelerate State of DevOps Report</a></li></ol></div>
+</div>
 
   <div class="stage-card" id="calculator">
     <div class="stage-head">

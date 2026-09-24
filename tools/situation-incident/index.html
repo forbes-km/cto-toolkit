@@ -73,6 +73,16 @@
   footer a { color: var(--accent); }
   .stage-grid.single { grid-template-columns: 1fr; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -167,18 +177,19 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Regime</th><th>Who it covers</th><th>Deadline</th></tr>
-          <tr><td>SEC Form 8-K, Item 1.05</td><td>US-listed public companies</td><td>Four business days after determining the incident is material; the materiality determination itself must be made without unreasonable delay</td></tr>
-          <tr><td>GDPR, Article 33</td><td>Controllers processing EU or UK personal data</td><td>72 hours after becoming aware, to the supervisory authority; affected individuals without undue delay when the risk to them is high</td></tr>
-          <tr><td>NIS2 Directive</td><td>EU essential and important entities</td><td>Early warning within 24 hours, incident notification within 72 hours, final report within one month</td></tr>
-          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>EU financial entities</td><td>Initial notice within 4 hours of classifying an incident as major and no later than 24 hours after detection; intermediate report within 72 hours; final report within one month</td></tr>
-          <tr><td>HIPAA Breach Notification Rule</td><td>US covered entities and business associates</td><td>Individuals without unreasonable delay and no later than 60 days after discovery; HHS and media as well when 500 or more people are affected</td></tr>
-          <tr><td>NYDFS Part 500</td><td>New York regulated financial services</td><td>72 hours after determining a reportable incident occurred; 24 hours after an extortion payment, with a written explanation within 30 days</td></tr>
+          <tr><td>SEC Form 8-K, Item 1.05</td><td>US-listed public companies</td><td>Four business days after determining the incident is material; the materiality determination itself must be made without unreasonable delay<sup class="src"><a href="#src-1" title="SEC press release 2023-139, cybersecurity disclosure rules, July 2023">[1]</a></sup></td></tr>
+          <tr><td>GDPR, Article 33</td><td>Controllers processing EU or UK personal data</td><td>72 hours after becoming aware, to the supervisory authority; affected individuals without undue delay when the risk to them is high<sup class="src"><a href="#src-2" title="Regulation (EU) 2016/679 (GDPR), Article 33">[2]</a></sup></td></tr>
+          <tr><td>NIS2 Directive</td><td>EU essential and important entities</td><td>Early warning within 24 hours, incident notification within 72 hours, final report within one month<sup class="src"><a href="#src-3" title="Directive (EU) 2022/2555 (NIS2), Article 23">[3]</a></sup></td></tr>
+          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>EU financial entities</td><td>Initial notice within 4 hours of classifying an incident as major and no later than 24 hours after becoming aware of it; intermediate report within 72 hours of the initial notice; final report within one month of the latest intermediate report<sup class="src"><a href="#src-4" title="Commission Delegated Regulation (EU) 2025/301, incident reporting time limits, Article 5">[4]</a></sup></td></tr>
+          <tr><td>HIPAA Breach Notification Rule</td><td>US covered entities and business associates</td><td>Individuals without unreasonable delay and no later than 60 days after discovery; HHS and media as well when 500 or more people are affected<sup class="src"><a href="#src-5" title="HHS, HIPAA Breach Notification Rule">[5]</a></sup></td></tr>
+          <tr><td>NYDFS Part 500</td><td>New York regulated financial services</td><td>72 hours after determining a reportable incident occurred; 24 hours after an extortion payment, with a written explanation within 30 days<sup class="src"><a href="#src-6" title="NYDFS, 23 NYCRR Part 500 as amended November 2023, Section 500.17">[6]</a></sup></td></tr>
           <tr><td>US state breach laws</td><td>Any company holding residents' personal data</td><td>All 50 states have one; several set 30 days, others say without unreasonable delay. The affected residents' states govern, not yours</td></tr>
-          <tr><td>CIRCIA</td><td>US critical infrastructure</td><td>Proposed 72 hours for covered incidents and 24 hours for ransom payments to CISA; the final rule was still pending at this review, so check its status</td></tr>
+          <tr><td>CIRCIA</td><td>US critical infrastructure</td><td>Proposed 72 hours for covered incidents and 24 hours for ransom payments to CISA; the final rule was still pending at this review, so check its status<sup class="src"><a href="#src-7" title="CISA, CIRCIA overview and rulemaking status">[7]</a></sup></td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.sec.gov/newsroom/press-releases/2023-139" rel="noopener">SEC press release 2023-139, cybersecurity disclosure rules, July 2023</a></li><li value="2" id="src-2"><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" rel="noopener">Regulation (EU) 2016/679 (GDPR), Article 33</a></li><li value="3" id="src-3"><a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj" rel="noopener">Directive (EU) 2022/2555 (NIS2), Article 23</a></li><li value="4" id="src-4"><a href="https://eur-lex.europa.eu/eli/reg_del/2025/301/oj/eng" rel="noopener">Commission Delegated Regulation (EU) 2025/301, incident reporting time limits, Article 5</a></li><li value="5" id="src-5"><a href="https://www.hhs.gov/hipaa/for-professionals/breach-notification/index.html" rel="noopener">HHS, HIPAA Breach Notification Rule</a></li><li value="6" id="src-6"><a href="https://www.dfs.ny.gov/system/files/documents/2023/12/rf23_nycrr_part_500_amend02_20231101.pdf" rel="noopener">NYDFS, 23 NYCRR Part 500 as amended November 2023, Section 500.17</a></li><li value="7" id="src-7"><a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/information-sharing/cyber-incident-reporting-critical-infrastructure-act-2022-circia" rel="noopener">CISA, CIRCIA overview and rulemaking status</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
@@ -205,7 +216,7 @@
     <div class="stage-head">
       <span class="stage-num">Current guidance</span>
       <h2>NIST SP 800-61 Revision 3</h2>
-      <p>NIST revised its incident response guidance in April 2025 and aligned it to the Cybersecurity Framework 2.0.</p>
+      <p>NIST revised its incident response guidance in April 2025 and aligned it to the Cybersecurity Framework 2.0.<sup class="src"><a href="#src-8" title="NIST SP 800-61 Rev. 3, Incident Response Recommendations, April 2025">[8]</a></sup></p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -217,7 +228,8 @@
         <p>If your incident plan still cites Revision 2 (2012), update the reference and the structure. More usefully, check that postmortem actions land in the risk register and the roadmap, since that feedback loop is the point of the revision.</p>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="8" id="src-8"><a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" rel="noopener">NIST SP 800-61 Rev. 3, Incident Response Recommendations, April 2025</a></li></ol></div>
+</div>
 <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Outputs</span>

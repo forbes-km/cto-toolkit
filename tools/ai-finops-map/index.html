@@ -103,6 +103,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -439,10 +449,11 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What to report</span>
-        <p>Cost per resolved outcome next to the cost of the human alternative, and the trend month over month. Flexera's 2026 survey found waste growing on AI workloads even as overall cloud value improved, so an unmeasured pilot is where that waste starts.</p>
+        <p>Cost per resolved outcome next to the cost of the human alternative, and the trend month over month. Flexera's 2026 survey found waste growing on AI workloads even as overall cloud value improved<sup class="src"><a href="#src-1" title="Flexera, 2026 State of the Cloud Report (release, March 2026)">[1]</a></sup>, so an unmeasured pilot is where that waste starts.</p>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.flexera.com/about-us/press-center/flexera-finds-cloud-value-is-rising-while-ai-waste-grows" rel="noopener">Flexera, 2026 State of the Cloud Report (release, March 2026)</a></li></ol></div>
+</div>
 </main>
 
 <footer>

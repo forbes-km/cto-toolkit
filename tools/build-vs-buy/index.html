@@ -73,6 +73,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -225,8 +235,9 @@
         <p>Security patching indefinitely, keeping pace with a changing regulatory or integration landscape, the bus-factor risk when the one engineer who deeply understands it leaves, and the opportunity cost of the team's attention being split across build-and-maintain instead of focused on the differentiator.</p>
       </div>
     </div>
-    <div class="same-note">Maintenance is the dominant cost of owned software. The research summarized by Robert Glass in Facts and Fallacies of Software Engineering puts it at 40 to 80 percent of lifecycle cost, around 60 percent on average. A build proposal whose five-year view shows maintenance as a small line has left out most of the cost; the worked example below shows the effect.</div>
-  </div>
+    <div class="same-note">Maintenance is the dominant cost of owned software. The research summarized by Robert Glass in Facts and Fallacies of Software Engineering puts it at 40 to 80 percent of lifecycle cost, around 60 percent on average.<sup class="src"><a href="#src-1" title="Robert L. Glass, Facts and Fallacies of Software Engineering, Addison-Wesley, 2002">[1]</a></sup> A build proposal whose five-year view shows maintenance as a small line has left out most of the cost; the worked example below shows the effect.</div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1">Robert L. Glass, Facts and Fallacies of Software Engineering, Addison-Wesley, 2002</li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">3</span>

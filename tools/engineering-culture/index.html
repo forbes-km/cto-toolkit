@@ -71,6 +71,16 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
 </style>
 </head>
 <body>
@@ -234,16 +244,17 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>Finding worth using</th></tr>
-          <tr><td>Ron Westrum's typology of organizational cultures (2004)</td><td>Organizations fall into pathological, bureaucratic, or generative patterns, distinguished mainly by how information flows and how messengers are treated</td></tr>
-          <tr><td>DORA research program (Google Cloud, annual since 2014)</td><td>Generative culture, in Westrum's sense, repeatedly predicts better software delivery and organizational performance. The 2025 report found AI amplifies whatever culture and practices a team already has</td></tr>
-          <tr><td>Amy Edmondson on psychological safety (1999 onward)</td><td>Teams that feel safe to raise problems report more errors early and learn faster, which looks worse on a dashboard in the short run and better in outcomes</td></tr>
-          <tr><td>Google's Project Aristotle (2015 to 2016)</td><td>Psychological safety was the strongest of the factors that distinguished effective teams, ahead of team composition</td></tr>
-          <tr><td>SPACE framework (Forsgren, Storey, and others, 2021)</td><td>Productivity has several dimensions, including satisfaction and wellbeing; measuring output alone misreads it</td></tr>
-          <tr><td>DevEx research (Noda, Storey, Forsgren, Greiler, 2023)</td><td>Developer experience comes down to three things leaders can change: fast feedback loops, manageable cognitive load, and protected flow time</td></tr>
+          <tr><td>Ron Westrum's typology of organizational cultures (2004)</td><td>Organizations fall into pathological, bureaucratic, or generative patterns, distinguished mainly by how information flows and how messengers are treated<sup class="src"><a href="#src-1" title="Westrum, A typology of organisational cultures, 2004">[1]</a></sup></td></tr>
+          <tr><td>DORA research program (Google Cloud, annual since 2014)</td><td>Generative culture, in Westrum's sense, repeatedly predicts better software delivery and organizational performance. The 2025 report found AI amplifies whatever culture and practices a team already has<sup class="src"><a href="#src-2" title="DORA, 2025 State of AI-assisted Software Development">[2]</a></sup></td></tr>
+          <tr><td>Amy Edmondson on psychological safety (1999 onward)</td><td>Teams that feel safe to raise problems report more errors early and learn faster, which looks worse on a dashboard in the short run and better in outcomes<sup class="src"><a href="#src-3" title="Edmondson, Psychological Safety and Learning Behavior in Work Teams, 1999">[3]</a></sup></td></tr>
+          <tr><td>Google's Project Aristotle (2015 to 2016)</td><td>Psychological safety was the strongest of the factors that distinguished effective teams, ahead of team composition<sup class="src"><a href="#src-4" title="Google re:Work, Understand team effectiveness">[4]</a></sup></td></tr>
+          <tr><td>SPACE framework (Forsgren, Storey, and others, 2021)</td><td>Productivity has several dimensions, including satisfaction and wellbeing; measuring output alone misreads it<sup class="src"><a href="#src-5" title="Forsgren and colleagues, The SPACE of Developer Productivity, ACM Queue, 2021">[5]</a></sup></td></tr>
+          <tr><td>DevEx research (Noda, Storey, Forsgren, Greiler, 2023)</td><td>Developer experience comes down to three things leaders can change: fast feedback loops, manageable cognitive load, and protected flow time<sup class="src"><a href="#src-6" title="Noda, Storey, Forsgren, Greiler, DevEx, ACM Queue, 2023">[6]</a></sup></td></tr>
         </table>
       </div>
     </div>
-  </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://doi.org/10.1136/qshc.2003.009522" rel="noopener">Westrum, A typology of organisational cultures, 2004</a></li><li value="2" id="src-2"><a href="https://dora.dev/research/2025/dora-report/" rel="noopener">DORA, 2025 State of AI-assisted Software Development</a></li><li value="3" id="src-3"><a href="https://doi.org/10.2307/2666999" rel="noopener">Edmondson, Psychological Safety and Learning Behavior in Work Teams, 1999</a></li><li value="4" id="src-4"><a href="https://rework.withgoogle.com/intl/en/guides/understand-team-effectiveness" rel="noopener">Google re:Work, Understand team effectiveness</a></li><li value="5" id="src-5"><a href="https://queue.acm.org/detail.cfm?id=3454124" rel="noopener">Forsgren and colleagues, The SPACE of Developer Productivity, ACM Queue, 2021</a></li><li value="6" id="src-6"><a href="https://doi.org/10.1145/3595878" rel="noopener">Noda, Storey, Forsgren, Greiler, DevEx, ACM Queue, 2023</a></li></ol></div>
+</div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">9</span>
