@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enterprise Architecture</title>
-<meta name="description" content="Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, how to build and use a capability model and operating model canvas, writing a target state executives finish, capability-driven roadmaps, portfolio and modernization calls, assessing an inherited architecture, EA in M&amp;A, and how the EA function itself should run, relate, fail, and be measured.">
+<meta name="description" content="Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, capability models with an interactive heat map, value streams, operating model canvases, target-state narratives, capability-driven roadmaps, portfolio calls, assessing an inherited architecture, EA in M&amp;A, standing up or rebooting the function, tooling, and how EA should run, relate, fail, and be measured.">
 <meta property="og:title" content="Enterprise Architecture | CTO Toolkit">
-<meta property="og:description" content="Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, how to build and use a capability model and operating model canvas, writing a target state executives finish, capability-driven roadmaps, portfolio and modernization calls, assessing an inherited architecture, EA in M&amp;A, and how the EA function itself should run, relate, fail, and be measured.">
+<meta property="og:description" content="Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, capability models with an interactive heat map, value streams, operating model canvases, target-state narratives, capability-driven roadmaps, portfolio calls, assessing an inherited architecture, EA in M&amp;A, standing up or rebooting the function, tooling, and how EA should run, relate, fail, and be measured.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/enterprise-architecture-map/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Enterprise Architecture | CTO Toolkit">
-<meta name="twitter:description" content="Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, how to build and use a capability model and operating model canvas, writing a target state executives finish, capability-driven roadmaps, portfolio and modernization calls, assessing an inherited architecture, EA in M&amp;A, and how the EA function itself should run, relate, fail, and be measured.">
+<meta name="twitter:description" content="Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, capability models with an interactive heat map, value streams, operating model canvases, target-state narratives, capability-driven roadmaps, portfolio calls, assessing an inherited architecture, EA in M&amp;A, standing up or rebooting the function, tooling, and how EA should run, relate, fail, and be measured.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/enterprise-architecture-map/index.html">
 <style>
@@ -90,6 +90,24 @@
   .page-nav a:hover { text-decoration: underline; }
   .stage-cell .matrix-table + .matrix-table { margin-top: 14px; }
   @media (max-width: 700px) { .page-nav ol { columns: 1; } }
+  .page-nav ul { margin: 0; padding-left: 18px; columns: 2; column-gap: 32px; }
+  .page-nav ul li { margin: 2px 0; break-inside: avoid; line-height: 1.5; }
+  @media (max-width: 700px) { .page-nav ul { columns: 1; } }
+  .hm-map { display: grid; gap: 10px; margin: 14px 0; }
+  .hm-row { display: grid; grid-template-columns: 170px 1fr; gap: 10px; align-items: start; }
+  .hm-l1 { font-size: 12px; font-weight: 600; color: var(--ink-soft); padding-top: 8px; }
+  .hm-tiles { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hm-tile { border-radius: 6px; padding: 7px 10px; font-size: 12px; line-height: 1.35; min-width: 132px; max-width: 220px; flex: 1 1 132px; border: 1px solid var(--line); }
+  .hm-tile b { display: block; font-weight: 600; }
+  .hm-tile span { font-family: var(--mono); font-size: 11px; opacity: .9; }
+  .hm-a0 { background: #F7F3EE; color: var(--ink); } .hm-a1 { background: #DDB88C; color: var(--ink); }
+  .hm-a2 { background: #9C6232; color: #fff; border-color: #9C6232; } .hm-a3 { background: #5A3316; color: #fff; border-color: #5A3316; }
+  .hm-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11.5px; color: var(--ink-soft); align-items: center; }
+  .hm-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -3px; margin-right: 5px; border: 1px solid var(--line); }
+  .hm-quad { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin: 10px 0; }
+  .hm-q { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; background: #fff; }
+  .hm-q strong { display: block; font-size: 13px; }
+  @media (max-width: 700px) { .hm-row { grid-template-columns: 1fr; } .hm-l1 { padding-top: 0; } }
   :target { scroll-margin-top: 80px; }
   .src-list li:target { background: var(--accent-soft); }
 </style>
@@ -99,9 +117,9 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Enterprise Architecture</h1>
-  <p>Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, how to build and use a capability model and operating model canvas, writing a target state executives finish, capability-driven roadmaps, portfolio and modernization calls, assessing an inherited architecture, EA in M&amp;A, and how the EA function itself should run, relate, fail, and be measured.</p>
+  <p>Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, capability models with an interactive heat map, value streams, operating model canvases, target-state narratives, capability-driven roadmaps, portfolio calls, assessing an inherited architecture, EA in M&amp;A, standing up or rebooting the function, tooling, and how EA should run, relate, fail, and be measured.</p>
   <div class="caveat">The Business Capability Model, Operating Model Canvas, Target-State Narrative Template, Capability-Driven Roadmap Method, EA Operating Model, Architecture Review Operating Model, Architecture Principles Library, and <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a> are field-tested instruments with full facilitation guides, templates, and worked examples, available through direct engagement. This page sets out the reasoning, structure, and decision rules behind each; the complete deliverables sit outside it.</div>
-  <nav class="page-nav" aria-label="On this page"><span class="src-lbl">On this page</span><ol><li><a href="#what">What enterprise architecture is</a></li><li><a href="#scope">Enterprise, domain, and solution architecture</a></li><li><a href="#bcm-rules">Business Capability Model: the structural rules</a></li><li><a href="#bcm-build">Building the capability model, and putting it to work</a></li><li><a href="#canvas">Operating Model Canvas: six dimensions</a></li><li><a href="#canvas-run">Running a canvas, and the four ways it goes wrong</a></li><li><a href="#target-state">The target-state narrative: prose first, diagrams second</a></li><li><a href="#roadmap">The capability-driven roadmap</a></li><li><a href="#portfolio">Portfolio and modernization calls: where EA turns a model into a decision</a></li><li><a href="#inherited">Assessing an architecture you inherited</a></li><li><a href="#ma">EA in mergers and acquisitions</a></li><li><a href="#services">What the EA function provides, and what it deliberately doesn't</a></li><li><a href="#engagement">Engagement patterns: matching depth to the work</a></li><li><a href="#capacity">Roles and capacity allocation</a></li><li><a href="#demand">Demand management</a></li><li><a href="#relationships">The relationships that decide whether EA gets heard</a></li><li><a href="#review">Architecture review: four touchpoints</a></li><li><a href="#failure">How EA functions fail, and what fixes each</a></li><li><a href="#standards">Standards and notations, current editions</a></li><li><a href="#measuring">Measuring whether EA is working</a></li></ol></nav>
+  <nav class="page-nav" aria-label="On this page"><span class="src-lbl">On this page</span><ul><li><a href="#what">What enterprise architecture is</a></li><li><a href="#scope">Enterprise, domain, and solution architecture</a></li><li><a href="#bcm-rules">Business Capability Model: the structural rules</a></li><li><a href="#bcm-build">Building the capability model, and putting it to work</a></li><li><a href="#value-streams">Value streams: the flow the capability map leaves out</a></li><li><a href="#heatmap">Capability heat map (interactive)</a></li><li><a href="#canvas">Operating Model Canvas: six dimensions</a></li><li><a href="#canvas-run">Running a canvas, and the four ways it goes wrong</a></li><li><a href="#target-state">The target-state narrative: prose first, diagrams second</a></li><li><a href="#roadmap">The capability-driven roadmap</a></li><li><a href="#portfolio">Portfolio and modernization calls: where EA turns a model into a decision</a></li><li><a href="#inherited">Assessing an architecture you inherited</a></li><li><a href="#ma">EA in mergers and acquisitions</a></li><li><a href="#standing-up">Standing up or rebooting an EA function</a></li><li><a href="#services">What the EA function provides, and what it deliberately doesn't</a></li><li><a href="#engagement">Engagement patterns: matching depth to the work</a></li><li><a href="#capacity">Roles and capacity allocation</a></li><li><a href="#demand">Demand management</a></li><li><a href="#relationships">The relationships that decide whether EA gets heard</a></li><li><a href="#review">Architecture review: four touchpoints</a></li><li><a href="#failure">How EA functions fail, and what fixes each</a></li><li><a href="#standards">Standards and notations, current editions</a></li><li><a href="#tooling">EA tooling: when a spreadsheet is enough</a></li><li><a href="#measuring">Measuring whether EA is working</a></li></ul></nav>
 
 </header>
 
@@ -193,11 +211,11 @@
       <div style="margin-top:16px"><table class="matrix-table">
           <tr><th>Artifact</th><th>Question it answers</th><th>Owned by</th><th>Go deeper</th></tr>
           <tr><td>Strategy decomposition</td><td>Which five to seven priorities matter, and how will we know they were met?</td><td>Executive team</td><td><a href="../technology-strategy/index.html">Technology Strategy</a></td></tr>
-          <tr><td>Business capability model</td><td>What does this organization do, independent of structure, process, or system?</td><td>Business leadership, EA facilitates</td><td>Sections 4 and 5 below</td></tr>
-          <tr><td>Operating model canvas</td><td>How is one capability actually delivered today?</td><td>Capability owner</td><td>Sections 6 and 7 below</td></tr>
-          <tr><td>Target-state narrative</td><td>What does the organization look like when the change is done, and why this target?</td><td>Named authors, sponsor approves</td><td>Section 8 below</td></tr>
-          <tr><td>Capability-driven roadmap</td><td>Which gaps close, through which initiatives, in what order?</td><td>Business sponsors per priority</td><td>Section 9 below; <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
-          <tr><td>Portfolio decisions</td><td>Which applications to invest in, tolerate, migrate, or eliminate?</td><td>Portfolio governance board</td><td>Section 11 below; <a href="../apm-portfolio-map/index.html">Application Portfolio</a></td></tr>
+          <tr><td>Business capability model</td><td>What does this organization do, independent of structure, process, or system?</td><td>Business leadership, EA facilitates</td><td>Sections <a href="#bcm-rules">3</a> and <a href="#bcm-build">4</a> below</td></tr>
+          <tr><td>Operating model canvas</td><td>How is one capability actually delivered today?</td><td>Capability owner</td><td>Sections <a href="#canvas">6</a> and <a href="#canvas-run">7</a> below</td></tr>
+          <tr><td>Target-state narrative</td><td>What does the organization look like when the change is done, and why this target?</td><td>Named authors, sponsor approves</td><td>Section <a href="#target-state">8</a> below</td></tr>
+          <tr><td>Capability-driven roadmap</td><td>Which gaps close, through which initiatives, in what order?</td><td>Business sponsors per priority</td><td>Section <a href="#roadmap">9</a> below; <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
+          <tr><td>Portfolio decisions</td><td>Which applications to invest in, tolerate, migrate, or eliminate?</td><td>Portfolio governance board</td><td>Section <a href="#portfolio">10</a> below; <a href="../apm-portfolio-map/index.html">Application Portfolio</a></td></tr>
           <tr><td>Solution design and ADRs</td><td>What gets built, and why was it built this way?</td><td>Delivery teams, EA advises</td><td><a href="../architecture-review-board/index.html">Architecture Review Board</a></td></tr>
         </table></div>
     </div></div>
@@ -256,9 +274,116 @@
     </div>
     <div class="same-note">Maintenance is light once built: confirm Levels 1 and 2 with the sponsor annually (most years nothing changes), review proposed changes quarterly against the MECE test, and keep traceability from initiatives, applications, and data current continuously. That last part is where the model earns its keep. And if there is no executive who will cite the model in their own communication, no business owner willing to be named, and no appetite for capability-anchored funding conversations, do not build it yet. Build those conditions first, or it becomes a wall poster.</div>
   </div>
-  <div class="stage-card" id="canvas">
+  <div class="stage-card" id="value-streams">
     <div class="stage-head">
       <span class="stage-num">5</span>
+      <h3>Value streams: the flow the capability map leaves out</h3>
+      <p>A capability map deliberately has no order. A value stream supplies it: the stages by which an organization delivers value to a stakeholder, each one enabled by capabilities from the map. Used together, they show where a customer feels a weak capability, and how often.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="eavs-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="eavs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="eavs-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="eavs-title">A value stream cross-mapped to the capabilities that enable each stage</title><polygon points="230,30 344,30 358,52 344,74 230,74" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="290.0" y="49.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Capture</text>
+<text x="290.0" y="63.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">interest</text>
+<polygon points="358,30 472,30 486,52 472,74 358,74 372,52" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="426.0" y="49.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Qualify</text>
+<text x="426.0" y="63.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">need</text>
+<polygon points="486,30 600,30 614,52 600,74 486,74 500,52" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="554.0" y="49.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Propose</text>
+<text x="554.0" y="63.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">offer</text>
+<polygon points="614,30 728,30 742,52 728,74 614,74 628,52" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="682.0" y="49.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Establish</text>
+<text x="682.0" y="63.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">agreement</text>
+<polygon points="742,30 856,30 870,52 856,74 742,74 756,52" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="810.0" y="49.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Activate</text>
+<text x="810.0" y="63.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">service</text>
+<text x="20.0" y="48.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Value stream:</text>
+<text x="20.0" y="63.0" text-anchor="start" font-size="12" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Onboard a customer</text>
+<rect x="16" y="96" width="200" height="24" rx="5" fill="#9C6232" stroke="var(--line)"/>
+<text x="24.0" y="112.0" text-anchor="start" font-size="11.5" font-weight="400" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Channel Management</text>
+<line x1="230" y1="108" x2="856" y2="108" stroke="var(--line)" stroke-width="1"/>
+<circle cx="294.0" cy="108" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="422.0" cy="108" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<rect x="16" y="128" width="200" height="24" rx="5" fill="#9C6232" stroke="var(--line)"/>
+<text x="24.0" y="144.0" text-anchor="start" font-size="11.5" font-weight="400" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Interaction Handling</text>
+<line x1="230" y1="140" x2="856" y2="140" stroke="var(--line)" stroke-width="1"/>
+<circle cx="294.0" cy="140" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="422.0" cy="140" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="550.0" cy="140" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="806.0" cy="140" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<rect x="16" y="160" width="200" height="24" rx="5" fill="#5A3316" stroke="var(--line)"/>
+<text x="24.0" y="176.0" text-anchor="start" font-size="11.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Customer Identity and Profile</text>
+<line x1="230" y1="172" x2="856" y2="172" stroke="var(--line)" stroke-width="1"/>
+<circle cx="422.0" cy="172" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="678.0" cy="172" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="806.0" cy="172" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<rect x="16" y="192" width="200" height="24" rx="5" fill="#9C6232" stroke="var(--line)"/>
+<text x="24.0" y="208.0" text-anchor="start" font-size="11.5" font-weight="400" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Customer Due Diligence</text>
+<line x1="230" y1="204" x2="856" y2="204" stroke="var(--line)" stroke-width="1"/>
+<circle cx="422.0" cy="204" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="678.0" cy="204" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<rect x="16" y="224" width="200" height="24" rx="5" fill="#9C6232" stroke="var(--line)"/>
+<text x="24.0" y="240.0" text-anchor="start" font-size="11.5" font-weight="400" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Pricing and Quoting</text>
+<line x1="230" y1="236" x2="856" y2="236" stroke="var(--line)" stroke-width="1"/>
+<circle cx="550.0" cy="236" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<circle cx="678.0" cy="236" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<rect x="16" y="256" width="200" height="24" rx="5" fill="#F7F3EE" stroke="var(--line)"/>
+<text x="24.0" y="272.0" text-anchor="start" font-size="11.5" font-weight="400" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Contract Management</text>
+<line x1="230" y1="268" x2="856" y2="268" stroke="var(--line)" stroke-width="1"/>
+<circle cx="678.0" cy="268" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<rect x="16" y="288" width="200" height="24" rx="5" fill="#DDB88C" stroke="var(--line)"/>
+<text x="24.0" y="304.0" text-anchor="start" font-size="11.5" font-weight="400" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Order Fulfillment</text>
+<line x1="230" y1="300" x2="856" y2="300" stroke="var(--line)" stroke-width="1"/>
+<circle cx="806.0" cy="300" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<rect x="16" y="320" width="200" height="24" rx="5" fill="#DDB88C" stroke="var(--line)"/>
+<text x="24.0" y="336.0" text-anchor="start" font-size="11.5" font-weight="400" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Billing</text>
+<line x1="230" y1="332" x2="856" y2="332" stroke="var(--line)" stroke-width="1"/>
+<circle cx="806.0" cy="332" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/>
+<line x1="294.0" y1="80" x2="294.0" y2="342" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="422.0" y1="80" x2="422.0" y2="342" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="550.0" y1="80" x2="550.0" y2="342" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="678.0" y1="80" x2="678.0" y2="342" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="806.0" y1="80" x2="806.0" y2="342" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="440.0" y="386.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Row shading is the capability heat map below. Customer Identity and Profile is weak and three stages depend on it, so customers feel it three times.</text></svg></div>
+      </div>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th></th><th>Capability map</th><th>Value stream</th></tr>
+          <tr><td>Answers</td><td>What does the organization do?</td><td>How does value reach a stakeholder, stage by stage?</td></tr>
+          <tr><td>Shape</td><td>A hierarchy with no order and no flow</td><td>An ordered set of stages, triggered by a stakeholder and ending in value they recognize</td></tr>
+          <tr><td>Stability</td><td>Stable across strategy cycles</td><td>Stable too; the processes underneath each stage change far more often</td></tr>
+          <tr><td>Best for</td><td>Investment, ownership, duplication, and portfolio mapping</td><td>Customer experience, bottlenecks, and scoping a transformation</td></tr>
+          <tr><td>Not</td><td>An org chart or a process map</td><td>A process map: no swim lanes, no systems, no handoff detail</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to build one</span>
+        <ul><li><strong>Name the stream for the value delivered</strong> from the stakeholder's side, such as Onboard a Customer or Resolve a Claim, not internal shorthand like quote to cash</li><li><strong>Keep stages few and ordered:</strong> five to eight, each ending in a recognizable state change for the thing moving through</li><li><strong>Cross-map capabilities to stages.</strong> When a stage underperforms, the map tells you which capabilities to look at; a capability that enables many stages is load-bearing</li><li><strong>Model a handful, not all of them.</strong> The three to five streams that carry the strategy are enough; nobody maintains fifty</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common misuses</span>
+        <ul><li>Drawing a process map and calling it a value stream</li><li>Naming stages after departments, which smuggles the org chart back in</li><li>Building value streams with no capability cross-map, so they never connect to investment</li><li>Confusing it with lean value stream mapping, a related but different technique for measuring flow and waste in a specific process</li></ul>
+      </div>
+    </div>
+    <div class="same-note">The cross-map is the payoff. Business architecture practice treats each value stream as one value proposition for one stakeholder, with capabilities mapped to the stages they enable, so a stage that falters points straight at the capabilities behind it<sup class="src"><a href="#src-1" title="Business Architecture Guild, Business Architecture Metamodel Guide v3.0, September 2024">[1]</a></sup>. The diagram uses the same shading as the heat map tool below: a weak capability used in three stages is a better investment target than a weaker one used in none.</div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://cdn.ymaws.com/www.businessarchitectureguild.org/resource/resmgr/whitepapers/business_architecture_metamo.pdf" rel="noopener">Business Architecture Guild, The Business Architecture Metamodel Guide, v3.0, September 2024</a></li></ol></div>
+  </div>
+  <div class="stage-card" id="heatmap">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Capability heat map</h3>
+      <p>The first use this page recommends for a new capability model: rate each capability for how much it matters to the strategy and how well it performs today. The tool colors the map by where attention is needed, ranks the biggest gaps, and, if you add run cost, shows whether money is going where the strategy needs it. It starts with a sample organization; replace the rows with your own.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell"></div></div>
+    <div class="same-note">How it scores: attention = importance x (5 minus performance), so a critical capability performing poorly scores 16 to 20 and anything performing at 5 scores zero. Bands: 1 to 5 low, 6 to 10 medium, 11 and above high. Importance and performance of 4 or more count as high. Rate performance from evidence where you have it: incident counts, cycle times, customer complaints, cost per transaction. Ratings from a single workshop drift toward the room's mood.</div>
+  </div>
+  <div class="stage-card" id="canvas">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
       <h3>Operating Model Canvas: six dimensions</h3>
       <p>A one-page view of how a capability is delivered. Makes an operating model that's normally invisible, living in heads and habits, explicit enough to reason about in one conversation.</p>
     </div>
@@ -279,7 +404,7 @@
   </div>
   <div class="stage-card" id="canvas-run">
     <div class="stage-head">
-      <span class="stage-num">6</span>
+      <span class="stage-num">7</span>
       <h3>Running a canvas, and the four ways it goes wrong</h3>
       <p>Leaders with line accountability plus a few practitioners who do the work, two sessions, architecture facilitating. The canvas sits on top of process maps, RACI, and the application portfolio; it summarizes them and points to them.</p>
     </div>
@@ -306,7 +431,7 @@
   </div>
   <div class="stage-card" id="target-state">
     <div class="stage-head">
-      <span class="stage-num">7</span>
+      <span class="stage-num">8</span>
       <h3>The target-state narrative: prose first, diagrams second</h3>
       <p>Executives read a target-state diagram for ten seconds, ask two questions, and move on. A narrative that stands on its own survives the meeting and becomes the reference the roadmap and investment case point back to. Four to eight pages for a capability cluster, eight to fifteen for the whole enterprise; past that, nobody reads it.</p>
     </div>
@@ -337,7 +462,7 @@
   </div>
   <div class="stage-card" id="roadmap">
     <div class="stage-head">
-      <span class="stage-num">8</span>
+      <span class="stage-num">9</span>
       <h3>The capability-driven roadmap</h3>
       <p>Most roadmaps are lists of technology initiatives with no anchor in the outcomes they serve, so when priorities shift they are either continued out of inertia or cancelled with nothing in their place. Anchoring on capability gaps lets the instruments change while the objective holds. Eight to twelve weeks for a mid-sized organization, twelve to sixteen for a large one.</p>
     </div>
@@ -419,7 +544,7 @@
   </div>
   <div class="stage-card" id="portfolio">
     <div class="stage-head">
-      <span class="stage-num">9</span>
+      <span class="stage-num">10</span>
       <h3>Portfolio and modernization calls: where EA turns a model into a decision</h3>
       <p>The capability model says what the organization does; the portfolio says what it runs to do it. EA is the function that keeps the two joined, so that disposition decisions are made per capability and not per system.</p>
     </div>
@@ -444,12 +569,12 @@
         <ul><li><strong>Zero retirements.</strong> In portfolios of 60 or more applications, 10 to 20 percent usually retire. None means discovery failed.</li><li><strong>Rearchitect on more than 10 to 15 percent.</strong> Enthusiasm outrunning capacity.</li><li><strong>Rehost by default.</strong> Nobody made a decision, so the cheapest verb won.</li><li><strong>Scoring theater.</strong> Scores assembled to justify calls already made.</li><li><strong>Migration and modernization on one deadline.</strong> Two risks compounded into one date.</li><li><strong>A new request 70 percent covered by an existing application.</strong> Extend the existing one; require three-year TCO and an exit plan for anything new.</li></ul>
       </div>
     </div>
-    <div class="same-note">Vocabulary: TIME is Gartner's portfolio model; the disposition verbs follow the "R" taxonomy, which AWS now publishes as seven strategies: retire, retain, rehost, relocate, repurchase, replatform, and refactor or re-architect<sup class="src"><a href="#src-1" title="AWS Prescriptive Guidance, migration strategies">[1]</a></sup>. The percentage ranges are practitioner heuristics from portfolio work, not industry benchmarks; treat them as a smell test. Scoring and the simulator live on <a href="../apm-portfolio-map/index.html">Application Portfolio</a>, execution mechanics on <a href="../modernization-execution/index.html">Modernization Execution</a>.</div>
-  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html" rel="noopener">AWS Prescriptive Guidance, About the migration strategies (the 7 Rs)</a></li></ol></div>
+    <div class="same-note">Vocabulary: TIME is Gartner's portfolio model; the disposition verbs follow the "R" taxonomy, which AWS now publishes as seven strategies: retire, retain, rehost, relocate, repurchase, replatform, and refactor or re-architect<sup class="src"><a href="#src-2" title="AWS Prescriptive Guidance, migration strategies">[2]</a></sup>. The percentage ranges are practitioner heuristics from portfolio work, not industry benchmarks; treat them as a smell test. Scoring and the simulator live on <a href="../apm-portfolio-map/index.html">Application Portfolio</a>, execution mechanics on <a href="../modernization-execution/index.html">Modernization Execution</a>.</div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html" rel="noopener">AWS Prescriptive Guidance, About the migration strategies (the 7 Rs)</a></li></ol></div>
   </div>
   <div class="stage-card" id="inherited">
     <div class="stage-head">
-      <span class="stage-num">10</span>
+      <span class="stage-num">11</span>
       <h3>Assessing an architecture you inherited</h3>
       <p>New CTOs, new heads of EA, and acquirers all face the same question: what is this architecture actually like, and what does it prevent? Diagrams describe intent. These tests find out what is true.</p>
     </div>
@@ -467,7 +592,7 @@
   </div>
   <div class="stage-card" id="ma">
     <div class="stage-head">
-      <span class="stage-num">11</span>
+      <span class="stage-num">12</span>
       <h3>EA in mergers and acquisitions</h3>
       <p>Diligence prices the risk and the integration office runs the program. EA contributes the thing neither does well on its own: a capability-level view of what the combined organization should look like and which systems get there by which path.</p>
     </div>
@@ -486,12 +611,52 @@
         </table><p style="margin-top:10px">Integrate is the most common right answer, and Coexist is underused. Choosing Merge for everything is how six-month integration promises turn into two-year programs.</p>
       </div>
     </div>
-    <div class="same-note">The postures line up with the classic acquisition integration typology of Haspeslagh and Jemison: Merge corresponds to absorption, Integrate to symbiosis, and Coexist to preservation<sup class="src"><a href="#src-2" title="Haspeslagh and Jemison, Managing Acquisitions, 1991">[2]</a></sup>. Deal-side detail lives on <a href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a>, <a href="../technology-diligence-map/index.html">Technology Diligence</a>, and the <a href="../ma-diligence-kit/index.html">M&amp;A Diligence Kit</a>.</div>
-  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2">Philippe Haspeslagh and David Jemison, <em>Managing Acquisitions: Creating Value Through Corporate Renewal</em>, Free Press, 1991</li></ol></div>
+    <div class="same-note">The postures line up with the classic acquisition integration typology of Haspeslagh and Jemison: Merge corresponds to absorption, Integrate to symbiosis, and Coexist to preservation<sup class="src"><a href="#src-3" title="Haspeslagh and Jemison, Managing Acquisitions, 1991">[3]</a></sup>. Deal-side detail lives on <a href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a>, <a href="../technology-diligence-map/index.html">Technology Diligence</a>, and the <a href="../ma-diligence-kit/index.html">M&amp;A Diligence Kit</a>.</div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="3" id="src-3">Philippe Haspeslagh and David Jemison, <em>Managing Acquisitions: Creating Value Through Corporate Renewal</em>, Free Press, 1991</li></ol></div>
+  </div>
+  <div class="stage-card" id="standing-up">
+    <div class="stage-head">
+      <span class="stage-num">13</span>
+      <h3>Standing up or rebooting an EA function</h3>
+      <p>The rest of this page describes a function that is running. Getting there is its own problem, and the right size depends on the organization's shape, not on a model org chart. The headcount bands below are rough practitioner guidance; the signals in the right-hand column matter more than the numbers.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Organization shape</th><th>Who does enterprise architecture</th><th>The signal that it is time for more</th></tr>
+          <tr><td>One product, under about 50 engineers</td><td>The CTO or a principal engineer, as part of the job. Significant decisions recorded as ADRs</td><td>The same platform decision gets made twice by different teams</td></tr>
+          <tr><td>About 50 to 200 engineers, or a second product line</td><td>One enterprise or principal architect with a small council of senior engineers; review only on the triggers in section <a href="#review">19</a></td><td>Teams choose overlapping platforms, or large purchases happen without anyone holding the whole picture</td></tr>
+          <tr><td>Several business units, 200 or more engineers, regulated data, or an acquisition program</td><td>A head of EA plus domain architects where the risk sits, usually data, security, and integration; intake and review tiers</td><td>Nobody can say how many applications you run or which ones do the same job</td></tr>
+          <tr><td>Large enterprise or serial acquirer</td><td>The full function described on this page, including business architecture</td><td>Duplicated capability measured in tens of millions a year</td></tr>
+        </table>
+        <p>The first hire is a practicing architect who can hold a room with business leaders and has made real platform decisions, not a framework specialist or a tool administrator. Tools and frameworks can come later; a function whose first months are spent adopting TOGAF or populating a repository has usually lost the business before it produces a decision.</p>
+      </div>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Days</th><th>Deliver</th><th>Why it comes first</th></tr>
+          <tr><td>1 to 30</td><td>Interview 15 to 20 leaders across business and technology. List the significant decisions due in the next two quarters and who is making them. Draft a Level 1 capability map. Close with a two-page read-out of what you heard, including what already works</td><td>Credibility starts with evidence of listening. The decision list shows where EA can help soonest</td></tr>
+          <tr><td>31 to 60</td><td>Support one visible, in-flight decision end to end and record it as an ADR. Open a single intake channel with weekly triage. Publish the Level 1 model with a named business owner</td><td>One decision visibly improved is worth more than any library of standards</td></tr>
+          <tr><td>61 to 90</td><td>Publish five to seven principles drawn from real decisions rather than a template. Set review triggers so small, in-pattern work needs no review. Run the first capability heat map with the owners. Report what EA did, what changed, and what it will not do</td><td>Scope is set by what the function declines as much as by what it takes on</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Rebooting one that is struggling</span>
+        <ul><li><strong>Diagnose first.</strong> Name which of the five failure patterns in section <a href="#failure">20</a> applies; the cure differs for each</li><li><strong>Announce what stops.</strong> Retire the lowest-value reviews, documents, and meetings first, publicly, so the change is visible before anything new is asked of anyone</li><li><strong>Keep what works.</strong> Most functions in trouble still do one or two things teams value; protect those</li><li><strong>Earn authority back case by case.</strong> A mandate restores attendance, not trust, and usually deepens the erosion</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What not to do in the first 90 days</span>
+        <ul><li>Starting with framework adoption, a repository purchase, or a standards catalog</li><li>Reviewing everything to prove relevance, which turns EA into a queue in its first month</li><li>Promising a complete current-state inventory before any decision is supported</li><li>Hiring a team before the first architect has shown what the function is for</li></ul>
+      </div>
+    </div>
+    <div class="same-note">If you are a new CTO rather than a new head of EA, the first 30 days above fold into your own first 90; see <a href="../situation-starting-as-cto/index.html">Starting as CTO</a>. Score where the function stands at the end of the 90 days on <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a>.</div>
   </div>
   <div class="stage-card" id="services">
     <div class="stage-head">
-      <span class="stage-num">12</span>
+      <span class="stage-num">14</span>
       <h3>What the EA function provides, and what it deliberately doesn't</h3>
       <p>Naming the boundary explicitly is what keeps a function from diluting its capacity trying to do everything asked of it.</p>
     </div>
@@ -509,7 +674,7 @@
   </div>
   <div class="stage-card" id="engagement">
     <div class="stage-head">
-      <span class="stage-num">13</span>
+      <span class="stage-num">15</span>
       <h3>Engagement patterns: matching depth to the work</h3>
       <p>Using the right depth for the work matters as much as doing the work well. Embedding an architect in every program is the fastest way to run out of architects.</p>
     </div>
@@ -529,7 +694,7 @@
   </div>
   <div class="stage-card" id="capacity">
     <div class="stage-head">
-      <span class="stage-num">14</span>
+      <span class="stage-num">16</span>
       <h3>Roles and capacity allocation</h3>
       <p>A rough guide for full-time architects. The specific percentages matter less than the discipline of allocating deliberately rather than letting whatever's loudest consume all of it.</p>
     </div>
@@ -547,7 +712,7 @@
   </div>
   <div class="stage-card" id="demand">
     <div class="stage-head">
-      <span class="stage-num">15</span>
+      <span class="stage-num">17</span>
       <h3>Demand management</h3>
       <p>The single most common EA failure mode is unmanaged demand: every ask accepted, capacity consumed by whoever escalates loudest. A single intake channel with triage that can say no is the fix.</p>
     </div>
@@ -565,7 +730,7 @@
   </div>
   <div class="stage-card" id="relationships">
     <div class="stage-head">
-      <span class="stage-num">16</span>
+      <span class="stage-num">18</span>
       <h3>The relationships that decide whether EA gets heard</h3>
       <p>EA credibility with business leaders is the highest-leverage asset the function has, and it is built or lost in these five relationships.</p>
     </div>
@@ -584,7 +749,7 @@
   </div>
   <div class="stage-card" id="review">
     <div class="stage-head">
-      <span class="stage-num">17</span>
+      <span class="stage-num">19</span>
       <h3>Architecture review: four touchpoints</h3>
       <p>Engagement rather than approval. Four short conversations during design beat one long review at the end, and the default posture is collaborative rather than gatekeeping.</p>
     </div>
@@ -603,7 +768,7 @@
   </div>
   <div class="stage-card" id="failure">
     <div class="stage-head">
-      <span class="stage-num">18</span>
+      <span class="stage-num">20</span>
       <h3>How EA functions fail, and what fixes each</h3>
       <p>Five well-known patterns, worth naming so they can be watched for rather than discovered after the fact.</p>
     </div>
@@ -623,7 +788,7 @@
   </div>
   <div class="stage-card" id="standards">
     <div class="stage-head">
-      <span class="stage-num">19</span>
+      <span class="stage-num">21</span>
       <h3>Standards and notations, current editions</h3>
       <p>Use one shared notation and one reference framework. Arguing about the framework is a common way for an EA function to avoid producing decisions.</p>
     </div>
@@ -631,19 +796,47 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Standard</th><th>Current edition</th><th>Use it for</th></tr>
-          <tr><td>TOGAF Standard (The Open Group)</td><td>10th Edition, 2022, modular in structure<sup class="src"><a href="#src-3" title="The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022">[3]</a></sup></td><td>A reference method; adopt the parts you need rather than the whole</td></tr>
-          <tr><td>ArchiMate (The Open Group)</td><td>ArchiMate 4, released April 2026, succeeding 3.2 (2022)<sup class="src"><a href="#src-4" title="The Open Group, ArchiMate 4 Specification announcement, April 2026">[4]</a></sup>; check your modeling tool supports it before switching</td><td>Enterprise-level models linking capabilities, applications, and technology</td></tr>
+          <tr><td>TOGAF Standard (The Open Group)</td><td>10th Edition, 2022, modular in structure<sup class="src"><a href="#src-4" title="The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022">[4]</a></sup></td><td>A reference method; adopt the parts you need rather than the whole</td></tr>
+          <tr><td>ArchiMate (The Open Group)</td><td>ArchiMate 4, released April 2026, succeeding 3.2 (2022)<sup class="src"><a href="#src-5" title="The Open Group, ArchiMate 4 Specification announcement, April 2026">[5]</a></sup>; check your modeling tool supports it before switching</td><td>Enterprise-level models linking capabilities, applications, and technology</td></tr>
           <tr><td>C4 model (Simon Brown)</td><td>Stable</td><td>Solution-level diagrams engineers will actually maintain</td></tr>
-          <tr><td>Architecture decision records (Michael Nygard, 2011)<sup class="src"><a href="#src-5" title="Michael Nygard, Documenting Architecture Decisions, November 2011">[5]</a></sup></td><td>Informal convention</td><td>Recording why a decision was made; see <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
+          <tr><td>Architecture decision records (Michael Nygard, 2011)<sup class="src"><a href="#src-6" title="Michael Nygard, Documenting Architecture Decisions, November 2011">[6]</a></sup></td><td>Informal convention</td><td>Recording why a decision was made; see <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
           <tr><td>BIZBOK Guide (Business Architecture Guild)</td><td>Periodically revised</td><td>Capability and value-stream mapping with business stakeholders</td></tr>
         </table>
       </div>
     </div>
-  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="3" id="src-3"><a href="https://www.opengroup.org/open-group-announces-launch-togaf-standard-10th-edition" rel="noopener">The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022</a></li><li value="4" id="src-4"><a href="https://www.opengroup.org/The-Open-Group-Announces-ArchiMate%C2%AE-4-Specification" rel="noopener">The Open Group, ArchiMate 4 Specification announcement, April 2026</a></li><li value="5" id="src-5"><a href="https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions" rel="noopener">Michael Nygard, Documenting Architecture Decisions, November 2011</a></li></ol></div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="4" id="src-4"><a href="https://www.opengroup.org/open-group-announces-launch-togaf-standard-10th-edition" rel="noopener">The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022</a></li><li value="5" id="src-5"><a href="https://www.opengroup.org/The-Open-Group-Announces-ArchiMate%C2%AE-4-Specification" rel="noopener">The Open Group, ArchiMate 4 Specification announcement, April 2026</a></li><li value="6" id="src-6"><a href="https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions" rel="noopener">Michael Nygard, Documenting Architecture Decisions, November 2011</a></li></ol></div>
 </div>
+  <div class="stage-card" id="tooling">
+    <div class="stage-head">
+      <span class="stage-num">22</span>
+      <h3>EA tooling: when a spreadsheet is enough</h3>
+      <p>Tool purchases are one of the most common ways EA functions spend money without improving a decision. The right tool depends on scale and on where the data comes from, and the order matters: model, then data, then tool.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Stage</th><th>Fits when</th><th>Load first</th><th>How it fails</th></tr>
+          <tr><td>Spreadsheets and a diagramming tool</td><td>Up to roughly 200 applications and one EA team</td><td>The capability model, the application list mapped to capabilities, owners, run cost, and TIME status</td><td>Copies multiply and nobody knows which is current. One owner per sheet, one link everyone uses</td></tr>
+          <tr><td>Diagrams as code for solution architecture</td><td>Solution teams need diagrams that stay current</td><td>C4 context and container diagrams kept in the repository next to the service they describe, reviewed with the code</td><td>A diagram nobody updates, which is worse than none because people trust it</td></tr>
+          <tr><td>A dedicated EA repository platform</td><td>Several hundred applications, multiple business units, an acquisition program, or portfolio data that finance and risk need</td><td>Integrations before manual entry: CMDB, single sign-on logs, contract records, and cloud billing, so the data refreshes itself</td><td>Bought before the model exists, then filled by hand once and left to decay: a catalog that costs six figures a year and answers no questions</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Rules that keep a tool useful</span>
+        <ul><li><strong>Model before tool.</strong> If the capability model and application list do not work in a spreadsheet, a platform will not fix them</li><li><strong>Integrations over data entry.</strong> Anything that depends on architects typing updates is stale within two quarters</li><li><strong>One owner per data element.</strong> Application owners own their records; EA owns the model and the quality checks</li><li><strong>Judge it by questions answered.</strong> Which applications support this capability, what do they cost, which are end of life. If the tool cannot answer those in minutes, the count of objects stored in it is irrelevant</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The platform market</span>
+        <p>The platform category includes products such as SAP LeanIX, Ardoq, Bizzdesign, and the application portfolio modules of IT service management suites. Evaluate them against your first three questions and your integration sources rather than feature lists; the scoring method on <a href="../vendor-evaluation/index.html">Vendor Evaluation</a> applies.</p>
+      </div>
+    </div>
+    <div class="same-note">The 200-application line is a practitioner rule of thumb, not a standard: below it, the cost of keeping a platform current usually exceeds the value it adds; above it, or with several business units feeding one portfolio, a spreadsheet stops being trustworthy. Portfolio scoring itself is on <a href="../apm-portfolio-map/index.html">Application Portfolio</a>.</div>
+  </div>
   <div class="stage-card" id="measuring">
     <div class="stage-head">
-      <span class="stage-num">20</span>
+      <span class="stage-num">23</span>
       <h3>Measuring whether EA is working</h3>
       <p>Measure outcomes the business can see. Artifact counts show activity, not value.</p>
     </div>
@@ -677,5 +870,106 @@
 
 </footer>
 
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+(function () {
+var card = document.getElementById('heatmap'), cell = card.querySelector('.stage-cell');
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
+var R = [['5', '5'], ['4', '4'], ['3', '3'], ['2', '2'], ['1', '1']];
+var cols = [
+  { key: 'name', label: 'Capability (Level 2)', type: 'text', width: '170px', wide: true },
+  { key: 'l1', label: 'Level 1 area', type: 'text', width: '150px' },
+  { key: 'imp', label: 'Importance to strategy (1-5)', type: 'select', options: R },
+  { key: 'perf', label: 'Performance today (1-5)', type: 'select', options: R },
+  { key: 'cost', label: 'Annual run cost ($, optional)', type: 'number', min: 0, step: 10000 }
+];
+var DEF = [
+  { name: 'Channel Management', l1: 'Customer Engagement', imp: '4', perf: '3', cost: 900000 },
+  { name: 'Interaction Handling', l1: 'Customer Engagement', imp: '4', perf: '3', cost: 1600000 },
+  { name: 'Customer Identity and Profile', l1: 'Customer Engagement', imp: '5', perf: '2', cost: 700000 },
+  { name: 'Self-Service Enablement', l1: 'Customer Engagement', imp: '4', perf: '2', cost: 500000 },
+  { name: 'Engagement Analytics', l1: 'Customer Engagement', imp: '3', perf: '3', cost: 400000 },
+  { name: 'Customer Due Diligence', l1: 'Customer Acquisition', imp: '4', perf: '3', cost: 600000 },
+  { name: 'Pricing and Quoting', l1: 'Customer Acquisition', imp: '5', perf: '3', cost: 800000 },
+  { name: 'Order Fulfillment', l1: 'Product and Service Delivery', imp: '5', perf: '4', cost: 2400000 },
+  { name: 'Billing', l1: 'Product and Service Delivery', imp: '4', perf: '4', cost: 1300000 },
+  { name: 'Regulatory Reporting', l1: 'Risk and Compliance', imp: '4', perf: '4', cost: 900000 },
+  { name: 'Policy Management', l1: 'Risk and Compliance', imp: '2', perf: '4', cost: 600000 },
+  { name: 'Financial Close', l1: 'Finance and Treasury', imp: '3', perf: '4', cost: 1100000 },
+  { name: 'Procurement', l1: 'Finance and Treasury', imp: '2', perf: '2', cost: 500000 },
+  { name: 'Workforce Scheduling', l1: 'Human Capital', imp: '2', perf: '5', cost: 1200000 },
+  { name: 'Identity and Access', l1: 'Information and Technology', imp: '5', perf: '3', cost: 700000 },
+  { name: 'Data Management', l1: 'Information and Technology', imp: '4', perf: '2', cost: 1000000 }
+];
+var BLANK = { name: '', l1: '', imp: '3', perf: '3', cost: null };
+var t = RowTable.create({ mount: sec(), id: 'hm', columns: cols, rows: DEF, blank: BLANK, addLabel: 'Add capability', min: 0, max: 80, onChange: calc });
+var out = sec('div', 'tool-out');
+var QN = { invest: 'Invest', protect: 'Protect', simplify: 'Simplify', contain: 'Contain' };
+var QD = {
+  invest: 'Matters to the strategy and underperforms. These are the capability gaps a roadmap should close first.',
+  protect: 'Matters and performs. Keep it that way; do not let it slide while attention goes elsewhere.',
+  simplify: 'Performs well but matters less. Often over-invested: candidates to standardize, buy as a service, or trim spend.',
+  contain: 'Matters less and underperforms. Run at minimum cost and fix only what breaks, unless the strategy changes.'
+};
+function model() {
+  var rows = t.get().filter(function (r) { return String(r.name || '').trim(); });
+  rows.forEach(function (r) {
+    r.i = +r.imp || 0; r.p = +r.perf || 0; r.score = r.i * (5 - r.p);
+    r.band = r.score === 0 ? 0 : r.score <= 5 ? 1 : r.score <= 10 ? 2 : 3;
+    r.q = r.i >= 4 ? (r.p >= 4 ? 'protect' : 'invest') : (r.p >= 4 ? 'simplify' : 'contain');
+    r.c = r.cost > 0 ? r.cost : 0;
+  });
+  return rows;
+}
+function calc() {
+  var rows = model();
+  if (!rows.length) { out.innerHTML = '<div class="tool-sum">Add at least one capability with a name to see the heat map.</div>'; return; }
+  var groups = {}, order = [];
+  rows.forEach(function (r) { var k = String(r.l1 || '').trim() || 'Unassigned'; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(r); });
+  var BN = ['None', 'Low', 'Medium', 'High'];
+  var map = '<div class="hm-legend"><span>Attention needed:</span>' + BN.map(function (b, i) { return '<span><i class="hm-a' + i + '"></i>' + b + '</span>'; }).join('') + '</div><div class="hm-map" role="list">';
+  order.forEach(function (k) {
+    map += '<div class="hm-row" role="listitem"><div class="hm-l1">' + E(k) + '</div><div class="hm-tiles">' +
+      groups[k].map(function (r) {
+        var tip = r.name + ': importance ' + r.i + ', performance ' + r.p + ', attention ' + r.score + ' (' + BN[r.band] + '), ' + QN[r.q] + (r.c ? ', run cost ' + $(r.c) : '');
+        return '<div class="hm-tile hm-a' + r.band + '" title="' + E(tip) + '" aria-label="' + E(tip) + '"><b>' + E(r.name) + '</b><span>I' + r.i + ' P' + r.p + ' = ' + r.score + '</span></div>';
+      }).join('') + '</div></div>';
+  });
+  map += '</div>';
+  var q = { invest: [], protect: [], simplify: [], contain: [] }, spend = { invest: 0, protect: 0, simplify: 0, contain: 0 }, tot = 0;
+  rows.forEach(function (r) { q[r.q].push(r); spend[r.q] += r.c; tot += r.c; });
+  var quads = '<div class="hm-quad">' + ['invest', 'protect', 'simplify', 'contain'].map(function (k) {
+    return '<div class="hm-q"><strong>' + QN[k] + ': ' + q[k].length + '</strong>' + (tot ? $(spend[k]) + ' run cost (' + Math.round(spend[k] / tot * 100) + '%)<br>' : '') + '<span style="color:var(--ink-soft)">' + QD[k] + '</span></div>';
+  }).join('') + '</div>';
+  var ranked = rows.slice().sort(function (a, b) { return b.score - a.score || b.i - a.i || a.name.localeCompare(b.name); });
+  var top = ranked.filter(function (r) { return r.score > 0; }).slice(0, 7);
+  var list = top.length ? '<h4>Biggest gaps, ranked</h4><table class="matrix-table"><tr><th>#</th><th>Capability</th><th>Area</th><th>Importance</th><th>Performance</th><th>Attention</th>' + (tot ? '<th>Run cost</th>' : '') + '</tr>' +
+    top.map(function (r, i) { return '<tr><td>' + (i + 1) + '</td><td>' + E(r.name) + '</td><td>' + E(r.l1 || '') + '</td><td>' + r.i + '</td><td>' + r.p + '</td><td>' + r.score + '</td>' + (tot ? '<td>' + (r.c ? $(r.c) : '') + '</td>' : '') + '</tr>'; }).join('') + '</table>' : '';
+  var f = [];
+  var fives = rows.filter(function (r) { return r.i === 5; }).length;
+  if (rows.length >= 5 && fives / rows.length > 0.4) f.push(fives + ' of ' + rows.length + ' capabilities are rated 5 for importance. When everything is critical, nothing is: force-rank, or cap the 5s at about a quarter of the list.');
+  if (rows.length >= 5 && rows.every(function (r) { return r.p >= 4; })) f.push('Every capability is rated 4 or 5 for performance. That is rare in practice; check the ratings against incident, cycle-time, and complaint data before acting on them.');
+  if (tot && spend.simplify > spend.invest) f.push('More run cost goes to Simplify capabilities (' + $(spend.simplify) + ') than to Invest capabilities (' + $(spend.invest) + '). That is the reallocation conversation: money is funding things that work but matter less, while the gaps the strategy needs are short of it.');
+  if (q.invest.length && tot && spend.invest / tot < 0.15) f.push('Invest capabilities get ' + Math.round(spend.invest / tot * 100) + '% of run cost. Run cost is not the whole story, since improvement usually needs project funding, but a gap this size rarely closes without some shift.');
+  var loaded = q.invest.filter(function (r) { return r.i === 5 && r.p <= 2; });
+  if (loaded.length) f.push('Critical and weak: ' + E(loaded.map(function (r) { return r.name; }).join(', ')) + '. Check the value streams that depend on ' + (loaded.length > 1 ? 'these' : 'it') + '; a weak capability used across several stages is where customers feel it most.');
+  if (!q.invest.length) f.push('No capability lands in Invest. Either the organization is in unusually good shape or the ratings are too kind; the second is more common.');
+  var sum = '<div class="tool-sum"><strong>' + rows.length + ' capabilities: ' + q.invest.length + ' to invest in, ' + q.protect.length + ' to protect, ' + q.simplify.length + ' to simplify, ' + q.contain.length + ' to contain.</strong>' +
+    (tot ? ' Total run cost ' + $(tot) + '.' : '') + (f.length ? '<ul>' + f.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '') + '</div>';
+  out.innerHTML = sum + map + quads + list;
+}
+calc();
+ToolShare.register({ id: 'hm', root: card, title: 'Capability heat map',
+  getState: function () { return { rows: t.get() }; },
+  setState: function (s) { s = s || {}; t.set(Array.isArray(s.rows) ? s.rows : DEF); calc(); },
+  csv: function () {
+    var rows = [['Capability', 'Level 1 area', 'Importance', 'Performance', 'Attention score', 'Quadrant', 'Annual run cost']];
+    model().forEach(function (r) { rows.push([r.name, r.l1, r.i, r.p, r.score, QN[r.q], r.c || '']); });
+    return rows;
+  } });
+})();
+</script>
 </body>
 </html>
