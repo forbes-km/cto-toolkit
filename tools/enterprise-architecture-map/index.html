@@ -98,8 +98,8 @@
   .hm-l1 { font-size: 12px; font-weight: 600; color: var(--ink-soft); padding-top: 8px; }
   .hm-tiles { display: flex; flex-wrap: wrap; gap: 6px; }
   .hm-tile { border-radius: 6px; padding: 7px 10px; font-size: 12px; line-height: 1.35; min-width: 160px; max-width: 240px; flex: 1 1 160px; border: 1px solid var(--line); }
-  .hm-tile b { display: block; font-weight: 600; }
-  .hm-tile span { display: block; font-size: 11.5px; opacity: .92; }
+  .hm-tile b { font-weight: 600; }
+  .hm-tile span { font-size: 11.5px; opacity: .92; }
   .hm-a0 { background: #F7F3EE; color: var(--ink); } .hm-a1 { background: #DDB88C; color: var(--ink); }
   .hm-a2 { background: #9C6232; color: #fff; border-color: #9C6232; } .hm-a3 { background: #5A3316; color: #fff; border-color: #5A3316; }
   .hm-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11.5px; color: var(--ink-soft); align-items: center; }
@@ -376,10 +376,10 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Capability heat map</h3>
-      <p>The first use this page recommends for a new capability model: rate each capability for how much it matters to the strategy and how well it performs today. The tool colors the map by where attention is needed, ranks the biggest gaps, and, if you add run cost, shows whether money is going where the strategy needs it. It starts with a sample organization; replace the rows with your own.</p>
+      <p>The first use this page recommends for a new capability model: rate each capability for how much it matters to the strategy and how well it performs today. The tool tells you what to do with each capability (invest, protect, simplify, or contain), colors the map by how urgently it needs improving, ranks the biggest gaps, and, if you add run cost, shows whether money is going where the strategy needs it. It starts with a sample organization; replace the rows with your own.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell"></div></div>
-    <div class="same-note">How it scores: attention = importance x (5 minus performance), so a critical capability performing poorly scores 16 to 20 and anything performing at 5 scores zero. Bands: 1 to 5 low, 6 to 10 medium, 11 and above high. Importance and performance of 4 or more count as high. Rate performance from evidence where you have it: incident counts, cycle times, customer complaints, cost per transaction. Ratings from a single workshop drift toward the room's mood.</div>
+    <div class="same-note">How it scores: each capability gets an improvement priority score, importance multiplied by how far performance falls short of 5. A capability rated 5 for importance and 2 for performance scores 5 x 3 = 15; anything performing at 5 scores zero, because there is no gap to close. Scores of 1 to 5 are low priority, 6 to 10 medium, 11 and above high. Importance and performance of 4 or more count as high. Rate performance from evidence where you have it: incident counts, cycle times, customer complaints, cost per transaction. Ratings from a single workshop drift toward the room's mood.</div>
   </div>
   <div class="stage-card" id="canvas">
     <div class="stage-head">
@@ -929,12 +929,12 @@ function calc() {
   var groups = {}, order = [];
   rows.forEach(function (r) { var k = String(r.l1 || '').trim() || 'Unassigned'; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(r); });
   var BN = ['None', 'Low', 'Medium', 'High'];
-  var map = '<div class="hm-legend"><span>Attention needed:</span>' + BN.map(function (b, i) { return '<span><i class="hm-a' + i + '"></i>' + b + '</span>'; }).join('') + '</div><div class="hm-map" role="list">';
+  var map = '<div class="hm-legend"><span>Color shows improvement priority:</span>' + BN.map(function (b, i) { return '<span><i class="hm-a' + i + '"></i>' + b + '</span>'; }).join('') + '</div><div class="hm-map" role="list">';
   order.forEach(function (k) {
     map += '<div class="hm-row" role="listitem"><div class="hm-l1">' + E(k) + '</div><div class="hm-tiles">' +
       groups[k].map(function (r) {
-        var tip = r.name + ': importance ' + r.i + ', performance ' + r.p + ', attention ' + r.score + ' (' + BN[r.band] + '), ' + QN[r.q] + (r.c ? ', run cost ' + $(r.c) : '');
-        return '<div class="hm-tile hm-a' + r.band + '" title="' + E(tip) + '" aria-label="' + E(tip) + '"><b>' + E(r.name) + '</b><span>Importance ' + r.i + ', performance ' + r.p + '</span><span>Attention: ' + BN[r.band].toLowerCase() + ' (' + r.score + ' of 20)</span></div>';
+        var tip = r.name + ': importance ' + r.i + ', performance ' + r.p + ', improvement priority ' + BN[r.band].toLowerCase() + ' (score ' + r.score + ' of 20), action: ' + QN[r.q] + (r.c ? ', run cost ' + $(r.c) : '');
+        return '<div class="hm-tile hm-a' + r.band + '" title="' + E(tip) + '" aria-label="' + E(tip) + '"><b>' + E(r.name) + '</b><br><span>Importance ' + r.i + '/5, performance ' + r.p + '/5</span><br><span>' + QN[r.q] + (r.band ? ', ' + BN[r.band].toLowerCase() + ' priority' : ', no gap') + '</span></div>';
       }).join('') + '</div></div>';
   });
   map += '</div>';
@@ -945,7 +945,7 @@ function calc() {
   }).join('') + '</div>';
   var ranked = rows.slice().sort(function (a, b) { return b.score - a.score || b.i - a.i || a.name.localeCompare(b.name); });
   var top = ranked.filter(function (r) { return r.score > 0; }).slice(0, 7);
-  var list = top.length ? '<h4>Biggest gaps, ranked</h4><table class="matrix-table"><tr><th>#</th><th>Capability</th><th>Area</th><th>Importance</th><th>Performance</th><th>Attention</th>' + (tot ? '<th>Run cost</th>' : '') + '</tr>' +
+  var list = top.length ? '<h4>Biggest gaps, ranked</h4><table class="matrix-table"><tr><th>#</th><th>Capability</th><th>Area</th><th>Importance</th><th>Performance</th><th>Priority score (of 20)</th>' + (tot ? '<th>Run cost</th>' : '') + '</tr>' +
     top.map(function (r, i) { return '<tr><td>' + (i + 1) + '</td><td>' + E(r.name) + '</td><td>' + E(r.l1 || '') + '</td><td>' + r.i + '</td><td>' + r.p + '</td><td>' + r.score + '</td>' + (tot ? '<td>' + (r.c ? $(r.c) : '') + '</td>' : '') + '</tr>'; }).join('') + '</table>' : '';
   var f = [];
   var fives = rows.filter(function (r) { return r.i === 5; }).length;
@@ -965,7 +965,7 @@ ToolShare.register({ id: 'hm', root: card, title: 'Capability heat map',
   getState: function () { return { rows: t.get() }; },
   setState: function (s) { s = s || {}; t.set(Array.isArray(s.rows) ? s.rows : DEF); calc(); },
   csv: function () {
-    var rows = [['Capability', 'Level 1 area', 'Importance', 'Performance', 'Attention score', 'Quadrant', 'Annual run cost']];
+    var rows = [['Capability', 'Level 1 area', 'Importance', 'Performance', 'Priority score (of 20)', 'Action', 'Annual run cost']];
     model().forEach(function (r) { rows.push([r.name, r.l1, r.i, r.p, r.score, QN[r.q], r.c || '']); });
     return rows;
   } });
