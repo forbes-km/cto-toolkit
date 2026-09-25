@@ -94,6 +94,9 @@
   .page-nav ul li { margin: 2px 0; break-inside: avoid; line-height: 1.5; }
   @media (max-width: 700px) { .page-nav ul { columns: 1; } }
   .hm-map { display: grid; gap: 10px; margin: 14px 0; }
+  .hm-edit { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 12px; }
+  .hm-edit > summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--accent); padding: 6px 0; }
+  .hm-edit[open] > summary { margin-bottom: 8px; }
   .hm-row { display: grid; grid-template-columns: 170px 1fr; gap: 10px; align-items: start; }
   .hm-l1 { font-size: 12px; font-weight: 600; color: var(--ink-soft); padding-top: 8px; }
   .hm-tiles { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -107,7 +110,7 @@
   .hm-quad { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin: 10px 0; }
   .hm-q { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; background: #fff; }
   .hm-q strong { display: block; font-size: 13px; }
-  @media (max-width: 700px) { .hm-row { grid-template-columns: 1fr; } .hm-l1 { padding-top: 0; } }
+  @media (max-width: 700px) { .hm-row { grid-template-columns: 1fr; } .hm-l1 { padding-top: 0; } .hm-tile { max-width: none; } }
   :target { scroll-margin-top: 80px; }
   .src-list li:target { background: var(--accent-soft); }
 </style>
@@ -376,7 +379,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Capability heat map</h3>
-      <p>The first use this page recommends for a new capability model: rate each capability for how much it matters to the strategy and how well it performs today. The tool tells you what to do with each capability (invest, protect, simplify, or contain), colors the map by how urgently it needs improving, ranks the biggest gaps, and, if you add run cost, shows whether money is going where the strategy needs it. It starts with a sample organization; replace the rows with your own.</p>
+      <p>The first use this page recommends for a new capability model: rate each capability for how much it matters to the strategy and how well it performs today. The tool tells you what to do with each capability (invest, protect, simplify, or contain), colors the map by how urgently it needs improving, ranks the biggest gaps, and, if you add run cost, shows whether money is going where the strategy needs it. It starts with a sample organization: open <em>Edit the capabilities and ratings</em> under the map to replace the rows with your own.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell"></div></div>
     <div class="same-note">How it scores: each capability gets an improvement priority score, importance multiplied by how far performance falls short of 5. A capability rated 5 for importance and 2 for performance scores 5 x 3 = 15; anything performing at 5 scores zero, because there is no gap to close. Scores of 1 to 5 are low priority, 6 to 10 medium, 11 and above high. Importance and performance of 4 or more count as high. Rate performance from evidence where you have it: incident counts, cycle times, customer complaints, cost per transaction. Ratings from a single workshop drift toward the room's mood.</div>
@@ -875,6 +878,10 @@
 <script>
 (function () {
 var card = document.getElementById('heatmap'), cell = card.querySelector('.stage-cell');
+if (typeof RowTable === 'undefined' || typeof ToolShare === 'undefined') {
+  cell.innerHTML = '<p style="font-size:13px;color:var(--ink-soft);margin:0">The interactive heat map needs the site\'s shared scripts, so it does not run in a standalone preview of this file. It works on the published site.</p>';
+  return;
+}
 var E = RowTable.esc, $ = RowTable.money;
 function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
 var R = [['5', '5'], ['4', '4'], ['3', '3'], ['2', '2'], ['1', '1']];
@@ -904,8 +911,11 @@ var DEF = [
   { name: 'Data Management', l1: 'Information and Technology', imp: '4', perf: '2', cost: 1000000 }
 ];
 var BLANK = { name: '', l1: '', imp: '3', perf: '3', cost: null };
-var t = RowTable.create({ mount: sec(), id: 'hm', columns: cols, rows: DEF, blank: BLANK, addLabel: 'Add capability', min: 0, max: 80, onChange: calc });
 var out = sec('div', 'tool-out');
+var det = document.createElement('details'); det.className = 'hm-edit'; det.open = window.innerWidth > 700;
+var sumEl = document.createElement('summary'); det.appendChild(sumEl); cell.appendChild(det);
+var mount = document.createElement('div'); det.appendChild(mount);
+var t = RowTable.create({ mount: mount, id: 'hm', columns: cols, rows: DEF, blank: BLANK, addLabel: 'Add capability', min: 0, max: 80, onChange: calc });
 var QN = { invest: 'Invest', protect: 'Protect', simplify: 'Simplify', contain: 'Contain' };
 var QD = {
   invest: 'Matters to the strategy and underperforms. These are the capability gaps a roadmap should close first.',
@@ -925,6 +935,7 @@ function model() {
 }
 function calc() {
   var rows = model();
+  sumEl.textContent = 'Edit the capabilities and ratings (' + t.get().length + ')';
   if (!rows.length) { out.innerHTML = '<div class="tool-sum">Add at least one capability with a name to see the heat map.</div>'; return; }
   var groups = {}, order = [];
   rows.forEach(function (r) { var k = String(r.l1 || '').trim() || 'Unassigned'; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(r); });
