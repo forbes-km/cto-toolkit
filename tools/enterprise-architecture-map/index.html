@@ -97,9 +97,9 @@
   .hm-row { display: grid; grid-template-columns: 170px 1fr; gap: 10px; align-items: start; }
   .hm-l1 { font-size: 12px; font-weight: 600; color: var(--ink-soft); padding-top: 8px; }
   .hm-tiles { display: flex; flex-wrap: wrap; gap: 6px; }
-  .hm-tile { border-radius: 6px; padding: 7px 10px; font-size: 12px; line-height: 1.35; min-width: 132px; max-width: 220px; flex: 1 1 132px; border: 1px solid var(--line); }
+  .hm-tile { border-radius: 6px; padding: 7px 10px; font-size: 12px; line-height: 1.35; min-width: 160px; max-width: 240px; flex: 1 1 160px; border: 1px solid var(--line); }
   .hm-tile b { display: block; font-weight: 600; }
-  .hm-tile span { font-family: var(--mono); font-size: 11px; opacity: .9; }
+  .hm-tile span { display: block; font-size: 11.5px; opacity: .92; }
   .hm-a0 { background: #F7F3EE; color: var(--ink); } .hm-a1 { background: #DDB88C; color: var(--ink); }
   .hm-a2 { background: #9C6232; color: #fff; border-color: #9C6232; } .hm-a3 { background: #5A3316; color: #fff; border-color: #5A3316; }
   .hm-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11.5px; color: var(--ink-soft); align-items: center; }
@@ -934,7 +934,7 @@ function calc() {
     map += '<div class="hm-row" role="listitem"><div class="hm-l1">' + E(k) + '</div><div class="hm-tiles">' +
       groups[k].map(function (r) {
         var tip = r.name + ': importance ' + r.i + ', performance ' + r.p + ', attention ' + r.score + ' (' + BN[r.band] + '), ' + QN[r.q] + (r.c ? ', run cost ' + $(r.c) : '');
-        return '<div class="hm-tile hm-a' + r.band + '" title="' + E(tip) + '" aria-label="' + E(tip) + '"><b>' + E(r.name) + '</b><span>I' + r.i + ' P' + r.p + ' = ' + r.score + '</span></div>';
+        return '<div class="hm-tile hm-a' + r.band + '" title="' + E(tip) + '" aria-label="' + E(tip) + '"><b>' + E(r.name) + '</b><span>Importance ' + r.i + ', performance ' + r.p + '</span><span>Attention: ' + BN[r.band].toLowerCase() + ' (' + r.score + ' of 20)</span></div>';
       }).join('') + '</div></div>';
   });
   map += '</div>';
