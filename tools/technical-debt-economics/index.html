@@ -110,6 +110,7 @@
         <tr><td>Risk exposure</td><td>The expected annual cost of the incident, breach, or outage the debt makes more likely</td><td>Probability of a material event in a year, times the cost of that event (revenue, recovery, credits, regulatory). A 20 percent chance of a $500k event is $100k a year. The order of magnitude is what matters, well ahead of precision</td></tr>
         <tr><td>Remediation cost</td><td>What it costs to make it go away, once</td><td>Engineering hours to fix, migrate, or retire, times the loaded rate, plus any one-time hard costs. Include the cost of the parallel run or cutover if there is one</td></tr>
       </table>      <p>Carry cost plus risk exposure is the annual cost of doing nothing. Divided into remediation cost it gives the payback period. Items with a payback under a year are operating decisions that have been avoided rather than debt decisions. Items with a payback over five years are usually not worth doing unless the risk exposure is dominated by a tail event that the organization has said it will not accept, which is what <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a> is for.</p>
+      <p style="margin-top:10px"><strong>The one-paragraph CFO test.</strong> Before an item goes on the list, write the case for it in one paragraph a CFO would accept: what it costs to leave, what it costs to fix, what goes wrong if nobody does. If that paragraph cannot be written, the severity is overstated or the numbers are missing, and either way the item is not ready to compete for budget.</p>
     </div></div>
   </div>
     <div class="stage-card">
@@ -233,6 +234,7 @@
         <tr><td>Undocumented single-person systems</td><td>Anything only one engineer can change</td><td>Key-person risk expressed as a probability times the cost of losing them</td></tr>
         <tr><td>Missing tests on critical paths</td><td>Change failure rate concentrated in a few services</td><td>Incident cost and the slowdown of every change to those services</td></tr>
         <tr><td>Deferred security findings</td><td>Pen test and scan findings older than one quarter</td><td>Almost pure risk exposure; usually cheap to remediate relative to it</td></tr>
+        <tr><td>Cloud spend outpacing usage</td><td>Cost per transaction or per customer rising while volume is flat</td><td>Architecture debt surfacing in the bill first: chatty services, oversized data movement, capacity bought to paper over contention</td></tr>
         <tr><td>Workarounds in the integration layer</td><td>Transformations and retries that exist because a contract was never fixed</td><td>Hours per month and the incidents when the workaround meets an edge case</td></tr>
       </table>
     </div></div>
