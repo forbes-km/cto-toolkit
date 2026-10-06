@@ -342,18 +342,18 @@
         <table class="matrix-table">
           <tr><th>Time</th><th>What happened</th><th>What the process did, or should have</th></tr>
           <tr><td>14:02</td><td>A deploy to the pricing service ships a config change that raises the connection pool timeout</td><td>Nothing yet. The change passed review and CI</td></tr>
-          <tr><td>14:11</td><td>Checkout p95 latency climbs past 6 seconds; error rate reaches 4 percent</td><td>SLO alert pages the on-call at 14:12. Detection time: 9 minutes</td></tr>
+          <tr><td>14:11</td><td>Checkout p95 latency climbs past 6 seconds; error rate reaches 4 percent</td><td>SLO alert pages the on-call at 14:12. Detection time: 1 minute after the SLO breach, 10 minutes after the deploy</td></tr>
           <tr><td>14:14</td><td>On-call engineer sees the alert, starts looking at dashboards, suspects the database</td><td>Not yet declared. This is the gap: the engineer wanted to be sure before paging anyone</td></tr>
           <tr><td>14:26</td><td>A support lead posts in the engineering channel that customers are calling</td><td>Engineer declares SEV1 at 14:27. IC and comms lead paged. Declaration delay: 15 minutes after the page</td></tr>
           <tr><td>14:31</td><td>IC opens the bridge and asks the three questions: impact, what changed, fastest mitigation</td><td>&quot;What changed&quot; surfaces the 14:02 deploy inside two minutes</td></tr>
-          <tr><td>14:33</td><td>Comms lead posts the first status page update: checkout degraded, investigating, next update 15:00</td><td>31 minutes after impact began; the target was 30 minutes after declaration and it was met, but declaration was late</td></tr>
+          <tr><td>14:33</td><td>Comms lead posts the first status page update: checkout degraded, investigating, next update 15:00</td><td>22 minutes after impact began and 6 after declaration; the 30-minute target was met, but declaration was late</td></tr>
           <tr><td>14:36</td><td>Ops lead proposes rollback of the pricing deploy; IC approves</td><td>Mitigate before diagnose. The rollback takes 7 minutes to propagate</td></tr>
           <tr><td>14:44</td><td>Error rate drops to baseline; latency recovers</td><td>IC does not resolve yet; the bar is 30 minutes within SLO</td></tr>
           <tr><td>15:15</td><td>Metrics stable for 30 minutes; the order queue that backed up has drained; IC declares resolved</td><td>Customer-visible impact: 14:11 to 14:44, 33 minutes, roughly $22,000 in lost orders plus recovery effort</td></tr>
           <tr><td>Day 3</td><td>Postmortem</td><td>Contributing factors found: the timeout change was reasonable in isolation but interacted with a retry policy in checkout to multiply connections; the SLO alert fired correctly; the 15-minute declaration delay was the largest avoidable cost; the pricing service had no canary stage</td></tr>
         </table>
         <p style="margin:12px 0 0;"><strong>The action items, with their categories:</strong> canary deploys for the pricing service (prevent, platform team, 30 days); a rule that any SLO page is declared as at least SEV2 immediately and downgraded later (detect faster, IC pool, immediate); a retry budget on the checkout client so a slow dependency cannot multiply load (reduce impact, checkout team, 45 days); and the class-of-incident question, which found two other services with the same retry pattern and produced a fourth item. The postmortem also recorded what went well: the &quot;what changed&quot; question found the cause in two minutes, and the rollback path worked first time because it had been exercised the month before.</p>
-        <p style="margin:8px 0 0;"><strong>What the numbers said afterward:</strong> time to detect 9 minutes, time to declare 16 minutes, time to mitigate 33 minutes. The nine minutes were the monitoring working; the sixteen were a person waiting for certainty. That single behavioral change, declare on the page, was worth more than any of the engineering items.</p>
+        <p style="margin:8px 0 0;"><strong>What the numbers said afterward:</strong> time to detect 1 minute from the SLO breach (10 from the deploy), time to declare 16 minutes, time to mitigate 33 minutes. The detection minute was the monitoring working; the sixteen were a person waiting for certainty. That single behavioral change, declare on the page, was worth more than any of the engineering items.</p>
       </div>
     </div>
   </div>
@@ -461,7 +461,7 @@
 
 <footer>
   Reference only. Adapt severity definitions and cadence to your organization's scale and customer commitments before treating this as a runbook. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for which notification clocks an incident starts. The incident command roles descend from the Incident Command System used by emergency services and adapted for software by Google's Site Reliability Engineering (O'Reilly, 2016); the blameless postmortem practice was popularized by Etsy's engineering team (John Allspaw, 2012). The worked examples, metrics, and sequencing are this site's.
-  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 
 </body>

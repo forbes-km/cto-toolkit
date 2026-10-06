@@ -76,7 +76,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Legacy Modernization Execution</h1>
   <p>How a migration gets run once the decision to modernize has been made. Deciding what to modernize is the Application Portfolio Management question; this page is about the execution mechanics that determine whether the migration succeeds or stalls: choosing the seam, the strangler fig and the routing layer that makes it work, cutover and rollback, parallel-run validation, data migration sequencing, the program structure that keeps a two-year effort honest, sunsetting, and the two ways it usually goes wrong. Two worked cases, one that worked and one that was rescued.</p>
-  <div class="caveat">This covers execution mechanics. See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for deciding what to modernize in the first place, <a href="../technology-diligence-map/index.html">Technology Diligence</a> for assessing what's being inherited in an acquisition, and <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> for the anti-corruption layer and contracts a strangler migration depends on. The strangler fig pattern is Martin Fowler's (2004); the migration strategies follow the widely used "R" taxonomy (rehost, replatform, refactor, repurchase, retire, retain) that Gartner introduced and AWS extended.</div>
+  <div class="caveat">This covers execution mechanics. See <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a> for deciding what to modernize in the first place, <a href="../technology-diligence-map/index.html">Technology Diligence</a> for assessing what's being inherited in an acquisition, and <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> for the anti-corruption layer and contracts a strangler migration depends on. The strangler fig pattern is Martin Fowler's (2004); the migration strategies follow the widely used "R" taxonomy, which began as Gartner's five Rs and was reworked by AWS into the six used here (rehost, replatform, refactor, repurchase, retire, retain) and later seven, adding relocate.</div>
 </header>
 
 <main>
@@ -97,7 +97,7 @@
           <tr><td>Retire</td><td>The application is switched off</td><td>Weeks, plus the time to find who still uses it</td><td>The user nobody knew about</td><td>The TIME map says Eliminate; often a third of an estate qualifies</td></tr>
           <tr><td>Retain</td><td>Nothing, deliberately, with a date to revisit</td><td>None</td><td>Drift; the system ages while attention is elsewhere</td><td>Low value, low risk, and the migration cost exceeds the carry cost</td></tr>
         </table>
-        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Most of this page is about the third row, because that is the one that fails. Rehost and replatform fail on cutover mechanics, covered in section 2. Repurchase fails on data migration, covered in section 4. Retire fails on the sunset discipline in section 6, which is why estates carry so many systems that were &quot;retired&quot; years ago.</p>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55;">Most of this page is about the third row, because that is the one that fails. Rehost and replatform fail on cutover mechanics, covered in section 1. Repurchase fails on data migration, covered in section 3. Retire fails on the sunset discipline in section 6, which is why estates carry so many systems that were &quot;retired&quot; years ago.</p>
       </div>
     </div>
   </div>
@@ -142,7 +142,7 @@
         <table class="matrix-table">
           <tr><th>Cutover pattern</th><th>How it works</th><th>Rollback cost</th><th>Fits when</th></tr>
           <tr><td>Canary</td><td>Route a small share of traffic (1 percent, then 5, then 25) to the new path, watch, widen</td><td>Trivial: route back</td><td>Stateless or read paths; anything where a small blast radius is acceptable</td></tr>
-          <tr><td>Blue/green</td><td>Two complete environments; switch the router, keep the old one warm</td><td>Low, until data diverges; then the data step from section 4 applies</td><td>Whole-service cutovers where a fast switch matters and data can be reconciled</td></tr>
+          <tr><td>Blue/green</td><td>Two complete environments; switch the router, keep the old one warm</td><td>Low, until data diverges; then the data step from section 3 applies</td><td>Whole-service cutovers where a fast switch matters and data can be reconciled</td></tr>
           <tr><td>Dark launch</td><td>The new path runs on live traffic with its output discarded; only its telemetry is used</td><td>None; nothing customer-visible changed</td><td>Validating a new implementation before any customer sees it; the first step of a parallel run</td></tr>
           <tr><td>Segment cutover</td><td>Move a customer cohort (internal users, then a friendly segment, then all) rather than a traffic percentage</td><td>Moderate; the cohort's data is now on the new system</td><td>Where behavior differs by customer and a percentage would split one customer's experience</td></tr>
           <tr><td>Big bang</td><td>Everything switches at once, usually over a weekend</td><td>High, and usually untested</td><td>Almost never by choice; occasionally forced by a contract end or a regulatory date, in which case it gets rehearsed at least twice in full</td></tr>
@@ -364,8 +364,8 @@
 </main>
 
 <footer>
-  Reference only. Migration risk and appropriate pace depend heavily on system criticality, data volume, and organizational capacity; adapt accordingly. See <a href="../integration-api-patterns/index.html" style="color:var(--accent);">Integration &amp; API Patterns</a> for the anti-corruption layer and the patterns a strangler migration depends on. The strangler fig pattern was named and described by Martin Fowler (2004); the anti-corruption layer is from Eric Evans, <em>Domain-Driven Design</em> (2003); the migration strategy taxonomy is Gartner's five Rs (2011) as extended to seven by AWS; canary and blue/green deployment are standard continuous delivery practice as described in Humble and Farley, <em>Continuous Delivery</em> (2010). The sequencing, program structure, measures, and both worked cases are this site's.
-  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+  Reference only. Migration risk and appropriate pace depend heavily on system criticality, data volume, and organizational capacity; adapt accordingly. See <a href="../integration-api-patterns/index.html" style="color:var(--accent);">Integration &amp; API Patterns</a> for the anti-corruption layer and the patterns a strangler migration depends on. The strangler fig pattern was named and described by Martin Fowler (2004); the anti-corruption layer is from Eric Evans, <em>Domain-Driven Design</em> (2003); the migration strategy taxonomy is Gartner's five Rs (2010) as extended to seven by AWS; canary and blue/green deployment are standard continuous delivery practice as described in Humble and Farley, <em>Continuous Delivery</em> (2010). The sequencing, program structure, measures, and both worked cases are this site's.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 
 </body>

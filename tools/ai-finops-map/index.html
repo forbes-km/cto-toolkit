@@ -150,7 +150,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Vertex AI bills current Gemini models per token, input and output metered separately; older model generations were metered per character, so check which meter applies to the model you pick. An easy-to-miss cost multiplier: Gemini's internal reasoning (thinking) tokens are billed as output, and on reasoning-heavy requests they can inflate cost several times beyond what the visible response length suggests.</p>
+      <p>Agent Platform (formerly Vertex AI) bills current Gemini models per token, input and output metered separately; older model generations were metered per character, so check which meter applies to the model you pick. An easy-to-miss cost multiplier: Gemini's internal reasoning (thinking) tokens are billed as output, and on reasoning-heavy requests they can inflate cost several times beyond what the visible response length suggests.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -204,11 +204,11 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Provisioned Throughput Units (PTU) reserve dedicated capacity at a flat monthly rate, converting variable token cost into a predictable fixed cost, but only pays off above a specific utilization threshold; idle PTU capacity is money spent on nothing.</p>
+      <p>Provisioned Throughput Units (PTU) reserve dedicated capacity, billed per PTU per hour, with Azure Reservations for 1-month or 1-year terms at a discount that varies by model family and term. That converts variable token cost into a predictable fixed cost, but only pays off above a specific utilization threshold; idle PTU capacity is money spent on nothing. Hourly billing suits short or variable use; for sustained production volume a reservation is usually cheaper.<sup class="src"><a href="#src-3" title="Microsoft Learn, provisioned throughput billing and cost management">[3]</a></sup></p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Provisioned throughput, priced per PTU per hour rather than per token, with Azure Reservations for 1-month or 1-year terms at a discount that varies by model family and term. Hourly billing suits short or variable use; for sustained production volume a reservation is usually cheaper. Compare against the pay-as-you-go bill at your actual volume before reserving.<sup class="src"><a href="#src-3" title="Microsoft Learn, provisioned throughput billing and cost management">[3]</a></sup></p>
+      <p>Provisioned Throughput is bought in generative AI scale units (GSUs) at a fixed price per GSU regardless of actual usage, on terms of one week, one month, three months, or one year, with longer terms discounted more. Commitments cannot be cancelled early, and traffic above the reservation falls back to pay-as-you-go pricing. Compare against the pay-as-you-go bill at your actual volume before committing.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -236,7 +236,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Cloud Billing labels plus BigQuery billing export let you attribute Vertex AI spend down to the label or project level, queryable alongside the rest of the GCP bill rather than as an isolated line item.</p>
+      <p>Cloud Billing labels plus BigQuery billing export let you attribute Agent Platform spend down to the label or project level, queryable alongside the rest of the GCP bill rather than as an isolated line item.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -291,7 +291,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Gemini 2.5 Flash-Lite at $0.10 input and $0.40 output per million tokens on Vertex AI, against $1.25 input for Gemini 2.5 Pro;<sup class="src"><a href="#src-4" title="Google Cloud, Vertex AI generative AI pricing">[4]</a></sup> the same routing principle applies, with the added wrinkle that reasoning tokens make the effective cost gap between tiers larger than the sticker price alone suggests.</p>
+      <p>Gemini 2.5 Flash-Lite at $0.10 input and $0.40 output per million tokens on Agent Platform, against $1.25 input for Gemini 2.5 Pro;<sup class="src"><a href="#src-4" title="Google Cloud, Agent Platform generative AI pricing">[4]</a></sup> the same routing principle applies, with the added wrinkle that reasoning tokens make the effective cost gap between tiers larger than the sticker price alone suggests.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -302,7 +302,7 @@
       <p>Same principle, and arguably higher stakes: a smaller open-weight model (7B to 14B class) served efficiently can handle a large share of production traffic at a fraction of the GPU footprint a frontier-class open-weight model requires, if the task doesn't need frontier reasoning.</p>
     </div>
     <div class="same-note">This is the FinOps decision most teams skip because it requires an evaluation harness to prove the cheaper model is good enough, and building that harness feels like overhead. It almost always pays for itself faster than infrastructure optimization does.</div>
-  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2"><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener">AWS, Amazon Bedrock pricing</a></li><li value="4" id="src-4"><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" rel="noopener">Google Cloud, Vertex AI generative AI pricing</a></li></ol></div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2"><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener">AWS, Amazon Bedrock pricing</a></li><li value="4" id="src-4"><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" rel="noopener">Google Cloud, Agent Platform generative AI pricing</a></li></ol></div>
 </div>
   <div class="stage-card">
     <div class="stage-head">
@@ -350,7 +350,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Context caching bills cached input at a fraction of the normal rate (75 percent off for Gemini 2.5 Flash-Lite at this review) plus a storage charge per million tokens per hour the cache is held. The discount differs by model, so check the pricing page for the model you use.<sup class="src"><a href="#src-4" title="Google Cloud, Vertex AI generative AI pricing">[4]</a></sup></p>
+      <p>Context caching bills cached input at a fraction of the normal rate (75 percent off for Gemini 2.5 Flash-Lite at this review) plus a storage charge per million tokens per hour the cache is held. The discount differs by model, so check the pricing page for the model you use.<sup class="src"><a href="#src-4" title="Google Cloud, Agent Platform generative AI pricing">[4]</a></sup></p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -361,7 +361,7 @@
       <p>vLLM and most modern serving stacks support prefix caching (often called automatic prefix caching or APC) natively, and the same discipline applies: stable content first, dynamic content last. The saving shows up as GPU time not spent recomputing the same prefix, rather than a line-item discount on a bill, so it has to be measured through throughput and latency metrics instead of a cost dashboard.</p>
     </div>
     <div class="same-note">Caching discounts are not permanent. Providers have already changed how cached tokens are priced more than once, so re-verify any specific caching discount against current pricing before it goes into a budget.</div>
-  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2"><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener">AWS, Amazon Bedrock pricing</a></li><li value="4"><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" rel="noopener">Google Cloud, Vertex AI generative AI pricing</a></li><li value="6" id="src-6"><a href="https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching" rel="noopener">Microsoft Learn, prompt caching with Azure OpenAI</a></li></ol></div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2"><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener">AWS, Amazon Bedrock pricing</a></li><li value="4"><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" rel="noopener">Google Cloud, Agent Platform generative AI pricing</a></li><li value="6" id="src-6"><a href="https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching" rel="noopener">Microsoft Learn, prompt caching with Azure OpenAI</a></li></ol></div>
 </div>
 
   <div class="stage-card">
@@ -380,7 +380,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Gemini batch prediction runs non-urgent jobs asynchronously at 50 percent off standard token rates.<sup class="src"><a href="#src-4" title="Google Cloud, Vertex AI generative AI pricing">[4]</a></sup> One gotcha applies to batch prediction on custom-trained models rather than Gemini: Google bills for the provisioned cluster runtime rather than active processing time, so under-filled jobs cost more per prediction than expected. Batching requests into larger groups is the fix.</p>
+      <p>Gemini batch prediction runs non-urgent jobs asynchronously at 50 percent off standard token rates.<sup class="src"><a href="#src-4" title="Google Cloud, Agent Platform generative AI pricing">[4]</a></sup> One gotcha applies to batch prediction on custom-trained models rather than Gemini: Google bills for the provisioned cluster runtime rather than active processing time, so under-filled jobs cost more per prediction than expected. Batching requests into larger groups is the fix.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -391,7 +391,7 @@
       <p>The equivalent move is scheduling batch workloads for off-peak GPU capacity, or running them through the same continuous-batching serving stack at a lower priority queue than interactive traffic. There's no separate billed rate to point to. The saving comes from higher GPU utilization on hardware that would otherwise sit idle overnight, which still has to be measured to know it's happening.</p>
     </div>
     <div class="same-note">The same discipline applies across every environment: anything without a hard latency requirement is a batch candidate. Auditing which workloads still run on the interactive path out of habit is a recurring source of avoidable spend.</div>
-  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2"><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener">AWS, Amazon Bedrock pricing</a></li><li value="4"><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" rel="noopener">Google Cloud, Vertex AI generative AI pricing</a></li><li value="7" id="src-7"><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference.html" rel="noopener">AWS, Amazon Bedrock User Guide: batch inference</a></li><li value="8" id="src-8"><a href="https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/batch" rel="noopener">Microsoft Learn, Azure OpenAI batch</a></li></ol></div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2"><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener">AWS, Amazon Bedrock pricing</a></li><li value="4"><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" rel="noopener">Google Cloud, Agent Platform generative AI pricing</a></li><li value="7" id="src-7"><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference.html" rel="noopener">AWS, Amazon Bedrock User Guide: batch inference</a></li><li value="8" id="src-8"><a href="https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/batch" rel="noopener">Microsoft Learn, Azure OpenAI batch</a></li></ol></div>
 </div>
 
   <div class="stage-card">
@@ -438,7 +438,7 @@
 
 <footer>
   Reference only. Pricing, reservation models, and hardware costs change quickly; verify current numbers against primary sources before relying on this for a budget or investment decision.
-  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>
 

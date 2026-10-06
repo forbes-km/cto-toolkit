@@ -347,7 +347,7 @@
 
 <footer>
   Reference only. Provider service catalogs and landing zone tooling change frequently; verify current naming, tiering, and feature parity directly against provider documentation before relying on this for a design or migration decision.
-  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 
 <script>
@@ -378,7 +378,7 @@ const data = [
   { category: "Database", capability: "Managed relational (general)", sub: "Managed MySQL / PostgreSQL / SQL Server", aws: "RDS", azure: "Azure SQL / Flexible Server", gcp: "Cloud SQL", oci: "Base Database Service" },
   { category: "Database", capability: "Distributed relational", sub: "Globally distributed, horizontally scalable SQL", aws: "Aurora", azure: "Azure Database for PostgreSQL elastic clusters (Citus); Cosmos DB for PostgreSQL not offered for new projects", gcp: "Spanner", oci: "Autonomous Database" },
   { category: "Database", capability: "Managed NoSQL / document", sub: "Schema-flexible document store", aws: "DynamoDB", azure: "Cosmos DB", gcp: "Firestore", oci: "NoSQL Database" },
-  { category: "Database", capability: "In-memory cache", sub: "Managed Redis / Memcached", aws: "ElastiCache", azure: "Azure Managed Redis / Azure Cache for Redis", gcp: "Memorystore", oci: "OCI Cache (Redis and Valkey compatible)" },
+  { category: "Database", capability: "In-memory cache", sub: "Managed Redis / Memcached", aws: "ElastiCache", azure: "Azure Managed Redis (Azure Cache for Redis is being retired)", gcp: "Memorystore", oci: "OCI Cache (Redis and Valkey compatible)" },
   { category: "Database", capability: "Data warehouse", sub: "Managed analytical / columnar warehouse", aws: "Redshift", azure: "Fabric Data Warehouse / Synapse Analytics", gcp: "BigQuery", oci: "Autonomous Data Warehouse" },
   { category: "Database", capability: "Graph database", sub: "Managed graph query engine", aws: "Neptune", azure: "Cosmos DB (Gremlin API)", gcp: "Spanner Graph", oci: "Graph Studio (on Autonomous DB)" },
   { category: "Database", capability: "Time-series database", sub: "Optimized for time-stamped metric data", aws: "Timestream for InfluxDB (LiveAnalytics closed to new customers June 2025)", azure: "Data Explorer (Kusto)", gcp: "Bigtable (common time-series pattern)", oci: "No dedicated native service" },
@@ -434,15 +434,15 @@ const data = [
 
   // Data & Analytics
   { category: "Data & Analytics", capability: "Managed ETL / data pipeline", sub: "Serverless data transformation pipelines", aws: "Glue", azure: "Data Factory", gcp: "Dataflow", oci: "Data Integration" },
-  { category: "Data & Analytics", capability: "Data lake storage + catalog", sub: "Structured metadata over object storage", aws: "Lake Formation", azure: "Purview + ADLS", gcp: "Dataplex", oci: "Data Catalog" },
+  { category: "Data & Analytics", capability: "Data lake storage + catalog", sub: "Structured metadata over object storage", aws: "Lake Formation", azure: "Purview + ADLS", gcp: "Dataplex Universal Catalog", oci: "Data Catalog" },
   { category: "Data & Analytics", capability: "Big data / Spark processing", sub: "Managed Hadoop/Spark clusters", aws: "EMR", azure: "HDInsight", gcp: "Dataproc", oci: "Big Data Service" },
   { category: "Data & Analytics", capability: "Business intelligence / dashboards", sub: "Self-service BI and reporting", aws: "Quick Sight (part of Amazon Quick Suite, formerly QuickSight)", azure: "Power BI", gcp: "Looker", oci: "Analytics Cloud" },
-  { category: "Data & Analytics", capability: "Unified analytics platform (SaaS)", sub: "Single SaaS surface spanning ingestion, warehousing, BI, and data science", aws: "No single equivalent; closest is combining Redshift, Glue, and Quick Sight", azure: "Microsoft Fabric", gcp: "BigQuery (with Looker and Vertex AI integrated around it)", oci: "No single equivalent; closest is Autonomous Data Warehouse plus Analytics Cloud" },
-  { category: "Data & Analytics", capability: "Managed search", sub: "Full-text and log search engine", aws: "OpenSearch Service", azure: "Azure AI Search (formerly Cognitive Search)", gcp: "No native equivalent; Vertex AI Search covers AI-driven search", oci: "OpenSearch Service" },
+  { category: "Data & Analytics", capability: "Unified analytics platform (SaaS)", sub: "Single SaaS surface spanning ingestion, warehousing, BI, and data science", aws: "No single equivalent; closest is combining Redshift, Glue, and Quick Sight", azure: "Microsoft Fabric", gcp: "BigQuery (with Looker and Gemini Enterprise Agent Platform integrated around it)", oci: "No single equivalent; closest is Autonomous Data Warehouse plus Analytics Cloud" },
+  { category: "Data & Analytics", capability: "Managed search", sub: "Full-text and log search engine", aws: "OpenSearch Service", azure: "Azure AI Search (formerly Cognitive Search)", gcp: "No native equivalent; Agent Platform Search (formerly Vertex AI Search) covers AI-driven search", oci: "OpenSearch Service" },
 
   // AI / ML
-  { category: "AI & ML", capability: "Managed ML platform", sub: "End-to-end model build, train, deploy", aws: "SageMaker", azure: "Azure Machine Learning", gcp: "Vertex AI", oci: "Data Science" },
-  { category: "AI & ML", capability: "Foundation model / generative AI access", sub: "Hosted LLM and generative model access", aws: "Bedrock", azure: "Microsoft Foundry (formerly Azure AI Foundry; Azure OpenAI and other models)", gcp: "Vertex AI (Model Garden)", oci: "Generative AI" },
+  { category: "AI & ML", capability: "Managed ML platform", sub: "End-to-end model build, train, deploy", aws: "SageMaker", azure: "Azure Machine Learning", gcp: "Gemini Enterprise Agent Platform (formerly Vertex AI)", oci: "Data Science" },
+  { category: "AI & ML", capability: "Foundation model / generative AI access", sub: "Hosted LLM and generative model access", aws: "Bedrock", azure: "Microsoft Foundry (formerly Azure AI Foundry; Azure OpenAI and other models)", gcp: "Gemini Enterprise Agent Platform (Model Garden)", oci: "Generative AI" },
   { category: "AI & ML", capability: "Document intelligence / OCR", sub: "Structured extraction from documents", aws: "Textract", azure: "Azure AI Document Intelligence", gcp: "Document AI", oci: "Document Understanding" },
   { category: "AI & ML", capability: "Vision AI", sub: "Image classification, detection, moderation", aws: "Rekognition", azure: "Azure AI Vision", gcp: "Vision AI", oci: "Vision" },
   { category: "AI & ML", capability: "Speech-to-text / text-to-speech", sub: "Speech recognition and synthesis", aws: "Transcribe / Polly", azure: "Azure AI Speech", gcp: "Speech-to-Text / Text-to-Speech", oci: "Speech" },

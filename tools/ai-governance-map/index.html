@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Governance Map</title>
-<meta name="description" content="Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them. Includes the standards and credentials landscape, AIGP, ISO/IEC 42001, NIST AI RMF, and where each applies.">
+<meta name="description" content="AI governance organized to the four domains of the IAPP AIGP Body of Knowledge v2.1: foundations, laws and standards, governing development, and governing deployment and use, each with concrete controls and failure modes, plus the standards landscape, when ISO/IEC 42001 is worth it, and a regulatory mapping.">
 <meta property="og:title" content="AI Governance Map | CTO Toolkit">
-<meta property="og:description" content="Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them. Includes the standards and credentials landscape, AIGP, ISO/IEC 42001, NIST AI RMF, and where each applies.">
+<meta property="og:description" content="AI governance organized to the four domains of the IAPP AIGP Body of Knowledge v2.1: foundations, laws and standards, governing development, and governing deployment and use, each with concrete controls and failure modes, plus the standards landscape, when ISO/IEC 42001 is worth it, and a regulatory mapping.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/ai-governance-map/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI Governance Map | CTO Toolkit">
-<meta name="twitter:description" content="Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them. Includes the standards and credentials landscape, AIGP, ISO/IEC 42001, NIST AI RMF, and where each applies.">
+<meta name="twitter:description" content="AI governance organized to the four domains of the IAPP AIGP Body of Knowledge v2.1: foundations, laws and standards, governing development, and governing deployment and use, each with concrete controls and failure modes, plus the standards landscape, when ISO/IEC 42001 is worth it, and a regulatory mapping.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/ai-governance-map/index.html">
 <style>
@@ -92,116 +92,269 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Governance Map</h1>
-  <p>Four layers, from data foundation to responsible AI oversight, each with concrete controls mapped to what breaks without them and which regulatory frameworks require them. Includes the standards and credentials landscape, AIGP, ISO/IEC 42001, NIST AI RMF, and where each applies.</p>
-  <div class="caveat">This is the technical and organizational governance layer. It does not replace legal review of the regulation that applies to your jurisdiction and use case; treat the regulatory mapping table as the starting point for that conversation.</div>
+  <p>AI governance organized to the four domains of the IAPP AIGP Body of Knowledge, version 2.1: the foundations of AI governance, how laws, standards and frameworks apply to AI, governing AI development, and governing AI deployment and use. Each competency carries the concrete controls that make it real, what breaks without them, and where the evidence comes from, followed by the standards landscape, when ISO/IEC 42001 certification is worth it, and a regulatory mapping.</p>
+  <div class="caveat">This page uses the AIGP structure so the program, the people running it, and anyone holding or studying for the credential share one vocabulary. It is not IAPP material or exam preparation, and it does not replace legal review of the rules that apply to your jurisdiction and use case; treat the regulatory sections as the starting point for that conversation.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Layer 1 &middot; data foundation</span>
-      <h3>Data foundation</h3>
-      <p>Before anything else, know what the model uses. If you cannot answer where a piece of training or retrieval data came from, nothing above this layer holds up.</p>
+      <span class="stage-num">Reference &middot; how this page is organized</span>
+      <h3>The AIGP Body of Knowledge, version 2.1, at a glance</h3>
+      <p>IAPP's current body of knowledge took effect on 2 February 2026. It groups AI governance into four domains and thirteen competencies, and the exam blueprint weights the two operational domains, development and deployment, most heavily.<sup class="src"><a href="#src-1" title="IAPP, AIGP Body of Knowledge v2.1">[1]</a></sup> The sections below follow the same order.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Domain</th><th>Competencies</th><th>Scored exam questions (v2.1 blueprint)</th><th>What it means for a program</th></tr>
+          <tr><td>I. Understanding the foundations of AI governance</td><td>I.A What AI is and why it needs governance<br>I.B Organizational expectations, roles and responsibilities<br>I.C Policies and procedures across the AI life cycle</td><td>16 to 20</td><td>Definitions, harms, principles, who owns what, and the policy set including third-party risk</td></tr>
+          <tr><td>II. Understanding how laws, standards and frameworks apply to AI</td><td>II.A Existing data privacy law<br>II.B Other existing law: IP, nondiscrimination, consumer protection, product liability<br>II.C AI-specific law<br>II.D Industry standards and tools</td><td>19 to 23</td><td>Which obligations already apply, which are arriving, and which voluntary frameworks give the program its structure</td></tr>
+          <tr><td>III. Understanding how to govern AI development</td><td>III.A Designing and building AI systems<br>III.B Collecting and using data for training and testing<br>III.C Release, monitoring and maintenance</td><td>21 to 25</td><td>The controls a builder or provider owns, from use case definition to post-release monitoring</td></tr>
+          <tr><td>IV. Understanding how to govern AI deployment and use</td><td>IV.A Key factors and risks in deployment<br>IV.B Assessing the AI system<br>IV.C Governing deployment and use</td><td>21 to 25</td><td>The controls a deployer owns, including bought and embedded AI, vendor terms, oversight, and the ability to switch a system off</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="same-note">The exam itself has 100 questions, 85 of them scored, so the ranges above sum to about 85. Version 2.1 frames governance around AI systems rather than individual models, which matches how incidents actually happen: through the model, its data, its retrieval layer, its integrations, and the people using it together.</div>
+    <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://assets.contentstack.io/v3/assets/bltd4dd5b2d705252bc/blt0d33152fd20bc134/AIGP_Cert%20BOK.pdf" rel="noopener">IAPP, AIGP Body of Knowledge, version 2.1, effective 2 February 2026</a></li></ol></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain I &middot; I.A</span>
+      <h3>What AI is, and why it needs its own governance</h3>
+      <p>Scope comes first. If the program cannot say what counts as an AI system, the inventory will miss most of what the organization actually runs.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Source registry covering every system feeding the AI pipeline</li><li>Data dictionary defining what each field means and where it originated</li><li>Lineage and provenance tracking from source document to retrieved chunk</li><li>Clear data ownership assigned per source system</li></ul>
+        <ul><li>A written working definition of an AI system, aligned to the OECD and EU AI Act definitions, so the inventory scope is consistent across teams</li><li>An AI inventory that covers built, bought, and embedded AI, including AI features switched on inside existing SaaS products</li><li>A harm taxonomy the risk process uses every time: harm to individuals (rights, safety, discrimination, privacy), to groups and society, to the organization (legal, financial, reputational), and to the environment</li><li>A short set of adopted responsible AI principles (fairness, safety, transparency, privacy, accountability, human oversight), each mapped to at least one control on this page</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>NIST AI RMF's Map function starts here: you cannot assess risk in a system whose inputs you cannot trace. Without this layer, an incident investigation cannot answer &quot;where did this bad output come from,&quot; which is usually the first question an investigation asks.</p>
+        <p>AI earns its own governance because of characteristics ordinary software does not share: probabilistic output, opacity, drift after deployment, behavior learned from data rather than written in code, scale, and, with agents, the ability to act. The common failure is a program that governs the chatbot engineering built while the resume screener a vendor added last quarter goes unexamined. Principles with no control mapped to them are a poster rather than a program.</p>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Layer 2 &middot; governance layer</span>
-      <h3>Governance layer</h3>
-      <p>Once the data foundation is solid, decide who decides what. Definition locks, retrieval boundaries, input validation, and a named data steward give the system clear lines of accountability.</p>
+      <span class="stage-num">Domain I &middot; I.B</span>
+      <h3>Roles, responsibilities, and organizational expectations</h3>
+      <p>Who signs off on an AI system going live, who is consulted, and which legal role the organization is playing for each system.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Definition locks: agreed, versioned definitions for terms the system reasons about, so they stop drifting between teams</li><li>Retrieval boundaries: which sources an agent or index is allowed to draw from for a given use case</li><li>Input validation on both user prompts and any document entering the ingestion pipeline</li><li>A named data steward with the authority to change what's retrievable</li></ul>
+        <ul><li>A named accountable owner per AI use case. A committee with no single decision-maker does not count</li><li>A cross-functional governance forum (legal, privacy, security, risk, data, product, HR, and the business owner) with a written charter and a decision log</li><li>For every system, a recorded answer to whether the organization is the developer, the provider, the deployer, or a user, because obligations follow the role rather than the technology</li><li>Role-based AI literacy and training: what staff may and may not do with AI tools, deeper training for reviewers, owners, and anyone exercising human oversight</li><li>A governance approach sized to the organization's context: sector, size, risk appetite, and whether it builds or mostly buys</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>Without a data steward, retrieval boundaries erode silently as new sources get connected for convenience, and the system starts answering from data nobody approved for that use case. This is the layer that turns &quot;we have a RAG pipeline&quot; into &quot;we have a RAG pipeline someone is accountable for.&quot;</p>
+        <p>Diffuse accountability is a recurring pattern behind headline AI incidents. It is rarely that nobody thought about the risk; it is that no single person owned the decision to accept it. Role confusion is the second failure. Under the EU AI Act a deployer that puts its own name on a high-risk system, substantially modifies it, or changes its intended purpose takes on provider obligations (Article 25).<sup class="src"><a href="#src-2" title="Regulation (EU) 2024/1689 (AI Act)">[2]</a></sup> Fine-tuning a vendor model for a new purpose can move an organization into that role without anyone deciding it should. Article 4 still expects providers and deployers to support AI literacy among their staff; the 2026 Omnibus softened it from guaranteeing a sufficient level to taking measures that support it.<sup class="src"><a href="#src-3" title="European Commission, AI Omnibus enters into force">[3]</a></sup></p>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Layer 3 &middot; trusted outputs</span>
-      <h3>Trusted outputs</h3>
-      <p>With governance in place, you can start defending your answers. Confidence thresholds, output guardrails, and bias checks turn &quot;the AI said so&quot; into something you can stand behind to a customer, auditor, or regulator.</p>
+      <span class="stage-num">Domain I &middot; I.C</span>
+      <h3>Policies and procedures across the AI life cycle, including third parties</h3>
+      <p>The policy set that turns principles into gates people actually pass through.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Confidence thresholds tied to the human-in-the-loop tiering model (see the <a href="../ai-architecture-map/index.html">Architecture Map</a>)</li><li>Output guardrails: schema validation, citation requirements, forbidden-content checks before a response ships</li><li>Bias and fairness checks on outputs for any use case touching people (hiring, credit, care recommendations)</li><li>Explainability sufficient to answer &quot;why did it say that&quot; after the fact, as well as at design time</li></ul>
+        <ul><li>An acceptable use policy for AI tools, covering which tools are approved and what data may go into them</li><li>A single intake path for every new AI use case, with risk tiering that decides how much review it gets (the tiers map to the human oversight tiers on the <a href="../ai-architecture-map/index.html">Architecture Map</a>)</li><li>Life cycle gates: design review, pre-release review, periodic re-assessment, and retirement</li><li>Existing policies updated rather than duplicated: privacy, security, procurement, records retention, model and change management, incident response</li><li>A third-party AI risk policy: due diligence questions for AI vendors, required contract terms, and monitoring for vendor model changes after signature</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>A confidence score without a documented threshold policy is a number nobody acts on consistently, and no auditor will accept it as a control. This layer is what regulators and auditors ask to see evidence of, so it has to produce artifacts (logs, rubric scores) rather than exist only as a design intention.</p>
+        <p>A standalone AI policy that no workflow references changes nothing. Intake is the control that keeps the inventory complete; without it, the inventory is a one-time survey that is stale within a quarter. Most enterprise AI exposure now arrives through vendors, which is why version 2.1 gives third-party risk management its own performance indicator, and why the procurement process has to ask about AI before the contract is signed. See <a href="../vendor-evaluation/index.html">Vendor Evaluation</a> for the scoring and risk register.</p>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Layer 4 &middot; responsible AI</span>
-      <h3>Responsible AI &amp; high-risk oversight</h3>
-      <p>The outer layer: autonomous agents, high-risk decisions, and regulated use cases. This only works because everything underneath it is already solid.</p>
+      <span class="stage-num">Domain II &middot; II.A</span>
+      <h3>Existing privacy law, applied to AI</h3>
+      <p>Most AI systems process personal data somewhere: in training, in retrieval, in prompts, or in logs. Privacy law applies to all of it today.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Control</span>
-        <ul><li>Formal classification of which use cases count as high-risk under applicable frameworks</li><li>Documented incident response plan specific to AI failures, separate from the generic IT incident process</li><li>Human oversight for high-risk decisions, implemented as the Tier 2 gate described on the <a href="../ai-architecture-map/index.html">Architecture Map</a> and enforced in code rather than by policy statement alone</li><li>Hallucination and groundedness checks running continuously in production, beyond the initial launch evaluation</li></ul>
+        <ul><li>A lawful basis and purpose-limitation check for each use of personal data in training, fine-tuning, retrieval, and inference</li><li>A data protection impact assessment where processing is likely to be high risk, run together with the AI impact assessment rather than separately</li><li>Data minimization applied to prompts, retrieval indexes, and logs, with retention set for each</li><li>Transparency notices that say where AI is used and what it does with personal data</li><li>Handling rules for special category and sensitive data, and a process for automated decision rights: GDPR Article 22, and California's automated decision-making technology rules, which require compliance for significant decisions from 1 January 2027<sup class="src"><a href="#src-4" title="California Privacy Protection Agency, regulations">[4]</a></sup></li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>Credit scoring, employment screening, and medical decisioning fall within the EU AI Act's Annex III high-risk use cases when the specific system matches the criteria listed there; operating in one of those domains does not by itself make a system high-risk. Article 14 requires human oversight for systems that do qualify.<sup class="src"><a href="#src-1" title="Regulation (EU) 2024/1689 (AI Act)">[1]</a></sup> The high-risk obligations were deferred by the Digital Omnibus on AI, adopted in June 2026 and in force from 27 July 2026: Annex III stand-alone systems, including employment and credit uses, now apply from 2 December 2027, and AI embedded in Annex I regulated products from 2 August 2028. Article 50 transparency duties still apply from 2 August 2026. The final text set fixed dates and dropped the Commission's earlier proposal to tie them to the readiness of harmonised standards, so confirm the current date for your specific use case against the published regulation.</p>
-      </div>
-    </div>
-  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" rel="noopener">Regulation (EU) 2024/1689 (AI Act)</a></li></ol></div>
-</div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Cross-cutting</span>
-      <h3>Model risk management</h3>
-      <p>Treating the model itself, and not only its outputs, as something with a lifecycle that needs governing.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Control</span>
-        <p>A model inventory listing every deployed model, its version, what it's used for, and who owns the decision to keep using it. Pre-deployment evaluation against a defined rubric before a new model version replaces an old one. Ongoing drift monitoring in production, tied to the observability stage on the <a href="../ai-architecture-map/index.html">Architecture Map</a>, in place of a one-time evaluation at launch.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Driver &amp; failure mode</span>
-        <p>The single most common gap: a team can name the model they deployed in January but not confirm what's running in production today after three silent provider-side updates. If you cannot answer &quot;which exact model version produced this output,&quot; you cannot investigate an incident or defend a decision.</p>
+        <p>The usual failures are data collected for one purpose reused for training without a compatible basis, and prompt and response logs growing into an unmanaged store of personal data nobody classified. Controllers stay responsible for AI processing even when a vendor runs the model. The EU AI Act allows special category data to be processed for bias detection and correction under strict conditions (Article 10(5)), and the 2026 Omnibus widened that route; it is a narrow exception, not a general basis. See <a href="../data-governance/index.html">Data Governance &amp; Privacy</a>.</p>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Reference</span>
-      <h3>The standards and credentials landscape</h3>
-      <p>Four different things people mean when they say &quot;AI governance,&quot; easy to conflate and different in what they certify, who holds them, and what they cost.</p>
+      <span class="stage-num">Domain II &middot; II.B</span>
+      <h3>Other existing law: IP, nondiscrimination, consumer protection, product liability</h3>
+      <p>Calling something AI is not a defense. These bodies of law reach AI systems now, regardless of when AI-specific rules arrive.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li><strong>Intellectual property:</strong> recorded rights to training and retrieval content, a position on ownership of generated output (US copyright protection requires human authorship), and vendor IP indemnities reviewed before signature</li><li><strong>Nondiscrimination:</strong> bias testing for any system that touches employment, credit, housing, insurance, or access to services, with the adverse action and notice duties that already exist in those domains applied to model-driven decisions</li><li><strong>Consumer protection:</strong> marketing and product claims about AI capabilities reviewed like any other claim, since overstating them is a deceptive practice</li><li><strong>Product liability:</strong> software, including AI, treated as a product with a defect exposure where it is sold or embedded in products</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>US regulators have said repeatedly that existing anti-discrimination and consumer protection law applies to automated systems, and enforcement has followed against inflated AI claims. In the EU, the revised Product Liability Directive explicitly covers software and AI systems and applies to products placed on the market after 9 December 2026, when member states must have transposed it.<sup class="src"><a href="#src-5" title="Directive (EU) 2024/2853, Product Liability">[5]</a></sup> The Commission dropped its separate AI Liability Directive proposal in 2025, so the revised product liability rules and national law carry that weight. The failure mode is treating these as future AI questions when they are current legal ones.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain II &middot; II.C</span>
+      <h3>AI-specific law: the main elements</h3>
+      <p>The EU AI Act is the template most other AI-specific laws borrow from, so its structure is worth knowing even outside the EU.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li><strong>Risk classification:</strong> every inventoried system classified against prohibited practices (Article 5), high-risk categories (Article 6 with Annexes I and III), transparency duties (Article 50), and minimal risk</li><li><strong>Provider obligations for high-risk systems:</strong> risk management, data governance, technical documentation, logging, instructions for deployers, human oversight, accuracy, robustness and cybersecurity, a quality management system, conformity assessment, and registration (Articles 9 to 17 and 43 to 49)</li><li><strong>Deployer obligations:</strong> use according to instructions, competent human oversight, input data relevance, monitoring, log retention, and for public bodies and certain private deployers a fundamental rights impact assessment (Articles 26 and 27)</li><li><strong>General-purpose AI models:</strong> documentation, copyright policy, and training content summaries for all providers, plus evaluation, incident reporting, and security duties for models with systemic risk (Articles 53 and 55)</li><li><strong>Enforcement:</strong> fines of up to 35 million euros or 7 percent of worldwide turnover for prohibited practices, 15 million or 3 percent for most other breaches, and 7.5 million or 1 percent for supplying incorrect information (Article 99)</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>Credit scoring and employment screening fall within the Annex III high-risk use cases when the specific system matches the criteria listed there; operating in one of those domains does not by itself make a system high-risk.<sup class="src"><a href="#src-2" title="Regulation (EU) 2024/1689 (AI Act)">[2]</a></sup> The Digital Omnibus on AI, adopted in June 2026 and in force from 27 July 2026, deferred the high-risk obligations: Annex III stand-alone systems now apply from 2 December 2027 and AI embedded in Annex I regulated products from 2 August 2028. Article 50 transparency duties have applied since 2 August 2026, with generative systems already on the market given until 2 December 2026 to meet the Article 50(2) marking requirement, and new prohibitions on generating non-consensual intimate imagery and child sexual abuse material also apply from 2 December 2026.<sup class="src"><a href="#src-3" title="European Commission, AI Omnibus enters into force">[3]</a></sup> In the US, Colorado repealed its 2024 AI Act and replaced it with SB 26-189, a notice, explanation, and human-review regime for automated consequential decisions from 1 January 2027,<sup class="src"><a href="#src-6" title="Seyfarth Shaw, Colorado SB 26-189">[6]</a></sup> while a December 2025 executive order directed the Justice Department to challenge state AI laws the administration considers inconsistent with national policy.<sup class="src"><a href="#src-7" title="White House, Ensuring a National Policy Framework for AI">[7]</a></sup> The obligations moved; they did not go away. See <a href="../regulatory-map/index.html">Regulatory Map</a> for the full timeline.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain II &middot; II.D</span>
+      <h3>Industry standards, frameworks, and credentials</h3>
+      <p>Several different things people mean when they say AI governance, easy to conflate and different in what they certify, who holds them, and what they cost.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Name</th><th>What it is</th><th>Who or what it applies to</th></tr>
-          <tr><td>AIGP (IAPP)</td><td>An individual professional credential, the AI-governance equivalent of IAPP's CIPP privacy certifications. 100-question exam across four domains: AI governance foundations, applicable laws and standards, governing AI development, governing AI deployment and use.</td><td>A person. Validates that someone can run an AI governance program; doesn't certify the organization or any specific system.</td></tr>
-          <tr><td>ISO/IEC 42001</td><td>A certifiable AI management system standard, the AI equivalent of ISO 27001 for information security. Third-party audited (Stage 1 and Stage 2), valid three years with annual surveillance audits, 38 Annex A controls selected and justified against your own risk assessment rather than applied as a fixed checklist.</td><td>An organization's AI management system. Already held by AWS, Anthropic, and Microsoft. Doesn't by itself satisfy EU AI Act obligations, but the risk assessment and governance structure it requires feeds directly into the technical documentation the Act does require.</td></tr>
-          <tr><td>NIST AI RMF</td><td>A voluntary US framework (Govern, Map, Measure, Manage). It is guidance to structure a program against; nobody audits you to it.</td><td>An organization's practice, self-assessed. Already referenced throughout this page's layer structure.</td></tr>
-          <tr><td>ISO/IEC 23894</td><td>Risk management guidance specific to AI, meant to be used alongside ISO 31000's general risk management approach.</td><td>An organization's risk process. Guidance rather than a certifiable standard on its own.</td></tr>
-          <tr><td>OECD AI Principles</td><td>High-level international principles (inclusive growth, human-centered values, transparency, robustness, accountability), adopted by dozens of governments as policy language.</td><td>National policy and regulation that draws on these principles; not something an organization implements or gets certified against directly.</td></tr>
+          <tr><td>OECD AI Principles</td><td>The first intergovernmental AI principles (2019, updated May 2024): inclusive growth and well-being, human rights and fairness, transparency, robustness and safety, and accountability. Also the source of the AI system definition the EU AI Act aligned to.<sup class="src"><a href="#src-8" title="OECD AI Principles">[8]</a></sup></td><td>National policy and regulation that draws on them; not something an organization implements or gets certified against directly</td></tr>
+          <tr><td>NIST AI RMF 1.0 and Playbook</td><td>A voluntary US framework (Govern, Map, Measure, Manage) with a companion Playbook of suggested actions, plus the Generative AI Profile, NIST AI 600-1 (July 2024).<sup class="src"><a href="#src-9" title="NIST AI Risk Management Framework">[9]</a></sup> Guidance to structure a program against; nobody audits you to it.</td><td>An organization's practice, self-assessed. Maps closely to the four AIGP domains on this page</td></tr>
+          <tr><td>ISO/IEC 22989:2022</td><td>AI concepts and terminology: the shared vocabulary the other ISO AI standards are written in</td><td>Anyone writing policy, contracts, or documentation who needs terms that mean the same thing to an auditor</td></tr>
+          <tr><td>ISO/IEC 42001:2023</td><td>A certifiable AI management system standard, the AI equivalent of ISO 27001 for information security. Third-party audited (Stage 1 and Stage 2), valid three years with annual surveillance audits, 38 Annex A controls selected and justified against your own risk assessment rather than applied as a fixed checklist.<sup class="src"><a href="#src-10" title="ISO/IEC 42001:2023">[10]</a></sup></td><td>An organization's AI management system. Already held by AWS, Anthropic, and Microsoft. Does not by itself satisfy EU AI Act obligations, but the risk assessment and governance structure it requires feeds directly into the technical documentation the Act does require</td></tr>
+          <tr><td>ISO/IEC 42005:2025</td><td>Guidance on AI system impact assessment: what to assess, for whom, and how to document it across the life cycle<sup class="src"><a href="#src-11" title="ISO/IEC 42005:2025">[11]</a></sup></td><td>The impact assessments in III.A and IV.B. Guidance rather than a certifiable standard</td></tr>
+          <tr><td>ISO/IEC 23894:2023</td><td>Risk management guidance specific to AI, meant to be used alongside ISO 31000's general approach</td><td>An organization's risk process. Guidance rather than a certifiable standard</td></tr>
+          <tr><td>AIGP (IAPP)</td><td>An individual professional credential, the AI governance counterpart to IAPP's privacy certifications. A 100-question exam across the four domains this page follows, maintained through continuing education every two years</td><td>A person. Shows someone can run an AI governance program; does not certify the organization or any specific system</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">The practical distinction that matters most: AIGP tells you something about a person you might hire or promote into an AI governance role. ISO 42001 tells a customer or regulator something about your organization, backed by an independent audit. Neither substitutes for the other, and neither substitutes for the technical controls described in the four layers above; a certified management system with no enforced technical controls underneath it is a common failure pattern.</div>
+    <div class="same-note">The practical distinction that matters most: AIGP tells you something about a person you might hire or promote into an AI governance role. ISO 42001 tells a customer or regulator something about your organization, backed by an independent audit. Neither substitutes for the other, and neither substitutes for the technical controls in Domains III and IV; a certified management system with no enforced technical controls underneath it is a common failure pattern.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain III &middot; III.A</span>
+      <h3>Governing the design and build of AI systems</h3>
+      <p>The decisions that are cheap to change on a whiteboard and expensive to change in production.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>A use case statement before any build: the business context, intended purpose, who is affected, the decision the system informs or makes, and what it must never do</li><li>An impact assessment before build, using ISO/IEC 42005 as the structure and combined with the privacy assessment where personal data is involved</li><li>Internal and external risks identified, including third-party models, open-weight components, datasets, and tools the system will call</li><li>Human oversight designed in from the start, using the tiering on the <a href="../ai-architecture-map/index.html">Architecture Map</a>, rather than added after launch</li><li>Design documentation kept as the build proceeds: intended use, known limitations, design choices and the alternatives rejected, recorded as <a href="../adr-roadmapping/index.html">ADRs</a></li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>Most AI incidents trace back to a purpose nobody wrote down, so the system drifted into uses it was never assessed for. The documentation is not paperwork for its own sake: under the EU AI Act a high-risk provider's technical documentation has to exist before the system is placed on the market, and reconstructing design rationale after the fact is slower and less credible than recording it during the build.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain III &middot; III.B</span>
+      <h3>Governing the data used for training, testing, and retrieval</h3>
+      <p>If you cannot answer where a piece of training or retrieval data came from, nothing built on it holds up.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>Data governance requirements set per use case: a source registry covering every system feeding the pipeline, a data dictionary, and clear data ownership per source</li><li>Lineage and provenance tracked from source document to training set or retrieved chunk, with the embedding model version recorded</li><li>Definition locks: agreed, versioned definitions for terms the system reasons about, so they stop drifting between teams</li><li>Retrieval boundaries: which sources an agent or index may draw from for a given use case, changed only by a named data steward</li><li>Input validation on user prompts and on any document entering the ingestion pipeline</li><li>Training and testing planned and documented: representative and held-out test sets, bias and fairness testing for any use case touching people, adversarial and red-team testing, and the results kept as evidence</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>NIST AI RMF's Map function starts here: you cannot assess risk in a system whose inputs you cannot trace. Without a data steward, retrieval boundaries erode silently as new sources get connected for convenience, and the system starts answering from data nobody approved for that use case. Without lineage, an investigation cannot answer where a bad output came from, which is usually the first question it asks. See <a href="../data-strategy/index.html">Data Strategy</a> for the data quality work underneath this.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain III &middot; III.C</span>
+      <h3>Governing release, monitoring, and maintenance</h3>
+      <p>Treating the system as something with a life cycle, so what was true at launch is checked again after every model, prompt, or index change.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>A release readiness gate: evaluation against a defined rubric, documented confidence thresholds, output guardrails (schema validation, citation requirements, forbidden-content checks), and explainability sufficient to answer why it said that after the fact</li><li>A model and system inventory listing every deployed model and index, its exact version, its use, and who owns the decision to keep using it</li><li>Continuous monitoring for drift, groundedness, and hallucination in production, tied to the observability stage on the <a href="../ai-architecture-map/index.html">Architecture Map</a>, plus scheduled maintenance and periodic re-assessment of performance, reliability, and safety</li><li>Decision logging: every promotion of a new model or index version recorded with who approved it and what evidence supported it</li><li>Incidents, issues, and risks managed and documented, with root cause worked jointly by the model, data, and platform owners</li><li>Public disclosures where required: transparency notices, system or model cards, and, for high-risk providers in the EU, serious incident reporting to the authorities</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>The single most common gap: a team can name the model they deployed in January but not confirm what is running in production today after three silent provider-side updates. If you cannot answer which exact model version produced an output, you cannot investigate an incident or defend a decision. A confidence score without a documented threshold policy is a number nobody acts on consistently, and no auditor will accept it as a control; this stage has to produce artifacts (logs, rubric scores, approvals) rather than exist as a design intention.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain IV &middot; IV.A</span>
+      <h3>Key factors and risks in deployment</h3>
+      <p>The same model carries very different risk depending on where and how it is deployed.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li><strong>Use case context:</strong> who is affected, how significant the decision is, whether a human reviews the output, and whether the outcome is reversible</li><li><strong>Model type:</strong> classical machine learning, generative, general-purpose, or agentic; proprietary or open-weight; and what each implies for testing, transparency, and control</li><li><strong>Deployment option:</strong> an AI feature inside a SaaS product, a managed model API, a cloud-hosted platform, self-hosted open weights, or on-device, with the control surface each one leaves you</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>A model summarizing internal meeting notes and the same model drafting adverse credit decisions are different risks, and the review should differ accordingly. Deployment choice decides how much you can control: a vendor feature gives you configuration and contract terms, a managed API adds prompt and guardrail control, and self-hosting gives full control along with full responsibility for patching, supply chain, and evaluation. Agents raise the stakes because they act rather than advise; see <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a> for scoping the identity they act with.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain IV &middot; IV.B</span>
+      <h3>Assessing the AI system before deployment</h3>
+      <p>A deployer's due diligence: the system's impact, the vendor's terms, and the trade-offs of the model it runs on.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>An impact assessment performed or reviewed by the deployer, including a fundamental rights impact assessment where the EU AI Act requires one</li><li>Vendor agreements reviewed for the terms that matter for AI: whether your data trains their models, retention of prompts and outputs, IP indemnity, notice of model changes, audit and evidence rights, sub-processors, incident notification, output ownership, and liability caps</li><li>The risks and opportunities of proprietary model deployment weighed explicitly: vendor support and indemnity against opacity, lock-in, and pricing exposure, and whether fine-tuning or rebranding shifts the organization into a provider role</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>Most organizations deploy far more AI than they build, so this is where most of their exposure sits. The failure is a contract signed on standard terms because the AI feature arrived as part of a renewal nobody reviewed for it. The clauses that fix this are the same ones that protect any renewal; see <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a> and the exit terms on <a href="../build-vs-buy/index.html">Build vs Buy</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Domain IV &middot; IV.C</span>
+      <h3>Governing deployment and use</h3>
+      <p>The outer layer: autonomous agents, consequential decisions, and regulated use cases, governed for as long as the system is live.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Control</span>
+        <ul><li>Policies, procedures, and ethical considerations applied to each deployment, including who may use it and for what</li><li>Human oversight for high-risk decisions, implemented as the Tier 2 gate on the <a href="../ai-architecture-map/index.html">Architecture Map</a> and enforced in code rather than by policy statement alone</li><li>Continuous monitoring and scheduled maintenance, with periodic performance, reliability, and safety assessments in production</li><li>Incidents, issues, risks, and post-market monitoring documented, with a severity scale specific to AI failures (harmful hallucination, biased output, data leakage through a response, an agent taking an unauthorized action)</li><li>Controls against secondary and unintended use: usage limits, technical scoping, and monitoring for use drifting beyond the assessed purpose</li><li>An external communication plan: disclosure that people are interacting with AI, customer notices, and what is said if the system fails publicly</li><li>Controls to deactivate or localize a system: a tested kill switch, feature flags, geographic or tenant scoping, and a rollback path to a prior model or index version</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Driver &amp; failure mode</span>
+        <p>A general incident process (see <a href="../incident-response/index.html">Incident Response</a>) usually is not built to ask whether a failure was the model's, the retrieval layer's, or the underlying data's, and that triage question determines the fix; extend the general process rather than replacing it. The rollback path depends directly on the versioning discipline in III.C. A system that cannot be switched off quickly cannot be governed, and secondary use is how a tool assessed for drafting internal notes ends up making customer-facing decisions nobody reviewed.</p>
+      </div>
+    </div>
   </div>
 
   <div class="stage-card">
@@ -217,7 +370,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Not worth it yet</span>
-        <p>A small AI footprint with a handful of internal use cases and no customer demanding third-party evidence. The four layers above aren't solidly in place yet. Certifying a management system before the underlying technical controls exist produces a certificate that doesn't reflect reality, and an auditor will eventually find that gap. NIST AI RMF, applied seriously and evidenced internally, covers most of the same ground without the $20,000 to $60,000 audit cost and multi-year commitment.</p>
+        <p>A small AI footprint with a handful of internal use cases and no customer demanding third-party evidence. The controls in Domains III and IV aren't solidly in place yet. Certifying a management system before the underlying technical controls exist produces a certificate that doesn't reflect reality, and an auditor will eventually find that gap. NIST AI RMF, applied seriously and evidenced internally, covers most of the same ground without the audit cost, commonly $20,000 to $60,000 depending on scope, and the multi-year commitment.</p>
       </div>
     </div>
   </div>
@@ -225,62 +378,32 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Reference</span>
-      <h3>Regulatory framework mapping</h3>
-      <p>Which control layer above satisfies which framework's requirement. Not legal advice; confirm applicability with counsel for your specific use case and jurisdiction.</p>
+      <h3>Regulatory and framework mapping</h3>
+      <p>Which AIGP competency and control on this page answers which requirement. Not legal advice; confirm applicability with counsel for your specific use case and jurisdiction.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Framework</th><th>What it requires</th><th>Which layer covers it</th></tr>
-          <tr><td>HIPAA</td><td>Minimum necessary access, immutable audit trail for PHI access</td><td>Layer 2 (retrieval boundaries) plus the PHI/PII stage on the <a href="../ai-architecture-map/index.html">Architecture Map</a></td></tr>
-          <tr><td>EU AI Act, Article 14</td><td>Human oversight for high-risk AI systems</td><td>Layer 4, enforced technically via the HITL tiering model</td></tr>
-          <tr><td>NIST AI RMF</td><td>Govern, Map, Measure, Manage functions across the AI lifecycle</td><td>All four layers plus model risk management, roughly one NIST function per layer</td></tr>
-          <tr><td>ISO/IEC 42001</td><td>An auditable AI management system: policy, risk assessment, selected Annex A controls, continuous improvement</td><td>All four layers plus the accountability and model risk management sections provide the evidence an auditor asks for</td></tr>
-          <tr><td>SOC 2 (if applicable to the AI system)</td><td>Access controls, change management, monitoring evidence</td><td>Layer 2 for access, model risk management for change control, Layer 3 for monitoring evidence</td></tr>
+          <tr><th>Framework</th><th>What it requires</th><th>Where it is covered</th></tr>
+          <tr><td>HIPAA</td><td>Minimum necessary access, an audit trail for PHI access, business associate agreements</td><td>III.B retrieval boundaries, IV.B vendor terms, and the PHI/PII stage on the <a href="../ai-architecture-map/index.html">Architecture Map</a></td></tr>
+          <tr><td>GDPR and US state privacy law</td><td>Lawful basis, minimization, impact assessments, transparency, automated decision rights</td><td>II.A, with the assessment combined with III.A and IV.B</td></tr>
+          <tr><td>EU AI Act, Articles 9 to 15</td><td>Risk management, data governance, documentation, logging, transparency, human oversight, accuracy and robustness for high-risk systems</td><td>II.C for classification, III.A to III.C for the provider controls, IV.C for oversight enforced through the HITL tiers</td></tr>
+          <tr><td>EU AI Act, Articles 26, 27 and 50</td><td>Deployer duties, fundamental rights impact assessment, transparency to people interacting with AI</td><td>IV.B and IV.C</td></tr>
+          <tr><td>Colorado SB 26-189 and NYC Local Law 144</td><td>Notice, explanation, and human review for automated consequential decisions; bias audits for hiring tools</td><td>II.B and II.C, with the bias testing in III.B and the oversight in IV.C</td></tr>
+          <tr><td>NIST AI RMF</td><td>Govern, Map, Measure, Manage across the AI life cycle</td><td>Govern maps to Domain I, Map to I.A and III.A, Measure to III.B and III.C, Manage to IV.C</td></tr>
+          <tr><td>ISO/IEC 42001</td><td>An auditable AI management system: policy, risk assessment, impact assessment, selected Annex A controls, continuous improvement</td><td>Domain I for the management system, Domains III and IV for the evidence an auditor samples</td></tr>
+          <tr><td>SOC 2 (if applicable to the AI system)</td><td>Access controls, change management, monitoring evidence</td><td>III.B for access, III.C for change control and monitoring evidence</td></tr>
         </table>
       </div>
     </div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Accountability</span>
-      <h3>Accountability &amp; audit trail</h3>
-      <p>Who signs off on an AI system going live, and what gets logged so that decision can be reconstructed later.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Control</span>
-        <p>A named accountable owner per AI use case. A committee with no single decision-maker does not count. Decision logging: every promotion of a new model or index version recorded with who approved it and what evaluation evidence supported the approval.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Driver &amp; failure mode</span>
-        <p>Diffuse accountability is a recurring AI governance failure pattern behind headline incidents. It's rarely that no one thought about the risk; it's that no single person owned the decision to accept it.</p>
-      </div>
-    </div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Incident response</span>
-      <h3>AI-specific incident response</h3>
-      <p>Different from a general IT incident: a hallucinated answer causing harm, a bias incident, or a model behaving unexpectedly needs its own triage path.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Control</span>
-        <p>A defined severity classification specific to AI failures (harmful hallucination, biased output, data leakage through a response, agent taking an unauthorized action). A rollback path that can revert to a prior model or index version quickly, which depends directly on the versioning discipline described in model risk management above.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Driver &amp; failure mode</span>
-        <p>A general incident response process (see <a href="../incident-response/index.html">Incident Response</a>) usually isn't built to ask &quot;was this the model's fault, the retrieval's fault, or the underlying data's fault,&quot; and that triage question determines the fix. Build this as an extension of the general process rather than a replacement for it.</p>
-      </div>
-    </div>
+    <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" rel="noopener">Regulation (EU) 2024/1689 (AI Act)</a></li><li value="3" id="src-3"><a href="https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force" rel="noopener">European Commission, AI Omnibus enters into force, July 2026</a></li><li value="4" id="src-4"><a href="https://cppa.ca.gov/regulations/" rel="noopener">California Privacy Protection Agency, CCPA regulations including automated decisionmaking technology</a></li><li value="5" id="src-5"><a href="https://eur-lex.europa.eu/eli/dir/2024/2853/oj" rel="noopener">Directive (EU) 2024/2853 on liability for defective products</a></li><li value="6" id="src-6"><a href="https://www.seyfarth.com/news-insights/colorado-enacts-artificial-intelligence-replacement-law.html" rel="noopener">Seyfarth Shaw, Colorado enacts AI replacement law (SB 26-189), May 2026</a></li><li value="7" id="src-7"><a href="https://www.whitehouse.gov/presidential-actions/2025/12/eliminating-state-law-obstruction-of-national-artificial-intelligence-policy/" rel="noopener">The White House, Ensuring a National Policy Framework for Artificial Intelligence, December 2025</a></li><li value="8" id="src-8"><a href="https://oecd.ai/en/ai-principles" rel="noopener">OECD, AI Principles</a></li><li value="9" id="src-9"><a href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener">NIST, AI Risk Management Framework and Playbook</a></li><li value="10" id="src-10"><a href="https://www.iso.org/standard/42001" rel="noopener">ISO/IEC 42001:2023, AI management system</a></li><li value="11" id="src-11"><a href="https://www.iso.org/standard/42005" rel="noopener">ISO/IEC 42005:2025, AI system impact assessment</a></li></ol></div>
   </div>
 
 </main>
 
 <footer>
-  Reference only. Regulatory requirements and enforcement postures change; verify current obligations against primary sources and counsel before relying on this for a compliance decision. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for the EU AI Act timeline after the 2026 deferral and the US state picture.
-  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+  Reference only. Regulatory requirements and enforcement postures change; verify current obligations against primary sources and counsel before relying on this for a compliance decision. See <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> for the EU AI Act timeline after the 2026 deferral and the US state picture. Structure follows the IAPP AIGP Body of Knowledge, version 2.1 (effective 2 February 2026); the controls, failure modes, and mappings are this site's.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>
 

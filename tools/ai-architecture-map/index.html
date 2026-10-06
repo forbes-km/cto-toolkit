@@ -248,7 +248,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Architecture Map</h1>
-  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.</p>
+  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product and service names reflect 2026 offerings: Google renamed Vertex AI to Gemini Enterprise Agent Platform in April 2026 (shortened here to Agent Platform; its API endpoints still use the older aiplatform name), and Oracle Database 23ai is now Oracle AI Database 26ai. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.</p>
   <div class="caveat">Not every stage differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere; where that's true, it's called out as a single statement rather than padded into five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
 </header>
 
@@ -265,9 +265,9 @@
         <div class="lz-card">
           <div class="lz-card-head"><h4>Managed model access</h4></div>
           <div class="lz-grid">
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock, unified Converse API across model families (Claude, Titan, Llama, Mistral)</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock, unified Converse API across model families (Amazon Nova, Claude, Llama, Mistral, and others)</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>Microsoft Foundry (formerly Azure AI Foundry), Azure OpenAI models plus the Foundry Model Catalog's open-weight options</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI, Gemini-first with third-party and open-weight models via Model Garden</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Gemini Enterprise Agent Platform (formerly Vertex AI), Gemini-first with third-party and open-weight models via Model Garden</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>OCI Generative AI, native and third-party models</p></div>
           </div>
         </div>
@@ -277,7 +277,7 @@
           <div class="lz-grid">
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock Knowledge Bases (S3, Confluence, SharePoint sources)</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Search with integrated vectorization, hybrid vector, keyword, and semantic ranking built into the index itself</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI Search (Google Drive, Cloud Storage sources)</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Agent Platform Search, formerly Vertex AI Search (Google Drive, Cloud Storage sources)</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>Generative AI Agents RAG service, integrated vector store and ingestion pipeline built in</p></div>
           </div>
         </div>
@@ -287,7 +287,7 @@
           <div class="lz-grid">
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>Bedrock Agents, AgentCore, and Flows</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>Foundry Agent Service, built-in tool calling</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI Agent Builder</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Agent Platform agent tooling with the Agent Development Kit (formerly Vertex AI Agent Builder)</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>Generative AI Agents, tool and API orchestration built into the same service as RAG</p></div>
           </div>
         </div>
@@ -297,8 +297,8 @@
           <div class="lz-grid">
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>pgvector on RDS, or OpenSearch at larger scale</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>AI Search's HNSW vector index, hybrid query mode built in</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI Vector Search, or vector functions inside BigQuery</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>AI Vector Search built into Oracle Database 23ai, or HeatWave GenAI for the MySQL side</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Agent Platform Vector Search, or vector functions inside BigQuery</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>AI Vector Search built into Oracle AI Database 26ai (formerly 23ai), or HeatWave GenAI for the MySQL side</p></div>
           </div>
         </div>
 
@@ -307,7 +307,7 @@
           <div class="lz-grid">
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot aws"></span>AWS</div><p>SageMaker</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot azure"></span>Azure</div><p>Azure Machine Learning</p></div>
-            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Vertex AI custom training</p></div>
+            <div class="lz-cell"><div class="lz-provider"><span class="lz-dot gcp"></span>GCP</div><p>Agent Platform custom training</p></div>
             <div class="lz-cell"><div class="lz-provider"><span class="lz-dot oci"></span>OCI</div><p>OCI Data Science, paired with GPU-backed AI infrastructure instances</p></div>
           </div>
         </div>
@@ -393,7 +393,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Vertex AI text embedding models, billed per character, with native integration into BigQuery for embedding data already living there.</p>
+      <p>Agent Platform text embedding models, billed per character or per token depending on the model, with native integration into BigQuery for embedding data already living there.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -421,11 +421,11 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Vertex AI Vector Search for dedicated ANN at scale, or vector functions inside BigQuery when the data already lives there and a separate index is overhead.</p>
+      <p>Agent Platform Vector Search for dedicated ANN at scale, or vector functions inside BigQuery when the data already lives there and a separate index is overhead.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>AI Vector Search built directly into Oracle Database 23ai, keeping vectors and relational data in one system rather than a separate store.</p>
+      <p>AI Vector Search built directly into Oracle AI Database 26ai, keeping vectors and relational data in one system rather than a separate store.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -449,7 +449,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Vertex AI Search includes a ranking API as part of its managed search stack, applying a similar L2 re-ranking pass over initial results.</p>
+      <p>Agent Platform Search includes a ranking API as part of its managed search stack, applying a similar L2 re-ranking pass over initial results.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -469,7 +469,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Bedrock model deployment: unified Converse API across Claude, Titan, Llama, and Mistral. Provisioned Throughput for predictable latency at volume, on-demand for variable load, plus a batch tier at a discount for non-interactive workloads.</p>
+      <p>Bedrock model deployment: unified Converse API across Amazon Nova, Claude, Llama, Mistral, and other model families. Provisioned Throughput for predictable latency at volume, on-demand for variable load, plus a batch tier at a discount for non-interactive workloads.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -477,7 +477,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Vertex AI model deployment: Gemini-first, with third-party and open-weight models available through Model Garden. Provisioned throughput and pay-as-you-go both available, same shape as the other two.</p>
+      <p>Agent Platform model deployment: Gemini-first, with third-party and open-weight models available through Model Garden. Provisioned throughput and pay-as-you-go both available, same shape as the other two.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -505,7 +505,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Vertex AI Agent Builder for managed tool orchestration, or a self-built MCP server called from a Vertex AI-hosted agent.</p>
+      <p>Agent Platform agent tooling (formerly Agent Builder) for managed tool orchestration, or a self-built MCP server called from an agent hosted on Agent Platform.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -592,7 +592,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Cloud DLP (Sensitive Data Protection) for PII/PHI detection and redaction as a pipeline step, with de-identification templates reusable across the pipeline. A BAA with Google is a precondition for PHI in Vertex AI.</p>
+      <p>Cloud DLP (Sensitive Data Protection) for PII/PHI detection and redaction as a pipeline step, with de-identification templates reusable across the pipeline. A BAA with Google is a precondition for PHI in Agent Platform.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -642,7 +642,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>OpenSearch and most managed vector stores lack point-in-time index restore; re-indexing from the source document store is the recovery path. Bedrock-hosted models inherit AWS's regional redundancy; multi-region endpoint deployment is a separate decision.</p>
+      <p>OpenSearch and most managed vector stores lack point-in-time index restore; re-indexing from the source document store is the recovery path. pgvector on RDS or Aurora is the exception, since it inherits the database's point-in-time recovery. Bedrock-hosted models inherit AWS's regional redundancy; multi-region endpoint deployment is a separate decision.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -650,11 +650,11 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Same pattern: Vertex AI Vector Search has no native point-in-time restore, source-document re-indexing is the recovery path. Vertex AI-hosted models inherit GCP's regional redundancy.</p>
+      <p>Same pattern: Agent Platform Vector Search has no native point-in-time restore, source-document re-indexing is the recovery path. Agent Platform-hosted models inherit GCP's regional redundancy.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>Oracle Database 23ai's native backup and point-in-time recovery covers vector data stored in-database. That is a real difference from the other three, because the vectors live inside the database rather than in a separate index.</p>
+      <p>Oracle AI Database 26ai's native backup and point-in-time recovery covers vector data stored in-database. That is a real difference from the other three, because the vectors live inside the database rather than in a separate index.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -674,7 +674,7 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability is often a tighter constraint than budget. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas needing an increase request well ahead of launch. Foundry deployments are provisioned capacity and do not scale elastically by default.</p>
+      <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability is often a tighter constraint than budget. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas needing an increase request well ahead of launch. PTU deployments are fixed capacity and do not scale elastically on their own; configure spillover to a standard deployment if bursts above the reservation must still be served.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -686,7 +686,7 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>GPU procurement lead time is the constraint here. Buying or leasing H100/H200-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, rather than raw compute, is usually the ceiling on concurrent requests per node.</p>
+      <p>GPU procurement lead time is the constraint here. Buying or leasing H100, H200, or Blackwell-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, rather than raw compute, is usually the ceiling on concurrent requests per node.</p>
     </div>
     <div class="same-note">Capacity planning has to happen months before a launch across every environment. What changes is the bottleneck: quota approval on a managed cloud, GPU hardware availability if self-hosting.</div>
   </div>
@@ -707,7 +707,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Dataplex for lineage and cataloging across source systems. Same alias-swap pattern for the vector store itself, since Vertex AI Vector Search doesn't version indexes natively either.</p>
+      <p>Dataplex Universal Catalog for lineage and cataloging across source systems. Same alias-swap pattern for the vector store itself, since Agent Platform Vector Search doesn't version indexes natively either.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -724,7 +724,7 @@
 
 <footer>
   Reference only. Vendor service names, open-weight model rankings, and serving-stack capabilities change quickly, so verify current details against primary sources before relying on this for a design decision.
-  <br><span style="opacity:0.7">Last reviewed September 2026.</span>
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>
 
