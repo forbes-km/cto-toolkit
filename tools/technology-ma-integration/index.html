@@ -87,7 +87,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>The five phases</h3>
-      <p>Each phase has a different job, and doing a later phase's work during an earlier one is one of the most common ways integrations go wrong.</p>
+      <p>Each phase has a different job, and doing a later phase's work too early is one of the usual ways integrations go wrong.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -95,7 +95,7 @@
           <tr><th>Phase</th><th>Job</th><th>Focus</th></tr>
           <tr><td>Day 0</td><td>Don't break anything</td><td>Identity, access, security continuity, communications, critical systems kept running exactly as they were</td></tr>
           <tr><td>First 30 days</td><td>Understand what you have</td><td>Technology inventory, people, vendors, contracts, architecture, security gaps, dependencies</td></tr>
-          <tr><td>100 days</td><td>Decide rather than default</td><td>Converge, coexist, or replace decisions per system, made and assigned an owner, with execution still ahead</td></tr>
+          <tr><td>100 days</td><td>Decide; don't default</td><td>Converge, coexist, or replace decisions per system, made and assigned an owner, with execution still ahead</td></tr>
           <tr><td>100 days to Year 1</td><td>Execute the decisions</td><td>The migration, consolidation, and platform convergence work, sequenced and tracked against what was decided at day 100; this is most of the calendar and most of the effort</td></tr>
           <tr><td>Year 1</td><td>Test the thesis</td><td>Measure realized synergies and convergence against what diligence promised, technical debt remediation, target architecture, operating model</td></tr>
         </table>
@@ -161,15 +161,15 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Day 0 is about keeping everything running</h3>
-      <p>The most common integration mistake happens in the first week rather than the first year.</p>
+      <p>The integration mistake that happens most often happens in the first week, not the first year.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">What good looks like</span>
         <p>Identity and access continuity, security posture held exactly where it was, communications sent as planned, critical systems left untouched. The goal on day 0 is invisibility to customers and continuity for employees, nothing more ambitious than that.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">What usually happens</span>
         <p>Attempting a quick consolidation win, merging two identity systems, migrating a customer-facing tool, before the estate is even fully understood. This creates a new outage layered on top of the transition itself, at the exact moment trust is most fragile.</p>
       </div>
     </div>
@@ -183,12 +183,12 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">The approach</span>
         <p>Score the combined estate the same way any application portfolio gets scored, then assign each system a named owner and an explicit converge, coexist, or replace call within the 100-day window, in place of a default assumption that everything eventually merges.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>Systems left in undecided limbo well past 100 days, with no owner for the call, while both organizations quietly keep maintaining duplicate infrastructure indefinitely because deciding felt harder than deferring.</p>
+        <span class="env-label b">The usual mistake</span>
+        <p>Systems left in undecided limbo well past 100 days, with no owner for the call, while both organizations keep maintaining duplicate infrastructure indefinitely because deciding felt harder than deferring.</p>
       </div>
     </div>
   </div>
@@ -197,16 +197,16 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Days 100 to 365: executing the decisions</h3>
-      <p>The phase this framework most commonly loses, a decision made at day 100 with no visible forcing function behind it for the next nine months.</p>
+      <p>The phase most integrations lose, a decision made at day 100 with no visible forcing function behind it for the next nine months.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Each converge, coexist, or replace decision made at day 100 gets a named owner, a sequenced execution plan, and a specific target date within the year, tracked on the same standing cadence as everything else in this phase. Migration and consolidation work starts immediately after the decision rather than months later once someone remembers it was made.</p>
+        <span class="env-label a">Do this</span>
+        <p>Each converge, coexist, or replace decision made at day 100 gets a named owner, a sequenced execution plan, and a specific target date within the year, tracked on the same standing cadence as everything else in this phase. Migration and consolidation work starts right after the decision, not months later when someone remembers it was made.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>The decision gets made and recorded at the 100-day mark, then nobody schedules or resources the execution work. Six months later the system is still officially &quot;decided to converge,&quot; with nothing having moved, which in practice is indistinguishable from never having decided at all.</p>
+        <span class="env-label b">Watch for</span>
+        <p>The decision gets made and recorded at the 100-day mark, then nobody schedules or resources the execution work. Six months later the system is still officially &quot;decided to converge,&quot; with nothing having moved, which looks exactly like never having decided at all.</p>
       </div>
     </div>
   </div>
@@ -215,7 +215,7 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>The call, worked across common system categories</h3>
-      <p>What the decision looks like against specific, common systems, rather than as an abstract framework.</p>
+      <p>What the decision looks like for specific, common systems.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -234,15 +234,15 @@
     <div class="stage-head">
       <span class="stage-num">5</span>
       <h3>The diligence-to-integration handoff</h3>
-      <p>Where institutional knowledge most commonly gets lost, right at the moment the deal closes and attention shifts.</p>
+      <p>Where institutional knowledge usually gets lost, right at the moment the deal closes and attention shifts.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What works</span>
-        <p>The people who ran diligence stay involved through at least the first 100 days, so findings, the security gap, the key-person risk, the technical debt hotspot, translate directly into the integration plan rather than getting rediscovered from scratch by a different team.</p>
+        <p>The people who ran diligence stay involved through at least the first 100 days, so findings, the security gap, the key-person risk, the technical debt hotspot, translate directly into the integration plan instead of being rediscovered by a different team.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">Where it goes wrong</span>
         <p>Diligence findings live in a report that gets filed away once the deal closes, and the integration team, often entirely different people, rediscovers the same risks weeks into the process that diligence had already flagged in detail.</p>
       </div>
     </div>
@@ -257,11 +257,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Decide deliberately, before Day 0, what's worth preserving from the acquired team's culture and practices, and build that preservation explicitly into the integration plan, rather than assuming the acquirer's culture automatically and correctly wins by default.</p>
+        <p>Decide before Day 0 what is worth keeping from the acquired team's culture and practices, and write it into the integration plan. Don't assume the acquirer's culture should win by default.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>The acquired team's good practices and institutional knowledge get silently discarded as &quot;not how we do things here,&quot; the same credibility-erosion pattern described on Engineering Culture, just compressed into a much shorter and higher-stakes window where the damage happens faster and is harder to reverse.</p>
+        <p>The acquired team's good practices and institutional knowledge get discarded without discussion as &quot;not how we do things here,&quot; the same credibility-erosion pattern described on Engineering Culture, just compressed into a much shorter and higher-stakes window where the damage happens faster and is harder to reverse.</p>
       </div>
     </div>
   </div>
@@ -270,16 +270,16 @@
     <div class="stage-head">
       <span class="stage-num">7</span>
       <h3>Year 1 is where the deal thesis gets tested</h3>
-      <p>The numbers used to justify the deal don't disappear once it closes, even though attention usually does. This is the measurement point for the execution work from Stage 3 rather than a separate deliverable that appears on its own.</p>
+      <p>The numbers used to justify the deal don't disappear once it closes, even though attention usually does. This is the measurement point for the execution work from Stage 3 and not a separate deliverable.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">What to do</span>
         <p>Track cost synergies and platform convergence against the specific figures used to justify the deal, on a standing cadence, with a named owner accountable for the gap between promised and realized.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>The synergies promised during diligence quietly stop being tracked once the deal has closed and organizational attention has moved to the next priority, so no one ever finds out whether the thesis was right.</p>
+        <span class="env-label b">Where it goes wrong</span>
+        <p>The synergies promised during diligence stop being tracked once the deal has closed and organizational attention has moved to the next priority, so no one ever finds out whether the thesis was right.</p>
       </div>
     </div>
   </div>
@@ -316,7 +316,7 @@
     <div class="stage-grid single" style="border-top:1px solid var(--line);">
       <div class="stage-cell">
         <h4 style="margin:0 0 4px; font-size:14px; font-weight:600; color:var(--ink);">Key-person retention</h4>
-        <p style="margin:0 0 12px; font-size:12.5px; color:var(--ink-soft);">The people the deal thesis quietly depends on staying.</p>
+        <p style="margin:0 0 12px; font-size:12.5px; color:var(--ink-soft);">The people the deal thesis depends on, whether or not anyone says so.</p>
         <div style="display:grid; grid-template-columns: 1.5fr 1.5fr 1fr auto; gap:10px; align-items:end; margin-bottom:12px;">
           <div>
             <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Name</label>
@@ -438,11 +438,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">How to run it</span>
         <p>Use a clean team, a small group bound by a clean-team agreement and advised by counsel, to review sensitive items such as customer contracts, pricing, and detailed architecture before close. Build the Day 1 plan from its findings: identity bridging, email and collaboration access, finance system cutoffs, and the systems that must not be touched.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">How it breaks</span>
         <p>Gun-jumping in reverse: teams avoid all joint planning out of caution, then discover on Day 1 that nobody has admin access to the target's identity provider and the only person who does has already resigned.</p>
       </div>
     </div>
@@ -460,7 +460,7 @@
           <tr><td>Service schedule</td><td>Every service listed with scope, service levels, and a named owner on each side</td><td>Vague descriptions such as IT support that nobody can hold to a standard</td></tr>
           <tr><td>Duration</td><td>Sized to the realistic exit plan, commonly 6 to 18 months, with extension terms priced in advance</td><td>A 6-month term for an ERP separation that takes 15</td></tr>
           <tr><td>Pricing</td><td>Cost-based, with step-ups that reward an early exit</td><td>Flat monthly fees that remove any incentive to move faster</td></tr>
-          <tr><td>Exit plan</td><td>A dated migration plan per service, reviewed monthly by a joint steering group</td><td>Treating the TSA as the plan rather than as the bridge to one</td></tr>
+          <tr><td>Exit plan</td><td>A dated migration plan per service, reviewed monthly by a joint steering group</td><td>Treating the TSA as the plan instead of the bridge to one</td></tr>
           <tr><td>Data and security</td><td>Access boundaries, logging, and data segregation defined per service</td><td>Buyer staff left with broad access to the seller's environment for months</td></tr>
         </table>
       </div>

@@ -197,7 +197,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference architecture</span>
       <h2>The layers a mature identity estate has</h2>
-      <p>Provider names differ; the structure does not. The table maps each layer to what it looks like on the major platforms so an architecture review can ask whether each layer exists rather than which product it uses.</p>
+      <p>Provider names differ; the structure does not. The table maps each layer to what it looks like on the major platforms so an architecture review can ask whether each layer exists, whatever product delivers it.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
@@ -232,7 +232,7 @@
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <p>The questions to ask, in order:</p>      <ol class="num-list">
-        <li><div><b>How many exist</b>Pull the full list of service principals, IAM roles, service accounts, and API keys from every cloud tenant and the CI system. If the number is a surprise, that is the finding.</div></li>
+        <li><div><b>How many exist</b>Pull the full list of service principals, IAM roles, service accounts, and API keys from every cloud tenant and the CI system. If the number surprises anyone, that alone tells you something.</div></li>
         <li><div><b>Which have an owner</b>Every non-human identity needs a named human owner and a purpose. Anything without one is a candidate for disablement after a quarantine period.</div></li>
         <li><div><b>Which use long-lived secrets</b>A client secret or access key that does not expire is a credential that will eventually be in a repository, a log, or a former employee's laptop. Migrate to managed identity or federated tokens; where impossible, vault and rotate.</div></li>
         <li><div><b>Which are over-privileged</b>Most workload identities were granted Contributor or PowerUser because it worked. Use the platform's unused-access analysis to shrink them to what they call.</div></li>
@@ -268,7 +268,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What to pull</span><p>The list of every account holding a privileged role in each cloud tenant and the directory, with whether the assignment is permanent or eligible, when it was last used, and whether the account has phishing-resistant MFA registered. Then the same for service principals with owner-level rights. It takes an hour and requires no tooling beyond what the platform provides.</p></div>
-      <div class="stage-cell"><span class="env-label b">How to read it</span><p>More than a handful of permanent global admins, any of them shared or belonging to people who have left, any without strong MFA, or any service principal with tenant-wide write access and a non-expiring secret: each is a finding in its own right, and together they say the identity layer has been administered rather than architected. That reading should shape the first quarter's security priorities regardless of what the security roadmap deck says.</p></div>
+      <div class="stage-cell"><span class="env-label b">How to read it</span><p>More than a handful of permanent global admins, any of them shared or belonging to people who have left, any without strong MFA, or any service principal with tenant-wide write access and a non-expiring secret: each is a finding in its own right, and together they say the identity layer has been administered but never designed. That reading should shape the first quarter's security priorities regardless of what the security roadmap deck says.</p></div>
     </div>
   </div>
   <div class="stage-card">

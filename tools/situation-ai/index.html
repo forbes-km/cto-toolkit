@@ -99,7 +99,7 @@
         <li><div><a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a><span>Agents act with whatever identity they are given; scope it before the first one reaches production.</span></div></li>
         <li><div><a href="../ai-finops-map/index.html">AI FinOps Map</a><span>Token economics, reserved capacity, caching and batch discounts, and the break-even for self-hosting. Model this before the bill teaches you.</span></div></li>
         <li><div><a href="../ai-engineering-operating-model/index.html">AI and the Engineering Operating Model</a><span>What changes in how engineers work when AI tooling is in the loop, and what does not.</span></div></li>
-        <li><div><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a><span>State explicitly what the organization will not accept from an AI system before someone ships it.</span></div></li>
+        <li><div><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a><span>Write down what the organization will not accept from an AI system before someone ships one.</span></div></li>
         <li><div><a href="../build-vs-buy/index.html">Build vs Buy</a><span>Most AI capability should be bought or composed. The page for deciding where the exceptions are.</span></div></li>
       </ol>
     </div>
@@ -116,7 +116,7 @@
         <tr><th>By when</th><th>Decision</th><th>Who owns it</th><th>What it looks like when it goes wrong</th></tr>
         <tr><td>Day 7</td><td>Who owns AI in the organization: one accountable executive, a portfolio, and an intake path, so that requests have somewhere to go</td><td>CEO, on the CTO's recommendation</td><td>Every function starts its own initiative, nobody can say what the company is doing with AI, and the board finds out from a vendor</td></tr>
         <tr><td>Day 14</td><td>What is already in use, sanctioned or not, and which of it handles customer, employee, or regulated data</td><td>CTO with the CISO</td><td>A shadow tool with an open data-retention policy has been receiving customer records for six months</td></tr>
-        <tr><td>Day 30</td><td>The risk tiers and the intake criteria, published, with the uses that are prohibited outright named</td><td>CTO with legal and the CISO</td><td>Governance arrives after the first initiative ships and is experienced as a brake rather than a lane</td></tr>
+        <tr><td>Day 30</td><td>The risk tiers and the intake criteria, published, with the uses that are prohibited outright named</td><td>CTO with legal and the CISO</td><td>Governance shows up after the first initiative ships, and everyone experiences it as a brake</td></tr>
         <tr><td>Day 45</td><td>The first portfolio classification: which initiatives Scale, Incubate, Watch, or Kill, and what each one costs</td><td>CTO with the business owners</td><td>Fifteen pilots, no kills, and a budget line that nobody can trace to an outcome</td></tr>
         <tr><td>Day 60</td><td>The platform decision: which model providers, which hosting posture, which guardrails and observability are mandatory for anything in production</td><td>CTO with the architecture function</td><td>Each team picks a provider, builds its own retrieval stack, and none of it is monitorable or portable</td></tr>
         <tr><td>Day 90</td><td>The unit economics of the first production initiative, measured, and whether it justifies scaling</td><td>CTO with the CFO</td><td>The pilot's demo cost is used as the production estimate and the bill arrives at ten times the model</td></tr>
@@ -137,7 +137,7 @@
         <li>What is the organization's tolerance for a wrong answer in this use case, and who has said so</li>
         <li>Which of the current AI tools in use retain or train on the data sent to them, and what has been sent</li>
         <li>Where does a human review the output, and is that review substantive or a checkbox</li>
-        <li>What does the first initiative cost per transaction at production volume rather than demo volume</li>
+        <li>What does the first initiative cost per transaction at production volume, not demo volume</li>
         <li>Which regulations already apply to the decisions the AI will influence, regardless of the fact that it is AI</li>
         <li>If the model provider changed pricing, terms, or availability tomorrow, what would break and how fast could it be swapped</li>
         <li>What would the organization stop doing if this initiative succeeded, and does anyone want to stop doing it</li>
@@ -149,11 +149,11 @@
     <div class="stage-head">
       <span class="stage-num">The trap</span>
       <h2>Pilot sprawl</h2>
-      <p>The most common state of an enterprise AI program at month nine is a dozen pilots, each with a champion, none with a kill criterion, and no way to say which of them the company is betting on.</p>
+      <p>Nine months in, a typical enterprise AI program has a dozen pilots, each with a champion, none with a kill criterion, and no way to say which of them the company is betting on.</p>
     </div>
     <div class="stage-grid">
-      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Every function got a pilot approved because saying no felt like being against AI. Each one used a different provider, built its own prompt library, and stored its own copy of the data. Six are technically working, none are in production, the cost is now visible on the cloud bill, and the board asks what the company got for it. The answer is a set of demos.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Run it as a portfolio from day one, with the gating in <a href="../ai-portfolio-management/index.html">AI Portfolio Management</a>: feasibility and data readiness before anything else, an explicit Kill classification that is used, and a cap on concurrent incubations. Pay for the platform layer once, centrally: guardrails, observability, retrieval, and cost attribution. Measure unit economics on the first production initiative before scaling anything, and report the portfolio to the board as a portfolio, including the kills.</p></div>
+      <div class="stage-cell a"><span class="env-label a">How it plays out</span><p>Every function got a pilot approved because saying no felt like being against AI. Each one used a different provider, built its own prompt library, and stored its own copy of the data. Six are technically working, none are in production, the cost is now visible on the cloud bill, and the board asks what the company got for it. The answer is a set of demos.</p></div>
+      <div class="stage-cell"><span class="env-label b">What to do instead</span><p>Run it as a portfolio from day one, with the gating in <a href="../ai-portfolio-management/index.html">AI Portfolio Management</a>: feasibility and data readiness before anything else, an explicit Kill classification that is used, and a cap on concurrent incubations. Pay for the platform layer once, centrally: guardrails, observability, retrieval, and cost attribution. Measure unit economics on the first production initiative before scaling anything, and report the portfolio to the board as a portfolio, including the kills.</p></div>
     </div>
   </div>
 
@@ -168,7 +168,7 @@
         <tr><th>Checkpoint</th><th>What exists</th></tr>
         <tr><td>Day 30</td><td>One accountable owner and a published intake path. An inventory of AI tools already in use, with data exposure classified. Risk tiers and prohibited uses published. The first version of the risk appetite statement covering AI systems.</td></tr>
         <tr><td>Day 90</td><td>A classified portfolio with costs, owners, and kill criteria. A platform decision recorded as an ADR: providers, hosting posture, mandatory guardrails and observability. The data readiness gaps for the Scale and Incubate initiatives named with owners. At least one initiative killed, publicly, so the organization learns the classification has teeth.</td></tr>
-        <tr><td>Day 180</td><td>The first production initiative live, with measured unit economics and a monitored error rate, reported to the board. Cost attribution by initiative on the bill. A governance process that has processed real intake and can show its decisions. A one-page AI narrative for the board that describes a portfolio rather than a pile of pilots.</td></tr>
+        <tr><td>Day 180</td><td>The first production initiative live, with measured unit economics and a monitored error rate, reported to the board. Cost attribution by initiative on the bill. A governance process that has processed real intake and can show its decisions. A one-page AI narrative for the board that describes a portfolio, with the kills included.</td></tr>
       </table>
     </div>
   </div>

@@ -83,7 +83,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Data Strategy</h1>
   <p>Beyond the storage architecture question: the operating model behind who owns data, self-service and literacy for the rest of the organization, metadata and lineage, real-time versus batch as an economic decision, build versus buy for the data stack, and whether the data itself is a product worth monetizing, alongside warehouse versus lakehouse versus mesh, master data management, and data quality as an AI prerequisite.</p>
-  <div class="caveat">General data strategy patterns rather than a specific technology recommendation. The right architecture and operating model depend on organizational structure and data maturity more than on which pattern is currently trending.</div>
+  <div class="caveat">General data strategy patterns, not a specific technology recommendation. The right architecture and operating model depend on organizational structure and data maturity more than on which pattern is currently trending.</div>
 </header>
 
 <main>
@@ -108,13 +108,13 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">1</span>
-      <h3>Data as a product rather than a project</h3>
+      <h3>Data as a product, not a project</h3>
       <p>The mindset shift underneath data mesh, applicable even in organizations not adopting the full mesh architecture.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Project mindset</span>
-        <p>A data pipeline gets built once to answer a specific question, then quietly rots as the source system changes underneath it, with no owner responsible for noticing or fixing the drift until a report breaks and someone escalates.</p>
+        <p>A data pipeline gets built once to answer a specific question, then slowly rots as the source system changes underneath it, with no owner responsible for noticing or fixing the drift until a report breaks and someone escalates.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Product mindset</span>
@@ -139,7 +139,7 @@
         <p>Data engineers embedded within each domain team, closer to the business context and faster to respond to that domain's needs. Standards and quality drift apart across domains without a strong central platform layer underneath providing shared tooling and governance.</p>
       </div>
     </div>
-    <div class="same-note">Most organizations land somewhere between the two: a central platform team providing shared infrastructure and standards, with domain-embedded engineers applying them locally. The failure mode is picking neither deliberately and ending up with an accidental, undocumented mix of both.</div>
+    <div class="same-note">Most organizations land somewhere between the two: a central platform team providing shared infrastructure and standards, with domain-embedded engineers applying them locally. The failure is never choosing, and ending up with an accidental, undocumented mix of both.</div>
   </div>
 
   <div class="stage-card">
@@ -154,7 +154,7 @@
         <p>A defined, curated set of self-service tools and pre-modeled datasets a non-technical analyst can query directly with guardrails, paired with training investment. A BI tool license handed out on its own is access, and access alone is not self-service.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">Where it goes wrong</span>
         <p>Self-service rolled out as tool access alone, which produces a proliferation of inconsistent, ungoverned dashboards each answering the same business question slightly differently, worse for decision-making than the centralized bottleneck it was meant to fix.</p>
       </div>
     </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What works</span>
-        <p>A defined source-of-truth mapping at the field level rather than the entity level: billing system is authoritative for payment status, CRM is authoritative for account ownership, product database is authoritative for usage data. Merge logic follows the mapping rather than picking one system to trust for everything.</p>
+        <p>A defined source-of-truth mapping at the field level rather than the entity level: billing system is authoritative for payment status, CRM is authoritative for account ownership, product database is authoritative for usage data. Merge logic follows the mapping. No single system gets trusted for everything.</p>
       </div>
     </div>
   </div>
@@ -191,7 +191,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it buys you</span>
-        <p>A catalog makes data discoverable and answers who owns it and whether it's still trustworthy. Lineage traces the path from source system to final dashboard or model, so a schema change or a broken pipeline can be traced to every downstream consumer in minutes instead of hours of tribal-knowledge archaeology. Both compound directly into the migration work further down this page (you can't safely run old and new in parallel if you don't know what depends on what) and into the AI grounding problem below (an agent that can't see schema, lineage, and ownership will guess).</p>
+        <p>A catalog makes data discoverable and answers who owns it and whether it's still trustworthy. Lineage traces the path from source system to final dashboard or model, so a schema change or a broken pipeline can be traced to every downstream consumer in minutes, without hours of digging through tribal knowledge. Both compound directly into the migration work further down this page (you can't safely run old and new in parallel if you don't know what depends on what) and into the AI grounding problem below (an agent that can't see schema, lineage, and ownership will guess).</p>
       </div>
     </div>
     <div class="same-note">Buy here almost without exception; this is the same mature, competitive market referenced in Build versus buy below. The strategic decision is how to make metadata active from day one (tagged, enforced, and surfaced where people already work) instead of a static wiki page that's stale within a quarter.</div>
@@ -282,7 +282,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What passes for a contract but isn't</span>
-        <p>A schema definition with no freshness commitment and no deprecation process. Consumers build against it anyway, because it's the only documentation available, and get broken silently the first time the upstream schema changes without warning.</p>
+        <p>A schema definition with no freshness commitment and no deprecation process. Consumers build against it anyway, because it's the only documentation available, and break, with no warning, the first time the upstream schema changes.</p>
       </div>
     </div>
   </div>
@@ -291,11 +291,11 @@
     <div class="stage-head">
       <span class="stage-num">11</span>
       <h3>Data as a product to external customers</h3>
-      <p>A question worth asking explicitly, even for organizations that will answer no.</p>
+      <p>A question worth asking out loud, even if the answer is no.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>For some organizations, the data itself, aggregated, anonymized, or offered directly, is a monetization opportunity distinct from its internal analytical use. This isn't relevant to every company, but it's worth asking deliberately: does this organization sit on data that would be valuable to someone else, and if so, is productizing it worth the privacy, security, and packaging investment that would require. The answer for most companies is no, but it should be a considered no rather than a question nobody asked.</p>
+        <p>For some organizations, the data itself, aggregated, anonymized, or offered directly, is a monetization opportunity distinct from its internal analytical use. It won't matter for every company, but ask it anyway: does this organization sit on data that would be valuable to someone else, and if so, is productizing it worth the privacy, security, and packaging investment that would require. The answer for most companies is no, but it should be a considered no, not a question nobody asked.</p>
       </div>
     </div>
   </div>
@@ -335,7 +335,7 @@
           <li>AI initiatives are blocked by data quality issues that were already flagged as a data strategy risk before the AI initiative started</li>
           <li>Self-service access was granted with no curation or training, producing multiple dashboards that answer the same question differently</li>
           <li>Real-time infrastructure exists for a use case nobody has ever needed the data faster than daily for</li>
-          <li>The centralized-versus-federated data team question was never decided deliberately, it just happened by accident of hiring</li>
+          <li>Nobody ever decided between a centralized and a federated data team; hiring decided it by accident</li>
         </ul>
       </div>
     </div>
@@ -344,7 +344,7 @@
 </main>
 
 <footer>
-  Reference only. Architectural pattern choice depends on organizational structure and data maturity; treat this as a starting framework rather than a recommendation for your specific environment. Named standards are current as of September 2026 and listed for orientation, not as endorsements.
+  Reference only. Architectural pattern choice depends on organizational structure and data maturity; treat this as a starting framework, not a recommendation for your specific environment. Named standards are current as of September 2026 and listed for orientation, not as endorsements.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>

@@ -84,7 +84,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Business Case Calculator</h1>
   <p>A working NPV, IRR, and payback calculator for a multi-year technology investment, built on the same mechanics as the full business case workbook.</p>
-  <div class="caveat">This calculator implements the same NPV, IRR, benefit-to-cost, and payback mechanics as the full business case workbook, condensed to year-level cost and benefit totals rather than line-item detail. The full workbook separates implementation from run costs, cost reduction from revenue benefits, and documents intangible benefits alongside the scored ones, available through direct engagement.</div>
+  <div class="caveat">This calculator implements the same NPV, IRR, benefit-to-cost, and payback mechanics as the full business case workbook, condensed to yearly cost and benefit totals. The full workbook separates implementation from run costs, cost reduction from revenue benefits, and documents intangible benefits alongside the scored ones, available through direct engagement.</div>
 </header>
 
 <main>
@@ -101,7 +101,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Reading it</span>
-        <p>NPV positive and B/C above roughly 1.5x reads as a strong case. NPV positive with B/C under 1.5x is worth funding, with the sensitivity checked before committing. These are illustrative reference points; your organization's bar depends on its cost of capital and risk appetite and should be set deliberately rather than borrowed from this page. NPV negative at base case doesn't automatically kill an initiative with strategic value that doesn't show up in the numbers, but it does mean the strategic argument has to carry the case explicitly instead of hiding behind an inflated financial one.</p>
+        <p>NPV positive and B/C above roughly 1.5x reads as a strong case. NPV positive with B/C under 1.5x is worth funding, with the sensitivity checked before committing. These are illustrative reference points; your organization's bar depends on its cost of capital and risk appetite and should be set on purpose, not borrowed from this page. NPV negative at base case doesn't automatically kill an initiative with strategic value that doesn't show up in the numbers, but it does mean the strategic argument has to carry the case in the open, not hide behind inflated financials.</p>
       </div>
     </div>
   </div>
@@ -164,16 +164,16 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Sensitivity: what happens if you're wrong</h3>
-      <p>The most common gap between a business case that survives scrutiny and one that only looks solid under one set of assumptions.</p>
+      <p>This is usually what separates a business case that survives scrutiny from one that only looks solid under a single set of assumptions.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Run the same model at a pessimistic case, benefits 20 to 30 percent lower, costs 10 to 15 percent higher, before presenting the base case. If NPV still clears positive under the pessimistic scenario, the case is robust. If it only works at the base case, say so explicitly rather than letting the base case stand in for more confidence than the analysis supports.</p>
+        <span class="env-label a">The approach</span>
+        <p>Run the same model at a pessimistic case, benefits 20 to 30 percent lower, costs 10 to 15 percent higher, before presenting the base case. If NPV still clears positive under the pessimistic scenario, the case is robust. If it only works at the base case, say so plainly. Don't let the base case imply more confidence than the analysis supports.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>Presenting only the base case with no sensitivity shown. Either it was never tested, or it was tested, the pessimistic case failed, and it quietly got left out of the deck, which a CFO who's seen enough of these will assume by default even without being told.</p>
+        <span class="env-label b">The usual mistake</span>
+        <p>Presenting only the base case with no sensitivity shown. Either it was never tested, or it was tested, the pessimistic case failed, and it got left out of the deck. An experienced CFO will assume the second.</p>
       </div>
     </div>
   </div>
@@ -182,16 +182,16 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Choosing a discount rate</h3>
-      <p>The single input most likely to be pulled from thin air, and the one most likely to quietly determine the verdict.</p>
+      <p>The input most likely to be pulled from thin air, and the one most likely to decide the verdict without anyone noticing.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What it represents</span>
-        <p>The return the capital could earn elsewhere, the company's cost of capital if it tracks one, or a hurdle rate leadership has explicitly agreed represents good enough for a technology investment. 8 percent shows up often as an illustrative default for an established company, but it is only a placeholder. Your own cost of capital is company-specific and should replace it. A deliberately higher rate, 15 percent or more, is often used for early-stage or higher-risk bets specifically because the higher bar forces only the strongest cases through.</p>
+        <p>The return the capital could earn elsewhere, the company's cost of capital if it tracks one, or a hurdle rate leadership has agreed represents good enough for a technology investment. 8 percent shows up often as an illustrative default for an established company, but it is only a placeholder. Your own cost of capital is company-specific and should replace it. A deliberately higher rate, 15 percent or more, is often used for early-stage or higher-risk bets specifically because the higher bar forces only the strongest cases through.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap</span>
-        <p>Picking a lower discount rate because it makes more initiatives clear the bar, which quietly inflates the entire portfolio's apparent quality without anyone deciding to lower the standard. If the rate changes between two business cases with no stated reason, that's worth questioning before either number gets trusted.</p>
+        <p>Picking a lower discount rate because it makes more initiatives clear the bar, which makes the whole portfolio look better than it is without anyone deciding to lower the standard. If the rate changes between two business cases with no stated reason, that's worth questioning before either number gets trusted.</p>
       </div>
     </div>
   </div>
@@ -206,9 +206,9 @@
       <div class="stage-cell">
         <ul>
           <li><strong>Double-counted benefits.</strong> The same cost saving claimed by two different initiatives' business cases, each one looking stronger on its own than the two deliver combined.</li>
-          <li><strong>A skipped ramp.</strong> Full benefit value assumed from Year 1, which is either describing a trivial change or quietly overstating the case, covered above.</li>
+          <li><strong>A skipped ramp.</strong> Full benefit value assumed from Year 1, which is either describing a trivial change or overstating the case, as covered above.</li>
           <li><strong>Costs that stop at go-live.</strong> The build cost is modeled carefully; the run cost the initiative adds afterward, ongoing licensing, additional on-call load, incremental support burden, never makes it into the model at all.</li>
-          <li><strong>A quietly adjusted discount rate.</strong> The rate shifts from the standard used elsewhere in the portfolio, with no stated reason, until the number clears the bar.</li>
+          <li><strong>A discount rate that moved.</strong> The rate shifts from the standard used elsewhere in the portfolio, with no stated reason, until the number clears the bar.</li>
         </ul>
       </div>
     </div>
@@ -231,7 +231,7 @@
 </main>
 
 <footer>
-  Reference only. A financial model is only as good as its inputs; treat the outputs as a starting point for review rather than a final answer.
+  Reference only. A financial model is only as good as its inputs; treat the outputs as the start of a review, not the final answer.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>

@@ -84,7 +84,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Which regulation applies, and when</h3>
-      <p>A starting map rather than a legal determination. Applicability depends on where customers are located, what data is collected, and industry-specific rules; confirm with counsel.</p>
+      <p>A starting map, not a legal determination. Applicability depends on where customers are located, what data is collected, and industry-specific rules; confirm with counsel.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -93,7 +93,7 @@
           <tr><td>GDPR</td><td>Processing personal data of individuals in the EU/EEA, regardless of where the company is based</td><td>Lawful basis for processing, subject access and deletion rights, breach notification within 72 hours</td></tr>
           <tr><td>CCPA / CPRA</td><td>Processing personal data of California residents above certain revenue or volume thresholds</td><td>Disclosure of data collected, opt-out of sale/sharing, deletion rights</td></tr>
           <tr><td>HIPAA</td><td>Handling protected health information as a covered entity or business associate</td><td>Safeguards on PHI, breach notification, business associate agreements with vendors</td></tr>
-          <tr><td>Sector and state-specific</td><td>Financial services, children's data, and a growing list of individual state privacy laws</td><td>Varies; often layered on top of the frameworks above rather than replacing them</td></tr>
+          <tr><td>Sector and state-specific</td><td>Financial services, children's data, and a growing list of individual state privacy laws</td><td>Varies; usually layered on top of the frameworks above</td></tr>
         </table>
       </div>
     </div>
@@ -107,12 +107,12 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>A classification scheme with a small number of clear tiers, public, internal, confidential, restricted or regulated, applied at the point data is created or collected rather than retrofitted later through an audit. Every system holding data above the lowest tier has a named owner accountable for it.</p>
+        <span class="env-label a">How to run it</span>
+        <p>A classification scheme with a small number of clear tiers, public, internal, confidential, restricted or regulated, applied when data is created or collected, not retrofitted after an audit. Every system holding data above the lowest tier has a named owner accountable for it.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>A classification policy that exists on paper but was never applied to the systems in production, so nobody can answer a basic question like &quot;where does our customer PII live&quot; without a multi-week investigation.</p>
+        <span class="env-label b">How it breaks</span>
+        <p>A classification policy that was written but never applied to the systems in production, so nobody can answer a basic question like &quot;where does our customer PII live&quot; without a multi-week investigation.</p>
       </div>
     </div>
   </div>
@@ -125,11 +125,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>A documented, at least partially automated process for locating and exporting or deleting an individual's data across every system that holds it, tested against a live request rather than assumed to work. A tracked SLA against the regulatory deadline, with an owner accountable for meeting it.</p>
+        <span class="env-label a">What good looks like</span>
+        <p>A documented, at least partially automated process for locating and exporting or deleting an individual's data across every system that holds it, tested against a live request before anyone relies on it. A tracked SLA against the regulatory deadline, with an owner accountable for meeting it.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">What usually happens</span>
         <p>Fulfillment handled manually by whichever engineer is available, searching system by system with no authoritative list of where personal data lives, which routinely blows past the regulatory response window on anything beyond the simplest request.</p>
       </div>
     </div>
@@ -144,7 +144,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <p>A request arrives through a web form and gets logged against the SLA clock immediately. The response process checks it against the data inventory: CRM, product database, support ticketing, and email marketing tool are all on the list, get queried, and the results get compiled into a portable export within the regulatory window.</p>
-        <p><strong>Where it commonly breaks:</strong> the analytics warehouse isn't on the inventory, because nobody classified it as holding personal data even though it has user IDs joinable back to an identity through the product database. The request gets marked complete while a meaningful chunk of what the organization holds on that person was never touched. This is why the inventory in section 1 has to be built by mapping data flows rather than by asking each team what they think they hold.</p>
+        <p><strong>Where it commonly breaks:</strong> the analytics warehouse isn't on the inventory, because nobody classified it as holding personal data even though it has user IDs joinable back to an identity through the product database. The request gets marked complete while a meaningful chunk of what the organization holds on that person was never touched. That is why the inventory in section 1 has to come from mapping data flows. Asking each team what they think they hold misses this.</p>
       </div>
     </div>
   </div>
@@ -162,7 +162,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>Data that's used operationally by several teams but formally owned by none of them, so retention and access decisions never get made deliberately, they just accumulate as whatever the default happened to be.</p>
+        <p>Data that's used operationally by several teams but formally owned by none of them, so nobody ever decides retention or access. They just default to whatever the system did.</p>
       </div>
     </div>
   </div>
@@ -170,16 +170,16 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">5</span>
-      <h3>Privacy by design rather than privacy as a review gate</h3>
+      <h3>Privacy by design, not privacy as a review gate</h3>
       <p>Where privacy consideration enters the development process changes how much friction it creates and how much risk it catches.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>A lightweight privacy impact assessment built into the design phase for any feature touching personal data, before implementation starts, so decisions about what to collect and how long to keep it are made deliberately rather than defaulted to &quot;collect everything, figure out retention later.&quot;</p>
+        <span class="env-label a">The approach</span>
+        <p>A lightweight privacy impact assessment built into the design phase for any feature touching personal data, before implementation starts, so decisions about what to collect and how long to keep it are made on purpose instead of defaulting to &quot;collect everything, figure out retention later.&quot;</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">The usual mistake</span>
         <p>Privacy review as a gate right before launch, which arrives too late to change the data model, so findings either get overridden under deadline pressure or become expensive retrofits after the feature is already live and being used.</p>
       </div>
     </div>

@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Epistemology &amp; Research Methods</title>
-<meta name="description" content="How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, made explicit here instead of left implicit.">
+<meta name="description" content="How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, spelled out here instead of left implicit.">
 <meta property="og:title" content="Epistemology &amp;amp; Research Methods | CTO Toolkit">
-<meta property="og:description" content="How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, made explicit here instead of left implicit.">
+<meta property="og:description" content="How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, spelled out here instead of left implicit.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/epistemology-research-methods/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Epistemology &amp;amp; Research Methods | CTO Toolkit">
-<meta name="twitter:description" content="How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, made explicit here instead of left implicit.">
+<meta name="twitter:description" content="How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, spelled out here instead of left implicit.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/epistemology-research-methods/index.html">
 <style>
@@ -78,7 +78,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Epistemology &amp; Research Methods</h1>
-  <p>How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, made explicit here instead of left implicit.</p>
+  <p>How we know what we know, and how to know enough, fast enough, to make a decision that has a deadline. This is the discipline sitting underneath every diligence finding, postmortem root cause, and portfolio score elsewhere on this site, spelled out here instead of left implicit.</p>
   <div class="caveat">This borders on academic epistemology, but it isn't taught as theory here. It's the applied version already embedded in this toolkit: the "Confidence: High/Medium/Low" tags in <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>'s technical debt scoring, the evidence-requirements lists in <a href="../technology-diligence-map/index.html">Technology Diligence</a>, the "what was assessed, what wasn't" sections in every diligence memo template. This page names the pattern and shows where else it applies.</div>
 </header>
 
@@ -116,10 +116,10 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where open-ended research fails</span>
-        <p>Academic research optimizes for near-total certainty over a timeframe measured in years, because the currency is being right rather than being timely. A business decision has a clock the underlying situation doesn't wait for. A diligence report finished after the deal has already closed has close to zero value, no matter how thorough it is.</p>
+        <p>Academic research optimizes for near-total certainty over a timeframe measured in years, because the currency is being right, not being on time. A business decision has a clock the underlying situation doesn't wait for. A diligence report finished after the deal has already closed has close to zero value, no matter how thorough it is.</p>
       </div>
     </div>
-    <div class="same-note">This is why confirmatory diligence runs 2-4 weeks and exclusivity diligence runs 4-8 weeks elsewhere on this site. More time would produce marginally more certainty, but the decision has a deadline, and every framework here separates &quot;what was assessed&quot; from &quot;what wasn't&quot; rather than pretending the boundary doesn't exist.</div>
+    <div class="same-note">This is why confirmatory diligence runs 2-4 weeks and exclusivity diligence runs 4-8 weeks elsewhere on this site. More time would produce marginally more certainty, but the decision has a deadline, and every framework here separates &quot;what was assessed&quot; from &quot;what wasn't&quot; instead of pretending the boundary doesn't exist.</div>
   </div>
 
   <div class="stage-card">
@@ -147,7 +147,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">What causation requires</span>
-        <p>A mechanism: if the first thing had been different, the second thing would have been different as a direct result, rather than merely less likely to appear alongside it. Establishing that usually takes more than the one data point that prompted the question, ideally a case where the suspected cause was absent and the effect still didn't happen.</p>
+        <p>A mechanism: if the first thing had been different, the second thing would have been different as a direct result, not just been less likely to show up alongside it. Establishing that usually takes more than the one data point that prompted the question, ideally a case where the suspected cause was absent and the effect still didn't happen.</p>
       </div>
     </div>
     <div class="same-note"><strong>Worked example.</strong> A deployment goes out at 2:14pm. Error rates spike five minutes later. The natural read: the deploy caused the spike, since it's the thing sitting right next to it in time. Rolling the deploy back doesn't fix anything. Investigation finds a database connection pool that had been slowly exhausting for three days because of a slow query introduced earlier that week; the deploy's restart briefly reset open connections, masking the problem for a few minutes before the pool hit its ceiling anyway, on a schedule that had nothing to do with the deploy. The deploy correlates with the spike. The slow query, running unnoticed for three days, is what caused it.</div>
@@ -157,7 +157,7 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Confirmation bias is structural in discovery work</h3>
-      <p>Treating it as an occasional character flaw misses the point. The shape of discovery work invites it by default.</p>
+      <p>Treating it as an occasional character flaw misreads where it comes from. The shape of discovery work invites it by default.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -166,7 +166,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Practice</span>
-        <p>Before writing the finding down, state the working conclusion explicitly and deliberately argue the opposite for a few minutes, even alone. It's a small, cheap step compared to the cost of a wrong root cause or a wrong severity rating that resurfaces the same problem next quarter.</p>
+        <p>Before writing the finding down, state the working conclusion out loud and spend a few minutes arguing the opposite, even alone. It's a small, cheap step compared to the cost of a wrong root cause or a wrong severity rating that resurfaces the same problem next quarter.</p>
       </div>
     </div>
   </div>
@@ -175,15 +175,15 @@
     <div class="stage-head">
       <span class="stage-num">4</span>
       <h3>Calibrated confidence beats false precision</h3>
-      <p>A number presented as fact when it's a best estimate is a small dishonesty that compounds into bad decisions downstream.</p>
+      <p>A number presented as fact when it's a best estimate is a small dishonesty that grows into bad decisions downstream.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">The approach</span>
         <p>Pair every material number with a confidence tag and a one-line reason: what would need to be true, or what evidence would need to arrive, for that confidence to move up or down. A range with a stated confidence level is more useful than a single unqualified figure, and easier to defend later.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">The usual mistake</span>
         <p>Dropping the confidence tag because an unqualified number feels more authoritative in a report or a board deck. This trades accuracy for the appearance of certainty, and the decision built on top of it inherits precision the underlying research never supported.</p>
       </div>
     </div>
@@ -193,7 +193,7 @@
     <div class="stage-head">
       <span class="stage-num">Applied</span>
       <h3>Where this already lives across the toolkit</h3>
-      <p>None of this is new to this site; it's the pattern underneath several pages, named explicitly here for the first time.</p>
+      <p>None of this is new to this site; it's the pattern underneath several pages, named here for the first time.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -230,7 +230,7 @@
 </main>
 
 <footer>
-  Reference only. This is a practical translation of research discipline rather than a formal epistemology course; treat it as a set of habits worth building into any discovery process.
+  Reference only. This is a practical translation of research discipline, not a formal epistemology course; treat it as a set of habits worth building into any discovery process.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

@@ -108,7 +108,7 @@
         <li><div><a href="../board-reporting/index.html">Board Reporting</a><span>Communicating what happened upward without making it worse, and the out-of-cycle escalation path that should already exist.</span></div></li>
         <li><div><a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a><span>Root cause versus triggering event, and the correlation-versus-causation trap that produces confident, wrong postmortems.</span></div></li>
         <li><div><a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a><span>Was this a risk the organization meant to accept, or a gap in the stated appetite itself.</span></div></li>
-        <li><div><a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a><span>If detection was slow or the same few people carried the response, the operating model is the finding.</span></div></li>
+        <li><div><a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a><span>If detection was slow or the same few people carried the response, the problem is the operating model.</span></div></li>
         <li><div><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a><span>Turn the incident's cost into the number that decides the next reliability investment.</span></div></li>
         <li><div><a href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a><span>If this was bigger than a single incident: recovery testing, RTO/RPO, and what the board will ask next.</span></div></li>
       </ol>
@@ -127,7 +127,7 @@
         <tr><td>Hour 4</td><td>Is this potentially material, reportable, or customer-notifiable, and which clocks have started</td><td>CTO with counsel and the CISO</td><td>The 72-hour breach notification window and the materiality assessment are discovered on day three</td></tr>
         <tr><td>Hour 24</td><td>What customers, the board, and the company are told, in what words, by whom</td><td>CEO, with the CTO supplying the facts and the timeline</td><td>Three different stories reach three audiences and the least accurate one reaches the press</td></tr>
         <tr><td>Day 3</td><td>Whether the immediate fix is stable enough to stand down the war room and return to normal operations</td><td>Incident commander, ratified by the CTO</td><td>The war room runs for two weeks because nobody is willing to say the residual risk is acceptable</td></tr>
-        <tr><td>Day 7</td><td>Who runs the postmortem, who attends, and whether it is blameless in practice rather than in name</td><td>CTO</td><td>The postmortem is run by the team that owns the failed system and produces action items only for that team</td></tr>
+        <tr><td>Day 7</td><td>Who runs the postmortem, who attends, and whether it will actually be blameless</td><td>CTO</td><td>The postmortem is run by the team that owns the failed system and produces action items only for that team</td></tr>
         <tr><td>Day 14</td><td>Which postmortem actions get funded now, from what, and which are consciously deferred with a date</td><td>CTO with the CFO</td><td>Forty actions, none funded, all still open at the next incident</td></tr>
         <tr><td>Day 30</td><td>Whether the incident changes the stated risk appetite, the DR posture, or the operating model</td><td>CTO with the CEO and board</td><td>The organization spends on the specific failure and leaves the class of failure untouched</td></tr>
       </table>
@@ -159,11 +159,11 @@
     <div class="stage-head">
       <span class="stage-num">The trap</span>
       <h2>Fixing the incident instead of the class of incident</h2>
-      <p>The most common outcome of a major incident is a well-executed fix for the specific failure, with the conditions that produced it left in place.</p>
+      <p>Most major incidents end with a well-executed fix for the specific failure, with the conditions that produced it left in place.</p>
     </div>
     <div class="stage-grid">
-      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The database failover that did not work gets tested and fixed. The fact that no failover in the estate has been tested in two years is not raised, because the postmortem's scope was the incident. Six months later a different failover fails, and this time the board asks why the first one did not prompt the question.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>One question in every postmortem, asked by the CTO personally: where else in the estate does this same condition exist. The answer becomes a separate item with its own owner, funded from the reserve in <a href="../technology-capital-allocation/index.html">Capital Allocation</a>, and reported to the board as the remediation that matters. The specific fix is table stakes; the class-level answer is the leadership output.</p></div>
+      <div class="stage-cell a"><span class="env-label a">How it plays out</span><p>The database failover that did not work gets tested and fixed. The fact that no failover in the estate has been tested in two years is not raised, because the postmortem's scope was the incident. Six months later a different failover fails, and this time the board asks why the first one did not prompt the question.</p></div>
+      <div class="stage-cell"><span class="env-label b">What to do instead</span><p>One question in every postmortem, asked by the CTO personally: where else in the estate does this same condition exist. The answer becomes a separate item with its own owner, funded from the reserve in <a href="../technology-capital-allocation/index.html">Capital Allocation</a>, and reported to the board as the remediation that matters. Anyone can fix the specific failure. Answering for the whole class of failure is the leadership job.</p></div>
     </div>
   </div>
 
@@ -273,7 +273,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What changed</span>
-        <p>Incident response is framed as part of overall cyber risk management rather than a separate four-phase lifecycle. Preparation maps to Govern, Identify, and Protect; response and recovery map to the CSF functions of the same name; lessons learned feed back into every function.</p>
+        <p>Incident response now sits inside overall cyber risk management instead of standing alone as a four-phase lifecycle. Preparation maps to Govern, Identify, and Protect; response and recovery map to the CSF functions of the same name; lessons learned feed back into every function.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What to do with it</span>
@@ -291,7 +291,7 @@
     <div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Checkpoint</th><th>What exists</th></tr>
-        <tr><td>Day 7</td><td>A written timeline with detection, escalation, and recovery times stated in minutes rather than adjectives. A completed regulatory and contractual notification log. A one-page summary for the board in the form the <a href="../board-reporting/index.html">Board Reporting</a> page describes. The postmortem scheduled with the right attendees, including someone from outside the owning team.</td></tr>
+        <tr><td>Day 7</td><td>A written timeline with detection, escalation, and recovery times stated in minutes, not adjectives. A completed regulatory and contractual notification log. A one-page summary for the board in the form the <a href="../board-reporting/index.html">Board Reporting</a> page describes. The postmortem scheduled with the right attendees, including someone from outside the owning team.</td></tr>
         <tr><td>Day 30</td><td>The postmortem published internally, with actions that have owners, dates, and funding decisions. The class-of-incident question answered with a list. A recorded decision on whether the risk appetite or DR posture changes. If detection or response depended on too few people, an operating model change proposed with a cost attached.</td></tr>
         <tr><td>Day 90</td><td>The funded actions closed or visibly progressing against their dates. A restore or failover test run on the class of system that failed. The incident's cost stated in dollars and used in the next <a href="../reliability-economics/index.html">reliability investment</a> conversation. The board updated once more, unprompted, which is what turns a bad quarter into evidence of control.</td></tr>
       </table>

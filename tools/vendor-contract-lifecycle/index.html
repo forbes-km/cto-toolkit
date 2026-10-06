@@ -153,7 +153,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h2>The exit clause types, and what each one guarantees</h2>
-      <p>Exit terms get negotiated once, at signing, and then not read again until the relationship is already ending, at which point they're a fact rather than a negotiation. Knowing what each type guarantees changes what gets pushed for the first time.</p>
+      <p>Exit terms get negotiated once, at signing, and then not read again until the relationship is already ending, and by then they are a fact, not a negotiation. Knowing what each type guarantees changes what gets pushed for the first time.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
@@ -161,7 +161,7 @@
         <tr><td>Termination for convenience</td><td>The right to end the contract before the term expires, usually with a notice period, without needing to prove the vendor did anything wrong</td><td>A favorable exit cost; some agreements pair this with an early-termination fee that offsets the flexibility</td></tr>
         <tr><td>Termination for cause</td><td>The right to exit for a defined breach (an SLA failure pattern, a security incident, insolvency) without the fee that a for-convenience exit might carry</td><td>Speed; proving cause and following the contract's notice-and-cure sequence usually takes longer than a for-convenience exit would</td></tr>
         <tr><td>Data portability and export</td><td>A defined format, a defined window, and (ideally) no charge for exporting your own data after termination</td><td>Usability; &quot;a documented, non-proprietary format&quot; still needs to be checked against what your next system can ingest without a custom transform</td></tr>
-        <tr><td>Transition assistance</td><td>A defined period, sometimes 30 to 90 days, during which the outgoing vendor continues limited support to ease cutover to a replacement</td><td>Free; transition assistance is very often billed at a rate specified in the contract, and that rate is worth negotiating at signing rather than discovering at exit</td></tr>
+        <tr><td>Transition assistance</td><td>A defined period, sometimes 30 to 90 days, during which the outgoing vendor continues limited support to ease cutover to a replacement</td><td>Free; transition assistance is very often billed at a rate specified in the contract, and that rate is worth negotiating at signing so it isn't a surprise at exit</td></tr>
         <tr><td>Deletion and retention</td><td>A commitment on when and how the vendor deletes your data after the transition period ends</td><td>Verification; few contracts include an audit right to confirm deletion happened, which matters more for regulated data under <a href="../regulatory-map/index.html">Regulatory Map</a></td></tr>
       </table>
     </div></div>
@@ -175,7 +175,7 @@
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <ol class="num-list">
-        <li><div><b>A rolling 12-month view, not a per-contract reminder</b>Every contract's notice deadline plotted on one timeline, so a cluster of five renewals landing the same quarter is visible months in advance instead of discovered five times separately.</div></li>
+        <li><div><b>A rolling 12-month view, not a per-contract reminder</b>Every contract's notice deadline plotted on one timeline, so a cluster of five renewals landing the same quarter is visible months in advance, not discovered five separate times.</div></li>
         <li><div><b>Criticality tier attached to every row</b>Pulled from the same tiering used in the vendor risk register on <a href="../vendor-evaluation/index.html">Vendor Evaluation</a>, so the portfolio owner can prioritize renewal planning time toward the contracts where getting it wrong carries real cost.</div></li>
         <li><div><b>A named owner per contract, visible on the dashboard itself</b>Not inferred from who signed it originally; ownership changes as people move roles, and a stale owner field is how a renewal gets missed even with a calendar in place.</div></li>
         <li><div><b>Concentration flags computed automatically</b>Any vendor crossing the concentration ceiling described on <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a> surfaces on the dashboard without anyone having to remember to check it contract by contract.</div></li>
@@ -191,8 +191,8 @@
       <p>The same organization, before and after the lifecycle discipline is applied at portfolio scale.</p>
     </div>
     <div class="stage-grid">
-      <div class="stage-cell a"><span class="env-label a">Per-contract discipline only</span><p>Each of 40 active vendor contracts has a diligent owner running the 180-day renewal sequence correctly, one contract at a time. In Q3, six major renewals land in the same six-week window because none of the individual owners had visibility into anyone else's calendar. Three get rushed, one renews on the vendor's terms rather than the organization's because there wasn't time to run the full sequence, and nobody notices until the following year that the two identity vendors, cloud identity and SSO, together now represent 34 percent of total vendor spend, well above the concentration ceiling nobody was tracking at the portfolio level.</p></div>
-      <div class="stage-cell"><span class="env-label b">With the portfolio layer</span><p>The same 40 contracts feed one dashboard. The Q3 cluster is visible in Q1, and two of the six renewals get pulled forward or pushed to spread the load, each still inside its own valid negotiation window. The concentration flag on the identity category fires automatically in the quarter its share crosses the 20 percent ceiling, well before either contract's renewal was due, giving the technology governance forum time to decide on an exit path deliberately rather than discovering the number during an unrelated renewal crunch.</p></div>
+      <div class="stage-cell a"><span class="env-label a">Per-contract discipline only</span><p>Each of 40 active vendor contracts has a diligent owner running the 180-day renewal sequence correctly, one contract at a time. In Q3, six major renewals land in the same six-week window because none of the individual owners had visibility into anyone else's calendar. Three get rushed, one renews on the vendor's terms instead of the organization's because there wasn't time to run the full sequence, and nobody notices until the following year that the two identity vendors, cloud identity and SSO, together now represent 34 percent of total vendor spend, well above the concentration ceiling nobody was tracking at the portfolio level.</p></div>
+      <div class="stage-cell"><span class="env-label b">With the portfolio layer</span><p>The same 40 contracts feed one dashboard. The Q3 cluster is visible in Q1, and two of the six renewals get pulled forward or pushed to spread the load, each still inside its own valid negotiation window. The concentration flag on the identity category fires automatically in the quarter its share crosses the 20 percent ceiling, well before either contract's renewal was due, giving the technology governance forum time to decide on an exit path calmly, not discover the number during an unrelated renewal crunch.</p></div>
     </div>
   </div>
 
@@ -205,10 +205,10 @@
     <div class="stage-grid single"><div class="stage-cell">
       <ul class="checklist">
         <li>No single view shows every contract's renewal date in one place; each owner tracks their own</li>
-        <li>Vendor concentration is discovered during a specific renewal negotiation rather than monitored continuously</li>
+        <li>Vendor concentration is discovered during a renewal negotiation instead of monitored continuously</li>
         <li>Two or more vendors doing substantially the same thing were each evaluated and contracted independently, with no intake check against the existing book</li>
         <li>Exit clause terms are unknown for most of the active portfolio until a specific contract is already ending</li>
-        <li>No quarterly review exists that looks at the vendor book as a whole rather than one relationship at a time</li>
+        <li>No quarterly review exists that looks at the vendor book as a whole</li>
       </ul>
     </div></div>
   </div>

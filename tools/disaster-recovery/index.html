@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Disaster Recovery &amp; Business Continuity</title>
-<meta name="description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole rather than degrading gracefully around a partial failure.">
+<meta name="description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.">
 <meta property="og:title" content="Disaster Recovery &amp;amp; Business Continuity | CTO Toolkit">
-<meta property="og:description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole rather than degrading gracefully around a partial failure.">
+<meta property="og:description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/disaster-recovery/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Disaster Recovery &amp;amp; Business Continuity | CTO Toolkit">
-<meta name="twitter:description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole rather than degrading gracefully around a partial failure.">
+<meta name="twitter:description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/disaster-recovery/index.html">
 <style>
@@ -85,7 +85,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Disaster Recovery &amp; Business Continuity</h1>
-  <p>What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole rather than degrading gracefully around a partial failure.</p>
+  <p>What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.</p>
   <div class="caveat">General DR/BC framework. See <a href="../incident-response/index.html">Incident Response</a> for the process that handles ordinary outages; this page is about recovery from the loss of an entire system, region, or facility.</div>
 </header>
 
@@ -94,7 +94,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>RTO and RPO, defined by tier</h3>
-      <p>Recovery Time Objective is how long the business can tolerate a system being down. Recovery Point Objective is how much data loss is acceptable. Both should be set by business impact rather than by what's technically easy.</p>
+      <p>Recovery Time Objective is how long the business can tolerate a system being down. Recovery Point Objective is how much data loss is acceptable. Set both from business impact, not from what is technically easy.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -112,16 +112,16 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Setting RTO and RPO</h3>
-      <p>The most common DR failure is a target that was never realistic in the first place; the bad recovery only exposes it.</p>
+      <p>DR most often fails because the target was never realistic to begin with; the bad recovery only exposes it.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">Do this</span>
         <p>Ask the business owner what happens at 1 hour, 4 hours, and 24 hours of downtime for each system, in dollars or customer impact, then set the target from that answer. The target should hurt to miss; if missing it wouldn't matter, the system is probably a lower tier than it's currently classified.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>An RTO of 4 hours written into a policy document, never tested, while the infrastructure would take 2 days to recover. The number on paper and the number that's true are different, and nobody finds out which one is real until a disaster.</p>
+        <span class="env-label b">Watch for</span>
+        <p>An RTO of 4 hours written into a policy document, never tested, while the infrastructure would take 2 days to recover. The number in the policy and the true number are different, and nobody finds out which one is real until a disaster.</p>
       </div>
     </div>
   </div>
@@ -135,7 +135,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Scheduled, automated restore tests, rather than manual ones someone remembers to run occasionally, with the restore time measured and compared against the stated RTO every time. A backup that restores successfully but takes 3x longer than the RTO promises is a finding.</p>
+        <p>Scheduled, automated restore tests (not manual ones someone remembers now and then), with the restore time measured and compared against the stated RTO every time. A backup that restores successfully but takes 3x longer than the RTO promises is a finding.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -152,11 +152,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>A scheduled exercise, at least annually for Tier 1 systems, that walks a realistic scenario end to end: who declares the disaster, who has authority to fail over, how customers get notified, and how the team knows recovery is complete rather than just visually normal again.</p>
+        <span class="env-label a">What to do</span>
+        <p>A scheduled exercise, at least annually for Tier 1 systems, that walks a realistic scenario end to end: who declares the disaster, who has authority to fail over, how customers get notified, and how the team knows recovery is complete and not just looking normal again.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">Where it goes wrong</span>
         <p>A DR plan that's technically sound but has never been rehearsed by the humans who'd execute it, so the event itself surfaces confusion about authority and sequencing that the document assumed away.</p>
       </div>
     </div>
@@ -170,11 +170,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">How to run it</span>
         <p>Cost the multi-region architecture (data replication, cross-region networking, the operational overhead of maintaining two live environments) against the quantified cost of the downtime it prevents. For revenue-critical systems, this usually clears the bar. For everything else, it often doesn't.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">How it breaks</span>
         <p>Multi-region architecture applied uniformly across the whole estate because it feels like the responsible default, without anyone pricing whether the systems getting that treatment warrant it.</p>
       </div>
     </div>
@@ -184,7 +184,7 @@
     <div class="stage-head">
       <span class="stage-num">5</span>
       <h3>Answering the board question</h3>
-      <p>&quot;What's our recovery time if we lose a region&quot; is a standard board question. The credible answer is specific rather than reassuring.</p>
+      <p>&quot;What's our recovery time if we lose a region&quot; is a standard board question. A credible answer is specific. Reassurance doesn't count.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -231,12 +231,12 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Frame DR investment the way an insurance purchase gets framed: an expected-value calculation across many possible years rather than a promised return in any single year. The probability input in the calculator above is an estimate, and saying so out loud is more credible than pretending it is precise.</p>
+        <span class="env-label a">What good looks like</span>
+        <p>Frame DR investment the way an insurance purchase gets framed: an expected-value calculation across many possible years, not a promised return in any single one. The probability input in the calculator above is an estimate, and saying so out loud is more credible than pretending it is precise.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>Presenting a DR business case with the same confident ROI language used for a revenue-generating feature, which invites exactly the wrong question, &quot;did we get that return this year,&quot; when the true answer is that a well-run DR program often means the disaster didn't happen to test it.</p>
+        <span class="env-label b">What usually happens</span>
+        <p>Presenting a DR business case with the same confident ROI language used for a revenue-generating feature, which invites the wrong question, &quot;did we get that return this year,&quot; when the true answer is that a well-run DR program often means the disaster didn't happen to test it.</p>
       </div>
     </div>
   </div>
@@ -282,17 +282,17 @@
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>DR red flags</h3>
-      <p>Patterns that show up consistently when a disaster recovery program looks complete on paper and isn't.</p>
+      <p>What you see when a disaster recovery program looks complete in the binder and isn't.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
           <li>RTO and RPO targets exist in a document but have never been tested against measured recovery time</li>
           <li>The last full-scale restore test or tabletop exercise was more than a year ago, or has never happened</li>
-          <li>Recovery depends on a single person's institutional knowledge rather than a documented, rehearsed runbook</li>
+          <li>Recovery depends on one person's memory, with no documented, rehearsed runbook</li>
           <li>Backup and primary infrastructure share a failure domain, same region, same provider account, same network path, undermining the recovery they're meant to enable</li>
           <li>Tier classification hasn't been revisited since the systems it covers changed significantly</li>
-          <li>DR investment gets pitched with certain-return ROI language rather than framed as insurance against a probabilistic event</li>
+          <li>DR investment gets pitched with guaranteed-return ROI language when it is really insurance against a probabilistic event</li>
         </ul>
       </div>
     </div>
@@ -301,7 +301,7 @@
 </main>
 
 <footer>
-  Reference only. RTO and RPO targets, testing cadence, and regulatory DR obligations vary by industry; treat this as a starting framework rather than a compliance checklist.
+  Reference only. RTO and RPO targets, testing cadence, and regulatory DR obligations vary by industry; treat this as a starting framework, not a compliance checklist.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

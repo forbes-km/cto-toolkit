@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology Risk Appetite</title>
-<meta name="description" content="Explicitly defining which risks the organization won&#x27;t accept, will accept temporarily, will monitor, and requires board or CEO visibility for, rather than leaving risk tolerance implicit and rediscovering it after something has already gone wrong.">
+<meta name="description" content="Writing down which risks the organization won&#x27;t accept, will accept temporarily, will monitor, and must show the board or CEO, so risk tolerance isn&#x27;t rediscovered after something has already gone wrong.">
 <meta property="og:title" content="Technology Risk Appetite | CTO Toolkit">
-<meta property="og:description" content="Explicitly defining which risks the organization won&#x27;t accept, will accept temporarily, will monitor, and requires board or CEO visibility for, rather than leaving risk tolerance implicit and rediscovering it after something has already gone wrong.">
+<meta property="og:description" content="Writing down which risks the organization won&#x27;t accept, will accept temporarily, will monitor, and must show the board or CEO, so risk tolerance isn&#x27;t rediscovered after something has already gone wrong.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technology-risk-appetite/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Technology Risk Appetite | CTO Toolkit">
-<meta name="twitter:description" content="Explicitly defining which risks the organization won&#x27;t accept, will accept temporarily, will monitor, and requires board or CEO visibility for, rather than leaving risk tolerance implicit and rediscovering it after something has already gone wrong.">
+<meta name="twitter:description" content="Writing down which risks the organization won&#x27;t accept, will accept temporarily, will monitor, and must show the board or CEO, so risk tolerance isn&#x27;t rediscovered after something has already gone wrong.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technology-risk-appetite/index.html">
 <style>
@@ -88,7 +88,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Technology Risk Appetite</h1>
-  <p>Explicitly defining which risks the organization won't accept, will accept temporarily, will monitor, and requires board or CEO visibility for, rather than leaving risk tolerance implicit and rediscovering it after something has already gone wrong.</p>
+  <p>Writing down which risks the organization won't accept, will accept temporarily, will monitor, and must show the board or CEO, so risk tolerance isn't rediscovered after something has already gone wrong.</p>
   <div class="caveat">This is the cross-cutting frame. Category-specific detail lives on <a href="../security-program/index.html">Security Program</a>, <a href="../disaster-recovery/index.html">Disaster Recovery</a>, <a href="../data-governance/index.html">Data Governance</a>, and <a href="../vendor-evaluation/index.html">Vendor Evaluation</a>. See <a href="../grc-operating-model/index.html">Governance, Risk &amp; Compliance</a> for how risk acceptance connects to a broader control and compliance program.</div>
 </header>
 
@@ -103,7 +103,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Tier</th><th>Definition</th><th>Who can accept it</th></tr>
-          <tr><td>Will not accept</td><td>Downside unacceptable regardless of likelihood: unencrypted regulated data at rest, no tested recovery plan for a revenue-critical system</td><td>No one; this is a standing prohibition rather than a judgment call</td></tr>
+          <tr><td>Will not accept</td><td>Downside unacceptable regardless of likelihood: unencrypted regulated data at rest, no tested recovery plan for a revenue-critical system</td><td>No one; this is a standing prohibition, not a judgment call</td></tr>
           <tr><td>Will accept temporarily</td><td>Known, tracked, with a remediation date and a named owner</td><td>The accountable owner from the decision-rights model, with the remediation plan documented</td></tr>
           <tr><td>Will monitor</td><td>Acceptable at current severity, tracked in case that changes</td><td>The team or function closest to the risk, without escalation, as long as it stays within stated bounds</td></tr>
           <tr><td>Requires board visibility</td><td>Severity or category crosses a stated materiality threshold</td><td>Surfaced regardless of whether it's currently being actively managed well</td></tr>
@@ -117,12 +117,12 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Why implicit risk tolerance is worse than a strict written one</h3>
-      <p>A conservative appetite stated clearly beats a permissive one left unstated, because the unstated version is an accident waiting to be discovered rather than a tolerance.</p>
+      <p>A conservative appetite stated clearly beats a permissive one left unstated, because the unstated version isn't a tolerance at all. It is an accident waiting to be discovered.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What an explicit appetite does</span>
-        <p>Gives engineers and managers a standing answer to &quot;is this acceptable&quot; without escalating every individual judgment call, and gives the CTO a defensible basis for a decision rather than an after-the-fact justification assembled once something has already gone wrong.</p>
+        <p>Gives engineers and managers a standing answer to &quot;is this acceptable&quot; without escalating every individual judgment call, and gives the CTO a defensible basis for a decision before anything goes wrong, not a justification assembled afterward.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What implicit tolerance produces</span>
@@ -153,14 +153,14 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>A worked example, applying the tiers</h3>
-      <p>What the five-tier model looks like against a common scenario rather than an abstract description.</p>
+      <p>What the five-tier model looks like against a common scenario.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>The finding:</strong> a known vulnerability in a legacy authentication library, requiring a multi-month migration to remediate properly, discovered during a routine dependency audit.</p>
         <p><strong>Will not accept?</strong> No. Exploiting it requires a specific, unlikely combination of internal network access and a second, unrelated compromise; it doesn't meet the &quot;unacceptable regardless of likelihood&quot; bar on its own.</p>
         <p><strong>Will accept temporarily.</strong> Yes, with a remediation date tied to the migration timeline, a named owner (head of security), and interim compensating controls (additional network segmentation around the affected service) documented alongside the acceptance itself.</p>
-        <p><strong>Board visibility?</strong> Depends on whether the affected system handles regulated data. If it does, the materiality threshold is crossed regardless of how contained the practical exploit path looks, because the threshold is about data category rather than the CTO's confidence in the mitigation.</p>
+        <p><strong>Board visibility?</strong> Depends on whether the affected system handles regulated data. If it does, the materiality threshold is crossed regardless of how contained the practical exploit path looks, because the threshold is about the data category, not the CTO's confidence in the mitigation.</p>
       </div>
     </div>
   </div>
@@ -174,11 +174,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What should happen</span>
-        <p>The accepted risk gets reviewed again with the same rigor as the original acceptance. If the date passes without remediation and without a re-justified new date, it escalates automatically to the next tier up, board visibility, rather than quietly receiving a new date stamped on it by the same person who missed the last one.</p>
+        <p>The accepted risk gets reviewed again with the same rigor as the original acceptance. If the date passes without remediation and without a re-justified new date, it escalates automatically to the next tier up, board visibility. It does not just get a new date from the same person who missed the last one.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
-        <p>A risk accepted a year ago, now on its third quietly extended remediation date, still sitting in the same tier with no escalation and no accountability for the pattern of missed dates itself, which is a worse signal than the original risk.</p>
+        <p>A risk accepted a year ago, now on its third extended remediation date, still sitting in the same tier with no escalation and no accountability for the pattern of missed dates itself, which is a worse signal than the original risk.</p>
       </div>
     </div>
   </div>
@@ -191,12 +191,12 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">What good looks like</span>
         <p>What was reasonable to tolerate at a five-person startup with no customers often becomes &quot;will not accept&quot; the moment the company signs its first enterprise customer with a security addendum, or crosses into handling regulated data for the first time. Revisit the appetite itself, and beyond it the individual risk decisions made under it, on the same annual cadence as the strategy reset.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>The appetite document was written once, early, by whoever was CTO at the time, and nobody revisits the thresholds as the company's regulatory exposure, customer base, or public profile changes around it, so the document quietly stops matching the business it's supposed to govern.</p>
+        <span class="env-label b">What usually happens</span>
+        <p>The appetite document was written once, early, by whoever was CTO at the time, and nobody revisits the thresholds as the company's regulatory exposure, customer base, or public profile changes around it, so the document slowly stops matching the business it's supposed to govern.</p>
       </div>
     </div>
   </div>
@@ -336,7 +336,7 @@
           <li>&quot;We'll accept this for now&quot; risks have no remediation date or owner attached</li>
           <li>The CTO has never stated, in writing, what the organization will not accept regardless of cost or convenience</li>
           <li>A remediation date has slipped more than once on the same accepted risk with no automatic escalation</li>
-                  <li>No key risk indicator with a numeric threshold exists for each risk category, so tolerance is a feeling rather than a line</li>
+                  <li>No key risk indicator with a numeric threshold exists for each risk category, so tolerance is a feeling, not a line</li>
           <li>For a public company, the board-visibility tier and the SEC materiality process are run by different people with different criteria</li>
 </ul>
       </div>

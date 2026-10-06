@@ -197,7 +197,7 @@
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Configuration without convention produces infinite surface area. Convention without explicit seams produces invisible magic.</p>
         <p><strong>Trade-off:</strong> The organization must invest in establishing and evolving conventions, ongoing work that drifts into inconsistency without it.</p>
-        <p><strong>Worked example:</strong> All services log in a common format and expose health/metrics on conventional paths. A service deviating for regulatory reasons documents why, explicitly.</p>
+        <p><strong>Worked example:</strong> All services log in a common format and expose health/metrics on conventional paths. A service that deviates for regulatory reasons writes down why.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Conventions are stated but not enforced; new services do whatever their authors prefer.</p>
       </div>
     </div>
@@ -255,7 +255,7 @@
         <p><strong>Rationale:</strong> Retrofitting sensitivity controls is more expensive than building them in; systems that move data without awareness of sensitivity produce the gaps that show up in breach postmortems.</p>
         <p><strong>Trade-off:</strong> Classification requires ongoing organizational discipline, every system handling data must know what classification applies.</p>
         <p><strong>Worked example:</strong> Customer purchase history is classified Restricted. A log entry including purchase history is subject to Restricted-level controls even if the producing system wouldn't otherwise be.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Classification exists on paper but isn't wired into any control. The cure is instrumenting classification into specific enforcement (encryption, access logging).</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Classification exists in a policy but isn't wired into any control. The cure is instrumenting classification into specific enforcement (encryption, access logging).</p>
       </div>
     </div>
   </div>
@@ -284,7 +284,7 @@
         <p><strong>Rationale:</strong> The reasoning behind a decision is usually the most valuable artifact, and the one most frequently lost.</p>
         <p><strong>Trade-off:</strong> Writing a good rationale takes effort, and most teams underestimate how much.</p>
         <p><strong>Worked example:</strong> An event-driven integration decision is recorded as an ADR including alternatives considered, why the chosen path won, and what would trigger revisiting it.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> ADRs exist but are written as announcements rather than reasoning. 'We will use X' with no explanation of what was rejected is a memo.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> ADRs exist, but they read like announcements with no reasoning in them. 'We will use X' with no explanation of what was rejected is a memo.</p>
       </div>
     </div>
   </div>
@@ -295,8 +295,8 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p><strong>Rationale:</strong> Architectural work compounds on team context. A team that's operated a system for two years makes better decisions about it than one assembled three weeks ago.</p>
-        <p><strong>Trade-off:</strong> Stable teams are harder to scale up rapidly for new initiatives; the organization has to plan for this rather than throwing people at problems.</p>
+        <p><strong>Rationale:</strong> Good architectural decisions build on team context. A team that's operated a system for two years makes better decisions about it than one assembled three weeks ago.</p>
+        <p><strong>Trade-off:</strong> Stable teams are harder to scale up rapidly for new initiatives; the organization has to plan for this instead of throwing people at problems.</p>
         <p><strong>Worked example:</strong> The team owning customer identity has a core of four engineers with two-plus years on it. New engineers onboard over three to six months rather than three weeks.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Team composition changes frequently, no one's been on the team more than six months. The cure is slowing the churn. Asking teams to document more treats the symptom.</p>
       </div>

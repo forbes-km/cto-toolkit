@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reliability as an Economic Decision</title>
-<meta name="description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision rather than a purely engineering one.">
+<meta name="description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision, not a purely engineering one.">
 <meta property="og:title" content="Reliability as an Economic Decision | CTO Toolkit">
-<meta property="og:description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision rather than a purely engineering one.">
+<meta property="og:description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision, not a purely engineering one.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/reliability-economics/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Reliability as an Economic Decision | CTO Toolkit">
-<meta name="twitter:description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision rather than a purely engineering one.">
+<meta name="twitter:description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision, not a purely engineering one.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/reliability-economics/index.html">
 <style>
@@ -78,7 +78,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Reliability as an Economic Decision</h1>
-  <p>How much reliability the business can afford, and how much unreliability it's implicitly willing to sell, framed as an investment decision rather than a purely engineering one.</p>
+  <p>How much reliability the business can afford, and how much unreliability it's implicitly willing to sell, framed as an investment decision, not a purely engineering one.</p>
   <div class="caveat">See <a href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a> for RTO/RPO and recovery testing, and <a href="../incident-response/index.html">Incident Response</a> for the operational process this economic frame sits above.</div>
 </header>
 
@@ -87,7 +87,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Availability tiers, illustrative</h3>
-      <p>Each additional nine of availability costs disproportionately more than the last one, which is exactly why the target should be chosen deliberately rather than defaulted to the highest available.</p>
+      <p>Each additional nine of availability costs disproportionately more than the last one, so the target should be chosen on purpose, not defaulted to the highest available.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -128,11 +128,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>An error budget is the amount of unreliability your target explicitly allows, a 99.9% uptime target allows roughly 43 minutes of downtime a month. While that budget isn't exhausted, engineering has explicit permission to ship faster. Once it is, that's a non-personal signal to slow down and stabilize.</p>
+        <span class="env-label a">What to do</span>
+        <p>An error budget is the amount of unreliability your target allows: a 99.9% uptime target allows roughly 43 minutes of downtime a month. While that budget isn't exhausted, engineering has explicit permission to ship faster. Once it is, that's a non-personal signal to slow down and stabilize.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">Where it goes wrong</span>
         <p>Treating reliability as an unlimited, unstated expectation, where every incident is judged a failure regardless of whether the system was still within a sane, previously agreed tolerance.</p>
       </div>
     </div>
@@ -146,12 +146,12 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Match redundancy investment to the tier a system needs rather than the highest tier available. A system that doesn't need five nines shouldn't be built to that standard just because the pattern exists elsewhere in the estate.</p>
+        <span class="env-label a">How to run it</span>
+        <p>Match redundancy investment to the tier a system needs, not the highest tier on offer. A system that doesn't need five nines shouldn't be built to that standard just because the pattern exists elsewhere in the estate.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>Applying multi-region, high-availability architecture uniformly across the estate as the safe default, which quietly taxes every team's velocity for protection most of those systems never needed in the first place.</p>
+        <span class="env-label b">How it breaks</span>
+        <p>Applying multi-region, high-availability architecture uniformly across the estate as the safe default, which taxes every team's velocity for protection most of those systems never needed in the first place.</p>
       </div>
     </div>
   </div>
@@ -206,7 +206,7 @@
         <tr><td>Tier 2: business critical</td><td>99.9%</td><td>Internal systems that stop work when down: identity, CI, core data pipelines, customer support tooling</td><td>Multi-zone, tested restore, business-hours on-call with escalation, an SLO with a dashboard</td></tr>
         <tr><td>Tier 3: important</td><td>99.5%</td><td>Reporting, internal tools, anything with a manual workaround</td><td>Single region with backups, restore tested annually, best-effort response</td></tr>
         <tr><td>Tier 4: everything else</td><td>No commitment</td><td>Experiments, sandboxes, deprecated systems awaiting retirement</td><td>Backups if the data matters; otherwise nothing</td></tr>
-      </table>      <p style="margin-bottom:8px;">The assignment is a product decision with an engineering cost attached, made by the business owner of each system against the cost-of-downtime number rather than by engineering against what feels safe. Most estates that do this exercise find they have been paying Tier 1 costs on Tier 3 systems and running a Tier 1 system on Tier 3 infrastructure, at the same time.</p>
+      </table>      <p style="margin-bottom:8px;">The assignment is a product decision with an engineering cost attached, made by the business owner of each system against the cost-of-downtime number, not by engineering against what feels safe. Most estates that do this exercise find they have been paying Tier 1 costs on Tier 3 systems and running a Tier 1 system on Tier 3 infrastructure, at the same time.</p>
     </div></div>
   </div>
 
@@ -218,7 +218,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">The numbers</span><p>An hour of checkout downtime costs $40,000 in lost orders and recovery effort. At 99.9% the annual downtime budget is about 8.7 hours, or roughly $350,000 of expected loss. At 99.99% it is about 53 minutes, roughly $35,000. The next nine is worth about $315,000 a year in avoided loss. Reaching it means a second region, automated failover, and a deeper on-call rota: about $220,000 a year in infrastructure and people. The investment clears by roughly $95,000 a year, and it is approved.</p></div>
-      <div class="stage-cell"><span class="env-label b">The same arithmetic on the reporting system</span><p>An hour of downtime on the internal reporting platform costs about $2,000 in delayed work. At 99.9% that is about $17,500 a year of expected loss. The proposed multi-region rebuild costs $180,000 a year. It fails by an order of magnitude and is declined, and the team that proposed it is asked what a tested nightly restore would cost instead. That number is $15,000, and it gets funded. The two decisions together are the point: reliability spending moves toward where downtime costs money and away from where it does not.</p></div>
+      <div class="stage-cell"><span class="env-label b">The same arithmetic on the reporting system</span><p>An hour of downtime on the internal reporting platform costs about $2,000 in delayed work. At 99.9% that is about $17,500 a year of expected loss. The proposed multi-region rebuild costs $180,000 a year. It fails by an order of magnitude and is declined, and the team that proposed it is asked what a tested nightly restore would cost instead. That number is $15,000, and it gets funded. Taken together, the two decisions show the pattern: reliability spending moves toward where downtime costs money and away from where it does not.</p></div>
     </div>
   </div>
 
@@ -266,11 +266,11 @@
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
       <h3>The availability number that measures the wrong thing</h3>
-      <p>The most common failure in reliability economics is doing the arithmetic on a number that does not reflect the customer's experience. The arithmetic itself is rarely the problem.</p>
+      <p>Reliability economics usually goes wrong by doing the arithmetic on a number that does not reflect the customer's experience. The arithmetic itself is rarely the problem.</p>
     </div>
     <div class="stage-grid">
-      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The board deck reports 99.98% availability, measured as the percentage of minutes the load balancer returned a 200. Customer churn analysis shows that a meaningful share of cancellations cite reliability. Both are true: the checkout took nine seconds to respond for two weeks after a database change, every request returned 200, and no alert fired. The reliability investment case, built on the 99.98%, concluded no further spending was needed.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>Define availability for each Tier 1 and Tier 2 system as the success rate of a named customer journey within a latency bound, measured from the client side. Rebuild the cost-of-downtime number against that definition. The number usually gets worse and the investment case usually gets clearer. See <a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a> for how the measurement is built and who owns it.</p></div>
+      <div class="stage-cell a"><span class="env-label a">The pattern</span><p>The board deck reports 99.98% availability, measured as the percentage of minutes the load balancer returned a 200. Customer churn analysis shows that a meaningful share of cancellations cite reliability. Both are true: the checkout took nine seconds to respond for two weeks after a database change, every request returned 200, and no alert fired. The reliability investment case, built on the 99.98%, concluded no further spending was needed.</p></div>
+      <div class="stage-cell"><span class="env-label b">The way out</span><p>Define availability for each Tier 1 and Tier 2 system as the success rate of a named customer journey within a latency bound, measured from the client side. Rebuild the cost-of-downtime number against that definition. The number usually gets worse and the investment case usually gets clearer. See <a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a> for how the measurement is built and who owns it.</p></div>
     </div>
   </div>
 
@@ -278,17 +278,17 @@
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs reliability spend isn't tied to economics</h3>
-      <p>Patterns that show up when reliability investment is driven by instinct rather than a stated cost-benefit basis.</p>
+      <p>What you see when reliability investment runs on instinct, with no stated cost-benefit basis.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
           <li>No system has a stated availability target tied to a cost-of-downtime calculation</li>
           <li>Error budgets don't exist, so every incident is treated with the same severity regardless of whether targets were met</li>
-          <li>Redundancy investment is uniform across the estate rather than tiered to criticality</li>
+          <li>Redundancy investment is uniform across the estate, not tiered to criticality</li>
           <li>The cost of the current reliability posture has never been compared to the cost of the downtime it prevents</li>
           <li>&quot;We need to be more reliable&quot; gets stated with no number attached to what that would cost or save</li>
-          <li>The next nine gets pursued because it's technically achievable rather than because the math above says it's worth it</li>
+          <li>The next nine gets pursued because it is technically achievable, whatever the math above says</li>
         </ul>
       </div>
     </div>

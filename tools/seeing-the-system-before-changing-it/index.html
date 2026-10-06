@@ -117,7 +117,7 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Define the system</h3>
-      <p>What you're changing, stated at the level where the behavior lives rather than the level where the budget line sits.</p>
+      <p>What you're changing, stated at the level where the behavior lives, not where the budget line sits.</p>
     </div>
     <div class="stage-grid triple">
       <div class="stage-cell a">
@@ -130,7 +130,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>The artifact is an event bus. The system being changed is every point-to-point contract between the five systems, the implicit timing and ordering assumptions baked into each one, and every downstream report or reconciliation process that quietly depends on those assumptions holding.</p>
+        <p>The artifact is an event bus. The system being changed is every point-to-point contract between the five systems, the implicit timing and ordering assumptions baked into each one, and every downstream report or reconciliation process that depends on those assumptions without saying so.</p>
       </div>
     </div>
     <div class="same-note">The technique for finding the system instead of stopping at the artifact is root cause analysis: ask why the artifact is the proposed fix, then why that answer is true, and repeat until the answer isn't itself caused by something further upstream. Toyota's 5 Whys is the simplest version of this. Stop after one round and you've defined the artifact and missed the system.</div>
@@ -145,7 +145,7 @@
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Every analysis draws a boundary around what counts as "in scope." The boundary is usually drawn to make the planning tractable, which means it's drawn to exclude exactly the inconvenient parts.</p>
+        <p>Every analysis draws a boundary around what counts as "in scope." The boundary is usually drawn to make the planning tractable, which usually means it leaves out the inconvenient parts.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
@@ -156,7 +156,7 @@
         <p>The boundary drawn for planning was "the integration layer." Excluded: the five system owners' own roadmaps, each of which assumed continued control over their point-to-point contracts, and the data warehouse's nightly batch jobs, which rely on a delivery order the event bus doesn't guarantee.</p>
       </div>
     </div>
-    <div class="same-note">The technique for drawing a boundary that doesn't quietly exclude the inconvenient part is MECE, mutually exclusive, collectively exhaustive, a McKinsey problem-structuring principle: break what's potentially in scope into pieces that don't overlap and, together, cover the whole system, then test each piece against the boundary question directly. An issue tree is the same technique on paper, one big question broken into an exhaustive, non-overlapping set of smaller ones, instead of a boundary drawn once by instinct and never checked for what it left out.</div>
+    <div class="same-note">The technique for drawing a boundary that keeps the inconvenient parts in is MECE, mutually exclusive, collectively exhaustive, a McKinsey problem-structuring principle: break what's potentially in scope into pieces that don't overlap and, together, cover the whole system, then test each piece against the boundary question directly. An issue tree is the same technique on paper, one big question broken into an exhaustive, non-overlapping set of smaller ones, instead of a boundary drawn once by instinct and never checked for what it left out.</div>
   </div>
 
   <div class="stage-card">
@@ -192,7 +192,7 @@
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Every system rewards something whether anyone designed it to or not. Find the reward structure that operates in practice before assuming the intervention only changes what it was aimed at.</p>
+        <p>Every system rewards something whether anyone designed it to or not. Find the reward structure that actually operates before assuming the intervention only changes what it was aimed at.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
@@ -244,7 +244,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>The event bus goes live and every system publishes correctly on day one. The cost shows up months later, when the warehouse's nightly reports start silently running on stale data during any week event delivery lags by even a few minutes, a failure mode the old synchronous calls never had.</p>
+        <p>The event bus goes live and every system publishes correctly on day one. The cost shows up months later, when the warehouse's nightly reports start running on stale data, with no error during any week event delivery lags by even a few minutes, a failure mode the old synchronous calls never had.</p>
       </div>
     </div>
   </div>
@@ -260,7 +260,7 @@
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>The intended effect gets modeled because it's the point of the change. Indirect effects get missed because nobody's job was to look for them, and they don't always arrive as a single, traceable step. Sometimes it's a feedback loop producing a result much later. Sometimes it's simultaneous, showing up somewhere nobody thought to check.</p>
+        <p>The intended effect gets modeled because it is why the change exists. Indirect effects get missed because nobody's job was to look for them, and they don't always arrive as a single, traceable step. Sometimes it's a feedback loop producing a result much later. Sometimes it's simultaneous, showing up somewhere nobody thought to check.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
@@ -282,11 +282,11 @@
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Every plan runs into "we can't do that because X." Half of those X's are load-bearing. The other half are how it's always been done, restated as if it were a law of physics.</p>
+        <p>Every plan runs into "we can't do that because X." Half of those X's are real. The other half are how it's always been done, restated as if it were a law of physics.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Binding constraint: one business unit operates under a regulatory requirement that mandates a separately governed technology function, so that unit can't be fully centralized without a compliance problem. Habit, never questioned: the assumption that every unit needs its own full technology leadership stack rather than shared platform capability with unit-specific product ownership.</p>
+        <p>Binding constraint: one business unit operates under a regulatory requirement that mandates a separately governed technology function, so that unit can't be fully centralized without a compliance problem. Habit, never questioned: the assumption that every unit needs its own full technology leadership stack instead of shared platform capability with unit-specific product ownership.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -308,7 +308,7 @@
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>If the measure is "total technology headcount reduced," the cuts land hardest on whichever unit documented its context the least rather than on duplication. The metric that matters is duplicate capability eliminated without loss of unit-specific delivery speed; headcount alone measures the wrong thing.</p>
+        <p>If the measure is "total technology headcount reduced," the cuts land hardest on whichever unit documented its context least, not on duplication. The metric that matters is duplicate capability eliminated without loss of unit-specific delivery speed; headcount alone measures the wrong thing.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
@@ -323,20 +323,20 @@
     <div class="stage-head">
       <span class="stage-num">10</span>
       <h3>Design the intervention, then observe the response</h3>
-      <p>The intervention that changes the system behavior you want with the least unnecessary disruption, rather than the largest change that feels decisive.</p>
+      <p>The intervention that changes the system behavior you want with the least unnecessary disruption. The largest change is not automatically the most decisive one.</p>
     </div>
     <div class="stage-grid triple">
       <div class="stage-cell a">
         <span class="env-label a">The question</span>
-        <p>Everything above exists to inform this design choice. A sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them, though a structural problem sometimes needs a structural fix rather than a smaller version of the same mistake. Either way, the intervention is never the last step. Watch what the system does in response, and update the answers above if it's not what questions 4 through 9 predicted.</p>
+        <p>Everything above exists to inform this design choice. A sequenced intervention that respects the loops and delays you just found usually beats a bigger one that ignores them, though a structural problem sometimes needs a structural fix, not a smaller version of the same mistake. Either way, the intervention is never the last step. Watch what the system does in response, and update the answers above if it's not what questions 4 through 9 predicted.</p>
       </div>
       <div class="stage-cell b">
         <span class="env-label b">Operating model</span>
-        <p>Instead of centralizing all four units in one reorg announcement: a phased centralization starting with the shared services duplicated identically across all four units, common infrastructure, security, while each unit keeps a dedicated technology lead in their president's staff meeting for at least two more budget cycles. Afterward, check whether presidents still report technology as represented at their leadership table, rather than assuming the org chart change was fine because nobody complained in month one.</p>
+        <p>Instead of centralizing all four units in one reorg announcement: a phased centralization starting with the shared services duplicated identically across all four units, common infrastructure, security, while each unit keeps a dedicated technology lead in their president's staff meeting for at least two more budget cycles. Afterward, check whether presidents still report technology as represented at their leadership table. Nobody complaining in month one is not evidence the change worked.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label c">System of systems</span>
-        <p>Instead of cutting all five systems over in one release: a phased migration starting with the two systems least sensitive to ordering, with the old point-to-point path kept running in parallel until event delivery is proven reliable under production load. Afterward, the warehouse's report accuracy gets checked against the old baseline rather than assumed fine because the bus is technically delivering events.</p>
+        <p>Instead of cutting all five systems over in one release: a phased migration starting with the two systems least sensitive to ordering, with the old point-to-point path kept running in parallel until event delivery is proven reliable under production load. Afterward, the warehouse's report accuracy gets checked against the old baseline. The bus technically delivering events does not mean the reports are right.</p>
       </div>
     </div>
     <div class="same-note">This is where the loop closes back into the rest of the toolkit: <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> records the decision, and whatever gets measured afterward feeds back into the Measurement stage of <a href="../decision-architecture/index.html">Decision Architecture</a>, which feeds back into Strategy. This diagnostic continues past the decision.</div>
@@ -354,7 +354,7 @@
           <li>You can name at least two actors, beyond the team proposing the change, who will behave differently once it ships</li>
           <li>You can name the current incentive the change removes or reverses, as well as the goal it's meant to achieve</li>
           <li>You've written down an indirect effect you expect, alongside the intended one the proposal is optimized for</li>
-          <li>The success metric measures the outcome you want rather than the easiest thing to measure by the deadline</li>
+          <li>The success metric measures the outcome you want, not the easiest thing to measure by the deadline</li>
           <li>You've stated which constraints are binding and which are how it's always been done, out loud, in the room</li>
         </ul>
       </div>

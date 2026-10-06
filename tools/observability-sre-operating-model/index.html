@@ -224,7 +224,7 @@
     <div class="stage-grid single"><div class="stage-cell">
       <ol class="num-list">
         <li><div><b>Decide the signals and their purpose first</b>Logs for forensic detail, metrics for state over time and alerting, traces for request flow across services. A signal with no consumer is cost. Most estates over-collect logs and under-instrument traces.</div></li>
-        <li><div><b>Standardize the instrumentation rather than the vendor</b>Use a vendor-neutral instrumentation standard (OpenTelemetry has become the default) so the collection layer is portable and the backend can be changed at a renewal. The backend is a <a href="../saas-contract-negotiation/index.html">SaaS renewal</a> problem; the instrumentation should not be.</div></li>
+        <li><div><b>Standardize the instrumentation, not the vendor</b>Use a vendor-neutral instrumentation standard (OpenTelemetry has become the default) so the collection layer is portable and the backend can be changed at a renewal. The backend is a <a href="../saas-contract-negotiation/index.html">SaaS renewal</a> problem; the instrumentation should not be.</div></li>
         <li><div><b>Put a cost owner on telemetry</b>Ingest volume by service, with a budget per service and an alert when it is exceeded. Sampling for traces, retention tiers for logs, cardinality limits for metrics. The observability bill is a FinOps problem and belongs in <a href="../cloud-cost-management/index.html">Cloud FinOps</a>.</div></li>
         <li><div><b>Alert on symptoms</b>Alerts derive from SLOs: error rate, latency, availability as the user sees them. Cause-level signals (CPU, disk, queue depth) feed dashboards and the investigation and stay off the pager.</div></li>
         <li><div><b>Make the correlation identifier non-negotiable</b>One identifier propagates through every request, message, and log line. Without it, distributed debugging is guesswork, and the integration patterns in <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> depend on it.</div></li>
@@ -242,10 +242,10 @@
       <ul class="checklist">
         <li>Rotations are at least six people deep; fewer means someone is on call one week in four or worse</li>
         <li>On-call is paid, either as an allowance or as time off, and the policy is written down</li>
-        <li>Pages per shift are measured; a shift with more than a handful of pages triggers a review of the alerts rather than of the person</li>
-        <li>Every page has a runbook; a page without one is a bug filed against the service rather than a test of the responder</li>
+        <li>Pages per shift are measured; a shift with more than a handful of pages triggers a review of the alerts, not the person</li>
+        <li>Every page has a runbook; a page without one is a bug against the service, not a test of the responder</li>
         <li>Escalation is defined by service and by severity, with a named second line, so the first responder is never alone by default</li>
-        <li>Follow-the-sun is used where the organization spans time zones; if it does not, night pages are minimized by design rather than endured</li>
+        <li>Follow-the-sun is used where the organization spans time zones; if it does not, night pages are designed out, not endured</li>
         <li>Toil discovered on call goes to a backlog with a budget, and the team sees it shrink</li>
         <li>New engineers shadow before they respond, and nobody is on the rota for a service they have never deployed</li>
       </ul>
@@ -266,7 +266,7 @@
         <tr><td>4</td><td>Publish a production readiness checklist and apply it to the next new service</td><td>One service has gone live through the checklist; the gaps it revealed are in a backlog</td></tr>
         <tr><td>5</td><td>Adopt a vendor-neutral instrumentation standard and a telemetry cost budget per service</td><td>Ingest by service is visible; the observability bill is flat or falling as coverage rises</td></tr>
         <tr><td>6</td><td>Write the error budget policy and get the CEO or CPO to sign it</td><td>A feature release has been delayed once because a budget was exhausted, and the organization survived</td></tr>
-        <tr><td>7</td><td>Decide the operating model explicitly, fund it, and name what SRE owns versus what teams own</td><td>An org design decision recorded in an ADR, with the on-call model and the funding that goes with it</td></tr>
+        <tr><td>7</td><td>Decide the operating model on the record, fund it, and name what SRE owns versus what teams own</td><td>An org design decision recorded in an ADR, with the on-call model and the funding that goes with it</td></tr>
       </table>
     </div></div>
   </div>
@@ -365,7 +365,7 @@
     <div class="stage-head">
       <span class="stage-num">Common pitfall</span>
       <h2>Renaming the ops team</h2>
-      <p>The most common SRE adoption is a change of job title. It produces a team with the same reactive workload, a new set of expectations, and no authority to change either.</p>
+      <p>In most companies, adopting SRE means changing a job title. It produces a team with the same reactive workload, a new set of expectations, and no authority to change either.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The operations team becomes the SRE team. Product teams are told they are now on call, escalate every page to SRE within minutes, and ship services with no SLO and no runbook because the checklist has no teeth. SRE is paged for everything, owns nothing, and attrits. Leadership concludes that SRE does not work here.</p></div>

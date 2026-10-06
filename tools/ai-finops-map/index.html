@@ -224,7 +224,7 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Chargeback &amp; unit economics</h3>
-      <p>Making AI spend attributable to the team or product that generated it instead of leaving it as one opaque line item.</p>
+      <p>Tying AI spend to the team or product that generated it, so it stops being one opaque line item.</p>
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
@@ -236,7 +236,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Cloud Billing labels plus BigQuery billing export let you attribute Agent Platform spend down to the label or project level, queryable alongside the rest of the GCP bill rather than as an isolated line item.</p>
+      <p>Cloud Billing labels plus BigQuery billing export let you attribute Agent Platform spend down to the label or project level, queryable next to the rest of the GCP bill.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -260,11 +260,11 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Cost Management budgets with action-group-triggered alerts at defined thresholds; Monitor can alert on token consumption rate directly if instrumented, catching an anomaly within the billing period rather than after it closes.</p>
+      <p>Cost Management budgets with action-group-triggered alerts at defined thresholds; Monitor can alert on token consumption rate directly if instrumented, so an anomaly gets caught while the billing period is still open.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Budgets & Alerts plus Cost Anomaly Detection at the billing-account level; the reasoning-token cost multiplier from Stage 1 is exactly the kind of anomaly this catches before it compounds across a month of traffic.</p>
+      <p>Budgets & Alerts plus Cost Anomaly Detection at the billing-account level; the reasoning-token cost multiplier from Stage 1 is the kind of anomaly this catches before a month of traffic multiplies it.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -295,7 +295,7 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>OCI's catalog spans Oracle-curated and partner models (Cohere, Llama, xAI Grok) at meaningfully different price points; the same routing principle applies, and dedicated-cluster pricing tiers differ enough by model family that the choice compounds with the reserved-capacity decision from Stage 2.</p>
+      <p>OCI's catalog spans Oracle-curated and partner models (Cohere, Llama, xAI Grok) at meaningfully different price points; the same routing principle applies, and dedicated-cluster pricing tiers differ enough by model family that the choice interacts with the reserved-capacity decision from Stage 2.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -320,7 +320,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Online prediction endpoints, Vector Search nodes, and Workbench instances all bill per hour regardless of traffic; a forgotten deployed endpoint is one of the most common GCP AI cost surprises, silently running up thousands a month for zero real usage.</p>
+      <p>Online prediction endpoints, Vector Search nodes, and Workbench instances all bill per hour regardless of traffic; a forgotten deployed endpoint is one of the most common GCP AI cost surprises, running up thousands a month with nobody using it.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -372,7 +372,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Batch Inference processes a submitted job asynchronously at 50 percent off standard on-demand pricing.<sup class="src"><a href="#src-2" title="AWS, Amazon Bedrock pricing">[2]</a></sup> Batch doesn't support tool calling, structured output, or multi-turn conversation, so it is a different execution model rather than a slower version of the same one.<sup class="src"><a href="#src-7" title="AWS, Amazon Bedrock User Guide: batch inference">[7]</a></sup> Don't move an agent loop to Batch because the token price is lower.</p>
+      <p>Batch Inference processes a submitted job asynchronously at 50 percent off standard on-demand pricing.<sup class="src"><a href="#src-2" title="AWS, Amazon Bedrock pricing">[2]</a></sup> Batch doesn't support tool calling, structured output, or multi-turn conversation, so treat it as a different execution model, not a slower copy of the interactive one.<sup class="src"><a href="#src-7" title="AWS, Amazon Bedrock User Guide: batch inference">[7]</a></sup> Don't move an agent loop to Batch because the token price is lower.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>

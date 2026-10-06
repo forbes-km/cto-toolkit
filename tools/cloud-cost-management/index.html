@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud FinOps</title>
-<meta name="description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta name="description" content="Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
 <meta property="og:title" content="Cloud FinOps | CTO Toolkit">
-<meta property="og:description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta property="og:description" content="Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/cloud-cost-management/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cloud FinOps | CTO Toolkit">
-<meta name="twitter:description" content="Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta name="twitter:description" content="Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/cloud-cost-management/index.html">
 <style>
@@ -87,7 +87,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Cloud FinOps</h1>
-  <p>Managing general infrastructure spend as a standing discipline rather than a quarterly panic when finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.</p>
+  <p>Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.</p>
   <div class="caveat">This covers general cloud infrastructure cost, compute, storage, networking, data services, using the FinOps Foundation's own framework. For token-based pricing, PTU and reserved capacity, and GPU amortization on AI workloads, see the <a href="../ai-finops-map/index.html">AI FinOps Map</a>. AI is a separate recognized Scope under the same Foundation framework. The Foundation itself publishes the full framework, certifications, and the FOCUS specification at <a href="https://www.finops.org" target="_blank" rel="noopener">finops.org</a>.</div>
 </header>
 
@@ -96,7 +96,7 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Phases: one building block of a larger framework</h3>
-      <p>These are the FinOps Foundation's own Phases. The Foundation is the industry body (under the Linux Foundation) that maintains the full FinOps Framework and the FOCUS billing specification referenced throughout this page. The complete framework also includes Principles, Personas, Domains and Capabilities, Technology Categories, and Scopes, and the Foundation's current definition centers on maximizing the business value of technology spend broadly rather than cloud alone. The 2026 framework names five Technology Categories, public cloud, SaaS, data center, data cloud platforms, and AI, and treats a Scope as a business-defined slice of spend across those categories, started because a business question needs answering.<sup class="src"><a href="#src-1" title="FinOps Foundation, FinOps Framework 2026, March 2026">[1]</a></sup> This page covers public cloud infrastructure, which is why AI cost modeling gets its own page rather than folding into this one.</p>
+      <p>These are the FinOps Foundation's own Phases. The Foundation is the industry body (under the Linux Foundation) that maintains the full FinOps Framework and the FOCUS billing specification referenced throughout this page. The complete framework also includes Principles, Personas, Domains and Capabilities, Technology Categories, and Scopes, and the Foundation's current definition centers on maximizing the business value of technology spend broadly rather than cloud alone. The 2026 framework names five Technology Categories, public cloud, SaaS, data center, data cloud platforms, and AI, and treats a Scope as a business-defined slice of spend across those categories, started because a business question needs answering.<sup class="src"><a href="#src-1" title="FinOps Foundation, FinOps Framework 2026, March 2026">[1]</a></sup> This page covers public cloud infrastructure, which is why AI cost modeling has its own page.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -169,7 +169,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Automated shutdown for non-production environments outside business hours, utilization-based rightsizing recommendations reviewed monthly, and a default assumption that any resource untouched for 90 days gets flagged for a decommission decision rather than left alone indefinitely.</p>
+        <p>Automated shutdown for non-production environments outside business hours, utilization-based rightsizing recommendations reviewed monthly, and a default assumption that any resource untouched for 90 days gets flagged for a decommission decision.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -186,11 +186,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">What to do</span>
         <p>Commit only on the stable baseline, the usage level that's been consistent for at least six months, and use on-demand or short-term commitments for anything still growing or shrinking. Ladder commitment terms so not everything renews at once, which avoids a cliff where the whole discount structure needs renegotiating simultaneously.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">Where it goes wrong</span>
         <p>Overcommitting based on a growth projection that doesn't materialize, then paying for reserved capacity that sits unused, which is a worse outcome than paying on-demand rates for the same idle resource would have been.</p>
       </div>
     </div>
@@ -204,12 +204,12 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>A mandatory tagging policy enforced at resource creation rather than applied retroactively by a cleanup script, with showback reporting that puts each team's spend in front of that team monthly. Chargeback, where teams' budgets are directly debited, is a stronger lever but works only once tagging discipline is already solid.</p>
+        <span class="env-label a">How to run it</span>
+        <p>A mandatory tagging policy enforced when the resource is created, not patched in later by a cleanup script, with showback reporting that puts each team's spend in front of that team monthly. Chargeback, where teams' budgets are directly debited, is a stronger lever but works only once tagging discipline is already solid.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>Rolling out chargeback before tagging is reliable, which produces disputed, inaccurate bills that teams learn to ignore rather than a credible signal they act on. Trust in the numbers has to come before the numbers carry financial weight.</p>
+        <span class="env-label b">How it breaks</span>
+        <p>Rolling out chargeback before tagging is reliable, which produces disputed, inaccurate bills that teams learn to ignore. Trust in the numbers has to come before the numbers carry financial weight.</p>
       </div>
     </div>
   </div>
@@ -222,11 +222,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Guardrails over gatekeeping: budget alerts that trigger automatically, instance-size policies enforced by infrastructure-as-code rather than a manual review, and approval requirements reserved for large or unusual spend rather than every new resource. Most cost control should be invisible to an engineer working within normal bounds.</p>
+        <span class="env-label a">What good looks like</span>
+        <p>Guardrails over gatekeeping: budget alerts that trigger automatically, instance-size policies enforced by infrastructure-as-code instead of manual review, and approvals reserved for large or unusual spend. Most cost control should be invisible to an engineer working within normal bounds.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">What usually happens</span>
         <p>An approval queue that becomes the default path for routine provisioning, which teaches engineers to over-request once to avoid asking twice, producing the exact oversizing the governance process was meant to prevent.</p>
       </div>
     </div>
@@ -254,7 +254,7 @@
     <div class="stage-head">
       <span class="stage-num">6</span>
       <h3>Crawl, Walk, Run, applied practically</h3>
-      <p>The FinOps Foundation's maturity model, stated concretely enough to assess against rather than claim.</p>
+      <p>The FinOps Foundation's maturity model, stated concretely enough that you can assess against it instead of just claiming a stage.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -263,7 +263,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap</span>
-        <p>Treating maturity as a label to claim rather than a description of what's happening. An organization that calls itself &quot;Run&quot; but can't answer what a single team spent last month is Crawl with better branding.</p>
+        <p>Treating maturity as a label to claim instead of a description of what is going on. An organization that calls itself &quot;Run&quot; but can't answer what a single team spent last month is Crawl with better branding.</p>
       </div>
     </div>
   </div>
@@ -298,7 +298,7 @@
           <tr><td>Proportional (metered)</td><td>Shared cost split by actual measured consumption, requests served, data volume, compute-seconds against the shared resource</td><td>The target state for anything shared and material; requires usage metering per consumer, which is the real cost of running this method rather than even split</td></tr>
           <tr><td>Fixed or negotiated</td><td>A pre-agreed percentage split, set by governance rather than derived from either headcount or metered usage</td><td>Joint infrastructure where no consumption metric fairly represents the benefit each BU gets, decided once by the same forum that owns the funding model on <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td></tr>
         </table>
-        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">The FinOps Foundation's own Allocation capability, under the Inform phase, covers this same problem in more depth; treat the table above as the working version rather than a substitute for reading it at finops.org when the shared-cost picture gets complicated.</p>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">The FinOps Foundation's own Allocation capability, under the Inform phase, covers this same problem in more depth; treat the table above as the working version, and read the full capability at finops.org when the shared-cost picture gets complicated.</p>
       </div>
     </div>
   </div>
@@ -345,13 +345,13 @@
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
       <h3>Signs cost governance isn't working</h3>
-      <p>Not exhaustive, but the patterns that show up consistently when a cost program looks good on paper and isn't changing behavior.</p>
+      <p>Not exhaustive, but the patterns that show up when a cost program looks good in the slides and isn't changing behavior.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
           <li>The last optimization effort was a one-time project with no recurring owner</li>
-          <li>Untagged or misattributed spend is a growing percentage of the bill rather than shrinking</li>
+          <li>Untagged or misattributed spend is a growing share of the bill, not a shrinking one</li>
           <li>Reserved capacity utilization is below 80 percent, meaning committed spend is going unused</li>
           <li>Non-production environments run around the clock with no automated schedule</li>
           <li>No one outside the finance or platform team can say what their own team's monthly cloud spend is</li>

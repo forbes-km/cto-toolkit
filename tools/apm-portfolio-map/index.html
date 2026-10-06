@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Application Portfolio Management</title>
-<meta name="description" content="How to look at an entire application estate at once, rather than one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.">
+<meta name="description" content="How to look at an entire application estate at once instead of one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.">
 <meta property="og:title" content="Application Portfolio Management | CTO Toolkit">
-<meta property="og:description" content="How to look at an entire application estate at once, rather than one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.">
+<meta property="og:description" content="How to look at an entire application estate at once instead of one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/apm-portfolio-map/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Application Portfolio Management | CTO Toolkit">
-<meta name="twitter:description" content="How to look at an entire application estate at once, rather than one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.">
+<meta name="twitter:description" content="How to look at an entire application estate at once instead of one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/apm-portfolio-map/index.html">
 <style>
@@ -100,7 +100,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Application Portfolio Management</h1>
-  <p>How to look at an entire application estate at once, rather than one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.</p>
+  <p>How to look at an entire application estate at once instead of one system at a time, and decide where to invest, where to hold, where to modernize, and where to retire. Built on the Gartner TIME model, layered with risk scoring and a technical debt backlog.</p>
   <div class="caveat">This page covers the scoring logic at a conceptual level. The full simulator is a working three-sheet instrument (debt backlog, risk register, application portfolio) with a live dashboard, dropdown-governed scoring, and an M&amp;A-specific variant for scoring a target company's portfolio during diligence, available through direct engagement.</div>
 </header>
 
@@ -109,7 +109,7 @@
     <div class="stage-head">
       <span class="stage-num">In the full toolkit</span>
       <h3>What exists behind this preview</h3>
-      <p>A working spreadsheet instrument rather than a static framework: three linked sheets feeding one dashboard, with the same scoring logic reused for standing portfolio governance and for scoring an acquisition target's stack under diligence.</p>
+      <p>A working spreadsheet, not a static framework: three linked sheets feeding one dashboard, with the same scoring logic reused for standing portfolio governance and for scoring an acquisition target's stack under diligence.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -129,7 +129,7 @@
             <p>A five-factor risk score per application, independent of how valuable or well-built the system is.</p>
             <ul>
               <li>Cybersecurity, compliance, operational resilience, vendor, and knowledge-concentration risk scored separately, then composited</li>
-              <li>Surfaces the application that's fine on paper but one departure or one vendor lapse from a bad quarter</li>
+              <li>Finds the application that looks fine on the scorecard but is one resignation or one vendor lapse away from a bad quarter</li>
             </ul>
           </div>
           <div class="type-card">
@@ -181,7 +181,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Why it's kept separate</span>
-        <p>Folding risk into Technical Health hides exactly the applications that need visibility: strategically critical, well-funded, actively developed, and sitting on a single unreplaceable engineer or an end-of-life dependency no one has scheduled work against. Reporting risk on its own axis keeps that combination visible instead of averaging it away.</p>
+        <p>Folding risk into Technical Health hides the very applications that need attention: strategically critical, well-funded, actively developed, and sitting on a single unreplaceable engineer or an end-of-life dependency no one has scheduled work against. Reporting risk on its own axis keeps that combination visible instead of averaging it away.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What to do with a high-risk Invest</span>
@@ -231,7 +231,7 @@
     <div class="stage-head">
       <span class="stage-num">Reading it</span>
       <h3>The portfolio signal, not the single score</h3>
-      <p>The useful output is the share of run cost sitting in Migrate and Eliminate.</p>
+      <p>The number to take away is the share of run cost sitting in Migrate and Eliminate.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -356,7 +356,7 @@
 </script>
 
 <footer>
-  Reference only. Treat quadrant placement as a starting point for a governance conversation rather than a mandate; a single low score on one factor is a reason to look closer, never an automatic verdict. See <a href="../technical-debt-economics/index.html" style="color:var(--accent);">Technical Debt Economics</a> for turning the debt backlog into carry cost and a funded sequence. TIME (Tolerate, Invest, Migrate, Eliminate) is Gartner's application portfolio model; the risk layer, debt backlog, and calculator are this site's.
+  Reference only. Treat quadrant placement as the start of a governance conversation, not a mandate; a single low score on one factor is a reason to look closer, never an automatic verdict. See <a href="../technical-debt-economics/index.html" style="color:var(--accent);">Technical Debt Economics</a> for turning the debt backlog into carry cost and a funded sequence. TIME (Tolerate, Invest, Migrate, Eliminate) is Gartner's application portfolio model; the risk layer, debt backlog, and calculator are this site's.
   <br>The source-bias caution above (owners inflate their own Business Value scores) is one example of a broader discipline: <a href="../epistemology-research-methods/index.html" style="color:var(--accent);">Epistemology &amp; Research Methods</a>.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>

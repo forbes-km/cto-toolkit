@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Engineering Metrics</title>
-<meta name="description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.">
+<meta name="description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.">
 <meta property="og:title" content="Engineering Metrics | CTO Toolkit">
-<meta property="og:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.">
+<meta property="og:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/engineering-metrics/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Engineering Metrics | CTO Toolkit">
-<meta name="twitter:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.">
+<meta name="twitter:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/engineering-metrics/index.html">
 <style>
@@ -90,8 +90,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Engineering Metrics</h1>
-  <p>The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the org.</p>
-  <div class="caveat">Benchmark bands below are the Elite and Low performance clusters from the 2024 State of DevOps report, the last edition to publish named clusters; the 2025 report switched to showing the percentile distribution of respondents instead. Treat the thresholds as reference points rather than pass/fail lines for your organization. DORA expanded from four metrics to five in 2024, adding deployment rework rate as a third stability signal; a source that still says &quot;the four DORA metrics&quot; is describing the pre-2024 model.</div>
+  <p>The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.</p>
+  <div class="caveat">Benchmark bands below are the Elite and Low performance clusters from the 2024 State of DevOps report, the last edition to publish named clusters; the 2025 report switched to showing the percentile distribution of respondents instead. Treat the thresholds as reference points, not pass/fail lines. DORA expanded from four metrics to five in 2024, adding deployment rework rate as a third stability signal; a source that still says &quot;the four DORA metrics&quot; is describing the pre-2024 model.</div>
 </header>
 
 <main>
@@ -111,7 +111,7 @@
           <tr><td>Failed deployment recovery time</td><td>How long it takes to recover from a failed deployment</td><td>Under one hour</td><td>Between one week and one month</td></tr>
           <tr><td>Deployment rework rate</td><td>Percentage of deployments that are unplanned rework fixing a previous release rather than new feature work</td><td colspan="2">No standardized industry band yet; track your own trend for this one</td></tr>
         </table>
-        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Deployment rework rate was added to the model in 2024<sup class="src"><a href="#src-1" title="DORA, 2024 Accelerate State of DevOps Report">[1]</a></sup> as a third stability signal alongside change fail rate. It's newer, and unlike the first four metrics, the industry hasn't converged on performance bands for it. That is a useful reminder that even a well-established framework keeps evolving, and that the confidence attached to a number should match how long it's been tested rather than how official it sounds.</p>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Deployment rework rate was added to the model in 2024<sup class="src"><a href="#src-1" title="DORA, 2024 Accelerate State of DevOps Report">[1]</a></sup> as a third stability signal alongside change fail rate. It's newer, and unlike the first four metrics, the industry hasn't converged on performance bands for it. That is a useful reminder that even a well-established framework keeps evolving, and that the confidence attached to a number should match how long it has been tested, not how official it sounds.</p>
       </div>
     </div>
   <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://dora.dev/research/2024/dora-report/" rel="noopener">DORA, 2024 Accelerate State of DevOps Report</a></li></ol></div>
@@ -162,7 +162,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Why they're wrong</span>
-        <p>Story points measure estimation rather than output, and are calibrated differently per team, making cross-team comparison meaningless. Lines of code rewards verbosity over good design. Commit count rewards small, frequent commits over meaningful ones, and is trivially gamed the moment someone knows it's being watched.</p>
+        <p>Story points measure estimation, not output, and are calibrated differently per team, making cross-team comparison meaningless. Lines of code rewards verbosity over good design. Commit count rewards small, frequent commits over meaningful ones, and is trivially gamed the moment someone knows it's being watched.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Why they persist</span>
@@ -174,7 +174,7 @@
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>Distribution over average</h3>
-      <p>The most common mistake in reading engineering metrics: reporting a mean when the distribution is what matters.</p>
+      <p>The mistake people make most often when reading engineering metrics: reporting a mean when the distribution is what matters.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -195,11 +195,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">What works</span>
+        <span class="env-label a">What holds up</span>
         <p>Metrics owned and reviewed at the team level first, with the team using them to improve their own process, before any number rolls up to a leadership dashboard. People who see a metric being used to improve their own work engage with it in good faith.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">What backfires</span>
+        <span class="env-label b">What doesn't</span>
         <p>Individual-level metrics tied to performance review, or a leadership dashboard that ranks teams against each other. Both produce the same response: people optimize for the number instead of the outcome the number was supposed to represent, and the metric stops meaning anything.</p>
       </div>
     </div>
@@ -214,7 +214,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Signal</th><th>What it catches that DORA misses</th></tr>
-          <tr><td>Code review turnaround time</td><td>A team can deploy frequently while pull requests sit unreviewed for days; this is often the bottleneck DORA's lead time number is quietly absorbing</td></tr>
+          <tr><td>Code review turnaround time</td><td>A team can deploy frequently while pull requests sit unreviewed for days; this is often the bottleneck hiding inside DORA's lead time number</td></tr>
           <tr><td>Pages per on-call rotation</td><td>Elite change fail rate and failed deployment recovery time can coexist with an on-call rotation that's burning people out through sheer volume of low-severity noise</td></tr>
           <tr><td>Technical debt ratio (tracked debt items versus new feature work merged)</td><td>Delivery metrics can look healthy for months while debt accumulates invisibly until it surfaces as a sudden change fail rate spike</td></tr>
           <tr><td>Time-to-first-commit for new hires</td><td>A slow, painful onboarding process doesn't show up in any DORA number until the new hire's productivity ramp is already six weeks behind where it should be</td></tr>
@@ -232,7 +232,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Where metrics earn their keep</span>
-        <p>In a team retro, where the team itself asks why lead time crept up this sprint and proposes a change to test next sprint, or in a 1:1 where a manager notices a specific engineer's review turnaround has quietly doubled and asks what's going on before it becomes a pattern. The number is a prompt for a conversation rather than the output.</p>
+        <p>In a team retro, where the team itself asks why lead time crept up this sprint and proposes a change to test next sprint, or in a 1:1 where a manager notices a specific engineer's review turnaround has doubled and asks what's going on before it becomes a pattern. The number starts the conversation. It isn't the output.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Where they don't</span>
@@ -249,7 +249,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p><strong>The team:</strong> eight engineers, reports a median lead time of 4 hours (inside the Elite band) and a change fail rate of 12 percent (between the High and Medium clusters). On paper, a strong team.</p>
+        <p><strong>The team:</strong> eight engineers, reports a median lead time of 4 hours (inside the Elite band) and a change fail rate of 12 percent (between the High and Medium clusters). By the headline numbers, a strong team.</p>
         <p><strong>The distribution check:</strong> p90 lead time is 11 days. Roughly one deployment in ten is taking over a week and a half, dragging against a median that looks fine. Digging in, the p90 outliers cluster around one specific service with a manual, undocumented deployment step that only two engineers know how to run.</p>
         <p><strong>What the average would have hidden:</strong> a leadership dashboard reporting only the median would show this team as healthy indefinitely, right up until both engineers who know the manual step are unavailable during an incident on that specific service, at which point failed deployment recovery time, the metric that matters most in the moment, blows well past any benchmark band.</p>
         <p><strong>The fix that came out of the conversation:</strong> the team automated the manual step as a two-week investment, dropping p90 lead time to under two days within the next reporting cycle. The median barely moved, because the median was never the problem.</p>

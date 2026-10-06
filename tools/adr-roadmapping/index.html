@@ -97,7 +97,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li><strong>Architecture Decision Record Template</strong>, a durable format for hard-to-reverse decisions plus the conventions that keep the practice alive rather than decorative</li>
+          <li><strong>Architecture Decision Record Template</strong>, a durable format for hard-to-reverse decisions plus the conventions that keep people writing and reading them</li>
           <li><strong>Target-State Narrative Template</strong>, a prose-first structure for describing a future operating model to executive audiences, built on the principle that diagrams illustrate clear writing and cannot replace it</li>
           <li><strong>Capability-Driven Roadmap Method</strong>, building multi-year roadmaps rooted in capability gaps rather than technology initiatives, with traceability from strategy to initiative</li>
           <li><strong>Business Case Template and Narrative</strong>, a financial model paired with the narrative structure that makes it defensible to executives and finance reviewers, including a candid options analysis and named benefit owners</li>
@@ -109,15 +109,15 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>What a good ADR contains</h3>
-      <p>An Architecture Decision Record exists to answer one question well after the fact: why did we decide this, given what we knew at the time. Most ADR templates fail at exactly that.</p>
+      <p>An Architecture Decision Record exists to answer one question well after the fact: why did we decide this, given what we knew at the time. Most ADR templates are weakest at exactly that.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Section</th><th>What it should contain</th></tr>
           <tr><td>Context</td><td>The situation and constraints as understood at decision time, written before hindsight sets in. This section goes stale fastest and matters most.</td></tr>
-          <tr><td>Decision</td><td>What was decided, stated in a single clear sentence rather than buried in a paragraph of qualifications.</td></tr>
-          <tr><td>Alternatives considered</td><td>What else was on the table and why it was rejected. Absence of this section is the most common ADR failure; it's what lets someone later ask &quot;why didn't we just do X&quot; and get a real answer instead of a re-litigation.</td></tr>
+          <tr><td>Decision</td><td>What was decided, in one clear sentence, not buried in a paragraph of qualifications.</td></tr>
+          <tr><td>Alternatives considered</td><td>What else was on the table and why it was rejected. Leaving this section out is how most ADRs fail; it's what lets someone later ask &quot;why didn't we just do X&quot; and get a real answer without reopening the whole debate.</td></tr>
           <tr><td>Consequences</td><td>What this decision makes harder later. Every architecture decision has a cost; an ADR that lists only benefits is incomplete.</td></tr>
         </table>
       </div>
@@ -132,7 +132,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Write one</span>
-        <p>When the decision is expensive to reverse, when it affects more than one team, or when you can already predict someone will ask &quot;why did we do it this way&quot; in six months. What counts as expensive to reverse scales with the team, a change that's a quick fix for a three-person startup might be a multi-quarter migration for a five-hundred-engineer org, so weigh it against your own team's capacity rather than a fixed unit of time.</p>
+        <p>When the decision is expensive to reverse, when it affects more than one team, or when you can already predict someone will ask &quot;why did we do it this way&quot; in six months. What counts as expensive to reverse scales with the team, a change that's a quick fix for a three-person startup might be a multi-quarter migration for a five-hundred-engineer org, so judge it against your own team's capacity, not a fixed number of days.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Skip it</span>
@@ -144,7 +144,7 @@
     <div class="stage-head">
       <span class="stage-num">2</span>
       <h3>Roadmaps for two different audiences</h3>
-      <p>The most common roadmap mistake is one document trying to serve both an engineering audience and a business audience, and serving neither well.</p>
+      <p>Most roadmaps go wrong the same way: one document trying to serve both an engineering audience and a business audience, and serving neither well.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -156,7 +156,7 @@
         <p>Organized by customer or business outcome, no implementation detail, timeframes expressed as calendar dates tied to business events (a renewal cycle, a fiscal year), directly reusable in the board reporting format described on the Board Reporting page.</p>
       </div>
     </div>
-    <div class="same-note">Maintain one underlying plan and generate both views from it, rather than maintaining two documents that inevitably drift out of sync with each other within a quarter or two.</div>
+    <div class="same-note">Keep one underlying plan and generate both views from it. Two separate documents will drift apart within a quarter or two.</div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
@@ -213,7 +213,7 @@
         </table>
       </div>
     </div>
-    <div class="same-note">What the example demonstrates: three initiatives, all traceable to one strategic priority, sequenced by real dependency rather than organizational convenience, each owned by a named business sponsor. The technology choices support the story; they don't constitute it.</div>
+    <div class="same-note">What the example demonstrates: three initiatives, all traceable to one strategic priority, sequenced by real dependency, not by what was organizationally convenient, each owned by a named business sponsor. The technology choices support the story; they don't constitute it.</div>
   </div>
 
   <div class="stage-card">

@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Architecture Review Board</title>
-<meta name="description" content="How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta name="description" content="How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
 <meta property="og:title" content="Architecture Review Board | CTO Toolkit">
-<meta property="og:description" content="How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta property="og:description" content="How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/architecture-review-board/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Architecture Review Board | CTO Toolkit">
-<meta name="twitter:description" content="How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta name="twitter:description" content="How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/architecture-review-board/index.html">
 <style>
@@ -88,7 +88,7 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Architecture Review Board</h1>
-  <p>How to stand up a review board that examines evidence from engineering work already done, rather than diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.</p>
+  <p>How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.</p>
   <div class="caveat">See <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for the record a review should produce, <a href="../architecture-principles/index.html">Architecture Principles Library</a> for what a board is applying, and <a href="../technology-decision-rights/index.html">Technology Decision Rights</a> for where the board's authority ends and a named individual's begins.</div>
 </header>
 
@@ -97,7 +97,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>What belongs in front of the board, and what doesn't</h3>
-      <p>The most common way a review board fails is reviewing everything, which turns it into a bottleneck and trains teams to route around it. The same filter used to decide when a decision needs an ADR applies here.</p>
+      <p>Review boards usually fail by reviewing everything, which turns it into a bottleneck and trains teams to route around it. The same filter used to decide when a decision needs an ADR applies here.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -121,11 +121,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What a working review looks at</span>
-        <p>The running system, observed traffic patterns, incident history, a working prototype or spike, existing code. Evidence produced by doing the engineering work rather than evidence produced to satisfy the meeting.</p>
+        <p>The running system, observed traffic patterns, incident history, a working prototype or spike, existing code. Evidence that exists because the engineering got done, not because a meeting was scheduled.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">The theater version</span>
-        <p>A polished architecture diagram produced in the days before the review, disconnected from the codebase, that nobody consults again once the meeting ends. The tell: check the diagram file's last-modified date six months later. If it's the review date, it was never a working artifact.</p>
+        <span class="env-label b">The staged version</span>
+        <p>A polished architecture diagram produced in the days before the review, disconnected from the codebase, that nobody consults again once the meeting ends. One giveaway: check the diagram file's last-modified date six months later. If it's the review date, it was never a working artifact.</p>
       </div>
     </div>
   </div>
@@ -152,16 +152,16 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>The review itself</h3>
-      <p>What makes a specific session evidence-based rather than theater, independent of how well the board was set up.</p>
+      <p>What makes a single session a real test of the design, however well the board itself was set up.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>The proposing team walks through the tradeoffs they considered and rejected, the same alternatives-considered discipline covered on the ADR page, with numbers behind claims (this handles X load, this costs Y) rather than assertions. The review produces a decision and its reasoning captured in an ADR. A verbal thumbs-up disappears when the meeting ends.</p>
+        <span class="env-label a">How to run it</span>
+        <p>The proposing team walks through the tradeoffs they considered and rejected, the same alternatives-considered discipline covered on the ADR page, with numbers behind claims (this handles X load, this costs Y). The review produces a decision and its reasoning captured in an ADR. A verbal thumbs-up disappears when the meeting ends.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>The review becomes a presentation the team already knows how to pass: confident language and a clean diagram calibrated to satisfy the audience rather than stress-test the reasoning. At that point the board is a rubber stamp with theater added, arguably worse than no review, since it spends time producing a false signal of scrutiny.</p>
+        <span class="env-label b">How it breaks</span>
+        <p>The review becomes a presentation the team already knows how to pass: confident language and a clean diagram tuned to satisfy the audience instead of testing the reasoning. At that point the board is a rubber stamp with extra steps, arguably worse than no review, since it spends time producing a false signal of scrutiny.</p>
       </div>
     </div>
   </div>
@@ -169,8 +169,8 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">4</span>
-      <h3>Running it long-term without decaying into theater</h3>
-      <p>A board that works well in its first year and quietly stops working in its third is the most common lifecycle, and it's predictable enough to design against.</p>
+      <h3>Keeping it useful after year one</h3>
+      <p>Most boards work well in year one and have stopped working by year three. That pattern is predictable enough to design against.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -179,7 +179,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">How it decays</span>
-        <p>The board approves the same rubber-stamp pattern for months. Membership never rotates, so the room's authority rests on tenure rather than current context. No one checks whether a past decision held up, so the board never learns whether its own judgment is any good, and keeps operating on the same instincts regardless of outcomes.</p>
+        <p>The board approves the same rubber-stamp pattern for months. Membership never rotates, so the room's authority comes from tenure, not current knowledge. No one checks whether a past decision held up, so the board never learns whether its own judgment is any good, and keeps operating on the same instincts regardless of outcomes.</p>
       </div>
     </div>
   </div>
@@ -200,7 +200,7 @@
         <p>It keeps the room's habit and rhythm intact, the same people, the same regular slot, the same expectation of showing up prepared to think carefully, without wasting the time when nothing formal needs review. It also creates a low-stakes on-ramp: an idea that draws interest in a salon session is the kind of thing ready to become a formal pitch at the next <a href="../innovation-portfolio/index.html">innovation tournament</a>.</p>
       </div>
     </div>
-    <div class="same-note">The board and the tournament are the same room used two different ways: one evaluates evidence against a decision that needs to be made, the other surfaces ideas that don't have evidence yet. Keeping both on the same cadence, in the same room, with the same people, is what makes the salon slot feel like a natural extension rather than a separate initiative competing for calendar space.</div>
+    <div class="same-note">The board and the tournament are the same room used two different ways: one evaluates evidence against a decision that needs to be made, the other surfaces ideas that don't have evidence yet. Keeping both on the same cadence, in the same room, with the same people, makes the salon slot feel like a natural extension, not one more initiative fighting for calendar space.</div>
   </div>
 
     <div class="stage-card">
@@ -270,7 +270,7 @@
     <div class="stage-head">
       <span class="stage-num">7</span>
       <h3>Standards and practices worth borrowing</h3>
-      <p>Most of what makes a board work is already written down elsewhere. Borrow deliberately rather than inventing a process.</p>
+      <p>Most of what makes a board work is already written down elsewhere. Borrow on purpose before inventing a process.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -296,11 +296,11 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
+        <span class="env-label a">What good looks like</span>
         <p>For each tier 2 decision, ask what automated check would fail if the decision were violated, then put it in the pipeline. Examples:</p><ul><li>Dependency rules that stop one domain calling another's database directly</li><li>A latency budget checked in a performance test</li><li>A cost ceiling alarm on a new service</li><li>A policy-as-code rule that blocks public storage buckets</li></ul>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
+        <span class="env-label b">What usually happens</span>
         <p>Treating the board's approval as the control. Six months later the system has drifted, nobody noticed, and the next review argues about a design that no longer exists in production.</p>
       </div>
     </div>
@@ -327,7 +327,7 @@
 <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Checklist</span>
-      <h3>Signs the board has become theater</h3>
+      <h3>Signs the board has become a rubber stamp</h3>
       <p>Patterns that show up when a review board exists on the calendar but has stopped functioning as a forcing function.</p>
     </div>
     <div class="stage-grid single">

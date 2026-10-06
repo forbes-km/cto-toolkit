@@ -93,14 +93,14 @@
   <h1>Technical Debt Economics</h1>
   <p>Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a fixed budget.</p>
   <p><strong>What technical debt is.</strong> Technical debt is the future cost you accept when you choose a faster or cheaper path today over a sounder one, whether deliberately (a known shortcut to hit a date) or by drift (a platform that aged out, a design the business outgrew). Like financial debt it carries interest, paid in slower delivery, extra toil, and risk, and that interest compounds until the principal is paid down.</p>
-  <div class="caveat">The calculator is a transparent, simplified version of the debt carry-cost optimizer in the private methodology. It ignores dependencies, team capacity, and partial remediation on purpose, so every ranking it produces can be explained. Inputs are estimates; the value is in the ranking rather than the decimals.</div>
+  <div class="caveat">The calculator is a transparent, simplified version of the debt carry-cost optimizer in the private methodology. It ignores dependencies, team capacity, and partial remediation on purpose, so every ranking it produces can be explained. Inputs are estimates; the value is in the ranking, not the decimals.</div>
 </header>
 
 <main>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Framework</span>
-      <h2>Three numbers per item, or it is a complaint rather than a debt conversation</h2>
+      <h2>Three numbers per item, or it is a complaint, not a debt conversation</h2>
       <p>Technical debt discussions fail because they are conducted in adjectives. An item becomes fundable once it has a carry cost, a remediation cost, and a risk exposure, each stated in dollars per year. Rough is fine. Absent is the problem.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
@@ -109,7 +109,7 @@
         <tr><td>Carry cost</td><td>What the debt costs every year it stays: slower delivery, extra operational toil, licensing for the thing you should have retired, the workaround everyone maintains</td><td>Engineering hours per month spent working around it, times a loaded hourly rate, times twelve, plus any hard costs (licenses, hosting, support contracts) that exist only because of it</td></tr>
         <tr><td>Risk exposure</td><td>The expected annual cost of the incident, breach, or outage the debt makes more likely</td><td>Probability of a material event in a year, times the cost of that event (revenue, recovery, credits, regulatory). A 20 percent chance of a $500k event is $100k a year. The order of magnitude is what matters, well ahead of precision</td></tr>
         <tr><td>Remediation cost</td><td>What it costs to make it go away, once</td><td>Engineering hours to fix, migrate, or retire, times the loaded rate, plus any one-time hard costs. Include the cost of the parallel run or cutover if there is one</td></tr>
-      </table>      <p>Carry cost plus risk exposure is the annual cost of doing nothing. Divided into remediation cost it gives the payback period. Items with a payback under a year are operating decisions that have been avoided rather than debt decisions. Items with a payback over five years are usually not worth doing unless the risk exposure is dominated by a tail event that the organization has said it will not accept, which is what <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a> is for.</p>
+      </table>      <p>Carry cost plus risk exposure is the annual cost of doing nothing. Divided into remediation cost it gives the payback period. Items with a payback under a year aren't really debt decisions. They are operating decisions somebody has been avoiding. Items with a payback over five years are usually not worth doing unless the risk exposure is dominated by a tail event that the organization has said it will not accept, which is what <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a> is for.</p>
       <p style="margin-top:10px"><strong>The one-paragraph CFO test.</strong> Before an item goes on the list, write the case for it in one paragraph a CFO would accept: what it costs to leave, what it costs to fix, what goes wrong if nobody does. If that paragraph cannot be written, the severity is overstated or the numbers are missing, and either way the item is not ready to compete for budget.</p>
     </div></div>
   </div>
@@ -165,7 +165,7 @@
 <line x1="690" y1="172" x2="730" y2="188" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#tdd-g)"/>
 <text x="697.0" y="196.0" text-anchor="start" font-size="10.5" font-weight="600" fill="var(--ink-soft)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">No</text>
 <text x="440.0" y="380.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">This is the rule the calculator below applies: nothing is funded unless it pays back, and nothing that pays back is dropped silently.</text></svg></div>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Accepted items are not failures. Reporting them as deliberately carried cost is what stops them resurfacing as surprises.</p>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Accepted items are not failures. Reporting them as cost carried on purpose stops them resurfacing as surprises.</p>
     </div></div>
   </div>
 <div class="stage-card" id="calculator">
@@ -195,14 +195,14 @@
     <div class="stage-head">
       <span class="stage-num">Method</span>
       <h2>How the sequencer decides</h2>
-      <p>The logic is deliberately simple enough to explain to a CFO in one sentence: fund the items that remove the most annual cost per remediation dollar, within the budget, and carry the rest.</p>
+      <p>The logic is kept simple enough to explain to a CFO in one sentence: fund the items that remove the most annual cost per remediation dollar, within the budget, and carry the rest.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <ol class="num-list">
         <li><div><b>Annual cost of doing nothing</b>Carry cost plus risk exposure, for each item.</div></li>
         <li><div><b>Ratio</b>Annual cost of doing nothing divided by remediation cost. This is the return on the remediation dollar. Items are ranked by it.</div></li>
         <li><div><b>Greedy allocation by year</b>Walk the ranked list. If an item fits in the current year's remaining budget, fund it that year. If it does not fit, carry it to the next year and keep walking so smaller items can use the remaining capacity. Repeat for the horizon.</div></li>
-        <li><div><b>Payback gate</b>An item is only funded in a year where the cost it avoids over the rest of the horizon exceeds its remediation cost. An item that would not pay back even if funded in year one is marked Accept: carry it knowingly, or take it to the capital allocation conversation as an investment in its own right. Items that pay back but do not fit the budget are shown as unfunded, which is a budget question rather than a merit question.</div></li>
+        <li><div><b>Payback gate</b>An item is only funded in a year where the cost it avoids over the rest of the horizon exceeds its remediation cost. An item that would not pay back even if funded in year one is marked Accept: carry it knowingly, or take it to the capital allocation conversation as an investment in its own right. Items that pay back but do not fit the budget are shown as unfunded, which makes it a budget question, not a merit question.</div></li>
         <li><div><b>Carry cost paid meanwhile</b>Every year an item is not yet remediated, its annual cost of doing nothing is paid. The total across the horizon is reported so the sequence can be compared against a different budget.</div></li>
         <li><div><b>What it does not do</b>It works in plain dollars, with no discounting and no growth in carry cost, so its totals will not match the NPV figures in the workbook below, which add both. It does not model dependencies between items, engineering capacity, or the option of partial remediation, and a greedy walk can leave some value on the table. The private version handles dependencies and capacity and solves the schedule exactly; this is the transparent core. A sequencing decision that cannot be explained is one the CFO will not fund twice.</div></li>
       </ol>
@@ -216,7 +216,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What the ranking shows</span><p>The item everyone talks about, the large monolith rewrite, ranks last: a large remediation cost against a carry cost that is substantial but diffuse. The item nobody talks about, a nightly retry workaround that costs one engineer a week a month, ranks first because it is nearly free to fix. The unsupported database with a meaningful breach probability sits in the top four with a payback under three months, because its risk exposure dominates its carry cost. Three of the top four items cost less than $15k to fix.</p></div>
-      <div class="stage-cell"><span class="env-label b">What to do with it</span><p>Fund the top of the list this quarter without a further business case; the numbers are the case. Take the monolith to the <a href="../technology-capital-allocation/index.html">capital allocation</a> conversation as a transform investment rather than a debt item, because that is what it is. Report the annual cost of doing nothing for the unfunded remainder to the board as a number, once a year, so nobody can later say the risk was hidden.</p></div>
+      <div class="stage-cell"><span class="env-label b">What to do with it</span><p>Fund the top of the list this quarter without a further business case; the numbers are the case. Take the monolith to the <a href="../technology-capital-allocation/index.html">capital allocation</a> conversation as a transform investment. That is what it is, whatever the backlog calls it. Report the annual cost of doing nothing for the unfunded remainder to the board as a number, once a year, so nobody can later say the risk was hidden.</p></div>
     </div>
   </div>
   <div class="stage-card">
@@ -250,7 +250,7 @@
         <a class="dl-btn primary" href="technical-debt-carry-cost-preview.xlsx" download>Download carry-cost workbook (.xlsx)</a>
         <a class="dl-btn secondary" href="sample-debt-remediation-plan.xlsx" download>Download sample remediation plan (.xlsx)</a>
       </div>
-      <div class="stage-cell" style="padding-top:0;"><p style="font-size:12.5px;color:var(--ink-soft);margin:0;">The workbook stops at the ranking. The full optimizer adds the constrained multi-year schedule (annual budget, engineer-day capacity, dependency chains), solved exactly as an integer program so the plan is the best one available for the inputs rather than a good approximation, plus a written rationale and a rule-coded priority band per item. Available through direct engagement.</p></div>
+      <div class="stage-cell" style="padding-top:0;"><p style="font-size:12.5px;color:var(--ink-soft);margin:0;">The workbook stops at the ranking. The full optimizer adds the constrained multi-year schedule (annual budget, engineer-day capacity, dependency chains), solved exactly as an integer program so the plan is the best one available for the inputs, not just a good approximation, plus a written rationale and a rule-coded priority band per item. Available through direct engagement.</p></div>
     </div>
   </div>
 
@@ -261,8 +261,8 @@
       <p>Allocating twenty percent of capacity to debt without a ranked list produces twenty percent of capacity spent on whatever each team finds annoying.</p>
     </div>
     <div class="stage-grid">
-      <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>Every sprint has a debt allocation. Engineers use it to refactor code they touch anyway. The unsupported database, which nobody enjoys working on, is untouched for three years. The allocation is visible in the roadmap, so leadership believes debt is being managed. The breach, when it comes, is on the database.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>The debt allocation funds the ranked list, top down, and nothing else. Local refactoring is part of normal delivery and stays out of the debt budget. The list is reviewed quarterly, new items need the three numbers to get on it, and the annual cost of doing nothing for the unfunded tail is reported alongside the items funded. See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the delivery signals that tell you whether the carry cost estimates were right.</p></div>
+      <div class="stage-cell a"><span class="env-label a">How it plays out</span><p>Every sprint has a debt allocation. Engineers use it to refactor code they touch anyway. The unsupported database, which nobody enjoys working on, is untouched for three years. The allocation is visible in the roadmap, so leadership believes debt is being managed. The breach, when it comes, is on the database.</p></div>
+      <div class="stage-cell"><span class="env-label b">What to do instead</span><p>The debt allocation funds the ranked list, top down, and nothing else. Local refactoring is part of normal delivery and stays out of the debt budget. The list is reviewed quarterly, new items need the three numbers to get on it, and the annual cost of doing nothing for the unfunded tail is reported alongside the items funded. See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the delivery signals that tell you whether the carry cost estimates were right.</p></div>
     </div>
   </div>
 </main>

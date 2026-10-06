@@ -249,7 +249,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Architecture Map</h1>
   <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product and service names reflect 2026 offerings: Google renamed Vertex AI to Gemini Enterprise Agent Platform in April 2026 (shortened here to Agent Platform; its API endpoints still use the older aiplatform name), and Oracle Database 23ai is now Oracle AI Database 26ai. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.</p>
-  <div class="caveat">Not every stage differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere; where that's true, it's called out as a single statement rather than padded into five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
+  <div class="caveat">Not every stage differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere; where that's true, it gets one statement instead of five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
 </header>
 
 <main>
@@ -322,7 +322,7 @@
           </div>
         </div>
 
-        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Model family availability by provider changes fast, and sources published a few months apart often disagree. Confirm the current model catalog and licensing directly with the provider rather than trusting a cached comparison, including this one.</p>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Model family availability by provider changes fast, and sources published a few months apart often disagree. Confirm the current model catalog and licensing with the provider itself. Don't trust a cached comparison, this one included.</p>
       </div>
     </div>
   </div>
@@ -513,7 +513,7 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>Identical MCP server code across every environment, since MCP is a protocol rather than a cloud service. The dependency that bites is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so verify per model rather than assuming.</p>
+      <p>Identical MCP server code across every environment, since MCP is a protocol rather than a cloud service. The dependency that bites is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so check it model by model.</p>
     </div>
     <div class="same-note">The protocol layer is the same everywhere. What changes across all five environments is only whether the serving stack in question has tool-calling support wired up for the specific model you chose.</div>
   </div>
@@ -613,7 +613,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>CloudWatch plus X-Ray for distributed tracing across the pipeline, retrieval and generation latency broken out individually. X-Ray is transitioning to OpenTelemetry as its primary instrumentation standard, worth building on directly rather than the legacy SDK.</p>
+      <p>CloudWatch plus X-Ray for distributed tracing across the pipeline, retrieval and generation latency broken out individually. X-Ray is transitioning to OpenTelemetry as its primary instrumentation standard, so build on OpenTelemetry now and skip the legacy SDK.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -670,7 +670,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Provisioned Throughput reserves capacity ahead of time; on-demand avoids that but comes with TPM/RPM rate quotas requiring an increase request well ahead of launch. Cross-region inference routes traffic across regions to dodge regional capacity limits at no added charge, which matters more than it sounds during a capacity crunch.</p>
+      <p>Provisioned Throughput reserves capacity ahead of time; on-demand avoids that but comes with TPM/RPM rate quotas requiring an increase request well ahead of launch. Cross-region inference routes traffic across regions to dodge regional capacity limits at no added charge, which counts for a lot during a capacity crunch.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
