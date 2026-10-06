@@ -172,7 +172,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h2>Carry-cost calculator and multi-year sequencer</h2>
-      <p>Enter up to eight debt items and an annual remediation budget. The tool computes annual cost of doing nothing, payback, and a ranking, then sequences the items across years within the budget. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Enter your debt items, as many as you need, and an annual remediation budget. Add, rename, or remove rows freely. The tool computes annual cost of doing nothing, payback, and a ranking, then sequences the items across years within the budget. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <div class="field"><span>Loaded engineering cost per hour ($)</span><input type="number" id="td-rate" value="120"></div>
@@ -184,6 +184,7 @@
       </table>
       </div>
       <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn secondary" id="td-add" type="button">+ Add item</button>
         <button class="btn" id="td-calc">Rank and sequence</button>
         <button class="btn secondary" id="td-sample">Load sample portfolio</button>
         <button class="btn secondary" id="td-clear">Clear</button>
@@ -286,8 +287,7 @@
 
 <script>
 (function(){
-  var tbl=document.getElementById('td-table');
-  var N=8;
+  var tbl=document.getElementById('td-table'), MAX=40, K=['h','c','p','e','rh','rc'];
   var sample=[
     ['Unsupported database version (v11, EOL)',20,48000,20,750000,240,25000],
     ['Integration workaround: nightly retry job',40,0,5,60000,80,0],
@@ -298,64 +298,79 @@
     ['Single-owner billing reconciliation script',10,0,10,300000,200,0],
     ['Legacy VPN appliance out of support',6,36000,10,250000,160,45000]
   ];
-  for(var i=0;i<N;i++){
-    var tr=document.createElement('tr');
-    tr.innerHTML='<td><input type="text" id="td-n'+i+'" placeholder="Item '+(i+1)+'" style="width:190px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>'+
-      ['h','c','p','e','rh','rc'].map(function(k){return '<td><input type="number" id="td-'+k+i+'" style="width:88px;font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;"></td>';}).join('');
-    tbl.appendChild(tr);
-  }
-  function v(id){var e=document.getElementById(id);var x=parseFloat(e.value);return (isNaN(x)||x<0)?0:x;}
-  function fmt(n){return '$'+Math.round(n).toLocaleString();}
-  document.getElementById('td-sample').addEventListener('click',function(){
-    sample.forEach(function(s,i){
-      document.getElementById('td-n'+i).value=s[0];
-      ['h','c','p','e','rh','rc'].forEach(function(k,j){document.getElementById('td-'+k+i).value=s[j+1];});
+  var items=[];
+  function blank(){return {n:'',h:'',c:'',p:'',e:'',rh:'',rc:''};}
+  function fromSample(){return sample.map(function(s){var o={n:s[0]};K.forEach(function(k,j){o[k]=s[j+1];});return o;});}
+  function esc(x){return String(x==null?'':x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+  var IS='font-family:var(--ui);font-size:12.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;';
+  function render(){
+    tbl.querySelectorAll('tr.td-row').forEach(function(r){r.remove();});
+    items.forEach(function(it,i){
+      var tr=document.createElement('tr');tr.className='td-row';
+      tr.innerHTML='<td><input type="text" id="td-n'+i+'" data-i="'+i+'" data-k="n" value="'+esc(it.n)+'" placeholder="Item '+(i+1)+'" aria-label="Item name" style="width:190px;'+IS+'"></td>'+
+        K.map(function(k){return '<td><input type="number" id="td-'+k+i+'" data-i="'+i+'" data-k="'+k+'" value="'+esc(it[k])+'" style="width:88px;'+IS+'"></td>';}).join('')+
+        '<td><button type="button" data-del="'+i+'" aria-label="Remove item '+(i+1)+'" style="background:none;border:0;color:var(--ink-soft);cursor:pointer;font-size:12px;font-weight:600;padding:4px"'+(items.length<=1?' disabled':'')+'>Remove</button></td>';
+      tbl.appendChild(tr);
     });
-  });
-  document.getElementById('td-clear').addEventListener('click',function(){
-    for(var i=0;i<N;i++){document.getElementById('td-n'+i).value='';['h','c','p','e','rh','rc'].forEach(function(k){document.getElementById('td-'+k+i).value='';});}
-    document.getElementById('td-result').style.display='none';
-  });
-  document.getElementById('td-calc').addEventListener('click',function(){
+    var add=document.getElementById('td-add'); if(add) add.style.display=items.length>=MAX?'none':'';
+  }
+  tbl.addEventListener('input',function(e){var t=e.target,i=t.getAttribute('data-i');if(i==null)return;items[+i][t.getAttribute('data-k')]=t.value;calc();});
+  tbl.addEventListener('click',function(e){var d=e.target.getAttribute('data-del');if(d==null)return;items.splice(+d,1);if(!items.length)items.push(blank());render();calc();});
+  document.getElementById('td-add').addEventListener('click',function(){if(items.length>=MAX)return;items.push(blank());render();var f=document.getElementById('td-n'+(items.length-1));if(f)f.focus();calc();});
+  ['td-rate','td-budget','td-years'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});
+  function num(x){x=parseFloat(x);return (isNaN(x)||x<0)?0:x;}
+  function v(id){return num(document.getElementById(id).value);}
+  function fmt(n){return '$'+Math.round(n).toLocaleString();}
+  document.getElementById('td-sample').addEventListener('click',function(){items=fromSample();render();calc();});
+  document.getElementById('td-clear').addEventListener('click',function(){items=[blank(),blank(),blank()];render();document.getElementById('td-result').style.display='none';});
+  document.getElementById('td-calc').addEventListener('click',calc);
+  function calc(){
     var rate=v('td-rate'),budget=v('td-budget'),years=Math.max(1,Math.min(6,Math.round(v('td-years'))||3));
-    var items=[];
-    for(var i=0;i<N;i++){
-      var name=document.getElementById('td-n'+i).value.trim();
-      var rh=v('td-rh'+i),rc=v('td-rc'+i);
-      if(!name&&rh===0&&rc===0)continue;
-      var carry=v('td-h'+i)*12*rate+v('td-c'+i);
-      var risk=(Math.min(100,v('td-p'+i))/100)*v('td-e'+i);
+    var list=[];
+    items.forEach(function(r,i){
+      var name=String(r.n||'').trim(),rh=num(r.rh),rc=num(r.rc);
+      if(!name&&rh===0&&rc===0)return;
+      var carry=num(r.h)*12*rate+num(r.c);
+      var risk=(Math.min(100,num(r.p))/100)*num(r.e);
       var rem=rh*rate+rc;
       var nothing=carry+risk;
-      items.push({name:name||('Item '+(i+1)),carry:carry,risk:risk,rem:rem,nothing:nothing,ratio:rem>0?nothing/rem:Infinity,payback:nothing>0?rem/nothing:Infinity,year:null,accept:false});
-    }
+      list.push({name:name||('Item '+(i+1)),carry:carry,risk:risk,rem:rem,nothing:nothing,ratio:rem>0?nothing/rem:Infinity,payback:nothing>0?rem/nothing:Infinity,year:null,accept:false});
+    });
     var out=document.getElementById('td-result');
-    if(!items.length){out.style.display='block';out.innerHTML='Enter at least one item, or load the sample portfolio.';return;}
-    items.sort(function(a,b){return b.ratio-a.ratio;});
-    items.forEach(function(it){if(it.rem>0&&it.nothing*years<=it.rem)it.accept=true;});
-    var remaining=[],carried=0;
+    if(!list.length){out.style.display='block';out.innerHTML='Enter at least one item, or load the sample portfolio.';return;}
+    list.sort(function(a,b){return b.ratio-a.ratio;});
+    list.forEach(function(it){if(it.rem>0&&it.nothing*years<=it.rem)it.accept=true;});
+    var carried=0;
     for(var y=1;y<=years;y++){
       var cap=budget;
-      items.forEach(function(it){
+      list.forEach(function(it){
         if(it.year===null&&!it.accept&&it.rem<=cap&&(it.rem===0||it.nothing*(years-y+1)>it.rem)){it.year=y;cap-=it.rem;}
       });
-      items.forEach(function(it){if(it.year===null||it.year>y)carried+=it.nothing;});
+      list.forEach(function(it){if(it.year===null||it.year>y)carried+=it.nothing;});
     }
-    var totalNothing=items.reduce(function(s,i){return s+i.nothing;},0);
-    var totalRem=items.reduce(function(s,i){return s+i.rem;},0);
+    var totalNothing=list.reduce(function(s,i){return s+i.nothing;},0);
+    var totalRem=list.reduce(function(s,i){return s+i.rem;},0);
     var h='<p><b>Annual cost of doing nothing across the portfolio: '+fmt(totalNothing)+'</b> against a one-time remediation cost of '+fmt(totalRem)+'. Cost paid over the '+years+'-year horizon on items not yet remediated: '+fmt(carried)+'.</p>';
     h+='<div style="overflow-x:auto;max-width:100%;"><table class="matrix-table" style="margin-top:8px;"><tr><th>Rank</th><th>Item</th><th>Carry / yr</th><th>Risk / yr</th><th>Do nothing / yr</th><th>Remediate</th><th>Payback</th><th>Fund in</th></tr>';
-    items.forEach(function(it,i){
+    list.forEach(function(it,i){
       var pb=isFinite(it.payback)?(it.payback<1?(Math.max(1,Math.round(it.payback*12))+(Math.max(1,Math.round(it.payback*12))===1?' month':' months')):(it.payback.toFixed(1)+' years')):'n/a';
       var fy=it.year?('Year '+it.year):(it.accept?'<span style="color:var(--ink-soft)">Accept: does not pay back in horizon</span>':'<span style="color:var(--b)">Unfunded in horizon</span>');
-      h+='<tr><td>'+(i+1)+'</td><td>'+it.name.replace(/</g,'&lt;')+'</td><td>'+fmt(it.carry)+'</td><td>'+fmt(it.risk)+'</td><td>'+fmt(it.nothing)+'</td><td>'+fmt(it.rem)+'</td><td>'+pb+'</td><td>'+fy+'</td></tr>';
+      h+='<tr><td>'+(i+1)+'</td><td>'+esc(it.name)+'</td><td>'+fmt(it.carry)+'</td><td>'+fmt(it.risk)+'</td><td>'+fmt(it.nothing)+'</td><td>'+fmt(it.rem)+'</td><td>'+pb+'</td><td>'+fy+'</td></tr>';
     });
     h+='</table></div>';
-    var unf=items.filter(function(i){return !i.year&&!i.accept;}),acc=items.filter(function(i){return i.accept;});
+    var unf=list.filter(function(i){return !i.year&&!i.accept;}),acc=list.filter(function(i){return i.accept;});
     if(unf.length){var un=unf.reduce(function(s,i){return s+i.nothing;},0);h+='<p style="margin-top:10px;">Items that would pay back but did not fit the budget carry '+fmt(un)+' per year. That number belongs in the next budget conversation as the case for a larger allocation.</p>';}
     if(acc.length){var ac=acc.reduce(function(s,i){return s+i.nothing;},0);h+='<p style="margin-top:10px;">Items marked Accept do not pay back within '+years+' years and carry '+fmt(ac)+' per year. Report them as knowingly accepted cost, or make the case for them as a transform investment with its own business case.</p>';}
     out.style.display='block';out.innerHTML=h;
-  });
+  }
+  window.TD={get:function(){return {rate:document.getElementById('td-rate').value,budget:document.getElementById('td-budget').value,years:document.getElementById('td-years').value,items:JSON.parse(JSON.stringify(items))};},
+    set:function(s){s=s||{};document.getElementById('td-rate').value=s.rate!=null?s.rate:120;document.getElementById('td-budget').value=s.budget!=null?s.budget:600000;document.getElementById('td-years').value=s.years!=null?s.years:3;
+      if(Array.isArray(s.items)&&s.items.length)items=s.items.slice(0,MAX).map(function(r){var o=blank();for(var k in o)if(r[k]!=null)o[k]=r[k];return o;});
+      else if(s['td-n0']!==undefined){items=[];for(var i=0;i<8;i++){if(s['td-n'+i]===undefined)break;var o={n:s['td-n'+i]};K.forEach(function(k){o[k]=s['td-'+k+i];});items.push(o);} if(s['td-rate']!=null)document.getElementById('td-rate').value=s['td-rate'];if(s['td-budget']!=null)document.getElementById('td-budget').value=s['td-budget'];if(s['td-years']!=null)document.getElementById('td-years').value=s['td-years'];}
+      else items=fromSample();
+      render();calc();},
+    rows:function(){return items;}};
+  items=fromSample();render();calc();
 })();
 </script>
 
@@ -368,17 +383,11 @@
 <script src="../../assets/tool-share.js"></script>
 <script>
 (function () {
-  if (!document.getElementById('td-n0').value) document.getElementById('td-sample').click();
-  var f = ToolShare.fields('#calculator', function () { document.getElementById('td-calc').click(); });
-  ToolShare.register({ id: 'td', root: '#calculator', title: 'Technical debt plan', getState: f.getState, setState: f.setState,
+  ToolShare.register({ id: 'td', root: '#calculator', title: 'Technical debt plan', getState: TD.get, setState: TD.set,
     csv: function () {
-      var v = function (id) { return document.getElementById(id).value; };
-      var rows = [['Engineer hourly cost', v('td-rate')], ['Annual budget', v('td-budget')], ['Horizon (years)', v('td-years')], []];
+      var s = TD.get(), rows = [['Engineer hourly cost', s.rate], ['Annual budget', s.budget], ['Horizon (years)', s.years], []];
       rows.push(['Item', 'Hours lost per month', 'Direct cost per year', 'Incident probability (%)', 'Incident cost', 'Remediation hours', 'Remediation cost']);
-      for (var i = 0; i < 8; i++) {
-        if (!v('td-n' + i) && !v('td-rh' + i) && !v('td-rc' + i)) continue;
-        rows.push([v('td-n' + i), v('td-h' + i), v('td-c' + i), v('td-p' + i), v('td-e' + i), v('td-rh' + i), v('td-rc' + i)]);
-      }
+      s.items.forEach(function (r) { if (!r.n && !r.rh && !r.rc) return; rows.push([r.n, r.h, r.c, r.p, r.e, r.rh, r.rc]); });
       rows.push([]);
       return rows.concat(ToolShare.tableRows('#td-result', true));
     } });

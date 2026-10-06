@@ -167,7 +167,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Run your own allocation</h3>
-      <p>Enter your total budget, current spend, and target percentage for each category. Attribute each cost to one line only: people and vendor cost goes in the band it serves, and the Headcount and Vendors lines hold only what is shared or unattributable. Runs entirely in your browser; nothing is sent anywhere. The downloadable workbook below carries the same logic across seven linked tabs; this is the quick version.</p>
+      <p>Enter your total budget, current spend, and target percentage for each category. Rename, remove, or add categories to match how your organization budgets. Attribute each cost to one line only: people and vendor cost goes in the band it serves, and the Headcount and Vendors lines hold only what is shared or unattributable. Runs entirely in your browser; nothing is sent anywhere. The downloadable workbook below carries the same logic across seven linked tabs; this is the quick version.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -176,11 +176,8 @@
             <input id="ca-total" type="number" value="10000000" style="margin-left:10px; width:160px; padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
           </label>
         </div>
-        <div id="ca-rows" style="display:grid; grid-template-columns: 130px 1fr 100px; gap:8px 12px; align-items:center; font-size:12.5px; margin-bottom:8px;">
-          <div style="font-weight:600;">Category</div>
-          <div style="font-weight:600;">Current spend ($)</div>
-          <div style="font-weight:600;">Target %</div>
-        </div>
+        <div id="ca-rows" style="display:grid; grid-template-columns: minmax(120px,1.3fr) 1fr 90px 60px; gap:8px 12px; align-items:center; font-size:12.5px; margin-bottom:8px;"></div>
+        <button type="button" id="ca-add" style="margin-top:4px; padding:7px 12px; background:white; color:var(--accent); border:1px solid var(--accent); border-radius:6px; font-family:var(--ui); font-size:12.5px; font-weight:600; cursor:pointer;">+ Add category</button>
         <button id="ca-calc" style="margin-top:10px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
         <div id="ca-result" style="margin-top:16px;"></div>
       </div>
@@ -200,39 +197,49 @@
     ];
 
     const caRowsEl = document.getElementById('ca-rows');
-    CA_CATEGORIES.forEach(cat => {
-      const label = document.createElement('div');
-      label.textContent = cat.label;
-      const currentInput = document.createElement('input');
-      currentInput.type = 'number';
-      currentInput.id = 'ca-current-' + cat.id;
-      currentInput.value = cat.current;
-      currentInput.style.cssText = 'width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;';
-      const targetInput = document.createElement('input');
-      targetInput.type = 'number';
-      targetInput.id = 'ca-target-' + cat.id;
-      targetInput.value = cat.target;
-      targetInput.min = 0;
-      targetInput.max = 100;
-      targetInput.style.cssText = 'width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;';
-      caRowsEl.appendChild(label);
-      caRowsEl.appendChild(currentInput);
-      caRowsEl.appendChild(targetInput);
-    });
+    const CA_MAX = 20;
+    const CA_IN = 'width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px; box-sizing:border-box;';
+    let CA = CA_CATEGORIES.map(c => ({ label: c.label, current: c.current, target: c.target }));
+    const caEsc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    function caRender() {
+      let h = '<div style="font-weight:600;">Category</div><div style="font-weight:600;">Current spend ($)</div><div style="font-weight:600;">Target %</div><div></div>';
+      CA.forEach((c, i) => {
+        h += '<input type="text" id="ca-label-' + i + '" data-i="' + i + '" data-k="label" value="' + caEsc(c.label) + '" aria-label="Category name" style="' + CA_IN + 'font-family:var(--ui);">' +
+          '<input type="number" id="ca-current-' + i + '" data-i="' + i + '" data-k="current" value="' + caEsc(c.current) + '" aria-label="' + caEsc(c.label) + ' current spend" style="' + CA_IN + '">' +
+          '<input type="number" id="ca-target-' + i + '" data-i="' + i + '" data-k="target" min="0" max="100" value="' + caEsc(c.target) + '" aria-label="' + caEsc(c.label) + ' target percent" style="' + CA_IN + '">' +
+          '<button type="button" data-del="' + i + '" aria-label="Remove ' + caEsc(c.label) + '" style="background:none;border:0;color:var(--ink-soft);cursor:pointer;font-size:12px;font-weight:600;padding:4px"' + (CA.length <= 1 ? ' disabled' : '') + '>Remove</button>';
+      });
+      caRowsEl.innerHTML = h;
+      document.getElementById('ca-add').style.display = CA.length >= CA_MAX ? 'none' : '';
+    }
+    caRowsEl.addEventListener('input', e => { const i = e.target.getAttribute('data-i'); if (i == null) return; CA[+i][e.target.getAttribute('data-k')] = e.target.value; document.getElementById('ca-calc').click(); });
+    caRowsEl.addEventListener('click', e => { const d = e.target.getAttribute('data-del'); if (d == null) return; CA.splice(+d, 1); caRender(); document.getElementById('ca-calc').click(); });
+    document.getElementById('ca-add').addEventListener('click', () => { if (CA.length >= CA_MAX) return; CA.push({ label: '', current: 0, target: 0 }); caRender(); const f = document.getElementById('ca-label-' + (CA.length - 1)); if (f) f.focus(); document.getElementById('ca-calc').click(); });
+    document.getElementById('ca-total').addEventListener('input', () => document.getElementById('ca-calc').click());
+    window.CA_STATE = {
+      get: () => ({ total: document.getElementById('ca-total').value, cats: JSON.parse(JSON.stringify(CA)) }),
+      set: s => { s = s || {};
+        if (s.cats && s.cats.length) { CA = s.cats.slice(0, CA_MAX).map(c => ({ label: String(c.label || ''), current: c.current, target: c.target })); }
+        else if (s['ca-current-run'] !== undefined) { CA = CA_CATEGORIES.map(c => ({ label: c.label, current: s['ca-current-' + c.id], target: s['ca-target-' + c.id] })); }
+        else { CA = CA_CATEGORIES.map(c => ({ label: c.label, current: c.current, target: c.target })); }
+        document.getElementById('ca-total').value = s.total != null ? s.total : (s['ca-total'] != null ? s['ca-total'] : 10000000);
+        caRender(); document.getElementById('ca-calc').click(); }
+    };
+    caRender();
 
     document.getElementById('ca-calc').addEventListener('click', () => {
       const total = Math.max(0, parseFloat(document.getElementById('ca-total').value) || 0);
       let currentSum = 0;
       let targetPctSum = 0;
-      const rows = CA_CATEGORIES.map(cat => {
-        const current = Math.max(0, parseFloat(document.getElementById('ca-current-' + cat.id).value) || 0);
-        const targetPct = Math.max(0, parseFloat(document.getElementById('ca-target-' + cat.id).value) || 0);
+      const rows = CA.map((cat, i) => {
+        const current = Math.max(0, parseFloat(cat.current) || 0);
+        const targetPct = Math.max(0, parseFloat(cat.target) || 0);
         currentSum += current;
         targetPctSum += targetPct;
         const currentPct = total > 0 ? (current / total) * 100 : 0;
         const targetDollar = total * (targetPct / 100);
         const varianceDollar = current - targetDollar;
-        return { label: cat.label, current, currentPct, targetPct, targetDollar, varianceDollar };
+        return { label: caEsc(cat.label || ('Category ' + (i + 1))), current, currentPct, targetPct, targetDollar, varianceDollar };
       });
 
       const biggestGap = rows.reduce((a, b) => (Math.abs(b.varianceDollar) > Math.abs(a.varianceDollar) ? b : a));
@@ -471,9 +478,11 @@
 <script src="../../assets/tool-share.js"></script>
 <script>
 (function () {
-  var f = ToolShare.fields('#calculator', function () { document.getElementById('ca-calc').click(); });
-  ToolShare.register({ id: 'ca', root: '#calculator', title: 'Capital allocation', getState: f.getState, setState: f.setState,
-    csv: function () { return ToolShare.inputRows('#calculator').concat([[]], ToolShare.tableRows('#ca-result', true)); } });
+  document.getElementById('ca-calc').click();
+  ToolShare.register({ id: 'ca', root: '#calculator', title: 'Capital allocation', getState: CA_STATE.get, setState: CA_STATE.set,
+    csv: function () { var s = CA_STATE.get(), rows = [['Total annual budget ($)', s.total], [], ['Category', 'Current spend ($)', 'Target %']];
+      s.cats.forEach(function (c) { rows.push([c.label, c.current, c.target]); });
+      return rows.concat([[]], ToolShare.tableRows('#ca-result', true)); } });
 })();
 </script>
 <!-- /toolshare -->

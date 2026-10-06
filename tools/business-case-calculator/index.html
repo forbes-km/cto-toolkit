@@ -109,35 +109,11 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Run the numbers</h3>
-      <p>Enter total costs and benefits per year. The tool runs the base case and a pessimistic case side by side (benefits cut and costs raised by the percentages you set), because a case that only works at the base numbers is a weaker case than it looks. Defaults are pre-filled with a representative example. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Enter costs and benefits as separate lines, named for what they are, over a horizon of 3 to 10 years. Add, rename, or remove lines freely. The tool runs the base case and a pessimistic case side by side (benefits cut and costs raised by the percentages you set), because a case that only works at the base numbers is a weaker case than it looks. Defaults are pre-filled with a representative example. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <div style="display:grid; grid-template-columns: 120px repeat(5, 1fr); gap:8px; align-items:center; margin-bottom:14px; font-size:12.5px;">
-          <div></div>
-          <div style="font-weight:600; text-align:center;">Year 1</div>
-          <div style="font-weight:600; text-align:center;">Year 2</div>
-          <div style="font-weight:600; text-align:center;">Year 3</div>
-          <div style="font-weight:600; text-align:center;">Year 4</div>
-          <div style="font-weight:600; text-align:center;">Year 5</div>
-          <div style="font-weight:600;">Costs ($)</div>
-          <div><input id="bc-cost-0" type="number" value="2530000" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-cost-1" type="number" value="1887500" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-cost-2" type="number" value="1207500" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-cost-3" type="number" value="1048000" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-cost-4" type="number" value="1078000" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div style="font-weight:600;">Benefits ($)</div>
-          <div><input id="bc-benefit-0" type="number" value="855000" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-benefit-1" type="number" value="1995000" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-benefit-2" type="number" value="2850000" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-benefit-3" type="number" value="2935500" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-          <div><input id="bc-benefit-4" type="number" value="3023565" style="width:100%; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"></div>
-        </div>
-        <div style="display:flex; gap:16px; align-items:center; margin-bottom:14px; font-size:12.5px;">
-          <label>Discount rate (WACC) <input id="bc-discount" type="number" value="8" step="0.5" style="width:70px; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"> %</label>
-          <label>Tax rate <input id="bc-tax" type="number" value="25" step="1" style="width:70px; padding:5px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:12px;"> %</label>
-        </div>
-        <button id="bc-calc" style="padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="bc-app"></div>
         <div id="bc-result" style="margin-top:16px;"></div>
       </div>
     </div>
@@ -241,16 +217,56 @@
 <script src="../../assets/row-table.js"></script>
 <script>
 (function () {
-  var card = document.getElementById('calculator'), btn = document.getElementById('bc-calc');
-  var sc = document.createElement('div');
-  sc.className = 'tool-extras'; sc.style.marginTop = '4px';
-  sc.innerHTML = '<label for="bc-hair">Pessimistic case: benefits lower by (%)<input type="number" id="bc-hair" value="25" min="0" max="100" step="1"></label>' +
-                 '<label for="bc-over">Pessimistic case: costs higher by (%)<input type="number" id="bc-over" value="12.5" min="0" step="0.5"></label>';
-  btn.parentNode.insertBefore(sc, btn);
-  btn.style.display = 'none';
+  var card = document.getElementById('calculator'), app = document.getElementById('bc-app'), E = RowTable.esc, MAXL = 20;
+  var DEF = { years: 5, disc: 8, tax: 25, hair: 25, over: 12.5,
+    costs: [{ n: 'Implementation: people and services', v: [1800000, 1000000, 250000, 0, 0] }, { n: 'Licensing and infrastructure', v: [480000, 600000, 650000, 720000, 740000] }, { n: 'Support and on-call added to run', v: [250000, 287500, 307500, 328000, 338000] }],
+    bens: [{ n: 'Legacy cost removed', v: [495000, 1155000, 1650000, 1699500, 1750485] }, { n: 'Productivity and revenue protected', v: [360000, 840000, 1200000, 1236000, 1273080] }] };
+  var S = JSON.parse(JSON.stringify(DEF));
+  function nz(v) { v = parseFloat(v); return isNaN(v) ? 0 : v; }
+  function m(v) { return (v < 0 ? '-$' : '$') + Math.round(Math.abs(v)).toLocaleString(); }
+  function yrs() { return Math.max(3, Math.min(10, Math.round(nz(S.years)) || 5)); }
+  function fit(L) { var n = yrs(); L.forEach(function (r) { r.v = (r.v || []).slice(0, n); while (r.v.length < n) r.v.push(r.v.length ? r.v[r.v.length - 1] : 0); }); }
+  var INP = 'width:100%;min-width:90px;padding:5px;border:1px solid var(--line);border-radius:5px;font-family:var(--mono);font-size:12px;box-sizing:border-box';
+  function section(key, title, add) {
+    var n = yrs(), L = S[key], h = '<h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:14px 0 6px">' + title + '</h4><div class="rt-wrap"><table class="rt-table"><thead><tr><th style="min-width:200px">Line</th>';
+    for (var y = 0; y < n; y++) h += '<th>Year ' + (y + 1) + '</th>';
+    h += '<th></th></tr></thead><tbody>';
+    L.forEach(function (r, i) {
+      h += '<tr><td class="rt-wide" data-label="Line"><input type="text" id="bc-' + key + '-n-' + i + '" data-sec="' + key + '" data-i="' + i + '" data-y="n" value="' + E(r.n) + '" aria-label="' + title + ' line name"></td>';
+      for (var y2 = 0; y2 < n; y2++) h += '<td data-label="Year ' + (y2 + 1) + '"><input type="number" id="bc-' + key + '-' + i + '-' + y2 + '" data-sec="' + key + '" data-i="' + i + '" data-y="' + y2 + '" value="' + E(r.v[y2]) + '" style="' + INP + '" aria-label="' + E(r.n || title) + ', year ' + (y2 + 1) + '"></td>';
+      h += '<td class="rt-x"><button type="button" class="rt-del" data-del="' + key + ',' + i + '"' + (L.length <= 1 ? ' disabled' : '') + '>Remove</button></td></tr>';
+    });
+    h += '<tr><td><strong>Total</strong></td>'; for (var y3 = 0; y3 < n; y3++) h += '<td data-label="Year ' + (y3 + 1) + ' total" id="bc-' + key + '-tot-' + y3 + '" style="font-family:var(--mono);font-size:12px;font-weight:600"></td>'; h += '<td></td></tr>';
+    return h + '</tbody></table></div>' + (L.length < MAXL ? '<button type="button" class="rt-add" data-add="' + key + '">+ ' + add + '</button>' : '');
+  }
+  function render() {
+    fit(S.costs); fit(S.bens);
+    app.innerHTML = '<div class="tool-extras" style="margin:0 0 6px">' +
+      '<label for="bc-years">Horizon (years, 3 to 10)<input type="number" id="bc-years" min="3" max="10" step="1" value="' + E(S.years) + '"></label>' +
+      '<label for="bc-discount">Discount rate (WACC) %<input type="number" id="bc-discount" step="0.5" value="' + E(S.disc) + '"></label>' +
+      '<label for="bc-tax">Tax rate %<input type="number" id="bc-tax" step="1" value="' + E(S.tax) + '"></label>' +
+      '<label for="bc-hair">Pessimistic case: benefits lower by (%)<input type="number" id="bc-hair" min="0" max="100" step="1" value="' + E(S.hair) + '"></label>' +
+      '<label for="bc-over">Pessimistic case: costs higher by (%)<input type="number" id="bc-over" min="0" step="0.5" value="' + E(S.over) + '"></label></div>' +
+      section('costs', 'Costs ($)', 'Add cost line') + section('bens', 'Benefits ($)', 'Add benefit line');
+    totals(); bcCompute();
+  }
+  function sum(L, y) { return L.reduce(function (a, r) { return a + nz(r.v[y]); }, 0); }
+  function totals() { var n = yrs(); ['costs', 'bens'].forEach(function (k) { for (var y = 0; y < n; y++) { var c = document.getElementById('bc-' + k + '-tot-' + y); if (c) c.textContent = m(sum(S[k], y)); } }); }
+  app.addEventListener('input', function (e) {
+    var t = e.target, id = t.id;
+    if (id === 'bc-years') { S.years = t.value; var n = Math.round(nz(t.value)); if (n >= 3 && n <= 10) { render(); var f = document.getElementById('bc-years'); f.focus(); var l = f.value.length; try { f.setSelectionRange(l, l); } catch (x) {} } return; }
+    if (id === 'bc-discount') S.disc = t.value; else if (id === 'bc-tax') S.tax = t.value; else if (id === 'bc-hair') S.hair = t.value; else if (id === 'bc-over') S.over = t.value;
+    var sec = t.getAttribute('data-sec');
+    if (sec) { var r = S[sec][+t.getAttribute('data-i')], y = t.getAttribute('data-y'); if (y === 'n') r.n = t.value; else r.v[+y] = t.value; totals(); }
+    bcCompute();
+  });
+  app.addEventListener('click', function (e) {
+    var a = e.target.getAttribute('data-add'), d = e.target.getAttribute('data-del');
+    if (a) { var row = { n: '', v: [] }; S[a].push(row); render(); var f = document.getElementById('bc-' + a + '-n-' + (S[a].length - 1)); if (f) f.focus(); ToolShare.changed(); }
+    if (d) { var p = d.split(','); S[p[0]].splice(+p[1], 1); render(); ToolShare.changed(); }
+  });
   function npv(rate, cf) { var n = 0; cf.forEach(function (c, i) { n += c / Math.pow(1 + rate, i + 1); }); return n; }
-  function irr(cf) { var lo = -0.99, hi = 5.0; if ((npv(lo, cf) > 0) === (npv(hi, cf) > 0)) return null; for (var k = 0; k < 200; k++) { var mid = (lo + hi) / 2, m = npv(mid, cf); if (Math.abs(m) < 1) return mid; if ((npv(lo, cf) > 0) === (m > 0)) lo = mid; else hi = mid; } return (lo + hi) / 2; }
-  function num(id) { var v = parseFloat(document.getElementById(id).value); return isNaN(v) ? 0 : v; }
+  function irr(cf) { var lo = -0.99, hi = 5.0; if ((npv(lo, cf) > 0) === (npv(hi, cf) > 0)) return null; for (var k = 0; k < 200; k++) { var mid = (lo + hi) / 2, mm = npv(mid, cf); if (Math.abs(mm) < 1) return mid; if ((npv(lo, cf) > 0) === (mm > 0)) lo = mid; else hi = mid; } return (lo + hi) / 2; }
   function run(costs, benefits, rate, tax) {
     var net = costs.map(function (c, i) { return (benefits[i] - c) * (1 - tax); });
     var hasNeg = net.some(function (x) { return x < 0; }), hasPos = net.some(function (x) { return x > 0; });
@@ -262,24 +278,40 @@
     return r;
   }
   window.bcCompute = function () {
-    var costs = [0, 1, 2, 3, 4].map(function (i) { return num('bc-cost-' + i); }), ben = [0, 1, 2, 3, 4].map(function (i) { return num('bc-benefit-' + i); });
-    var rate = num('bc-discount') / 100, tax = num('bc-tax') / 100, h = Math.min(100, Math.max(0, num('bc-hair'))) / 100, o = Math.max(0, num('bc-over')) / 100;
+    var n = yrs(), costs = [], ben = [];
+    for (var y = 0; y < n; y++) { costs.push(sum(S.costs, y)); ben.push(sum(S.bens, y)); }
+    var rate = nz(S.disc) / 100, tax = nz(S.tax) / 100, h = Math.min(100, Math.max(0, nz(S.hair))) / 100, o = Math.max(0, nz(S.over)) / 100;
     var B = run(costs, ben, rate, tax), P = run(costs.map(function (c) { return c * (1 + o); }), ben.map(function (b) { return b * (1 - h); }), rate, tax);
-    function col(r) { return '<strong>NPV: ' + (r.npv < 0 ? '-$' : '$') + Math.round(Math.abs(r.npv)).toLocaleString() + '</strong><br>Benefit-to-cost ratio: ' + r.bc.toFixed(2) + 'x<br>IRR: ' + (r.irr !== null ? (r.irr * 100).toFixed(1) + '%' : 'not defined (' + r.irrNote + ')') + '<br>Payback: ' + r.pb + '<br>' + r.verdict; }
+    function col(r) { return '<strong>NPV: ' + m(r.npv) + '</strong><br>Benefit-to-cost ratio: ' + r.bc.toFixed(2) + 'x<br>IRR: ' + (r.irr !== null ? (r.irr * 100).toFixed(1) + '%' : 'not defined (' + r.irrNote + ')') + '<br>Payback: ' + r.pb + '<br>' + r.verdict; }
     var robust = P.npv > 0;
+    var bigC = S.costs.map(function (r) { return { n: r.n || 'Unnamed line', v: r.v.slice(0, n).reduce(function (a, x) { return a + nz(x); }, 0) }; }).sort(function (a, b) { return b.v - a.v; })[0];
+    var bigB = S.bens.map(function (r) { return { n: r.n || 'Unnamed line', v: r.v.slice(0, n).reduce(function (a, x) { return a + nz(x); }, 0) }; }).sort(function (a, b) { return b.v - a.v; })[0];
+    var tc = costs.reduce(function (a, b) { return a + b; }, 0), tb = ben.reduce(function (a, b) { return a + b; }, 0);
     document.getElementById('bc-result').innerHTML =
       '<div class="tool-sum"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 24px">' +
       '<div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:4px">Base case</div>' + col(B) + '</div>' +
       '<div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:4px">Pessimistic: benefits -' + (h * 100).toFixed(0) + '%, costs +' + (o * 100).toFixed(1).replace(/\.0$/, '') + '%</div>' + col(P) + '</div></div><br>' +
       (robust ? '<strong>Robust.</strong> NPV stays positive in the pessimistic case, so the decision does not rest on the base-case assumptions holding exactly.' :
-        (B.npv > 0 ? '<strong>Fragile.</strong> Positive at the base case but negative in the pessimistic case. Say so explicitly when presenting it, and name the one or two assumptions that carry the result.' : '<strong>Negative in both cases.</strong> This needs a strategic argument beyond the financials, or a smaller scope.')) + '</div>';
+        (B.npv > 0 ? '<strong>Fragile.</strong> Positive at the base case but negative in the pessimistic case. Say so explicitly when presenting it, and name the one or two assumptions that carry the result.' : '<strong>Negative in both cases.</strong> This needs a strategic argument beyond the financials, or a smaller scope.')) +
+      (tc > 0 && tb > 0 && bigC && bigB ? '<br><br>The largest cost line is ' + E(bigC.n) + ' at ' + Math.round(bigC.v / tc * 100) + '% of cost; the largest benefit line is ' + E(bigB.n) + ' at ' + Math.round(bigB.v / tb * 100) + '% of benefit. Those are the two assumptions a reviewer will test first.' : '') + '</div>';
   };
-  card.querySelector('.stage-cell').addEventListener('input', bcCompute);
-  var f = ToolShare.fields('#calculator', bcCompute);
-  ToolShare.register({ id: 'bc', root: card, title: 'Business case', getState: f.getState, setState: f.setState,
-    csv: function () { var v = function (id) { return document.getElementById(id).value; }, rows = [['Year', 'Costs ($)', 'Benefits ($)']];
-      for (var i = 0; i < 5; i++) rows.push(['Year ' + (i + 1), v('bc-cost-' + i), v('bc-benefit-' + i)]);
-      rows.push([], ['Discount rate (%)', v('bc-discount')], ['Tax rate (%)', v('bc-tax')], ['Pessimistic benefit cut (%)', v('bc-hair')], ['Pessimistic cost increase (%)', v('bc-over')], []);
+  function setState(s) {
+    s = s || {};
+    if (s['bc-cost-0'] !== undefined) {
+      S = { years: 5, disc: s['bc-discount'] || 8, tax: s['bc-tax'] || 25, hair: s['bc-hair'] || 25, over: s['bc-over'] || 12.5, costs: [{ n: 'Costs', v: [] }], bens: [{ n: 'Benefits', v: [] }] };
+      for (var i = 0; i < 5; i++) { S.costs[0].v.push(s['bc-cost-' + i]); S.bens[0].v.push(s['bc-benefit-' + i]); }
+    } else {
+      S = JSON.parse(JSON.stringify(DEF)); ['years', 'disc', 'tax', 'hair', 'over'].forEach(function (k) { if (s[k] != null) S[k] = s[k]; });
+      ['costs', 'bens'].forEach(function (k) { if (Array.isArray(s[k]) && s[k].length) S[k] = s[k].slice(0, MAXL).map(function (r) { return { n: String(r.n || ''), v: Array.isArray(r.v) ? r.v.slice(0, 10) : [] }; }); });
+    }
+    render();
+  }
+  setState(DEF);
+  ToolShare.register({ id: 'bc', root: card, title: 'Business case', getState: function () { return JSON.parse(JSON.stringify(S)); }, setState: setState,
+    csv: function () { var n = yrs(), head = ['Line']; for (var y = 0; y < n; y++) head.push('Year ' + (y + 1));
+      var rows = [['Costs ($)'], head]; S.costs.forEach(function (r) { rows.push([r.n].concat(r.v.slice(0, n))); }); rows.push(['Total costs'].concat(head.slice(1).map(function (_, y) { return sum(S.costs, y); })));
+      rows.push([], ['Benefits ($)'], head); S.bens.forEach(function (r) { rows.push([r.n].concat(r.v.slice(0, n))); }); rows.push(['Total benefits'].concat(head.slice(1).map(function (_, y) { return sum(S.bens, y); })));
+      rows.push([], ['Discount rate (%)', S.disc], ['Tax rate (%)', S.tax], ['Pessimistic benefit cut (%)', S.hair], ['Pessimistic cost increase (%)', S.over], []);
       document.getElementById('bc-result').innerText.split('\n').forEach(function (l) { if (l.trim()) rows.push([l.trim()]); }); return rows; } });
 })();
 </script>

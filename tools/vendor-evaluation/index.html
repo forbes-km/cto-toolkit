@@ -139,7 +139,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score a vendor</h3>
-      <p>Compare up to four vendors side by side on the six weighted dimensions, scored by one evaluator. Weights are editable. A vendor with any dimension at 1 is knocked out whatever its average, and the tool checks whether the winner survives a switch to equal weights. The full workbook supports multiple evaluators scoring independently and surfacing the variance between them, which is where this framework earns its keep; this tool is a single evaluator's pass. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Compare up to six vendors side by side, scored by one evaluator. The six default dimensions and their weights are a starting point: rename them, remove them, or add your own, such as data residency, AI terms, or accessibility. A vendor with any dimension at 1 is knocked out whatever its average, and the tool checks whether the winner survives a switch to equal weights. The full workbook supports multiple evaluators scoring independently and surfacing the variance between them, which is where this framework earns its keep; this tool is a single evaluator's pass. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -348,24 +348,25 @@ function sec(tag, cls, before) { var d = document.createElement(tag || 'div'); i
 cell.innerHTML = '';
 var DIMS = [['functional', 'Functional fit', 30], ['security', 'Security & compliance posture', 20], ['financial', 'Financial stability', 15], ['integration', 'Integration complexity (5 = simple)', 15], ['support', 'Support & SLA', 10], ['exit', 'Exit & data portability', 10]];
 var DEF = { names: ['Vendor A', 'Vendor B', 'Vendor C'], w: DIMS.map(function (d) { return d[2]; }), s: [[5, 3, 4, 3, 3, 2], [4, 4, 3, 4, 4, 4], [4, 1, 4, 5, 4, 4]] };
-var MAXV = 4, state;
+var MAXV = 6, MAXD = 15, state;
 var box = sec(), out = sec('div', 'tool-out'), ctl = sec();
 function draw() {
   var n = state.names.length, h = '<div class="tool-extras" style="margin:0 0 12px">';
   state.names.forEach(function (nm, j) { h += '<label>Vendor ' + (j + 1) + ' name<input type="text" data-name="' + j + '" value="' + E(nm) + '" aria-label="Vendor ' + (j + 1) + ' name"></label>'; });
-  h += '</div><div class="rt-wrap"><table class="rt-table ve-grid"><thead><tr><th style="min-width:170px">Dimension</th><th>Weight %</th>';
+  h += '</div><div class="rt-wrap"><table class="rt-table ve-grid"><thead><tr><th style="min-width:200px">Dimension</th><th>Weight %</th>';
   state.names.forEach(function (nm, j) { h += '<th data-vh="' + j + '">' + E(nm) + '</th>'; });
-  h += '</tr></thead><tbody>';
-  DIMS.forEach(function (d, i) {
-    h += '<tr><td data-label="Dimension"><strong>' + E(d[1]) + '</strong></td><td data-label="Weight %"><input type="number" min="0" max="100" data-w="' + i + '" value="' + state.w[i] + '" aria-label="' + E(d[1]) + ' weight"></td>';
-    state.names.forEach(function (nm, j) { h += '<td data-label="' + E(nm) + '"><select data-s="' + j + ',' + i + '" aria-label="' + E(nm + ', ' + d[1]) + '">' + [1, 2, 3, 4, 5].map(function (v) { return '<option' + (v === state.s[j][i] ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></td>'; });
-    h += '</tr>';
+  h += '<th></th></tr></thead><tbody>';
+  state.dims.forEach(function (d, i) {
+    h += '<tr><td data-label="Dimension" class="rt-wide"><input type="text" data-dn="' + i + '" value="' + E(d) + '" aria-label="Dimension ' + (i + 1) + ' name"></td><td data-label="Weight %"><input type="number" min="0" max="100" data-w="' + i + '" value="' + state.w[i] + '" aria-label="' + E(d) + ' weight"></td>';
+    state.names.forEach(function (nm, j) { h += '<td data-label="' + E(nm) + '"><select data-s="' + j + ',' + i + '" aria-label="' + E(nm + ', ' + d) + '">' + [1, 2, 3, 4, 5].map(function (v) { return '<option' + (v === state.s[j][i] ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></td>'; });
+    h += '<td class="rt-x"><button type="button" class="rt-del" data-ddel="' + i + '"' + (state.dims.length <= 1 ? ' disabled' : '') + '>Remove</button></td></tr>';
   });
   h += '</tbody></table></div>';
   box.innerHTML = h;
-  ctl.innerHTML = '<button type="button" class="rt-add" id="ve-addv"' + (n >= MAXV ? ' disabled style="display:none"' : '') + '>+ Add vendor</button> ' + (n > 1 ? '<button type="button" class="rt-add" id="ve-delv">Remove last vendor</button>' : '');
+  ctl.innerHTML = '<button type="button" class="rt-add" id="ve-addd"' + (state.dims.length >= MAXD ? ' disabled style="display:none"' : '') + '>+ Add dimension</button> <button type="button" class="rt-add" id="ve-addv"' + (n >= MAXV ? ' disabled style="display:none"' : '') + '>+ Add vendor</button> ' + (n > 1 ? '<button type="button" class="rt-add" id="ve-delv">Remove last vendor</button>' : '');
   var a = document.getElementById('ve-addv'), r = document.getElementById('ve-delv');
-  if (a) a.onclick = function () { state.names.push('Vendor ' + String.fromCharCode(65 + state.names.length)); state.s.push([3, 3, 3, 3, 3, 3]); draw(); calc(); ToolShare.changed(); };
+  if (a) a.onclick = function () { state.names.push('Vendor ' + String.fromCharCode(65 + state.names.length)); state.s.push(state.dims.map(function () { return 3; })); draw(); calc(); ToolShare.changed(); };
+  var ad = document.getElementById('ve-addd'); if (ad) ad.onclick = function () { state.dims.push('New dimension'); state.w.push(0); state.s.forEach(function (row) { row.push(3); }); draw(); calc(); ToolShare.changed(); var f = box.querySelector('input[data-dn="' + (state.dims.length - 1) + '"]'); if (f) { f.focus(); f.select(); } };
   if (r) r.onclick = function () { state.names.pop(); state.s.pop(); draw(); calc(); ToolShare.changed(); };
   cell.appendChild(out);
 }
@@ -376,25 +377,27 @@ box.addEventListener('input', function (e) {
     var th = box.querySelector('[data-vh="' + j + '"]'); if (th) th.textContent = t.value;
     box.querySelectorAll('select[data-s^="' + j + ',"]').forEach(function (sel) { sel.parentNode.setAttribute('data-label', t.value); });
   }
+  if (t.dataset.dn != null) { var di = +t.dataset.dn; state.dims[di] = t.value; }
   if (t.dataset.w != null) state.w[+t.dataset.w] = Math.max(0, parseFloat(t.value) || 0);
   if (t.dataset.s) { var p = t.dataset.s.split(','); state.s[+p[0]][+p[1]] = +t.value; }
   calc();
 });
+box.addEventListener('click', function (e) { var d = e.target.dataset && e.target.dataset.ddel; if (d == null) return; d = +d; state.dims.splice(d, 1); state.w.splice(d, 1); state.s.forEach(function (row) { row.splice(d, 1); }); draw(); calc(); ToolShare.changed(); });
 box.addEventListener('change', function (e) { if (e.target.dataset.s) { var p = e.target.dataset.s.split(','); state.s[+p[0]][+p[1]] = +e.target.value; calc(); } });
 function score(w) {
   var tw = w.reduce(function (a, b) { return a + b; }, 0) || 1;
   return state.names.map(function (nm, j) {
     var ws = state.s[j].reduce(function (a, v, i) { return a + v * w[i]; }, 0) / tw;
-    var ko = state.s[j].map(function (v, i) { return v <= 1 ? DIMS[i][1] : null; }).filter(Boolean);
+    var ko = state.s[j].map(function (v, i) { return v <= 1 ? (state.dims[i] || 'Dimension ' + (i + 1)) : null; }).filter(Boolean);
     return { name: nm, j: j, ws: ws, ko: ko };
   }).sort(function (a, b) { return (a.ko.length ? 1 : 0) - (b.ko.length ? 1 : 0) || b.ws - a.ws; });
 }
 function calc() {
-  var wsum = state.w.reduce(function (a, b) { return a + b; }, 0), R = score(state.w), EQ = score(DIMS.map(function () { return 1; }));
+  var wsum = state.w.reduce(function (a, b) { return a + b; }, 0), R = score(state.w), EQ = score(state.dims.map(function () { return 1; }));
   var h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Rank</th><th>Vendor</th><th>Weighted score</th><th>Weakest</th><th>Status</th></tr>';
   R.forEach(function (x, k) {
     var weak = state.s[x.j].reduce(function (a, v, i) { return v < state.s[x.j][a] ? i : a; }, 0);
-    h += '<tr><td>' + (k + 1) + '</td><td>' + E(x.name) + '</td><td>' + x.ws.toFixed(2) + '</td><td>' + E(DIMS[weak][1]) + ' (' + state.s[x.j][weak] + ')</td><td>' + (x.ko.length ? '<span class="tag bad">Knocked out: ' + E(x.ko.join(', ')) + '</span>' : (x.ws >= 4 ? '<span class="tag good">Strong</span>' : x.ws >= 3 ? '<span class="tag mid">Proceed with conditions</span>' : '<span class="tag bad">Significant concerns</span>')) + '</td></tr>';
+    h += '<tr><td>' + (k + 1) + '</td><td>' + E(x.name) + '</td><td>' + x.ws.toFixed(2) + '</td><td>' + E(state.dims[weak] || '') + ' (' + state.s[x.j][weak] + ')</td><td>' + (x.ko.length ? '<span class="tag bad">Knocked out: ' + E(x.ko.join(', ')) + '</span>' : (x.ws >= 4 ? '<span class="tag good">Strong</span>' : x.ws >= 3 ? '<span class="tag mid">Proceed with conditions</span>' : '<span class="tag bad">Significant concerns</span>')) + '</td></tr>';
   });
   h += '</table></div>';
   var win = R[0], s = '<div class="tool-sum">';
@@ -411,13 +414,14 @@ function calc() {
 }
 function setAll(s) {
   s = s || {}; var n = Math.max(1, Math.min(MAXV, (s.names || DEF.names).length));
-  state = { names: (s.names || DEF.names).slice(0, n).map(String), w: DIMS.map(function (d, i) { var v = s.w && s.w[i]; return v >= 0 ? +v : d[2]; }), s: [] };
-  for (var j = 0; j < n; j++) state.s.push(DIMS.map(function (d, i) { var v = s.s && s.s[j] && s.s[j][i]; return v >= 1 && v <= 5 ? +v : 3; }));
+  var dims = Array.isArray(s.dims) && s.dims.length ? s.dims.slice(0, MAXD).map(String) : DIMS.map(function (d) { return d[1]; });
+  state = { names: (s.names || DEF.names).slice(0, n).map(String), dims: dims, w: dims.map(function (d, i) { var v = s.w && s.w[i]; return v >= 0 ? +v : (DIMS[i] && !s.dims ? DIMS[i][2] : 0); }), s: [] };
+  for (var j = 0; j < n; j++) state.s.push(dims.map(function (d, i) { var v = s.s && s.s[j] && s.s[j][i]; return v >= 1 && v <= 5 ? +v : 3; }));
   draw(); calc();
 }
 setAll(DEF);
 ToolShare.register({ id: 've', root: card, title: 'Vendor comparison', getState: function () { return JSON.parse(JSON.stringify(state)); }, setState: setAll,
-  csv: function () { var rows = [['Dimension', 'Weight %'].concat(state.names)]; DIMS.forEach(function (d, i) { rows.push([d[1], state.w[i]].concat(state.s.map(function (v) { return v[i]; }))); });
+  csv: function () { var rows = [['Dimension', 'Weight %'].concat(state.names)]; state.dims.forEach(function (d, i) { rows.push([d, state.w[i]].concat(state.s.map(function (v) { return v[i]; }))); });
     rows.push([], ['Vendor', 'Weighted score', 'Knocked out']); score(state.w).forEach(function (x) { rows.push([x.name, x.ws.toFixed(2), x.ko.join('; ')]); }); return rows; } });
 </script>
 <!-- /toolshare -->
