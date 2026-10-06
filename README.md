@@ -25,9 +25,11 @@ Three pages explain the whole: **Epistemology and Research Methods** is the thin
 
 ## What is runnable
 
-- **Interactive calculators** embedded in their pages: application portfolio scoring, AI initiative classification, zero-trust and EA maturity, security and compliance maturity, GRC common-control effort, business case NPV and IRR, capital allocation, reliability and disaster recovery cost-benefit, cloud FinOps maturity, vendor scoring, stakeholder mapping, technical debt ranking and multi-year sequencing, and a regulatory applicability filter
-- **Downloadable templates** (.md and .docx): ADR, incident postmortem, vendor evaluation scorecard, technology strategy, business case one-pager
-- **Downloadable workbooks** (.xlsx, formula-driven): technology capital allocation, cloud FinOps
+- **Interactive calculators** embedded in their pages: application portfolio scoring, AI initiative classification, zero-trust and EA maturity, security and compliance maturity, GRC common-control effort, business case NPV and IRR, capital allocation, reliability and disaster recovery cost-benefit, cloud FinOps maturity, vendor scoring, stakeholder mapping, technical debt ranking and multi-year sequencing, a regulatory applicability filter, AI use case risk tiering, error budget and burn rate, unit-cost forecasting, run-rate versus in-year savings, and hiring capacity
+- **Downloadable templates** (.md and .docx): ADR, incident postmortem, incident severity and communications kit, vendor evaluation scorecard, technology strategy, business case one-pager, AI use case intake form, risk appetite statement, executive role charter, error budget policy and production readiness checklist, emergency succession pack
+- **Downloadable workbooks** (.xlsx, formula-driven): technology capital allocation, cloud FinOps, AI inventory and risk register, decision rights RACI and log, succession heatmap, SaaS renewal calendar
+- **Industry overlays** for healthcare and financial services on Data Governance, Incident Response, Vendor Evaluation, the AI Governance Map, and the M&A Diligence Kit
+- **Benchmark tables** with sourced industry figures (downtime cost, SaaS utilization and inflation, security budget share, breach cost, technical debt, span of control, attrition) next to the rules of thumb they test
 - **A sample board reporting deck** (.pptx), synthetic throughout, built to the structure the Board Reporting page describes
 - **Cloud Service Mapper**: a dependency-free reference translating 79 capabilities across AWS, Azure, GCP, and OCI, with a landing zone comparison
 
