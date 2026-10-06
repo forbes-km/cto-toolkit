@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reliability as an Economic Decision</title>
+<meta name="description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision, not a purely engineering one.">
+<meta property="og:title" content="Reliability as an Economic Decision | CTO Toolkit">
+<meta property="og:description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision, not a purely engineering one.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/reliability-economics/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reliability as an Economic Decision | CTO Toolkit">
+<meta name="twitter:description" content="How much reliability the business can afford, and how much unreliability it&#x27;s implicitly willing to sell, framed as an investment decision, not a purely engineering one.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/reliability-economics/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Reliability as an Economic Decision</h1>
+  <p>How much reliability the business can afford, and how much unreliability it's implicitly willing to sell, framed as an investment decision, not a purely engineering one.</p>
+  <div class="caveat">See <a href="../disaster-recovery/index.html">Disaster Recovery &amp; Business Continuity</a> for RTO/RPO and recovery testing, and <a href="../incident-response/index.html">Incident Response</a> for the operational process this economic frame sits above.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Availability tiers, illustrative</h3>
+      <p>Each additional nine of availability costs disproportionately more than the last one, so the target should be chosen on purpose, not defaulted to the highest available.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Availability</th><th>Approx. annual downtime budget</th><th>Relative cost to achieve</th></tr>
+          <tr><td>99%</td><td>About 3.65 days per year</td><td>Baseline</td></tr>
+          <tr><td>99.9%</td><td>About 8.7 hours per year</td><td>Meaningfully higher</td></tr>
+          <tr><td>99.95%</td><td>About 4.4 hours per year</td><td>Materially higher again</td></tr>
+          <tr><td>99.99%</td><td>About 53 minutes per year</td><td>Disproportionately higher; usually justified only for revenue-critical systems</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>The cost of downtime has to be a number</h3>
+      <p>A specific figure, or the investment decision that follows from it can't be evaluated at all.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Quantify what an hour of downtime costs this specific system: lost revenue, SLA penalties, support load, reputational cost where it can be estimated. Only then decide what reliability tier is worth paying for, working backward from that number.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>&quot;Downtime is unacceptable&quot; applied as an unexamined default to every system regardless of whether the math supports the investment that belief implies, which is how reliability spending ends up disconnected from business impact.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Error budgets make the tradeoff explicit</h3>
+      <p>A number both engineering and the business can agree on, replacing an unstated and unlimited expectation of perfection.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to do</span>
+        <p>An error budget is the amount of unreliability your target allows: a 99.9% uptime target allows roughly 43 minutes of downtime a month. While that budget isn't exhausted, engineering has explicit permission to ship faster. Once it is, that's a non-personal signal to slow down and stabilize.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it goes wrong</span>
+        <p>Treating reliability as an unlimited, unstated expectation, where every incident is judged a failure regardless of whether the system was still within a sane, previously agreed tolerance.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Overengineering is a cost</h3>
+      <p>Redundancy protects against downtime, and it also carries an ongoing operational tax of its own.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to run it</span>
+        <p>Match redundancy investment to the tier a system needs, not the highest tier on offer. A system that doesn't need five nines shouldn't be built to that standard just because the pattern exists elsewhere in the estate.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it breaks</span>
+        <p>Applying multi-region, high-availability architecture uniformly across the estate as the safe default, which taxes every team's velocity for protection most of those systems never needed in the first place.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Is the next nine worth it?</h3>
+      <p>List the systems whose availability target is in question. For each, the tool converts the current and target tier into hours of downtime a year, prices the difference, and compares it with the annual cost of reaching the target. The defaults are the two worked examples below plus one more. Runs entirely in your browser; nothing is sent anywhere.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: 260px 1fr; gap:10px 16px; align-items:center; font-size:13px; max-width:560px;">
+          <label for="re-cost">Cost of downtime, per hour ($)</label>
+          <input id="re-cost" type="number" value="25000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="re-current">Current availability tier</label>
+          <select id="re-current" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--ui); font-size:13px;">
+            <option value="99">99%</option>
+            <option value="99.9" selected>99.9%</option>
+            <option value="99.95">99.95%</option>
+            <option value="99.99">99.99%</option>
+          </select>
+
+          <label for="re-target">Target availability tier</label>
+          <select id="re-target" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--ui); font-size:13px;">
+            <option value="99">99%</option>
+            <option value="99.9">99.9%</option>
+            <option value="99.95" selected>99.95%</option>
+            <option value="99.99">99.99%</option>
+          </select>
+
+          <label for="re-invest">Annual cost to reach target tier ($)</label>
+          <input id="re-invest" type="number" value="180000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+        </div>
+        <button id="re-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="re-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>Tiering the estate</h3>
+      <p>The calculator above evaluates one system. The decision that saves money is made once, across the estate: which systems get which tier, and why.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table" style="margin-bottom:0;">
+        <tr><th>Tier</th><th>Typical target</th><th>What qualifies</th><th>What the tier buys</th></tr>
+        <tr><td>Tier 1: revenue and safety critical</td><td>99.95% to 99.99%</td><td>Checkout, order capture, clinical or safety systems, anything where an hour of outage is a board-level event</td><td>Multi-zone or multi-region, automated failover tested quarterly, 24x7 on-call at least six deep, error budget policy signed by the product executive</td></tr>
+        <tr><td>Tier 2: business critical</td><td>99.9%</td><td>Internal systems that stop work when down: identity, CI, core data pipelines, customer support tooling</td><td>Multi-zone, tested restore, business-hours on-call with escalation, an SLO with a dashboard</td></tr>
+        <tr><td>Tier 3: important</td><td>99.5%</td><td>Reporting, internal tools, anything with a manual workaround</td><td>Single region with backups, restore tested annually, best-effort response</td></tr>
+        <tr><td>Tier 4: everything else</td><td>No commitment</td><td>Experiments, sandboxes, deprecated systems awaiting retirement</td><td>Backups if the data matters; otherwise nothing</td></tr>
+      </table>      <p style="margin-bottom:8px;">The assignment is a product decision with an engineering cost attached, made by the business owner of each system against the cost-of-downtime number, not by engineering against what feels safe. Most estates that do this exercise find they have been paying Tier 1 costs on Tier 3 systems and running a Tier 1 system on Tier 3 infrastructure, at the same time.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>A checkout service, from 99.9% to 99.99%</h3>
+      <p>The arithmetic is simple. What matters is that it gets done before the architecture is chosen.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">The numbers</span><p>An hour of checkout downtime costs $40,000 in lost orders and recovery effort. At 99.9% the annual downtime budget is about 8.7 hours, or roughly $350,000 of expected loss. At 99.99% it is about 53 minutes, roughly $35,000. The next nine is worth about $315,000 a year in avoided loss. Reaching it means a second region, automated failover, and a deeper on-call rota: about $220,000 a year in infrastructure and people. The investment clears by roughly $95,000 a year, and it is approved.</p></div>
+      <div class="stage-cell"><span class="env-label b">The same arithmetic on the reporting system</span><p>An hour of downtime on the internal reporting platform costs about $2,000 in delayed work. At 99.9% that is about $17,500 a year of expected loss. The proposed multi-region rebuild costs $180,000 a year. It fails by an order of magnitude and is declined, and the team that proposed it is asked what a tested nightly restore would cost instead. That number is $15,000, and it gets funded. Taken together, the two decisions show the pattern: reliability spending moves toward where downtime costs money and away from where it does not.</p></div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Diagram</span>
+      <h3>The two decisions side by side</h3>
+      <p>Moving from 99.9 to 99.99 percent availability, priced for both systems in the worked examples above.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
+<div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="rel-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="rel-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="rel-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="rel-title">Loss avoided versus cost for the two reliability decisions</title><text x="20.0" y="42.0" text-anchor="start" font-size="13" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Checkout</text>
+<rect x="170" y="30" width="551.25" height="26" rx="3" fill="var(--accent)"/>
+<text x="729.2" y="48.0" text-anchor="start" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$315K loss avoided per year</text>
+<rect x="170" y="62" width="385.0" height="26" rx="3" fill="#8A5A2E"/>
+<text x="563.0" y="80.0" text-anchor="start" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$220K cost per year</text>
+<text x="170.0" y="110.0" text-anchor="start" font-size="11" font-weight="600" fill="var(--accent)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Approved: clears by about $95K a year</text>
+<text x="20.0" y="152.0" text-anchor="start" font-size="13" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Reporting platform</text>
+<rect x="170" y="140" width="29.75" height="26" rx="3" fill="var(--accent)"/>
+<text x="207.8" y="158.0" text-anchor="start" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">under $17K loss avoided</text>
+<rect x="170" y="172" width="315.0" height="26" rx="3" fill="#8A5A2E"/>
+<text x="493.0" y="190.0" text-anchor="start" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$180K cost per year</text>
+<text x="170.0" y="220.0" text-anchor="start" font-size="11" font-weight="600" fill="#9B2C2C" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Declined: a $15K tested restore funded instead</text>
+<text x="440.0" y="262.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Same arithmetic, opposite answers: reliability money moves toward where downtime costs money.</text></svg></div>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Figures from the worked examples on this page. The calculator lets you run the same comparison across your own systems.</p>
+    </div></div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Method</span>
+      <h3>Measuring availability from where the customer stands</h3>
+      <p>A tier target means nothing if it is measured at the wrong place. Most organizations measure where it is convenient and report a number the customer would not recognize.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <table class="matrix-table" style="margin-bottom:0;">
+        <tr><th>Measured at</th><th>What it tells you</th><th>What it hides</th></tr>
+        <tr><td>The infrastructure (host up, container running)</td><td>Whether the platform is alive</td><td>Every failure above the platform: a deployed bug, a dependency timeout, a full disk that returns errors from a running process</td></tr>
+        <tr><td>The load balancer (HTTP 200 rate)</td><td>Whether requests are being answered</td><td>Slow responses that time out on the client, correct-looking errors, and the customers who could not reach the load balancer at all</td></tr>
+        <tr><td>A synthetic transaction (a scripted checkout every minute from outside)</td><td>Whether the journey works end to end from the outside</td><td>Real user diversity: regions, devices, the edge case only real traffic hits</td></tr>
+        <tr><td>Real user monitoring (success rate of customer journeys as experienced)</td><td>What customers experienced</td><td>Nothing that matters, at the cost of more instrumentation; this is the number an SLO should be built on</td></tr>
+      </table>      <p style="margin-bottom:8px;">A defensible availability claim states the measurement point and the window. Five nines at the load balancer over a good quarter is not the same claim as four nines on real customer journeys over three years, and anyone doing diligence will ask which one you mean.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Benchmarks</span>
+      <h3>What published data says</h3>
+      <p>Published figures to sanity-check the downtime cost you put into the calculator. They are surveys, so treat them as a range check, not an input.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Benchmark</th><th>Published figure</th><th>How to use it</th></tr>
+          <tr><td>Hourly cost of downtime, mid-size and large enterprises</td><td>More than 90 percent put it above $300,000 an hour; 41 percent put it at $1M to over $5M. Survey of more than 1,000 firms, late 2023 to early 2024<sup class="src"><a href="#src-1" title="ITIC, 2024 Hourly Cost of Downtime Survey" style="font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;padding:0 1px">[1]</a></sup></td><td>These are enterprise-wide figures for a full outage. A single system usually costs far less: the checkout example above uses $40,000 an hour. If your per-system figure is above the survey range, check for double counting; if a revenue system is far below it, check what was left out.</td></tr>
+        </table>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--line);padding:12px 20px 14px;font-size:12px;color:var(--ink-soft);line-height:1.6"><span style="display:block;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;font-size:10.5px;margin-bottom:4px">Sources</span><ol style="margin:0;padding-left:20px"><li value="1" id="src-1"><a href="https://calyptix.com/wp-content/uploads/ITIC-2024-Hourly-Cost-of-Downtime-Survey-Results-Part-2.pdf" rel="noopener">ITIC, 2024 Hourly Cost of Downtime Survey</a></li></ol></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h3>The availability number that measures the wrong thing</h3>
+      <p>Reliability economics usually goes wrong by doing the arithmetic on a number that does not reflect the customer's experience. The arithmetic itself is rarely the problem.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">The pattern</span><p>The board deck reports 99.98% availability, measured as the percentage of minutes the load balancer returned a 200. Customer churn analysis shows that a meaningful share of cancellations cite reliability. Both are true: the checkout took nine seconds to respond for two weeks after a database change, every request returned 200, and no alert fired. The reliability investment case, built on the 99.98%, concluded no further spending was needed.</p></div>
+      <div class="stage-cell"><span class="env-label b">The way out</span><p>Define availability for each Tier 1 and Tier 2 system as the success rate of a named customer journey within a latency bound, measured from the client side. Rebuild the cost-of-downtime number against that definition. The number usually gets worse and the investment case usually gets clearer. See <a href="../observability-sre-operating-model/index.html">Observability &amp; SRE Operating Model</a> for how the measurement is built and who owns it.</p></div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs reliability spend isn't tied to economics</h3>
+      <p>What you see when reliability investment runs on instinct, with no stated cost-benefit basis.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>No system has a stated availability target tied to a cost-of-downtime calculation</li>
+          <li>Error budgets don't exist, so every incident is treated with the same severity regardless of whether targets were met</li>
+          <li>Redundancy investment is uniform across the estate, not tiered to criticality</li>
+          <li>The cost of the current reliability posture has never been compared to the cost of the downtime it prevents</li>
+          <li>&quot;We need to be more reliable&quot; gets stated with no number attached to what that would cost or save</li>
+          <li>The next nine gets pursued because it is technically achievable, whatever the math above says</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Downtime-budget figures are illustrative estimates; availability calculations depend on the exact SLA definition and measurement window used. See <a href="../observability-sre-operating-model/index.html" style="color:var(--accent);">Observability &amp; SRE Operating Model</a> for how the function that delivers reliability is organized. Error budgets and service level objectives as practiced here originate in Google's Site Reliability Engineering (O'Reilly, 2016). The economic framing and calculator are this site's.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+cell.innerHTML = '';
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
+function tag(v) { return '<span class="tag ' + (v === 'Worth it' ? 'good' : v === 'Not worth it' ? 'bad' : 'mid') + '">' + v + '</span>'; }
+function verdict(net, invest) { if (invest > 0 && Math.abs(net) <= 0.2 * invest) return 'Marginal'; return net > 0 ? 'Worth it' : 'Not worth it'; }
+
+var MIN = { '99': 5259.6, '99.9': 525.96, '99.95': 262.98, '99.99': 52.596 };
+var TIERS = [['99', '99%'], ['99.9', '99.9%'], ['99.95', '99.95%'], ['99.99', '99.99%']];
+var cols = [
+  { key: 'name', label: 'System', type: 'text', width: '150px', wide: true },
+  { key: 'cost', label: 'Downtime cost per hour ($)', type: 'number', min: 0, step: 1000 },
+  { key: 'cur', label: 'Current tier', type: 'select', options: TIERS },
+  { key: 'tgt', label: 'Target tier', type: 'select', options: TIERS },
+  { key: 'inv', label: 'Annual cost to reach target ($)', type: 'number', min: 0, step: 5000 }
+];
+var DEF = [
+  { name: 'Checkout', cost: 40000, cur: '99.9', tgt: '99.99', inv: 220000 },
+  { name: 'Internal reporting platform', cost: 2000, cur: '99.9', tgt: '99.99', inv: 180000 },
+  { name: 'Identity and single sign-on', cost: 30000, cur: '99.9', tgt: '99.95', inv: 90000 }
+];
+var t = RowTable.create({ mount: sec(), id: 're', columns: cols, rows: DEF, blank: { name: '', cost: 10000, cur: '99.9', tgt: '99.95', inv: 50000 }, addLabel: 'Add system', min: 1, max: 25, onChange: calc });
+var out = sec('div', 'tool-out');
+function rowsCalc() {
+  return t.get().map(function (r) {
+    var hc = MIN[r.cur] / 60, ht = MIN[r.tgt] / 60, avoided = Math.max(0, hc - ht) * (r.cost || 0), inv = r.inv || 0, net = avoided - inv, bad = parseFloat(r.tgt) <= parseFloat(r.cur);
+    return { r: r, hc: hc, ht: ht, avoided: avoided, inv: inv, net: net, bad: bad, v: bad ? 'Check tiers' : verdict(net, inv) };
+  }).sort(function (a, b) { return b.net - a.net; });
+}
+function calc() {
+  var R = rowsCalc(), h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>System</th><th>Downtime / yr now</th><th>At target</th><th>Loss avoided / yr</th><th>Cost / yr</th><th>Net / yr</th><th>Verdict</th></tr>';
+  R.forEach(function (x) {
+    h += '<tr><td>' + E(x.r.name || '(unnamed)') + '</td><td>' + x.hc.toFixed(1) + ' h</td><td>' + x.ht.toFixed(1) + ' h</td><td>' + $(x.avoided) + '</td><td>' + $(x.inv) + '</td><td>' + $(x.net) + '</td><td>' + (x.bad ? '<span class="tag mid">Target is not higher</span>' : tag(x.v)) + '</td></tr>';
+  });
+  h += '</table></div>';
+  var yes = R.filter(function (x) { return x.v === 'Worth it'; }), no = R.filter(function (x) { return x.v === 'Not worth it'; });
+  var s = '<div class="tool-sum"><strong>' + yes.length + ' of ' + R.length + (R.length === 1 ? ' upgrade' : ' upgrades') + (yes.length === 1 ? ' pays' : ' pay') + ' ' + (yes.length === 1 ? 'for itself' : 'for themselves') + '.</strong> ';
+  s += yes.length ? 'Approve: ' + E(yes.map(function (x) { return x.r.name; }).join(', ')) + ' (net ' + $(yes.reduce(function (a, x) { return a + x.net; }, 0)) + ' a year). ' : '';
+  s += no.length ? 'Decline or rescope: ' + E(no.map(function (x) { return x.r.name; }).join(', ')) + '. Ask what a cheaper step, such as a tested restore or a warm standby, would cost instead. ' : '';
+  s += '<br><br>This assumes downtime actually falls to the target tier rather than only being budgeted for. Measure availability from the user\'s side, not the load balancer\'s, or the avoided loss is overstated.</div>';
+  out.innerHTML = s + '<h4>By system, best return first</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 're', root: card, title: 'Reliability investment', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && s.rows && s.rows.length ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['System', 'Downtime cost per hour', 'Current tier (%)', 'Target tier (%)', 'Annual cost', 'Downtime now (h/yr)', 'Downtime at target (h/yr)', 'Loss avoided per year', 'Net per year', 'Verdict']];
+    rowsCalc().forEach(function (x) { rows.push([x.r.name, x.r.cost, x.r.cur, x.r.tgt, x.inv, x.hc.toFixed(2), x.ht.toFixed(2), Math.round(x.avoided), Math.round(x.net), x.v]); }); return rows; } });
+</script>
+<!-- /toolshare -->
+</body>
+</html>

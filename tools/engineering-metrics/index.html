@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Metrics</title>
+<meta name="description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.">
+<meta property="og:title" content="Engineering Metrics | CTO Toolkit">
+<meta property="og:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/engineering-metrics/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering Metrics | CTO Toolkit">
+<meta name="twitter:description" content="The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/engineering-metrics/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Engineering Metrics</h1>
+  <p>The five DORA metrics and their benchmark bands, why story points and lines of code persist despite being poor proxies, why distribution matters more than the average, and the trust problem that determines whether a metrics program survives contact with the organization.</p>
+  <div class="caveat">Benchmark bands below are the Elite and Low performance clusters from the 2024 State of DevOps report, the last edition to publish named clusters; the 2025 report switched to showing the percentile distribution of respondents instead. Treat the thresholds as reference points, not pass/fail lines. DORA expanded from four metrics to five in 2024, adding deployment rework rate as a third stability signal; a source that still says &quot;the four DORA metrics&quot; is describing the pre-2024 model.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>The five DORA metrics</h3>
+      <p>The closest thing the industry has to a validated, research-backed set of engineering performance metrics. They are an incomplete picture on their own, and still the right starting point before inventing something else.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Metric</th><th>What it measures</th><th>Elite (2024 cluster)</th><th>Low (2024 cluster)</th></tr>
+          <tr><td>Deployment frequency</td><td>How often code reaches production</td><td>On demand, multiple times a day</td><td>Between once per month and once every six months</td></tr>
+          <tr><td>Change lead time</td><td>Time from commit to running in production</td><td>Under one day</td><td>Between one month and six months</td></tr>
+          <tr><td>Change fail rate</td><td>Percentage of deployments requiring immediate intervention</td><td>Around 5 percent</td><td>Around 40 percent</td></tr>
+          <tr><td>Failed deployment recovery time</td><td>How long it takes to recover from a failed deployment</td><td>Under one hour</td><td>Between one week and one month</td></tr>
+          <tr><td>Deployment rework rate</td><td>Percentage of deployments that are unplanned rework fixing a previous release rather than new feature work</td><td colspan="2">No standardized industry band yet; track your own trend for this one</td></tr>
+        </table>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Deployment rework rate was added to the model in 2024<sup class="src"><a href="#src-1" title="DORA, 2024 Accelerate State of DevOps Report">[1]</a></sup> as a third stability signal alongside change fail rate. It's newer, and unlike the first four metrics, the industry hasn't converged on performance bands for it. That is a useful reminder that even a well-established framework keeps evolving, and that the confidence attached to a number should match how long it has been tested, not how official it sounds.</p>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://dora.dev/research/2024/dora-report/" rel="noopener">DORA, 2024 Accelerate State of DevOps Report</a></li></ol></div>
+</div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Classify your own numbers</h3>
+      <p>Enter one row per team. Each metric is banded against the table above: Elite means daily or more frequent deploys, lead time under a day, change fail rate of 5 percent or less, and recovery under an hour. Low means deploying less than about once a month, lead time over a month, change fail rate of 30 percent or more (a deliberately earlier cut than the 2024 Low cluster's roughly 40 percent), or recovery over a week. Anything between is reported as Medium here; the 2024 report split that middle into High and Medium clusters. The tool also flags teams whose speed is not matched by stability. Runs entirely in your browser; nothing is sent anywhere.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px 16px;">
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-deploy" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Deployment frequency (deploys per week)</label>
+            <input id="dora-deploy" type="number" value="5" min="0" step="0.1" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-lead" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Change lead time (hours, commit to production)</label>
+            <input id="dora-lead" type="number" value="4" min="0" step="0.1" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-fail" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Change fail rate (%)</label>
+            <input id="dora-fail" type="number" value="20" min="0" max="100" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-recovery" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Failed deployment recovery time (hours)</label>
+            <input id="dora-recovery" type="number" value="3" min="0" step="0.1" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+          <div style="border:1px solid var(--line); border-radius:8px; padding:12px 14px; background:var(--paper);">
+            <label for="dora-rework" style="display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;">Deployment rework rate (%, informational only)</label>
+            <input id="dora-rework" type="number" value="15" min="0" max="100" style="width:100%; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;">
+          </div>
+        </div>
+        <button id="dora-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Classify</button>
+        <div id="dora-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>What not to measure, and why it persists anyway</h3>
+      <p>Story points, lines of code, and commit count remain common despite being well understood as poor proxies. Worth naming why they persist.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why they're wrong</span>
+        <p>Story points measure estimation, not output, and are calibrated differently per team, making cross-team comparison meaningless. Lines of code rewards verbosity over good design. Commit count rewards small, frequent commits over meaningful ones, and is trivially gamed the moment someone knows it's being watched.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Why they persist</span>
+        <p>They're easy to pull from existing tools with no new instrumentation, and they produce a number, which satisfies a reporting requirement even when the number means very little. Replacing them requires investing in DORA-style instrumentation that most orgs haven't built yet.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Distribution over average</h3>
+      <p>The mistake people make most often when reading engineering metrics: reporting a mean when the distribution is what matters.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why the average lies</span>
+        <p>A team with a median lead time of two hours and a long tail of three-week outliers has a very different problem than a team with a consistent two-day lead time across the board, but both can produce the same average. The fix rarely looks the same for both.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to look at instead</span>
+        <p>Report the median and the 90th percentile together. The median tells you what's typical; the gap between median and p90 tells you how bad the worst case gets, and that gap is usually where the operational risk lives.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Using metrics without weaponizing them</h3>
+      <p>The trust problem that kills a metrics program faster than any technical flaw in the metrics themselves.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What holds up</span>
+        <p>Metrics owned and reviewed at the team level first, with the team using them to improve their own process, before any number rolls up to a leadership dashboard. People who see a metric being used to improve their own work engage with it in good faith.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What doesn't</span>
+        <p>Individual-level metrics tied to performance review, or a leadership dashboard that ranks teams against each other. Both produce the same response: people optimize for the number instead of the outcome the number was supposed to represent, and the metric stops meaning anything.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Beyond DORA: what the five metrics don't capture</h3>
+      <p>DORA measures delivery. It says nothing about the team's health or whether the work being delivered is sustainable.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Signal</th><th>What it catches that DORA misses</th></tr>
+          <tr><td>Code review turnaround time</td><td>A team can deploy frequently while pull requests sit unreviewed for days; this is often the bottleneck hiding inside DORA's lead time number</td></tr>
+          <tr><td>Pages per on-call rotation</td><td>Elite change fail rate and failed deployment recovery time can coexist with an on-call rotation that's burning people out through sheer volume of low-severity noise</td></tr>
+          <tr><td>Technical debt ratio (tracked debt items versus new feature work merged)</td><td>Delivery metrics can look healthy for months while debt accumulates invisibly until it surfaces as a sudden change fail rate spike</td></tr>
+          <tr><td>Time-to-first-commit for new hires</td><td>A slow, painful onboarding process doesn't show up in any DORA number until the new hire's productivity ramp is already six weeks behind where it should be</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>The conversation is the point, and the dashboard is only the prompt</h3>
+      <p>A metrics program that produces a dashboard nobody discusses has produced nothing.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Where metrics earn their keep</span>
+        <p>In a team retro, where the team itself asks why lead time crept up this sprint and proposes a change to test next sprint, or in a 1:1 where a manager notices a specific engineer's review turnaround has doubled and asks what's going on before it becomes a pattern. The number starts the conversation. It isn't the output.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where they don't</span>
+        <p>A dashboard displayed in a wiki that gets glanced at during a monthly all-hands and never referenced between updates. Building the dashboard is the easy 20 percent; making it something a team uses to change a decision is the hard 80 percent, and most metrics programs stop at the easy part.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>A worked example</h3>
+      <p>What reading distribution instead of average looks like against concrete numbers.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>The team:</strong> eight engineers, reports a median lead time of 4 hours (inside the Elite band) and a change fail rate of 12 percent (between the High and Medium clusters). By the headline numbers, a strong team.</p>
+        <p><strong>The distribution check:</strong> p90 lead time is 11 days. Roughly one deployment in ten is taking over a week and a half, dragging against a median that looks fine. Digging in, the p90 outliers cluster around one specific service with a manual, undocumented deployment step that only two engineers know how to run.</p>
+        <p><strong>What the average would have hidden:</strong> a leadership dashboard reporting only the median would show this team as healthy indefinitely, right up until both engineers who know the manual step are unavailable during an incident on that specific service, at which point failed deployment recovery time, the metric that matters most in the moment, blows well past any benchmark band.</p>
+        <p><strong>The fix that came out of the conversation:</strong> the team automated the manual step as a two-week investment, dropping p90 lead time to under two days within the next reporting cycle. The median barely moved, because the median was never the problem.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Benchmark bands shift as the industry's baseline improves; verify against current State of DevOps research before using specific thresholds in a review. The DORA metrics and their benchmark bands come from DORA (DevOps Research and Assessment, now part of Google Cloud) and the State of DevOps reports, with the underlying research in Nicole Forsgren, Jez Humble, and Gene Kim, Accelerate (IT Revolution, 2018). The interpretation and the calculator are this site's.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+
+</footer>
+
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+cell.innerHTML = '';
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
+function tag(v) { return '<span class="tag ' + (v === 'Worth it' ? 'good' : v === 'Not worth it' ? 'bad' : 'mid') + '">' + v + '</span>'; }
+function verdict(net, invest) { if (invest > 0 && Math.abs(net) <= 0.2 * invest) return 'Marginal'; return net > 0 ? 'Worth it' : 'Not worth it'; }
+
+var WEEK = 7 * 24;
+function band(v, elite, low) { return elite(v) ? 'Elite' : (low(v) ? 'Low' : 'Medium'); }
+function bands(r) {
+  return {
+    deploy: band(r.deploy || 0, function (v) { return v >= 7; }, function (v) { return v < 12 / 52; }),
+    lead: band(r.lead || 0, function (v) { return v < 24; }, function (v) { return v > 30 * 24; }),
+    fail: band(r.fail || 0, function (v) { return v <= 5; }, function (v) { return v >= 30; }),
+    rec: band(r.rec || 0, function (v) { return v < 1; }, function (v) { return v > WEEK; })
+  };
+}
+var cols = [
+  { key: 'name', label: 'Team', type: 'text', width: '130px', wide: true },
+  { key: 'deploy', label: 'Deploys per week', type: 'number', min: 0, step: 0.1 },
+  { key: 'lead', label: 'Lead time (hours)', type: 'number', min: 0, step: 0.1 },
+  { key: 'fail', label: 'Change fail rate (%)', type: 'number', min: 0, max: 100, step: 1 },
+  { key: 'rec', label: 'Recovery time (hours)', type: 'number', min: 0, step: 0.1 },
+  { key: 'rework', label: 'Rework rate (%)', type: 'number', min: 0, max: 100, step: 1 }
+];
+var DEF = [
+  { name: 'Checkout', deploy: 10, lead: 4, fail: 12, rec: 2, rework: 9 },
+  { name: 'Mobile', deploy: 2, lead: 72, fail: 8, rec: 6, rework: 6 },
+  { name: 'Platform', deploy: 8, lead: 10, fail: 4, rec: 0.5, rework: 3 },
+  { name: 'Billing', deploy: 0.2, lead: 900, fail: 35, rec: 200, rework: 20 }
+];
+var t = RowTable.create({ mount: sec(), id: 'dora', columns: cols, rows: DEF, blank: { name: '', deploy: 5, lead: 24, fail: 15, rec: 4, rework: 10 }, addLabel: 'Add team', min: 1, max: 30, onChange: calc });
+var out = sec('div', 'tool-out');
+var C = { Elite: 'good', Medium: 'mid', Low: 'bad' };
+function b(x) { return '<span class="tag ' + C[x] + '">' + x + '</span>'; }
+function calc() {
+  var R = t.get(), h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Team</th><th>Deploy frequency</th><th>Lead time</th><th>Change fail rate</th><th>Recovery</th><th>Rework</th></tr>', flags = [], low = [];
+  R.forEach(function (r) {
+    var x = bands(r);
+    h += '<tr><td>' + E(r.name || '(unnamed)') + '</td><td>' + b(x.deploy) + '</td><td>' + b(x.lead) + '</td><td>' + b(x.fail) + '</td><td>' + b(x.rec) + '</td><td>' + (r.rework != null ? r.rework + '%' : '') + '</td></tr>';
+    if ((x.deploy === 'Elite' || x.lead === 'Elite') && (x.fail !== 'Elite' || x.rec !== 'Elite')) flags.push(E(r.name) + ': fast (' + (x.lead === 'Elite' ? 'lead time' : 'deploy frequency') + ' Elite) but change fail rate is ' + x.fail + ' and recovery is ' + x.rec + '. Speed without stability shows up as customer-facing incidents; look at test coverage and change size before pushing for more throughput.');
+    if ([x.deploy, x.lead, x.fail, x.rec].filter(function (v) { return v === 'Low'; }).length >= 2) low.push(E(r.name));
+  });
+  h += '</table></div>';
+  var s = '<div class="tool-sum"><strong>' + R.length + ' teams classified.</strong> ' + (flags.length ? flags.length + (flags.length === 1 ? ' shows' : ' show') + ' throughput running ahead of stability. ' : 'No team shows throughput running ahead of stability. ') + (low.length ? 'Low on two or more measures: ' + low.join(', ') + '. Start with lead time and batch size there, not tooling.' : '') +
+    '<br><br>Compare each team against its own trend, not against the other teams. The bands describe the industry, not a target for any single team, and rework rate has no standard band yet.</div>';
+  out.innerHTML = s + (flags.length ? '<h4>Speed ahead of stability</h4><ul>' + flags.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' : '') + '<h4>Bands by team</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 'dora', root: card, title: 'Delivery metrics by team', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && s.rows && s.rows.length ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['Team', 'Deploys per week', 'Lead time (h)', 'Change fail rate (%)', 'Recovery (h)', 'Rework (%)', 'Deploy band', 'Lead time band', 'Fail rate band', 'Recovery band']];
+    t.get().forEach(function (r) { var x = bands(r); rows.push([r.name, r.deploy, r.lead, r.fail, r.rec, r.rework, x.deploy, x.lead, x.fail, x.rec]); }); return rows; } });
+</script>
+<!-- /toolshare -->
+</body>
+</html>

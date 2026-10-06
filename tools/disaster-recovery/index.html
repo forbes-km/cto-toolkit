@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Recovery &amp; Business Continuity</title>
+<meta name="description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.">
+<meta property="og:title" content="Disaster Recovery &amp;amp; Business Continuity | CTO Toolkit">
+<meta property="og:description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/disaster-recovery/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Disaster Recovery &amp;amp; Business Continuity | CTO Toolkit">
+<meta name="twitter:description" content="What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/disaster-recovery/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Disaster Recovery &amp; Business Continuity</h1>
+  <p>What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.</p>
+  <div class="caveat">General DR/BC framework. See <a href="../incident-response/index.html">Incident Response</a> for the process that handles ordinary outages; this page is about recovery from the loss of an entire system, region, or facility.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>RTO and RPO, defined by tier</h3>
+      <p>Recovery Time Objective is how long the business can tolerate a system being down. Recovery Point Objective is how much data loss is acceptable. Set both from business impact, not from what is technically easy.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Tier</th><th>Example systems</th><th>Typical RTO</th><th>Typical RPO</th></tr>
+          <tr><td>Tier 1: Revenue-critical</td><td>Payment processing, core transaction systems, customer-facing platform</td><td>Minutes to under 1 hour</td><td>Near-zero, seconds to minutes</td></tr>
+          <tr><td>Tier 2: Operationally important</td><td>Internal tools, reporting, secondary customer channels</td><td>4 to 24 hours</td><td>Minutes to hours</td></tr>
+          <tr><td>Tier 3: Deferred impact</td><td>Archival systems, non-urgent internal tools</td><td>Days</td><td>Up to 24 hours</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Setting RTO and RPO</h3>
+      <p>DR most often fails because the target was never realistic to begin with; the bad recovery only exposes it.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Do this</span>
+        <p>Ask the business owner what happens at 1 hour, 4 hours, and 24 hours of downtime for each system, in dollars or customer impact, then set the target from that answer. The target should hurt to miss; if missing it wouldn't matter, the system is probably a lower tier than it's currently classified.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Watch for</span>
+        <p>An RTO of 4 hours written into a policy document, never tested, while the infrastructure would take 2 days to recover. The number in the policy and the true number are different, and nobody finds out which one is real until a disaster.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Backup testing discipline</h3>
+      <p>A backup that has never been restored is a hypothesis.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Scheduled, automated restore tests (not manual ones someone remembers now and then), with the restore time measured and compared against the stated RTO every time. A backup that restores successfully but takes 3x longer than the RTO promises is a finding.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Backups that run successfully and are never restored until the day they're needed, at which point corruption, missing dependencies, or forgotten configuration steps turn a routine recovery into an extended outage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Tabletop exercises</h3>
+      <p>Rehearsing the decision-making as well as the technical recovery steps.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to do</span>
+        <p>A scheduled exercise, at least annually for Tier 1 systems, that walks a realistic scenario end to end: who declares the disaster, who has authority to fail over, how customers get notified, and how the team knows recovery is complete and not just looking normal again.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it goes wrong</span>
+        <p>A DR plan that's technically sound but has never been rehearsed by the humans who'd execute it, so the event itself surfaces confusion about authority and sequencing that the document assumed away.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Multi-region versus single-region, costed</h3>
+      <p>Multi-region resilience is expensive, and the expense is often invisible until someone prices it out.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to run it</span>
+        <p>Cost the multi-region architecture (data replication, cross-region networking, the operational overhead of maintaining two live environments) against the quantified cost of the downtime it prevents. For revenue-critical systems, this usually clears the bar. For everything else, it often doesn't.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it breaks</span>
+        <p>Multi-region architecture applied uniformly across the whole estate because it feels like the responsible default, without anyone pricing whether the systems getting that treatment warrant it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Answering the board question</h3>
+      <p>&quot;What's our recovery time if we lose a region&quot; is a standard board question. A credible answer is specific. Reassurance doesn't count.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A credible answer names the tier, states the tested RTO with the date it was last verified, and states which systems don't yet meet target. &quot;We're covered&quot; without those specifics is the answer of someone who hasn't tested it recently, and board members who've heard that answer before know the difference.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Is the faster recovery time worth its cost?</h3>
+      <p>List the systems you are deciding on. For each, the tool compares the expected annual value of a faster recovery (probability of an event, times hours saved, times downtime cost) with what the faster RTO costs, then ranks the systems. It is the same expected-value logic as before, applied across the estate. Runs entirely in your browser; nothing is sent anywhere.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div style="display:grid; grid-template-columns: 300px 1fr; gap:10px 16px; align-items:center; font-size:13px; max-width:600px;">
+          <label for="dr-cost">Cost of downtime, per hour ($)</label>
+          <input id="dr-cost" type="number" value="25000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-current-rto">Current RTO (hours)</label>
+          <input id="dr-current-rto" type="number" value="24" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-target-rto">Target RTO (hours)</label>
+          <input id="dr-target-rto" type="number" value="4" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-prob">Probability of a disaster event this year (%)</label>
+          <input id="dr-prob" type="number" value="20" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+
+          <label for="dr-invest">Annual cost to reach the faster RTO ($)</label>
+          <input id="dr-invest" type="number" value="150000" style="padding:6px 8px; border:1px solid var(--line); border-radius:5px; font-family:var(--mono); font-size:13px;">
+        </div>
+        <button id="dr-calc" style="margin-top:16px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate</button>
+        <div id="dr-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Communicating DR investment as insurance</h3>
+      <p>See <a href="../cto-cfo-relationship/index.html">Working with the CFO</a> for the general argument about when ROI framing doesn't fit. DR spend is one of the clearest examples.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What good looks like</span>
+        <p>Frame DR investment the way an insurance purchase gets framed: an expected-value calculation across many possible years, not a promised return in any single one. The probability input in the calculator above is an estimate, and saying so out loud is more credible than pretending it is precise.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What usually happens</span>
+        <p>Presenting a DR business case with the same confident ROI language used for a revenue-generating feature, which invites the wrong question, &quot;did we get that return this year,&quot; when the true answer is that a well-run DR program often means the disaster didn't happen to test it.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Standards and regulatory expectations</h3>
+      <p>Obligations differ by sector; this is where most auditors and examiners start.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>What it expects</th></tr>
+          <tr><td>ISO 22301:2019</td><td>A certifiable business continuity management system: impact analysis, strategies, exercises, and improvement<sup class="src"><a href="#src-1" title="ISO 22301:2019, Business continuity management systems">[1]</a></sup></td></tr>
+          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>For EU financial entities since January 2025: tested ICT continuity and recovery plans, and threat-led penetration testing at least every three years for entities designated as significant<sup class="src"><a href="#src-2" title="Regulation (EU) 2022/2554 (Digital Operational Resilience Act)">[2]</a></sup></td></tr>
+          <tr><td>HIPAA Security Rule, 45 CFR 164.308(a)(7)</td><td>A contingency plan with data backup, disaster recovery, emergency mode operation, and testing<sup class="src"><a href="#src-3" title="45 CFR 164.308(a)(7), contingency plan">[3]</a></sup></td></tr>
+          <tr><td>FFIEC Business Continuity Management booklet (2019)</td><td>US financial institutions: resilience across the whole organization, including third parties<sup class="src"><a href="#src-4" title="FFIEC, revised Business Continuity Management booklet, November 2019">[4]</a></sup></td></tr>
+          <tr><td>NIST SP 800-34 Rev. 1</td><td>Contingency planning guide for information systems; widely used outside government<sup class="src"><a href="#src-5" title="NIST SP 800-34 Rev. 1, Contingency Planning Guide">[5]</a></sup></td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.iso.org/standard/75106.html" rel="noopener">ISO 22301:2019, Business continuity management systems</a></li><li value="2" id="src-2"><a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj" rel="noopener">Regulation (EU) 2022/2554 (Digital Operational Resilience Act)</a></li><li value="3" id="src-3"><a href="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C/section-164.308" rel="noopener">45 CFR 164.308(a)(7), contingency plan</a></li><li value="4" id="src-4"><a href="https://www.ffiec.gov/news/press-releases/2019/pr-11-14" rel="noopener">FFIEC, revised Business Continuity Management booklet, November 2019</a></li><li value="5" id="src-5"><a href="https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final" rel="noopener">NIST SP 800-34 Rev. 1, Contingency Planning Guide</a></li></ol></div>
+</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Ransomware changes the recovery design</h3>
+      <p>Most DR plans assume the failure is an outage. Ransomware assumes the attacker has already reached the backups.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Design for it</span>
+        <p>Keep at least one backup copy immutable or offline, restore into an isolated clean environment, and rebuild identity systems first, since a compromised identity provider re-infects everything restored after it. The 3-2-1-1-0 rule summarizes it: three copies, two media, one offsite, one immutable or offline, zero errors on test restores.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Test for it</span>
+        <p>A tabletop that assumes backups are encrypted, and a timed restore of a critical system from the immutable copy alone. The time measured there, not the replication lag, is the realistic recovery time.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Benchmarks</span>
+      <h3>What published data says</h3>
+      <p>A published reference point for the downtime cost input in the RTO calculator.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Benchmark</th><th>Published figure</th><th>How to use it</th></tr>
+          <tr><td>Hourly cost of downtime, mid-size and large enterprises</td><td>More than 90 percent put it above $300,000 an hour; 41 percent put it at $1M to over $5M. Survey of more than 1,000 firms, late 2023 to early 2024<sup class="src"><a href="#src-6" title="ITIC, 2024 Hourly Cost of Downtime Survey">[6]</a></sup></td><td>Use it to challenge an estimate that looks too low for the business-critical tier, not as the number for every system. Lower tiers should be priced from their own revenue and workaround cost.</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="6" id="src-6"><a href="https://calyptix.com/wp-content/uploads/ITIC-2024-Hourly-Cost-of-Downtime-Survey-Results-Part-2.pdf" rel="noopener">ITIC, 2024 Hourly Cost of Downtime Survey</a></li></ol></div>
+  </div>
+
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>DR red flags</h3>
+      <p>What you see when a disaster recovery program looks complete in the binder and isn't.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>RTO and RPO targets exist in a document but have never been tested against measured recovery time</li>
+          <li>The last full-scale restore test or tabletop exercise was more than a year ago, or has never happened</li>
+          <li>Recovery depends on one person's memory, with no documented, rehearsed runbook</li>
+          <li>Backup and primary infrastructure share a failure domain, same region, same provider account, same network path, undermining the recovery they're meant to enable</li>
+          <li>Tier classification hasn't been revisited since the systems it covers changed significantly</li>
+          <li>DR investment gets pitched with guaranteed-return ROI language when it is really insurance against a probabilistic event</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. RTO and RPO targets, testing cadence, and regulatory DR obligations vary by industry; treat this as a starting framework, not a compliance checklist.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell');
+cell.innerHTML = '';
+var E = RowTable.esc, $ = RowTable.money;
+function sec(tag, cls) { var d = document.createElement(tag || 'div'); if (cls) d.className = cls; cell.appendChild(d); return d; }
+function tag(v) { return '<span class="tag ' + (v === 'Worth it' ? 'good' : v === 'Not worth it' ? 'bad' : 'mid') + '">' + v + '</span>'; }
+function verdict(net, invest) { if (invest > 0 && Math.abs(net) <= 0.2 * invest) return 'Marginal'; return net > 0 ? 'Worth it' : 'Not worth it'; }
+
+var cols = [
+  { key: 'name', label: 'System', type: 'text', width: '150px', wide: true },
+  { key: 'cost', label: 'Downtime cost per hour ($)', type: 'number', min: 0, step: 1000 },
+  { key: 'cur', label: 'Current RTO (hours)', type: 'number', min: 0, step: 0.5 },
+  { key: 'tgt', label: 'Target RTO (hours)', type: 'number', min: 0, step: 0.5 },
+  { key: 'p', label: 'Event probability per year (%)', type: 'number', min: 0, max: 100, step: 1 },
+  { key: 'inv', label: 'Annual cost of target RTO ($)', type: 'number', min: 0, step: 5000 }
+];
+var DEF = [
+  { name: 'Claims processing', cost: 25000, cur: 24, tgt: 4, p: 20, inv: 150000 },
+  { name: 'Customer portal', cost: 15000, cur: 12, tgt: 2, p: 10, inv: 90000 },
+  { name: 'Order platform', cost: 40000, cur: 24, tgt: 4, p: 10, inv: 70000 },
+  { name: 'Internal reporting', cost: 2000, cur: 48, tgt: 8, p: 10, inv: 30000 }
+];
+var out;
+var t = RowTable.create({ mount: sec(), id: 'dr', columns: cols, rows: DEF, blank: { name: '', cost: 10000, cur: 24, tgt: 4, p: 10, inv: 50000 }, addLabel: 'Add system', min: 1, max: 25, onChange: calc });
+out = sec('div', 'tool-out');
+function rowsCalc() {
+  return t.get().map(function (r) {
+    var saved = Math.max(0, (r.cur || 0) - (r.tgt || 0)), val = (Math.min(100, r.p || 0) / 100) * saved * (r.cost || 0), inv = r.inv || 0, net = val - inv;
+    return { r: r, saved: saved, val: val, inv: inv, net: net, bad: (r.tgt || 0) >= (r.cur || 0), v: (r.tgt || 0) >= (r.cur || 0) ? 'Check RTOs' : verdict(net, inv) };
+  }).sort(function (a, b) { return b.net - a.net; });
+}
+function calc() {
+  var R = rowsCalc(), h = '', tv = 0, ti = 0, fund = 0, fundInv = 0;
+  h += '<div class="rt-wrap"><table class="matrix-table"><tr><th>System</th><th>Hours saved per event</th><th>Expected value / yr</th><th>Cost / yr</th><th>Net / yr</th><th>Verdict</th></tr>';
+  R.forEach(function (x) {
+    tv += x.val; ti += x.inv; if (x.v === 'Worth it') { fund += x.net; fundInv += x.inv; }
+    h += '<tr><td>' + E(x.r.name || '(unnamed)') + '</td><td>' + x.saved.toFixed(1) + '</td><td>' + $(x.val) + '</td><td>' + $(x.inv) + '</td><td>' + $(x.net) + '</td><td>' + (x.bad ? '<span class="tag mid">Target is not faster</span>' : tag(x.v)) + '</td></tr>';
+  });
+  h += '</table></div>';
+  var worth = R.filter(function (x) { return x.v === 'Worth it'; }).map(function (x) { return x.r.name; });
+  var s = '<div class="tool-sum"><strong>Fund: ' + (worth.length ? E(worth.join(', ')) : 'none at these numbers') + '.</strong><br>';
+  s += 'Funding only those systems costs ' + $(fundInv) + ' a year and returns ' + $(fund) + ' a year of expected value above its cost. Funding everything listed would cost ' + $(ti) + ' for ' + $(tv) + ' of expected value.<br><br>';
+  s += 'These are expected values across many possible years, not a promise for any one year; treat the decision the way an insurance purchase is treated. For systems marked Not worth it, check whether the probability or the downtime cost is understated before dropping them, and whether a cheaper step, such as a tested restore, closes most of the gap.</div>';
+  out.innerHTML = s + '<h4>By system, best return first</h4>' + h;
+}
+calc();
+ToolShare.register({ id: 'dr', root: card, title: 'Disaster recovery investment', getState: function () { return { rows: t.get() }; }, setState: function (s) { t.set(s && s.rows && s.rows.length ? s.rows : DEF); calc(); },
+  csv: function () { var rows = [['System', 'Downtime cost per hour', 'Current RTO (h)', 'Target RTO (h)', 'Probability (%)', 'Annual cost', 'Hours saved', 'Expected value per year', 'Net per year', 'Verdict']];
+    rowsCalc().forEach(function (x) { rows.push([x.r.name, x.r.cost, x.r.cur, x.r.tgt, x.r.p, x.inv, x.saved, Math.round(x.val), Math.round(x.net), x.v]); }); return rows; } });
+</script>
+<!-- /toolshare -->
+</body>
+</html>
