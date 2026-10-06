@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud FinOps</title>
+<meta name="description" content="Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta property="og:title" content="Cloud FinOps | CTO Toolkit">
+<meta property="og:description" content="Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/cloud-cost-management/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cloud FinOps | CTO Toolkit">
+<meta name="twitter:description" content="Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/cloud-cost-management/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Cloud FinOps</h1>
+  <p>Managing general infrastructure spend as a standing discipline, so it stops being a quarterly panic every time finance asks why the cloud bill jumped. Distinct from AI-specific cost modeling.</p>
+  <div class="caveat">This covers general cloud infrastructure cost, compute, storage, networking, data services, using the FinOps Foundation's own framework. For token-based pricing, PTU and reserved capacity, and GPU amortization on AI workloads, see the <a href="../ai-finops-map/index.html">AI FinOps Map</a>. AI is a separate recognized Scope under the same Foundation framework. The Foundation itself publishes the full framework, certifications, and the FOCUS specification at <a href="https://www.finops.org" target="_blank" rel="noopener">finops.org</a>.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Phases: one building block of a larger framework</h3>
+      <p>These are the FinOps Foundation's own Phases. The Foundation is the industry body (under the Linux Foundation) that maintains the full FinOps Framework and the FOCUS billing specification referenced throughout this page. The complete framework also includes Principles, Personas, Domains and Capabilities, Technology Categories, and Scopes, and the Foundation's current definition centers on maximizing the business value of technology spend broadly rather than cloud alone. The 2026 framework names five Technology Categories, public cloud, SaaS, data center, data cloud platforms, and AI, and treats a Scope as a business-defined slice of spend across those categories, started because a business question needs answering.<sup class="src"><a href="#src-1" title="FinOps Foundation, FinOps Framework 2026, March 2026">[1]</a></sup> This page covers public cloud infrastructure, which is why AI cost modeling has its own page.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Phase</th><th>Focus</th><th>Typical activities</th></tr>
+          <tr><td>Inform</td><td>Visibility and allocation</td><td>Tagging, showback, budgets, forecasting, benchmarking spend against peers</td></tr>
+          <tr><td>Optimize</td><td>Reducing waste and improving rates</td><td>Rightsizing, reserved capacity and commitment discounts, workload rearchitecture for cost efficiency</td></tr>
+          <tr><td>Operate</td><td>Continuous governance</td><td>Automated policies, anomaly detection, aligning engineering and finance around cost as a shared, ongoing metric</td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.finops.org/insights/2026-finops-framework/" rel="noopener">FinOps Foundation, FinOps Framework 2026, March 2026</a></li></ol></div>
+</div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Diagram</span>
+      <h3>The phases are a loop, not a sequence</h3>
+      <p>Organizations cycle through all three repeatedly, at different maturity for different parts of the estate.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
+<div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fo-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="fo-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="fo-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="fo-title">FinOps phases as a continuous loop</title><rect x="330" y="30" width="220" height="80" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="440.0" y="56.5" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Inform</text>
+<text x="440.0" y="73.5" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">visibility and allocation</text>
+<text x="440.0" y="90.5" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">tagging, showback, budgets</text>
+<rect x="590" y="190" width="220" height="80" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="700.0" y="216.5" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Optimize</text>
+<text x="700.0" y="233.5" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">reduce waste, improve rates</text>
+<text x="700.0" y="250.5" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">rightsizing, commitments</text>
+<rect x="70" y="190" width="220" height="80" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="180.0" y="216.5" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Operate</text>
+<text x="180.0" y="233.5" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">continuous governance</text>
+<text x="180.0" y="250.5" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">policies, anomaly alerts</text>
+<line x1="552" y1="90" x2="650" y2="188" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#fo-a)"/>
+<line x1="588" y1="240" x2="292" y2="240" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#fo-a)"/>
+<line x1="230" y1="188" x2="328" y2="90" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#fo-a)"/>
+<text x="440.0" y="175.0" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Each pass is driven</text>
+<text x="440.0" y="192.0" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">by a business question</text>
+<text x="440.0" y="312.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Most programs stall between Inform and Optimize: savings are found but nobody owns the spend they sit in.</text></svg></div>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Phase names and focus areas are the FinOps Foundation's, as summarized in the table above.</p>
+    </div></div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Where cost hides</h3>
+      <p>The categories that consistently account for the largest share of avoidable spend, in roughly the order worth checking first. This is the Optimize phase in practice.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Category</th><th>What to look for</th></tr>
+          <tr><td>Idle and oversized compute</td><td>Instances provisioned for a peak load that rarely occurs, running at 10-15 percent utilization around the clock</td></tr>
+          <tr><td>Non-production environments</td><td>Dev, staging, and QA environments running 24/7 when they're only used during business hours</td></tr>
+          <tr><td>Orphaned resources</td><td>Volumes, snapshots, and load balancers left behind after the workload that used them was decommissioned</td></tr>
+          <tr><td>Untagged spend</td><td>Cost with no owning team attached, which nobody feels accountable for reducing because nobody's dashboard shows it</td></tr>
+          <tr><td>Storage tiering</td><td>Data sitting in a hot storage tier years after it stopped being accessed regularly</td></tr>
+          <tr><td>Data egress</td><td>Cross-region or cross-cloud transfer that could be avoided with different architecture, often invisible until the bill arrives</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Rightsizing and idle elimination</h3>
+      <p>The fastest money on the table, and the easiest to let slide once the first sweep is done.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Automated shutdown for non-production environments outside business hours, utilization-based rightsizing recommendations reviewed monthly, and a default assumption that any resource untouched for 90 days gets flagged for a decommission decision.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Treating this as a one-time cleanup sprint instead of an ongoing practice. Six months after the sweep, utilization has drifted again and nobody's watching, because the tooling that found the savings the first time was never left running.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Reserved capacity and commitment strategy</h3>
+      <p>Committing to reserved instances or savings plans locks in a discount and locks in a bet about future usage. Both halves matter.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to do</span>
+        <p>Commit only on the stable baseline, the usage level that's been consistent for at least six months, and use on-demand or short-term commitments for anything still growing or shrinking. Ladder commitment terms so not everything renews at once, which avoids a cliff where the whole discount structure needs renegotiating simultaneously.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it goes wrong</span>
+        <p>Overcommitting based on a growth projection that doesn't materialize, then paying for reserved capacity that sits unused, which is a worse outcome than paying on-demand rates for the same idle resource would have been.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Tagging, showback, and chargeback</h3>
+      <p>Cost visibility changes behavior. Cost invisibility guarantees nobody optimizes anything they can't see themselves accountable for.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to run it</span>
+        <p>A mandatory tagging policy enforced when the resource is created, not patched in later by a cleanup script, with showback reporting that puts each team's spend in front of that team monthly. Chargeback, where teams' budgets are directly debited, is a stronger lever but works only once tagging discipline is already solid.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it breaks</span>
+        <p>Rolling out chargeback before tagging is reliable, which produces disputed, inaccurate bills that teams learn to ignore. Trust in the numbers has to come before the numbers carry financial weight.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Governance without becoming a bottleneck</h3>
+      <p>The tension every cost program eventually hits: enough control to prevent waste, without so much that provisioning something new takes a week of approvals.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What good looks like</span>
+        <p>Guardrails over gatekeeping: budget alerts that trigger automatically, instance-size policies enforced by infrastructure-as-code instead of manual review, and approvals reserved for large or unusual spend. Most cost control should be invisible to an engineer working within normal bounds.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What usually happens</span>
+        <p>An approval queue that becomes the default path for routine provisioning, which teaches engineers to over-request once to avoid asking twice, producing the exact oversizing the governance process was meant to prevent.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>FOCUS: a shared billing language across clouds</h3>
+      <p>The FinOps Foundation's second major contribution beyond the phase model, and the reason cross-cloud cost comparison stopped being a manual exercise.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What it solves</span>
+        <p>Before FOCUS (the FinOps Open Cost and Usage Specification), comparing a dollar of AWS spend to a dollar of Azure spend meant manually normalizing wildly different billing export formats, column names, and units. FOCUS is an open, vendor-neutral spec, now adopted by AWS, Microsoft, Google, and others, that puts every provider's billing data into the same shape.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it doesn't solve</span>
+        <p>FOCUS standardizes the data format and leaves the underlying pricing and discount structures untouched. A normalized bill still requires the same rightsizing and commitment discipline covered above. FOCUS removes the translation tax from the reporting layer; the practice itself still has to happen.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Crawl, Walk, Run, applied practically</h3>
+      <p>The FinOps Foundation's maturity model, stated concretely enough that you can assess against it instead of just claiming a stage.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What distinguishes each stage</span>
+        <p><strong>Crawl:</strong> tagging exists but is inconsistent, cost visibility is monthly and reactive, no forecasting. <strong>Walk:</strong> tagging enforced at creation, showback running, budgets set proactively, rightsizing is a recurring practice with an owner. <strong>Run:</strong> chargeback in place, unit economics tracked (cost per customer or transaction), anomaly detection automated, cost is a first-class input to architecture decisions rather than an afterthought.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>Treating maturity as a label to claim instead of a description of what is going on. An organization that calls itself &quot;Run&quot; but can't answer what a single team spent last month is Crawl with better branding.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score your own FinOps maturity</h3>
+      <p>Six of the FinOps Framework's capabilities, the ones that most reliably separate stages of maturity, scored now and at target. The tool maps each score to Crawl, Walk, or Run, applies this page's rule that allocation caps everything else, and gives a next step for every gap. Runs entirely in your browser; nothing is sent anywhere.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="cf-inputs"></div>
+        <button id="cf-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate maturity score</button>
+        <div id="cf-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Allocation methods for multi-account, multi-BU estates</h3>
+      <p>Section 3 covers tagging discipline as the prerequisite. Once tagging is reliable, the question becomes which allocation method to run on top of it, and shared infrastructure that no single team's tags can attribute cleanly is where most multi-BU chargeback programs stall.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Method</th><th>How it splits shared cost</th><th>Where it fits</th></tr>
+          <tr><td>Direct allocation</td><td>Cost attributed to the team or BU whose tag is on the resource, no splitting required</td><td>Dedicated compute, storage, and services with clean tagging; the majority of spend in a mature program</td></tr>
+          <tr><td>Even split</td><td>Shared cost (a common network egress bill, a shared database cluster) divided equally across consuming teams regardless of actual usage</td><td>A fast starting point when metering shared usage isn't built yet; crude, and worth replacing with proportional splitting once the metering exists</td></tr>
+          <tr><td>Proportional (metered)</td><td>Shared cost split by actual measured consumption, requests served, data volume, compute-seconds against the shared resource</td><td>The target state for anything shared and material; requires usage metering per consumer, which is the real cost of running this method rather than even split</td></tr>
+          <tr><td>Fixed or negotiated</td><td>A pre-agreed percentage split, set by governance rather than derived from either headcount or metered usage</td><td>Joint infrastructure where no consumption metric fairly represents the benefit each BU gets, decided once by the same forum that owns the funding model on <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td></tr>
+        </table>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">The FinOps Foundation's own Allocation capability, under the Inform phase, covers this same problem in more depth; treat the table above as the working version, and read the full capability at finops.org when the shared-cost picture gets complicated.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>What changed in the FinOps Framework, 2025 to 2026</h3>
+      <p>Worth knowing because tooling vendors, certifications, and job descriptions now use this vocabulary.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Change</th><th>What it means in practice</th></tr>
+          <tr><td>Scopes (2025, refined 2026)</td><td>Spend is analyzed in business-defined segments, a product line, an acquisition, an AI program, rather than only by account or service</td></tr>
+          <tr><td>Technology Categories (2026)</td><td>Dedicated guidance for public cloud, SaaS, data center, data cloud platforms such as Snowflake and Databricks, and AI</td></tr>
+          <tr><td>Executive Strategy Alignment (2026)<sup class="src"><a href="#src-1" title="FinOps Foundation, FinOps Framework 2026, March 2026">[1]</a></sup></td><td>A new capability recognizing that technology value is a board-level conversation; FinOps output feeds strategy and capital allocation, not only engineering</td></tr>
+          <tr><td>Intersecting Disciplines (2026)</td><td>Formal overlap with IT asset management, IT financial management, sustainability, and security, which often own adjacent data</td></tr>
+          <tr><td>FOCUS 1.3 (December 2025)</td><td>The billing specification added a contract commitments dataset, columns that expose how shared costs such as Kubernetes are split, and metadata stating whether data is final or still subject to revision<sup class="src"><a href="#src-2" title="FinOps Foundation, Introducing FOCUS 1.3, December 2025">[2]</a></sup></td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1"><a href="https://www.finops.org/insights/2026-finops-framework/" rel="noopener">FinOps Foundation, FinOps Framework 2026, March 2026</a></li><li value="2" id="src-2"><a href="https://www.finops.org/insights/introducing-focus-1-3/" rel="noopener">FinOps Foundation, Introducing FOCUS 1.3, December 2025</a></li></ol></div>
+</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Unit economics, worked</h3>
+      <p>The measure that turns a rising bill from a spending question into an efficiency question. Figures are illustrative for a B2B SaaS product.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Quarter</th><th>Cloud spend</th><th>Active customers</th><th>Cost per customer per month</th><th>Reading</th></tr>
+          <tr><td>Q1</td><td>$1.20M</td><td>4,000</td><td>$100</td><td>Baseline</td></tr>
+          <tr><td>Q2</td><td>$1.38M</td><td>4,800</td><td>$96</td><td>Spend up 15 percent, efficiency improving: growth, not waste</td></tr>
+          <tr><td>Q3</td><td>$1.52M</td><td>4,900</td><td>$103</td><td>Spend up 10 percent on flat customers: investigate before the next commitment purchase</td></tr>
+          <tr><td>Q4</td><td>$1.45M</td><td>5,300</td><td>$91</td><td>Rightsizing and a savings plan on the stable baseline brought unit cost below Q1</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs cost governance isn't working</h3>
+      <p>Not exhaustive, but the patterns that show up when a cost program looks good in the slides and isn't changing behavior.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>The last optimization effort was a one-time project with no recurring owner</li>
+          <li>Untagged or misattributed spend is a growing share of the bill, not a shrinking one</li>
+          <li>Reserved capacity utilization is below 80 percent, meaning committed spend is going unused</li>
+          <li>Non-production environments run around the clock with no automated schedule</li>
+          <li>No one outside the finance or platform team can say what their own team's monthly cloud spend is</li>
+          <li>The organization describes itself as FinOps &quot;mature&quot; but can't answer what a single team spent last month</li>
+                  <li>Cost is reported only as total spend, with no unit cost agreed with finance</li>
+          <li>The program still uses pre-2025 FinOps vocabulary and cannot map spend to business-defined scopes</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Download</span>
+      <h3>Cloud FinOps workbook</h3>
+      <p>Six linked tabs: instructions, a rightsizing tracker, a reserved capacity break-even calculator, showback and chargeback allocation, the maturity assessment above made live, and a savings opportunity log. Every formula recalculates when you change an input.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="dl-btn primary" href="cloud-finops-workbook.xlsx" download>Download .xlsx</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Framework terms reflect the FinOps Foundation's 2025 and 2026 FinOps Framework updates and FOCUS 1.3 (December 2025). Cloud pricing models, discount structures, and vendor tooling change frequently; verify current mechanics against your provider's documentation before committing budget.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/maturity-tool.js"></script>
+<script>
+var CF_NEXT = {"Cost allocation & tagging": "Enforce tags at resource creation through infrastructure as code, then run showback so every team sees its own spend.", "Rate optimization (commitments, discounts)": "Commit only on the usage baseline that has been stable for six months, and ladder terms so renewals do not all land at once.", "Anomaly management": "Automate budget and anomaly alerts routed to the owning team, not a central inbox.", "Forecasting & budgeting": "Set budgets proactively per team and reforecast monthly from actual usage.", "Unit economics": "Agree one unit cost with finance (cost per customer or per transaction) and report it every month.", "Governance & accountability": "Replace approval queues with guardrails: automatic budget alerts and size policies in infrastructure as code."};
+function cfBand(v) { return v < 2.5 ? 'Crawl' : (v < 4 ? 'Walk' : 'Run'); }
+MaturityTool.create({
+  id: 'cf', card: '#calculator', title: 'FinOps maturity', dimLabel: 'Capability', band: cfBand,
+  columns: [{ key: 'current', label: 'Current' }, { key: 'target', label: 'Target' }],
+  dims: Object.keys(CF_NEXT).map(function (n) { return { name: n, next: CF_NEXT[n] }; }),
+  defaults: { current: [2, 4, 2, 3, 1, 3], target: [4, 4, 3, 4, 3, 4] },
+  interpret: function (S) {
+    var out = [], alloc = S.dims[0].vals.current, rate = S.dims[1].vals.current;
+    var stage = cfBand(S.avg.current);
+    if (alloc < 3 && stage !== 'Crawl') { out.push('<strong>Effective stage: Crawl.</strong> The average says ' + stage + ', but allocation is at ' + alloc + '. Nobody can act on savings they cannot attribute, so allocation caps the rest.'); }
+    else out.push('Effective stage: <strong>' + stage + '</strong>.');
+    if (rate >= 4 && alloc <= 2) out.push('Run-level rate optimization on top of Crawl-level allocation: discounts are being bought on usage nobody owns.');
+    if (S.dims[4].vals.current <= 2) out.push('Without a unit cost, a rising bill cannot be told apart from growth. See the unit economics example further down this page.');
+    return out.join('<br><br>');
+  }
+});
+</script>
+<!-- /toolshare -->
+</body>
+</html>

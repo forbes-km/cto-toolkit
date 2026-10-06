@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Culture</title>
+<meta name="description" content="What shapes how an engineering organization behaves day to day, beyond org charts and values decks. Every other page about building the organization assumes this is healthy.">
+<meta property="og:title" content="Engineering Culture | CTO Toolkit">
+<meta property="og:description" content="What shapes how an engineering organization behaves day to day, beyond org charts and values decks. Every other page about building the organization assumes this is healthy.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/engineering-culture/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering Culture | CTO Toolkit">
+<meta name="twitter:description" content="What shapes how an engineering organization behaves day to day, beyond org charts and values decks. Every other page about building the organization assumes this is healthy.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/engineering-culture/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Engineering Culture</h1>
+  <p>What shapes how an engineering organization behaves day to day, beyond org charts and values decks. Every other page about building the organization assumes this is healthy.</p>
+  <div class="caveat">See <a href="../org-design/index.html">Org Design</a> for team structure, <a href="../platform-engineering/index.html">Platform Engineering</a> for developer experience specifically, and <a href="../technical-hiring-leveling/index.html">Technical Hiring &amp; Leveling</a> for culture add versus culture fit in interviewing.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>Symbol versus substance</h3>
+      <p>The gap between what an organization says its culture is and what determines behavior is where most culture work fails.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Symbol</th><th>What determines behavior</th></tr>
+          <tr><td>Stated values on a wall or a slide</td><td>What gets rewarded in promotion and compensation decisions</td></tr>
+          <tr><td>A culture deck</td><td>What happens in the room when a deadline and a quality standard conflict</td></tr>
+          <tr><td>Perks and amenities</td><td>Whether people ship work they're proud to put their name on</td></tr>
+          <tr><td>&quot;We value work-life balance&quot;</td><td>Whether anyone leaves on time without guilt or a backlog of resentment</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Culture is whatever gets rewarded</h3>
+      <p>The clearest predictor of the culture you have is what a high performer gets away with that no one else would.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What shapes it</span>
+        <p>Promotion criteria, what leadership visibly celebrates in public forums, and what gets tolerated from a top performer that would draw a consequence for anyone else. These three things are the culture, regardless of what the values document says.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>Writing a values document and treating the exercise as complete, without ever auditing whether promotion decisions, performance reviews, and day-to-day tolerance reflect those stated values. The gap between the two is usually visible to everyone except leadership.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>A worked example: diagnosing a gap</h3>
+      <p>What the audit in section 1 looks like run against data instead of impressions.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>A company's values deck states &quot;we value work-life balance and sustainable pace.&quot; Nobody has ever written a rule contradicting that. But a look at the last two promotion cycles against work-pattern data shows every engineer promoted to senior had a visible pattern of late-night and weekend Slack activity; nobody promoted in that window kept a strictly nine-to-six pattern.</p>
+        <p>No survey would have caught this, because a pulse survey asks about stated values, not what people actually do. Cross-referencing promotion outcomes against a specific behavioral signal (hours of activity, not self-reported sentiment) made the reward function visible immediately. The stated value and what gets rewarded had diverged completely, and the gap stayed invisible until someone looked at the right data instead of asking the right question.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Blameless is a practice</h3>
+      <p>See <a href="../incident-response/index.html">Incident Response</a> for the mechanics of a blameless postmortem. This is about what determines whether the practice survives contact with a bad outage.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What sustains it</span>
+        <p>Leadership visibly not punishing the engineer who caused a serious incident, in front of the team, repeatedly, until people believe it, whatever the policy document says. Trust here is built slowly, one incident at a time.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What kills it</span>
+        <p>One visible instance of blame after a sufficiently bad incident erases months of stated blameless culture instantly. The trust is asymmetric: it takes a long series of consistent restraint to build and one data point to destroy.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Whose culture wins in a merger or a scaling moment</h3>
+      <p>Two cultures rarely blend into something new. One absorbs the other, and which one wins is more predictable than most leaders expect.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What determines dominance</span>
+        <p>The size of the surviving organization, which leadership team's members remain in place after the transition, and which systems and processes get adopted as the combined standard. All three tend to point the same direction.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The mistake</span>
+        <p>Assuming a merger or rapid scaling event will produce a neutral, blended culture through goodwill alone. Decide what is worth keeping from the smaller or absorbed side, and write that into the integration plan.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Remote and hybrid culture specifically</h3>
+      <p>The core mechanism doesn't change with location. What changes is how much deliberate effort it takes to make it visible.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What stays the same</span>
+        <p>Culture is still whatever gets rewarded. If anything, it becomes more visible remotely, since behavior happens in trackable channels, Slack timestamps, meeting attendance, async response times, where an office used to give only vaguer signals.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What changes</span>
+        <p>The blameless-culture trust described above depends on visible, repeated leadership behavior. Remote teams see far less of that by default, no hallway conversations, no visible body language during a tense moment, so leadership has to be far more deliberate about making the same restraint visible in writing, because it won't simply be felt.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Burnout as a distinct signal from attrition</h3>
+      <p>Someone burned out and still employed is a worse leading indicator than someone who already left.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Why it's distinct</span>
+        <p>Declining output and a rising error rate in a burned-out but still-employed engineer often get misread as a performance problem instead of a culture symptom, because they haven't yet generated the attrition data point that would trigger an investigation.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to watch</span>
+        <p>A sudden change in someone's own baseline, working hours, response time, output quality, is a more reliable signal than a static threshold. A chronically overworked culture normalizes a baseline that looks fine compared to itself but wouldn't compare well to a healthy organization.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Measuring culture without gaming it</h3>
+      <p>See <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the trust problem that determines whether any metrics program survives; culture measurement has the identical problem.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to track</span>
+        <p>Voluntary attrition, especially regretted attrition among senior or high-performing people, pulse survey trends over time instead of a single score, and whether people internally refer friends for open roles, a strong revealed-preference signal that's hard to fake.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What doesn't work</span>
+        <p>A single annual engagement survey score treated as the complete picture, gamed the same way any metric gets gamed once it's tied to a leader's own performance review and that leader controls how the survey gets framed and followed up on.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>What the research actually says</h3>
+      <p>Culture is one of the few areas where the evidence is consistent across many years of studies. Leaning on it moves the conversation away from opinion.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>Finding worth using</th></tr>
+          <tr><td>Ron Westrum's typology of organizational cultures (2004)</td><td>Organizations fall into pathological, bureaucratic, or generative patterns, distinguished mainly by how information flows and how messengers are treated<sup class="src"><a href="#src-1" title="Westrum, A typology of organisational cultures, 2004">[1]</a></sup></td></tr>
+          <tr><td>DORA research program (Google Cloud, annual since 2014)</td><td>Generative culture, in Westrum's sense, repeatedly predicts better software delivery and organizational performance. The 2025 report found AI amplifies whatever culture and practices a team already has<sup class="src"><a href="#src-2" title="DORA, 2025 State of AI-assisted Software Development">[2]</a></sup></td></tr>
+          <tr><td>Amy Edmondson on psychological safety (1999 onward)</td><td>Teams that feel safe to raise problems report more errors early and learn faster, which looks worse on a dashboard in the short run and better in outcomes<sup class="src"><a href="#src-3" title="Edmondson, Psychological Safety and Learning Behavior in Work Teams, 1999">[3]</a></sup></td></tr>
+          <tr><td>Google's Project Aristotle (2015 to 2016)</td><td>Psychological safety was the strongest of the factors that distinguished effective teams, ahead of team composition<sup class="src"><a href="#src-4" title="Google re:Work, Understand team effectiveness">[4]</a></sup></td></tr>
+          <tr><td>SPACE framework (Forsgren, Storey, and others, 2021)</td><td>Productivity has several dimensions, including satisfaction and wellbeing; measuring output alone misreads it<sup class="src"><a href="#src-5" title="Forsgren and colleagues, The SPACE of Developer Productivity, ACM Queue, 2021">[5]</a></sup></td></tr>
+          <tr><td>DevEx research (Noda, Storey, Forsgren, Greiler, 2023)</td><td>Developer experience comes down to three things leaders can change: fast feedback loops, manageable cognitive load, and protected flow time<sup class="src"><a href="#src-6" title="Noda, Storey, Forsgren, Greiler, DevEx, ACM Queue, 2023">[6]</a></sup></td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://doi.org/10.1136/qshc.2003.009522" rel="noopener">Westrum, A typology of organisational cultures, 2004</a></li><li value="2" id="src-2"><a href="https://dora.dev/research/2025/dora-report/" rel="noopener">DORA, 2025 State of AI-assisted Software Development</a></li><li value="3" id="src-3"><a href="https://doi.org/10.2307/2666999" rel="noopener">Edmondson, Psychological Safety and Learning Behavior in Work Teams, 1999</a></li><li value="4" id="src-4"><a href="https://rework.withgoogle.com/intl/en/guides/understand-team-effectiveness" rel="noopener">Google re:Work, Understand team effectiveness</a></li><li value="5" id="src-5"><a href="https://queue.acm.org/detail.cfm?id=3454124" rel="noopener">Forsgren and colleagues, The SPACE of Developer Productivity, ACM Queue, 2021</a></li><li value="6" id="src-6"><a href="https://doi.org/10.1145/3595878" rel="noopener">Noda, Storey, Forsgren, Greiler, DevEx, ACM Queue, 2023</a></li></ol></div>
+</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Measuring it: a short team-level pulse</h3>
+      <p>A small, repeatable instrument beats an annual engagement survey for spotting drift. Run it quarterly at team level, report trends, and never tie it to an individual manager's rating.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell">
+      <p>Ask each engineer to rate agreement from 1 to 7 with six statements built on Westrum's dimensions, paraphrased here:</p><ul><li>People on my team actively seek out the information they need, and get it</li><li>People who bring bad news or raise problems are not punished for it</li><li>Responsibilities are shared rather than pushed onto others</li><li>Working across team boundaries is encouraged</li><li>When something fails, the response is inquiry into the system, not a search for someone to blame</li><li>New ideas are welcomed, including from junior people</li></ul><p>Add two DevEx items, how often work is blocked waiting on someone else and how often the engineer gets two uninterrupted hours, and pair the results with regretted attrition and internal referral rates. The most useful reading is the item that moved most since last quarter. Ignore the average.</p>
+    </div></div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">10</span>
+      <h3>A worked example: reading the pulse after a reorg</h3>
+      <p>Three teams, the same quarter, the same reorg. The averages look similar; the pattern underneath does not.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Team</th><th>Average before</th><th>Average after</th><th>Largest single change</th><th>What it pointed to</th></tr>
+          <tr><td>Payments</td><td>5.6</td><td>5.4</td><td>Cross-team work, down 0.4</td><td>Normal adjustment to a new neighbor team; no action beyond a joint planning session</td></tr>
+          <tr><td>Platform</td><td>5.8</td><td>4.1</td><td>Messengers not punished, down 2.3</td><td>A new manager had criticized an engineer in public for flagging a launch risk. Addressed directly with the manager within the week</td></tr>
+          <tr><td>Mobile</td><td>4.9</td><td>5.3</td><td>New ideas welcomed, up 1.1</td><td>The reorg removed an approval layer; worth protecting in the next org change</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs culture is deteriorating beneath a healthy-looking surface</h3>
+      <p>Patterns that show up before the problem is visible in a survey score or an exit interview.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Voluntary attrition among senior or high-performing engineers is elevated, even if overall attrition looks acceptable</li>
+          <li>Employees have stopped referring friends for open roles</li>
+          <li>The stated values and the working promotion criteria have diverged, and most people already know it</li>
+          <li>Blameless postmortems exist as a stated policy, but the last serious incident produced visible blame anyway</li>
+          <li>Pulse survey trends are flat or declining while leadership continues describing culture as strong in the same conversation</li>
+          <li>Someone's individual work baseline has shifted noticeably and it's being handled as a performance issue without anyone asking whether it is a culture symptom</li>
+                  <li>Culture is measured only by an annual engagement score, never by team-level items on information flow and psychological safety</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Draws on Ron Westrum's typology of organizational cultures, the DORA research program including the 2025 State of AI-assisted Software Development report, Amy Edmondson's work on psychological safety, Google's Project Aristotle, the SPACE framework, and published DevEx research. Pulse items are paraphrased, not the original survey wording. Culture work is slow, and none of this substitutes for leadership behavior sustained over time.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+</body>
+</html>

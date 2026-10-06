@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Review Board</title>
+<meta name="description" content="How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta property="og:title" content="Architecture Review Board | CTO Toolkit">
+<meta property="og:description" content="How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/architecture-review-board/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Architecture Review Board | CTO Toolkit">
+<meta name="twitter:description" content="How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/architecture-review-board/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Architecture Review Board</h1>
+  <p>How to stand up a review board that examines evidence from engineering work already done, not diagrams produced for the meeting, and how to keep it working as a forcing function for years after the founding energy fades.</p>
+  <div class="caveat">See <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a> for the record a review should produce, <a href="../architecture-principles/index.html">Architecture Principles Library</a> for what a board is applying, and <a href="../technology-decision-rights/index.html">Technology Decision Rights</a> for where the board's authority ends and a named individual's begins.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>What belongs in front of the board, and what doesn't</h3>
+      <p>Review boards usually fail by reviewing everything, which turns it into a bottleneck and trains teams to route around it. The same filter used to decide when a decision needs an ADR applies here.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Goes to the board</th><th>Doesn't need the board</th></tr>
+          <tr><td>A new external dependency or a shared service other teams will depend on</td><td>A team's fully contained internal implementation detail</td></tr>
+          <tr><td>A decision that affects more than one team's roadmap</td><td>A reversible, single-team decision costing less than a day to undo</td></tr>
+          <tr><td>A new system of record or data store other systems will read from</td><td>Adding a field to a schema the team already owns exclusively</td></tr>
+          <tr><td>A deliberate deviation from an established architecture principle</td><td>Following a pattern the board has already approved elsewhere</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Evidence over drawings</h3>
+      <p>The distinction that separates a review with teeth from a rubber stamp with a diagram attached.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a working review looks at</span>
+        <p>The running system, observed traffic patterns, incident history, a working prototype or spike, existing code. Evidence that exists because the engineering got done, not because a meeting was scheduled.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The staged version</span>
+        <p>A polished architecture diagram produced in the days before the review, disconnected from the codebase, that nobody consults again once the meeting ends. One giveaway: check the diagram file's last-modified date six months later. If it's the review date, it was never a working artifact.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Setting it up: composition and authority</h3>
+      <p>Two decisions made once, at founding, that determine whether the board has standing or only a name.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Composition</span>
+        <p>A small standing group, four to six people, spanning the systems most likely to be affected by cross-cutting decisions. Rotate membership on a defined cycle so it doesn't calcify into the same five people's opinions indefinitely. The proposing team's own senior engineer is always in the room, never reviewed in absentia.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Authority, stated explicitly</span>
+        <p>See <a href="../technology-decision-rights/index.html">Technology Decision Rights</a>: the board should be Consulted, rarely Accountable. A named individual, the CTO or a delegate, is accountable for architecture standards and can be persuaded by a strong board recommendation, but the board's vote is input to that person's decision and can be overridden.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>The review itself</h3>
+      <p>What makes a single session a real test of the design, however well the board itself was set up.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to run it</span>
+        <p>The proposing team walks through the tradeoffs they considered and rejected, the same alternatives-considered discipline covered on the ADR page, with numbers behind claims (this handles X load, this costs Y). The review produces a decision and its reasoning captured in an ADR. A verbal thumbs-up disappears when the meeting ends.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it breaks</span>
+        <p>The review becomes a presentation the team already knows how to pass: confident language and a clean diagram tuned to satisfy the audience instead of testing the reasoning. At that point the board is a rubber stamp with extra steps, arguably worse than no review, since it spends time producing a false signal of scrutiny.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Keeping it useful after year one</h3>
+      <p>Most boards work well in year one and have stopped working by year three. That pattern is predictable enough to design against.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What sustains it</span>
+        <p>A standing cadence, biweekly is common, that runs whether or not there's a full docket. A public backlog of upcoming reviews so teams plan around it instead of being surprised. Periodic retrospectives on the board's own past decisions: did what it approved work out, was what it blocked right to block.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How it decays</span>
+        <p>The board approves the same rubber-stamp pattern for months. Membership never rotates, so the room's authority comes from tenure, not current knowledge. No one checks whether a past decision held up, so the board never learns whether its own judgment is any good, and keeps operating on the same instincts regardless of outcomes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Empty slots: turn them into innovation salons instead of canceling</h3>
+      <p>What to do with a scheduled review slot that has nothing queued for it, which happens regularly once a board is running well and teams aren't manufacturing proposals just to fill the docket.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The idea</span>
+        <p>Instead of canceling the slot, which trains people to deprioritize the cadence, or filling it with a low-stakes item just to have something on the agenda, open it up: anyone can bring an early-stage idea, a technical curiosity, or a &quot;here's something I've been thinking about&quot; for informal discussion. No funding decision required, no ADR required, just structured space for ideas that aren't ready for a formal pitch yet.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Why this works better than canceling</span>
+        <p>It keeps the room's habit and rhythm intact, the same people, the same regular slot, the same expectation of showing up prepared to think carefully, without wasting the time when nothing formal needs review. It also creates a low-stakes on-ramp: an idea that draws interest in a salon session is the kind of thing ready to become a formal pitch at the next <a href="../innovation-portfolio/index.html">innovation tournament</a>.</p>
+      </div>
+    </div>
+    <div class="same-note">The board and the tournament are the same room used two different ways: one evaluates evidence against a decision that needs to be made, the other surfaces ideas that don't have evidence yet. Keeping both on the same cadence, in the same room, with the same people, makes the salon slot feel like a natural extension, not one more initiative fighting for calendar space.</div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Review tiers and turnaround commitments</h3>
+      <p>A board earns trust by being fast on the routine and thorough on the consequential. Publishing turnaround commitments is what stops teams from routing around it. Times are suggested starting points.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Tier</th><th>Triggers</th><th>Process</th><th>Turnaround</th></tr>
+          <tr><td>0. Self-serve</td><td>Uses a pattern the board already approved</td><td>Team writes a short ADR referencing the approved pattern; no meeting</td><td>None; the ADR is the record</td></tr>
+          <tr><td>1. Async review</td><td>New dependency, moderate cross-team impact, reversible within a quarter</td><td>Written ADR reviewed by two board members in the document itself</td><td>Three business days</td></tr>
+          <tr><td>2. Full board</td><td>New system of record, shared platform, principle deviation, or hard-to-reverse spend</td><td>Live session with evidence: prototype, load data, cost model, alternatives rejected</td><td>Scheduled within ten business days of request</td></tr>
+          <tr><td>Emergency</td><td>A production incident forced an unreviewed change</td><td>Change ships; the ADR and review follow</td><td>Retrospective review within two weeks</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Diagram</span>
+      <h3>Routing a change to the right tier</h3>
+      <p>Most changes should never reach a meeting. Published turnaround times are what keep teams from routing around the board.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
+<div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="arb-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="arb-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="arb-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="arb-title">Routing a proposed change to the right review tier</title><rect x="10" y="140" width="130" height="70" rx="8" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"/>
+<text x="75.0" y="170.0" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Proposed</text>
+<text x="75.0" y="187.0" text-anchor="middle" font-size="11.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">change</text>
+<rect x="190" y="20" width="230" height="62" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+<text x="305.0" y="46.0" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Tier 0: self-serve</text>
+<text x="305.0" y="62.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">uses an approved pattern</text>
+<rect x="450" y="20" width="190" height="62" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="545.0" y="53.5" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">ADR only, no meeting</text>
+<text x="660.0" y="56.0" text-anchor="start" font-size="11.5" font-weight="700" fill="var(--accent)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">no wait</text>
+<line x1="140" y1="175" x2="190" y2="51" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#arb-a)"/>
+<line x1="420" y1="51" x2="450" y2="51" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arb-g)"/>
+<rect x="190" y="100" width="230" height="62" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="305.0" y="126.0" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Tier 1: async review</text>
+<text x="305.0" y="142.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">new dependency, reversible</text>
+<rect x="450" y="100" width="190" height="62" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="545.0" y="133.5" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">two members review the ADR</text>
+<text x="660.0" y="136.0" text-anchor="start" font-size="11.5" font-weight="700" fill="var(--accent)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">3 business days</text>
+<line x1="140" y1="175" x2="190" y2="131" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#arb-a)"/>
+<line x1="420" y1="131" x2="450" y2="131" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arb-g)"/>
+<rect x="190" y="180" width="230" height="62" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="305.0" y="206.0" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Tier 2: full board</text>
+<text x="305.0" y="222.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">system of record, hard to reverse</text>
+<rect x="450" y="180" width="190" height="62" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="545.0" y="213.5" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">live session with evidence</text>
+<text x="660.0" y="216.0" text-anchor="start" font-size="11.5" font-weight="700" fill="var(--accent)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">within 10 business days</text>
+<line x1="140" y1="175" x2="190" y2="211" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#arb-a)"/>
+<line x1="420" y1="211" x2="450" y2="211" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arb-g)"/>
+<rect x="190" y="260" width="230" height="62" rx="8" fill="#F3E9DC" stroke="#8A5A2E" stroke-width="1.2"/>
+<text x="305.0" y="286.0" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Emergency</text>
+<text x="305.0" y="302.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">incident forced the change</text>
+<rect x="450" y="260" width="190" height="62" rx="8" fill="white" stroke="var(--line)" stroke-width="1.2"/>
+<text x="545.0" y="293.5" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">ship now, ADR follows</text>
+<text x="660.0" y="296.0" text-anchor="start" font-size="11.5" font-weight="700" fill="var(--accent)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">review within 2 weeks</text>
+<line x1="140" y1="175" x2="190" y2="291" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arb-g)"/>
+<line x1="420" y1="291" x2="450" y2="291" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arb-g)"/></svg></div>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Tiers and turnaround times from the table above; treat them as starting points. Every tier ends in a decision record.</p>
+    </div></div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>Standards and practices worth borrowing</h3>
+      <p>Most of what makes a board work is already written down elsewhere. Borrow on purpose before inventing a process.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>What it contributes</th></tr>
+          <tr><td>Architecture Decision Records (Michael Nygard, 2011)<sup class="src"><a href="#src-1" title="Michael Nygard, Documenting Architecture Decisions, November 2011">[1]</a></sup></td><td>The short, immutable record of context, decision, and consequences that every review should produce</td></tr>
+          <tr><td>ISO/IEC/IEEE 42010:2022<sup class="src"><a href="#src-2" title="ISO/IEC/IEEE 42010:2022, Architecture description">[2]</a></sup></td><td>A precise vocabulary for architecture descriptions: stakeholders, their concerns, and the viewpoints that address them. Useful for deciding what a proposal must show</td></tr>
+          <tr><td>C4 model (Simon Brown)</td><td>Four levels of diagram, context, containers, components, code, so reviewers see the right level of detail instead of one crowded picture</td></tr>
+          <tr><td>arc42</td><td>A free, widely used template for documenting a system; a good default for the evidence pack on tier 2 reviews</td></tr>
+          <tr><td>Architecture fitness functions (Ford, Parsons, Kua, Sadalage, Building Evolutionary Architectures, 2nd ed., 2022)</td><td>Turning an architecture decision into an automated check so it stays true after the meeting</td></tr>
+          <tr><td>The architecture advice process (Andrew Harmel-Law, Facilitating Software Architecture, 2024)</td><td>A decentralized alternative in which teams decide after seeking advice, with the board acting as an advisory forum and keeper of the decision log</td></tr>
+          <tr><td>TOGAF Standard, 10th Edition</td><td>The formal Architecture Board and compliance review concepts, useful for regulated enterprises that need an auditable governance trail</td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions" rel="noopener">Michael Nygard, Documenting Architecture Decisions, November 2011</a></li><li value="2" id="src-2"><a href="https://www.iso.org/standard/74393.html" rel="noopener">ISO/IEC/IEEE 42010:2022, Architecture description</a></li></ol></div>
+</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>Fitness functions: keep the decision true after the meeting</h3>
+      <p>A decision that exists only in an ADR decays as soon as the next deadline arrives. Encode the important ones.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What good looks like</span>
+        <p>For each tier 2 decision, ask what automated check would fail if the decision were violated, then put it in the pipeline. Examples:</p><ul><li>Dependency rules that stop one domain calling another's database directly</li><li>A latency budget checked in a performance test</li><li>A cost ceiling alarm on a new service</li><li>A policy-as-code rule that blocks public storage buckets</li></ul>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What usually happens</span>
+        <p>Treating the board's approval as the control. Six months later the system has drifted, nobody noticed, and the next review argues about a design that no longer exists in production.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Measure the board itself</h3>
+      <p>A board that never measures its own performance cannot tell whether it adds value or delay. These five numbers, reviewed quarterly, are enough.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Metric</th><th>What healthy looks like</th><th>What it warns about</th></tr>
+          <tr><td>Median days from request to decision</td><td>Within the published turnaround for each tier</td><td>Rising numbers mean teams will start routing around the board</td></tr>
+          <tr><td>Share of proposals changed by review</td><td>Somewhere between a fifth and a half</td><td>Near zero is a rubber stamp; very high means teams arrive unprepared or the principles are unclear</td></tr>
+          <tr><td>Decisions with a written ADR</td><td>All tier 1 and tier 2 decisions</td><td>Anything lower means the board's reasoning is lost when members rotate</td></tr>
+          <tr><td>Decisions revisited after 6 to 12 months</td><td>A sample reviewed every quarter, with a verdict on whether each held up</td><td>No review of outcomes means the board never learns whether its judgment is good</td></tr>
+          <tr><td>Bypass rate</td><td>Few or no systems in production that should have come to the board and did not</td><td>A high bypass rate is the clearest sign the board is seen as an obstacle</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the board has become a rubber stamp</h3>
+      <p>Patterns that show up when a review board exists on the calendar but has stopped functioning as a forcing function.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Reviews consistently approve with no pushback or requested changes</li>
+          <li>No one can name a decision the board changed its mind about after seeing how it played out</li>
+          <li>Board membership hasn't rotated in over a year</li>
+          <li>Decisions aren't captured anywhere durable, no ADR, no written record, once the meeting ends</li>
+          <li>Teams prepare a specific &quot;board-ready&quot; version of their architecture that differs from what's running in production</li>
+                  <li>Nobody can say the median time from review request to decision</li>
+          <li>Important decisions exist only in ADRs, with no automated check to catch drift</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. Draws on ADRs as described by Michael Nygard, ISO/IEC/IEEE 42010:2022, the C4 model, arc42, fitness functions from Building Evolutionary Architectures (2nd ed., 2022), and the architecture advice process described by Andrew Harmel-Law. Board size, tiers, cadence, and turnaround should reflect your organization's scale and decision-rights model.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+</body>
+</html>

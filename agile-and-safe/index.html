@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agile and SAFe</title>
+<meta name="description" content="What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it turns into ceremony for its own sake.">
+<meta property="og:title" content="Agile and SAFe | CTO Toolkit">
+<meta property="og:description" content="What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it turns into ceremony for its own sake.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/agile-and-safe/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agile and SAFe | CTO Toolkit">
+<meta name="twitter:description" content="What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it turns into ceremony for its own sake.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/agile-and-safe/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  .caveat a { color: var(--accent); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .same-note a { color: var(--accent); }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Agile and SAFe</h1>
+  <p>What agile requires versus what most transformations install instead, and where SAFe specifically earns its overhead at scale versus where it turns into ceremony for its own sake.</p>
+  <div class="caveat">See <a href="../org-design/index.html">Org Design</a> for the team topology this coordination sits on top of, and <a href="../engineering-metrics/index.html">Engineering Metrics</a> for the DORA outcomes agile is supposed to produce and often does not.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The four values, and what commonly gets installed instead</h3>
+      <p>Each value in the agile manifesto asks for a concrete change in how a team works. Most organizations install a process substitute that satisfies the ritual and skips the substance.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Value</th><th>What it requires</th><th>What commonly gets installed instead</th></tr>
+          <tr><td>Individuals and interactions over processes and tools</td><td>Trust, and a team empowered to change its own process</td><td>A fixed ceremony calendar treated as the definition of agile itself</td></tr>
+          <tr><td>Working software over comprehensive documentation</td><td>Frequent, real integration and deployment</td><td>Sprint demos of work that has not been deployed</td></tr>
+          <tr><td>Customer collaboration over contract negotiation</td><td>Direct, frequent contact between the team and the people using what they build</td><td>A product owner as the sole interface, recreating the exact handoff agile was meant to remove</td></tr>
+          <tr><td>Responding to change over following a plan</td><td>A backlog re-prioritized as new information arrives</td><td>A locked sprint commitment defended against any change, optimizing for predictability over responsiveness</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Why &quot;doing agile&quot; and &quot;being agile&quot; diverge</h3>
+      <p>The gap that determines whether the ceremonies are earning their keep.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Being agile</span>
+        <p>The team changes what it does based on what it learns, mid-sprint if warranted, and treats each ceremony as a tool it owns and can modify or drop the moment it stops earning its keep.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Doing agile</span>
+        <p>Standup, retro, planning, and review run on schedule whether or not they produce anything, treated as compliance items, not tools the team owns. A quick test: ask when the team last changed its own process because of a retro. Silence answers the question.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>Where SAFe helps</h3>
+      <p>A real coordination problem exists at scale, and SAFe was built to address it, whatever else gets said about the framework.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The problem it addresses</span>
+        <p>Coordinating dependencies across many teams building toward a shared release or shared platform, where informal coordination breaks down past a certain team count and someone has to own cross-team sequencing by name, because hope is not a plan.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Roughly where it starts to matter</span>
+        <p>Often cited around 50 to 125 people, five to twelve teams, though the trigger that matters is dependency density between teams, and headcount is only a proxy for it. Ten independent teams with no shared release need none of this; four teams shipping one product together might.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Where SAFe turns into ceremony</h3>
+      <p>The same framework, installed for a coordination problem the organization doesn't have.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The failure mode</span>
+        <p>The framework's ceremonies, PI planning, the various sync meetings, the layered roles, get installed wholesale regardless of whether the organization's coordination problem matches what SAFe was built to solve, producing ceremony overhead that outweighs the coordination it buys.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">How to spot it</span>
+        <p>Ask what specific coordination failure a given SAFe ceremony prevents. If the answer is &quot;we don't know, this is just what SAFe says to do,&quot; the ceremony is cargo cult and can go.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Scaling down deliberately, as well as up</h3>
+      <p>The adoption decision most organizations skip: choosing which pieces to install and which to leave out.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Practice</span>
+        <p>Apply only the specific mechanisms that address a named coordination problem, and skip the rest. Adopting part of a framework on purpose costs less overhead than either the whole thing or no coordination at all.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Common failure mode</span>
+        <p>Adopting the framework &quot;properly&quot; because partial adoption feels like doing it wrong, which installs overhead for coordination problems the organization doesn't have, simply because the framework bundles them together with the ones it does.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>The main frameworks, compared plainly</h3>
+      <p>Every framework below solves a real problem. The mistake is choosing by reputation when the choice should follow the coordination problem you have.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Framework</th><th>Scale and shape</th><th>Fits when</th><th>Costs</th></tr>
+          <tr><td>Scrum (Scrum Guide 2020)</td><td>One team of typically ten or fewer, fixed-length sprints</td><td>A single team building one product increment at a time</td><td>Sprint ceremonies; weak on cross-team dependencies</td></tr>
+          <tr><td>Kanban</td><td>Continuous flow with limits on work in progress</td><td>Ops, platform, and support teams with unpredictable arrival of work</td><td>Needs discipline on limits or it becomes a to-do list</td></tr>
+          <tr><td>SAFe 6.0</td><td>Agile Release Trains of about 50 to 125 people in 5 to 12 teams, planning increments of 8 to 12 weeks</td><td>Many teams with dense dependencies toward shared releases</td><td>The heaviest role and ceremony set; easy to over-install</td></tr>
+          <tr><td>LeSS</td><td>Up to about eight teams on one product with one product owner and one backlog; LeSS Huge beyond that</td><td>One large product where splitting ownership would create handoffs</td><td>Demands deep structural change and removal of roles</td></tr>
+          <tr><td>Nexus (Scrum.org)</td><td>Three to nine Scrum teams with an integration team</td><td>Organizations already running Scrum that need light scaling</td><td>Limited guidance beyond integration</td></tr>
+          <tr><td>Team Topologies (Skelton and Pais)</td><td>Not a process: team types and interaction modes that reduce the need for coordination</td><td>Dependency problems are structural and should be designed away</td><td>Requires reorganizing teams, not just adding meetings</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Measure flow and outcomes, not ceremony</h3>
+      <p>What gets reported upward determines what the framework becomes. Report the things agility is supposed to change.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Measure</th><th>Source</th><th>Replaces</th></tr>
+          <tr><td>Deployment frequency, lead time, change failure rate, failed deployment recovery time, rework rate</td><td>DORA metrics, per <a href="../engineering-metrics/index.html">Engineering Metrics</a></td><td>Velocity reported upward as if comparable across teams</td></tr>
+          <tr><td>Flow time, flow load, flow efficiency, and the mix of features, defects, risk, and debt</td><td>The Flow Framework (Mik Kersten, Project to Product, 2018)</td><td>Story points completed</td></tr>
+          <tr><td>Planned versus delivered objectives, with business value assessed after the fact</td><td>SAFe program predictability measure, used honestly</td><td>Ceremony attendance and on-time PI events</td></tr>
+          <tr><td>Customer and business outcomes for shipped work</td><td>Your own product analytics</td><td>Output counts of any kind</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>A worked example: right-sizing PI planning</h3>
+      <p>A nine-team train ran full two-day PI planning every quarter with about 90 people in the room. A dependency map showed the dependencies were real but clustered. Figures are illustrative.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Before</th><th>Change</th><th>After</th></tr>
+          <tr><td>Two days, about 90 people, every quarter: roughly 180 person-days of planning</td><td>Mapped actual cross-team dependencies from the previous two increments</td><td>Two clusters of three and four teams with dense dependencies; two teams nearly independent</td></tr>
+          <tr><td>Program predictability around 70 percent</td><td>Replaced full-train planning with one planning day per cluster, plus a monthly 60-minute dependency review</td><td>About 80 person-days of planning per quarter, including the independent teams' own sessions; predictability unchanged</td></tr>
+          <tr><td>Independent teams sitting through two days of other teams' planning</td><td>The two independent teams moved to their own quarterly planning</td><td>Those teams reported the most improvement in focus time</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs agile or SAFe has become ritual</h3>
+      <p>Patterns that show up when process is running on schedule but no longer producing what it's meant to.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Ceremonies run on schedule regardless of whether the team can name what each one is currently producing</li>
+          <li>The team has never changed its own process based on a retrospective</li>
+          <li>Story points or velocity get reported upward as if comparable across different teams</li>
+          <li>SAFe ceremonies are followed without anyone able to name the specific coordination failure each one prevents</li>
+          <li>&quot;Being agile&quot; and &quot;following the ceremony calendar&quot; are treated as the same thing by leadership</li>
+                  <li>The framework was chosen without first mapping which teams actually depend on each other</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. The right level of process depends on team count, dependency density, and organizational maturity; there is no universally correct amount of ceremony. SAFe is a registered trademark of Scaled Agile, Inc.; LeSS, Nexus, Scrum, the Flow Framework, and Team Topologies are the work of their respective authors and organizations. The summaries here are condensed readings of their published material, and the assessment of where each helps or hurts is this site's own view.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+</body>
+</html>
