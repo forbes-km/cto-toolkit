@@ -93,7 +93,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Governance Map</h1>
   <p>AI governance organized to the four domains of the IAPP AIGP Body of Knowledge, version 2.1: the foundations of AI governance, how laws, standards and frameworks apply to AI, governing AI development, and governing AI deployment and use. Each competency carries the concrete controls that make it real, what breaks without them, and where the evidence comes from, followed by the standards landscape, when ISO/IEC 42001 certification is worth it, and a regulatory mapping.</p>
-  <div class="caveat">This page uses the AIGP structure so the program, the people running it, and anyone holding or studying for the credential share one vocabulary. It is not IAPP material or exam preparation, and it does not replace legal review of the rules that apply to your jurisdiction and use case; treat the regulatory sections as the starting point for that conversation.</div>
+  <div class="caveat">This page uses the AIGP domain structure so the program, the people running it, and the auditors and regulators reviewing it share one vocabulary. It is not IAPP material, and it does not replace legal review of the rules that apply to your jurisdiction and use case; treat the regulatory sections as the starting point for that conversation.</div>
 </header>
 
 <main>
@@ -101,20 +101,20 @@
     <div class="stage-head">
       <span class="stage-num">Reference &middot; how this page is organized</span>
       <h3>The AIGP Body of Knowledge, version 2.1, at a glance</h3>
-      <p>IAPP's current body of knowledge took effect on 2 February 2026. It groups AI governance into four domains and thirteen competencies, and the exam blueprint weights the two operational domains, development and deployment, most heavily.<sup class="src"><a href="#src-1" title="IAPP, AIGP Body of Knowledge v2.1">[1]</a></sup> The sections below follow the same order.</p>
+      <p>IAPP's current body of knowledge took effect on 2 February 2026. It groups AI governance into four domains and thirteen competencies, and most of the day-to-day work sits in the two operational domains, development and deployment.<sup class="src"><a href="#src-1" title="IAPP, AIGP Body of Knowledge v2.1">[1]</a></sup> The sections below follow the same order.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Domain</th><th>Competencies</th><th>Scored exam questions (v2.1 blueprint)</th><th>What it means for a program</th></tr>
-          <tr><td>I. Understanding the foundations of AI governance</td><td>I.A What AI is and why it needs governance<br>I.B Organizational expectations, roles and responsibilities<br>I.C Policies and procedures across the AI life cycle</td><td>16 to 20</td><td>Definitions, harms, principles, who owns what, and the policy set including third-party risk</td></tr>
-          <tr><td>II. Understanding how laws, standards and frameworks apply to AI</td><td>II.A Existing data privacy law<br>II.B Other existing law: IP, nondiscrimination, consumer protection, product liability<br>II.C AI-specific law<br>II.D Industry standards and tools</td><td>19 to 23</td><td>Which obligations already apply, which are arriving, and which voluntary frameworks give the program its structure</td></tr>
-          <tr><td>III. Understanding how to govern AI development</td><td>III.A Designing and building AI systems<br>III.B Collecting and using data for training and testing<br>III.C Release, monitoring and maintenance</td><td>21 to 25</td><td>The controls a builder or provider owns, from use case definition to post-release monitoring</td></tr>
-          <tr><td>IV. Understanding how to govern AI deployment and use</td><td>IV.A Key factors and risks in deployment<br>IV.B Assessing the AI system<br>IV.C Governing deployment and use</td><td>21 to 25</td><td>The controls a deployer owns, including bought and embedded AI, vendor terms, oversight, and the ability to switch a system off</td></tr>
+          <tr><th>Domain</th><th>Competencies</th><th>What it means for a program</th></tr>
+          <tr><td>I. Understanding the foundations of AI governance</td><td>I.A What AI is and why it needs governance<br>I.B Organizational expectations, roles and responsibilities<br>I.C Policies and procedures across the AI life cycle</td><td>Definitions, harms, principles, who owns what, and the policy set including third-party risk</td></tr>
+          <tr><td>II. Understanding how laws, standards and frameworks apply to AI</td><td>II.A Existing data privacy law<br>II.B Other existing law: IP, nondiscrimination, consumer protection, product liability<br>II.C AI-specific law<br>II.D Industry standards and tools</td><td>Which obligations already apply, which are arriving, and which voluntary frameworks give the program its structure</td></tr>
+          <tr><td>III. Understanding how to govern AI development</td><td>III.A Designing and building AI systems<br>III.B Collecting and using data for training and testing<br>III.C Release, monitoring and maintenance</td><td>The controls a builder or provider owns, from use case definition to post-release monitoring</td></tr>
+          <tr><td>IV. Understanding how to govern AI deployment and use</td><td>IV.A Key factors and risks in deployment<br>IV.B Assessing the AI system<br>IV.C Governing deployment and use</td><td>The controls a deployer owns, including bought and embedded AI, vendor terms, oversight, and the ability to switch a system off</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">The exam itself has 100 questions, 85 of them scored, so the ranges above sum to about 85. Version 2.1 frames governance around AI systems rather than individual models, which matches how incidents actually happen: through the model, its data, its retrieval layer, its integrations, and the people using it together.</div>
+    <div class="same-note">Version 2.1 frames governance around AI systems rather than individual models, which matches how incidents actually happen: through the model, its data, its retrieval layer, its integrations, and the people using it together.</div>
     <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://assets.contentstack.io/v3/assets/bltd4dd5b2d705252bc/blt0d33152fd20bc134/AIGP_Cert%20BOK.pdf" rel="noopener">IAPP, AIGP Body of Knowledge, version 2.1, effective 2 February 2026</a></li></ol></div>
   </div>
 
@@ -167,7 +167,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Driver &amp; failure mode</span>
-        <p>A standalone AI policy that no workflow references changes nothing. Intake is the control that keeps the inventory complete; without it, the inventory is a one-time survey that is stale within a quarter. Most enterprise AI exposure now arrives through vendors, which is why version 2.1 gives third-party risk management its own performance indicator, and why the procurement process has to ask about AI before the contract is signed. See <a href="../vendor-evaluation/index.html">Vendor Evaluation</a> for the scoring and risk register.</p>
+        <p>A standalone AI policy that no workflow references changes nothing. Intake is the control that keeps the inventory complete; without it, the inventory is a one-time survey that is stale within a quarter. Most enterprise AI exposure now arrives through vendors, which is why third-party risk gets its own policy here, and why the procurement process has to ask about AI before the contract is signed. See <a href="../vendor-evaluation/index.html">Vendor Evaluation</a> for the scoring and risk register.</p>
       </div>
     </div>
   </div>
@@ -242,7 +242,7 @@
           <tr><td>ISO/IEC 42001:2023</td><td>A certifiable AI management system standard, the AI equivalent of ISO 27001 for information security. Third-party audited (Stage 1 and Stage 2), valid three years with annual surveillance audits, 38 Annex A controls, each selected and justified against your own risk assessment instead of applied as a fixed checklist.<sup class="src"><a href="#src-10" title="ISO/IEC 42001:2023">[10]</a></sup></td><td>An organization's AI management system. Already held by AWS, Anthropic, and Microsoft. Does not by itself satisfy EU AI Act obligations, but the risk assessment and governance structure it requires feeds directly into the technical documentation the Act does require</td></tr>
           <tr><td>ISO/IEC 42005:2025</td><td>Guidance on AI system impact assessment: what to assess, for whom, and how to document it across the life cycle<sup class="src"><a href="#src-11" title="ISO/IEC 42005:2025">[11]</a></sup></td><td>The impact assessments in III.A and IV.B. Guidance rather than a certifiable standard</td></tr>
           <tr><td>ISO/IEC 23894:2023</td><td>Risk management guidance specific to AI, meant to be used alongside ISO 31000's general approach</td><td>An organization's risk process. Guidance rather than a certifiable standard</td></tr>
-          <tr><td>AIGP (IAPP)</td><td>An individual professional credential, the AI governance counterpart to IAPP's privacy certifications. A 100-question exam across the four domains this page follows, maintained through continuing education every two years</td><td>A person. Shows someone can run an AI governance program; does not certify the organization or any specific system</td></tr>
+          <tr><td>AIGP (IAPP)</td><td>An individual professional credential, the AI governance counterpart to IAPP's privacy certifications, kept current through continuing education</td><td>A person. Shows someone can run an AI governance program; does not certify the organization or any specific system</td></tr>
         </table>
       </div>
     </div>
