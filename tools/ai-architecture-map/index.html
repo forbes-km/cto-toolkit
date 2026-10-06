@@ -737,5 +737,25 @@
     document.querySelectorAll('.provider-content').forEach(c => c.classList.toggle('active', c.dataset.provider === provider));
   });
 </script>
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script>
+(function () {
+  var main = document.querySelector('main'), NAMES = { aws: 'AWS', azure: 'Azure', gcp: 'GCP', oci: 'OCI', oss: 'Self-hosted' };
+  function current() { var b = document.querySelector('.provider-btn.active'); return b ? b.dataset.provider : 'aws'; }
+  function pick(p) { if (!NAMES[p]) p = 'aws'; document.querySelectorAll('.provider-btn').forEach(function (b) { b.classList.toggle('active', b.dataset.provider === p); }); document.querySelectorAll('.provider-content').forEach(function (c) { c.classList.toggle('active', c.dataset.provider === p); }); }
+  document.getElementById('provider-toggle').addEventListener('click', function () { setTimeout(function () { if (ToolShare.changed) ToolShare.changed(); }, 0); });
+  ToolShare.register({ id: 'aia', root: main, barAfter: '#provider-toggle', title: 'AI reference architecture', computeOnLoad: false,
+    getState: function () { return { provider: current() }; },
+    setState: function (s) { pick((s || {}).provider || 'aws'); },
+    csv: function () { var p = current(), rows = [['Provider', NAMES[p]], [], ['Stage', 'Capability', 'What it covers', NAMES[p] + ' guidance']];
+      document.querySelectorAll('.stage-card').forEach(function (c) { var pc = c.querySelector('.provider-content[data-provider="' + p + '"]'); if (!pc) return;
+        var num = c.querySelector('.stage-num'), h = c.querySelector('.stage-head h3, .stage-head h2'), d = c.querySelector('.stage-head p'), lbl = pc.querySelector('.provider-label');
+        var txt = pc.innerText; if (lbl) txt = txt.replace(lbl.innerText, '');
+        rows.push([num ? num.innerText.trim() : '', h ? h.innerText.trim() : '', d ? d.innerText.trim() : '', txt.replace(/\s+/g, ' ').trim()]); });
+      return rows; } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>

@@ -628,5 +628,28 @@ render();
 renderLandingZone();
 </script>
 
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script>
+(function () {
+  var view = document.getElementById('mapper-view'), lzView = document.getElementById('landing-zone-view');
+  function curView() { return lzView.classList.contains('active') ? 'landing-zone' : 'mapper'; }
+  function setView(v) { document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('active', t.dataset.view === v); }); document.querySelectorAll('.view').forEach(function (x) { x.classList.toggle('active', x.id === v + '-view'); }); }
+  function setProvider(p) { if (p !== 'all' && providers.indexOf(p) < 0) p = 'all'; activeProvider = p; document.querySelectorAll('.chip').forEach(function (c) { c.classList.toggle('active', c.dataset.provider === p); }); }
+  document.querySelectorAll('.chip,.tab').forEach(function (el) { el.addEventListener('click', function () { setTimeout(function () { if (ToolShare.changed) ToolShare.changed(); }, 0); }); });
+  ToolShare.register({ id: 'csm', root: view, barAfter: '#mapper-view .controls', title: 'Cloud service map', computeOnLoad: false,
+    getState: function () { return { q: document.getElementById('search').value, p: activeProvider, v: curView() }; },
+    setState: function (s) { s = s || {}; var box = document.getElementById('search'); box.value = s.q || ''; query = box.value; setProvider(s.p || 'all'); setView(s.v === 'landing-zone' ? 'landing-zone' : 'mapper'); render(); },
+    csv: function () {
+      var cols = activeProvider === 'all' ? providers : [activeProvider], q = query.trim().toLowerCase();
+      var rows = [['Search filter', q ? query.trim() : 'none'], ['Providers', cols.map(function (p) { return labels[p]; }).join(', ')], [], ['Category', 'Capability', 'Description'].concat(cols.map(function (p) { return labels[p]; }))];
+      data.filter(function (r) { return !q || [r.capability, r.sub, r.aws, r.azure, r.gcp, r.oci].join(' ').toLowerCase().indexOf(q) >= 0; })
+        .forEach(function (r) { rows.push([r.category, r.capability, r.sub].concat(cols.map(function (p) { return r[p]; }))); });
+      rows.push([], ['Landing zone area', 'What it decides'].concat(cols.map(function (p) { return labels[p]; })));
+      lzData.forEach(function (r) { rows.push([r.title, r.sub].concat(cols.map(function (p) { return r[p]; }))); });
+      return rows; } });
+})();
+</script>
+<!-- /toolshare -->
 </body>
 </html>
