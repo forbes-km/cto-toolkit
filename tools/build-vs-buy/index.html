@@ -119,7 +119,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own decision</h3>
-      <p>Score each criterion from the table above, 1 to 5, high meaning it leans build, and weight them for this decision. Then compare five-year cost for Build, Buy, and Extend (buy the platform and build a thin custom layer); the defaults reproduce the worked example below. The tool tells you when the criteria and the cost point in different directions. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Compare two to six options of your own, such as two vendors and a build, on criteria you can rename and add to and cost lines you define. The tool ranks options on present value, counts the value lost before go-live and to fit gaps, prices the chance of having to leave a vendor, shows low and high cases and whether the ranking survives them, lays out cash by year for the budget, and tells you what would have to change for the answer to flip. Save scenarios to compare side by side. The defaults reproduce the worked example below. Runs entirely in your browser; nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -223,19 +223,24 @@
     <div class="stage-head">
       <span class="stage-num">6</span>
       <h3>A worked five-year cost of ownership</h3>
-      <p>A customer notification platform: email, SMS, and in-app messages with templates, preferences, and delivery tracking. Figures are illustrative, in thousands of dollars, loaded engineer cost of $200K a year.</p>
+      <p>A customer notification platform: email, SMS, and in-app messages with templates, preferences, and delivery tracking. Figures are illustrative, in thousands of dollars: a loaded engineer cost of $200K a year rising 4 percent annually, an 8 percent discount rate, $180K a year of value when the capability fully meets the need, and a 30 percent chance of leaving a vendor within five years. These are the calculator's defaults.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Cost line</th><th>Build</th><th>Buy</th><th>Extend (platform plus thin custom layer)</th></tr>
-          <tr><td>Initial</td><td>900: six engineers for nine months</td><td>150: implementation and integration</td><td>250: platform setup plus a custom preference engine</td></tr>
+          <tr><td>Initial, with contingency</td><td>1,125: six engineers for nine months (900) plus 25 percent contingency, because internal builds overrun</td><td>150: implementation and integration on a fixed quote, no contingency</td><td>275: platform setup plus a custom preference engine (250) plus 10 percent</td></tr>
           <tr><td>Licensing over five years</td><td>None</td><td>1,035: $180K a year rising 7 percent annually</td><td>690: $120K a year rising 7 percent annually</td></tr>
-          <tr><td>People over five years</td><td>2,500: 2.5 engineers maintaining, patching, on call</td><td>500: half an engineer on integration</td><td>1,000: one engineer on the custom layer</td></tr>
-          <tr><td>Infrastructure and compliance</td><td>500</td><td>Included</td><td>Included</td></tr>
-          <tr><td>Five-year total</td><td>3,900</td><td>1,685</td><td>1,940</td></tr>
+          <tr><td>People over five years</td><td>2,333: 2.5 engineers maintaining, patching, and on call from go-live in month 9</td><td>525: half an engineer on integration from go-live in month 2</td><td>1,017: one engineer on the custom layer from go-live in month 4</td></tr>
+          <tr><td>Infrastructure and compliance</td><td>456: $100K a year from go-live, rising 3 percent</td><td>Included</td><td>Included</td></tr>
+          <tr><td>Value lost before go-live and to fit gaps</td><td>135: nine months without it, then a full fit</td><td>117: two months without it, then a 10 percent fit gap every year</td><td>85: four months without it, then a 3 percent fit gap</td></tr>
+          <tr><td>Expected exit cost</td><td>None</td><td>45: $150K to leave, at a 30 percent chance</td><td>60: $200K to leave, at a 30 percent chance</td></tr>
+          <tr><td>Five-year total, undiscounted</td><td>4,049</td><td>1,872</td><td>2,127</td></tr>
+          <tr><td>Present value at 8 percent</td><td>3,405</td><td>1,510</td><td>1,735</td></tr>
+          <tr><td>Present value range</td><td>3,077 to 4,717 (10 percent under to 40 percent over on cash)</td><td>1,441 to 1,717 (5 under, 15 over)</td><td>1,573 to 2,139 (10 under, 25 over)</td></tr>
           <tr><td>When it wins</td><td>Only if notifications are a differentiator customers pay for</td><td>The default for undifferentiated capability</td><td>When one narrow piece, here the preference engine, is genuinely differentiating</td></tr>
         </table>
+        <p style="font-size:13px;line-height:1.6;margin:10px 0 0">Buy is cheapest, but Extend's low case sits below Buy's high case, so the estimates do not settle it. Firm up the Extend quote and the Buy licensing terms before choosing between them. Build loses in every case.</p>
       </div>
     </div>
   </div>
@@ -243,40 +248,42 @@
     <div class="stage-head">
       <span class="stage-num">Diagram</span>
       <h3>Where the five-year cost goes</h3>
-      <p>The worked example above as bars. Figures in thousands of dollars.</p>
+      <p>The worked example above as bars, undiscounted. Figures in thousands of dollars.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
-<div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tco-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="tco-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="tco-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="tco-title">Five-year cost of ownership for build, buy, and extend</title><text x="108.0" y="55.0" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Build</text>
-<rect x="120" y="36" width="143.07692307692307" height="30" rx="2" fill="#8A5A2E"/>
-<text x="191.5" y="56.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">900</text>
-<rect x="263.0769230769231" y="36" width="397.4358974358974" height="30" rx="2" fill="var(--accent)"/>
-<text x="461.8" y="56.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">2,500</text>
-<rect x="660.5128205128206" y="36" width="79.48717948717949" height="30" rx="2" fill="#7B3F9E"/>
-<text x="700.3" y="56.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">500</text>
-<text x="750.0" y="56.0" text-anchor="start" font-size="12.5" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$3,900K</text>
+<div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tco-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><title id="tco-title">Five-year cost of ownership for build, buy, and extend</title>
+<text x="108.0" y="55.0" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Build</text>
+<rect x="120.0" y="36" width="166.7" height="30" rx="2" fill="#8A5A2E"/>
+<text x="203.4" y="56.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">1,125</text>
+<rect x="286.7" y="36" width="345.7" height="30" rx="2" fill="var(--accent)"/>
+<text x="459.6" y="56.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">2,333</text>
+<rect x="632.4" y="36" width="67.6" height="30" rx="2" fill="#7B3F9E"/>
+<text x="666.2" y="56.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">456</text>
+<rect x="700.0" y="36" width="20.0" height="30" rx="2" fill="#9A9A92"/>
+<text x="730.0" y="56.0" text-anchor="start" font-size="12.5" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$4,049K</text>
 <text x="108.0" y="117.0" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Buy</text>
-<rect x="120" y="98" width="23.846153846153843" height="30" rx="2" fill="#8A5A2E"/>
-<rect x="143.84615384615384" y="98" width="164.53846153846152" height="30" rx="2" fill="#2E6FB0"/>
-<text x="226.1" y="118.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">1,035</text>
-<rect x="308.38461538461536" y="98" width="79.48717948717949" height="30" rx="2" fill="var(--accent)"/>
-<text x="348.1" y="118.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">500</text>
-<text x="397.9" y="118.0" text-anchor="start" font-size="12.5" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$1,685K</text>
+<rect x="120.0" y="98" width="22.2" height="30" rx="2" fill="#8A5A2E"/>
+<rect x="142.2" y="98" width="153.4" height="30" rx="2" fill="#2E6FB0"/>
+<text x="218.9" y="118.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">1,035</text>
+<rect x="295.6" y="98" width="77.8" height="30" rx="2" fill="var(--accent)"/>
+<text x="334.5" y="118.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">525</text>
+<rect x="373.4" y="98" width="24.0" height="30" rx="2" fill="#9A9A92"/>
+<text x="407.4" y="118.0" text-anchor="start" font-size="12.5" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$1,872K</text>
 <text x="108.0" y="179.0" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Extend</text>
-<rect x="120" y="160" width="39.743589743589745" height="30" rx="2" fill="#8A5A2E"/>
-<rect x="159.74358974358975" y="160" width="109.69230769230768" height="30" rx="2" fill="#2E6FB0"/>
-<text x="214.6" y="180.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">690</text>
-<rect x="269.43589743589746" y="160" width="158.97435897435898" height="30" rx="2" fill="var(--accent)"/>
-<text x="348.9" y="180.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">1,000</text>
-<text x="438.4" y="180.0" text-anchor="start" font-size="12.5" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$1,940K</text>
-<rect x="120" y="232" width="14" height="12" rx="2" fill="#8A5A2E"/>
-<text x="140.0" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Initial</text>
-<rect x="250" y="232" width="14" height="12" rx="2" fill="#2E6FB0"/>
-<text x="270.0" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Licensing</text>
-<rect x="380" y="232" width="14" height="12" rx="2" fill="var(--accent)"/>
-<text x="400.0" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">People</text>
-<rect x="510" y="232" width="14" height="12" rx="2" fill="#7B3F9E"/>
-<text x="530.0" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Infrastructure</text>
-<text x="440.0" y="282.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">People cost over five years, not the initial build, is what makes building expensive: 2.5 engineers maintaining it for five years.</text></svg></div>
+<rect x="120.0" y="160" width="40.8" height="30" rx="2" fill="#8A5A2E"/>
+<text x="140.4" y="180.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">275</text>
+<rect x="160.8" y="160" width="102.2" height="30" rx="2" fill="#2E6FB0"/>
+<text x="211.9" y="180.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">690</text>
+<rect x="263.0" y="160" width="150.7" height="30" rx="2" fill="var(--accent)"/>
+<text x="338.4" y="180.0" text-anchor="middle" font-size="10.5" font-weight="600" fill="white" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">1,017</text>
+<rect x="413.7" y="160" width="21.5" height="30" rx="2" fill="#9A9A92"/>
+<text x="445.2" y="180.0" text-anchor="start" font-size="12.5" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$2,127K</text>
+<rect x="120" y="232" width="14" height="12" rx="2" fill="#8A5A2E"/><text x="140" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">One-time with contingency</text>
+<rect x="300" y="232" width="14" height="12" rx="2" fill="#2E6FB0"/><text x="320" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Licensing</text>
+<rect x="420" y="232" width="14" height="12" rx="2" fill="var(--accent)"/><text x="440" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">People</text>
+<rect x="520" y="232" width="14" height="12" rx="2" fill="#7B3F9E"/><text x="540" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Infrastructure</text>
+<rect x="650" y="232" width="14" height="12" rx="2" fill="#9A9A92"/><text x="670" y="242.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Value lost and expected exit</text>
+<text x="440.0" y="282.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Running cost after go-live, not the initial build, is what makes building expensive: 2.5 engineers maintaining it for over four years.</text></svg></div>
       <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Illustrative figures from the worked example. The calculator above lets you enter your own and compares them with the criteria score.</p>
     </div></div>
   </div>
@@ -333,45 +340,270 @@
 <script>
 (function () {
   var card = document.getElementById('calculator'), cell = card.querySelector('.stage-cell'); cell.innerHTML = '';
-  var E = RowTable.esc;
-  var CR = [['diff', 'Differentiation', '1 = commodity, 5 = core differentiator customers cite'], ['vendor', 'Vendor fit', '1 = a mature, well-fitting vendor exists, 5 = no good option exists'], ['time', 'Time-to-value pressure', '1 = need it in weeks, 5 = have runway for months'], ['maint', 'Maintenance capacity', '1 = no permanent team wanted, 5 = have or will build one'], ['lockin', 'Lock-in risk if bought', '1 = exit path is reasonable, 5 = switching cost would be unacceptable']];
-  var OPT = [['build', 'Build'], ['buy', 'Buy'], ['extend', 'Extend']];
-  var F = [['init', 'Initial cost ($K)'], ['lic', 'Licensing, year 1 ($K)'], ['esc', 'Licensing increase per year (%)'], ['ppl', 'People per year ($K)'], ['infra', 'Infrastructure and compliance per year ($K)']];
-  var DEF = { s: { diff: 2, vendor: 2, time: 2, maint: 3, lockin: 3 }, w: { diff: 30, vendor: 25, time: 15, maint: 15, lockin: 15 },
-    c: { build: { init: 900, lic: 0, esc: 0, ppl: 500, infra: 100 }, buy: { init: 150, lic: 180, esc: 7, ppl: 100, infra: 0 }, extend: { init: 250, lic: 120, esc: 7, ppl: 200, infra: 0 } } };
-  var h = '<h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:0 0 6px">Criteria</h4><div class="rt-wrap"><table class="rt-table"><thead><tr><th style="min-width:200px">Criterion</th><th>Score (1 to 5)</th><th>Weight %</th></tr></thead><tbody>';
-  CR.forEach(function (c) { h += '<tr><td class="rt-wide" data-label="Criterion"><strong>' + c[1] + '</strong><br><span style="font-size:11px;color:var(--ink-soft)">' + c[2] + '</span></td><td data-label="Score"><select id="bvb-s-' + c[0] + '" aria-label="' + c[1] + ' score">' + [1, 2, 3, 4, 5].map(function (v) { return '<option>' + v + '</option>'; }).join('') + '</select></td><td data-label="Weight %"><input type="number" id="bvb-w-' + c[0] + '" min="0" max="100" aria-label="' + c[1] + ' weight"></td></tr>'; });
-  h += '</tbody></table></div><h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:18px 0 6px">Five-year cost of ownership</h4><div class="rt-wrap"><table class="rt-table"><thead><tr><th style="min-width:200px">Cost line</th>' + OPT.map(function (o) { return '<th>' + o[1] + '</th>'; }).join('') + '</tr></thead><tbody>';
-  F.forEach(function (f) { h += '<tr><td class="rt-wide" data-label="Cost line">' + f[1] + '</td>' + OPT.map(function (o) { return '<td data-label="' + o[1] + '"><input type="number" id="bvb-c-' + o[0] + '-' + f[0] + '" min="0" step="10" aria-label="' + o[1] + ', ' + f[1] + '"></td>'; }).join('') + '</tr>'; });
-  h += '</tbody></table></div><div class="tool-out" id="bvb-out"></div>';
-  cell.innerHTML = h;
-  function g(id) { return document.getElementById(id); } function n(id) { var v = parseFloat(g(id).value); return isNaN(v) || v < 0 ? 0 : v; }
-  function state() { var s = { s: {}, w: {}, c: {} }; CR.forEach(function (c) { s.s[c[0]] = +g('bvb-s-' + c[0]).value; s.w[c[0]] = n('bvb-w-' + c[0]); }); OPT.forEach(function (o) { s.c[o[0]] = {}; F.forEach(function (f) { s.c[o[0]][f[0]] = n('bvb-c-' + o[0] + '-' + f[0]); }); }); return s; }
-  function set(s) { s = s || {}; CR.forEach(function (c) { var v = s.s && s.s[c[0]]; g('bvb-s-' + c[0]).value = v >= 1 && v <= 5 ? v : DEF.s[c[0]]; var w = s.w && s.w[c[0]]; g('bvb-w-' + c[0]).value = w >= 0 ? w : DEF.w[c[0]]; });
-    OPT.forEach(function (o) { F.forEach(function (f) { var v = s.c && s.c[o[0]] && s.c[o[0]][f[0]]; g('bvb-c-' + o[0] + '-' + f[0]).value = v >= 0 ? v : DEF.c[o[0]][f[0]]; }); }); calc(); }
-  function tco(c) { var lic = 0; for (var y = 0; y < 5; y++) lic += c.lic * Math.pow(1 + c.esc / 100, y); return { init: c.init, lic: lic, ppl: c.ppl * 5, infra: c.infra * 5, total: c.init + lic + c.ppl * 5 + c.infra * 5 }; }
-  function model() { var s = state(), tw = CR.reduce(function (a, c) { return a + s.w[c[0]]; }, 0) || 1, avg = CR.reduce(function (a, c) { return a + s.s[c[0]] * s.w[c[0]]; }, 0) / tw;
-    var lean = avg >= 4 ? 'BUILD' : avg >= 3 ? 'PARTNER OR EXTEND' : avg >= 2 ? 'BUY' : 'STRONGLY BUY', leanOpt = avg >= 4 ? 'build' : avg >= 3 ? 'extend' : 'buy';
-    var T = {}; OPT.forEach(function (o) { T[o[0]] = tco(s.c[o[0]]); }); var cheap = OPT.map(function (o) { return o[0]; }).sort(function (a, b) { return T[a].total - T[b].total; })[0];
-    return { s: s, tw: tw, avg: avg, lean: lean, leanOpt: leanOpt, T: T, cheap: cheap }; }
-  function calc() {
-    var m = model(), s = m.s, L = { build: 'Build', buy: 'Buy', extend: 'Extend' }, k = function (v) { return '$' + Math.round(v).toLocaleString() + 'K'; };
-    var o = '<div class="tool-sum">';
-    if (Math.abs(m.tw - 100) > 0.5) o += '<strong>Weights sum to ' + m.tw + '%.</strong> The score is normalized, but fix the weights before sharing.<br><br>';
-    o += '<strong>Criteria lean: ' + m.lean + '</strong> (weighted ' + m.avg.toFixed(1) + ' of 5). <strong>Lowest five-year cost: ' + L[m.cheap] + '</strong> at ' + k(m.T[m.cheap].total) + '.<br><br>';
-    if (m.leanOpt === m.cheap) o += 'The criteria and the cost agree. ' + (m.cheap === 'buy' ? 'Check vendor concentration before signing: this decision may look fine alone while adding to dependency on the same few vendors.' : m.cheap === 'extend' ? 'Buying the undifferentiated majority and building a thin layer is the answer in its own right, not a compromise.' : 'Make sure the build estimate carries maintenance: the research this page cites puts it at 40 to 80 percent of lifecycle cost.');
-    else o += 'The criteria point to <strong>' + L[m.leanOpt] + '</strong>, which costs ' + k(m.T[m.leanOpt].total - m.T[m.cheap].total) + ' more over five years than ' + L[m.cheap] + '. The criteria have to justify that premium in terms the CFO will accept, such as revenue a differentiator protects, or the decision should follow the cost.';
-    if (s.s.diff <= 2 && m.avg >= 3) o += '<br><br>Differentiation scored low while the overall lean is not buy. Re-run the differentiation test before leaning build: a weak differentiation score carried by the other criteria is how preference-driven builds get approved.';
-    o += '</div><h4>Five-year totals</h4><div class="rt-wrap"><table class="matrix-table"><tr><th>Cost line</th><th>Build</th><th>Buy</th><th>Extend</th></tr>' +
-      [['Initial', 'init'], ['Licensing', 'lic'], ['People', 'ppl'], ['Infrastructure and compliance', 'infra'], ['<strong>Five-year total</strong>', 'total']].map(function (r) { return '<tr><td>' + r[0] + '</td>' + ['build', 'buy', 'extend'].map(function (x) { return '<td>' + (r[1] === 'total' ? '<strong>' + k(m.T[x][r[1]]) + '</strong>' : k(m.T[x][r[1]])) + '</td>'; }).join('') + '</tr>'; }).join('') + '</table></div>';
-    g('bvb-out').innerHTML = o;
+  var E = RowTable.esc, TYPES = [['build', 'Build'], ['buy', 'Buy'], ['extend', 'Extend or partner']], TL = { build: 'Build', buy: 'Buy', extend: 'Extend or partner' };
+  var MAXO = 6, MAXL = 20, MAXS = 8;
+  function nz(v, d) { v = parseFloat(v); return isNaN(v) ? d : v; }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function k(v) { return (v < 0 ? '-$' : '$') + Math.round(Math.abs(v)).toLocaleString() + 'K'; }
+  function pct(v) { return Math.round(v) + '%'; }
+  function H4(t, top) { return '<h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:' + (top ? '22px' : '0') + ' 0 6px">' + t + '</h4>'; }
+  function noteHtml(t) { return '<p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:4px 0 8px">' + t + '</p>'; }
+  function block(html) { var d = document.createElement('div'); d.innerHTML = html; cell.appendChild(d); return d; }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  var DEF = {
+    g: { years: 5, rate: 8, value: 180 },
+    opts: [
+      { id: 'o1', name: 'Build', type: 'build', m: 9, fit: 100, c: 25, lo: 10, hi: 40, x: 0, px: 0 },
+      { id: 'o2', name: 'Buy', type: 'buy', m: 2, fit: 90, c: 0, lo: 5, hi: 15, x: 150, px: 30 },
+      { id: 'o3', name: 'Extend', type: 'extend', m: 4, fit: 97, c: 10, lo: 10, hi: 25, x: 200, px: 30 }],
+    cr: [
+      { name: 'Differentiation', scale: '1 = commodity, 5 = core differentiator customers cite', s: '2', w: 30 },
+      { name: 'Vendor fit', scale: '1 = a mature, well-fitting vendor exists, 5 = no good option exists', s: '2', w: 25 },
+      { name: 'Time-to-value pressure', scale: '1 = need it in weeks, 5 = have runway for months', s: '2', w: 15 },
+      { name: 'Maintenance capacity', scale: '1 = no permanent team wanted, 5 = have or will build one', s: '3', w: 15 },
+      { name: 'Lock-in risk if bought', scale: '1 = exit path is reasonable, 5 = switching cost would be unacceptable', s: '3', w: 15 }],
+    cl: [
+      { name: 'Initial build or implementation', kind: 'once', esc: 0, after: 'N', v: { o1: 900, o2: 150, o3: 250 } },
+      { name: 'Licensing and subscription', kind: 'annual', esc: 7, after: 'N', v: { o1: 0, o2: 180, o3: 120 } },
+      { name: 'People to run and maintain', kind: 'annual', esc: 4, after: 'Y', v: { o1: 500, o2: 100, o3: 200 } },
+      { name: 'Infrastructure and compliance', kind: 'annual', esc: 3, after: 'Y', v: { o1: 100, o2: 0, o3: 0 } }],
+    scen: []
+  };
+  var S = clone(DEF), nextId = 4;
+
+  // ---------- 1. Assumptions ----------
+  block(H4('Assumptions'));
+  var G = RowTable.extras(cell, 'bvb-g', [
+    { key: 'years', label: 'Horizon (years, 1 to 10)', min: 1, max: 10, step: 1, value: 5 },
+    { key: 'rate', label: 'Discount rate (%)', min: 0, max: 50, step: 0.5, value: 8 },
+    { key: 'value', label: 'Annual value of the capability at full fit ($K)', min: 0, step: 10, value: 180 }]);
+  block(noteHtml('The discount rate is normally your cost of capital or finance\'s hurdle rate. Annual value is what the capability is worth to the business each year when it fully meets the requirement: revenue it protects, cost it removes, or the workaround it replaces. Each option loses that value until it goes live, and loses its fit gap every year after. Enter 0 to compare on cost alone.'));
+
+  // ---------- 2. Criteria ----------
+  block(H4('Criteria', true) + noteHtml('Score each criterion 1 to 5, where 5 leans build, and weight it for this decision. Rename, remove, or add your own; the weights should total 100.'));
+  var SC = [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5']];
+  var CR = RowTable.create({ mount: cell, id: 'bvb-cr', addLabel: 'Add criterion', min: 1, max: 15, onChange: calc, rows: DEF.cr,
+    blank: { name: '', scale: '1 = leans buy, 5 = leans build', s: '3', w: 0 },
+    columns: [{ key: 'name', label: 'Criterion', type: 'text', width: '170px', wide: true },
+      { key: 'scale', label: 'What 1 and 5 mean', type: 'text', width: '240px', wide: true },
+      { key: 's', label: 'Score', type: 'select', width: '70px', options: SC },
+      { key: 'w', label: 'Weight %', type: 'number', min: 0, max: 100, step: 1 }] });
+
+  // ---------- 3. Options (custom editable table) ----------
+  block(H4('Options', true) + noteHtml('Two to six options. Name them for what they are (Vendor A, Vendor B, Build on our platform) and give each a type so the criteria can point at it. Fit is the share of the requirement it meets once live. The cost range is how far its cash costs could land below or above your estimate. Exit cost is what leaving would take; it is counted at the chance you give it.'));
+  var optWrap = document.createElement('div'); cell.appendChild(optWrap);
+  var OF = [['name', 'Option', 'text', '130px'], ['type', 'Type', 'select', '150px'], ['m', 'Months to go live', 'number', '70px'], ['fit', 'Fit %', 'number', '64px'],
+    ['c', 'Contingency on one-time %', 'number', '70px'], ['lo', 'Could cost less by %', 'number', '64px'], ['hi', 'Could cost more by %', 'number', '64px'],
+    ['x', 'Exit cost ($K)', 'number', '70px'], ['px', 'Chance of exit by end %', 'number', '64px']];
+  function renderOpts() {
+    var h = '<div class="rt-wrap"><table class="rt-table" id="bvb-opts"><thead><tr>' + OF.map(function (f) { return '<th style="min-width:' + f[3] + '">' + f[1] + '</th>'; }).join('') + '<th></th></tr></thead><tbody>';
+    S.opts.forEach(function (o, i) {
+      h += '<tr>' + OF.map(function (f) {
+        var id = 'bvb-o-' + f[0] + '-' + i, a = ' id="' + id + '" data-oi="' + i + '" data-ok="' + f[0] + '" aria-label="' + E((o.name || 'Option') + ' ' + f[1]) + '"';
+        var inp = f[2] === 'select' ? '<select' + a + '>' + TYPES.map(function (t) { return '<option value="' + t[0] + '"' + (o.type === t[0] ? ' selected' : '') + '>' + t[1] + '</option>'; }).join('') + '</select>'
+          : '<input type="' + f[2] + '"' + a + ' value="' + E(o[f[0]]) + '"' + (f[2] === 'number' ? ' step="any"' : '') + '>';
+        return '<td data-label="' + E(f[1]) + '"' + (f[0] === 'name' ? ' class="rt-wide"' : '') + '>' + inp + '</td>';
+      }).join('') + '<td class="rt-x"><button type="button" class="rt-del" data-odel="' + i + '"' + (S.opts.length <= 2 ? ' disabled' : '') + '>Remove</button></td></tr>';
+    });
+    h += '</tbody></table></div>' + (S.opts.length < MAXO ? '<button type="button" class="rt-add" id="bvb-addopt">+ Add option</button>' : '');
+    optWrap.innerHTML = h;
   }
-  cell.addEventListener('input', calc); cell.addEventListener('change', calc);
+  optWrap.addEventListener('input', onOpt); optWrap.addEventListener('change', onOpt);
+  function onOpt(e) { var t = e.target, ki = t.getAttribute('data-ok'); if (!ki) return; var o = S.opts[+t.getAttribute('data-oi')]; o[ki] = (ki === 'name' || ki === 'type') ? t.value : t.value;
+    if (ki === 'name') renderLinesHead(); calc(); }
+  optWrap.addEventListener('click', function (e) {
+    var d = e.target.getAttribute('data-odel');
+    if (d != null) { var gone = S.opts.splice(+d, 1)[0]; S.cl.forEach(function (L) { delete L.v[gone.id]; }); renderAll(); return; }
+    if (e.target.id === 'bvb-addopt') { var id = 'o' + (nextId++); S.opts.push({ id: id, name: 'Option ' + (S.opts.length + 1), type: 'buy', m: 3, fit: 90, c: 0, lo: 5, hi: 15, x: 0, px: 0 }); S.cl.forEach(function (L) { L.v[id] = 0; }); renderAll(); }
+  });
+
+  // ---------- 4. Cost lines (custom editable table, one column per option) ----------
+  block(H4('Cost lines ($K)', true) + noteHtml('One-time costs land at the start. Annual costs grow by their escalation rate each year, salaries included, and start either at signing or at go-live. Add lines for anything that differs between options: training, data migration, support contracts, decommissioning.'));
+  var lineWrap = document.createElement('div'); cell.appendChild(lineWrap);
+  function renderLines() {
+    var h = '<div class="rt-wrap"><table class="rt-table" id="bvb-lines"><thead><tr id="bvb-lines-head"></tr></thead><tbody>';
+    S.cl.forEach(function (L, i) {
+      h += '<tr><td class="rt-wide" data-label="Cost line"><input type="text" id="bvb-l-name-' + i + '" data-li="' + i + '" data-lk="name" value="' + E(L.name) + '" aria-label="Cost line name"></td>' +
+        '<td data-label="Type"><select id="bvb-l-kind-' + i + '" data-li="' + i + '" data-lk="kind" aria-label="Type"><option value="once"' + (L.kind === 'once' ? ' selected' : '') + '>One-time</option><option value="annual"' + (L.kind !== 'once' ? ' selected' : '') + '>Annual</option></select></td>' +
+        '<td data-label="Escalation %/yr"><input type="number" step="any" id="bvb-l-esc-' + i + '" data-li="' + i + '" data-lk="esc" value="' + E(L.esc) + '" aria-label="Escalation"></td>' +
+        '<td data-label="Annual cost starts"><select id="bvb-l-after-' + i + '" data-li="' + i + '" data-lk="after" aria-label="Annual cost starts"><option value="N"' + (L.after !== 'Y' ? ' selected' : '') + '>At signing</option><option value="Y"' + (L.after === 'Y' ? ' selected' : '') + '>At go-live</option></select></td>' +
+        S.opts.map(function (o, j) { return '<td data-label="' + E(o.name || 'Option') + '"><input type="number" step="any" min="0" id="bvb-l-v-' + i + '-' + j + '" data-li="' + i + '" data-lo="' + o.id + '" value="' + E(L.v[o.id] == null ? 0 : L.v[o.id]) + '" aria-label="' + E((L.name || 'Line') + ', ' + (o.name || 'option')) + '"></td>'; }).join('') +
+        '<td class="rt-x"><button type="button" class="rt-del" data-ldel="' + i + '"' + (S.cl.length <= 1 ? ' disabled' : '') + '>Remove</button></td></tr>';
+    });
+    h += '</tbody></table></div>' + (S.cl.length < MAXL ? '<button type="button" class="rt-add" id="bvb-addline">+ Add cost line</button>' : '');
+    lineWrap.innerHTML = h; renderLinesHead();
+  }
+  function renderLinesHead() {
+    var hd = document.getElementById('bvb-lines-head'); if (!hd) return;
+    hd.innerHTML = '<th style="min-width:190px">Cost line</th><th style="min-width:110px">Type</th><th style="min-width:70px">Escalation %/yr</th><th style="min-width:120px">Annual cost starts</th>' +
+      S.opts.map(function (o) { return '<th style="min-width:80px">' + E(o.name || 'Option') + '</th>'; }).join('') + '<th></th>';
+    lineWrap.querySelectorAll('input[data-lo]').forEach(function (inp) { var o = S.opts.filter(function (x) { return x.id === inp.getAttribute('data-lo'); })[0]; if (o) inp.parentNode.setAttribute('data-label', o.name || 'Option'); });
+  }
+  lineWrap.addEventListener('input', onLine); lineWrap.addEventListener('change', onLine);
+  function onLine(e) { var t = e.target, i = t.getAttribute('data-li'); if (i == null) return; var L = S.cl[+i];
+    if (t.getAttribute('data-lo')) L.v[t.getAttribute('data-lo')] = t.value; else L[t.getAttribute('data-lk')] = t.value; calc(); }
+  lineWrap.addEventListener('click', function (e) {
+    var d = e.target.getAttribute('data-ldel');
+    if (d != null) { S.cl.splice(+d, 1); renderLines(); calc(); return; }
+    if (e.target.id === 'bvb-addline') { var v = {}; S.opts.forEach(function (o) { v[o.id] = 0; }); S.cl.push({ name: '', kind: 'annual', esc: 0, after: 'Y', v: v }); renderLines(); calc();
+      var f = lineWrap.querySelector('tbody tr:last-child input'); if (f) f.focus(); }
+  });
+
+  // ---------- 5. Results and scenarios ----------
+  var out = document.createElement('div'); out.className = 'tool-out'; out.id = 'bvb-out'; out.setAttribute('aria-live', 'polite'); cell.appendChild(out);
+  block(H4('Scenarios', true) + noteHtml('Save the current inputs under a name, change something, and save again to compare. Scenarios are kept in this browser and travel with a share link.') +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><input type="text" id="bvb-scen-name" placeholder="Scenario name, e.g. with data migration" aria-label="Scenario name" style="flex:1 1 220px;font-family:inherit;font-size:13px;padding:6px 7px;border:1px solid var(--line);border-radius:6px"><button type="button" class="rt-add" id="bvb-scen-save" style="margin-top:0">Save current inputs as a scenario</button></div><div id="bvb-scen-out" style="margin-top:10px"></div>');
+  var scenOut = document.getElementById('bvb-scen-out');
+
+  function renderAll() { renderOpts(); renderLines(); calc(); }
+
+  function state() { return { g: G.get(), opts: clone(S.opts), cr: CR.get(), cl: clone(S.cl), scen: clone(S.scen) }; }
+  function core(st) { return { g: st.g, opts: st.opts, cr: st.cr, cl: st.cl }; }
+  function set(s) {
+    s = s || {};
+    G.set(s.g || DEF.g);
+    CR.set(s.cr && s.cr.length ? s.cr : DEF.cr);
+    S.opts = (s.opts && s.opts.length >= 2 ? s.opts : DEF.opts).slice(0, MAXO).map(function (o) { return clone(o); });
+    var seen = {}; S.opts.forEach(function (o, i) { if (!o.id || seen[o.id]) o.id = 'x' + i + '_' + Math.random().toString(36).slice(2, 6); seen[o.id] = 1; if (!TL[o.type]) o.type = 'buy'; });
+    S.cl = (s.cl && s.cl.length ? s.cl : DEF.cl).slice(0, MAXL).map(function (L) { var c = clone(L); c.v = c.v || {}; S.opts.forEach(function (o) { if (c.v[o.id] == null) c.v[o.id] = 0; }); return c; });
+    S.scen = Array.isArray(s.scen) ? s.scen.slice(0, MAXS) : [];
+    nextId = S.opts.reduce(function (a, o) { var n = parseInt(String(o.id).replace(/\D/g, ''), 10); return isNaN(n) ? a : Math.max(a, n + 1); }, S.opts.length + 1);
+    renderAll();
+  }
+
+  // ---------- model ----------
+  function model(st) {
+    var H = Math.round(clamp(nz(st.g.years, 5), 1, 10)), r = clamp(nz(st.g.rate, 8), 0, 50) / 100, V = Math.max(0, nz(st.g.value, 0));
+    var M = { H: H, r: r, V: V, opts: [] };
+    st.opts.forEach(function (os) {
+      var m = clamp(nz(os.m, 0), 0, 120), fit = clamp(nz(os.fit, 100), 0, 100) / 100, c = clamp(nz(os.c, 0), -50, 300) / 100,
+        lo = clamp(nz(os.lo, 0), 0, 95) / 100, hi = clamp(nz(os.hi, 0), 0, 500) / 100, X = Math.max(0, nz(os.x, 0)), px = clamp(nz(os.px, 0), 0, 100) / 100;
+      var R = { id: os.id, name: os.name || 'Unnamed option', type: TL[os.type] ? os.type : 'buy', m: m, fit: fit, c: c, lo: lo, hi: hi, X: X, px: px,
+        lines: [], once: 0, rec: 0, recPV: 0, recAfter: 0, year: [], lost: 0, lostPV: 0, lostK: 0 };
+      for (var y = 0; y <= H; y++) R.year[y] = 0;
+      st.cl.forEach(function (Ln) {
+        var v = Math.max(0, nz(Ln.v && Ln.v[os.id], 0)), nom = 0, pv = 0;
+        if (Ln.kind === 'once') { nom = v * (1 + c); pv = nom; R.once += nom; R.year[0] += nom; }
+        else {
+          var esc = nz(Ln.esc, 0) / 100;
+          for (var yy = 1; yy <= H; yy++) { var f = Ln.after === 'Y' ? clamp((12 * yy - m) / 12, 0, 1) : 1, a = v * Math.pow(1 + esc, yy - 1) * f; nom += a; pv += a / Math.pow(1 + r, yy); R.year[yy] += a; }
+          R.rec += nom; R.recPV += pv; if (Ln.after === 'Y') R.recAfter += nom;
+        }
+        R.lines.push({ name: Ln.name || 'Unnamed line', once: Ln.kind === 'once', nom: nom, pv: pv });
+      });
+      for (var z = 1; z <= H; z++) { var live = clamp((12 * z - m) / 12, 0, 1), share = 1 - fit * live; R.lost += V * share; R.lostK += share / Math.pow(1 + r, z); }
+      R.lostPV = V * R.lostK;
+      R.exitE = X * px; R.exitPV = R.exitE / Math.pow(1 + r, H);
+      R.cash = R.once + R.rec; R.cashPV = R.once + R.recPV;
+      R.total = R.cash + R.exitE + R.lost; R.pv = R.cashPV + R.exitPV + R.lostPV;
+      R.pvLow = R.cashPV * (1 - lo) + R.exitPV + R.lostPV; R.pvHigh = R.cashPV * (1 + hi) + R.exitPV + R.lostPV;
+      M.opts.push(R);
+    });
+    M.rank = M.opts.slice().sort(function (a, b) { return a.pv - b.pv; });
+    var tw = 0, sw = 0; st.cr.forEach(function (c) { var w = Math.max(0, nz(c.w, 0)); tw += w; sw += clamp(nz(c.s, 3), 1, 5) * w; });
+    M.tw = tw; M.avg = tw > 0 ? sw / tw : 3;
+    M.lean = M.avg >= 4 ? 'BUILD' : M.avg >= 3 ? 'EXTEND OR PARTNER' : M.avg >= 2 ? 'BUY' : 'STRONGLY BUY';
+    M.leanType = M.avg >= 4 ? 'build' : M.avg >= 3 ? 'extend' : 'buy';
+    M.leanOpt = M.rank.filter(function (o) { return o.type === M.leanType; })[0] || null;
+    return M;
+  }
+
+  function breakEven(M, A, B) {
+    var gap = B.pv - A.pv, out = [];
+    out.push(E(B.name) + ' costs ' + k(gap) + ' more than ' + E(A.name) + ' (' + (A.pv > 0 ? pct(gap / A.pv * 100) : '0%') + ').');
+    if (B.once > 0) { var p1 = gap / B.once * 100; out.push(p1 <= 100 ? E(B.name) + '\'s one-time costs, contingency included, would have to come in ' + pct(p1) + ' lower to tie.' : 'Cutting ' + E(B.name) + '\'s one-time costs to zero would not close the gap.'); }
+    if (B.recPV > 0) { var p2 = gap / B.recPV * 100; out.push(p2 <= 100 ? E(B.name) + '\'s recurring costs would have to run ' + pct(p2) + ' lower every year to tie.' : 'Cutting ' + E(B.name) + '\'s recurring costs to zero would not close the gap.'); }
+    if (A.once > 0) { var p3 = gap / A.once * 100; out.push(E(A.name) + ' stays ahead unless its one-time costs ' + (p3 >= 100 ? 'reach more than ' + (Math.round(p3 / 10) / 10 + 1).toFixed(1).replace(/\.0$/, '') + ' times the current estimate' : 'overrun by more than ' + pct(p3)) + ', contingency included.'); }
+    if (A.recPV > 0) out.push(E(A.name) + ' stays ahead unless its recurring costs run more than ' + pct(gap / A.recPV * 100) + ' above plan.');
+    if (Math.abs(A.lostK - B.lostK) > 1e-9) {
+      var base = (B.pv - B.lostPV) - (A.pv - A.lostPV), vstar = base / (A.lostK - B.lostK);
+      if (vstar > 0 && Math.abs(vstar - M.V) > 0.5) out.push('The two cross at an annual value of ' + k(vstar) + ' (you entered ' + k(M.V) + '). ' + (vstar > M.V ? 'Above that, ' + E(B.name) + ' wins because it goes live sooner or fits better.' : 'Below that, ' + E(B.name) + ' wins.'));
+    }
+    if (A.exitPV > 0 && A.X > 0) { var pxs = (gap / Math.pow(1 + M.r, -M.H) / A.X + A.px) * 100; if (pxs <= 100) out.push(E(A.name) + ' stays ahead unless the chance of having to leave it rises above ' + pct(pxs) + '.'); }
+    return out;
+  }
+
+  // ---------- render results ----------
+  function calc() {
+    var st = state(), M = model(st), best = M.rank[0], second = M.rank[1], o = '<div class="tool-sum">';
+    if (Math.abs(M.tw - 100) > 0.5) o += '<strong>Weights total ' + Math.round(M.tw * 10) / 10 + '%.</strong> The score is normalized, but fix the weights before sharing.<br><br>';
+    o += '<strong>Criteria lean: ' + M.lean + '</strong> (weighted ' + M.avg.toFixed(1) + ' of 5). <strong>Lowest total cost: ' + E(best.name) + '</strong> at ' + k(best.pv) + ' present value over ' + M.H + ' years.<br><br>';
+    if (!M.leanOpt) o += 'The criteria lean ' + TL[M.leanType].toLowerCase() + ', but no option has that type. Add one, or set an option\'s type, so the two can be compared.';
+    else if (M.leanOpt === best) o += 'The criteria and the cost agree. ' + (best.type === 'buy' ? 'Check vendor concentration before signing: this decision may look fine alone while adding to dependency on the same few vendors.' : best.type === 'extend' ? 'Buying the undifferentiated majority and building a thin layer is the answer in its own right, not a compromise.' : 'Make sure the build estimate carries maintenance for the whole horizon, not only the first release.');
+    else o += 'The criteria point to <strong>' + E(M.leanOpt.name) + '</strong>, which costs ' + k(M.leanOpt.pv - best.pv) + ' more than ' + E(best.name) + '. The criteria have to justify that premium in terms the CFO will accept, or the decision should follow the cost.';
+    // range robustness
+    var overlap = M.rank.slice(1).filter(function (x) { return x.pvLow < best.pvHigh; });
+    o += '<br><br>' + (overlap.length ? '<strong>The ranking is not settled by the estimates.</strong> Within the cost ranges, ' + overlap.map(function (x) { return E(x.name) + ' could come in at ' + k(x.pvLow); }).join(', ') + ', below ' + E(best.name) + '\'s high case of ' + k(best.pvHigh) + '. Tighten those estimates before deciding.' : '<strong>The ranking holds across the cost ranges.</strong> ' + E(best.name) + '\'s high case (' + k(best.pvHigh) + ') is still below every other option\'s low case.');
+    var dRow = st.cr.filter(function (c) { return /differentiat/i.test(c.name || ''); })[0];
+    if (dRow && nz(dRow.s, 3) <= 2 && M.avg >= 3) o += '<br><br>Differentiation scored low while the overall lean is not buy. Re-run the differentiation test before leaning build: a weak differentiation score carried by the other criteria is how preference-driven builds get approved.';
+    M.opts.filter(function (x) { return x.type === 'build' && x.cash > 0; }).forEach(function (x) { var sh = x.recAfter / x.cash * 100; if (sh < 40) o += '<br><br>Only ' + pct(sh) + ' of ' + E(x.name) + '\'s cost comes after go-live. The research cited on this page puts maintenance at 40 to 80 percent of lifecycle cost, so that estimate is probably missing most of its running cost.'; });
+    o += '</div>';
+
+    // summary by option
+    var th = '<tr><th>Cost line</th>' + M.opts.map(function (x) { return '<th>' + E(x.name) + '</th>'; }).join('') + '</tr>';
+    var rows = st.cl.map(function (Ln, i) { return '<tr><td>' + E(Ln.name || 'Unnamed line') + (Ln.kind === 'once' ? ' <span style="color:var(--ink-soft)">(incl. contingency)</span>' : '') + '</td>' + M.opts.map(function (x) { return '<td>' + k(x.lines[i].nom) + '</td>'; }).join('') + '</tr>'; }).join('');
+    rows += '<tr><td>Value lost before go-live and to fit gaps</td>' + M.opts.map(function (x) { return '<td>' + k(x.lost) + '</td>'; }).join('') + '</tr>';
+    rows += '<tr><td>Expected exit cost (cost &times; chance)</td>' + M.opts.map(function (x) { return '<td>' + k(x.exitE) + '</td>'; }).join('') + '</tr>';
+    rows += '<tr><td><strong>Total, undiscounted</strong></td>' + M.opts.map(function (x) { return '<td><strong>' + k(x.total) + '</strong></td>'; }).join('') + '</tr>';
+    rows += '<tr><td><strong>Present value at ' + (M.r * 100).toFixed(1).replace(/\.0$/, '') + '%</strong></td>' + M.opts.map(function (x) { return '<td><strong>' + k(x.pv) + '</strong>' + (x === best ? ' <span class="tag good">lowest</span>' : '') + '</td>'; }).join('') + '</tr>';
+    rows += '<tr><td>Range, present value (low to high)</td>' + M.opts.map(function (x) { return '<td>' + k(x.pvLow) + ' to ' + k(x.pvHigh) + '</td>'; }).join('') + '</tr>';
+    o += '<h4>' + M.H + '-year cost by option</h4><div class="rt-wrap"><table class="matrix-table">' + th + rows + '</table></div>';
+
+    // year by year cash
+    var yh = '<tr><th>Cash out ($K)</th><th>Start</th>'; for (var y = 1; y <= M.H; y++) yh += '<th>Year ' + y + '</th>'; yh += '<th>Total</th></tr>';
+    var yr = M.opts.map(function (x) { var t = '<tr><td>' + E(x.name) + '</td>'; for (var y2 = 0; y2 <= M.H; y2++) t += '<td>' + k(x.year[y2]) + '</td>'; return t + '<td><strong>' + k(x.cash) + '</strong></td></tr>'; }).join('');
+    var peak = M.opts.map(function (x) { var mx = 0, at = 0; x.year.forEach(function (v, i) { if (v > mx) { mx = v; at = i; } }); return E(x.name) + ' peaks at ' + k(mx) + ' ' + (at === 0 ? 'at the start' : 'in year ' + at); }).join('; ');
+    o += '<h4>Year by year, cash only</h4><div class="rt-wrap"><table class="matrix-table">' + yh + yr + '</table></div>' + noteHtml('What each option adds to the budget each year, with contingency. It leaves out value lost and exit cost, which are not budget lines. ' + peak + '.');
+
+    // break-even
+    o += '<h4>What would change the answer</h4><ul>' + breakEven(M, best, second).map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>';
+    if (M.leanOpt && M.leanOpt !== best && M.leanOpt !== second) o += '<p style="font-size:13px;margin:10px 0 0">Against ' + E(M.leanOpt.name) + ', the option the criteria favor:</p><ul>' + breakEven(M, best, M.leanOpt).map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>';
+    out.innerHTML = o;
+    renderScen();
+  }
+
+  function renderScen() {
+    if (!S.scen.length) { scenOut.innerHTML = noteHtml('No scenarios saved yet.'); return; }
+    var h = '<div class="rt-wrap"><table class="matrix-table"><tr><th>Scenario</th><th>Lowest cost</th><th>Present value</th><th>Runner-up and gap</th><th>Ranking holds across ranges?</th><th>Criteria lean</th><th></th></tr>';
+    S.scen.forEach(function (sc, i) {
+      var m = model(sc.st), b = m.rank[0], s2 = m.rank[1], ok = !m.rank.slice(1).some(function (x) { return x.pvLow < b.pvHigh; });
+      h += '<tr><td>' + E(sc.name) + '</td><td>' + E(b.name) + '</td><td>' + k(b.pv) + '</td><td>' + (s2 ? E(s2.name) + ', ' + k(s2.pv - b.pv) + ' more' : '') + '</td><td>' + (ok ? '<span class="tag good">Yes</span>' : '<span class="tag mid">No</span>') + '</td><td>' + m.lean + '</td>' +
+        '<td style="white-space:nowrap"><button type="button" class="rt-del" data-sload="' + i + '" style="color:var(--accent)">Load</button> <button type="button" class="rt-del" data-sdel="' + i + '">Delete</button></td></tr>';
+    });
+    scenOut.innerHTML = h + '</table></div>';
+  }
+  cell.addEventListener('click', function (e) {
+    if (e.target.id === 'bvb-scen-save') {
+      if (S.scen.length >= MAXS) { alertNote('You can keep up to ' + MAXS + ' scenarios. Delete one first.'); return; }
+      var nm = (document.getElementById('bvb-scen-name').value || '').trim() || ('Scenario ' + (S.scen.length + 1));
+      S.scen.push({ name: nm, st: core(state()) }); document.getElementById('bvb-scen-name').value = ''; renderScen(); if (window.ToolShare && ToolShare.changed) ToolShare.changed(); return;
+    }
+    var l = e.target.getAttribute('data-sload'), d = e.target.getAttribute('data-sdel');
+    if (l != null) { var keep = clone(S.scen), sc = clone(S.scen[+l].st); sc.scen = keep; set(sc); if (ToolShare.changed) ToolShare.changed(); }
+    if (d != null) { S.scen.splice(+d, 1); renderScen(); if (ToolShare.changed) ToolShare.changed(); }
+  });
+  function alertNote(t) { scenOut.insertAdjacentHTML('afterbegin', noteHtml('<strong>' + t + '</strong>')); }
+
+  var gBox = cell.querySelector('.tool-extras'); gBox.addEventListener('input', calc); gBox.addEventListener('change', calc);
   set(DEF);
+
   ToolShare.register({ id: 'bvb', root: card, title: 'Build, buy, or extend', getState: state, setState: set,
-    csv: function () { var m = model(), rows = [['Criterion', 'Score', 'Weight %']]; CR.forEach(function (c) { rows.push([c[1], m.s.s[c[0]], m.s.w[c[0]]]); });
-      rows.push(['Weighted lean', m.avg.toFixed(2), m.lean], [], ['Five-year cost ($K)', 'Build', 'Buy', 'Extend']);
-      ['init', 'lic', 'ppl', 'infra', 'total'].forEach(function (x) { rows.push([x, m.T.build[x].toFixed(0), m.T.buy[x].toFixed(0), m.T.extend[x].toFixed(0)]); }); return rows; } });
+    csv: function () {
+      var st = state(), M = model(st), rows = [['Assumption', 'Value'], ['Horizon (years)', M.H], ['Discount rate (%)', M.r * 100], ['Annual value at full fit ($K)', M.V], [],
+        ['Criterion', 'What 1 and 5 mean', 'Score', 'Weight %']];
+      st.cr.forEach(function (c) { rows.push([c.name, c.scale, c.s, c.w]); });
+      rows.push(['Weighted lean', '', M.avg.toFixed(2), M.lean], [], ['Option', 'Type', 'Months to go live', 'Fit %', 'Contingency %', 'Could cost less by %', 'Could cost more by %', 'Exit cost ($K)', 'Chance of exit %']);
+      st.opts.forEach(function (x) { rows.push([x.name, TL[x.type] || x.type, x.m, x.fit, x.c, x.lo, x.hi, x.x, x.px]); });
+      rows.push([], ['Cost line', 'Type', 'Escalation %', 'Starts'].concat(st.opts.map(function (x) { return x.name + ' ($K)'; })));
+      st.cl.forEach(function (c) { var once = c.kind === 'once'; rows.push([c.name, once ? 'One-time' : 'Annual', once ? '' : c.esc, once ? '' : (c.after === 'Y' ? 'At go-live' : 'At signing')].concat(st.opts.map(function (x) { return c.v[x.id]; }))); });
+      rows.push([], ['Result ($K)'].concat(M.opts.map(function (x) { return x.name; })));
+      [['Cash, undiscounted', 'cash'], ['Value lost', 'lost'], ['Expected exit cost', 'exitE'], ['Total, undiscounted', 'total'], ['Present value', 'pv'], ['Present value, low', 'pvLow'], ['Present value, high', 'pvHigh']].forEach(function (r) { rows.push([r[0]].concat(M.opts.map(function (x) { return Math.round(x[r[1]]); }))); });
+      rows.push([], ['Cash by year ($K)', 'Start'].concat(Array.apply(null, Array(M.H)).map(function (_, i) { return 'Year ' + (i + 1); })));
+      M.opts.forEach(function (x) { rows.push([x.name].concat(x.year.map(function (v) { return Math.round(v); }))); });
+      if (S.scen.length) { rows.push([], ['Scenario', 'Lowest cost', 'Present value ($K)']); S.scen.forEach(function (sc) { var m = model(sc.st); rows.push([sc.name, m.rank[0].name, Math.round(m.rank[0].pv)]); }); }
+      return rows;
+    } });
 })();
 </script>
 <!-- /toolshare -->
