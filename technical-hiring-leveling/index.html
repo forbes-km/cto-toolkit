@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Hiring &amp; Leveling</title>
+<meta name="description" content="Leveling by scope and ambiguity, not tenure; designing an interview loop where each stage tests something different; why independent scoring before group discussion matters, and the difference between culture fit and culture add.">
+<meta property="og:title" content="Technical Hiring &amp;amp; Leveling | CTO Toolkit">
+<meta property="og:description" content="Leveling by scope and ambiguity, not tenure; designing an interview loop where each stage tests something different; why independent scoring before group discussion matters, and the difference between culture fit and culture add.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technical-hiring-leveling/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technical Hiring &amp;amp; Leveling | CTO Toolkit">
+<meta name="twitter:description" content="Leveling by scope and ambiguity, not tenure; designing an interview loop where each stage tests something different; why independent scoring before group discussion matters, and the difference between culture fit and culture add.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technical-hiring-leveling/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Technical Hiring &amp; Leveling</h1>
+  <p>Leveling by scope and ambiguity, not tenure; designing an interview loop where each stage tests something different; why independent scoring before group discussion matters, and the difference between culture fit and culture add.</p>
+  <div class="caveat">A framework for structuring leveling and interview design. Specific rubrics, leveling calibration, and compensation banding depend on company stage and market and should be built with a leveling committee, using this page as a starting point.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Leveling by scope, not tenure</h3>
+      <p>The leveling mistake companies make most: anchoring on years of experience instead of the scope and ambiguity a person can independently handle.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Level</th><th>Scope of impact</th><th>Ambiguity handled</th></tr>
+          <tr><td>Mid-level</td><td>Owns a well-defined project or feature within a team</td><td>Needs clear requirements; escalates ambiguity to a senior or manager</td></tr>
+          <tr><td>Senior</td><td>Owns a system or a significant cross-team initiative</td><td>Resolves ambiguity within their domain independently; brings options along with the questions</td></tr>
+          <tr><td>Staff</td><td>Influences technical direction across multiple teams or the whole org</td><td>Defines the problem as well as the solution in ambiguous, unscoped situations</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">1</span>
+      <h3>Why tenure-based leveling fails</h3>
+      <p>Years of experience correlates loosely with scope of impact, and loosely is doing a lot of work in that sentence.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The failure</span>
+        <p>A candidate with eight years of experience doing the same well-scoped, individually assigned work for eight years hasn't necessarily developed staff-level judgment, while someone with four years who's had to define ambiguous problems from scratch may have. Tenure-anchored leveling systematically over-levels the former and under-levels the latter.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The fix</span>
+        <p>Level against specific, documented examples of scope and ambiguity handled, gathered from the interview loop and reference checks, not from the years-of-experience line on a resume. This takes more work per candidate and produces meaningfully more accurate leveling.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">2</span>
+      <h3>A worked example: leveling two candidates</h3>
+      <p>What the fix above looks like applied to two people with very different resumes and very different scope.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Candidate A:</strong> eight years of experience, all at one company, owned a single well-defined subsystem the entire time. A product manager always supplied clear specs; ambiguity, when it came up, got escalated instead of resolved.</p>
+        <p><strong>Candidate B:</strong> four years of experience. In year three, handed an open-ended &quot;reduce infrastructure cost&quot; mandate with no defined solution. Had to define the problem, evaluate three competing approaches, and drive cross-team adoption of the one that won.</p>
+        <p><strong>The call:</strong> Candidate A levels as mid-level, well-scoped work, ambiguity escalated instead of resolved, despite twice the tenure. Candidate B levels as senior: ambiguity resolved independently, options brought along with the questions. Tenure-anchored leveling would have inverted this outcome entirely.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">3</span>
+      <h3>Interview loop design</h3>
+      <p>The structural problem that shows up most: five interviewers independently asking some version of the same algorithm question, leaving signal gaps elsewhere.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a well-designed loop covers</span>
+        <p>Each interview stage tests something distinct and non-overlapping: coding ability, system design and tradeoff reasoning, past project depth and ownership, and collaboration or communication signal, each owned by a different interviewer with a defined rubric for that stage specifically.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What a poorly designed loop looks like</span>
+        <p>Multiple interviewers independently converging on the same type of question because nobody coordinated the loop beforehand, leaving system design or collaboration entirely untested while coding ability gets triple-checked.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">4</span>
+      <h3>Independent scoring before group discussion</h3>
+      <p>The same multi-evaluator mechanic that makes a vendor scorecard defensible applies directly to hiring decisions, and for the same reason.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How it works</span>
+        <p>Every interviewer submits their score and written notes before the debrief conversation starts, and before hearing what others thought. This prevents the most senior or most vocal interviewer's opinion from anchoring everyone else's assessment before independent judgment gets a chance to register.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it surfaces</span>
+        <p>A split score, one interviewer strongly positive, another strongly negative, is the most valuable thing the process can produce. Don't explain it away. It means the loop caught something a single interview would have missed entirely.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">5</span>
+      <h3>Culture add, not culture fit</h3>
+      <p>A subtle distinction that changes what the interview process is optimizing for.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">Culture fit</span>
+        <p>Screens for similarity to the existing team, which slowly narrows the team's collective perspective and is also where a lot of unconscious bias hides undetected, since &quot;similar to us&quot; is a very easy proxy for bias to disguise itself as.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Culture add</span>
+        <p>Screens for alignment with a small set of explicit, named values (how the team handles disagreement, how it treats mistakes) while actively looking for what a candidate would add that the team doesn't already have, not how well they would blend in.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">6</span>
+      <h3>Calibration across loops, over time</h3>
+      <p>A well-designed single loop still drifts against other loops without a mechanism forcing them to agree.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to do</span>
+        <p>A standing leveling committee, distinct from any single interview loop, periodically reviews leveling decisions across multiple hiring managers and teams, checking whether the same demonstrated scope gets leveled consistently regardless of who ran the loop.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">Where it goes wrong</span>
+        <p>Leveling drifts differently across teams with no central calibration, so a &quot;senior&quot; hired by one hiring manager and a &quot;senior&quot; hired by another represent different bars, discovered only once they land on the same team and the gap becomes visible to everyone.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">7</span>
+      <h3>What actually predicts job performance</h3>
+      <p>The largest recent re-analysis of selection research, Sackett and colleagues (2022)<sup class="src"><a href="#src-1" title="Sackett, Zhang, Berry, Lievens, Journal of Applied Psychology, 2022">[1]</a></sup>, corrected a long-standing statistical overcorrection and reordered the list. The practical conclusion for engineering hiring is clear.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Method</th><th>Corrected validity (Sackett et al., 2022)</th><th>What it means for an engineering loop</th></tr>
+          <tr><td>Structured interviews</td><td>0.42, the highest of the common methods</td><td>Same questions for every candidate at a level, scored against written, anchored rubrics</td></tr>
+          <tr><td>Job knowledge tests</td><td>0.40</td><td>Questions about the actual stack and domain, not trivia unrelated to the role</td></tr>
+          <tr><td>Work sample tests</td><td>0.33</td><td>A realistic, time-boxed task that looks like the job: debugging, extending, or reviewing real-looking code</td></tr>
+          <tr><td>General cognitive ability tests</td><td>0.31, lower than the figure long cited</td><td>Puzzle-style and brainteaser questions add little beyond the three methods above</td></tr>
+          <tr><td>Unstructured conversation</td><td>Materially lower than any of the above</td><td>A friendly chat with no rubric mostly measures rapport, which is where bias hides</td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://doi.org/10.1037/apl0000994" rel="noopener">Sackett, Zhang, Berry, Lievens, Journal of Applied Psychology, 2022</a></li></ol></div>
+</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">8</span>
+      <h3>A loop that covers distinct signal</h3>
+      <p>Each stage owns one signal, with a rubric written before the first candidate. Anchored rubrics describe what a 1, 2, 3, and 4 look like at this level so interviewers score behavior, not impressions.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Stage</th><th>Signal</th><th>Format</th><th>Rubric anchors</th></tr>
+          <tr><td>Recruiter screen</td><td>Role fit, level range, logistics, compensation expectations</td><td>30 minutes, structured questions</td><td>Pass or hold, with notes</td></tr>
+          <tr><td>Work sample</td><td>Can they do the work</td><td>60 to 90 minutes, pair session or time-capped take-home on realistic code</td><td>Correctness, testing, reading unfamiliar code, communication while working</td></tr>
+          <tr><td>System design</td><td>Tradeoff reasoning at the right scale for the level</td><td>60 minutes; problem scoped to the level being hired</td><td>Requirements clarified, options compared, failure modes, cost awareness</td></tr>
+          <tr><td>Project deep dive</td><td>Scope and ambiguity handled, which is the leveling evidence</td><td>45 to 60 minutes on one project the candidate chose</td><td>Who defined the problem, what they decided, what they would change</td></tr>
+          <tr><td>Collaboration and values</td><td>How they handle disagreement, feedback, and mistakes</td><td>Structured behavioral questions</td><td>Specific past examples, not hypotheticals</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">9</span>
+      <h3>Pay transparency and AI screening rules, as of September 2026</h3>
+      <p>Hiring practice is now shaped by law in most places engineering teams recruit. Confirm specifics with employment counsel for each location you hire in.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Rule</th><th>What it requires</th><th>Practical effect</th></tr>
+          <tr><td>US state and city pay transparency laws (Colorado, California, Washington, New York, Illinois, and a growing number of others)</td><td>Good-faith pay ranges in job postings, with varying thresholds and coverage of remote roles</td><td>Leveling bands have to exist and be defensible before the requisition opens</td></tr>
+          <tr><td>EU Pay Transparency Directive</td><td>Pay range information to candidates before interview, a ban on asking about salary history, and gender pay gap reporting, first due by June 7, 2027 for employers with 150 or more staff. The transposition deadline was June 7, 2026; only a handful of member states met it<sup class="src"><a href="#src-2" title="Directive (EU) 2023/970, Pay Transparency">[2]</a></sup></td><td>Treat the directive's requirements as the working standard across the EU even where local law is late</td></tr>
+          <tr><td>NYC Local Law 144</td><td>An independent bias audit and candidate notice before using an automated employment decision tool</td><td>Any AI resume screener or ranking tool used for New York City roles needs an annual audit</td></tr>
+          <tr><td>Colorado SB 26-189</td><td>From January 1, 2027, notice, explanation of adverse decisions, appeal, and human review for automated decisions affecting employment<sup class="src"><a href="#src-3" title="Seyfarth Shaw, Colorado enacts AI replacement law (SB 26-189), May 2026">[3]</a></sup></td><td>The same obligations reach any AI-assisted hiring step for Colorado candidates</td></tr>
+          <tr><td>EU AI Act</td><td>AI used in recruitment and worker management is high-risk; after the 2026 AI Omnibus those obligations apply from December 2, 2027<sup class="src"><a href="#src-4" title="European Commission, AI Omnibus enters into force, July 2026">[4]</a></sup></td><td>Vendors and deployers of hiring AI need conformity work planned now</td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://eur-lex.europa.eu/eli/dir/2023/970/oj/eng" rel="noopener">Directive (EU) 2023/970, Pay Transparency</a></li><li value="3" id="src-3"><a href="https://www.seyfarth.com/news-insights/colorado-enacts-artificial-intelligence-replacement-law.html" rel="noopener">Seyfarth Shaw, Colorado enacts AI replacement law (SB 26-189), May 2026</a></li><li value="4" id="src-4"><a href="https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force" rel="noopener">European Commission, AI Omnibus enters into force, July 2026</a></li></ol></div>
+</div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Checklist</span>
+      <h3>Signs the hiring and leveling process isn't working</h3>
+      <p>Patterns that show up when hiring feels rigorous but the underlying signal is weaker than the process implies.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ul>
+          <li>Leveling is anchored to years of experience, not documented scope and ambiguity handled</li>
+          <li>Interviewers ask overlapping questions, leaving signal gaps (design, collaboration) untested</li>
+          <li>Interviewers discuss impressions with each other before submitting independent scores</li>
+          <li>The interview process screens for culture fit (similarity) instead of culture add (what's missing)</li>
+          <li>No standing calibration mechanism exists to check whether &quot;senior&quot; means the same thing across different hiring managers or teams</li>
+                  <li>Interview questions have no written, anchored rubric, so scores reflect each interviewer's personal bar</li>
+          <li>Postings go out without pay ranges in places that require them, or leveling bands do not exist to support the ranges</li>
+          <li>An AI screening or ranking tool is in use without the audit, notice, and human review that apply where you hire</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only; not legal advice. Validity figures are from Sackett, Zhang, Berry, and Lievens (2022), Journal of Applied Psychology. Pay transparency and AI hiring rules reflect September 2026 and change often. Build specific rubrics and interview scorecards with a calibration committee. Don't apply this framework mechanically.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+
+</footer>
+
+</body>
+</html>

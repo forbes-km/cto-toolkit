@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We're Cutting Costs</title>
+<meta name="description" content="The number has probably already been chosen for you. What you still control is whether the cut lands on things that matter, whether the savings hold or merely defer cost, and whether the organization on the other side of it can still deliver. This page sequences the decisions and links to the pages that hold the detail.">
+<meta property="og:title" content="We&#x27;re Cutting Costs | CTO Toolkit">
+<meta property="og:description" content="The number has probably already been chosen for you. What you still control is whether the cut lands on things that matter, whether the savings hold or merely defer cost, and whether the organization on the other side of it can still deliver. This page sequences the decisions and links to the pages that hold the detail.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/situation-cutting-costs/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="We&#x27;re Cutting Costs | CTO Toolkit">
+<meta name="twitter:description" content="The number has probably already been chosen for you. What you still control is whether the cut lands on things that matter, whether the savings hold or merely defer cost, and whether the organization on the other side of it can still deliver. This page sequences the decisions and links to the pages that hold the detail.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/situation-cutting-costs/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 900px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 32px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 32px; color: var(--ink-soft); font-size: 15px; max-width: 640px; line-height: 1.55; }
+  main { max-width: 900px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-head a { color: var(--accent); }
+  .stage-cell { padding: 8px 20px 16px; }
+  .stage-cell p { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+  .stage-cell a { color: var(--accent); }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid .stage-cell { padding: 16px 20px; }
+  .stage-grid .stage-cell p { margin: 0; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .situation-list { list-style: none; margin: 0; padding: 0; counter-reset: sit; }
+  .situation-list li { counter-increment: sit; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .situation-list li:last-child { border-bottom: none; }
+  .situation-list li::before { content: counter(sit); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .situation-list a { color: var(--ink); font-weight: 600; text-decoration: none; font-size: 13.5px; }
+  .situation-list a:hover { color: var(--accent); }
+  .situation-list span { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 2px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .matrix-table td a { color: var(--accent); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  footer a { color: var(--accent); }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>We're Cutting Costs</h1>
+  <p>The number has probably already been chosen for you. What you still control is whether the cut lands on things that matter, whether the savings hold or merely defer cost, and whether the organization on the other side of it can still deliver. This page sequences the decisions and links to the pages that hold the detail.</p>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reading order</span>
+      <h2>Where to start</h2>
+      <p>Framing first, then the ranked list, then the CFO. The mechanics of cloud and vendor savings come after the decisions about what is protected.</p>
+    </div>
+    <div class="stage-cell">
+      <ol class="situation-list">
+        <li><div><a href="../technology-strategy-downturn/index.html">Technology Strategy During a Downturn</a><span>The framing for the whole exercise: what to protect, what to pause, and what to kill, decided before the spreadsheet opens.</span></div></li>
+        <li><div><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a><span>The pre-ranked cut list this moment demands. If it does not exist yet, this page is how to build it in a week.</span></div></li>
+        <li><div><a href="../cto-cfo-relationship/index.html">Working with the CFO</a><span>Numbers with visible derivation, and the conversation that has to happen before the budget meeting, not during it.</span></div></li>
+        <li><div><a href="../technology-budget-management/index.html">Running the Technology Budget</a><span>Where the money goes today, at a level of detail the CFO will trust.</span></div></li>
+        <li><div><a href="../cloud-cost-management/index.html">Cloud FinOps</a><span>Usually the fastest savings that stick: rightsizing, commitment coverage, waste elimination, and showback so it does not creep back.</span></div></li>
+        <li><div><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a><span>The TIME map turns a vague desire to retire things into a named list with owners and dates.</span></div></li>
+        <li><div><a href="../technical-debt-economics/index.html">Technical Debt Economics</a><span>Which debt to keep carrying and which to fund, as numbers, so the cut does not land on the item with the highest carry cost.</span></div></li>
+        <li><div><a href="../vendor-evaluation/index.html">Vendor Evaluation</a><span>Exit cost and renewal leverage for the contracts that make up most of the non-people spend.</span></div></li>
+        <li><div><a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a><span>The renewal calendar and the clauses to fix; usually the largest non-recurring saving available.</span></div></li>
+        <li><div><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a><span>Which bets survive, and which get paused on the record so they are not simply starved.</span></div></li>
+        <li><div><a href="../platform-engineering/index.html">Platform Engineering</a><span>Where consolidation reduces both cost and cognitive load, and where it only moves the cost somewhere less visible.</span></div></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Decisions with a date</span>
+      <h2>What has to be decided, and by when</h2>
+      <p>A cost mandate has a clock on it from the day it lands. These are the decisions that determine whether the cut is a plan or a scramble.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>By when</th><th>Decision</th><th>Who owns it</th><th>What it looks like when it goes wrong</th></tr>
+        <tr><td>Day 3</td><td>Which categories are protected outright, before any line-item review begins: security baseline, regulatory obligations, the systems that make revenue</td><td>CTO, agreed with the CEO</td><td>Everything is negotiable, so the loudest advocates protect their budgets and the quiet ones absorb the cut</td></tr>
+        <tr><td>Day 7</td><td>Whether the target is achievable without headcount, and if not, what the headcount number is and where it lands</td><td>CTO with the CFO and CHRO</td><td>A tooling-only plan is presented, misses by half, and a headcount cut arrives late and unplanned</td></tr>
+        <tr><td>Day 14</td><td>The ranked cut list, with the consequence of each item stated plainly, delivered to the CFO one-on-one</td><td>CTO</td><td>The list is revealed for the first time in the budget meeting and every line becomes a fight</td></tr>
+        <tr><td>Day 21</td><td>Which vendor renewals in the next twelve months get renegotiated, consolidated, or exited, and who runs each negotiation</td><td>CTO with procurement</td><td>Contracts auto-renew at list price during the exact quarter the company is cutting</td></tr>
+        <tr><td>Day 30</td><td>Which in-flight initiatives stop, pause with a restart condition, or continue at reduced scope</td><td>CTO with the CEO</td><td>Nothing is stopped, everything is slowed, and every initiative misses</td></tr>
+        <tr><td>Day 45</td><td>How savings are tracked and reported, and who signs off that a saving is a real reduction and not a deferral</td><td>CTO with finance</td><td>Savings are declared at the announcement and never reconciled, and the cost comes back within a year</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Questions to ask</span>
+      <h2>Questions that separate savings from deferred cost</h2>
+      <p>Most cost plans fail because nobody asked whether the saving is a reduction, a deferral, or a transfer. Ask these before any number goes to the CFO.</p>
+    </div>
+    <div class="stage-cell">
+      <ul class="checklist">
+        <li>What is the run cost of the estate, by system, and how much of it is licensing that scales with headcount you are about to reduce</li>
+        <li>Which applications on the TIME map are already marked tolerate or eliminate, and what has stopped them being retired so far</li>
+        <li>How much of cloud spend is uncommitted on-demand, and how much of the committed spend is under-utilized</li>
+        <li>Which contracts renew in the next twelve months, at what value, and with what notice period</li>
+        <li>For every proposed saving, is it a reduction in run cost, a deferral of spend that returns later, or a transfer of cost to another team or the business</li>
+        <li>What is the cost of the next major incident, and does the proposed cut increase its probability</li>
+        <li>Which roles, if cut, remove the only person who understands a system that still makes money</li>
+        <li>What does the security program lose, specifically, and does that change the stated risk appetite</li>
+        <li>What would the team stop doing if headcount were reduced, and has anyone written that list down</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The trap</span>
+      <h2>The across-the-board percentage</h2>
+      <p>The usual way to cut technology cost is to take the same percentage from every team and category. It protects nothing that matters and reflects no prioritization; it avoids the discomfort of choosing.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">The pattern</span><p>Every team loses fifteen percent. Security loses its pen test budget, the platform team loses the engineer who was automating the thing that costs the most, and the revenue-critical system's on-call rota drops to two people. Nine months later the run cost is back where it was, the deferred work is more expensive, and the best people have left because they could see nothing was being decided.</p></div>
+      <div class="stage-cell"><span class="env-label b">The way out</span><p>Decide the protected categories first, then cut deeper in fewer places. Retire whole systems; trimming every system a little saves almost nothing. Take the vendor renewals seriously; they are usually the largest non-recurring saving available. Report savings only when they show up in the ledger, and keep the <a href="../technology-capital-allocation/index.html">ranked list</a> alive after the cut so the next round, if it comes, is already answered.</p></div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Levers</span>
+      <h2>Where the money comes from, and how fast it arrives</h2>
+      <p>Size and speed differ by an order of magnitude between levers. Ranges are illustrative starting points, not benchmarks.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Lever</th><th>Time to first saving</th><th>What limits it</th></tr>
+          <tr><td>Cloud waste: idle resources, orphaned storage, oversized instances</td><td>Weeks</td><td>Engineering time to verify each change; organizations in Flexera's 2026 survey estimated roughly 29 percent of their cloud spend was wasted, the first rise in five years<sup class="src"><a href="#src-1" title="Flexera, 2026 State of the Cloud Report (release, March 2026)">[1]</a></sup></td></tr>
+          <tr><td>Commitment coverage: savings plans, reserved capacity, committed-use discounts</td><td>One billing cycle</td><td>Only safe on the stable baseline; AWS quotes discounts of up to 72 percent against on-demand for the longest, least flexible terms<sup class="src"><a href="#src-2" title="AWS, Savings Plans">[2]</a></sup></td></tr>
+          <tr><td>SaaS seat reclamation and renewal negotiation</td><td>At each renewal date</td><td>Contract terms and notice windows; see <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
+          <tr><td>Contractor and consultant reduction</td><td>Weeks to one quarter</td><td>Knowledge held only by contractors; plan the handover before the end date</td></tr>
+          <tr><td>Pausing or killing projects</td><td>Immediate for spend, slower for people</td><td>Sunk-cost pressure, and write-offs on capitalized work</td></tr>
+          <tr><td>Application and vendor consolidation</td><td>Two to four quarters</td><td>Migration cost and dual running; the saving is real but rarely inside the current fiscal year</td></tr>
+          <tr><td>Headcount</td><td>One to two quarters after the decision</td><td>Notice periods, severance, and legal process; first-year savings are well below the run-rate figure</td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.flexera.com/about-us/press-center/flexera-finds-cloud-value-is-rising-while-ai-waste-grows" rel="noopener">Flexera, 2026 State of the Cloud Report (release, March 2026)</a></li><li value="2" id="src-2"><a href="https://aws.amazon.com/savingsplans/" rel="noopener">AWS, Savings Plans</a></li></ol></div>
+</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>Run-rate versus in-year: the number finance actually needs</h2>
+      <p>A $40M technology budget with a 12 percent reduction target ($4.8M). Cuts start in month 3 of the fiscal year.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Lever</th><th>Run-rate saving</th><th>In-year saving</th><th>Why they differ</th></tr>
+          <tr><td>Cloud rightsizing and cleanup</td><td>$1.00M</td><td>$0.75M</td><td>Ten months of savings, less verification time</td></tr>
+          <tr><td>Commitment coverage from 55 to 80 percent</td><td>$0.80M</td><td>$0.60M</td><td>Purchased after two months of usage data</td></tr>
+          <tr><td>SaaS reclamation and renegotiation</td><td>$0.90M</td><td>$0.40M</td><td>Only contracts renewing this fiscal year contribute</td></tr>
+          <tr><td>Contractors down 30 percent</td><td>$1.20M</td><td>$0.90M</td><td>Handover period before end dates</td></tr>
+          <tr><td>Pause two Horizon 3 bets</td><td>$1.10M</td><td>$0.80M</td><td>Wind-down costs and one quarter of committed spend</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>$5.00M</strong></td><td><strong>$3.45M</strong></td><td>Run-rate clears the target; in-year covers about 72 percent of it</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Diagram</span>
+      <h2>Why the in-year number falls short</h2>
+      <p>The worked example above as bars: every lever delivers less in the current year than its run-rate.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
+<div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cut-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="cut-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="cut-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="cut-title">Run-rate savings compared with savings that land in the current fiscal year</title><text x="160.0" y="40.0" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Cloud cleanup</text>
+<rect x="170" y="24" width="433.33333333333337" height="14" rx="3" fill="var(--accent)"/>
+<text x="609.3" y="35.0" text-anchor="start" font-size="10" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$1.00M</text>
+<rect x="170" y="39" width="325.0" height="14" rx="3" fill="#8A5A2E"/>
+<text x="501.0" y="50.0" text-anchor="start" font-size="10" font-weight="600" fill="#8A5A2E" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$0.75M</text>
+<text x="160.0" y="80.0" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Commitments</text>
+<rect x="170" y="64" width="346.66666666666674" height="14" rx="3" fill="var(--accent)"/>
+<text x="522.7" y="75.0" text-anchor="start" font-size="10" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$0.80M</text>
+<rect x="170" y="79" width="260.0" height="14" rx="3" fill="#8A5A2E"/>
+<text x="436.0" y="90.0" text-anchor="start" font-size="10" font-weight="600" fill="#8A5A2E" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$0.60M</text>
+<text x="160.0" y="120.0" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">SaaS renewals</text>
+<rect x="170" y="104" width="390.00000000000006" height="14" rx="3" fill="var(--accent)"/>
+<text x="566.0" y="115.0" text-anchor="start" font-size="10" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$0.90M</text>
+<rect x="170" y="119" width="173.33333333333337" height="14" rx="3" fill="#8A5A2E"/>
+<text x="349.3" y="130.0" text-anchor="start" font-size="10" font-weight="600" fill="#8A5A2E" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$0.40M</text>
+<text x="160.0" y="160.0" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Contractors</text>
+<rect x="170" y="144" width="520.0" height="14" rx="3" fill="var(--accent)"/>
+<text x="696.0" y="155.0" text-anchor="start" font-size="10" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$1.20M</text>
+<rect x="170" y="159" width="390.00000000000006" height="14" rx="3" fill="#8A5A2E"/>
+<text x="566.0" y="170.0" text-anchor="start" font-size="10" font-weight="600" fill="#8A5A2E" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$0.90M</text>
+<text x="160.0" y="200.0" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Pause H3 bets</text>
+<rect x="170" y="184" width="476.66666666666674" height="14" rx="3" fill="var(--accent)"/>
+<text x="652.7" y="195.0" text-anchor="start" font-size="10" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$1.10M</text>
+<rect x="170" y="199" width="346.66666666666674" height="14" rx="3" fill="#8A5A2E"/>
+<text x="522.7" y="210.0" text-anchor="start" font-size="10" font-weight="600" fill="#8A5A2E" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$0.80M</text>
+<text x="160.0" y="252.0" text-anchor="end" font-size="12" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Total</text>
+<rect x="170" y="236" width="520.0" height="14" rx="3" fill="var(--accent)"/>
+<text x="696.0" y="247.0" text-anchor="start" font-size="10.5" font-weight="700" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$5.00M run-rate</text>
+<rect x="170" y="251" width="358.8" height="14" rx="3" fill="#8A5A2E"/>
+<text x="534.8" y="262.0" text-anchor="start" font-size="10.5" font-weight="700" fill="#8A5A2E" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$3.45M in-year</text>
+<line x1="669.2" y1="228" x2="669.2" y2="272" stroke="#B23B3B" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="669.2" y="224.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#B23B3B" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">$4.8M target</text>
+<rect x="170" y="290" width="12" height="12" rx="3" fill="var(--accent)"/>
+<text x="188.0" y="300.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Run-rate (full year)</text>
+<rect x="360" y="290" width="12" height="12" rx="3" fill="#8A5A2E"/>
+<text x="378.0" y="300.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">In-year (cuts start month 3)</text>
+<text x="440.0" y="334.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Run-rate clears the target; in-year does not. Show finance both numbers on day one, not in the quarterly close.</text></svg></div>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Figures are the illustrative ones from the worked example. SaaS savings lag most, because only contracts renewing this year contribute.</p>
+    </div></div>
+  </div>
+  <div class="stage-card" id="cc-card">
+    <div class="stage-head">
+      <span class="stage-num">Calculator</span>
+      <h2>Run-rate versus in-year savings</h2>
+      <p>Enter the levers, the month each one starts saving, how much of it is reachable this fiscal year, and any one-time cost. The defaults land within a few thousand dollars of the worked example above. Months run 1 to 12 through the fiscal year.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="cc-in"></div>
+        <div class="tool-out" id="cc-out" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The conversation</span>
+      <h2>Present both numbers, every time</h2>
+      <p>Most cost programs lose credibility in month six, when finance compares the promised figure with the ledger.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What to do</span>
+        <p>Give the CFO the run-rate saving, the in-year saving, the one-time cost to achieve it, and the month each lever lands. If in-year falls short of the target, say so on day 14 and offer the bridge options. Do not let the gap appear for the first time at quarter close.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What goes wrong</span>
+        <p>A single savings number is announced, finance books it against the current year, and months later the shortfall gets blamed on execution when the real problem was arithmetic nobody showed.</p>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Outputs</span>
+      <h2>What should exist at 30, 60, and 90 days</h2>
+      <p>The announcement is the easy part. These are the artifacts that make the saving stick and hold up to scrutiny.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Checkpoint</th><th>What exists</th></tr>
+        <tr><td>Day 30</td><td>A protected-category list agreed with the CEO. A ranked cut list with consequences stated, already reviewed by the CFO privately. A vendor renewal calendar for the next twelve months with a strategy per contract. An explicit stop, pause, and continue decision for every in-flight initiative.</td></tr>
+        <tr><td>Day 60</td><td>Cloud commitment coverage and rightsizing actions executed, with the saving showing up in the bill, not just in a forecast. The first vendor renegotiations closed. Headcount decisions, if any, made and communicated once, not in waves. A written record of what the organization has stopped doing.</td></tr>
+        <tr><td>Day 90</td><td>A savings tracker reconciled against actual spend, signed by finance. A restart condition recorded for every paused initiative. The security and reliability posture re-stated against the new spend level so nobody is surprised later. The next round of cuts, if asked for, answered from the same list without starting over.</td></tr>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer>
+  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html">CTO Toolkit</a> home page.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+<!-- calc:cc -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/row-table.js"></script>
+<script>
+(function () {
+  function fm(n) { return (n < 0 ? '-$' : '$') + Math.round(Math.abs(n)).toLocaleString(); }
+  function fmm(n) { return (n < 0 ? '-$' : '$') + (Math.abs(n) / 1e6).toFixed(2) + 'M'; }
+  function nz(v, d) { return v == null || isNaN(v) ? d : v; }
+  function wire(card, fn) { var c = card.querySelector('.stage-cell'); c.addEventListener('input', fn); c.addEventListener('change', fn); }
+  function textRows(el) { var r = []; el.innerText.split('\n').forEach(function (l) { if (l.trim()) r.push([l.trim()]); }); return r; }
+
+  var card = document.getElementById('cc-card'), inp = document.getElementById('cc-in'), out = document.getElementById('cc-out');
+  var X = RowTable.extras(inp, 'cc', [
+    { key: 'budget', label: 'Technology budget ($)', min: 0, step: 100000, value: 40000000 },
+    { key: 'pct', label: 'Reduction target (%)', min: 0, max: 100, step: 0.5, value: 12 }]);
+  var DEF = [
+    { lever: 'Cloud rightsizing and cleanup', rr: 1000000, m: 4, reach: 100, once: 0 },
+    { lever: 'Commitment coverage', rr: 800000, m: 4, reach: 100, once: 0 },
+    { lever: 'SaaS renewals (only those renewing this year)', rr: 900000, m: 5, reach: 67, once: 0 },
+    { lever: 'Contractors down 30 percent', rr: 1200000, m: 4, reach: 100, once: 0 },
+    { lever: 'Pause two Horizon 3 bets', rr: 1100000, m: 4, reach: 100, once: 25000 }];
+  var T = RowTable.create({ mount: inp, id: 'cc-rt', addLabel: 'Add lever', min: 1, max: 20, onChange: calc,
+    blank: { lever: '', rr: 0, m: 6, reach: 100, once: 0 }, rows: DEF,
+    columns: [{ key: 'lever', label: 'Lever', type: 'text', width: '200px', wide: true },
+      { key: 'rr', label: 'Run-rate saving ($/yr)', type: 'number', min: 0, step: 10000 },
+      { key: 'm', label: 'First month saving', type: 'number', min: 1, max: 12, step: 1 },
+      { key: 'reach', label: 'In reach this year (%)', type: 'number', min: 0, max: 100, step: 1 },
+      { key: 'once', label: 'One-time cost this year ($)', type: 'number', min: 0, step: 5000 }] });
+  X.set({});
+  function lv(r) { var m = Math.min(12, Math.max(1, Math.round(nz(r.m, 1)))), months = 13 - m;
+    var iy = nz(r.rr, 0) * months / 12 * Math.min(100, Math.max(0, nz(r.reach, 100))) / 100 - nz(r.once, 0);
+    return { months: months, iy: iy }; }
+  function calc() {
+    var x = X.get(), target = nz(x.budget, 0) * nz(x.pct, 0) / 100, rows = T.get(), RR = 0, IY = 0, ONCE = 0, body = '';
+    rows.forEach(function (r) { var o = lv(r); RR += nz(r.rr, 0); IY += o.iy; ONCE += nz(r.once, 0);
+      body += '<li>' + RowTable.esc(r.lever || 'Unnamed lever') + ': ' + fmm(nz(r.rr, 0)) + ' run-rate, ' + fmm(o.iy) + ' this year (' + o.months + ' months' + (nz(r.reach, 100) < 100 ? ', ' + nz(r.reach, 100) + '% in reach' : '') + ')</li>'; });
+    var pr = target > 0 ? RR / target : 0, pi = target > 0 ? IY / target : 0;
+    var tag = pi >= 1 ? '<span class="tag good">In-year target met</span>' : (pr >= 1 ? '<span class="tag mid">Run-rate clears it, in-year does not</span>' : '<span class="tag bad">Short on both</span>');
+    out.innerHTML = '<div class="tool-sum">' + tag + '<br><strong>Target: ' + fmm(target) + '</strong><br>' +
+      'Run-rate savings: ' + fmm(RR) + ' (' + Math.round(pr * 100) + '% of target)<br>' +
+      'In-year savings, net of one-time cost: ' + fmm(IY) + ' (' + Math.round(pi * 100) + '% of target)<br>' +
+      'In-year gap to close: ' + (IY >= target ? 'none' : fmm(target - IY)) + '<br>' +
+      'One-time cost to achieve: ' + fm(ONCE) + '</div><h4>By lever</h4><ul>' + body + '</ul>' +
+      (IY < target ? '<p style="font-size:13px;color:var(--ink-soft);margin:10px 0 0">Give the CFO both numbers now. The bridge options are levers that start earlier, a larger share of renewals pulled forward, or a one-year deferral agreed on the record and not booked as a saving.</p>' : '');
+  }
+  wire(card, calc);
+  ToolShare.register({ id: 'cc', root: card, title: 'Run-rate versus in-year savings',
+    getState: function () { return { x: X.get(), rows: T.get() }; },
+    setState: function (s) { X.set(s.x); T.set(s.rows || DEF); calc(); },
+    csv: function () { var r = [['Lever', 'Run-rate saving ($)', 'First month', 'In reach (%)', 'One-time cost ($)', 'In-year saving ($)']];
+      T.get().forEach(function (x) { r.push([x.lever, x.rr, x.m, x.reach, x.once, Math.round(lv(x).iy)]); }); r.push([]); return r.concat(textRows(out)); } });
+})();
+</script>
+<!-- /calc:cc -->
+</body>
+</html>

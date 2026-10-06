@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero-Trust Maturity Preview</title>
+<meta name="description" content="A preview of the six-dimension Security &amp; Zero-Trust Maturity Model, scored on evidence instead of stated policy: identity and access, segmentation and blast radius, detection and response, vulnerability management, third-party risk, and governance and culture.">
+<meta property="og:title" content="Zero-Trust Maturity Preview | CTO Toolkit">
+<meta property="og:description" content="A preview of the six-dimension Security &amp; Zero-Trust Maturity Model, scored on evidence instead of stated policy: identity and access, segmentation and blast radius, detection and response, vulnerability management, third-party risk, and governance and culture.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/zero-trust-maturity/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zero-Trust Maturity Preview | CTO Toolkit">
+<meta name="twitter:description" content="A preview of the six-dimension Security &amp; Zero-Trust Maturity Model, scored on evidence instead of stated policy: identity and access, segmentation and blast radius, detection and response, vulnerability management, third-party risk, and governance and culture.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/zero-trust-maturity/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1C1E1B;
+    --ink-soft: #52564F;
+    --line: #DCDAD2;
+    --accent: #2E5E4E;
+    --accent-soft: #E4EDE8;
+    --a: #2E6FB0;
+    --a-soft: #E7EFF7;
+    --b: #8A5A2E;
+    --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 1100px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 34px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 16px; color: var(--ink-soft); font-size: 15px; max-width: 720px; line-height: 1.5; }
+  .caveat { max-width: 720px; background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0 0 32px; border-radius: 0 6px 6px 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  .stage-cell { padding: 16px 20px; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .stage-cell a, .caveat a, .same-note a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  .stage-cell a:hover, .caveat a:hover, .same-note a:hover { text-decoration-color: var(--accent); }
+  .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
+  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
+  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
+  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
+  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .grid4 { grid-template-columns: 1fr; }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>Zero-Trust Maturity Preview</h1>
+  <p>A preview of the six-dimension Security &amp; Zero-Trust Maturity Model, scored on evidence instead of stated policy: identity and access, segmentation and blast radius, detection and response, vulnerability management, third-party risk, and governance and culture.</p>
+  <div class="caveat">This page covers the framework and scoring discipline. The full facilitated workbook, scored against a defined zero-trust target architecture, is available through direct engagement.</div>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Framework</span>
+      <h3>Six dimensions, scored independently</h3>
+      <p>Most organizations are unevenly mature across these six; that unevenness is itself the most useful output of the assessment.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Dimension</th><th>Level 1: Ad hoc</th><th>Level 3: Defined</th><th>Level 5: Optimized</th></tr>
+          <tr><td>Identity &amp; access</td><td>Standing broad access, no consistent least-privilege policy across systems</td><td>Documented access policy applied through a defined onboarding/offboarding process</td><td>Just-in-time, continuously verified access with no standing privilege by default</td></tr>
+          <tr><td>Segmentation &amp; blast radius</td><td>Flat network, one compromised credential reaches most of the environment</td><td>Defined network segments with controlled points between them</td><td>Micro-segmented to the workload level; a single compromise is contained by design, not by luck</td></tr>
+          <tr><td>Detection &amp; response</td><td>Reliant on external reports to learn about a problem</td><td>Centralized logging and defined alerting on known threat patterns</td><td>Behavioral anomaly detection catching novel patterns, with a tested response plan behind it</td></tr>
+          <tr><td>Vulnerability management</td><td>Scanning inconsistent, patching reactive and undocumented</td><td>Regular scanning cadence, patching SLA defined and mostly met</td><td>Continuous scanning integrated into deployment, patching SLA consistently met with evidence</td></tr>
+          <tr><td>Third-party risk</td><td>Vendor access granted with no ongoing review</td><td>Vendor risk assessed at onboarding, reviewed periodically</td><td>Continuous vendor risk monitoring, access scoped and reviewed on the same cadence as internal identity</td></tr>
+          <tr><td>Governance &amp; culture</td><td>Security treated as a separate team's job, outside delivery</td><td>Defined security requirements built into the delivery process</td><td>Security ownership distributed to delivery teams, with a lightweight central function instead of a gate</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card" id="calculator">
+    <div class="stage-head">
+      <span class="stage-num">Interactive</span>
+      <h3>Score your own environment</h3>
+      <p>Score each dimension today and where it needs to be, with a line of evidence for each score. The tool applies this page's identity-first rule, ranks the gaps, and gives the sequence to close them. Runs entirely in your browser; nothing is sent anywhere.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <div id="ztm-inputs"></div>
+        <button id="ztm-calc" style="margin-top:12px; padding:9px 18px; background:var(--accent); color:white; border:none; border-radius:6px; font-family:var(--ui); font-size:13px; font-weight:600; cursor:pointer;">Calculate maturity score</button>
+        <div id="ztm-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Diagram</span>
+      <h3>Why identity is scored first</h3>
+      <p>The six dimensions are scored independently above, but they are not independent in practice. Five of them rest on one.</p>
+    </div>
+    <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
+<svg viewBox="0 0 880 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="zt-title" style="width:100%;height:auto;display:block;max-width:880px;margin:0 auto;">
+<defs>
+  <marker id="zt-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker>
+  <marker id="zt-arrowa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+</defs>
+<title id="zt-title">Six zero-trust dimensions with identity as the foundation the others assume</title>
+<circle cx="440" cy="240" r="76" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="440" y="232" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Identity and access</text>
+<text x="440" y="248" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">who is asking</text>
+<text x="440" y="266" text-anchor="middle" font-size="10" fill="var(--accent)" font-weight="600" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">FIRST MOVE</text>
+<rect x="340.0" y="24.0" width="200" height="52" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="440.0" y="46.3" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Segmentation</text>
+<text x="440.0" y="61.8" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">limits where a trusted identity can go</text>
+<line x1="440.0" y1="162.0" x2="440.0" y2="76.52" stroke="var(--accent)" stroke-width="1.3" marker-end="url(#zt-arrowa)"/>
+<rect x="520.7007380960791" y="155.28677106876" width="200" height="52" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="620.7007380960791" y="177.6" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Detection and response</text>
+<text x="620.7007380960791" y="193.1" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">notices when trust was misplaced</text>
+<line x1="514.182408271022" y1="215.8966744387541" x2="539.0805706901914" y2="207.80677106876" stroke="var(--accent)" stroke-width="1.3" marker-end="url(#zt-arrowa)"/>
+<rect x="451.67919793556985" y="367.71322893124" width="200" height="52" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="551.6791979355698" y="390.0" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Vulnerability management</text>
+<text x="551.6791979355698" y="405.5" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">closes the doors identity guards</text>
+<line x1="485.8472496788129" y1="303.1033255612459" x2="532.4112900928677" y2="367.19322893124" stroke="var(--accent)" stroke-width="1.3" marker-end="url(#zt-arrowa)"/>
+<rect x="228.32080206443015" y="367.71322893124" width="200" height="52" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="328.32080206443015" y="390.0" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Third-party risk</text>
+<text x="328.32080206443015" y="405.5" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">extends the boundary outward</text>
+<line x1="394.1527503211871" y1="303.1033255612459" x2="347.58870990713234" y2="367.19322893124" stroke="var(--accent)" stroke-width="1.3" marker-end="url(#zt-arrowa)"/>
+<rect x="159.2992619039208" y="155.28677106876" width="200" height="52" rx="8" fill="white" stroke="var(--line)" stroke-width="1"/>
+<text x="259.2992619039208" y="177.6" text-anchor="middle" font-size="11.5" fill="var(--ink)" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Governance and culture</text>
+<text x="259.2992619039208" y="193.1" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">keeps all of it from decaying</text>
+<line x1="365.817591728978" y1="215.8966744387541" x2="340.91942930980855" y2="207.80677106876" stroke="var(--accent)" stroke-width="1.3" marker-end="url(#zt-arrowa)"/>
+<rect x="30" y="454" width="820" height="56" rx="8" fill="var(--paper)" stroke="var(--line)"/>
+<text x="440" y="477" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Every outer dimension assumes the request came from who it says it did.</text>
+<text x="440" y="495" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Micro-segmentation on top of standing broad access is complexity around a weak foundation.</text>
+</svg>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Arrows show what each outer dimension takes for granted. The sequencing card below follows from the picture: concentrate on the hub until it holds, then move outward.</p>
+    </div></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Sequencing</span>
+      <h3>Where to start, since you can't do all six at once</h3>
+      <p>Treating six dimensions as equally urgent is how effort gets spread thin everywhere and deep nowhere.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">The highest-leverage starting point</span>
+        <p>Identity and access almost always comes first. Segmentation, detection, and even third-party risk all assume you can trust who's making a request in the first place; building micro-segmentation on top of standing broad access adds complexity around a foundation that's still weak.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">The trap</span>
+        <p>Spreading effort evenly across all six dimensions produces slow, shallow progress everywhere and leaves the foundational dimension as weak as it started. Concentrating effort where it builds on itself works better.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h3>Reading the pattern, not the average</h3>
+      <p>What the six-dimension breakdown reveals when it's uneven, which it almost always is.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p><strong>Scores:</strong> Identity &amp; access 2, Segmentation &amp; blast radius 2, Detection &amp; response 4, Vulnerability management 3, Third-party risk 2, Governance &amp; culture 3. Average: 2.7.</p>
+        <p><strong>The diagnosis the average hides:</strong> strong detection sitting on top of weak identity and segmentation is a specific, dangerous pattern. This organization can see an attacker after they're already in, but the foundational controls that would have made getting in hard, or limited what they could reach once inside, are still weak. The instinct this score pattern usually triggers, buy more detection tooling since it's already the strongest area, is backwards. More visibility into a wide-open environment doesn't reduce how wide open it is. Identity and segmentation need the next dollar; detection can wait.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reference</span>
+      <h3>The standards behind the six dimensions</h3>
+      <p>Map the scores to a published model so auditors and customers recognize the vocabulary.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Source</th><th>Date</th><th>What it contributes</th></tr>
+          <tr><td>NIST SP 800-207, Zero Trust Architecture</td><td>August 2020</td><td>The core definition: no implicit trust based on network location; per-request access decisions<sup class="src"><a href="#src-1" title="NIST SP 800-207, Zero Trust Architecture, August 2020">[1]</a></sup></td></tr>
+          <tr><td>CISA Zero Trust Maturity Model 2.0</td><td>April 2023</td><td>Five pillars (identity, devices, networks, applications and workloads, data) across four stages: traditional, initial, advanced, optimal<sup class="src"><a href="#src-2" title="CISA, Zero Trust Maturity Model Version 2.0, April 2023">[2]</a></sup></td></tr>
+          <tr><td>NIST SP 800-207A</td><td>September 2023</td><td>Zero trust for cloud-native applications across multiple locations<sup class="src"><a href="#src-3" title="NIST SP 800-207A, September 2023">[3]</a></sup></td></tr>
+          <tr><td>NIST SP 1800-35, Implementing a Zero Trust Architecture</td><td>June 2025</td><td>Nineteen example implementations built with commercial products at the National Cybersecurity Center of Excellence<sup class="src"><a href="#src-4" title="NIST NCCoE, final SP 1800-35, June 2025">[4]</a></sup></td></tr>
+          <tr><td>OMB M-22-09</td><td>January 2022</td><td>US federal agency targets, useful as a public benchmark for sequencing<sup class="src"><a href="#src-5" title="OMB Memorandum M-22-09, January 2022">[5]</a></sup></td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://csrc.nist.gov/pubs/sp/800/207/final" rel="noopener">NIST SP 800-207, Zero Trust Architecture, August 2020</a></li><li value="2" id="src-2"><a href="https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model" rel="noopener">CISA, Zero Trust Maturity Model Version 2.0, April 2023</a></li><li value="3" id="src-3"><a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" rel="noopener">NIST SP 800-207A, September 2023</a></li><li value="4" id="src-4"><a href="https://www.nccoe.nist.gov/news-insights/nist-publishes-final-special-publication-1800-35-implementing-zero-trust-architecture" rel="noopener">NIST NCCoE, final SP 1800-35, June 2025</a></li><li value="5" id="src-5"><a href="https://www.whitehouse.gov/wp-content/uploads/2022/01/M-22-09.pdf" rel="noopener">OMB Memorandum M-22-09, January 2022</a></li></ol></div>
+</div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">How to use this</span>
+      <h3>Scoring on evidence, and what to do with the result</h3>
+      <p>The assessment only has value if the scoring holds up, which is harder than it sounds when the person scoring it is also accountable for the result.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">How to score it</span>
+        <p>Score against evidence, not intention. &quot;We have a policy&quot; is evidence of intent, and it does not reach Level 3 unless the policy is followed. Ask for the artifact (the access review log, the segmentation diagram, the vendor review record) before accepting a self-reported level.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What to do with a low score</span>
+        <p>A Level 1 or 2 in any dimension is a prioritization input, not an emergency in itself. Rank dimensions by business impact if that dimension fails, not by how uncomfortable the low score feels, and fund the highest-impact gap first even when an easier one is available.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h3>Compliance certification as a false signal of maturity</h3>
+      <p>A frequent gap between what a certification confirms and what an organization assumes it confirms.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a">
+        <span class="env-label a">What a certification confirms</span>
+        <p>SOC 2 or ISO 27001 confirms that defined controls existed and were followed during the specific audit period the certification covers, evaluated against a scope the organization itself proposed.</p>
+      </div>
+      <div class="stage-cell">
+        <span class="env-label b">What it doesn't confirm</span>
+        <p>That the scope covered every system that matters, that the maturity level holds up outside the audit window, or that a novel attack pattern outside the certified controls would be caught. Treat certification as a floor.</p>
+      </div>
+    </div>
+    <div class="same-note">See <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> for the broader NIST CSF-based governance ladder this architecture-specific model complements; the two are meant to disagree sometimes. If they always agree, one is redundant.</div>
+  </div>
+
+</main>
+
+<footer>
+  Reference only. This previews the framework's six dimensions and scoring discipline; the full facilitated instrument and target-state architecture live in the <a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a> methodology. See <a href="../identity-access-architecture/index.html" style="color:var(--accent);">Identity &amp; Access Architecture</a> for the standalone treatment of the first-move dimension.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+
+</footer>
+
+<!-- toolshare -->
+<script src="../../assets/tool-share.js"></script>
+<script src="../../assets/maturity-tool.js"></script>
+<script>
+var ZT_L3 = {
+  'Identity & access': 'Documented access policy applied through a defined onboarding and offboarding process',
+  'Segmentation & blast radius': 'Defined network segments with controlled points between them',
+  'Detection & response': 'Centralized logging and defined alerting on known threat patterns',
+  'Vulnerability management': 'Regular scanning cadence, patching SLA defined and mostly met',
+  'Third-party risk': 'Vendor risk assessed at onboarding, reviewed periodically',
+  'Governance & culture': 'Defined security requirements built into the delivery process'
+};
+var ZT_L5 = {
+  'Identity & access': 'Just-in-time, continuously verified access with no standing privilege by default',
+  'Segmentation & blast radius': 'Micro-segmented to the workload level, so one compromise is contained by design',
+  'Detection & response': 'Behavioral anomaly detection with a tested response plan behind it',
+  'Vulnerability management': 'Continuous scanning in deployment, patching SLA consistently met with evidence',
+  'Third-party risk': 'Continuous vendor monitoring, access reviewed on the same cadence as internal identity',
+  'Governance & culture': 'Security ownership distributed to delivery teams'
+};
+function ztNext(name) { return function (v) { return (v.current < 3 ? 'Reach Level 3: ' + ZT_L3[name] : 'Toward Level 5: ' + ZT_L5[name]) + '.'; }; }
+MaturityTool.create({
+  id: 'ztm', card: '#calculator', title: 'Zero-trust maturity',
+  columns: [{ key: 'current', label: 'Current' }, { key: 'target', label: 'Target' }],
+  noteLabel: 'Evidence', notePlaceholder: 'Artifact that proves the score',
+  dims: Object.keys(ZT_L3).map(function (n) { return { name: n, next: ztNext(n) }; }),
+  defaults: { current: [2, 2, 4, 3, 2, 3], target: [4, 3, 4, 4, 3, 3], note: ['Standing admin access on 40 accounts', 'Flat network in the main VPC', 'SIEM with tuned alerts, tested quarterly', '', 'No review after vendor onboarding', ''] },
+  interpret: function (S) {
+    var d = {}; S.dims.forEach(function (x) { d[x.name] = x; });
+    var id = d['Identity & access'].vals.current, out = [];
+    if (id < 3) out.push('<strong>Identity is below Level 3, so the other five scores are effectively capped.</strong> Segmentation, detection, and third-party controls all assume you can trust who is making a request. Put the next dollar into identity before anything else.');
+    var det = d['Detection & response'].vals.current;
+    if (det >= 4 && (id <= 2 || d['Segmentation & blast radius'].vals.current <= 2)) out.push('Strong detection on top of weak identity or segmentation: you can see an attacker once they are in, but getting in and moving around is still easy. More detection tooling is the wrong next purchase.');
+    var weakest = S.dims.slice().sort(function (a, b) { return a.vals.current - b.vals.current; })[0];
+    if (!out.length) out.push('Weakest dimension: <strong>' + weakest.name + '</strong> at Level ' + weakest.vals.current + '. An attacker goes for the weakest dimension, not the average.');
+    var seq = S.dims.filter(function (x) { return x.gap > 0; }).sort(function (a, b) {
+      var pa = a.name === 'Identity & access' ? -1 : 0, pb = b.name === 'Identity & access' ? -1 : 0;
+      return pa - pb || b.gap - a.gap;
+    }).map(function (x) { return x.name; });
+    if (seq.length) out.push('Sequence: ' + seq.join(', then ') + '. Identity goes first whenever it has a gap; after that, the largest gap.');
+    var unevidenced = S.dims.filter(function (x) { return x.vals.current >= 3 && !x.note; }).map(function (x) { return x.name; });
+    if (unevidenced.length) out.push('No evidence recorded for: ' + unevidenced.join(', ') + '. Scores of 3 or more without an artifact are usually intent, not practice.');
+    return out.join('<br><br>');
+  }
+});
+</script>
+<!-- /toolshare -->
+</body>
+</html>

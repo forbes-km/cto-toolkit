@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We're Going Through M&amp;A</title>
+<meta name="description" content="Whether you are buying, being bought, or merging, the technology work splits into two halves that most people run as one: the diligence that changes the price and terms, and the integration that determines whether the deal thesis survives contact with two estates as they are. This page sequences both and links to the pages that hold the detail.">
+<meta property="og:title" content="We&#x27;re Going Through M&amp;amp;A | CTO Toolkit">
+<meta property="og:description" content="Whether you are buying, being bought, or merging, the technology work splits into two halves that most people run as one: the diligence that changes the price and terms, and the integration that determines whether the deal thesis survives contact with two estates as they are. This page sequences both and links to the pages that hold the detail.">
+<meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/situation-ma/index.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="We&#x27;re Going Through M&amp;amp;A | CTO Toolkit">
+<meta name="twitter:description" content="Whether you are buying, being bought, or merging, the technology work splits into two halves that most people run as one: the diligence that changes the price and terms, and the integration that determines whether the deal thesis survives contact with two estates as they are. This page sequences both and links to the pages that hold the detail.">
+<meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
+<link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/situation-ma/index.html">
+<style>
+  :root {
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
+    --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+  header { padding: 44px 32px 0; max-width: 900px; margin: 0 auto; }
+  .back { font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 16px; display: inline-block; }
+  .back:hover { color: var(--accent); }
+  h1 { font-family: var(--sans); font-weight: 600; font-size: 32px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header p { margin: 0 0 32px; color: var(--ink-soft); font-size: 15px; max-width: 640px; line-height: 1.55; }
+  main { max-width: 900px; margin: 0 auto; padding: 8px 32px 80px; }
+  .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
+  .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-weight: 600; color: var(--ink); }
+  .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .stage-head a { color: var(--accent); }
+  .stage-cell { padding: 8px 20px 16px; }
+  .stage-cell p { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+  .stage-cell a { color: var(--accent); }
+  .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage-grid .stage-cell { padding: 16px 20px; }
+  .stage-grid .stage-cell p { margin: 0; }
+  .stage-cell.a { border-right: 1px solid var(--line); }
+  .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
+  .env-label.a { background: var(--a-soft); color: var(--a); }
+  .env-label.b { background: var(--b-soft); color: var(--b); }
+  .situation-list { list-style: none; margin: 0; padding: 0; counter-reset: sit; }
+  .situation-list li { counter-increment: sit; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .situation-list li:last-child { border-bottom: none; }
+  .situation-list li::before { content: counter(sit); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .situation-list a { color: var(--ink); font-weight: 600; text-decoration: none; font-size: 13.5px; }
+  .situation-list a:hover { color: var(--accent); }
+  .situation-list span { display: block; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 2px; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
+  .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
+  .matrix-table td a { color: var(--accent); }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  @media (max-width: 700px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
+    .matrix-table { display: block; overflow-x: auto; }
+  }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
+  footer { max-width: 900px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+  footer a { color: var(--accent); }
+  .stage-grid.single { grid-template-columns: 1fr; }
+  @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  sup.src a:hover { text-decoration: underline; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-list a { color: var(--accent); }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
+  <h1>We're Going Through M&amp;A</h1>
+  <p>Whether you are buying, being bought, or merging, the technology work splits into two halves that most people run as one: the diligence that changes the price and terms, and the integration that determines whether the deal thesis survives contact with two estates as they are. This page sequences both and links to the pages that hold the detail.</p>
+</header>
+
+<main>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Reading order</span>
+      <h2>Where to start</h2>
+      <p>Diligence pages first, then integration, then the people and decision-rights pages that determine whether the combined organization can function.</p>
+    </div>
+    <div class="stage-cell">
+      <ol class="situation-list">
+        <li><div><a href="../technology-diligence-map/index.html">Technology Diligence</a><span>Technical debt signals, key-person risk, security posture, and the red flags that should stop or reprice a deal.</span></div></li>
+        <li><div><a href="../ma-diligence-kit/index.html">M&amp;A Diligence Kit</a><span>The question bank, the data room structure, and the sell-side preparation sequence.</span></div></li>
+        <li><div><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a><span>Score the target's estate on the same TIME map as your own so integration decisions are made from one view of both estates.</span></div></li>
+        <li><div><a href="../technology-ma-integration/index.html">Technology M&amp;A Integration</a><span>Day 0 continuity, the converge, coexist, or replace decision, and the execution phase that determines whether synergies materialize.</span></div></li>
+        <li><div><a href="../cto-succession/index.html">CTO Leadership &amp; Succession</a><span>Key-person retention on both sides; the people who matter most are the ones who can leave fastest.</span></div></li>
+        <li><div><a href="../technology-decision-rights/index.html">Technology Decision Rights</a><span>Two organizations means two sets of decision owners. Make the combined ones explicit before the first conflict.</span></div></li>
+        <li><div><a href="../role-boundaries/index.html">Role Boundaries: CTO, CIO, CISO, CPO</a><span>Which executive owns what in the combined organization, decided before day one so nobody discovers the answer in month three.</span></div></li>
+        <li><div><a href="../data-governance/index.html">Data Governance &amp; Privacy</a><span>Customer data crossing entity and jurisdiction boundaries has legal consequences that integration plans routinely ignore.</span></div></li>
+        <li><div><a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a><span>The target's certifications tell you what was audited, which is a narrower claim than what is true. Score on evidence before you inherit the gap.</span></div></li>
+        <li><div><a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a><span>The privileged account export is the one artifact that tells you how the target ran security; pull it in diligence and again on Day 0.</span></div></li>
+        <li><div><a href="../regulatory-map/index.html">Regulatory Map</a><span>Which regimes follow the data and the entities across the transaction, and which notifications the deal itself triggers.</span></div></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Decisions with a date</span>
+      <h2>What has to be decided, and by when</h2>
+      <p>The clock runs from before the letter of intent through Day 100. Most of the value is decided before close and most of the damage happens in the first thirty days after it.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>By when</th><th>Decision</th><th>Who owns it</th><th>What it looks like when it goes wrong</th></tr>
+        <tr><td>Before LOI</td><td>Which technology findings would stop the deal, which would reprice it, and which are integration cost to be modeled</td><td>CTO with the deal team</td><td>Every finding is treated as an integration detail and the price never moves</td></tr>
+        <tr><td>Diligence week 1</td><td>Who from technology is on the diligence team, and whether they have access to the code, the cloud bill, and the people, not just a data room of slides</td><td>CTO</td><td>Diligence is done from an architecture deck and a SOC 2 letter, and the estate as it stands is discovered post-close</td></tr>
+        <tr><td>Diligence close</td><td>The integration approach per major system: converge, coexist, or replace, with a cost and a date for each</td><td>CTO with the integration lead</td><td>The approach is left for the 100-day plan and the 100-day plan is spent arguing about it</td></tr>
+        <tr><td>Signing</td><td>Which named people must be retained, with what terms, and who has the conversation with them before the announcement</td><td>CTO with the CEO and CHRO</td><td>The two engineers who understand the billing system hear about the deal from the press and resign in week two</td></tr>
+        <tr><td>Day 0</td><td>What must not break on day one: identity, payroll, customer-facing systems, security monitoring across both estates</td><td>CTO, run as an incident-style operation</td><td>A domain trust or SSO change on day one locks out half the acquired company</td></tr>
+        <tr><td>Day 30</td><td>The combined decision-rights and executive role map, published</td><td>CTO with the CEO</td><td>Two CISOs, two platform teams, and two roadmaps, each assuming the other will yield</td></tr>
+        <tr><td>Day 100</td><td>Which synergy commitments are on track, which are not, and what the board is told about the difference</td><td>CTO with the CFO</td><td>The synergy number from the deal model is reported as if it were a plan when it is really an assumption</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Questions to ask</span>
+      <h2>Questions that reprice or stop a deal</h2>
+      <p>Ask these in diligence, and put them to the target's engineers and their cloud bill, not to their slides.</p>
+    </div>
+    <div class="stage-cell">
+      <ul class="checklist">
+        <li>What percentage of the target's revenue depends on systems that fewer than three people understand</li>
+        <li>What does the target's cloud bill look like by service and by month, and how does it compare to what was presented</li>
+        <li>How many production incidents in the last year, how were they detected, and how long did recovery take</li>
+        <li>Which of the target's certifications are in scope for the systems that matter to the deal thesis</li>
+        <li>Where does customer and employee data physically live, under which entity, and which regulations follow it across the transaction</li>
+        <li>Which contracts have change-of-control clauses, and which vendors gain pricing leverage the day the deal closes</li>
+        <li>What is the target's technical debt, as a scored backlog, not a paragraph of reassurance</li>
+        <li>Who on the target's side has been told the truth about their role post-close, and who has not</li>
+        <li>If the acquired product is to be replaced, what is the realistic migration cost and timeline, and who has done one of these before</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">The trap</span>
+      <h2>Diligence that stops at the slides</h2>
+      <p>The most expensive M&A technology failure is a diligence exercise that reads the target's own description of itself and moves on, because the deal team is under time pressure and the technology findings are not seen as price-moving.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-cell a"><span class="env-label a">The pattern</span><p>The target presents a clean architecture diagram, a SOC 2 Type II, and a roadmap. Post-close, the platform turns out to depend on a single contractor, the SOC 2 scope excluded the product that drove the valuation, and the integration cost is three times the model. None of this was hidden. Nobody asked for the artifact.</p></div>
+      <div class="stage-cell"><span class="env-label b">The way out</span><p>Treat diligence as an evidence exercise using the same discipline as <a href="../epistemology-research-methods/index.html">Epistemology &amp; Research Methods</a>: for every claim, ask for the artifact, and treat the absence of one as the finding. Insist that specific technology findings appear in the price and the terms as well as the integration plan. Then run Day 0 like an incident and the first 100 days like a program with a tracker and dates.</p></div>
+    </div>
+  </div>
+
+    <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Legal clocks</span>
+      <h2>Deal-level rules that constrain technology work</h2>
+      <p>Status as of September 2026. Deal counsel owns these; technology needs to know where they limit what can be done and shared.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Rule</th><th>What it does</th><th>Technology implication</th></tr>
+          <tr><td>HSR Act premerger notification (US)</td><td>Deals above the annually adjusted threshold cannot close until a waiting period, normally 30 days, expires</td><td>No joint operation of systems, and no sharing of competitively sensitive data outside a clean team, before expiry. That is the gun-jumping risk</td></tr>
+          <tr><td>HSR filing form</td><td>The FTC's expanded form was vacated by a federal district court in February 2026 and the Fifth Circuit declined to stay that ruling in March 2026, so filers may use the prior, shorter form while the appeal continues<sup class="src"><a href="#src-1" title="FTC, HSR notification forms and guidance">[1]</a></sup></td><td>Less document preparation now, but the rule could return; keep diligence records organized either way</td></tr>
+          <tr><td>CFIUS (US)</td><td>Review of foreign investment, particularly in critical technology, critical infrastructure, or sensitive personal data</td><td>Data residency, access controls, and who can see what can become formal mitigation conditions</td></tr>
+          <tr><td>Data protection law</td><td>GDPR and similar laws follow the data across the transaction</td><td>A lawful basis for any transfer of customer or employee data, and a data map before integration begins</td></tr>
+          <tr><td>WARN Act and foreign consultation rules</td><td>Notice for mass layoffs, generally 60 days in the US<sup class="src"><a href="#src-2" title="US Department of Labor, Plant Closings and Layoffs (WARN)">[2]</a></sup></td><td>Integration headcount plans need HR and counsel before they are announced</td></tr>
+        </table>
+      </div>
+    </div>
+  <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.ftc.gov/enforcement/premerger-notification-program/hsr-notification-forms-instructions-guidance" rel="noopener">FTC, HSR notification forms and guidance</a></li><li value="2" id="src-2"><a href="https://www.dol.gov/general/topic/termination/plantclosings" rel="noopener">US Department of Labor, Plant Closings and Layoffs (WARN)</a></li></ol></div>
+</div>
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>Turning diligence findings into price</h2>
+      <p>Every finding gets one of three labels before the model is updated. Figures are illustrative.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Finding</th><th>Label</th><th>How it enters the model</th></tr>
+          <tr><td>Core platform on a database version past end of support; 18-month migration</td><td>Reprice</td><td>Migration cost of about $2.4M plus extended support fees, deducted from price or held in escrow</td></tr>
+          <tr><td>Two engineers account for about 70 percent of commits to the billing service</td><td>Integration cost plus retention</td><td>Retention packages and a documented knowledge transfer plan, as a closing condition</td></tr>
+          <tr><td>SOC 2 report with exceptions in access reviews</td><td>Integration cost</td><td>Remediation budget and a 90-day plan, since customer contracts depend on the report</td></tr>
+          <tr><td>Customer data stored in a region the target's contracts prohibit</td><td>Stop or reprice</td><td>Legal exposure assessed by counsel before signing; may require a specific indemnity</td></tr>
+          <tr><td>Open-source license conflict in the core product</td><td>Reprice or stop</td><td>Code scan and legal opinion; remediation cost or indemnity depending on distribution model</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Outputs</span>
+      <h2>What should exist at diligence close, Day 30, and Day 100</h2>
+      <p>The deal model is a set of assumptions. These are the artifacts that turn it into a plan and then into a result.</p>
+    </div>
+    <div class="stage-cell">
+      <table class="matrix-table">
+        <tr><th>Checkpoint</th><th>What exists</th></tr>
+        <tr><td>Diligence close</td><td>A scored technology diligence report with red flags classified as stop, reprice, or integration cost. A TIME map of the target's estate. A named key-person list with retention actions. A per-system converge, coexist, or replace decision with cost and date. Specific technology findings reflected in the price, the reps and warranties, or the escrow.</td></tr>
+        <tr><td>Day 30</td><td>Day 0 completed without a customer-facing or identity outage. The combined executive role and decision-rights map published. Retention conversations held with every named individual. Change-of-control vendor contracts triaged. A single security monitoring view across both estates, even if crude.</td></tr>
+        <tr><td>Day 100</td><td>An integration tracker reporting synergy realization against the deal model, with variance explained. The first replace or converge migration either underway with a plan or explicitly re-scoped. The board told which synergy assumptions were wrong and what replaces them. Nobody critical lost by surprise.</td></tr>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer>
+  One of several situational entry points into this toolkit. See the full topic catalog on the <a href="../../index.html">CTO Toolkit</a> home page.
+  <br><span style="opacity:0.7">Last reviewed October 2026.</span>
+</footer>
+
+</body>
+</html>
