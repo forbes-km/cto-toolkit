@@ -4,29 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Board Reporting</title>
-<meta name="description" content="A preview of the Technology Board Reporting Framework: what works reporting technology, security, and AI posture to a board, the out-of-cycle escalation mechanism, and the specific mistakes that undermine credibility.">
+<meta name="description" content="How technology, security, and AI reach a board: the annual calendar, which committee hears what, the standing one-page summary, usable metrics, escalation thresholds, disclosure clocks, director questions, and a worked example.">
 <meta property="og:title" content="Board Reporting | CTO Toolkit">
-<meta property="og:description" content="A preview of the Technology Board Reporting Framework: what works reporting technology, security, and AI posture to a board, the out-of-cycle escalation mechanism, and the specific mistakes that undermine credibility.">
+<meta property="og:description" content="How technology, security, and AI reach a board: the annual calendar, which committee hears what, the standing one-page summary, usable metrics, escalation thresholds, disclosure clocks, director questions, and a worked example.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/board-reporting/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Board Reporting | CTO Toolkit">
-<meta name="twitter:description" content="A preview of the Technology Board Reporting Framework: what works reporting technology, security, and AI posture to a board, the out-of-cycle escalation mechanism, and the specific mistakes that undermine credibility.">
+<meta name="twitter:description" content="How technology, security, and AI reach a board: the annual calendar, which committee hears what, the standing one-page summary, usable metrics, escalation thresholds, disclosure clocks, director questions, and a worked example.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/board-reporting/index.html">
 <style>
   :root {
-    --paper: #F6F5F1;
-    --ink: #1C1E1B;
-    --ink-soft: #52564F;
-    --line: #DCDAD2;
-    --accent: #2E5E4E;
-    --accent-soft: #E4EDE8;
-    --a: #2E6FB0;
-    --a-soft: #E7EFF7;
-    --b: #8A5A2E;
-    --b-soft: #F3E9DC;
+    --paper: #F6F5F1; --ink: #1C1E1B; --ink-soft: #52564F; --line: #DCDAD2;
+    --accent: #2E5E4E; --accent-soft: #E4EDE8;
+    --a: #2E6FB0; --a-soft: #E7EFF7; --b: #8A5A2E; --b-soft: #F3E9DC;
     --mono: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
     --sans: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -43,38 +36,63 @@
   .stage-card { border: 1px solid var(--line); border-radius: 10px; background: white; margin-bottom: 18px; overflow: hidden; }
   .stage-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
   .stage-head .stage-num { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
-  .stage-head h3 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
+  .stage-head h2 { margin: 2px 0 4px; font-size: 16.5px; font-family: var(--ui); font-weight: 600; color: var(--ink); }
   .stage-head p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
   .stage-grid { display: grid; grid-template-columns: 1fr 1fr; }
-  .stage-grid.single { grid-template-columns: 1fr; }
-  .stage-cell { padding: 16px 20px; }
+  .stage-grid.single { grid-template-columns: minmax(0, 1fr); }
+  .stage-cell { padding: 16px 20px; min-width: 0; }
   .stage-cell.a { border-right: 1px solid var(--line); }
   .env-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; }
   .env-label.a { background: var(--a-soft); color: var(--a); }
   .env-label.b { background: var(--b-soft); color: var(--b); }
-  .stage-cell p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink); }
-  .stage-cell ul { margin: 6px 0 0; padding-left: 18px; }
+  .stage-cell p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .stage-cell p:last-child { margin-bottom: 0; }
+  .stage-cell ul, .stage-cell ol { margin: 6px 0 0; padding-left: 18px; }
   .stage-cell li { font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  a { color: var(--accent); }
   .stage-cell code { font-family: var(--mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
-  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
-  .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 18px; }
-  .type-card { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 16px 20px; }
-  .type-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
-  .type-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
-  .type-card .anti { font-size: 12px; color: var(--b); line-height: 1.5; }
-  .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px; }
-  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix-table th, .matrix-table td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.55; }
   .matrix-table th { background: var(--accent-soft); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); }
-  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
-  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .checklist { list-style: none; margin: 4px 0 0; padding: 0; }
+  .checklist li { padding: 8px 0 8px 26px; border-bottom: 1px solid var(--line); position: relative; font-size: 13px; line-height: 1.55; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
+  .btn { padding: 9px 18px; background: var(--accent); color: white; border: none; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .field:last-child { border-bottom: none; }
+  .field input, .field select { font-family: var(--ui); font-size: 13px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); width: 150px; }
+  .result { margin-top: 14px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.6; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); margin-right: 4px; }
   @media (max-width: 700px) {
     .stage-grid { grid-template-columns: 1fr; }
     .stage-cell.a { border-right: none; border-bottom: 1px solid var(--line); }
-    .grid4 { grid-template-columns: 1fr; }
     .matrix-table { display: block; overflow-x: auto; }
+    .field input, .field select { width: 110px; }
   }
+  @media print { body { background: white; } .back { display: none; } .stage-card { break-inside: avoid; } }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
+
+  .dl-btn { padding: 9px 18px; border-radius: 6px; font-family: var(--ui); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+  .dl-btn.primary { background: var(--accent); color: white; border: none; }
+  .dl-btn.secondary { background: white; color: var(--accent); border: 1px solid var(--accent); }
+  .stage-grid.single { grid-template-columns: 1fr; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  sup.src { line-height: 0; }
+  sup.src a { font-size: 10.5px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
+  .src-list { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .src-list ol { margin: 0; padding-left: 20px; }
+  .src-list li { margin: 2px 0; }
+  .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
+  :target { scroll-margin-top: 80px; }
+  .src-list li:target { background: var(--accent-soft); }
+  .same-note { grid-column: 1 / -1; padding: 10px 20px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border-top: 1px solid var(--line); font-style: italic; }
 </style>
 </head>
 <body>
@@ -82,148 +100,233 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Board Reporting</h1>
-  <p>A preview of the Technology Board Reporting Framework: what works reporting technology, security, and AI posture to a board, the out-of-cycle escalation mechanism, and the specific mistakes that undermine credibility.</p>
-  <div class="caveat">This page covers the operating practice, plus a downloadable sample deck applying it. The full framework, structure, cadence, and escalation thresholds tailored to a specific board, is available through direct engagement.</div>
+  <p>How technology, security, and AI reach a board: the calendar across a year, which committee hears what, the one page that goes to every meeting, the metrics a director can actually use, the thresholds that trigger a call between meetings, and the questions you will be asked.</p>
+  <div class="caveat">This page covers the operating practice and includes a downloadable sample deck built to it. Disclosure rules referenced here were checked in October 2026. The full framework, with cadence and escalation thresholds tailored to a particular board, is available through direct engagement.</div>
 </header>
 
 <main>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">1</span>
-      <h3>Cadence &amp; format</h3>
-      <p>How often the board hears from technology, and in what form, before a single word of content is decided.</p>
+      <span class="stage-num">Start here</span>
+      <h2>What the board is for, from where you sit</h2>
+      <p>Most weak board reporting comes from a wrong picture of the audience.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What works</span>
-        <p>A consistent one-page technology summary attached to every board meeting, regardless of whether anything dramatic happened, plus a deeper technology review quarterly or semi-annually. Consistency builds the board's pattern recognition for what normal looks like, so they notice when something isn't.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">What backfires</span>
-        <p>Technology only showing up on the agenda when something has gone wrong. This trains the board to associate a CTO presentation with bad news, and every appearance starts to feel like a confession.</p>
+        <p>A board does not run technology and does not want to. It has three jobs that touch your area: oversee risk, approve and test the use of capital, and make sure management is competent to execute the strategy. Every minute of your time in the room should serve one of those three. Status updates serve none of them, which is why they get skimmed.</p>
+        <p>Directors also see a lot of companies. Many sit on two or three boards and have heard a dozen CTOs present. They are good at spotting a presenter who is managing them instead of informing them, and that judgment, once formed, is hard to reverse. Consistency across quarters builds more credibility than any single strong presentation.</p>
+        <p>One test covers most of what follows. Before each meeting, write one sentence per section of your material: what you want the board to know, feel, or decide because of it. A section with no answer gets cut.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">2</span>
-      <h3>The out-of-cycle escalation path</h3>
-      <p>The specific mechanism that makes a promise like &quot;the quarterly report never contains a surprise&quot; true in practice.</p>
+      <span class="stage-num">Cadence</span>
+      <h2>A year of board meetings, planned in advance</h2>
+      <p>Four regular meetings is typical. Give each one a theme so the deep dives rotate instead of competing for the same twenty minutes.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What holds up</span>
-        <p>A pre-agreed threshold for what triggers a call to the board chair or committee lead outside the normal cadence, a confirmed material breach, a regulatory filing obligation, a decision that can't wait until the next scheduled meeting, agreed before an incident, not improvised in the middle of one.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">What doesn't</span>
-        <p>No defined threshold, which means every incident becomes a judgment call about whether it's board-worthy, made under pressure by whoever's closest to it. That's how a material issue ends up sitting until the next quarterly meeting for no reason other than nobody decided to escalate it sooner.</p>
+        <table class="matrix-table">
+          <tr><th>Meeting</th><th>Deep-dive theme</th><th>What you bring</th><th>Decision you may ask for</th></tr>
+          <tr><td>Q1</td><td>Plan and capital</td><td>Prior year actuals against plan, this year's technology investment ranked by return and risk, the run, grow, and transform split</td><td>Approval of a major investment or a change to the split</td></tr>
+          <tr><td>Q2</td><td>Security and resilience</td><td>Posture trend, the last tabletop or DR test with results, third-party exposure, insurance coverage against the scenarios that matter</td><td>Acceptance of a named residual risk, or funding to close it</td></tr>
+          <tr><td>Q3</td><td>Strategy and architecture</td><td>Where the technology strategy stands against the business strategy, what changed, AI portfolio and governance</td><td>Endorsement of a strategic bet or a stop</td></tr>
+          <tr><td>Q4</td><td>Risk appetite and next year</td><td>Proposed changes to technology risk appetite, the draft plan, succession and key-person risk in the technology team</td><td>Approval of the risk appetite statement</td></tr>
+        </table>
+        <p style="margin-top:12px">The one-page summary below goes to every meeting regardless of theme. Public companies also need the annual 10-K disclosure of board oversight in view when planning the Q4 or Q1 session, since what the board actually did during the year is what that disclosure describes.</p>
       </div>
     </div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">3</span>
-      <h3>Two clocks: internal escalation versus external disclosure</h3>
-      <p>For a public company, the out-of-cycle path above and the regulatory disclosure deadline are related but distinct, and conflating them creates legal exposure.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">The internal clock</span>
-        <p>The board should hear about a likely-material incident within roughly 24 hours, well ahead of any external deadline, so there's time to prepare a proper disclosure and align on the facts before anyone outside the company sees them.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">The external clock</span>
-        <p>Under current SEC rules, a public company must disclose a cybersecurity incident determined to be material on Form 8-K within four business days of that materiality determination. The clock starts when materiality is decided, not at discovery, so the internal escalation path needs to run well ahead of it.</p>
-      </div>
-    </div>
-    <div class="same-note">This is a compliance question. Confirm the exact disclosure obligations, timing, and materiality process for your company with counsel; don't rely on this page for the legal determination.</div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">4</span>
-      <h3>Translating technical risk into business risk</h3>
-      <p>The way board reporting fails most often: the risk is reported in the language engineers diagnosed it in, not the language the board decides in.</p>
+      <span class="stage-num">Structure</span>
+      <h2>Which part of the board hears what</h2>
+      <p>Getting the forum wrong wastes the time of the people who should hear it and bores the people who should not.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Do this</span>
-        <p>&quot;A vulnerability in our authentication system could allow unauthorized account access, affecting an estimated 40,000 customer accounts and carrying breach notification obligations in three states&quot; states the business consequence first and the technical detail second, for anyone who wants it.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Avoid this</span>
-        <p>&quot;We have a CVSS 9.1 vulnerability in our OAuth implementation&quot; is accurate and unusable by a board that isn't going to look up what CVSS 9.1 means mid-meeting. If a board member has to ask &quot;what does that mean for us,&quot; the report failed before the discussion even starts.</p>
+        <table class="matrix-table">
+          <tr><th>Forum</th><th>Typical technology content</th><th>Your usual counterpart</th></tr>
+          <tr><td>Full board</td><td>Strategy, major investments, material incidents, the annual risk appetite</td><td>Board chair, through the CEO</td></tr>
+          <tr><td>Audit committee</td><td>Cyber risk oversight in most public companies, controls, internal audit findings on technology, capitalization of software</td><td>Committee chair and the CFO</td></tr>
+          <tr><td>Risk committee, where one exists</td><td>Enterprise risk register, operational resilience, third-party concentration, regulatory exposure</td><td>Chief risk officer</td></tr>
+          <tr><td>Technology committee, where one exists</td><td>Architecture direction, modernization progress, AI, talent in the technology function</td><td>Committee chair, often the most technical director</td></tr>
+        </table>
+        <p style="margin-top:12px">In a survey of the S&amp;P 100's first 10-K filings under the SEC cyber rules, about two thirds placed primary cyber oversight with a committee, and most of those named the audit committee.<sup class="src"><a href="#src-2" title="Gibson Dunn, survey of S&amp;P 100 Form 10-K cybersecurity disclosures">[2]</a></sup> Audit committees are already carrying financial reporting, so their cyber time is short. Bring them trends and exceptions. Save the explanation of how the program works for an annual session or a pre-read.</p>
       </div>
     </div>
-    <div class="same-note">For more than one or two risks, a single narrative paragraph stops working. A heat map, top risks plotted by likelihood and impact, gives the board a portfolio view in one glance, with the highest-priority item then unpacked in business language the way the example above does.</div>
+    <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://www.gibsondunn.com/cybersecurity-disclosure-survey-of-form-10-k-cybersecurity-disclosures-by-sp-100-cos/" rel="noopener">Gibson Dunn, survey of S&amp;P 100 Form 10-K cybersecurity disclosures</a></li></ol></div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
-      <h3>Investment &amp; roadmap tied to outcomes</h3>
-      <p>Connecting engineering spend and roadmap decisions to something the board governs: capital allocation and strategic risk.</p>
+      <span class="stage-num">The standing page</span>
+      <h2>The one page that goes to every meeting</h2>
+      <p>Same layout every time, so a director can compare it with last quarter in under a minute.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What works</span>
-        <p>Framing a platform investment as &quot;this reduces our customer onboarding time from six weeks to two, which our sales pipeline data shows is currently costing us an estimated 15 percent of qualified leads&quot; ties the spend to a number the board already tracks.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">What backfires</span>
-        <p>A roadmap slide organized by internal team names and sprint numbers. It's accurate to how the work is organized internally and meaningless to a board trying to understand what changes for the business and when.</p>
-      </div>
-    </div>
-  </div>
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">6</span>
-      <h3>Security &amp; compliance posture</h3>
-      <p>What a board needs to know here, distinct from an operational security review the CISO or security team runs separately.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What holds up</span>
-        <p>A small, stable set of metrics tracked over time: mean time to detect, mean time to remediate critical vulnerabilities, percentage of the environment covered by current compliance certifications, third-party and vendor posture (percentage of vendors with a current SOC 2 or equivalent), and current cyber insurance coverage, with any material incidents since the last meeting and the incident response postmortem attached if one occurred.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">What doesn't</span>
-        <p>A wall of green checkmarks with no trend line, no incident history, and no sense of how the organization compares to industry peers. A board cannot distinguish &quot;consistently secure&quot; from &quot;we've never measured this rigorously enough to find a problem&quot; without a track record and an external reference point to compare against.</p>
+        <ol class="num-list">
+          <li><span><b>Headline</b>Two sentences. What changed since the last meeting and whether anything needs the board's attention. If nothing does, say so plainly.</span></li>
+          <li><span><b>Six to eight metrics with a trend</b>The same metrics every quarter, each with the last four values and a target. A metric that appears once and disappears tells the board you dropped it because it looked bad.</span></li>
+          <li><span><b>Top risks</b>Three to five, each with its trend arrow and owner. A heat map works once there are more than two.</span></li>
+          <li><span><b>Incidents since the last meeting</b>Every incident above an agreed severity, one line each, with customer impact and status of the follow-up. Include the ones that were handled well.</span></li>
+          <li><span><b>Major programs</b>Status against the outcome promised when the board approved the money, not against the project plan.</span></li>
+          <li><span><b>Ask</b>What you need from the board, or a clear statement that you need nothing this quarter.</span></li>
+        </ol>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">7</span>
-      <h3>Reporting on AI specifically</h3>
-      <p>An increasingly standard board expectation, and one most technology leaders haven't built a repeatable format for yet.</p>
+      <span class="stage-num">Metrics</span>
+      <h2>Metrics a director can use</h2>
+      <p>Pick from these and keep the set stable. Each one should have a plain-language definition on the page the first time it appears.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Do this</span>
-        <p>A short standing section covering what AI systems are in production, what's spent on them, and what governance controls are in place, referencing the AI Governance Map's four domains directly, so the language stays the same every quarter. Boards are increasingly asking about this whether or not it's offered, and forward-looking boards are starting to ask about emerging technology risk more broadly, post-quantum cryptography readiness, for example, is now a live board discussion topic at some companies.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Avoid this</span>
-        <p>Treating an AI pilot as not board-relevant because it's &quot;still experimental.&quot; If it touches customer data or a regulated decision, the board's risk oversight duty applies well before the system reaches full production, and finding out about it after an incident is worse than a modest early mention.</p>
+        <table class="matrix-table">
+          <tr><th>Metric</th><th>Why a board cares</th><th>What a bad trend usually means</th></tr>
+          <tr><td>Availability of revenue-critical services, against target</td><td>Customer and revenue exposure in one number</td><td>Capacity, change discipline, or an aging platform. Pair it with incident count to tell which</td></tr>
+          <tr><td>Critical vulnerabilities open past the agreed fix window</td><td>The gap between policy and practice</td><td>Patching capacity is short or ownership is unclear, and audit will find it before an attacker does</td></tr>
+          <tr><td>Time to detect and contain a confirmed security incident</td><td>Whether the security spend works when it matters</td><td>Logging gaps or alert fatigue. Ask how many incidents were found by a third party</td></tr>
+          <tr><td>Privileged accounts, and the share reviewed this quarter</td><td>The most common route from a breach to a disaster</td><td>Access reviews are a formality, which is also an audit finding waiting to happen</td></tr>
+          <tr><td>Critical vendors with a current security assessment</td><td>Exposure the company does not control directly</td><td>Procurement is signing faster than security can assess</td></tr>
+          <tr><td>Technology cost per unit of business volume</td><td>Efficiency independent of growth</td><td>Architecture debt or unmanaged cloud spend. The total alone cannot show this</td></tr>
+          <tr><td>Last successful restore or failover test, and its result</td><td>Whether the recovery plan is real</td><td>A plan that has not been tested in a year should be treated as untested</td></tr>
+          <tr><td>Regretted attrition in the technology team</td><td>Execution capacity and key-person risk</td><td>Something in leadership, pay, or workload is wrong, and delivery dates will follow</td></tr>
+        </table>
+        <p style="margin-top:12px">Two cautions. Averages hide the incident that matters, so for detection and recovery show the worst case next to the median. And any metric tied to someone's bonus will improve on paper first, so know which of yours are.</p>
       </div>
     </div>
   </div>
+
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">8</span>
-      <h3>Common mistakes, named directly</h3>
-      <p>These come up often enough that they deserve to be named on their own.</p>
+      <span class="stage-num">Between meetings</span>
+      <h2>Escalation thresholds, agreed before you need them</h2>
+      <p>The promise that the quarterly report never contains a surprise only holds if everyone knows in advance what triggers a call.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>Tier</th><th>Example triggers</th><th>Who hears, and how fast</th></tr>
+          <tr><td>Call now</td><td>Suspected material breach, ransomware with operational impact, an outage of a revenue-critical system beyond its agreed tolerance, a regulator or law enforcement contact about an incident</td><td>CEO immediately. Board chair and the relevant committee chair the same day, by phone</td></tr>
+          <tr><td>Notify within days</td><td>An incident that may become material as facts develop, loss of a key technology leader, a critical vendor failure with a workaround in place</td><td>Committee chair within two business days, written</td></tr>
+          <tr><td>Next regular meeting</td><td>Incidents handled within tolerance, risks that moved but stayed inside appetite, program slippage that does not change the outcome</td><td>The standing page</td></tr>
+        </table>
+        <p style="margin-top:12px">Write the tiers into a short protocol the CEO and the board chair have both read. The value is that nobody has to decide under pressure whether something is board-worthy, which is the moment people talk themselves out of making the call.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Public companies</span>
+      <h2>The internal clock and the disclosure clock are different</h2>
+      <p>Confusing them is how a company ends up disclosing to the market before its own board has the facts.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Under the SEC rules adopted in 2023, a registrant has to determine whether a cybersecurity incident is material without unreasonable delay, and then file a Form 8-K under Item 1.05 within four business days of that determination. Separately, the annual 10-K has to describe, under Regulation S-K Item 106, how the board oversees cyber risk, which committee is responsible, and how management keeps it informed.<sup class="src"><a href="#src-1" title="SEC press release 2023-139">[1]</a></sup> That annual description is only credible if the reporting it describes actually happened, which is one more reason to keep the standing page consistent.</p>
+        <p>Regulated firms can carry their own requirements on top. For entities licensed by the New York Department of Financial Services, Part 500 expects the CISO to report in writing to the board at least annually and to bring material cyber issues to it in a timely way, and it expects the board itself to have enough understanding of cyber matters to exercise oversight.<sup class="src"><a href="#src-3" title="NYDFS, 23 NYCRR Part 500 as amended November 2023">[3]</a></sup></p>
+        <p>The practical rule: the board should hear about a likely-material incident well before anyone outside the company does. Aim for within a day of the first credible signal, so counsel has room to run the materiality determination with the board informed. Disclosure obligations and the materiality process are legal questions. Settle them with counsel in advance, not during the incident.</p>
+      </div>
+    </div>
+    <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="1" id="src-1"><a href="https://www.sec.gov/news/press-release/2023-139" rel="noopener">SEC press release 2023-139, cybersecurity risk management and incident disclosure rules</a></li><li value="3" id="src-3"><a href="https://www.dfs.ny.gov/system/files/documents/2023/12/rf23_nycrr_part_500_amend02_20231101.pdf" rel="noopener">NYDFS, 23 NYCRR Part 500 as amended November 2023</a></li></ol></div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Translation</span>
+      <h2>Rewriting a technical risk for the board</h2>
+      <p>The risk is usually diagnosed in engineering language. The board decides in business language. Somebody has to translate, and it should be you.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
-        <span class="env-label a">The mistake</span>
-        <ul><li>Reporting activity (story points completed, deployments shipped) instead of outcomes (what changed for the business)</li><li>Surprising the board with bad news in the meeting instead of a pre-brief to the chair or committee lead beforehand</li><li>Treating every board update as a status report instead of occasionally using the time to ask the board for something specific: a decision, a resource, air cover for a hard tradeoff</li></ul>
+        <span class="env-label b">As the engineers wrote it</span>
+        <p>Critical (CVSS 9.1) flaw in the OAuth token validation of the customer portal. Patch requires a framework upgrade estimated at six weeks.</p>
       </div>
       <div class="stage-cell">
-        <span class="env-label b">The fix</span>
-        <p>Before every board meeting, write one sentence per section: &quot;what do I want the board to know, feel, or decide because of this.&quot; If a section doesn't have a clear answer to that, cut it or rework it. A board deck is a decision-support tool. Documentation belongs elsewhere.</p>
+        <span class="env-label a">As the board needs it</span>
+        <p>A weakness in how customers log in could let an attacker take over accounts. About 40,000 accounts are exposed, and a breach would trigger notification duties in three states. We have put compensating monitoring in place and the permanent fix lands in six weeks. We are accepting the residual risk until then, inside the appetite you approved.</p>
+      </div>
+    </div>
+    <div class="same-note">The order is consequence, exposure, what is being done, and whose decision it is. The CVSS score can sit in an appendix for the director who wants it.</div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Preparation</span>
+      <h2>Questions directors ask, and what a prepared answer contains</h2>
+      <p>These come up in some form at most boards. Have the answer before the meeting, with a number in it.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>The question</th><th>A prepared answer includes</th></tr>
+          <tr><td>Could what happened to that other company happen to us?</td><td>Whether the same weakness exists here, the evidence you checked, and what would stop or limit it. Have this ready within days of any major public incident in your sector.</td></tr>
+          <tr><td>Are we spending enough on security?</td><td>Spend against peers as a range, but mostly what the spend buys: the risks reduced and the ones still open. A percentage alone answers nothing.</td></tr>
+          <tr><td>How long would it take us to recover from ransomware?</td><td>The result of the last real restore test, not the plan's target, and which systems would come back first.</td></tr>
+          <tr><td>What are we doing with AI, and is it safe?</td><td>What is in production, what it costs, who approved each use, and what would trigger switching one off. See <a href="../ai-governance-map/index.html">AI Governance</a>.</td></tr>
+          <tr><td>Who would run technology if you left tomorrow?</td><td>A named interim leader and how ready they are. See <a href="../cto-succession/index.html">CTO Leadership &amp; Succession</a>.</td></tr>
+          <tr><td>Why does this program cost more than we approved?</td><td>Which assumption moved, by how much, and what the outcome still is. Raise it before they ask.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Worked example</span>
+      <h2>Two weeks before a meeting, after a bad quarter</h2>
+      <p>A mid-size SaaS company had a nine-hour outage of its billing platform in August, caused by a failed database upgrade at a managed provider. Customers were not overcharged, but invoices went out four days late. The Q3 meeting is in mid-October. Figures are illustrative.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <table class="matrix-table">
+          <tr><th>When</th><th>What happened</th><th>Why</th></tr>
+          <tr><td>August, same day</td><td>CEO informed during the outage. Audit committee chair called that evening, because billing is a revenue-critical system and the outage passed its agreed tolerance</td><td>The escalation protocol made it a call, not a judgment</td></tr>
+          <tr><td>Two weeks before</td><td>Draft standing page shared with the CEO and CFO. The incident appears in the incident section and drives availability below target for the first time in five quarters</td><td>No one on the management team should learn about the framing in the meeting</td></tr>
+          <tr><td>Ten days before</td><td>Thirty-minute call with the audit committee chair to walk through the postmortem and the proposed ask</td><td>The chair can shape the discussion and will not be surprised by the ask</td></tr>
+          <tr><td>One week before</td><td>Pre-read sent: the standing page, a two-page incident summary, and the ask. The full postmortem is an appendix</td><td>Directors who read ahead ask better questions</td></tr>
+          <tr><td>The meeting</td><td>Ten minutes. Two on the headline and metrics, five on the incident and what changed, three on the ask: funding a second provider region for billing at $380k a year, against an estimated $1.1M exposure per comparable outage</td><td>Most of the time goes to the decision, not the narrative</td></tr>
+          <tr><td>Next day</td><td>Short note to the chair recording the decision and the date the failover test will be reported</td><td>Closes the loop and sets up the next standing page</td></tr>
+        </table>
+        <p style="margin-top:12px">The ask was approved with a condition: report the failover test result at the Q1 meeting. That condition is a good outcome. It means the board is overseeing the risk, which is its job, and it gives the next report a fixed point to measure against.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">AI and emerging risk</span>
+      <h2>Reporting AI before anyone asks</h2>
+      <p>Directors are being asked about AI by investors and regulators. They need a consistent account from you to answer.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Give AI a short standing section: what is in production, what it costs, which uses touch customers or regulated decisions, and what controls are in place, described in the same terms every quarter. Use the domains on the <a href="../ai-governance-map/index.html">AI Governance Map</a> so the vocabulary does not drift.</p>
+        <p>Do not hold back a pilot because it is still experimental. If it uses customer data or informs a regulated decision, the board's oversight duty already applies, and learning about it after an incident is far worse than a brief early mention. The same goes for longer-horizon items such as post-quantum cryptography readiness: one line a year on where you stand is enough until the timeline gets closer.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Common pitfall</span>
+      <h2>The deck that reports activity</h2>
+      <p>Thirty slides of sprints completed, tickets closed, and projects in green.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>It feels thorough and it gives the board nothing to oversee. Directors cannot tell whether the green is earned or just unmeasured, and the one real issue is buried on slide nineteen, where nobody reaches it. When something does go wrong later, the deck is evidence that the issue was technically disclosed and practically hidden, which is the worst position to be in.</p>
+        <p>The fix is the standing page plus one deep dive and one ask. Everything else goes in an appendix or a reading room. If you find you cannot fit what matters on one page, that is usually a sign you have not yet decided what matters.</p>
       </div>
     </div>
   </div>
@@ -231,8 +334,8 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Download</span>
-      <h3>Sample board deck</h3>
-      <p>A seven-slide illustrative example applying every section above: at-a-glance metrics, business outcomes, security and AI posture, a risk heat map plus one risk translated into business terms, investment tied to outcomes, and a specific ask. Figures are synthetic; adapt the structure with your own numbers.</p>
+      <h2>Sample board deck</h2>
+      <p>A seven-slide example built to this page: at-a-glance metrics, business outcomes, security and AI posture, a risk heat map with one risk translated into business terms, investment tied to outcomes, and an ask. Figures are synthetic.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell" style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -244,7 +347,7 @@
 </main>
 
 <footer>
-  Reference only. This comes from operating experience, not governance law. Confirm disclosure and reporting obligations for your specific company structure with counsel.
+  Reference only. This comes from operating experience, not governance law. Confirm disclosure and reporting obligations for your company with counsel. Related: <a href="../technology-risk-appetite/index.html">Technology Risk Appetite</a>, <a href="../regulatory-map/index.html">Regulatory Map</a>, <a href="../incident-response/index.html">Incident Response</a>.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

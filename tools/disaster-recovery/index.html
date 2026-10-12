@@ -86,7 +86,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Disaster Recovery &amp; Business Continuity</h1>
   <p>What happens when a primary system, region, or data center becomes unavailable. Distinct from day-to-day incident response: this is about surviving the loss of something whole, not degrading gracefully around a partial failure.</p>
-  <div class="caveat">General DR/BC framework. See <a href="../incident-response/index.html">Incident Response</a> for the process that handles ordinary outages; this page is about recovery from the loss of an entire system, region, or facility.</div>
+  <div class="caveat">General DR/BC framework. See <a href="../incident-response/index.html">Incident Response</a> for the process that handles ordinary outages. This page is about recovery from the loss of an entire system, region, or facility.</div>
 </header>
 
 <main>
@@ -112,12 +112,12 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>Setting RTO and RPO</h3>
-      <p>DR most often fails because the target was never realistic to begin with; the bad recovery only exposes it.</p>
+      <p>DR most often fails because the target was never realistic to begin with. The bad recovery only exposes it.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Do this</span>
-        <p>Ask the business owner what happens at 1 hour, 4 hours, and 24 hours of downtime for each system, in dollars or customer impact, then set the target from that answer. The target should hurt to miss; if missing it wouldn't matter, the system is probably a lower tier than it's currently classified.</p>
+        <p>Ask the business owner what happens at 1 hour, 4 hours, and 24 hours of downtime for each system, in dollars or customer impact, then set the target from that answer. The target should hurt to miss. If missing it wouldn't matter, the system is probably a lower tier than it's currently classified.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Watch for</span>
@@ -197,7 +197,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Is the faster recovery time worth its cost?</h3>
-      <p>List the systems you are deciding on. For each, the tool compares the expected annual value of a faster recovery (probability of an event, times hours saved, times downtime cost) with what the faster RTO costs, then ranks the systems. It is the same expected-value logic as before, applied across the estate. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>List the systems you are deciding on. For each, the tool compares the expected annual value of a faster recovery (probability of an event, times hours saved, times downtime cost) with what the faster RTO costs, then ranks the systems. It is the same expected-value logic as before, applied across the estate. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -245,7 +245,7 @@
     <div class="stage-head">
       <span class="stage-num">7</span>
       <h3>Standards and regulatory expectations</h3>
-      <p>Obligations differ by sector; this is where most auditors and examiners start.</p>
+      <p>Obligations differ by sector. This is where most auditors and examiners start.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -255,7 +255,7 @@
           <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>For EU financial entities since January 2025: tested ICT continuity and recovery plans, and threat-led penetration testing at least every three years for entities designated as significant<sup class="src"><a href="#src-2" title="Regulation (EU) 2022/2554 (Digital Operational Resilience Act)">[2]</a></sup></td></tr>
           <tr><td>HIPAA Security Rule, 45 CFR 164.308(a)(7)</td><td>A contingency plan with data backup, disaster recovery, emergency mode operation, and testing<sup class="src"><a href="#src-3" title="45 CFR 164.308(a)(7), contingency plan">[3]</a></sup></td></tr>
           <tr><td>FFIEC Business Continuity Management booklet (2019)</td><td>US financial institutions: resilience across the whole organization, including third parties<sup class="src"><a href="#src-4" title="FFIEC, revised Business Continuity Management booklet, November 2019">[4]</a></sup></td></tr>
-          <tr><td>NIST SP 800-34 Rev. 1</td><td>Contingency planning guide for information systems; widely used outside government<sup class="src"><a href="#src-5" title="NIST SP 800-34 Rev. 1, Contingency Planning Guide">[5]</a></sup></td></tr>
+          <tr><td>NIST SP 800-34 Rev. 1</td><td>Contingency planning guide for information systems. Widely used outside government<sup class="src"><a href="#src-5" title="NIST SP 800-34 Rev. 1, Contingency Planning Guide">[5]</a></sup></td></tr>
         </table>
       </div>
     </div>
@@ -288,7 +288,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Benchmark</th><th>Published figure</th><th>How to use it</th></tr>
-          <tr><td>Hourly cost of downtime, mid-size and large enterprises</td><td>More than 90 percent put it above $300,000 an hour; 41 percent put it at $1M to over $5M. Survey of more than 1,000 firms, late 2023 to early 2024<sup class="src"><a href="#src-6" title="ITIC, 2024 Hourly Cost of Downtime Survey">[6]</a></sup></td><td>Use it to challenge an estimate that looks too low for the business-critical tier, not as the number for every system. Lower tiers should be priced from their own revenue and workaround cost.</td></tr>
+          <tr><td>Hourly cost of downtime, mid-size and large enterprises</td><td>More than 90 percent put it above $300,000 an hour. 41 percent put it at $1M to over $5M. Survey of more than 1,000 firms, late 2023 to early 2024<sup class="src"><a href="#src-6" title="ITIC, 2024 Hourly Cost of Downtime Survey">[6]</a></sup></td><td>Use it to challenge an estimate that looks too low for the business-critical tier, not as the number for every system. Lower tiers should be priced from their own revenue and workaround cost.</td></tr>
         </table>
       </div>
     </div>
@@ -297,7 +297,7 @@
 
 <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Checklist</span>
+      <span class="stage-num">Red flags</span>
       <h3>DR red flags</h3>
       <p>What you see when a disaster recovery program looks complete in the binder and isn't.</p>
     </div>
@@ -318,7 +318,7 @@
 </main>
 
 <footer>
-  Reference only. RTO and RPO targets, testing cadence, and regulatory DR obligations vary by industry; treat this as a starting framework, not a compliance checklist.
+  Reference only. RTO and RPO targets, testing cadence, and regulatory DR obligations vary by industry. Treat this as a starting framework, not a compliance checklist.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

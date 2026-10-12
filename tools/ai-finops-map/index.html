@@ -121,7 +121,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI FinOps Map</h1>
   <p>Cost modeling stage by stage, the same shape as the <a href="../ai-architecture-map/index.html">Architecture Map</a> it follows. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage below switches to that environment's cost model. Includes a break-even calculator and the two cost levers, prompt caching and batch processing, most teams leave unused.</p>
-  <div class="caveat">Cost modeling here is directional. Build your own model with your volume, region, and negotiated pricing before committing budget. Vendor pricing changes frequently; verify current rates before using specific numbers in a budget decision.</div>
+  <div class="caveat">Cost modeling here is directional. Build your own model with your volume, region, and negotiated pricing before committing budget. Vendor pricing changes frequently. Verify current rates before putting numbers in a budget decision.</div>
 </header>
 
 <main>
@@ -150,7 +150,7 @@
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Agent Platform (formerly Vertex AI) bills current Gemini models per token, input and output metered separately; older model generations were metered per character, so check which meter applies to the model you pick. An easy-to-miss cost multiplier: Gemini's internal reasoning (thinking) tokens are billed as output, and on reasoning-heavy requests they can inflate cost several times beyond what the visible response length suggests.</p>
+      <p>Agent Platform (formerly Vertex AI) bills current Gemini models per token, input and output metered separately. Older model generations were metered per character, so check which meter applies to the model you pick. An easy-to-miss cost multiplier: Gemini's internal reasoning (thinking) tokens are billed as output, and on reasoning-heavy requests they can inflate cost several times beyond what the visible response length suggests.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -168,7 +168,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Find your own break-even point</h3>
-      <p>The break-even formula above, projected forward. Enter the fixed monthly cost of self-hosting, the managed price per query, today's volume, and how fast volume grows. The tool finds the break-even volume, the month self-hosting starts to win, and the cumulative cost of each option over 24 months, with a price sensitivity check. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>The break-even formula above, projected forward. Enter the fixed monthly cost of self-hosting, the managed price per query, today's volume, and how fast volume grows. The tool finds the break-even volume, the month self-hosting starts to win, and the cumulative cost of each option over 24 months, with a price sensitivity check. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -200,11 +200,11 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Provisioned Throughput reserves dedicated capacity in model units, billed hourly whether used or not, with no-commitment, 1-month, and 6-month terms.<sup class="src"><a href="#src-2" title="AWS, Amazon Bedrock pricing">[2]</a></sup> Only pays off above sustained utilization; buying a 6-month commitment before traffic is stable is the single fastest way to overspend here. Some custom and fine-tuned models still require Provisioned Throughput rather than on-demand billing; check the deployment options for the specific model before assuming pay-as-you-go is available.</p>
+      <p>Provisioned Throughput reserves dedicated capacity in model units, billed hourly whether used or not, with no-commitment, 1-month, and 6-month terms.<sup class="src"><a href="#src-2" title="AWS, Amazon Bedrock pricing">[2]</a></sup> Only pays off above sustained utilization. Buying a 6-month commitment before traffic is stable is the single fastest way to overspend here. Some custom and fine-tuned models still require Provisioned Throughput rather than on-demand billing. Check the deployment options for the model you want before assuming pay-as-you-go is available.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Provisioned Throughput Units (PTU) reserve dedicated capacity, billed per PTU per hour, with Azure Reservations for 1-month or 1-year terms at a discount that varies by model family and term. That converts variable token cost into a predictable fixed cost, but only pays off above a specific utilization threshold; idle PTU capacity is money spent on nothing. Hourly billing suits short or variable use; for sustained production volume a reservation is usually cheaper.<sup class="src"><a href="#src-3" title="Microsoft Learn, provisioned throughput billing and cost management">[3]</a></sup></p>
+      <p>Provisioned Throughput Units (PTU) reserve dedicated capacity, billed per PTU per hour, with Azure Reservations for 1-month or 1-year terms at a discount that varies by model family and term. That converts variable token cost into a predictable fixed cost, but only pays off above a utilization threshold. Idle PTU capacity is money spent on nothing. Hourly billing suits short or variable use. For sustained production volume a reservation is usually cheaper.<sup class="src"><a href="#src-3" title="Microsoft Learn, provisioned throughput billing and cost management">[3]</a></sup></p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -244,7 +244,7 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>No managed billing hierarchy to lean on; attribution requires your own request-tagging at the application layer (which team or product initiated the call) correlated against GPU-hour cost allocated proportionally to usage. This is meaningfully more engineering work to build.</p>
+      <p>No managed billing hierarchy to lean on. Attribution requires your own request-tagging at the application layer (which team or product initiated the call) correlated against GPU-hour cost allocated proportionally to usage. This is meaningfully more engineering work to build.</p>
     </div>
     <div class="same-note">The metric that matters across every environment is cost per unit of business value: cost per resolved support ticket, cost per underwriting decision. Cost per token and cost per GPU-hour are inputs to that number and poor substitutes for it. Build the unit economics dashboard around the business metric first and let infrastructure cost roll up into it.</div>
   </div>
@@ -260,11 +260,11 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Cost Management budgets with action-group-triggered alerts at defined thresholds; Monitor can alert on token consumption rate directly if instrumented, so an anomaly gets caught while the billing period is still open.</p>
+      <p>Cost Management budgets with action-group-triggered alerts at defined thresholds. Monitor can alert on token consumption rate directly if instrumented, so an anomaly gets caught while the billing period is still open.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Budgets & Alerts plus Cost Anomaly Detection at the billing-account level; the reasoning-token cost multiplier from Stage 1 is the kind of anomaly this catches before a month of traffic multiplies it.</p>
+      <p>Budgets & Alerts plus Cost Anomaly Detection at the billing-account level. The reasoning-token cost multiplier from Stage 1 is the kind of anomaly this catches before a month of traffic multiplies it.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -283,19 +283,19 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Bedrock's catalog spans a more than hundredfold price range across model tiers;<sup class="src"><a href="#src-2" title="AWS, Amazon Bedrock pricing">[2]</a></sup> routing simple classification or extraction tasks to a cheaper model (Nova Micro or Haiku-class) and reserving the frontier model for complex reasoning is often a larger lever than any reservation optimization.</p>
+      <p>Bedrock's catalog spans a more than hundredfold price range across model tiers.<sup class="src"><a href="#src-2" title="AWS, Amazon Bedrock pricing">[2]</a></sup> routing simple classification or extraction tasks to a cheaper model (Nova Micro or Haiku-class) and reserving the frontier model for complex reasoning is often a larger lever than any reservation optimization.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Foundry's model catalog spans a wide price-performance range; routing simple classification or extraction tasks to a smaller, cheaper model and reserving the frontier model for complex reasoning is often a larger cost lever than any PTU or reservation optimization.</p>
+      <p>Foundry's model catalog spans a wide price-performance range. Routing simple classification or extraction tasks to a smaller, cheaper model and reserving the frontier model for complex reasoning is often a larger cost lever than any PTU or reservation optimization.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Gemini 3.5 Flash-Lite lists at $0.30 input and $2.50 output per million tokens, against $2.00 input and $12.00 output for Gemini 3.1 Pro, still in preview at this review; Agent Platform rates can differ by region and contract, so check both pricing pages;<sup class="src"><a href="#src-4" title="Google Cloud, Agent Platform generative AI pricing">[4]</a><a href="#src-9" title="Google, Gemini API pricing (list prices)">[9]</a></sup> the same routing principle applies, with the added wrinkle that reasoning tokens make the effective cost gap between tiers larger than the sticker price alone suggests.</p>
+      <p>Gemini 3.5 Flash-Lite lists at $0.30 input and $2.50 output per million tokens, against $2.00 input and $12.00 output for Gemini 3.1 Pro, still in preview at this review. Agent Platform rates can differ by region and contract, so check both pricing pages.<sup class="src"><a href="#src-4" title="Google Cloud, Agent Platform generative AI pricing">[4]</a><a href="#src-9" title="Google, Gemini API pricing (list prices)">[9]</a></sup> the same routing principle applies, with the added wrinkle that reasoning tokens make the effective cost gap between tiers larger than the sticker price alone suggests.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>OCI's catalog spans Oracle-curated and partner models (Cohere, Llama, xAI Grok) at meaningfully different price points; the same routing principle applies, and dedicated-cluster pricing tiers differ enough by model family that the choice interacts with the reserved-capacity decision from Stage 2.</p>
+      <p>OCI's catalog spans Oracle-curated and partner models (Cohere, Llama, xAI Grok) at meaningfully different price points. The same routing principle applies, and dedicated-cluster pricing tiers differ enough by model family that the choice interacts with the reserved-capacity decision from Stage 2.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
@@ -312,15 +312,15 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Provisioned Throughput reserved for peak load sitting idle most of the day; forgotten Knowledge Bases vector storage (OpenSearch Serverless bills a minimum of about $350 a month for a standard collection even at zero query traffic; dev-test collections cost about half that, and newer collection types scale to zero when idle)<sup class="src"><a href="#src-5" title="AWS, Amazon OpenSearch Service pricing">[5]</a></sup> left running after a project ends. Both invisible unless someone is specifically auditing deployed resources against active use cases.</p>
+      <p>Provisioned Throughput reserved for peak load sitting idle most of the day. Forgotten Knowledge Bases vector storage (OpenSearch Serverless bills a minimum of about $350 a month for a standard collection even at zero query traffic, dev-test collections cost about half that, and newer collection types scale to zero when idle)<sup class="src"><a href="#src-5" title="AWS, Amazon OpenSearch Service pricing">[5]</a></sup> left running after a project ends. Both invisible unless someone is auditing deployed resources against active use cases.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>PTU reservations sized for peak load sitting idle most of the day; forgotten dev/test Foundry deployments left running after the project using them ended. Both invisible unless someone is specifically auditing deployed resources against actual active use cases.</p>
+      <p>PTU reservations sized for peak load sitting idle most of the day. Forgotten dev/test Foundry deployments left running after the project using them ended. Both invisible unless someone is auditing deployed resources against actual active use cases.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
-      <p>Online prediction endpoints, Vector Search nodes, and Workbench instances all bill per hour regardless of traffic; a forgotten deployed endpoint is one of the most common GCP AI cost surprises, running up thousands a month with nobody using it.</p>
+      <p>Online prediction endpoints, Vector Search nodes, and Workbench instances all bill per hour regardless of traffic. A forgotten deployed endpoint is one of the most common GCP AI cost surprises, running up thousands a month with nobody using it.</p>
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
@@ -346,7 +346,7 @@
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Prompts of 1,024 tokens or more are cached automatically on supported models, with no opt-in, and cached input tokens are billed at a discount on Standard deployments (up to 100 percent on provisioned deployments). The exact rate depends on the model, so check the pricing page.<sup class="src"><a href="#src-6" title="Microsoft Learn, prompt caching with Azure OpenAI">[6]</a></sup> The architectural work is keeping the cacheable part of the prompt byte-identical and in the same position on every request; dynamic content has to move to the end, after the cacheable prefix, or the cache never hits.</p>
+      <p>Prompts of 1,024 tokens or more are cached automatically on supported models, with no opt-in, and cached input tokens are billed at a discount on Standard deployments (up to 100 percent on provisioned deployments). The exact rate depends on the model, so check the pricing page.<sup class="src"><a href="#src-6" title="Microsoft Learn, prompt caching with Azure OpenAI">[6]</a></sup> The architectural work is keeping the cacheable part of the prompt byte-identical and in the same position on every request. Dynamic content has to move to the end, after the cacheable prefix, or the cache never hits.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -360,7 +360,7 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>vLLM and most modern serving stacks support prefix caching (often called automatic prefix caching or APC) natively, and the same discipline applies: stable content first, dynamic content last. The saving shows up as GPU time not spent recomputing the same prefix, rather than a line-item discount on a bill, so it has to be measured through throughput and latency metrics instead of a cost dashboard.</p>
     </div>
-    <div class="same-note">Caching discounts are not permanent. Providers have already changed how cached tokens are priced more than once, so re-verify any specific caching discount against current pricing before it goes into a budget.</div>
+    <div class="same-note">Caching discounts are not permanent. Providers have already changed how cached tokens are priced more than once, so re-verify any caching discount against current pricing before it goes into a budget.</div>
   <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2"><a href="https://aws.amazon.com/bedrock/pricing/" rel="noopener">AWS, Amazon Bedrock pricing</a></li><li value="4"><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" rel="noopener">Google Cloud, Agent Platform generative AI pricing</a></li><li value="6" id="src-6"><a href="https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching" rel="noopener">Microsoft Learn, prompt caching with Azure OpenAI</a></li><li value="9"><a href="https://ai.google.dev/gemini-api/docs/pricing" rel="noopener">Google, Gemini API pricing (list prices)</a></li></ol></div>
 </div>
 
@@ -398,7 +398,7 @@
     <div class="stage-head">
       <span class="stage-num">9</span>
       <h3>Worked example: cost per resolved support ticket</h3>
-      <p>Unit cost is the number that decides whether an AI feature scales. Token prices are illustrative round numbers; substitute your contracted rates.</p>
+      <p>Unit cost is the number that decides whether an AI feature scales. Token prices are illustrative round numbers. Substitute your contracted rates.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -437,7 +437,7 @@
 </main>
 
 <footer>
-  Reference only. Pricing, reservation models, and hardware costs change quickly; verify current numbers against primary sources before relying on this for a budget or investment decision.
+  Reference only. Pricing, reservation models, and hardware costs change quickly. Verify current numbers against primary sources before relying on this for a budget or investment decision.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>

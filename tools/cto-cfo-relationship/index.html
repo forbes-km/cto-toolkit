@@ -81,6 +81,11 @@
   .src-lbl { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px; margin-bottom: 4px; }
   :target { scroll-margin-top: 80px; }
   .src-list li:target { background: var(--accent-soft); }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
 </style>
 </head>
 <body>
@@ -97,7 +102,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>What the CFO needs from a CTO</h3>
-      <p>Different from what the CEO needs. The CEO wants judgment and a point of view; the CFO wants numbers that survive scrutiny.</p>
+      <p>Not the same as what the CEO needs. The CEO wants judgment and a point of view. The CFO wants numbers that survive scrutiny.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -114,74 +119,62 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">1</span>
-      <h3>Defending a number the CFO doesn't like</h3>
-      <p>The moment that determines whether the relationship is adversarial or productive going forward.</p>
+      <span class="stage-num">Sequence</span>
+      <h3>The budget conversation, in the order it should happen</h3>
+      <p>Most CFO friction is about timing. The numbers are often fine. The CFO just saw them too late and in the wrong room.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">How it works</span>
-        <p>Show the derivation along with the conclusion. Walk through the specific assumption that, if changed, would change the number. Disagreement then becomes a conversation about one assumption, which is productive, instead of a vague sense that the number feels wrong, which goes nowhere.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Where it goes wrong</span>
-        <p>Presenting a number as settled fact with no visible derivation. Any pushback then turns into a fight about credibility instead of a disagreement about one input, and credibility fights are much harder to walk back than assumption disagreements.</p>
+        <table class="matrix-table">
+          <tr><th>When</th><th>What happens</th><th>What it prevents</th></tr>
+          <tr><td>Eight weeks before the cycle opens</td><td>One-on-one with the CFO. Walk through the ranked priorities from <a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a> and the logic behind the order</td><td>The CFO meeting your reasoning for the first time in front of peers, where every question sounds like a challenge</td></tr>
+          <tr><td>Four weeks before</td><td>Share the derivation for each large number and name the one assumption each depends on most</td><td>An argument about whether the total feels right, which nobody can win</td></tr>
+          <tr><td>The budget meeting</td><td>Nothing new. The CFO already knows the numbers and has had the chance to push back privately</td><td>A public negotiation that leaves one of you looking unprepared</td></tr>
+          <tr><td>Every month after</td><td>Actuals against the agreed unit costs, with any drift flagged before quarter close</td><td>The forecast that is quietly wrong for two months and then wrong in public</td></tr>
+        </table>
+        <p style="margin-top:12px">When the CFO pushes back on a number anyway, go back to the derivation. Point to the assumption that would change the answer and ask whether that is the one in question. If it is, you are now having a useful conversation about one input. If you defend the total instead, the disagreement turns into a question of whether your numbers can be trusted, and that one is much harder to recover from.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">2</span>
-      <h3>When ROI framing doesn't fit, and saying so</h3>
-      <p>Forcing every investment into ROI language is a common, well-intentioned mistake that costs credibility over time.</p>
+      <span class="stage-num">Framing</span>
+      <h3>Which number to bring, by type of investment</h3>
+      <p>Forcing every investment into ROI language is a well-meant habit that costs credibility over time. Some spend has a clean return. Some reduces risk. Some is the price of being allowed to operate.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What's ROI-shaped</span>
-        <p>Infrastructure consolidation, a specific automation replacing manual work, a feature with a modeled revenue impact. These reduce cleanly to a number, and the CFO relationship is healthiest when the number is presented for what it is, no more and no less.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">What isn't, and shouldn't be forced</span>
-        <p>Security investment, reliability investment, and technical debt remediation reduce risk and avoid future cost; they rarely produce a clean, defensible ROI figure. Forcing one produces a number nobody believes, which costs more credibility than justifying the investment on risk grounds instead.</p>
+        <table class="matrix-table">
+          <tr><th>Investment type</th><th>Honest framing</th><th>Bring this</th><th>Don't bring this</th></tr>
+          <tr><td>Automation, consolidation, decommissioning</td><td>Return on investment</td><td>Payback period and the run cost removed, with the date it leaves the ledger</td><td>Savings counted from the announcement date instead of the cutover</td></tr>
+          <tr><td>Revenue-facing capability</td><td>Modeled revenue impact</td><td>A range tied to a figure sales or product already owns, such as win rate or churn</td><td>A single revenue number engineering produced on its own</td></tr>
+          <tr><td>Security</td><td>Risk reduction</td><td>The scenario it addresses, the expected loss before and after, and where it sits against the stated <a href="../technology-risk-appetite/index.html">risk appetite</a></td><td>An ROI percentage built on breach statistics nobody in the room believes</td></tr>
+          <tr><td>Reliability</td><td>Avoided cost</td><td>Cost per hour of downtime for the affected service times the reduction in expected hours. See <a href="../reliability-economics/index.html">Reliability as an Economic Decision</a></td><td>Availability targets with no cost attached</td></tr>
+          <tr><td>Technical debt</td><td>Carry cost</td><td>Annual cost of doing nothing against the one-time fix, from <a href="../technical-debt-economics/index.html">Technical Debt Economics</a></td><td>A request for a percentage of capacity with no ranked list behind it</td></tr>
+          <tr><td>Regulatory and compliance</td><td>License to operate</td><td>The obligation, its deadline, and the consequence of missing it</td><td>Any return figure at all. It has none, and pretending otherwise invites the question of whether it is optional</td></tr>
+          <tr><td>Exploration</td><td>Cost of an option</td><td>A capped amount, a learning goal, and the date you will stop if the goal isn't met</td><td>A business case for something nobody yet knows enough to model</td></tr>
+        </table>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">3</span>
-      <h3>The budget conversation before the budget conversation</h3>
-      <p>Where most CFO relationships go wrong: the timing of when the CFO first sees the numbers, more than the numbers themselves.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">The approach</span>
-        <p>Bring the CFO the pre-ranked capital allocation priorities before the formal budget cycle starts, in a one-on-one setting. The CFO should never see the logic behind technology priorities for the first time in a room with other executives present.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">The usual mistake</span>
-        <p>The CFO's first exposure to how priorities were ranked happens live in the budget meeting itself, which makes every question feel adversarial even when it's just first contact with the reasoning.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">4</span>
+      <span class="stage-num">Accounting</span>
       <h3>Capitalization and accounting realities worth understanding</h3>
       <p>A CFO thinks in capex versus opex and amortization schedules. A CTO who understands the basics can talk to the CFO directly instead of needing an interpreter.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>Software development costs that qualify for capitalization, versus costs that must be expensed immediately, materially change how a project's cost looks in a given quarter, independent of the project's actual value. Understanding this distinction, even at a high level, prevents a CTO from being caught off guard when a CFO cares more about the timing of a cost than its total, or pushes back on a schedule change that seems purely technical but carries a real capitalization consequence on the books. The rules themselves changed in 2025 on both the book and the tax side; the next section sets out what applies now.</p>
+        <p>Software development costs that qualify for capitalization, versus costs that must be expensed immediately, materially change how a project's cost looks in a given quarter, independent of the project's actual value. Knowing the distinction, even roughly, keeps a CTO from being caught off guard when a CFO cares more about when a cost lands than how big it is, or pushes back on a schedule change that looks purely technical but moves money between periods. The rules changed in 2025 on both the book and the tax side. The next section sets out what applies now.</p>
       </div>
     </div>
   </div>
 
     <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
+      <span class="stage-num">Reference</span>
       <h3>The rules that change how a project looks, as of September 2026</h3>
       <p>Book accounting and tax treatment are separate systems with separate rules. A CTO does not need to apply them, but does need to know which one a CFO is talking about.</p>
     </div>
@@ -189,10 +182,10 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Area</th><th>Current rule</th><th>Why the CTO should care</th></tr>
-          <tr><td>Internal-use software, US GAAP (ASC 350-40)</td><td>ASU 2025-06, issued September 2025<sup class="src"><a href="#src-1" title="FASB, ASU 2025-06, Internal-Use Software, September 2025">[1]</a></sup>, removes the old preliminary, development, and post-implementation stages. Capitalization starts once management has authorized and committed funding and completion is probable, and cannot start while significant development uncertainty remains. Effective for annual periods beginning after December 15, 2027; early adoption is permitted</td><td>Agile teams no longer have to force work into waterfall stages to support capitalization, but novel or unproven work stays expensed until the uncertainty is resolved through coding and testing</td></tr>
-          <tr><td>Software sold or licensed to customers (ASC 985-20)</td><td>Costs are capitalized only after technological feasibility is established, which in practice leaves most development expensed</td><td>Hosted SaaS generally follows the internal-use guidance instead; confirm with finance which model applies to your product</td></tr>
+          <tr><td>Internal-use software, US GAAP (ASC 350-40)</td><td>ASU 2025-06, issued September 2025<sup class="src"><a href="#src-1" title="FASB, ASU 2025-06, Internal-Use Software, September 2025">[1]</a></sup>, removes the old preliminary, development, and post-implementation stages. Capitalization starts once management has authorized and committed funding and completion is probable, and cannot start while significant development uncertainty remains. Effective for annual periods beginning after December 15, 2027. Early adoption is permitted</td><td>Agile teams no longer have to force work into waterfall stages to support capitalization, but novel or unproven work stays expensed until the uncertainty is resolved through coding and testing</td></tr>
+          <tr><td>Software sold or licensed to customers (ASC 985-20)</td><td>Costs are capitalized only after technological feasibility is established, which in practice leaves most development expensed</td><td>Hosted SaaS generally follows the internal-use guidance instead. Confirm with finance which model applies to your product</td></tr>
           <tr><td>Implementing SaaS you buy (ASU 2018-15)</td><td>Implementation costs of a cloud computing arrangement are capitalized and amortized over the hosting term<sup class="src"><a href="#src-2" title="FASB, ASU 2018-15, cloud computing implementation costs, August 2018">[2]</a></sup>, presented with the hosting fees as operating expense</td><td>A large SaaS implementation can be spread over the contract instead of landing in one quarter, which changes how a CFO views the timing</td></tr>
-          <tr><td>IFRS (IAS 38)</td><td>Research is expensed; development is capitalized only when six criteria are met, including technical feasibility and a reliable measure of cost. Configuration and customization of SaaS is generally expensed unless it creates a separate asset</td><td>Multinationals may report the same project differently under IFRS and US GAAP</td></tr>
+          <tr><td>IFRS (IAS 38)</td><td>Research is expensed. Development is capitalized only when six criteria are met, including technical feasibility and a reliable measure of cost. Configuration and customization of SaaS is generally expensed unless it creates a separate asset</td><td>Multinationals may report the same project differently under IFRS and US GAAP</td></tr>
           <tr><td>US tax: research and experimental costs (Sections 174 and 174A)</td><td>The 2025 budget reconciliation law restored immediate deduction of domestic research costs, which include software development, for tax years beginning after December 31, 2024. Foreign research is still amortized over 15 years.<sup class="src"><a href="#src-3" title="IRS, Rev. Proc. 2025-28, Section 174A guidance">[3]</a></sup> Smaller businesses, with average gross receipts of $31M or less, could elect to apply it retroactively to 2022 through 2024</td><td>Where the engineering work is done now changes the tax cost: domestic development is deductible at once, offshore development is not</td></tr>
         </table>
       </div>
@@ -237,30 +230,26 @@
 <text x="512.0" y="100.0" text-anchor="start" font-size="10.5" font-weight="600" fill="var(--ink-soft)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">No</text>
 <line x1="705" y1="120" x2="705" y2="70" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#cap-g)"/>
 <text x="712.0" y="100.0" text-anchor="start" font-size="10.5" font-weight="600" fill="var(--ink-soft)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">No</text>
-<text x="440.0" y="340.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">ASU 2025-06 replaces the old project-stage test. Effective for annual periods beginning after December 15, 2027; early adoption permitted.</text></svg></div>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">A summary for orientation, not accounting advice. Finance decides the treatment; the CTO's job is to know which question is holding a project in expense.</p>
+<text x="440.0" y="340.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">ASU 2025-06 replaces the old project-stage test. Effective for annual periods beginning after December 15, 2027. Early adoption permitted.</text></svg></div>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">A summary for orientation, not accounting advice. Finance decides the treatment. The CTO's job is to know which question is holding a project in expense.</p>
     </div></div>
   </div>
 <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">6</span>
+      <span class="stage-num">In practice</span>
       <h3>What to do with that as a CTO</h3>
       <p>The practical consequences sit in how engineering tracks its work, not in the accounting itself.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Do this</span>
-        <p>Track time by project or initiative in the tool the team already uses, so finance can support capitalization and tax positions without a quarterly scramble. Tell the CFO early when a capitalized project is likely to be cancelled or fundamentally rescoped, because that can mean an impairment charge that has to be planned for, not discovered.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Watch for</span>
-        <p>A capitalized project gets abandoned without a word, and finance learns about it at quarter close. The write-off is a surprise, the CFO concludes engineering does not understand the numbers, and every future capitalization request gets more scrutiny.</p>
+        <p>Track time by project or initiative in the tool the team already uses, so finance can support capitalization and tax positions without a quarterly scramble. Nobody likes timesheets, but a lightweight allocation per sprint is usually enough and it is far cheaper than reconstructing a year of effort for an auditor.</p>
+        <p>The bigger risk is cancellation. When a capitalized project is likely to be cancelled or fundamentally rescoped, tell the CFO early, because that can mean an impairment charge. If finance learns about it at quarter close instead, the write-off is a surprise, the CFO concludes engineering does not understand the numbers, and every capitalization request after that gets extra scrutiny.</p>
       </div>
     </div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">7</span>
+      <span class="stage-num">Worked example</span>
       <h3>A worked example: defending a cloud forecast</h3>
       <p>The derivation made visible, so the disagreement lands on one assumption instead of on the total.</p>
     </div>
@@ -271,7 +260,7 @@
           <tr><td>Current run rate</td><td>$4.20M a year</td><td>200M transactions a year at $0.021 each</td></tr>
           <tr><td>Volume next year</td><td>236M transactions</td><td>Sales plan of 18 percent transaction growth, the assumption finance owns</td></tr>
           <tr><td>Unit cost next year</td><td>$0.018</td><td>Commitment discounts on the stable baseline plus rightsizing already identified</td></tr>
-          <tr><td>Forecast</td><td>$4.25M</td><td>236M at $0.018; without the unit-cost work it would be $4.96M</td></tr>
+          <tr><td>Forecast</td><td>$4.25M</td><td>236M at $0.018. Without the unit-cost work it would be $4.96M</td></tr>
           <tr><td>Sensitivity</td><td>About $180K per 5 points of growth</td><td>The one number to hand the CFO: if the growth assumption moves, this is how the forecast moves with it</td></tr>
         </table>
       </div>
@@ -293,38 +282,32 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">8</span>
-      <h3>Unit economics as the shared language</h3>
-      <p>The single change that most improves a CTO-CFO relationship is agreeing one or two unit costs and reporting them every month.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Pick a unit the business already counts: cost per transaction, per active customer, per claim processed, per patient encounter. Report infrastructure and tooling cost against it monthly. The FinOps Framework treats this as a core capability because it turns a growing bill into a question about efficiency instead of a question about spend.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">The failure mode</span>
-        <p>Reporting total cloud spend alone. Total spend rises with success, so the CFO sees a number going up and the CTO argues it is fine, and neither can show who is right without a unit to divide by.</p>
-      </div>
-    </div>
-  </div>
-<div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs the relationship is unhealthy</h3>
-      <p>Patterns that show up when the CTO-CFO relationship has drifted into friction, regardless of how either person would describe it individually.</p>
+      <span class="stage-num">Shared language</span>
+      <h3>Agree a unit cost and report it every month</h3>
+      <p>Of everything on this page, this does the most for the relationship, and it takes the least effort once it is set up.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <ul>
-          <li>Technology budget numbers get revised after the CFO has already committed them upward, more than once</li>
-          <li>Every investment gets forced into ROI language regardless of whether it fits</li>
-          <li>The CFO's first exposure to a priority ranking happens in a contentious budget meeting</li>
-          <li>The CTO can't explain, at a basic level, why a project's cost is phased the way it is on the books</li>
-          <li>Disagreements about a number turn personal instead of staying on a specific assumption</li>
-                  <li>The CTO cannot say which current projects are capitalized or what happens to the books if one is cancelled</li>
-          <li>No unit cost has been agreed with finance, so every budget discussion is about total spend</li>
-</ul>
+        <p>Pick a unit the business already counts: cost per transaction, per active customer, per claim processed, per patient encounter. Report infrastructure and tooling cost against it every month. The FinOps Framework treats unit economics as a core capability for this reason: it turns a growing bill into a question about efficiency instead of a question about spend.</p>
+        <p>Without it, total cloud spend is the only number on the table. Total spend rises with success, so the CFO sees a line going up, the CTO argues it is fine, and neither can show who is right because there is nothing to divide by.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Repair</span>
+      <h3>If the relationship is already strained</h3>
+      <p>The usual symptoms: numbers revised after the CFO committed them upward, disagreements that turn personal, and a CFO who now checks every engineering estimate independently.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ol class="num-list">
+          <li><span><b>Own the last miss, plainly and once</b>Name the forecast that went wrong, the assumption that broke, and what you changed so it won't happen the same way. Don't relitigate whose fault it was.</span></li>
+          <li><span><b>Offer a smaller promise you will keep</b>One unit cost, reported monthly, with drift flagged before close. Three months of that rebuilds more trust than any presentation.</span></li>
+          <li><span><b>Put the next budget conversation on the calendar now</b>Use the sequence above. The point is that the CFO sees your reasoning early and privately next time, and can see you doing it.</span></li>
+          <li><span><b>Learn which projects are capitalized</b>If you can't say which current work is on the balance sheet and what a cancellation would do to it, fix that before the next quarter close. It is the gap a CFO notices fastest.</span></li>
+        </ol>
       </div>
     </div>
   </div>
@@ -332,7 +315,7 @@
 </main>
 
 <footer>
-  Reference only; not accounting or tax advice. Summarizes FASB ASU 2025-06 and ASU 2018-15, ASC 985-20, IAS 38, and the 2025 changes to Internal Revenue Code Sections 174 and 174A as in force in September 2026. Treatment depends on jurisdiction, entity type, and facts; confirm specifics with your finance and tax advisors.
+  Reference only. Not accounting or tax advice. Summarizes FASB ASU 2025-06 and ASU 2018-15, ASC 985-20, IAS 38, and the 2025 changes to Internal Revenue Code Sections 174 and 174A as in force in September 2026. Treatment depends on jurisdiction, entity type, and facts. Confirm specifics with your finance and tax advisors.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

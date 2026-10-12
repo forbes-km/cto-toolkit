@@ -92,7 +92,7 @@
     <div class="stage-head">
       <span class="stage-num">In the full toolkit</span>
       <h3>Named artifacts this page previews</h3>
-      <p>Four specific templates, beyond the general practice described below.</p>
+      <p>Four templates, beyond the general practice described below.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -117,8 +117,8 @@
           <tr><th>Section</th><th>What it should contain</th></tr>
           <tr><td>Context</td><td>The situation and constraints as understood at decision time, written before hindsight sets in. This section goes stale fastest and matters most.</td></tr>
           <tr><td>Decision</td><td>What was decided, in one clear sentence, not buried in a paragraph of qualifications.</td></tr>
-          <tr><td>Alternatives considered</td><td>What else was on the table and why it was rejected. Leaving this section out is how most ADRs fail; it's what lets someone later ask &quot;why didn't we just do X&quot; and get a real answer without reopening the whole debate.</td></tr>
-          <tr><td>Consequences</td><td>What this decision makes harder later. Every architecture decision has a cost; an ADR that lists only benefits is incomplete.</td></tr>
+          <tr><td>Alternatives considered</td><td>What else was on the table and why it was rejected. Leaving this section out is how most ADRs fail. It's what lets someone later ask &quot;why didn't we just do X&quot; and get a real answer without reopening the whole debate.</td></tr>
+          <tr><td>Consequences</td><td>What this decision makes harder later. Every architecture decision has a cost. An ADR that lists only benefits is incomplete.</td></tr>
         </table>
       </div>
     </div>
@@ -185,15 +185,15 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li><strong>Numbers are never reused</strong>, even for deprecated or superseded ADRs. The number identifies the record; it says nothing about priority.</li>
+          <li><strong>Numbers are never reused</strong>, even for deprecated or superseded ADRs. The number identifies the record. It says nothing about priority.</li>
           <li><strong>Once accepted, the decision is immutable.</strong> Circumstances change, a new ADR supersedes it. Editing the original to reflect current understanding destroys the record.</li>
           <li><strong>One decision per ADR.</strong> A compound ADR is a sign the team is avoiding the harder work of separating decisions.</li>
-          <li><strong>One to two pages.</strong> Longer usually means design work leaking in that belongs elsewhere; shorter usually means the alternatives section is missing.</li>
+          <li><strong>One to two pages.</strong> Longer usually means design work leaking in that belongs elsewhere. Shorter usually means the alternatives section is missing.</li>
           <li><strong>Author by role as well as name.</strong> &quot;Lead Architect, Payments&quot; carries context that survives staff changes.</li>
         </ul>
       </div>
     </div>
-    <div class="same-note">Signals of a healthy practice: new engineers read old ADRs during onboarding and find them useful, debates reference specific ADRs by number, superseded ADRs exist and are traceable. Signals of a failing one: ADRs only get written when leadership asks to see one, the alternatives section always contains only the chosen path with strawman alternatives dismissed, no ADR has ever been superseded.</div>
+    <div class="same-note">Signals of a healthy practice: new engineers read old ADRs during onboarding and find them useful, debates cite ADRs by number, superseded ADRs exist and are traceable. Signals of a failing one: ADRs only get written when leadership asks to see one, the alternatives section always contains only the chosen path with strawman alternatives dismissed, no ADR has ever been superseded.</div>
   </div>
 
   <div class="stage-card">
@@ -207,13 +207,13 @@
         <p><strong>Strategic priority:</strong> reduce customer acquisition cost 25 percent within 36 months while maintaining conversion on qualified leads.</p>
         <table class="matrix-table">
           <tr><th>Capability</th><th>Gap</th><th>Initiative</th><th>Sequence</th></tr>
-          <tr><td>Customer Insight</td><td>Prospect scoring is rule-based, updated quarterly, limited signal integration</td><td>Prospect Scoring Modernization</td><td>Starts first; outputs feed the other two</td></tr>
+          <tr><td>Customer Insight</td><td>Prospect scoring is rule-based, updated quarterly, limited signal integration</td><td>Prospect Scoring Modernization</td><td>Starts first. Outputs feed the other two</td></tr>
           <tr><td>Campaign Management</td><td>Execution is batch-oriented, attribution manual</td><td>Campaign Operations Overhaul</td><td>Starts month 3, overlapping</td></tr>
           <tr><td>Digital Engagement</td><td>First response to leads requires human effort, capacity-constrained</td><td>Early-Stage Engagement Automation</td><td>Starts month 6, once upstream work is stable</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">What the example demonstrates: three initiatives, all traceable to one strategic priority, sequenced by real dependency, not by what was organizationally convenient, each owned by a named business sponsor. The technology choices support the story; they don't constitute it.</div>
+    <div class="same-note">What the example demonstrates: three initiatives, all traceable to one strategic priority, sequenced by real dependency, not by what was organizationally convenient, each owned by a named business sponsor. The technology choices support the story. They don't constitute it.</div>
   </div>
 
   <div class="stage-card">

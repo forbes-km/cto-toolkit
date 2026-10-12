@@ -213,10 +213,10 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Tier</th><th>Triggers</th><th>Process</th><th>Turnaround</th></tr>
-          <tr><td>0. Self-serve</td><td>Uses a pattern the board already approved</td><td>Team writes a short ADR referencing the approved pattern; no meeting</td><td>None; the ADR is the record</td></tr>
+          <tr><td>0. Self-serve</td><td>Uses a pattern the board already approved</td><td>Team writes a short ADR referencing the approved pattern. No meeting</td><td>None. The ADR is the record</td></tr>
           <tr><td>1. Async review</td><td>New dependency, moderate cross-team impact, reversible within a quarter</td><td>Written ADR reviewed by two board members in the document itself</td><td>Three business days</td></tr>
           <tr><td>2. Full board</td><td>New system of record, shared platform, principle deviation, or hard-to-reverse spend</td><td>Live session with evidence: prototype, load data, cost model, alternatives rejected</td><td>Scheduled within ten business days of request</td></tr>
-          <tr><td>Emergency</td><td>A production incident forced an unreviewed change</td><td>Change ships; the ADR and review follow</td><td>Retrospective review within two weeks</td></tr>
+          <tr><td>Emergency</td><td>A production incident forced an unreviewed change</td><td>Change ships. The ADR and review follow</td><td>Retrospective review within two weeks</td></tr>
         </table>
       </div>
     </div>
@@ -263,7 +263,7 @@
 <text x="660.0" y="296.0" text-anchor="start" font-size="11.5" font-weight="700" fill="var(--accent)" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">review within 2 weeks</text>
 <line x1="140" y1="175" x2="190" y2="291" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arb-g)"/>
 <line x1="420" y1="291" x2="450" y2="291" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arb-g)"/></svg></div>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Tiers and turnaround times from the table above; treat them as starting points. Every tier ends in a decision record.</p>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Tiers and turnaround times from the table above. Treat them as starting points. Every tier ends in a decision record.</p>
     </div></div>
   </div>
 <div class="stage-card">
@@ -279,7 +279,7 @@
           <tr><td>Architecture Decision Records (Michael Nygard, 2011)<sup class="src"><a href="#src-1" title="Michael Nygard, Documenting Architecture Decisions, November 2011">[1]</a></sup></td><td>The short, immutable record of context, decision, and consequences that every review should produce</td></tr>
           <tr><td>ISO/IEC/IEEE 42010:2022<sup class="src"><a href="#src-2" title="ISO/IEC/IEEE 42010:2022, Architecture description">[2]</a></sup></td><td>A precise vocabulary for architecture descriptions: stakeholders, their concerns, and the viewpoints that address them. Useful for deciding what a proposal must show</td></tr>
           <tr><td>C4 model (Simon Brown)</td><td>Four levels of diagram, context, containers, components, code, so reviewers see the right level of detail instead of one crowded picture</td></tr>
-          <tr><td>arc42</td><td>A free, widely used template for documenting a system; a good default for the evidence pack on tier 2 reviews</td></tr>
+          <tr><td>arc42</td><td>A free, widely used template for documenting a system. A good default for the evidence pack on tier 2 reviews</td></tr>
           <tr><td>Architecture fitness functions (Ford, Parsons, Kua, Sadalage, Building Evolutionary Architectures, 2nd ed., 2022)</td><td>Turning an architecture decision into an automated check so it stays true after the meeting</td></tr>
           <tr><td>The architecture advice process (Andrew Harmel-Law, Facilitating Software Architecture, 2024)</td><td>A decentralized alternative in which teams decide after seeking advice, with the board acting as an advisory forum and keeper of the decision log</td></tr>
           <tr><td>TOGAF Standard, 10th Edition</td><td>The formal Architecture Board and compliance review concepts, useful for regulated enterprises that need an auditable governance trail</td></tr>
@@ -316,7 +316,7 @@
         <table class="matrix-table">
           <tr><th>Metric</th><th>What healthy looks like</th><th>What it warns about</th></tr>
           <tr><td>Median days from request to decision</td><td>Within the published turnaround for each tier</td><td>Rising numbers mean teams will start routing around the board</td></tr>
-          <tr><td>Share of proposals changed by review</td><td>Somewhere between a fifth and a half</td><td>Near zero is a rubber stamp; very high means teams arrive unprepared or the principles are unclear</td></tr>
+          <tr><td>Share of proposals changed by review</td><td>Somewhere between a fifth and a half</td><td>Near zero is a rubber stamp. Very high means teams arrive unprepared or the principles are unclear</td></tr>
           <tr><td>Decisions with a written ADR</td><td>All tier 1 and tier 2 decisions</td><td>Anything lower means the board's reasoning is lost when members rotate</td></tr>
           <tr><td>Decisions revisited after 6 to 12 months</td><td>A sample reviewed every quarter, with a verdict on whether each held up</td><td>No review of outcomes means the board never learns whether its judgment is good</td></tr>
           <tr><td>Bypass rate</td><td>Few or no systems in production that should have come to the board and did not</td><td>A high bypass rate is the clearest sign the board is seen as an obstacle</td></tr>
@@ -326,8 +326,8 @@
   </div>
 <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs the board has become a rubber stamp</h3>
+      <span class="stage-num">Self-check</span>
+      <h3>Is the board a rubber stamp?</h3>
       <p>Patterns that show up when a review board exists on the calendar but has stopped functioning as a forcing function.</p>
     </div>
     <div class="stage-grid single">
@@ -337,7 +337,7 @@
           <li>No one can name a decision the board changed its mind about after seeing how it played out</li>
           <li>Board membership hasn't rotated in over a year</li>
           <li>Decisions aren't captured anywhere durable, no ADR, no written record, once the meeting ends</li>
-          <li>Teams prepare a specific &quot;board-ready&quot; version of their architecture that differs from what's running in production</li>
+          <li>Teams prepare a separate &quot;board-ready&quot; version of their architecture that differs from what's running in production</li>
                   <li>Nobody can say the median time from review request to decision</li>
           <li>Important decisions exist only in ADRs, with no automated check to catch drift</li>
 </ul>

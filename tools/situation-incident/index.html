@@ -129,7 +129,7 @@
         <tr><td>Day 3</td><td>Whether the immediate fix is stable enough to stand down the war room and return to normal operations</td><td>Incident commander, ratified by the CTO</td><td>The war room runs for two weeks because nobody is willing to say the residual risk is acceptable</td></tr>
         <tr><td>Day 7</td><td>Who runs the postmortem, who attends, and whether it will actually be blameless</td><td>CTO</td><td>The postmortem is run by the team that owns the failed system and produces action items only for that team</td></tr>
         <tr><td>Day 14</td><td>Which postmortem actions get funded now, from what, and which are consciously deferred with a date</td><td>CTO with the CFO</td><td>Forty actions, none funded, all still open at the next incident</td></tr>
-        <tr><td>Day 30</td><td>Whether the incident changes the stated risk appetite, the DR posture, or the operating model</td><td>CTO with the CEO and board</td><td>The organization spends on the specific failure and leaves the class of failure untouched</td></tr>
+        <tr><td>Day 30</td><td>Whether the incident changes the stated risk appetite, the DR posture, or the operating model</td><td>CTO with the CEO and board</td><td>The organization spends on the single failure and leaves the class of failure untouched</td></tr>
       </table>
     </div>
   </div>
@@ -138,7 +138,7 @@
     <div class="stage-head">
       <span class="stage-num">Questions to ask</span>
       <h2>Questions to ask before the postmortem</h2>
-      <p>Answers the CTO should have before sitting in the room. The postmortem is for the team to learn; these are for the CTO to understand what kind of organization had this incident.</p>
+      <p>Answers the CTO should have before sitting in the room. The postmortem is for the team to learn. These are for the CTO to understand what kind of organization had this incident.</p>
     </div>
     <div class="stage-cell">
       <ul class="checklist">
@@ -159,7 +159,7 @@
     <div class="stage-head">
       <span class="stage-num">The trap</span>
       <h2>Fixing the incident instead of the class of incident</h2>
-      <p>Most major incidents end with a well-executed fix for the specific failure, with the conditions that produced it left in place.</p>
+      <p>Most major incidents end with a well-executed fix for the failure itself, with the conditions that produced it left in place.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">How it plays out</span><p>The database failover that did not work gets tested and fixed. The fact that no failover in the estate has been tested in two years is not raised, because the postmortem's scope was the incident. Six months later a different failover fails, and this time the board asks why the first one did not prompt the question.</p></div>
@@ -177,14 +177,14 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Regime</th><th>Who it covers</th><th>Deadline</th></tr>
-          <tr><td>SEC Form 8-K, Item 1.05</td><td>US-listed public companies</td><td>Four business days after determining the incident is material; the materiality determination itself must be made without unreasonable delay<sup class="src"><a href="#src-1" title="SEC press release 2023-139, cybersecurity disclosure rules, July 2023">[1]</a></sup></td></tr>
-          <tr><td>GDPR, Article 33</td><td>Controllers processing EU or UK personal data</td><td>72 hours after becoming aware, to the supervisory authority; affected individuals without undue delay when the risk to them is high<sup class="src"><a href="#src-2" title="Regulation (EU) 2016/679 (GDPR), Article 33">[2]</a></sup></td></tr>
+          <tr><td>SEC Form 8-K, Item 1.05</td><td>US-listed public companies</td><td>Four business days after determining the incident is material. The materiality determination itself must be made without unreasonable delay<sup class="src"><a href="#src-1" title="SEC press release 2023-139, cybersecurity disclosure rules, July 2023">[1]</a></sup></td></tr>
+          <tr><td>GDPR, Article 33</td><td>Controllers processing EU or UK personal data</td><td>72 hours after becoming aware, to the supervisory authority. Affected individuals without undue delay when the risk to them is high<sup class="src"><a href="#src-2" title="Regulation (EU) 2016/679 (GDPR), Article 33">[2]</a></sup></td></tr>
           <tr><td>NIS2 Directive</td><td>EU essential and important entities</td><td>Early warning within 24 hours, incident notification within 72 hours, final report within one month<sup class="src"><a href="#src-3" title="Directive (EU) 2022/2555 (NIS2), Article 23">[3]</a></sup></td></tr>
-          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>EU financial entities</td><td>Initial notice within 4 hours of classifying an incident as major and no later than 24 hours after becoming aware of it; intermediate report within 72 hours of the initial notice; final report within one month of the latest intermediate report<sup class="src"><a href="#src-4" title="Commission Delegated Regulation (EU) 2025/301, incident reporting time limits, Article 5">[4]</a></sup></td></tr>
-          <tr><td>HIPAA Breach Notification Rule</td><td>US covered entities and business associates</td><td>Individuals without unreasonable delay and no later than 60 days after discovery; HHS and media as well when 500 or more people are affected<sup class="src"><a href="#src-5" title="HHS, HIPAA Breach Notification Rule">[5]</a></sup></td></tr>
-          <tr><td>NYDFS Part 500</td><td>New York regulated financial services</td><td>72 hours after determining a reportable incident occurred; 24 hours after an extortion payment, with a written explanation within 30 days<sup class="src"><a href="#src-6" title="NYDFS, 23 NYCRR Part 500 as amended November 2023, Section 500.17">[6]</a></sup></td></tr>
-          <tr><td>US state breach laws</td><td>Any company holding residents' personal data</td><td>All 50 states have one; several set 30 days, others say without unreasonable delay. The affected residents' states govern, not yours</td></tr>
-          <tr><td>CIRCIA</td><td>US critical infrastructure</td><td>Proposed 72 hours for covered incidents and 24 hours for ransom payments to CISA; the final rule went to White House review in early October 2026 and had not been published at this review, so check its status<sup class="src"><a href="#src-7" title="CISA, CIRCIA overview and rulemaking status">[7]</a></sup></td></tr>
+          <tr><td>EU Digital Operational Resilience Act (DORA)</td><td>EU financial entities</td><td>Initial notice within 4 hours of classifying an incident as major and no later than 24 hours after becoming aware of it. Intermediate report within 72 hours of the initial notice. Final report within one month of the latest intermediate report<sup class="src"><a href="#src-4" title="Commission Delegated Regulation (EU) 2025/301, incident reporting time limits, Article 5">[4]</a></sup></td></tr>
+          <tr><td>HIPAA Breach Notification Rule</td><td>US covered entities and business associates</td><td>Individuals without unreasonable delay and no later than 60 days after discovery. HHS and media as well when 500 or more people are affected<sup class="src"><a href="#src-5" title="HHS, HIPAA Breach Notification Rule">[5]</a></sup></td></tr>
+          <tr><td>NYDFS Part 500</td><td>New York regulated financial services</td><td>72 hours after determining a reportable incident occurred. 24 hours after an extortion payment, with a written explanation within 30 days<sup class="src"><a href="#src-6" title="NYDFS, 23 NYCRR Part 500 as amended November 2023, Section 500.17">[6]</a></sup></td></tr>
+          <tr><td>US state breach laws</td><td>Any company holding residents' personal data</td><td>All 50 states have one. Several set 30 days, others say without unreasonable delay. The affected residents' states govern, not yours</td></tr>
+          <tr><td>CIRCIA</td><td>US critical infrastructure</td><td>Proposed 72 hours for covered incidents and 24 hours for ransom payments to CISA. The final rule went to White House review in early October 2026 and had not been published at this review, so check its status<sup class="src"><a href="#src-7" title="CISA, CIRCIA overview and rulemaking status">[7]</a></sup></td></tr>
         </table>
       </div>
     </div>
@@ -237,8 +237,8 @@
 <text x="20.0" y="30.0" text-anchor="start" font-size="11" font-weight="600" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Awareness or determination</text>
 <rect x="30" y="232" width="820" height="70" rx="8" fill="var(--paper)" stroke="var(--line)" stroke-width="1.2"/>
 <text x="440.0" y="256.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">The clocks do not all start at the same moment: most run from awareness, SEC runs from the materiality determination,</text>
-<text x="440.0" y="274.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">and DORA runs from classification. Log the time and reasoning for each one as it starts. *CIRCIA figures are proposed;</text>
-<text x="440.0" y="292.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">the final rule was still pending at this review. EU NIS2 and DORA final reports follow within about a month.</text></svg></div>
+<text x="440.0" y="274.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">and DORA runs from classification. Log the time and reasoning for each one as it starts. *CIRCIA figures are proposed.</text>
+<text x="440.0" y="292.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">The final rule was still pending at this review. EU NIS2 and DORA final reports follow within about a month.</text></svg></div>
       <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Deadlines as of September 2026, sourced in the table above. Counsel decides which apply.</p>
     </div></div>
   </div>
@@ -253,10 +253,10 @@
         <table class="matrix-table">
           <tr><th>Time</th><th>Action</th><th>Owner</th></tr>
           <tr><td>T+0:20</td><td>On-call confirms encryption activity, isolates the affected segment, declares a major incident</td><td>On-call engineer</td></tr>
-          <tr><td>T+0:45</td><td>Incident commander named; separate channels opened for technical response and for executive and legal decisions</td><td>CTO or delegate</td></tr>
-          <tr><td>T+1:30</td><td>Outside counsel engaged so the forensic firm is retained through counsel; insurer notified per the policy</td><td>General counsel</td></tr>
+          <tr><td>T+0:45</td><td>Incident commander named. Separate channels opened for technical response and for executive and legal decisions</td><td>CTO or delegate</td></tr>
+          <tr><td>T+1:30</td><td>Outside counsel engaged so the forensic firm is retained through counsel. Insurer notified per the policy</td><td>General counsel</td></tr>
           <tr><td>T+3:00</td><td>Scope assessment: which systems, whether data left the network, whether backups are intact and isolated</td><td>Security lead</td></tr>
-          <tr><td>T+4:00</td><td>Reporting triage against the table above; clocks that may have started are logged with the time and the reasoning</td><td>Counsel with CISO</td></tr>
+          <tr><td>T+4:00</td><td>Reporting triage against the table above. Clocks that may have started are logged with the time and the reasoning</td><td>Counsel with CISO</td></tr>
           <tr><td>T+8:00</td><td>Holding statement to customers and staff, in one agreed wording, with a time for the next update</td><td>CEO, facts from CTO</td></tr>
           <tr><td>T+12:00</td><td>Restore plan chosen: clean rebuild from known-good backups, prioritized by revenue impact</td><td>Incident commander</td></tr>
           <tr><td>T+24:00</td><td>Board briefed: what is known, what is not, decisions taken, next decision and when</td><td>CEO and CTO</td></tr>
@@ -273,7 +273,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What changed</span>
-        <p>Incident response now sits inside overall cyber risk management instead of standing alone as a four-phase lifecycle. Preparation maps to Govern, Identify, and Protect; response and recovery map to the CSF functions of the same name; lessons learned feed back into every function.</p>
+        <p>Incident response now sits inside overall cyber risk management instead of standing alone as a four-phase lifecycle. Preparation maps to Govern, Identify, and Protect. Response and recovery map to the CSF functions of the same name. Lessons learned feed back into every function.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What to do with it</span>

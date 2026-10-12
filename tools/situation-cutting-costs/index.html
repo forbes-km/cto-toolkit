@@ -110,7 +110,7 @@
         <li><div><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a><span>The TIME map turns a vague desire to retire things into a named list with owners and dates.</span></div></li>
         <li><div><a href="../technical-debt-economics/index.html">Technical Debt Economics</a><span>Which debt to keep carrying and which to fund, as numbers, so the cut does not land on the item with the highest carry cost.</span></div></li>
         <li><div><a href="../vendor-evaluation/index.html">Vendor Evaluation</a><span>Exit cost and renewal leverage for the contracts that make up most of the non-people spend.</span></div></li>
-        <li><div><a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a><span>The renewal calendar and the clauses to fix; usually the largest non-recurring saving available.</span></div></li>
+        <li><div><a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a><span>The renewal calendar and the clauses to fix. Usually the largest non-recurring saving available.</span></div></li>
         <li><div><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a><span>Which bets survive, and which get paused on the record so they are not simply starved.</span></div></li>
         <li><div><a href="../platform-engineering/index.html">Platform Engineering</a><span>Where consolidation reduces both cost and cognitive load, and where it only moves the cost somewhere less visible.</span></div></li>
       </ol>
@@ -151,7 +151,7 @@
         <li>For every proposed saving, is it a reduction in run cost, a deferral of spend that returns later, or a transfer of cost to another team or the business</li>
         <li>What is the cost of the next major incident, and does the proposed cut increase its probability</li>
         <li>Which roles, if cut, remove the only person who understands a system that still makes money</li>
-        <li>What does the security program lose, specifically, and does that change the stated risk appetite</li>
+        <li>What exactly does the security program lose, and does that change the stated risk appetite</li>
         <li>What would the team stop doing if headcount were reduced, and has anyone written that list down</li>
       </ul>
     </div>
@@ -161,11 +161,11 @@
     <div class="stage-head">
       <span class="stage-num">The trap</span>
       <h2>The across-the-board percentage</h2>
-      <p>The usual way to cut technology cost is to take the same percentage from every team and category. It protects nothing that matters and reflects no prioritization; it avoids the discomfort of choosing.</p>
+      <p>The usual way to cut technology cost is to take the same percentage from every team and category. It protects nothing that matters and reflects no prioritization. It avoids the discomfort of choosing.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">The pattern</span><p>Every team loses fifteen percent. Security loses its pen test budget, the platform team loses the engineer who was automating the thing that costs the most, and the revenue-critical system's on-call rota drops to two people. Nine months later the run cost is back where it was, the deferred work is more expensive, and the best people have left because they could see nothing was being decided.</p></div>
-      <div class="stage-cell"><span class="env-label b">The way out</span><p>Decide the protected categories first, then cut deeper in fewer places. Retire whole systems; trimming every system a little saves almost nothing. Take the vendor renewals seriously; they are usually the largest non-recurring saving available. Report savings only when they show up in the ledger, and keep the <a href="../technology-capital-allocation/index.html">ranked list</a> alive after the cut so the next round, if it comes, is already answered.</p></div>
+      <div class="stage-cell"><span class="env-label b">The way out</span><p>Decide the protected categories first, then cut deeper in fewer places. Retire whole systems. Trimming every system a little saves almost nothing. Take the vendor renewals seriously. They are usually the largest non-recurring saving available. Report savings only when they show up in the ledger, and keep the <a href="../technology-capital-allocation/index.html">ranked list</a> alive after the cut so the next round, if it comes, is already answered.</p></div>
     </div>
   </div>
 
@@ -179,13 +179,13 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Lever</th><th>Time to first saving</th><th>What limits it</th></tr>
-          <tr><td>Cloud waste: idle resources, orphaned storage, oversized instances</td><td>Weeks</td><td>Engineering time to verify each change; organizations in Flexera's 2026 survey estimated roughly 29 percent of their cloud spend was wasted, the first rise in five years<sup class="src"><a href="#src-1" title="Flexera, 2026 State of the Cloud Report (release, March 2026)">[1]</a></sup></td></tr>
-          <tr><td>Commitment coverage: savings plans, reserved capacity, committed-use discounts</td><td>One billing cycle</td><td>Only safe on the stable baseline; AWS quotes discounts of up to 72 percent against on-demand for the longest, least flexible terms<sup class="src"><a href="#src-2" title="AWS, Savings Plans">[2]</a></sup></td></tr>
-          <tr><td>SaaS seat reclamation and renewal negotiation</td><td>At each renewal date</td><td>Contract terms and notice windows; see <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
-          <tr><td>Contractor and consultant reduction</td><td>Weeks to one quarter</td><td>Knowledge held only by contractors; plan the handover before the end date</td></tr>
+          <tr><td>Cloud waste: idle resources, orphaned storage, oversized instances</td><td>Weeks</td><td>Engineering time to verify each change. Organizations in Flexera's 2026 survey estimated roughly 29 percent of their cloud spend was wasted, the first rise in five years<sup class="src"><a href="#src-1" title="Flexera, 2026 State of the Cloud Report (release, March 2026)">[1]</a></sup></td></tr>
+          <tr><td>Commitment coverage: savings plans, reserved capacity, committed-use discounts</td><td>One billing cycle</td><td>Only safe on the stable baseline. AWS quotes discounts of up to 72 percent against on-demand for the longest, least flexible terms<sup class="src"><a href="#src-2" title="AWS, Savings Plans">[2]</a></sup></td></tr>
+          <tr><td>SaaS seat reclamation and renewal negotiation</td><td>At each renewal date</td><td>Contract terms and notice windows. See <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
+          <tr><td>Contractor and consultant reduction</td><td>Weeks to one quarter</td><td>Knowledge held only by contractors. Plan the handover before the end date</td></tr>
           <tr><td>Pausing or killing projects</td><td>Immediate for spend, slower for people</td><td>Sunk-cost pressure, and write-offs on capitalized work</td></tr>
-          <tr><td>Application and vendor consolidation</td><td>Two to four quarters</td><td>Migration cost and dual running; the saving is real but rarely inside the current fiscal year</td></tr>
-          <tr><td>Headcount</td><td>One to two quarters after the decision</td><td>Notice periods, severance, and legal process; first-year savings are well below the run-rate figure</td></tr>
+          <tr><td>Application and vendor consolidation</td><td>Two to four quarters</td><td>Migration cost and dual running. The saving is real but rarely inside the current fiscal year</td></tr>
+          <tr><td>Headcount</td><td>One to two quarters after the decision</td><td>Notice periods, severance, and legal process. First-year savings are well below the run-rate figure</td></tr>
         </table>
       </div>
     </div>
@@ -206,7 +206,7 @@
           <tr><td>SaaS reclamation and renegotiation</td><td>$0.90M</td><td>$0.40M</td><td>Only contracts renewing this fiscal year contribute</td></tr>
           <tr><td>Contractors down 30 percent</td><td>$1.20M</td><td>$0.90M</td><td>Handover period before end dates</td></tr>
           <tr><td>Pause two Horizon 3 bets</td><td>$1.10M</td><td>$0.80M</td><td>Wind-down costs and one quarter of committed spend</td></tr>
-          <tr><td><strong>Total</strong></td><td><strong>$5.00M</strong></td><td><strong>$3.45M</strong></td><td>Run-rate clears the target; in-year covers about 72 percent of it</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>$5.00M</strong></td><td><strong>$3.45M</strong></td><td>Run-rate clears the target. In-year covers about 72 percent of it</td></tr>
         </table>
       </div>
     </div>
@@ -254,7 +254,7 @@
 <text x="188.0" y="300.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Run-rate (full year)</text>
 <rect x="360" y="290" width="12" height="12" rx="3" fill="#8A5A2E"/>
 <text x="378.0" y="300.0" text-anchor="start" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">In-year (cuts start month 3)</text>
-<text x="440.0" y="334.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Run-rate clears the target; in-year does not. Show finance both numbers on day one, not in the quarterly close.</text></svg></div>
+<text x="440.0" y="334.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Run-rate clears the target. In-year does not. Show finance both numbers on day one, not in the quarterly close.</text></svg></div>
       <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Figures are the illustrative ones from the worked example. SaaS savings lag most, because only contracts renewing this year contribute.</p>
     </div></div>
   </div>

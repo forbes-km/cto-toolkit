@@ -96,7 +96,7 @@
           <tr><td>99%</td><td>About 3.65 days per year</td><td>Baseline</td></tr>
           <tr><td>99.9%</td><td>About 8.7 hours per year</td><td>Meaningfully higher</td></tr>
           <tr><td>99.95%</td><td>About 4.4 hours per year</td><td>Materially higher again</td></tr>
-          <tr><td>99.99%</td><td>About 53 minutes per year</td><td>Disproportionately higher; usually justified only for revenue-critical systems</td></tr>
+          <tr><td>99.99%</td><td>About 53 minutes per year</td><td>Disproportionately higher. Usually justified only for revenue-critical systems</td></tr>
         </table>
       </div>
     </div>
@@ -106,12 +106,12 @@
     <div class="stage-head">
       <span class="stage-num">1</span>
       <h3>The cost of downtime has to be a number</h3>
-      <p>A specific figure, or the investment decision that follows from it can't be evaluated at all.</p>
+      <p>A real figure, or the investment decision that follows from it can't be evaluated at all.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Practice</span>
-        <p>Quantify what an hour of downtime costs this specific system: lost revenue, SLA penalties, support load, reputational cost where it can be estimated. Only then decide what reliability tier is worth paying for, working backward from that number.</p>
+        <p>Quantify what an hour of downtime costs this system: lost revenue, SLA penalties, support load, reputational cost where it can be estimated. Only then decide what reliability tier is worth paying for, working backward from that number.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -160,7 +160,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Is the next nine worth it?</h3>
-      <p>List the systems whose availability target is in question. For each, the tool converts the current and target tier into hours of downtime a year, prices the difference, and compares it with the annual cost of reaching the target. The defaults are the two worked examples below plus one more. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>List the systems whose availability target is in question. For each, the tool converts the current and target tier into hours of downtime a year, prices the difference, and compares it with the annual cost of reaching the target. The defaults are the two worked examples below plus one more. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -205,7 +205,7 @@
         <tr><td>Tier 1: revenue and safety critical</td><td>99.95% to 99.99%</td><td>Checkout, order capture, clinical or safety systems, anything where an hour of outage is a board-level event</td><td>Multi-zone or multi-region, automated failover tested quarterly, 24x7 on-call at least six deep, error budget policy signed by the product executive</td></tr>
         <tr><td>Tier 2: business critical</td><td>99.9%</td><td>Internal systems that stop work when down: identity, CI, core data pipelines, customer support tooling</td><td>Multi-zone, tested restore, business-hours on-call with escalation, an SLO with a dashboard</td></tr>
         <tr><td>Tier 3: important</td><td>99.5%</td><td>Reporting, internal tools, anything with a manual workaround</td><td>Single region with backups, restore tested annually, best-effort response</td></tr>
-        <tr><td>Tier 4: everything else</td><td>No commitment</td><td>Experiments, sandboxes, deprecated systems awaiting retirement</td><td>Backups if the data matters; otherwise nothing</td></tr>
+        <tr><td>Tier 4: everything else</td><td>No commitment</td><td>Experiments, sandboxes, deprecated systems awaiting retirement</td><td>Backups if the data matters. Otherwise nothing</td></tr>
       </table>      <p style="margin-bottom:8px;">The assignment is a product decision with an engineering cost attached, made by the business owner of each system against the cost-of-downtime number, not by engineering against what feels safe. Most estates that do this exercise find they have been paying Tier 1 costs on Tier 3 systems and running a Tier 1 system on Tier 3 infrastructure, at the same time.</p>
     </div></div>
   </div>
@@ -257,7 +257,7 @@
         <tr><td>The infrastructure (host up, container running)</td><td>Whether the platform is alive</td><td>Every failure above the platform: a deployed bug, a dependency timeout, a full disk that returns errors from a running process</td></tr>
         <tr><td>The load balancer (HTTP 200 rate)</td><td>Whether requests are being answered</td><td>Slow responses that time out on the client, correct-looking errors, and the customers who could not reach the load balancer at all</td></tr>
         <tr><td>A synthetic transaction (a scripted checkout every minute from outside)</td><td>Whether the journey works end to end from the outside</td><td>Real user diversity: regions, devices, the edge case only real traffic hits</td></tr>
-        <tr><td>Real user monitoring (success rate of customer journeys as experienced)</td><td>What customers experienced</td><td>Nothing that matters, at the cost of more instrumentation; this is the number an SLO should be built on</td></tr>
+        <tr><td>Real user monitoring (success rate of customer journeys as experienced)</td><td>What customers experienced</td><td>Nothing that matters, at the cost of more instrumentation. This is the number an SLO should be built on</td></tr>
       </table>      <p style="margin-bottom:8px;">A defensible availability claim states the measurement point and the window. Five nines at the load balancer over a good quarter is not the same claim as four nines on real customer journeys over three years, and anyone doing diligence will ask which one you mean.</p>
     </div></div>
   </div>
@@ -272,7 +272,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Benchmark</th><th>Published figure</th><th>How to use it</th></tr>
-          <tr><td>Hourly cost of downtime, mid-size and large enterprises</td><td>More than 90 percent put it above $300,000 an hour; 41 percent put it at $1M to over $5M. Survey of more than 1,000 firms, late 2023 to early 2024<sup class="src"><a href="#src-1" title="ITIC, 2024 Hourly Cost of Downtime Survey" style="font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;padding:0 1px">[1]</a></sup></td><td>These are enterprise-wide figures for a full outage. A single system usually costs far less: the checkout example above uses $40,000 an hour. If your per-system figure is above the survey range, check for double counting; if a revenue system is far below it, check what was left out.</td></tr>
+          <tr><td>Hourly cost of downtime, mid-size and large enterprises</td><td>More than 90 percent put it above $300,000 an hour. 41 percent put it at $1M to over $5M. Survey of more than 1,000 firms, late 2023 to early 2024<sup class="src"><a href="#src-1" title="ITIC, 2024 Hourly Cost of Downtime Survey" style="font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;padding:0 1px">[1]</a></sup></td><td>These are enterprise-wide figures for a full outage. A single system usually costs far less: the checkout example above uses $40,000 an hour. If your per-system figure is above the survey range, check for double counting. If a revenue system is far below it, check what was left out.</td></tr>
         </table>
       </div>
     </div>
@@ -291,30 +291,11 @@
     </div>
   </div>
 
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs reliability spend isn't tied to economics</h3>
-      <p>What you see when reliability investment runs on instinct, with no stated cost-benefit basis.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <ul>
-          <li>No system has a stated availability target tied to a cost-of-downtime calculation</li>
-          <li>Error budgets don't exist, so every incident is treated with the same severity regardless of whether targets were met</li>
-          <li>Redundancy investment is uniform across the estate, not tiered to criticality</li>
-          <li>The cost of the current reliability posture has never been compared to the cost of the downtime it prevents</li>
-          <li>&quot;We need to be more reliable&quot; gets stated with no number attached to what that would cost or save</li>
-          <li>The next nine gets pursued because it is technically achievable, whatever the math above says</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
+  
 </main>
 
 <footer>
-  Reference only. Downtime-budget figures are illustrative estimates; availability calculations depend on the exact SLA definition and measurement window used. See <a href="../observability-sre-operating-model/index.html" style="color:var(--accent);">Observability &amp; SRE Operating Model</a> for how the function that delivers reliability is organized. Error budgets and service level objectives as practiced here originate in Google's Site Reliability Engineering (O'Reilly, 2016). The economic framing and calculator are this site's.
+  Reference only. Downtime-budget figures are illustrative estimates. Availability calculations depend on the exact SLA definition and measurement window used. See <a href="../observability-sre-operating-model/index.html" style="color:var(--accent);">Observability &amp; SRE Operating Model</a> for how the function that delivers reliability is organized. Error budgets and service level objectives as practiced here originate in Google's Site Reliability Engineering (O'Reilly, 2016). The economic framing and calculator are this site's.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

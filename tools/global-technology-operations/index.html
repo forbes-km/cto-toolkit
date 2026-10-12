@@ -92,10 +92,10 @@
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Dimension</th><th>The single-region default</th><th>What changes globally</th></tr>
-        <tr><td>Data residency</td><td>Data lives wherever is operationally convenient</td><td>Some jurisdictions require certain data classes to be stored, and sometimes processed, within their borders; architecture has to support storing the same data differently by region, not one global data layer</td></tr>
-        <tr><td>Cross-border transfer</td><td>Not a distinct question; data moves freely inside one legal environment</td><td>Moving data between regions needs a lawful transfer basis (an adequacy determination, a transfer mechanism such as the EU's Standard Contractual Clauses, or in-region processing that avoids the transfer entirely)</td></tr>
+        <tr><td>Data residency</td><td>Data lives wherever is operationally convenient</td><td>Some jurisdictions require certain data classes to be stored, and sometimes processed, within their borders. Architecture has to support storing the same data differently by region, not one global data layer</td></tr>
+        <tr><td>Cross-border transfer</td><td>Not a distinct question. Data moves freely inside one legal environment</td><td>Moving data between regions needs a lawful transfer basis (an adequacy determination, a transfer mechanism such as the EU's Standard Contractual Clauses, or in-region processing that avoids the transfer entirely)</td></tr>
         <tr><td>Staffing coverage</td><td>One time zone, one on-call rotation, business hours mean the same thing to everyone</td><td>Coverage across time zones has to be designed, described below, or incident response and support both degrade overnight in whichever region is asleep</td></tr>
-        <tr><td>Regulatory divergence</td><td>One compliance program covers the whole operation</td><td>Requirements diverge by jurisdiction and sector, so a single global compliance posture either overbuilds for regions that don't need it or underbuilds for the ones that do; see <a href="../regulatory-map/index.html">Regulatory Map</a></td></tr>
+        <tr><td>Regulatory divergence</td><td>One compliance program covers the whole operation</td><td>Requirements diverge by jurisdiction and sector, so a single global compliance posture either overbuilds for regions that don't need it or underbuilds for the ones that do. See <a href="../regulatory-map/index.html">Regulatory Map</a></td></tr>
       </table>
     </div></div>
   </div>
@@ -109,7 +109,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Working pattern</span>
-        <p>Data classification drives storage location: a field or record is tagged with its residency requirement at creation, and the storage and backup layer enforces where copies can exist, so no engineer has to remember the rule for every dataset. Disaster recovery and backup, covered generally on <a href="../disaster-recovery/index.html">Disaster Recovery</a>, has to respect the same residency boundary; a backup replicated to the wrong region defeats the entire control.</p>
+        <p>Data classification drives storage location: a field or record is tagged with its residency requirement at creation, and the storage and backup layer enforces where copies can exist, so no engineer has to remember the rule for every dataset. Disaster recovery and backup, covered generally on <a href="../disaster-recovery/index.html">Disaster Recovery</a>, has to respect the same residency boundary. A backup replicated to the wrong region defeats the entire control.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure mode</span>
@@ -147,7 +147,7 @@
         <tr><th>Decision</th><th>What it forces</th></tr>
         <tr><td>Where is the system of record</td><td>Either one region holds authoritative data with others reading a replica (simpler, adds latency for the non-primary regions), or data is multi-master in practice (harder, avoids the latency cost, adds conflict resolution as a real engineering problem)</td></tr>
         <tr><td>What happens on a regional outage</td><td>Whether the system fails over to another region automatically, and if so, whether that failover crosses a residency boundary that the failover plan has to respect, not just the technical plan on <a href="../disaster-recovery/index.html">Disaster Recovery</a></td></tr>
-        <tr><td>Identity and access across regions</td><td>Whether a single global identity provider serves every region, or region-specific instances are required by a residency rule; see <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a></td></tr>
+        <tr><td>Identity and access across regions</td><td>Whether a single global identity provider serves every region, or region-specific instances are required by a residency rule. See <a href="../identity-access-architecture/index.html">Identity &amp; Access Architecture</a></td></tr>
         <tr><td>Which region owns an incident that spans two</td><td>A named tiebreak rule, so an incident that spans both regions doesn't stall while two on-call teams each assume the other has command</td></tr>
       </table>
     </div></div>
@@ -161,33 +161,15 @@
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <p>A database performance issue in the EU region degraded response times starting late in the EU team's shift, 40 minutes before the scheduled handoff to the US region. The EU on-call engineer opened an incident, started the standard triage from <a href="../incident-response/index.html">Incident Response</a>, and had not yet identified a root cause when the shift boundary arrived. Because the handoff document was mandatory, the incoming US engineer received a written state: symptoms, what had been ruled out, current mitigation attempts, and the fact that resolving it might involve replicating a diagnostic dataset outside the EU, which required a residency check before anyone touched it.</p>
-      <p>The US engineer, working from the handoff document instead of starting from zero, escalated the residency question immediately, before anyone exported the data, confirmed a valid transfer mechanism was in place for diagnostic data specifically because that had been decided in advance as part of the data classification work, and continued the investigation without the delay a fresh discovery would have cost. The incident resolved two hours into the US shift. The postmortem's only finding was that the overlap window between regions was 15 minutes, shorter than the standard, and had nearly not been enough for a real-time handoff on an active incident; it was extended to 45 minutes afterward.</p>
+      <p>The US engineer, working from the handoff document instead of starting from zero, escalated the residency question immediately, before anyone exported the data, confirmed a valid transfer mechanism was in place for diagnostic data because that had been decided in advance as part of the data classification work, and continued the investigation without the delay a fresh discovery would have cost. The incident resolved two hours into the US shift. The postmortem's only finding was that the overlap window between regions was 15 minutes, shorter than the standard, and had nearly not been enough for a real-time handoff on an active incident. It was extended to 45 minutes afterward.</p>
     </div></div>
   </div>
 
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs global operations are running on assumptions, not design</h3>
-      <p>What you see when an organization expanded into several regions without redesigning for it.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <ul>
-          <li>No documented data classification maps residency requirements to where data lives and replicates in practice</li>
-          <li>Shift handoffs between regions are verbal or informal, with no structured document and no defined overlap window</li>
-          <li>No named tiebreak rule exists for who owns an incident that spans two regions</li>
-          <li>Disaster recovery and backup plans were designed before residency requirements existed and have never been re-checked against them</li>
-          <li>Regional compliance posture is one global policy, with no mapped requirements by jurisdiction</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
+  
 </main>
 
 <footer>
-  Reference only. Data residency and cross-border transfer requirements vary by jurisdiction and change; verify current requirements against <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> and counsel before architecture decisions are finalized.
+  Reference only. Data residency and cross-border transfer requirements vary by jurisdiction and change. Verify current requirements against <a href="../regulatory-map/index.html" style="color:var(--accent);">Regulatory Map</a> and counsel before architecture decisions are finalized.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

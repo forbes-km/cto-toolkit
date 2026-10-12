@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Architecture Map</title>
-<meta name="description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
+<meta name="description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance. The stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
 <meta property="og:title" content="AI Architecture Map | CTO Toolkit">
-<meta property="og:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
+<meta property="og:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance. The stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/ai-architecture-map/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI Architecture Map | CTO Toolkit">
-<meta name="twitter:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
+<meta name="twitter:description" content="Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance. The stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment&#x27;s answer. Product and service names reflect 2026 offerings. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/ai-architecture-map/index.html">
 <style>
@@ -248,8 +248,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>AI Architecture Map</h1>
-  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance; the stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product and service names reflect 2026 offerings: Google renamed Vertex AI to Gemini Enterprise Agent Platform in April 2026 (shortened here to Agent Platform; its API endpoints still use the older aiplatform name), and Oracle Database 23ai is now Oracle AI Database 26ai. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.</p>
-  <div class="caveat">Not every stage differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere; where that's true, it gets one statement instead of five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
+  <p>Pipeline stage by pipeline stage, from raw documents to a grounded, human-supervised, secured response. A compact reference table below covers six capabilities across all four major clouds at a glance. The stage-by-stage depth that follows uses a toggle. Click AWS, Azure, GCP, OCI, or Self-hosted once and every stage on the page switches to that environment's answer. Product and service names reflect 2026 offerings: Google renamed Vertex AI to Gemini Enterprise Agent Platform in April 2026 (shortened here to Agent Platform, its API endpoints still use the older aiplatform name), and Oracle Database 23ai is now Oracle AI Database 26ai. This space moves fast, so verify current service names against primary sources before relying on any of this for a design decision.</p>
+  <div class="caveat">Not every stage differs by environment. Chunking logic and the MCP protocol layer run in your own application code and are identical everywhere. Where that's true, it gets one statement instead of five near-duplicate answers. Human-in-the-loop is a partial case: the tiering logic and failure modes are identical across every environment, but the concrete queue and notification infrastructure differs by provider, so that stage keeps the toggle while its own same-note explains what stays constant.</div>
 </header>
 
 <main>
@@ -343,7 +343,7 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Textract for OCR, layout, table, and key-value extraction; pair with Comprehend for downstream entity extraction on the recovered text.</p>
+      <p>Textract for OCR, layout, table, and key-value extraction. Pair with Comprehend for downstream entity extraction on the recovered text.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -401,7 +401,7 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>Open-weight embedding models (BGE-large, E5-mistral, Nomic Embed, GTE) served on owned GPUs via Hugging Face Text Embeddings Inference (TEI) or an Infinity server. No per-token bill; cost is amortized GPU time.</p>
+      <p>Open-weight embedding models (BGE-large, E5-mistral, Nomic Embed, GTE) served on owned GPUs via Hugging Face Text Embeddings Inference (TEI) or an Infinity server. No per-token bill. Cost is amortized GPU time.</p>
     </div>
   </div>
 
@@ -515,7 +515,7 @@
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
       <p>Identical MCP server code across every environment, since MCP is a protocol rather than a cloud service. The dependency that bites is whether your serving stack (vLLM, TGI) supports the model's native tool-calling chat template, so check it model by model.</p>
     </div>
-    <div class="same-note">The protocol layer is the same everywhere. What changes across all five environments is only whether the serving stack in question has tool-calling support wired up for the specific model you chose.</div>
+    <div class="same-note">The protocol layer is the same everywhere. What changes across all five environments is only whether the serving stack in question has tool-calling support wired up for the model you chose.</div>
   </div>
 
   <div class="stage-card">
@@ -551,15 +551,15 @@
     <div class="stage-head">
       <span class="stage-num">Stage 9 &middot; cross-cutting</span>
       <h3>Security &amp; threat model</h3>
-      <p>Prompt injection, tool-call authorization, and the model supply chain. Data doesn't pass through this once; it applies to every stage above.</p>
+      <p>Prompt injection, tool-call authorization, and the model supply chain. Data doesn't pass through this once. It applies to every stage above.</p>
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Bedrock Guardrails runs as a pre-processing gate for content filtering and PII redaction on both input and retrieved content. Tool calls run under IAM roles scoped per agent; Bedrock endpoints sit behind VPC endpoints with public access disabled.</p>
+      <p>Bedrock Guardrails runs as a pre-processing gate for content filtering and PII redaction on both input and retrieved content. Tool calls run under IAM roles scoped per agent. Bedrock endpoints sit behind VPC endpoints with public access disabled.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>AI Content Safety's prompt shields run as a pre-processing gate on both user input and any retrieved or tool-returned content before it reaches the model, since an injected instruction can arrive through a poisoned document just as easily as through the chat box. Tool calls run under managed identities with least-privilege RBAC scoped per agent through Entra ID. Foundry deployments sit behind private endpoints and VNet integration; AI Search restricted to private link with public network access disabled.</p>
+      <p>AI Content Safety's prompt shields run as a pre-processing gate on both user input and any retrieved or tool-returned content before it reaches the model, since an injected instruction can arrive through a poisoned document just as easily as through the chat box. Tool calls run under managed identities with least-privilege RBAC scoped per agent through Entra ID. Foundry deployments sit behind private endpoints and VNet integration. AI Search restricted to private link with public network access disabled.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -571,7 +571,7 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>No managed prompt-shield equivalent. Typically an open guard model (Llama Guard, or a policy layer like NeMo Guardrails) run as a pre and post filter in your own pipeline, tuned and maintained by you. Tool-call authorization is your own implementation at the MCP server layer, commonly OAuth2 or mTLS between the agent runtime and each tool server. Model and weight supply chain matters here specifically: verify checksums and provenance of downloaded weights against the publisher's signed release. Network isolation is your own VPC or on-prem segmentation around the GPU serving cluster.</p>
+      <p>No managed prompt-shield equivalent. Typically an open guard model (Llama Guard, or a policy layer like NeMo Guardrails) run as a pre and post filter in your own pipeline, tuned and maintained by you. Tool-call authorization is your own implementation at the MCP server layer, commonly OAuth2 or mTLS between the agent runtime and each tool server. Model and weight supply chain matters most here: verify checksums and provenance of downloaded weights against the publisher's signed release. Network isolation is your own VPC or on-prem segmentation around the GPU serving cluster.</p>
     </div>
     <div class="same-note">RAG poisoning, malicious content planted in a source document that later gets retrieved and treated as trusted context, targets the retrieval layer rather than the model host. Access control and validation on what gets indexed matter equally across every environment.</div>
   </div>
@@ -580,11 +580,11 @@
     <div class="stage-head">
       <span class="stage-num">Stage 10 &middot; cross-cutting</span>
       <h3>PHI &amp; PII data protection</h3>
-      <p>The technical control layer. Policy, accountability, and audit ownership for regulated data live on the <a href="../ai-governance-map/index.html">AI Governance Map</a>; this is what enforces it in the pipeline.</p>
+      <p>The technical control layer. Policy, accountability, and audit ownership for regulated data live on the <a href="../ai-governance-map/index.html">AI Governance Map</a>. This is what enforces it in the pipeline.</p>
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Comprehend Medical and Comprehend's PII detection run as a pipeline step redacting protected fields; Macie inventories sensitive data already sitting in S3. A signed BAA with AWS is a precondition for PHI in Bedrock; confirm the specific model is in scope.</p>
+      <p>Comprehend Medical and Comprehend's PII detection run as a pipeline step redacting protected fields. Macie inventories sensitive data already sitting in S3. A signed BAA with AWS is a precondition for PHI in Bedrock. Confirm the model you use is in scope.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
@@ -600,7 +600,7 @@
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>De-identification via an open tool (Microsoft Presidio, or a PHI-tuned open NER model) run as the same kind of pipeline step, self-maintained. Disk and transport encryption are your own responsibility; nothing is on by default the way it is in a managed cloud service. No BAA applies since there's no third-party processor, but that shifts the entire compliance burden onto your own controls and audit evidence rather than removing the requirement.</p>
+      <p>De-identification via an open tool (Microsoft Presidio, or a PHI-tuned open NER model) run as the same kind of pipeline step, self-maintained. Disk and transport encryption are your own responsibility. Nothing is on by default the way it is in a managed cloud service. No BAA applies since there's no third-party processor, but that shifts the entire compliance burden onto your own controls and audit evidence rather than removing the requirement.</p>
     </div>
     <div class="same-note">Minimum necessary access and an immutable audit trail of who or what touched PHI are HIPAA requirements regardless of hosting. Hosting choice changes who implements the control. The requirement stays.</div>
   </div>
@@ -642,11 +642,11 @@
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>OpenSearch and most managed vector stores lack point-in-time index restore; re-indexing from the source document store is the recovery path. pgvector on RDS or Aurora is the exception, since it inherits the database's point-in-time recovery. Bedrock-hosted models inherit AWS's regional redundancy; multi-region endpoint deployment is a separate decision.</p>
+      <p>OpenSearch and most managed vector stores lack point-in-time index restore. Re-indexing from the source document store is the recovery path. pgvector on RDS or Aurora is the exception, since it inherits the database's point-in-time recovery. Bedrock-hosted models inherit AWS's regional redundancy. Multi-region endpoint deployment is a separate decision.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>AI Search has no built-in point-in-time restore for the index itself; re-indexing from the source document store is the recovery path. Foundry-hosted models inherit Azure's regional redundancy; multi-region deployment is a separate decision.</p>
+      <p>AI Search has no built-in point-in-time restore for the index itself. Re-indexing from the source document store is the recovery path. Foundry-hosted models inherit Azure's regional redundancy. Multi-region deployment is a separate decision.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -666,15 +666,15 @@
     <div class="stage-head">
       <span class="stage-num">Stage 13 &middot; cross-cutting</span>
       <h3>Capacity &amp; scaling</h3>
-      <p>The architecture question underneath cost: can this handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the <a href="../ai-finops-map/index.html">AI FinOps Map</a>; this is what determines whether capacity is even available to buy.</p>
+      <p>The architecture question underneath cost: can this handle load, and how far ahead do you need to plan for it. Cost modeling itself lives on the <a href="../ai-finops-map/index.html">AI FinOps Map</a>. This is what determines whether capacity is even available to buy.</p>
     </div>
     <div class="provider-content active" data-provider="aws">
       <span class="provider-label"><span class="dot"></span>AWS</span>
-      <p>Provisioned Throughput reserves capacity ahead of time; on-demand avoids that but comes with TPM/RPM rate quotas requiring an increase request well ahead of launch. Cross-region inference routes traffic across regions to dodge regional capacity limits at no added charge, which counts for a lot during a capacity crunch.</p>
+      <p>Provisioned Throughput reserves capacity ahead of time. On-demand avoids that but comes with TPM/RPM rate quotas requiring an increase request well ahead of launch. Cross-region inference routes traffic across regions to dodge regional capacity limits at no added charge, which counts for a lot during a capacity crunch.</p>
     </div>
     <div class="provider-content" data-provider="azure">
       <span class="provider-label"><span class="dot"></span>Azure</span>
-      <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability is often a tighter constraint than budget. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas needing an increase request well ahead of launch. PTU deployments are fixed capacity and do not scale elastically on their own; configure spillover to a standard deployment if bursts above the reservation must still be served.</p>
+      <p>Provisioned Throughput requires reserving capacity ahead of time, and regional availability is often a tighter constraint than budget. Pay-as-you-go avoids that reservation lead time but comes with TPM/RPM rate quotas needing an increase request well ahead of launch. PTU deployments are fixed capacity and do not scale elastically on their own. Configure spillover to a standard deployment if bursts above the reservation must still be served.</p>
     </div>
     <div class="provider-content" data-provider="gcp">
       <span class="provider-label"><span class="dot"></span>GCP</span>
@@ -682,11 +682,11 @@
     </div>
     <div class="provider-content" data-provider="oci">
       <span class="provider-label"><span class="dot"></span>OCI</span>
-      <p>Capacity and quota mechanics follow the same general shape as the other clouds; verify current provisioned-throughput and rate-limit specifics directly against OCI documentation before planning a launch around them.</p>
+      <p>Capacity and quota mechanics follow the same general shape as the other clouds. Verify current provisioned-throughput and rate-limit specifics directly against OCI documentation before planning a launch around them.</p>
     </div>
     <div class="provider-content" data-provider="oss">
       <span class="provider-label"><span class="dot"></span>Self-hosted / open-weight</span>
-      <p>GPU procurement lead time is the constraint here. Buying or leasing H100, H200, or Blackwell-class GPUs can run multi-month lead times during tight supply cycles; renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, rather than raw compute, is usually the ceiling on concurrent requests per node.</p>
+      <p>GPU procurement lead time is the constraint here. Buying or leasing H100, H200, or Blackwell-class GPUs can run multi-month lead times during tight supply cycles. Renting from a GPU cloud (Lambda, CoreWeave, RunPod) trades that lead time for less capacity control and variable pricing. On the serving side, vLLM or TGI scale horizontally behind a load balancer, with continuous batching used to maximize throughput per GPU before adding more hardware. KV-cache memory, rather than raw compute, is usually the ceiling on concurrent requests per node.</p>
     </div>
     <div class="same-note">Capacity planning has to happen months before a launch across every environment. What changes is the bottleneck: quota approval on a managed cloud, GPU hardware availability if self-hosting.</div>
   </div>

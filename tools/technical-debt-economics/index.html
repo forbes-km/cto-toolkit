@@ -93,7 +93,7 @@
   <h1>Technical Debt Economics</h1>
   <p>Technical debt gets discussed in adjectives and funded by whoever argues best. This page replaces that with three numbers per item and a sequencing method simple enough to defend to a CFO: what it costs each year to leave it, what it costs once to fix it, and therefore which items to fund first within a fixed budget.</p>
   <p><strong>What technical debt is.</strong> Technical debt is the future cost you accept when you choose a faster or cheaper path today over a sounder one, whether deliberately (a known shortcut to hit a date) or by drift (a platform that aged out, a design the business outgrew). Like financial debt it carries interest, paid in slower delivery, extra toil, and risk, and that interest compounds until the principal is paid down.</p>
-  <div class="caveat">The calculator is a transparent, simplified version of the debt carry-cost optimizer in the private methodology. It ignores dependencies, team capacity, and partial remediation on purpose, so every ranking it produces can be explained. Inputs are estimates; the value is in the ranking, not the decimals.</div>
+  <div class="caveat">The calculator is a transparent, simplified version of the debt carry-cost optimizer in the private methodology. It ignores dependencies, team capacity, and partial remediation on purpose, so every ranking it produces can be explained. Inputs are estimates. The value is in the ranking, not the decimals.</div>
 </header>
 
 <main>
@@ -172,7 +172,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h2>Carry-cost calculator and multi-year sequencer</h2>
-      <p>Enter your debt items, as many as you need, and an annual remediation budget. Add, rename, or remove rows freely. The tool computes annual cost of doing nothing, payback, and a ranking, then sequences the items across years within the budget. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Enter your debt items, as many as you need, and an annual remediation budget. Add, rename, or remove rows freely. The tool computes annual cost of doing nothing, payback, and a ranking, then sequences the items across years within the budget. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <div class="field"><span>Loaded engineering cost per hour ($)</span><input type="number" id="td-rate" value="120"></div>
@@ -205,7 +205,7 @@
         <li><div><b>Greedy allocation by year</b>Walk the ranked list. If an item fits in the current year's remaining budget, fund it that year. If it does not fit, carry it to the next year and keep walking so smaller items can use the remaining capacity. Repeat for the horizon.</div></li>
         <li><div><b>Payback gate</b>An item is only funded in a year where the cost it avoids over the rest of the horizon exceeds its remediation cost. An item that would not pay back even if funded in year one is marked Accept: carry it knowingly, or take it to the capital allocation conversation as an investment in its own right. Items that pay back but do not fit the budget are shown as unfunded, which makes it a budget question, not a merit question.</div></li>
         <li><div><b>Carry cost paid meanwhile</b>Every year an item is not yet remediated, its annual cost of doing nothing is paid. The total across the horizon is reported so the sequence can be compared against a different budget.</div></li>
-        <li><div><b>What it does not do</b>It works in plain dollars, with no discounting and no growth in carry cost, so its totals will not match the NPV figures in the workbook below, which add both. It does not model dependencies between items, engineering capacity, or the option of partial remediation, and a greedy walk can leave some value on the table. The private version handles dependencies and capacity and solves the schedule exactly; this is the transparent core. A sequencing decision that cannot be explained is one the CFO will not fund twice.</div></li>
+        <li><div><b>What it does not do</b>It works in plain dollars, with no discounting and no growth in carry cost, so its totals will not match the NPV figures in the workbook below, which add both. It does not model dependencies between items, engineering capacity, or the option of partial remediation, and a greedy walk can leave some value on the table. The private version handles dependencies and capacity and solves the schedule exactly. This is the transparent core. A sequencing decision that cannot be explained is one the CFO will not fund twice.</div></li>
       </ol>
     </div></div>
   </div>
@@ -217,7 +217,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What the ranking shows</span><p>The item everyone talks about, the large monolith rewrite, ranks last: a large remediation cost against a carry cost that is substantial but diffuse. The item nobody talks about, a nightly retry workaround that eats about one engineer-week every month, ranks first because it is nearly free to fix. The unsupported database with a meaningful breach probability sits in the top four with a payback under three months, because its risk exposure dominates its carry cost. Three of the top four items cost less than $15k to fix.</p></div>
-      <div class="stage-cell"><span class="env-label b">What to do with it</span><p>Fund the top of the list this quarter without a further business case; the numbers are the case. Take the monolith to the <a href="../technology-capital-allocation/index.html">capital allocation</a> conversation as a transform investment. That is what it is, whatever the backlog calls it. Report the annual cost of doing nothing for the unfunded remainder to the board as a number, once a year, so nobody can later say the risk was hidden.</p></div>
+      <div class="stage-cell"><span class="env-label b">What to do with it</span><p>Fund the top of the list this quarter without a further business case. The numbers are the case. Take the monolith to the <a href="../technology-capital-allocation/index.html">capital allocation</a> conversation as a transform investment. That is what it is, whatever the backlog calls it. Report the annual cost of doing nothing for the unfunded remainder to the board as a number, once a year, so nobody can later say the risk was hidden.</p></div>
     </div>
   </div>
   <div class="stage-card">
@@ -229,12 +229,12 @@
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Source</th><th>What to look for</th><th>Typical carry cost driver</th></tr>
-        <tr><td>Unsupported or end-of-life versions</td><td>Runtimes, databases, operating systems, and frameworks past vendor support</td><td>Risk exposure; also extended support contracts and the inability to patch</td></tr>
+        <tr><td>Unsupported or end-of-life versions</td><td>Runtimes, databases, operating systems, and frameworks past vendor support</td><td>Risk exposure. Also extended support contracts and the inability to patch</td></tr>
         <tr><td>Manual operational toil</td><td>Deployments, restores, certificate renewals, and data fixes done by hand</td><td>Hours per month, plus the outage each one eventually causes</td></tr>
         <tr><td>Duplicated capability</td><td>Two or more systems doing the same job because a migration stopped halfway</td><td>Double licensing, double integration, double on-call</td></tr>
         <tr><td>Undocumented single-person systems</td><td>Anything only one engineer can change</td><td>Key-person risk expressed as a probability times the cost of losing them</td></tr>
         <tr><td>Missing tests on critical paths</td><td>Change failure rate concentrated in a few services</td><td>Incident cost and the slowdown of every change to those services</td></tr>
-        <tr><td>Deferred security findings</td><td>Pen test and scan findings older than one quarter</td><td>Almost pure risk exposure; usually cheap to remediate relative to it</td></tr>
+        <tr><td>Deferred security findings</td><td>Pen test and scan findings older than one quarter</td><td>Almost pure risk exposure. Usually cheap to remediate relative to it</td></tr>
         <tr><td>Cloud spend outpacing usage</td><td>Cost per transaction or per customer rising while volume is flat</td><td>Architecture debt surfacing in the bill first: chatty services, oversized data movement, capacity bought to paper over contention</td></tr>
         <tr><td>Workarounds in the integration layer</td><td>Transformations and retries that exist because a contract was never fixed</td><td>Hours per month and the incidents when the workaround meets an edge case</td></tr>
       </table>
@@ -250,7 +250,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Benchmark</th><th>Published figure</th><th>How to use it</th></tr>
-          <tr><td>Debt as a share of the technology estate</td><td>CIOs put technical debt at 20 to 40 percent of the value of their technology estate, before depreciation, in a 2020 survey of 50 CIOs<sup class="src"><a href="#src-1" title="McKinsey, Tech debt: Reclaiming tech equity" style="font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;padding:0 1px">[1]</a></sup></td><td>An order-of-magnitude check on the remediation total. If your ranked list sums to a fraction of a percent of the estate, discovery was thin.</td></tr><tr><td>Budget diverted from new work</td><td>The same CIOs said 10 to 20 percent of the technology budget meant for new products went to resolving debt, and 60 percent said their debt had risen over three years<sup class="src"><a href="#src-1" title="McKinsey, Tech debt: Reclaiming tech equity" style="font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;padding:0 1px">[1]</a></sup></td><td>This is the carry cost in budget terms. Compare it with the hours lost per month in the sequencer; if your carry is far below 10 percent, the inputs are probably missing items.</td></tr>
+          <tr><td>Debt as a share of the technology estate</td><td>CIOs put technical debt at 20 to 40 percent of the value of their technology estate, before depreciation, in a 2020 survey of 50 CIOs<sup class="src"><a href="#src-1" title="McKinsey, Tech debt: Reclaiming tech equity" style="font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;padding:0 1px">[1]</a></sup></td><td>An order-of-magnitude check on the remediation total. If your ranked list sums to a fraction of a percent of the estate, discovery was thin.</td></tr><tr><td>Budget diverted from new work</td><td>The same CIOs said 10 to 20 percent of the technology budget meant for new products went to resolving debt, and 60 percent said their debt had risen over three years<sup class="src"><a href="#src-1" title="McKinsey, Tech debt: Reclaiming tech equity" style="font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;padding:0 1px">[1]</a></sup></td><td>This is the carry cost in budget terms. Compare it with the hours lost per month in the sequencer. If your carry is far below 10 percent, the inputs are probably missing items.</td></tr>
         </table>
       </div>
     </div>

@@ -107,10 +107,10 @@
         <table class="matrix-table">
           <tr><th>Page</th><th>What it scores</th><th>What it doesn't do</th></tr>
           <tr><td><a href="../apm-portfolio-map/index.html">Application Portfolio Management</a></td><td>The existing application estate: Tolerate, Invest, Migrate, Eliminate</td><td>Doesn't rank new initiatives against each other, or against running applications</td></tr>
-          <tr><td><a href="../ai-portfolio-management/index.html">AI Portfolio Management</a></td><td>AI initiatives specifically, gated on feasibility and data readiness first</td><td>Doesn't compare an AI initiative's priority against a non-AI one competing for the same sprint capacity</td></tr>
-          <tr><td><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a></td><td>Exploratory bets specifically, across the three horizons</td><td>Doesn't cover run-the-business work, which is most of the portfolio at most companies</td></tr>
-          <tr><td><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td><td>The dollars, split across Run, Grow, Transform, Security, Debt, and Reserve as one portfolio</td><td>Allocates budget to buckets; doesn't rank individual competing initiatives within or across those buckets</td></tr>
-          <tr><td><strong>This page</strong></td><td>Every competing initiative, any category, ranked and sequenced on one list against the same capacity constraint</td><td>Doesn't replace the category-specific scoring above; a project still needs its AI-readiness or innovation-stage evaluation before it lands here</td></tr>
+          <tr><td><a href="../ai-portfolio-management/index.html">AI Portfolio Management</a></td><td>AI initiatives only, gated on feasibility and data readiness first</td><td>Doesn't compare an AI initiative's priority against a non-AI one competing for the same sprint capacity</td></tr>
+          <tr><td><a href="../innovation-portfolio/index.html">Innovation Portfolio Management</a></td><td>Exploratory bets only, across the three horizons</td><td>Doesn't cover run-the-business work, which is most of the portfolio at most companies</td></tr>
+          <tr><td><a href="../technology-capital-allocation/index.html">Technology Capital Allocation</a></td><td>The dollars, split across Run, Grow, Transform, Security, Debt, and Reserve as one portfolio</td><td>Allocates budget to buckets. Doesn't rank individual competing initiatives within or across those buckets</td></tr>
+          <tr><td><strong>This page</strong></td><td>Every competing initiative, any category, ranked and sequenced on one list against the same capacity constraint</td><td>Doesn't replace the category-specific scoring above. A project still needs its AI-readiness or innovation-stage evaluation before it lands here</td></tr>
         </table>
       </div>
     </div>
@@ -145,14 +145,14 @@
         <p>WSJF = Cost of Delay &divide; Job Size. Cost of Delay is the sum of three components, each scored on a relative Fibonacci scale (1, 2, 3, 5, 8, 13, 20): <strong>User-Business Value</strong> (the direct economic or customer benefit), <strong>Time Criticality</strong> (does the value decay if this waits), and <strong>Risk Reduction / Opportunity Enablement</strong> (does this unlock or de-risk other work). Divide that sum by relative <strong>Job Size</strong>, and the result ranks a moderately valuable two-week job above a highly valuable six-month one, because value delivered sooner keeps paying and value delayed decays. An AI pilot, a compliance mandate, and a technical debt paydown all get scored on the same four inputs, and that is why it works across categories the other four portfolio pages can't reach.</p>
       </div>
     </div>
-    <div class="same-note">The scores are relative, not precise measurements. Anchor the smallest, most obvious item on your list at 1 for each component, then size everything else against it. The ranking is what you are after; the individual numbers are scaffolding.</div>
+    <div class="same-note">The scores are relative, not precise measurements. Anchor the smallest, most obvious item on your list at 1 for each component, then size everything else against it. The ranking is what you are after. The individual numbers are scaffolding.</div>
   </div>
 
   <div class="stage-card" id="calculator">
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Rank your own portfolio</h3>
-      <p>List every initiative competing for capacity, regardless of category, and set the capacity you have in job-size points. The tool ranks by WSJF, draws the cut line where capacity runs out, and totals the cost of delay deferred below it. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>List every initiative competing for capacity, regardless of category, and set the capacity you have in job-size points. The tool ranks by WSJF, draws the cut line where capacity runs out, and totals the cost of delay deferred below it. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -223,11 +223,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What the ranking says</span>
-        <p>Do B first; it is urgent and small. Then A. Split C into increments so the first slice can compete on its own size instead of waiting behind everything.</p>
+        <p>Do B first. It is urgent and small. Then A. Split C into increments so the first slice can compete on its own size instead of waiting behind everything.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What it does not say</span>
-        <p>WSJF ranks within available capacity. It does not tell you whether C should be funded at all; that is the capital allocation decision, made before this ranking runs.</p>
+        <p>WSJF ranks within available capacity. It does not tell you whether C should be funded at all. That is the capital allocation decision, made before this ranking runs.</p>
       </div>
     </div>
   </div>
@@ -258,7 +258,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>A high-WSJF initiative that depends on a lower-ranked one still has to wait; running it first produces rework or a stalled effort waiting on its own dependency. Before finalizing sequence, check the top ten items against each other for blocking relationships, in addition to checking them against the full backlog. The common failure: nobody maps this until two teams have already started conflicting work, which is a coordination cost the ranking itself was supposed to prevent.</p>
+        <p>A high-WSJF initiative that depends on a lower-ranked one still has to wait. Running it first produces rework or a stalled effort waiting on its own dependency. Before finalizing sequence, check the top ten items against each other for blocking relationships, in addition to checking them against the full backlog. The common failure: nobody maps this until two teams have already started conflicting work, which is a coordination cost the ranking itself was supposed to prevent.</p>
       </div>
     </div>
   </div>
@@ -276,7 +276,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">The discipline</span>
-        <p>Every re-ranking cycle scores in-flight work against new proposals on the same list, with no separate "already committed" list exempt from comparison. Money and time already spent are gone regardless of the decision now; the only question is whether finishing beats every current alternative for the capacity remaining.</p>
+        <p>Every re-ranking cycle scores in-flight work against new proposals on the same list, with no separate "already committed" list exempt from comparison. Money and time already spent are gone regardless of the decision now. The only question is whether finishing beats every current alternative for the capacity remaining.</p>
       </div>
     </div>
   </div>
@@ -289,7 +289,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>Quarterly re-ranking of the full list is the common floor, monthly for organizations moving fast enough that a quarter is a long time. Between formal cycles, a time-critical item can force an out-of-cycle re-rank, but that path should be visibly rare; if it's common, the formal cadence is too slow for the business it's serving.</p>
+        <p>Quarterly re-ranking of the full list is the common floor, monthly for organizations moving fast enough that a quarter is a long time. Between formal cycles, a time-critical item can force an out-of-cycle re-rank, but that path should be visibly rare. If it's common, the formal cadence is too slow for the business it's serving.</p>
       </div>
     </div>
   </div>
@@ -297,7 +297,7 @@
 </main>
 
 <footer>
-  Reference only. WSJF weights and Fibonacci scoring are illustrative; the framework's value is in relative comparison, not the specific numbers.
+  Reference only. WSJF weights and Fibonacci scoring are illustrative. The framework's value is in relative comparison, not the exact numbers.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

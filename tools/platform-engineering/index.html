@@ -84,13 +84,13 @@
     <div class="stage-head">
       <span class="stage-num">Goals</span>
       <h3>What this is for</h3>
-      <p>The central goal, and the ones downstream of it. Self-service, golden paths, and everything else on this page are the means; these are the ends.</p>
+      <p>The central goal, and the ones downstream of it. Self-service, golden paths, and everything else on this page are the means. These are the ends.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Goal</th><th>What it means</th></tr>
-          <tr><td>Reduce cognitive load on product engineering teams</td><td>The central goal everything else serves. A team building a product shouldn't also have to be expert in Kubernetes, network policy, database operations, and compliance tagging just to ship; the platform absorbs that complexity.</td></tr>
+          <tr><td>Reduce cognitive load on product engineering teams</td><td>The central goal everything else serves. A team building a product shouldn't also have to be expert in Kubernetes, network policy, database operations, and compliance tagging just to ship. The platform absorbs that complexity.</td></tr>
           <tr><td>Increase delivery velocity</td><td>Getting from &quot;I need X&quot; to &quot;I have X&quot; in minutes or hours instead of days or weeks.</td></tr>
           <tr><td>Enforce standards consistently</td><td>Security, compliance, cost tagging, and network policy encoded once, in a template or golden path. Otherwise every team re-implements them, and never the same way twice.</td></tr>
           <tr><td>Eliminate duplicated effort across teams</td><td>Without a shared platform, every team builds its own version of the same deployment pipeline, the same provisioning process, the same monitoring setup.</td></tr>
@@ -103,56 +103,36 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Framework</span>
+      <span class="stage-num">The core idea</span>
       <h3>Platform as a product, not a shared utility</h3>
       <p>The distinction that determines whether a platform team gets adopted voluntarily or gets worked around.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>A platform built as a product has users (product engineering teams), a roadmap shaped by what those users need, and success measured by adoption and satisfaction, the same discipline applied to any external-facing product. A platform built as a shared utility gets whatever capacity is left over after feature work, has no user research behind its priorities, and gets adopted only where teams have no other choice. The first approach produces a platform teams want to use; the second produces one they route around the moment they're allowed to.</p>
+        <p>A platform built as a product has users (the product engineering teams), a roadmap shaped by what those users need, and success measured by adoption and satisfaction, the same discipline as any product sold outside the company. A platform run as a shared utility gets whatever capacity is left after feature work, has no user research behind its priorities, and is adopted only where teams have no choice. Teams want to use the first. They route around the second the moment they are allowed to.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Reference</span>
-      <h3>Cloud versus on-prem: what changes</h3>
-      <p>The self-service and golden path guidance below was written cloud-first, since that's the more mature case. Here's what's different if some or all of the estate is on-prem or bare metal.</p>
+      <span class="stage-num">The five practices</span>
+      <h3>What separates a platform teams choose from one they route around</h3>
+      <p>The same five the calculator below scores. Each has a visible sign when it is missing, usually long before anyone measures it.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
-          <tr><th>Dimension</th><th>Cloud</th><th>On-prem / bare metal</th></tr>
-          <tr><td>Provisioning speed</td><td>Minutes, via API</td><td>Hours if capacity is already racked; weeks or months if new hardware has to be ordered</td></tr>
-          <tr><td>Scaling</td><td>Elastic; spin up and tear down on demand</td><td>Bounded by physical capacity already on hand; scaling means ordering and racking more of it</td></tr>
-          <tr><td>Self-service ceiling</td><td>Effectively unlimited from the requester's point of view</td><td>Self-service against a pre-provisioned capacity pool; a request past available headroom has to queue or escalate</td></tr>
-          <tr><td>Cost model</td><td>Opex, pay-per-use, elastic</td><td>Largely fixed capex already spent; utilization efficiency matters more than avoiding waste, since the hardware cost is sunk either way</td></tr>
-          <tr><td>Tooling maturity</td><td>Mature; every major IaC tool has first-class cloud provider support</td><td>Less mature; bare metal is still commonly flagged in current platform engineering discussion as &quot;artisanal infrastructure,&quot; provisioned manually and outside the platform's own tooling, even at organizations that are otherwise fully API-driven everywhere else</td></tr>
+          <tr><th>Practice</th><th>When it's working</th><th>The sign it isn't</th></tr>
+          <tr><td>Self-service coverage</td><td>The routine requests that make up most demand (a new service, a database, a pipeline) are provisioned through tooling with sane defaults and no human in the loop. People review only the unusual requests</td><td>Every request goes through a ticket queue, so product teams move at the speed of the platform team's backlog, however simple the request</td></tr>
+          <tr><td>Golden path adoption</td><td>The supported path is built around the most common use case, is the fastest option available, and stays optional. Teams can deviate, but they support what they customize</td><td>The path was designed for an idealized team, adoption stays low, and every team keeps its own version, which defeats the point of standardizing</td></tr>
+          <tr><td>Outcome-linked funding</td><td>Platform spend is tracked against deployment frequency, lead time, and incident rate, the measures leadership already uses for engineering</td><td>Nobody outside engineering can say what the platform delivers, so it is the first line cut in a downturn, even though removing it slows every other team</td></tr>
+          <tr><td>Developer experience measurement</td><td>Time to first deploy, satisfaction surveys, and support ticket volume are reviewed as seriously as uptime</td><td>Satisfaction has been assumed rather than measured, and workarounds and shadow infrastructure are how the dissatisfaction shows up</td></tr>
+          <tr><td>Roadmap traceability</td><td>Each roadmap item traces back to a request or a measured friction point from the teams the platform serves</td><td>The roadmap reflects what the platform team finds interesting to build</td></tr>
         </table>
-        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Most platform teams in 2026 run both. A common pattern: steady-state, predictable workloads (databases, core services) run on-prem or on bare metal where it's cheaper at scale or required for latency and compliance reasons, while variable and spiky workloads scale in the cloud. A small number of providers now offer &quot;bare metal cloud,&quot; single-tenant physical performance with the same API-driven provisioning cloud users expect, narrowing this gap further, but it remains the less mature option and should be evaluated that way, not assumed equal to a mainstream cloud provider's tooling.</p>
       </div>
     </div>
   </div>
-
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">1</span>
-      <h3>Self-service versus ticket-driven infrastructure</h3>
-      <p>Whether provisioning something new takes minutes or a multi-day queue determines how much of the platform's value reaches engineering teams.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What good looks like</span>
-        <p>Common infrastructure needs, a new service, a database, a deployment pipeline, provisioned through self-service tooling with sane defaults, no ticket or human approval required for the standard case. Reserve human review for unusual requests; the routine ones that make up the bulk of demand should never see a human.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">What usually happens</span>
-        <p>Every infrastructure request routed through a ticket queue regardless of how routine it is, which caps how fast product teams can move at the platform team's ticket-processing capacity, however simple the request.</p>
-      </div>
-    </div>
-  </div>
-
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">Worked example</span>
@@ -161,10 +141,10 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>A developer needs a new PostgreSQL database for a service. Through a developer portal (Backstage is the common open-source choice; Port is a common commercial alternative) or an internal CLI, they select a pre-approved &quot;new database&quot; template and fill in a short form: service name, environment, expected scale tier.</p>
+        <p>A developer needs a new PostgreSQL database for a service. Through a developer portal (Backstage is the common open-source choice, Port is a common commercial alternative) or an internal CLI, they select a pre-approved &quot;new database&quot; template and fill in a short form: service name, environment, expected scale tier.</p>
         <p>Submitting the form triggers an infrastructure-as-code pipeline, often a Terraform module or a Crossplane composition, that provisions the database with the organization's standards already baked in: encryption at rest, standard tagging for cost allocation, automated backups, and network policy applied without the developer having to know or configure any of it themselves. The database is ready in minutes, registered automatically in the service catalog, with ownership and cost attribution wired in from the start. No ticket, no human approval, for the standard case.</p>
         <p>The template itself is where governance lives. Security, compliance, and tagging requirements get encoded once, in the template, so no human re-checks them on every request. An unusual request, a non-standard database engine, an exception to the network policy, is exactly the case that should still route to a human, because it's the case the template wasn't built to handle safely on its own.</p>
-        <p style="font-size:12px; color:var(--ink-soft);">On-prem, the same template pattern applies, provisioning still runs through a pipeline with standards baked in, but the pipeline also has to check available capacity before it commits, and route to a human when the request would exceed it. That capacity check has no equivalent in the cloud version of this example above.</p>
+        <p style="font-size:12px; color:var(--ink-soft);">On-prem, the same template pattern applies, provisioning still runs through a pipeline with standards baked in, but the pipeline also has to check available capacity before it commits, and route to a human when the request would exceed it. The cloud version has no equivalent of that capacity check.</p>
         <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">The database example above is self-service at the resource level, inside an environment that already exists. The same discipline applies one level up: issuing an entire new, pre-governed subscription or account to a team, Azure calls this subscription vending, AWS calls it Account Factory, GCP typically calls it a project factory. See the landing zone reference on <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> for how each provider's version works.</p>
       </div>
     </div>
@@ -172,76 +152,43 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">2</span>
-      <h3>Golden path design</h3>
-      <p>A golden path is the supported, well-paved way to accomplish a common task, built to be easier than any alternative.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">The approach</span>
-        <p>Design the golden path around the most common use case, make it the fastest option available, and keep it optional. Teams with unusual requirements should be able to deviate, just without platform-team support for the parts they've customized away from the standard.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">The usual mistake</span>
-        <p>A golden path built for an idealized use case that doesn't match what most teams need, so adoption stays low and everyone keeps building their own version, defeating the purpose of standardizing in the first place.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">3</span>
-      <h3>Team funding and organizational placement</h3>
-      <p>Platform teams funded as pure overhead get cut first when budget tightens, regardless of the value they're delivering.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Do this</span>
-        <p>Frame and track platform investment against a measurable outcome, deployment frequency, lead time, incident rate, so its value is visible in the same terms leadership already uses to evaluate engineering effectiveness. A cost center that can't show its contribution gets cut.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Watch for</span>
-        <p>A platform team that can't articulate its impact in outcomes anyone outside engineering tracks, which makes it the easiest line item to cut in a downturn, even when its removal would slow every other engineering team down.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">4</span>
-      <h3>Developer experience as a deliberate metric</h3>
-      <p>What a platform team optimizes for shapes what it builds; measuring the experience alongside uptime keeps the incentives pointed at the right outcome.</p>
+      <span class="stage-num">Reference</span>
+      <h3>Cloud versus on-prem: what changes</h3>
+      <p>The self-service guidance above was written cloud-first, since that's the more mature case. Here's what's different if some or all of the estate is on-prem or bare metal.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>Regular, structured feedback from the engineers using the platform, time-to-first-deploy for a new service, satisfaction survey results, support ticket volume and resolution time, treated as seriously as uptime and reliability metrics. A platform can be technically reliable and still be actively disliked by the people forced to use it, and that dissatisfaction shows up eventually as workarounds and shadow infrastructure.</p>
+        <table class="matrix-table">
+          <tr><th>Dimension</th><th>Cloud</th><th>On-prem / bare metal</th></tr>
+          <tr><td>Provisioning speed</td><td>Minutes, via API</td><td>Hours if capacity is already racked. Weeks or months if new hardware has to be ordered</td></tr>
+          <tr><td>Scaling</td><td>Elastic. Spin up and tear down on demand</td><td>Bounded by physical capacity already on hand. Scaling means ordering and racking more of it</td></tr>
+          <tr><td>Self-service ceiling</td><td>Effectively unlimited from the requester's point of view</td><td>Self-service against a pre-provisioned capacity pool. A request past available headroom has to queue or escalate</td></tr>
+          <tr><td>Cost model</td><td>Opex, pay-per-use, elastic</td><td>Largely fixed capex already spent. Utilization efficiency matters more than avoiding waste, since the hardware cost is sunk either way</td></tr>
+          <tr><td>Tooling maturity</td><td>Mature. Every major IaC tool has first-class cloud provider support</td><td>Less mature. Bare metal is still commonly flagged in current platform engineering discussion as &quot;artisanal infrastructure,&quot; provisioned manually and outside the platform's own tooling, even at organizations that are otherwise fully API-driven everywhere else</td></tr>
+        </table>
+        <p style="font-size:12px; color:var(--ink-soft); margin-top:8px;">Most platform teams in 2026 run both. A common pattern: steady-state, predictable workloads (databases, core services) run on-prem or on bare metal where it's cheaper at scale or required for latency and compliance reasons, while variable and spiky workloads scale in the cloud. A small number of providers now offer &quot;bare metal cloud,&quot; single-tenant physical performance with the same API-driven provisioning cloud users expect, narrowing this gap further, but it remains the less mature option and should be evaluated that way, not assumed equal to a mainstream cloud provider's tooling.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
-      <h3>The overbuilt platform trap</h3>
-      <p>Platform teams, left to their own judgment about priorities, drift toward building for imagined future scale instead of the problems product teams have today.</p>
+      <span class="stage-num">Common pitfall</span>
+      <h3>The overbuilt platform</h3>
+      <p>Left to set their own priorities, platform teams drift toward building for scale the company may never reach.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What holds up</span>
-        <p>Prioritization driven by direct input from the teams the platform serves, with roadmap decisions traceable to a specific request or a specific measured friction point, the same product discipline applied to any customer-facing roadmap.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">What doesn't</span>
-        <p>An elaborate multi-cluster, multi-region abstraction layer built for a scale the company is nowhere near, while product teams struggle with a basic deployment step nobody prioritized fixing because it wasn't as technically interesting to build.</p>
+        <p>The result is an elaborate multi-cluster, multi-region abstraction layer, built for a company several times the current size, while product teams still fight a manual deployment step nobody fixed because it wasn't interesting work. The platform team is busy and proud of what it built. Adoption is low, and the teams that most need help have quietly built their own scripts.</p>
+        <p>The cure is the last row of the table above. When every roadmap item has to name the team that asked for it or the friction it removes, the speculative work has to compete with real problems, and it usually loses.</p>
       </div>
     </div>
   </div>
-
   <div class="stage-card" id="calculator">
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own platform</h3>
-      <p>Score the five practices now and at target, then add three adoption facts. The tool ties the scores to the adoption numbers and flags the warning signs from the checklist below. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Score the five practices now and at target, then add three adoption facts. The tool ties the scores to the adoption numbers and flags the warning signs from the practices table above. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -252,29 +199,10 @@
     </div>
   </div>
 
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs the platform isn't earning its adoption</h3>
-      <p>Patterns that show up when a platform team exists but isn't delivering the leverage it's meant to.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <ul>
-          <li>Product teams maintain workarounds or shadow infrastructure instead of using the platform's supported path</li>
-          <li>Common provisioning tasks require a ticket and a multi-day wait</li>
-          <li>The platform roadmap isn't traceable to specific requests or friction reported by the teams it serves</li>
-          <li>Platform investment can't be tied to any measurable engineering outcome when leadership asks what it's delivering</li>
-          <li>Developer satisfaction with the platform has never been measured, only assumed</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
 </main>
 
 <footer>
-  Reference only. Platform team scope and investment level should scale with engineering org size; a ten-person engineering team rarely needs a dedicated platform function.
+  Reference only. Platform team scope and investment level should scale with engineering org size. A ten-person engineering team rarely needs a dedicated platform function.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

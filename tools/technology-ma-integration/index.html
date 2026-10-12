@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology M&amp;A Integration</title>
-<meta name="description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
+<meta name="description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying. This is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
 <meta property="og:title" content="Technology M&amp;amp;A Integration | CTO Toolkit">
-<meta property="og:description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
+<meta property="og:description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying. This is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
 <meta property="og:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <meta property="og:url" content="https://forbes-km.github.io/cto-toolkit/tools/technology-ma-integration/index.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Technology M&amp;amp;A Integration | CTO Toolkit">
-<meta name="twitter:description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
+<meta name="twitter:description" content="What happens after the deal closes. Diligence tells you what you&#x27;re buying. This is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.">
 <meta name="twitter:image" content="https://forbes-km.github.io/cto-toolkit/og-image.png">
 <link rel="canonical" href="https://forbes-km.github.io/cto-toolkit/tools/technology-ma-integration/index.html">
 <style>
@@ -71,6 +71,11 @@
   }
   footer { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.6; }
   @media (max-width: 700px) { .matrix-table th, .matrix-table td { min-width: 130px; } }
+  .num-list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+  .num-list li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .num-list li:last-child { border-bottom: none; }
+  .num-list li::before { content: counter(n); font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 50%; width: 22px; height: 22px; min-width: 22px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .num-list b { display: block; margin-bottom: 2px; }
 </style>
 </head>
 <body>
@@ -78,8 +83,8 @@
 <header>
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Technology M&amp;A Integration</h1>
-  <p>What happens after the deal closes. Diligence tells you what you're buying; this is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.</p>
-  <div class="caveat">Diligence-stage assessment lives on <a href="../technology-diligence-map/index.html">Technology Diligence</a>. Scoring the combined application estate uses the same instrument as <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>. This page picks up where those leave off, at close, and covers the reasoning conceptually; Technology Diligence's own preview section lists the working-artifact layer beyond this page, a scheduled timeline tool, a decision tree, and a tracker, for readers who need more than the reasoning.</div>
+  <p>What happens after the deal closes. Diligence tells you what you're buying. This is the discipline of combining it, sequenced across the first day, the first 100 days, and the first year.</p>
+  <div class="caveat">Diligence-stage assessment lives on <a href="../technology-diligence-map/index.html">Technology Diligence</a>. Scoring the combined application estate uses the same instrument as <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>. This page picks up where those leave off, at close, and covers the reasoning conceptually. Technology Diligence's own preview section lists the working-artifact layer beyond this page, a scheduled timeline tool, a decision tree, and a tracker, for readers who need more than the reasoning.</div>
 </header>
 
 <main>
@@ -95,8 +100,8 @@
           <tr><th>Phase</th><th>Job</th><th>Focus</th></tr>
           <tr><td>Day 0</td><td>Don't break anything</td><td>Identity, access, security continuity, communications, critical systems kept running exactly as they were</td></tr>
           <tr><td>First 30 days</td><td>Understand what you have</td><td>Technology inventory, people, vendors, contracts, architecture, security gaps, dependencies</td></tr>
-          <tr><td>100 days</td><td>Decide; don't default</td><td>Converge, coexist, or replace decisions per system, made and assigned an owner, with execution still ahead</td></tr>
-          <tr><td>100 days to Year 1</td><td>Execute the decisions</td><td>The migration, consolidation, and platform convergence work, sequenced and tracked against what was decided at day 100; this is most of the calendar and most of the effort</td></tr>
+          <tr><td>100 days</td><td>Decide. Don't default</td><td>Converge, coexist, or replace decisions per system, made and assigned an owner, with execution still ahead</td></tr>
+          <tr><td>100 days to Year 1</td><td>Execute the decisions</td><td>The migration, consolidation, and platform convergence work, sequenced and tracked against what was decided at day 100. This is most of the calendar and most of the effort</td></tr>
           <tr><td>Year 1</td><td>Test the thesis</td><td>Measure realized synergies and convergence against what diligence promised, technical debt remediation, target architecture, operating model</td></tr>
         </table>
       </div>
@@ -107,7 +112,7 @@
     <div class="stage-head">
       <span class="stage-num">Diagram</span>
       <h3>The phases, with the TSA running underneath</h3>
-      <p>Integration work and transition services run in parallel. The phases decide; the TSA exits are when the decisions become real.</p>
+      <p>Integration work and transition services run in parallel. The phases decide. The TSA exits are when the decisions become real.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
 <div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pmi-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="pmi-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="pmi-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="pmi-title">Integration phases from Day 0 to Year 1, with transition services running alongside</title><rect x="150.0" y="30" width="7.666666666666657" height="50" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
@@ -154,76 +159,75 @@
 <line x1="150.0" y1="231" x2="850.0" y2="231" stroke="var(--ink-soft)" stroke-width="1"/>
 <text x="440.0" y="282.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Every transition service needs a dated exit plan from Day 0. The longest one, usually ERP, sets the real length of the TSA,</text>
 <text x="440.0" y="300.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">and a 6-month term on a 15-month separation is where carve-out cost overruns come from.</text></svg></div>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Phase lengths follow the table above; the TSA services and exit months are illustrative. See the TSA card further down for how to structure them.</p>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Phase lengths follow the table above. The TSA services and exit months are illustrative. See the TSA card further down for how to structure them.</p>
     </div></div>
   </div>
-<div class="stage-card">
+
+  <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">1</span>
-      <h3>Day 0 is about keeping everything running</h3>
-      <p>The integration mistake that happens most often happens in the first week, not the first year.</p>
+      <span class="stage-num">Before close</span>
+      <h3>Clean teams and Day 1 readiness</h3>
+      <p>Most Day 0 problems are decided in the weeks before signing, while the two companies still cannot share competitively sensitive information freely.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What good looks like</span>
-        <p>Identity and access continuity, security posture held exactly where it was, communications sent as planned, critical systems left untouched. The goal on day 0 is invisibility to customers and continuity for employees, nothing more ambitious than that.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">What usually happens</span>
-        <p>Attempting a quick consolidation win, merging two identity systems, migrating a customer-facing tool, before the estate is even fully understood. This creates a new outage layered on top of the transition itself, at the exact moment trust is most fragile.</p>
+        <p>Use a clean team: a small group bound by a clean-team agreement and advised by counsel, allowed to review sensitive material such as customer contracts, pricing, and detailed architecture before close. Build the Day 1 plan from what it finds. The plan covers identity bridging, email and collaboration access, finance system cutoffs, and a list of systems nobody touches.</p>
+        <p>The opposite failure is common too. Out of caution about gun-jumping, the teams avoid joint planning altogether and discover on Day 1 that nobody has admin access to the target's identity provider, and the one person who did has already resigned.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">2</span>
-      <h3>The 100-day converge, coexist, or replace decision</h3>
-      <p>Every inherited system needs an explicit call. The absence of a decision is itself a decision, and usually the worst one.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">The approach</span>
-        <p>Score the combined estate the same way any application portfolio gets scored, then assign each system a named owner and an explicit converge, coexist, or replace call within the 100-day window, in place of a default assumption that everything eventually merges.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">The usual mistake</span>
-        <p>Systems left in undecided limbo well past 100 days, with no owner for the call, while both organizations keep maintaining duplicate infrastructure indefinitely because deciding felt harder than deferring.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">3</span>
-      <h3>Days 100 to 365: executing the decisions</h3>
-      <p>The phase most integrations lose, a decision made at day 100 with no visible forcing function behind it for the next nine months.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Do this</span>
-        <p>Each converge, coexist, or replace decision made at day 100 gets a named owner, a sequenced execution plan, and a specific target date within the year, tracked on the same standing cadence as everything else in this phase. Migration and consolidation work starts right after the decision, not months later when someone remembers it was made.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Watch for</span>
-        <p>The decision gets made and recorded at the 100-day mark, then nobody schedules or resources the execution work. Six months later the system is still officially &quot;decided to converge,&quot; with nothing having moved, which looks exactly like never having decided at all.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">4</span>
-      <h3>The call, worked across common system categories</h3>
-      <p>What the decision looks like for specific, common systems.</p>
+      <span class="stage-num">Day 0</span>
+      <h3>Keep everything running</h3>
+      <p>The goal is that customers notice nothing and employees can still do their jobs. The most frequent integration mistake happens in the first week, not the first year: a quick consolidation win attempted before anyone understands the estate.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
+          <tr><th>Area</th><th>Do on Day 0</th><th>Leave alone until later</th></tr>
+          <tr><td>Identity and access</td><td>Federate or bridge so people can reach what they need. Remove access for anyone leaving at close. Review privileged accounts on both sides</td><td>Merging the two directories</td></tr>
+          <tr><td>Security operations</td><td>Keep both monitoring stacks running and connect them to one escalation path</td><td>Replacing the target's tools</td></tr>
+          <tr><td>Email and collaboration</td><td>Shared calendars and directory lookup, so the two companies can find each other</td><td>Mailbox migration</td></tr>
+          <tr><td>Customer-facing systems</td><td>A change freeze, with an exception process that needs your sign-off</td><td>Anything that changes a login, a URL, or an invoice</td></tr>
+          <tr><td>Finance and payroll</td><td>Confirm cutoffs and that people get paid on schedule</td><td>System consolidation</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Handoff</span>
+      <h3>Carry the diligence findings into the plan</h3>
+      <p>Knowledge gets lost at the moment the deal closes and attention moves. The security gap, the key-person risk, and the debt hotspot that diligence found get rediscovered weeks later by a different team.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <ol class="num-list">
+          <li><span><b>Keep the diligence leads on through day 100</b>At least part time. They know which answers were evasive and which systems they never got to see.</span></li>
+          <li><span><b>Turn every finding into a backlog item with an owner</b>A report filed in the deal room helps nobody. Each red flag from <a href="../technology-diligence-map/index.html">Technology Diligence</a> becomes a tracked item in the integration plan, with a date.</span></li>
+          <li><span><b>Hold a day-30 readout</b>Diligence leads and integration owners in one room, going through what was confirmed, what turned out worse, and what nobody has looked at yet.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-head">
+      <span class="stage-num">Day 100</span>
+      <h3>Converge, coexist, or replace, for every system</h3>
+      <p>Every inherited system needs an explicit call. Not deciding is itself a decision, and usually the worst one.</p>
+    </div>
+    <div class="stage-grid single">
+      <div class="stage-cell">
+        <p>Score the combined estate the same way any portfolio gets scored in <a href="../apm-portfolio-map/index.html">Application Portfolio Management</a>. Then give each system a named owner and an explicit call within the 100-day window, instead of assuming everything eventually merges. Systems left undecided past day 100 tend to stay that way, with both organizations paying for duplicate infrastructure because deferring felt easier than deciding.</p>
+        <table class="matrix-table" style="margin-top:12px">
           <tr><th>System</th><th>Typical call</th><th>Why</th></tr>
           <tr><td>CRM</td><td>Converge onto the acquirer's system</td><td>Sales process consistency and pipeline visibility matter more than any feature gap the acquired system might have had</td></tr>
-          <tr><td>Identity &amp; access</td><td>Converge immediately, within Day 0 to 30</td><td>Security and access control can't safely run on two separate systems for long; this is the one category that shouldn't wait for the 100-day window</td></tr>
-          <tr><td>Core product data warehouse</td><td>Coexist initially, converge during Year 1</td><td>Migration risk is high; premature convergence risks corrupting the acquired product's own operational data before it's understood</td></tr>
+          <tr><td>Identity &amp; access</td><td>Converge early, within Day 0 to 30</td><td>Security and access control can't safely run on two separate systems for long. This is the one category that shouldn't wait for the 100-day window</td></tr>
+          <tr><td>Core product data warehouse</td><td>Coexist initially, converge during Year 1</td><td>Migration risk is high, and converging too early risks corrupting the acquired product's own operational data before it's understood</td></tr>
           <tr><td>Internal ticketing or ITSM</td><td>Replace both with a new standard, or converge onto whichever is stronger</td><td>Internal and lower stakes, which is why it often gets deferred the longest despite being one of the easiest calls to make</td></tr>
         </table>
       </div>
@@ -232,54 +236,27 @@
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">5</span>
-      <h3>The diligence-to-integration handoff</h3>
-      <p>Where institutional knowledge usually gets lost, right at the moment the deal closes and attention shifts.</p>
+      <span class="stage-num">Days 100 to 365</span>
+      <h3>Executing the decisions</h3>
+      <p>The phase most integrations lose.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What works</span>
-        <p>The people who ran diligence stay involved through at least the first 100 days, so findings, the security gap, the key-person risk, the technical debt hotspot, translate directly into the integration plan instead of being rediscovered by a different team.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Where it goes wrong</span>
-        <p>Diligence findings live in a report that gets filed away once the deal closes, and the integration team, often entirely different people, rediscovers the same risks weeks into the process that diligence had already flagged in detail.</p>
+        <p>A decision made at day 100 with nothing forcing it forward for the next nine months looks, six months later, exactly like no decision at all. The system is officially "decided to converge" and nothing has moved. Each call needs an owner, a sequenced plan, a target date inside the year, and a slot on the same standing review as the rest of the integration. Migration work starts the week after the decision, not when someone remembers it was made.</p>
+        <p>Culture belongs in the same plan. Decide before Day 0 which of the acquired team's practices are worth keeping, and write them down. Otherwise good practices get thrown out as "not how we do things here," which is the pattern described on <a href="../engineering-culture/index.html">Engineering Culture</a>, compressed into a window where the damage happens faster and the people you most need to keep are the ones with the most options.</p>
       </div>
     </div>
   </div>
 
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">6</span>
-      <h3>Cultural integration, in this specific window</h3>
-      <p>See <a href="../engineering-culture/index.html">Engineering Culture</a> for the general argument about whose culture wins in a merger. This is that argument, compressed into a much higher-stakes, much shorter timeframe.</p>
+      <span class="stage-num">Year 1</span>
+      <h3>The deal thesis gets tested here</h3>
+      <p>The numbers used to justify the deal don't go away at close, even though attention usually does.</p>
     </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">Practice</span>
-        <p>Decide before Day 0 what is worth keeping from the acquired team's culture and practices, and write it into the integration plan. Don't assume the acquirer's culture should win by default.</p>
-      </div>
+    <div class="stage-grid single">
       <div class="stage-cell">
-        <span class="env-label b">Common failure mode</span>
-        <p>The acquired team's good practices and institutional knowledge get discarded without discussion as &quot;not how we do things here,&quot; the same credibility-erosion pattern described on Engineering Culture, just compressed into a much shorter and higher-stakes window where the damage happens faster and is harder to reverse.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">7</span>
-      <h3>Year 1 is where the deal thesis gets tested</h3>
-      <p>The numbers used to justify the deal don't disappear once it closes, even though attention usually does. This is the measurement point for the execution work from Stage 3 and not a separate deliverable.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">What to do</span>
-        <p>Track cost synergies and platform convergence against the specific figures used to justify the deal, on a standing cadence, with a named owner accountable for the gap between promised and realized.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">Where it goes wrong</span>
-        <p>The synergies promised during diligence stop being tracked once the deal has closed and organizational attention has moved to the next priority, so no one ever finds out whether the thesis was right.</p>
+        <p>Track cost synergies and platform convergence against the figures in the deal model, on a standing cadence, with one named person accountable for the gap between promised and realized. Track key-person retention the same way, because the people who understand the acquired systems are usually part of what was bought. If nobody tracks either, nobody ever learns whether the thesis was right, and the next deal gets modeled with the same assumptions.</p>
       </div>
     </div>
   </div>
@@ -288,12 +265,12 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>PMI tracker: synergy realization and key-person retention</h3>
-      <p>The working dashboard Stage 3 and Stage 7 both argue you need. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>The working dashboard for the two things above. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <h4 style="margin:0 0 4px; font-size:14px; font-weight:600; color:var(--ink);">Synergy realization</h4>
-        <p style="margin:0 0 12px; font-size:12.5px; color:var(--ink-soft);">The specific figures used to justify the deal, tracked against what's been realized.</p>
+        <p style="margin:0 0 12px; font-size:12.5px; color:var(--ink-soft);">The figures used to justify the deal, tracked against what has been realized.</p>
         <div style="display:grid; grid-template-columns: 2fr 1fr 1fr auto; gap:10px; align-items:end; margin-bottom:12px;">
           <div>
             <label style="display:block; font-size:11.5px; font-weight:600; color:var(--ink); margin-bottom:5px;">Synergy</label>
@@ -430,26 +407,9 @@
     renderPmiKeyPeople();
   </script>
 
-    <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">8</span>
-      <h3>Before close: clean teams and Day 1 readiness</h3>
-      <p>Most Day 0 problems are decided in the weeks before signing, while the two companies still cannot share competitively sensitive information freely.</p>
-    </div>
-    <div class="stage-grid">
-      <div class="stage-cell a">
-        <span class="env-label a">How to run it</span>
-        <p>Use a clean team, a small group bound by a clean-team agreement and advised by counsel, to review sensitive items such as customer contracts, pricing, and detailed architecture before close. Build the Day 1 plan from its findings: identity bridging, email and collaboration access, finance system cutoffs, and the systems that must not be touched.</p>
-      </div>
-      <div class="stage-cell">
-        <span class="env-label b">How it breaks</span>
-        <p>Gun-jumping in reverse: teams avoid all joint planning out of caution, then discover on Day 1 that nobody has admin access to the target's identity provider and the only person who does has already resigned.</p>
-      </div>
-    </div>
-  </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">9</span>
+      <span class="stage-num">Carve-outs</span>
       <h3>Transition service agreements (TSAs)</h3>
       <p>In a carve-out, the buyer usually depends on the seller's systems for months after close. The TSA is where most carve-out cost overruns come from.</p>
     </div>
@@ -466,23 +426,24 @@
       </div>
     </div>
   </div>
-<div class="stage-card">
+
+  <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs integration is drifting</h3>
-      <p>Patterns that show up when an integration has good intentions but no forcing function behind them.</p>
+      <span class="stage-num">Health check</span>
+      <h3>Where a healthy integration stands at day 200</h3>
+      <p>Run this at roughly the midpoint of year one. Drift is easy to fix at day 200 and expensive at day 400.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <ul>
-          <li>No named owner exists for the converge, coexist, or replace decision on a given inherited system</li>
-          <li>Cost synergies promised during diligence aren't being tracked against actuals a year later</li>
-          <li>Identity and access consolidation is still incomplete well past the 100-day mark with no active plan</li>
-          <li>Key people from the acquired company have left without the succession plan that was supposed to prevent it</li>
-          <li>The acquired company's application portfolio has never been scored on the same terms as the acquirer's own</li>
-          <li>The diligence team's findings never made it into the integration plan in any traceable way</li>
-                  <li>A carve-out closed with TSA services that have no dated exit plan</li>
-</ul>
+        <table class="matrix-table">
+          <tr><th>Measure</th><th>On track</th><th>Drifting</th></tr>
+          <tr><td>Inherited systems with a converge, coexist, or replace call and a named owner</td><td>All of them</td><td>Any without an owner</td></tr>
+          <tr><td>Identity and access</td><td>One directory, or a dated plan to get there this quarter</td><td>Two directories and no active plan</td></tr>
+          <tr><td>Synergies realized against the deal model</td><td>Tracked monthly, with a known gap and an owner for it</td><td>Not tracked since close</td></tr>
+          <tr><td>Key people from the acquired company</td><td>Retained, or their knowledge transferred before they left</td><td>Departures nobody planned for</td></tr>
+          <tr><td>Diligence findings</td><td>Each one traceable to a closed or scheduled backlog item</td><td>Findings nobody on the integration team has read</td></tr>
+          <tr><td>TSA services, in a carve-out</td><td>Each with a dated exit plan reviewed monthly</td><td>Services with no exit date</td></tr>
+        </table>
       </div>
     </div>
   </div>
@@ -490,7 +451,7 @@
 </main>
 
 <footer>
-  Reference only. Integration timelines and sequencing depend heavily on deal size, cultural fit, and regulatory context; adapt accordingly.
+  Reference only. Integration timelines and sequencing depend heavily on deal size, cultural fit, and regulatory context. Adapt accordingly.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

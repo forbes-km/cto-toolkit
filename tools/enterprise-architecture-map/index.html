@@ -121,7 +121,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Enterprise Architecture</h1>
   <p>Enterprise architecture end to end: what it is and is not, the artifact chain from strategy to a buildable decision, capability models with an interactive heat map, value streams, operating model canvases, target-state narratives, capability-driven roadmaps, portfolio calls, assessing an inherited architecture, EA in M&amp;A, standing up or rebooting the function, tooling, and how EA should run, relate, fail, and be measured.</p>
-  <div class="caveat">The Business Capability Model, Operating Model Canvas, Target-State Narrative Template, Capability-Driven Roadmap Method, EA Operating Model, Architecture Review Operating Model, Architecture Principles Library, and <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a> are field-tested instruments with full facilitation guides, templates, and worked examples, available through direct engagement. This page sets out the reasoning, structure, and decision rules behind each; the complete deliverables sit outside it.</div>
+  <div class="caveat">The Business Capability Model, Operating Model Canvas, Target-State Narrative Template, Capability-Driven Roadmap Method, EA Operating Model, Architecture Review Operating Model, Architecture Principles Library, and <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a> are field-tested instruments with full facilitation guides, templates, and worked examples, available through direct engagement. This page sets out the reasoning, structure, and decision rules behind each. The complete deliverables sit outside it.</div>
   <nav class="page-nav" aria-label="On this page"><span class="src-lbl">On this page</span><ul><li><a href="#what">What enterprise architecture is</a></li><li><a href="#scope">Enterprise, domain, and solution architecture</a></li><li><a href="#bcm-rules">Business Capability Model: the structural rules</a></li><li><a href="#bcm-build">Building the capability model, and putting it to work</a></li><li><a href="#value-streams">Value streams: the flow the capability map leaves out</a></li><li><a href="#heatmap">Capability heat map (interactive)</a></li><li><a href="#canvas">Operating Model Canvas: six dimensions</a></li><li><a href="#canvas-run">Running a canvas, and the four ways it goes wrong</a></li><li><a href="#target-state">The target-state narrative: prose first, diagrams second</a></li><li><a href="#roadmap">The capability-driven roadmap</a></li><li><a href="#portfolio">Portfolio and modernization calls: where EA turns a model into a decision</a></li><li><a href="#inherited">Assessing an architecture you inherited</a></li><li><a href="#ma">EA in mergers and acquisitions</a></li><li><a href="#standing-up">Standing up or rebooting an EA function</a></li><li><a href="#services">What the EA function provides, and what it chooses not to</a></li><li><a href="#engagement">Engagement patterns: matching depth to the work</a></li><li><a href="#capacity">Roles and capacity allocation</a></li><li><a href="#demand">Demand management</a></li><li><a href="#relationships">The relationships that decide whether EA gets heard</a></li><li><a href="#review">Architecture review: four touchpoints</a></li><li><a href="#failure">How EA functions fail, and what fixes each</a></li><li><a href="#standards">Standards and notations, current editions</a></li><li><a href="#tooling">EA tooling: when a spreadsheet is enough</a></li><li><a href="#measuring">Measuring whether EA is working</a></li></ul></nav>
 
 </header>
@@ -136,11 +136,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Is</span>
-        <p>The unit of analysis is the enterprise as an operating system. Business capabilities define what the organization does; the operating model defines how those capabilities are delivered; technology exists to support that operating model. When EA works, technology decisions follow from capability decisions, and capability decisions follow from strategy.</p>
+        <p>The unit of analysis is the enterprise as an operating system. Business capabilities define what the organization does. The operating model defines how those capabilities are delivered. Technology exists to support that operating model. When EA works, technology decisions follow from capability decisions, and capability decisions follow from strategy.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Is not</span>
-        <ul><li>A documentation function; the goal is future-state decisions, and a current-state inventory is at most an input to them</li><li>A technology review board; approving individual selections is narrow governance and a small slice of the discipline</li><li>A framework exercise; TOGAF and Zachman are vocabularies for the work, not the work itself</li><li>A tool implementation; choosing and populating a repository supports the work but will not, on its own, produce a better decision</li><li>A long-range planning department; EA is distinct in owning the linkage between strategic intent and operational reality across domains</li></ul>
+        <ul><li>A documentation function. The goal is future-state decisions, and a current-state inventory is at most an input to them</li><li>A technology review board. Approving individual selections is narrow governance and a small slice of the discipline</li><li>A framework exercise. TOGAF and Zachman are vocabularies for the work, not the work itself</li><li>A tool implementation. Choosing and populating a repository supports the work but will not, on its own, produce a better decision</li><li>A long-range planning department. EA is distinct in owning the linkage between strategic intent and operational reality across domains</li></ul>
       </div>
     </div>
     <div class="same-note">Every EA output is judged by what it changes. A capability model earns its place when it moves an investment decision, a reference architecture when variance across teams falls, and a roadmap when the organization can actually absorb the sequence it proposes.</div>
@@ -156,7 +156,7 @@
         <table class="matrix-table">
           <tr><th></th><th>Enterprise</th><th>Domain</th><th>Solution</th></tr>
           <tr><td>Scope</td><td>The organization as a whole</td><td>A specific capability or technology domain</td><td>A single initiative, product, or system</td></tr>
-          <tr><td>Primary question</td><td>How should the organization operate and evolve to deliver on strategy?</td><td>How should this domain be structured and advanced over time?</td><td>How do we design and deliver this specific solution?</td></tr>
+          <tr><td>Primary question</td><td>How should the organization operate and evolve to deliver on strategy?</td><td>How should this domain be structured and advanced over time?</td><td>How do we design and deliver this solution?</td></tr>
           <tr><td>Time horizon</td><td>Three to five years, rolling</td><td>One to three years</td><td>Weeks to months</td></tr>
           <tr><td>Typical outputs</td><td>Capability model, operating model, target state, investment roadmap, governance</td><td>Reference architecture, standards, patterns, domain roadmap</td><td>Solution design, implementation plan, technical specifications</td></tr>
           <tr><td>Value shows up when</td><td>Cross-domain investments compound and the operating model keeps pace with strategy</td><td>Variance across solutions falls and the domain becomes predictable to consume</td><td>The system ships on scope, schedule, and quality</td></tr>
@@ -217,8 +217,8 @@
           <tr><td>Business capability model</td><td>What does this organization do, independent of structure, process, or system?</td><td>Business leadership, EA facilitates</td><td>Sections <a href="#bcm-rules">3</a> and <a href="#bcm-build">4</a> below</td></tr>
           <tr><td>Operating model canvas</td><td>How is one capability actually delivered today?</td><td>Capability owner</td><td>Sections <a href="#canvas">6</a> and <a href="#canvas-run">7</a> below</td></tr>
           <tr><td>Target-state narrative</td><td>What does the organization look like when the change is done, and why this target?</td><td>Named authors, sponsor approves</td><td>Section <a href="#target-state">8</a> below</td></tr>
-          <tr><td>Capability-driven roadmap</td><td>Which gaps close, through which initiatives, in what order?</td><td>Business sponsors per priority</td><td>Section <a href="#roadmap">9</a> below; <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
-          <tr><td>Portfolio decisions</td><td>Which applications to invest in, tolerate, migrate, or eliminate?</td><td>Portfolio governance board</td><td>Section <a href="#portfolio">10</a> below; <a href="../apm-portfolio-map/index.html">Application Portfolio</a></td></tr>
+          <tr><td>Capability-driven roadmap</td><td>Which gaps close, through which initiatives, in what order?</td><td>Business sponsors per priority</td><td>Section <a href="#roadmap">9</a> below. <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
+          <tr><td>Portfolio decisions</td><td>Which applications to invest in, tolerate, migrate, or eliminate?</td><td>Portfolio governance board</td><td>Section <a href="#portfolio">10</a> below. <a href="../apm-portfolio-map/index.html">Application Portfolio</a></td></tr>
           <tr><td>Solution design and ADRs</td><td>What gets built, and why was it built this way?</td><td>Delivery teams, EA advises</td><td><a href="../architecture-review-board/index.html">Architecture Review Board</a></td></tr>
         </table></div>
     </div></div>
@@ -227,19 +227,19 @@
     <div class="stage-head">
       <span class="stage-num">3</span>
       <h3>Business Capability Model: the structural rules</h3>
-      <p>A hierarchical, business-led view of what the organization does, independent of process or technology. Violating these rules loses credibility quickly; treat them as rules, not style preferences.</p>
+      <p>A hierarchical, business-led view of what the organization does, independent of process or technology. Violating these rules loses credibility quickly. Treat them as rules, not style preferences.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">The rules</span>
-        <ul><li>Capabilities are nouns: <em>Customer Onboarding</em> rather than <em>Onboard Customers</em>. Verb phrases slide toward process, which varies by business unit and time.</li><li>MECE (mutually exclusive, collectively exhaustive) at each level: no capability overlaps with its siblings, and together they cover everything the parent capability includes, with nothing left out</li><li>Three levels is usually enough, four is the ceiling; Level 1 is 8 to 12 capabilities, Level 2 decomposes each into 3 to 8</li><li>The business owns the model; EA facilitates. A model that can't survive a conversation with the COO is an IT artifact with capability labels</li></ul>
+        <ul><li>Capabilities are nouns: <em>Customer Onboarding</em> rather than <em>Onboard Customers</em>. Verb phrases slide toward process, which varies by business unit and time.</li><li>MECE (mutually exclusive, collectively exhaustive) at each level: no capability overlaps with its siblings, and together they cover everything the parent capability includes, with nothing left out</li><li>Three levels is usually enough, four is the ceiling. Level 1 is 8 to 12 capabilities, Level 2 decomposes each into 3 to 8</li><li>The business owns the model. EA facilitates. A model that can't survive a conversation with the COO is an IT artifact with capability labels</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common failure modes</span>
         <ul><li>The model that's really an org chart, and breaks the next time the org restructures</li><li>The model that reads like a process map, verb phrases and sequential flow</li><li>The model nobody owns, drifting from reality within two reorganizations</li><li>The model used only for IT planning, never referenced in a business investment conversation</li></ul>
       </div>
     </div>
-    <div class="same-note">A capability also describes what, never how, where, or who. Customer Identity Verification is a capability; verifying identity through a third-party service at the call center is an implementation that belongs in another view and traces back to it.</div>
+    <div class="same-note">A capability also describes what, never how, where, or who. Customer Identity Verification is a capability. Verifying identity through a third-party service at the call center is an implementation that belongs in another view and traces back to it.</div>
   </div>
   <div class="stage-card" id="bcm-build">
     <div class="stage-head">
@@ -267,11 +267,11 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>When</th><th>Work</th><th>The rule that keeps it honest</th></tr>
-          <tr><td>Week 1</td><td>Gather strategy documents and prior architecture work; name the sponsor and a working group with a senior business leader per segment; write a one-paragraph charter</td><td>Architects facilitate; they do not vote</td></tr>
+          <tr><td>Week 1</td><td>Gather strategy documents and prior architecture work. Name the sponsor and a working group with a senior business leader per segment. Write a one-paragraph charter</td><td>Architects facilitate. They do not vote</td></tr>
           <tr><td>Week 2</td><td>Adapt a reference structure in a half-day workshop until Level 1 reads like this organization</td><td>Never attempt Level 2 in the same session</td></tr>
-          <tr><td>Weeks 3 to 4</td><td>One two-to-three hour workshop per Level 1 area with its business owners</td><td>Run the MECE test at the end of each session; failures go to a parking list, and overlaps are resolved at the boundary</td></tr>
-          <tr><td>Weeks 5 to 6</td><td>Walk the draft through each owner, then the sponsor; publish with a version and a named owner</td><td>Changes at this stage are language, not structure</td></tr>
-          <tr><td>Week 7 onward</td><td>Put it to work immediately: heat-map current pain by capability, map the top ten in-flight initiatives, map the application portfolio at Level 2 or 3</td><td>Plan these three uses before publishing; an unused model loses credibility within a quarter</td></tr>
+          <tr><td>Weeks 3 to 4</td><td>One two-to-three hour workshop per Level 1 area with its business owners</td><td>Run the MECE test at the end of each session. Failures go to a parking list, and overlaps are resolved at the boundary</td></tr>
+          <tr><td>Weeks 5 to 6</td><td>Walk the draft through each owner, then the sponsor. Publish with a version and a named owner</td><td>Changes at this stage are language, not structure</td></tr>
+          <tr><td>Week 7 onward</td><td>Put it to work immediately: heat-map current pain by capability, map the top ten in-flight initiatives, map the application portfolio at Level 2 or 3</td><td>Plan these three uses before publishing. An unused model loses credibility within a quarter</td></tr>
         </table>
       </div>
     </div>
@@ -356,7 +356,7 @@
           <tr><th></th><th>Capability map</th><th>Value stream</th></tr>
           <tr><td>Answers</td><td>What does the organization do?</td><td>How does value reach a stakeholder, stage by stage?</td></tr>
           <tr><td>Shape</td><td>A hierarchy with no order and no flow</td><td>An ordered set of stages, triggered by a stakeholder and ending in value they recognize</td></tr>
-          <tr><td>Stability</td><td>Stable across strategy cycles</td><td>Stable too; the processes underneath each stage change far more often</td></tr>
+          <tr><td>Stability</td><td>Stable across strategy cycles</td><td>Stable too. The processes underneath each stage change far more often</td></tr>
           <tr><td>Best for</td><td>Investment, ownership, duplication, and portfolio mapping</td><td>Customer experience, bottlenecks, and scoping a transformation</td></tr>
           <tr><td>Not</td><td>An org chart or a process map</td><td>A process map: no swim lanes, no systems, no handoff detail</td></tr>
         </table>
@@ -365,11 +365,11 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">How to build one</span>
-        <ul><li><strong>Name the stream for the value delivered</strong> from the stakeholder's side, such as Onboard a Customer or Resolve a Claim, not internal shorthand like quote to cash</li><li><strong>Keep stages few and ordered:</strong> five to eight, each ending in a recognizable state change for the thing moving through</li><li><strong>Cross-map capabilities to stages.</strong> When a stage underperforms, the map tells you which capabilities to look at; a capability that enables many stages is load-bearing</li><li><strong>Model a handful, not all of them.</strong> The three to five streams that carry the strategy are enough; nobody maintains fifty</li></ul>
+        <ul><li><strong>Name the stream for the value delivered</strong> from the stakeholder's side, such as Onboard a Customer or Resolve a Claim, not internal shorthand like quote to cash</li><li><strong>Keep stages few and ordered:</strong> five to eight, each ending in a recognizable state change for the thing moving through</li><li><strong>Cross-map capabilities to stages.</strong> When a stage underperforms, the map tells you which capabilities to look at. A capability that enables many stages is load-bearing</li><li><strong>Model a handful, not all of them.</strong> The three to five streams that carry the strategy are enough. Nobody maintains fifty</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common misuses</span>
-        <ul><li>Drawing a process map and calling it a value stream</li><li>Naming stages after departments, which turns the value stream back into an org chart</li><li>Building value streams with no capability cross-map, so they never connect to investment</li><li>Confusing it with lean value stream mapping, a related but different technique for measuring flow and waste in a specific process</li></ul>
+        <ul><li>Drawing a process map and calling it a value stream</li><li>Naming stages after departments, which turns the value stream back into an org chart</li><li>Building value streams with no capability cross-map, so they never connect to investment</li><li>Confusing it with lean value stream mapping, a related but different technique for measuring flow and waste in a single process</li></ul>
       </div>
     </div>
     <div class="same-note">The cross-map is the payoff. Business architecture practice treats each value stream as one value proposition for one stakeholder, with capabilities mapped to the stages they enable, so a stage that falters points straight at the capabilities behind it<sup class="src"><a href="#src-1" title="Business Architecture Guild, Business Architecture Metamodel Guide v3.0, September 2024">[1]</a></sup>. The diagram uses the same shading as the heat map tool below: a weak capability used in three stages is a better investment target than a weaker one used in none.</div>
@@ -382,7 +382,7 @@
       <p>The first use this page recommends for a new capability model: rate each capability for how much it matters to the strategy and how well it performs today. The tool tells you what to do with each capability (invest, protect, simplify, or contain), colors the map by how urgently it needs improving, ranks the biggest gaps, and, if you add run cost, shows whether money is going where the strategy needs it. It starts with a sample organization: open <em>Edit the capabilities and ratings</em> under the map to replace the rows with your own.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell"></div></div>
-    <div class="same-note">How it scores: the improvement priority score is importance multiplied by the performance gap, where the gap is how many points performance sits below a perfect 5. Example: importance 5 and performance 2 give a gap of 3 (5 minus 2), so the score is 5 x 3 = 15. A capability performing at 5 has no gap and scores zero. Scores of 1 to 5 are low priority, 6 to 10 medium, and 11 to 20 high. The action (invest, protect, simplify, or contain) treats a rating of 4 or 5 as high. Rate performance from evidence where you have it, such as incident counts, cycle times, customer complaints, and cost per transaction; ratings from a single workshop tend to reflect the mood in the room.</div>
+    <div class="same-note">How it scores: the improvement priority score is importance multiplied by the performance gap, where the gap is how many points performance sits below a perfect 5. Example: importance 5 and performance 2 give a gap of 3 (5 minus 2), so the score is 5 x 3 = 15. A capability performing at 5 has no gap and scores zero. Scores of 1 to 5 are low priority, 6 to 10 medium, and 11 to 20 high. The action (invest, protect, simplify, or contain) treats a rating of 4 or 5 as high. Rate performance from evidence where you have it, such as incident counts, cycle times, customer complaints, and cost per transaction. Ratings from a single workshop tend to reflect the mood in the room.</div>
   </div>
   <div class="stage-card" id="canvas">
     <div class="stage-head">
@@ -409,7 +409,7 @@
     <div class="stage-head">
       <span class="stage-num">7</span>
       <h3>Running a canvas, and the four ways it goes wrong</h3>
-      <p>Leaders with line accountability plus a few practitioners who do the work, two sessions, architecture facilitating. The canvas sits on top of process maps, RACI, and the application portfolio; it summarizes them and points to them.</p>
+      <p>Leaders with line accountability plus a few practitioners who do the work, two sessions, architecture facilitating. The canvas sits on top of process maps, RACI, and the application portfolio. It summarizes them and points to them.</p>
     </div>
     <div class="stage-grid">
       <div class="stage-cell a">
@@ -425,18 +425,18 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Session</th><th>What happens</th></tr>
-          <tr><td>Session 1, 90 minutes: draft</td><td>Agree the boundary first; thirty minutes on scope saves two hours of dispute. Work the six dimensions in order. Everyone writes before anyone debates, so disagreement surfaces instead of deferring to whoever speaks first. Close by naming the three biggest disagreements and who resolves each before session 2.</td></tr>
-          <tr><td>Session 2, 90 minutes: stress-test</td><td>Clarifications only, no structural rewrites. Then three tests: trace the last real exception through the canvas; take the last real change and check which dimensions moved; describe a plausible future change and see whether the canvas predicts what would have to move. Publish with the working group named, a version, and a review date.</td></tr>
+          <tr><td>Session 1, 90 minutes: draft</td><td>Agree the boundary first. Thirty minutes on scope saves two hours of dispute. Work the six dimensions in order. Everyone writes before anyone debates, so disagreement surfaces instead of deferring to whoever speaks first. Close by naming the three biggest disagreements and who resolves each before session 2.</td></tr>
+          <tr><td>Session 2, 90 minutes: stress-test</td><td>Clarifications only, no structural rewrites. Then three tests: trace the last real exception through the canvas. Take the last real change and check which dimensions moved. Describe a plausible future change and see whether the canvas predicts what would have to move. Publish with the working group named, a version, and a review date.</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">The four errors: a wishful current state that describes how the capability should work and fails the stress tests; overloading, where any dimension with more than five to seven elements means the scope is too broad; boxes and arrows standing in for statements, when a finished canvas should read aloud as sensible prose; and no named owner, so it goes stale within a year.</div>
+    <div class="same-note">There are four common errors. The first is a wishful current state that describes how the capability should work and fails the stress tests. The second is overloading: any dimension with more than five to seven elements means the scope is too broad. The third is boxes and arrows standing in for statements, when a finished canvas should read aloud as sensible prose. The fourth is having no named owner, so it goes stale within a year.</div>
   </div>
   <div class="stage-card" id="target-state">
     <div class="stage-head">
       <span class="stage-num">8</span>
       <h3>The target-state narrative: prose first, diagrams second</h3>
-      <p>Executives read a target-state diagram for ten seconds, ask two questions, and move on. A narrative that stands on its own survives the meeting and becomes the reference the roadmap and investment case point back to. Four to eight pages for a capability cluster, eight to fifteen for the whole enterprise; past that, nobody reads it.</p>
+      <p>Executives read a target-state diagram for ten seconds, ask two questions, and move on. A narrative that stands on its own survives the meeting and becomes the reference the roadmap and investment case point back to. Four to eight pages for a capability cluster, eight to fifteen for the whole enterprise. Past that, nobody reads it.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -444,7 +444,7 @@
           <tr><th>Section</th><th>Length</th><th>What it has to do</th></tr>
           <tr><td>1. Executive summary</td><td>One page</td><td>Three paragraphs: the target in terms the executives already use, why this target over the alternatives, and the shape of the journey. If they read nothing else, the message has landed.</td></tr>
           <tr><td>2. The target state</td><td>Two to four pages</td><td>Five dimensions and no more: what the organization does, how work is organized, how information is used, how technology serves the business, and how the organization changes. No architecture diagrams here.</td></tr>
-          <tr><td>3. Why this target</td><td>One to two pages</td><td>What the strategy needs that today cannot deliver, what external forces make today untenable, what the target opens up. Specific beats generic: resolving a request in one interaction sticks; becoming more agile does not.</td></tr>
+          <tr><td>3. Why this target</td><td>One to two pages</td><td>What the strategy needs that today cannot deliver, what external forces make today untenable, what the target opens up. Specific beats generic: resolving a request in one interaction sticks. Becoming more agile does not.</td></tr>
           <tr><td>4. Trade-offs, and what we are not choosing</td><td>One page</td><td>The directions set aside and why, what the organization gives up, and the risks stated plainly. Sophisticated readers notice when this is missing and discount everything else.</td></tr>
           <tr><td>5. What changes, for whom</td><td>One to two pages</td><td>Customers, business teams, technology teams, and leadership. The leadership paragraph is the one most often skipped, and the target operating model always implies new leadership behavior.</td></tr>
           <tr><td>6. How we get there</td><td>One page</td><td>Phases and their character, what has started, the decisions still open, and the commitment required. The detailed plan lives in the roadmap.</td></tr>
@@ -454,14 +454,14 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Writing rules</span>
-        <ul><li>Written by one or two named people, then validated; committees write prose designed to avoid objections</li><li>Present tense, as if the target already exists; future tense signals the author is not committed</li><li>Active voice that names who does what</li><li>Delete adjectives that carry no information and any paragraph that could describe a different company</li><li>The opposite test: if the opposite of a claim is also a position a sensible organization might take, the claim says something; if the opposite is absurd, it is a platitude</li></ul>
+        <ul><li>Written by one or two named people, then validated. Committees write prose designed to avoid objections</li><li>Present tense, as if the target already exists. Future tense signals the author is not committed</li><li>Active voice that names who does what</li><li>Delete adjectives that carry no information and any paragraph that could describe a different company</li><li>The opposite test: if the opposite of a claim is also a position a sensible organization might take, the claim says something. If the opposite is absurd, it is a platitude</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common errors</span>
         <ul><li>A diagram first, with prose explaining it</li><li>A technology stack presented as a target state</li><li>Trade-offs missing or softened into positives</li><li>Ten dimensions instead of five</li><li>No named author, so nobody owns the position</li></ul>
       </div>
     </div>
-    <div class="same-note">A narrative is harder to write than a deck and more durable. Use slides in the steering committee if that is the format; write the narrative anyway, because it forces the thinking to be complete in a way slides let you skip.</div>
+    <div class="same-note">A narrative is harder to write than a deck and more durable. Use slides in the steering committee if that is the format. Write the narrative anyway, because it forces the thinking to be complete in a way slides let you skip.</div>
   </div>
   <div class="stage-card" id="roadmap">
     <div class="stage-head">
@@ -474,8 +474,8 @@
         <table class="matrix-table">
           <tr><th>Step</th><th>Output</th><th>Where it goes wrong</th></tr>
           <tr><td>1. Decompose strategy</td><td>Five to seven priorities, each with a measurable outcome and the two to five capability areas it depends on</td><td>More than ten priorities means the strategy is unfocused, and the roadmap will inherit that</td></tr>
-          <tr><td>2. Analyze capability gaps</td><td>A gap register: current state, required state, the gap in capability terms (speed, scale, fidelity, coverage, consistency, cost), and why it is hard to close</td><td>Skipped in favor of jumping to initiatives; this step is the method</td></tr>
-          <tr><td>3. Identify initiatives</td><td>Each initiative keyed to a gap, with a sponsor, provisional scope, and rough size</td><td>Initiatives that close no gap stay in; operating model changes left out because no system moves</td></tr>
+          <tr><td>2. Analyze capability gaps</td><td>A gap register: current state, required state, the gap in capability terms (speed, scale, fidelity, coverage, consistency, cost), and why it is hard to close</td><td>Skipped in favor of jumping to initiatives. This step is the method</td></tr>
+          <tr><td>3. Identify initiatives</td><td>Each initiative keyed to a gap, with a sponsor, provisional scope, and rough size</td><td>Initiatives that close no gap stay in. Operating model changes left out because no system moves</td></tr>
           <tr><td>4. Sequence</td><td>Year 1 by quarter, years 2 and 3 by half-year</td><td>Political ordering instead of dependency ordering</td></tr>
           <tr><td>5. Narrate and trace</td><td>A business-language narrative plus a traceability view from priority to gap to initiative to deliverable</td><td>Traceability treated as decoration and never consulted when replanning</td></tr>
           <tr><td>6. Validate and approve</td><td>An approved roadmap with a named owner and a review cadence</td><td>Restructuring at this stage means steps 1 to 3 were rushed</td></tr>
@@ -489,7 +489,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Common errors</span>
-        <ul><li>Initiatives first, capabilities retrofitted afterward</li><li>Built by IT and presented to the business for endorsement</li><li>Every gap attacked in year one</li><li>Sequence presented without the reasoning, so nobody can replan it</li><li>Published and never revisited; review quarterly in year one, twice a year after</li><li>Year 3 fantasy: specific projects three years out, which is false confidence</li></ul>
+        <ul><li>Initiatives first, capabilities retrofitted afterward</li><li>Built by IT and presented to the business for endorsement</li><li>Every gap attacked in year one</li><li>Sequence presented without the reasoning, so nobody can replan it</li><li>Published and never revisited. Review quarterly in year one, twice a year after</li><li>Year 3 fantasy: specific projects three years out, which is false confidence</li></ul>
       </div>
     </div>
     <div class="same-note">Four prerequisites, or the roadmap rests on sand: a written strategy with clear priorities, a capability model at Level 2 or better, an honest view of the current state, and business sponsors who own their gaps. Some gaps close through operating model change alone, such as moving a decision right, and those are legitimate roadmap entries. Some have no good initiative yet, and the right year-one item is discovery.</div>
@@ -536,7 +536,7 @@
 <line x1="350.0" y1="126" x2="350.0" y2="194" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#earoad-g)"/>
 <text x="458.0" y="164.0" text-anchor="start" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">starts once scoring is committed and visible</text>
 <text x="508.0" y="210.0" text-anchor="start" font-size="10" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">starts once scoring gives usable interim output</text></svg></div>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Campaign work starts at month three because it needs the new scoring to be committed and visible, not finished. Automation waits until month six, when scoring produces usable interim output; starting it earlier means building on unstable upstream work. Everything ships inside 18 months, and the second half of the horizon is tuning and the operational change that makes the capability stick.</p>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">Campaign work starts at month three because it needs the new scoring to be committed and visible, not finished. Automation waits until month six, when scoring produces usable interim output. Starting it earlier means building on unstable upstream work. Everything ships inside 18 months, and the second half of the horizon is tuning and the operational change that makes the capability stick.</p>
       <div style="margin-top:16px"><table class="matrix-table">
           <tr><th>Strategic priority</th><th>Capability gap</th><th>Initiative</th><th>Sponsor</th><th>Target</th></tr>
           <tr><td>Cut acquisition cost 25% in 36 months</td><td>Customer Insight: quarterly rule-based scoring, weak signal coverage</td><td>Prospect scoring modernization</td><td>VP Marketing</td><td>Year 1</td></tr>
@@ -549,14 +549,14 @@
     <div class="stage-head">
       <span class="stage-num">10</span>
       <h3>Portfolio and modernization calls: where EA turns a model into a decision</h3>
-      <p>The capability model says what the organization does; the portfolio says what it runs to do it. EA is the function that keeps the two joined, so that disposition decisions are made per capability and not per system.</p>
+      <p>The capability model says what the organization does. The portfolio says what it runs to do it. EA is the function that keeps the two joined, so that disposition decisions are made per capability and not per system.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>TIME quadrant</th><th>Value and condition</th><th>Usual dispositions</th><th>What EA checks before agreeing</th></tr>
-          <tr><td>Invest</td><td>High value, good condition</td><td>Retain and extend, refactor where it speeds change</td><td>That the capability is differentiating or load-bearing; heavy spend on a commodity is how budgets disappear</td></tr>
-          <tr><td>Tolerate</td><td>Low value, good condition</td><td>Retain as is, rehost at most</td><td>That Retain carries an expiry date; without one it drifts into Ignore</td></tr>
+          <tr><td>Invest</td><td>High value, good condition</td><td>Retain and extend, refactor where it speeds change</td><td>That the capability is differentiating or load-bearing. Heavy spend on a commodity is how budgets disappear</td></tr>
+          <tr><td>Tolerate</td><td>Low value, good condition</td><td>Retain as is, rehost at most</td><td>That Retain carries an expiry date. Without one it drifts into Ignore</td></tr>
           <tr><td>Migrate</td><td>High value, poor condition</td><td>Replatform, refactor or rearchitect, replace with SaaS, consolidate</td><td>That duplicates are grouped by capability, not technology, and that rebuilds are reserved for differentiating capability</td></tr>
           <tr><td>Eliminate</td><td>Low value, poor condition</td><td>Retire, with data archived to its retention rule</td><td>That decommissioning is funded and counted as part of done</td></tr>
         </table>
@@ -569,10 +569,10 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Red flags in a disposition plan</span>
-        <ul><li><strong>Zero retirements.</strong> In portfolios of 60 or more applications, 10 to 20 percent usually retire. None means discovery failed.</li><li><strong>Rearchitect on more than 10 to 15 percent.</strong> Enthusiasm outrunning capacity.</li><li><strong>Rehost by default.</strong> Nobody made a decision, so the cheapest verb won.</li><li><strong>Scoring theater.</strong> Scores assembled to justify calls already made.</li><li><strong>Migration and modernization on one deadline.</strong> Two risks compounded into one date.</li><li><strong>A new request 70 percent covered by an existing application.</strong> Extend the existing one; require three-year TCO and an exit plan for anything new.</li></ul>
+        <ul><li><strong>Zero retirements.</strong> In portfolios of 60 or more applications, 10 to 20 percent usually retire. None means discovery failed.</li><li><strong>Rearchitect on more than 10 to 15 percent.</strong> Enthusiasm outrunning capacity.</li><li><strong>Rehost by default.</strong> Nobody made a decision, so the cheapest verb won.</li><li><strong>Scoring theater.</strong> Scores assembled to justify calls already made.</li><li><strong>Migration and modernization on one deadline.</strong> Two risks compounded into one date.</li><li><strong>A new request 70 percent covered by an existing application.</strong> Extend the existing one. Require three-year TCO and an exit plan for anything new.</li></ul>
       </div>
     </div>
-    <div class="same-note">Vocabulary: TIME is Gartner's portfolio model; the disposition verbs follow the "R" taxonomy, which AWS now publishes as seven strategies: retire, retain, rehost, relocate, repurchase, replatform, and refactor or re-architect<sup class="src"><a href="#src-2" title="AWS Prescriptive Guidance, migration strategies">[2]</a></sup>. The percentage ranges are practitioner heuristics from portfolio work, not industry benchmarks; treat them as a smell test. Scoring and the simulator live on <a href="../apm-portfolio-map/index.html">Application Portfolio</a>, execution mechanics on <a href="../modernization-execution/index.html">Modernization Execution</a>.</div>
+    <div class="same-note">Vocabulary: TIME is Gartner's portfolio model. The disposition verbs follow the "R" taxonomy, which AWS now publishes as seven strategies: retire, retain, rehost, relocate, repurchase, replatform, and refactor or re-architect<sup class="src"><a href="#src-2" title="AWS Prescriptive Guidance, migration strategies">[2]</a></sup>. The percentage ranges are practitioner heuristics from portfolio work, not industry benchmarks. Treat them as a smell test. Scoring and the simulator live on <a href="../apm-portfolio-map/index.html">Application Portfolio</a>, execution mechanics on <a href="../modernization-execution/index.html">Modernization Execution</a>.</div>
   <div class="src-list"><span class="src-lbl">Sources</span><ol><li value="2" id="src-2"><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html" rel="noopener">AWS Prescriptive Guidance, About the migration strategies (the 7 Rs)</a></li></ol></div>
   </div>
   <div class="stage-card">
@@ -605,7 +605,7 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Patterns that recur</span>
-        <ul><li>A target state that has been in flight for three years is a finding, not a plan</li><li>Architecture style is never the finding by itself; a well-run monolith beats badly bounded microservices every time</li><li>Founder-era platform exhaustion: the design that got the company here cannot carry the next stage</li><li>A successful product on a struggling platform, with delivery slowing each quarter</li><li>Acquired and never integrated: roll-ups running several of everything</li><li>Cloud cost climbing faster than usage, which is often architecture debt showing up in the bill first</li></ul>
+        <ul><li>A target state that has been in flight for three years is a finding, not a plan</li><li>Architecture style is never the finding by itself. A well-run monolith beats badly bounded microservices every time</li><li>Founder-era platform exhaustion: the design that got the company here cannot carry the next stage</li><li>A successful product on a struggling platform, with delivery slowing each quarter</li><li>Acquired and never integrated: roll-ups running several of everything</li><li>Cloud cost climbing faster than usage, which is often architecture debt showing up in the bill first</li></ul>
       </div>
     </div>
     <div class="same-note">Once the findings are in, price them: carry cost, risk exposure, and remediation cost per item, on <a href="../technical-debt-economics/index.html">Technical Debt Economics</a>. The acquisition version of this assessment is on <a href="../technology-diligence-map/index.html">Technology Diligence</a>.</div>
@@ -619,7 +619,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">What EA contributes</span>
-        <ul><li><strong>Overlay the two capability models.</strong> Duplication shows up by capability, which is where synergy actually lives; grouping by technology finds overlap that does not matter and misses overlap that does.</li><li><strong>Compare operating model canvases</strong> for each capability being combined. Mismatched decision rights and information authority predict where integration will hurt long before a system is touched.</li><li><strong>Set posture per capability, not per deal.</strong> Identity usually merges early because everything else depends on it; developer tooling merges quickly; ERP and HR run in parallel for a year or more; customer-facing platforms never go on a fast timeline.</li><li><strong>Deliver the day-90 package:</strong> a verified inventory, a re-validated deal thesis, and an integration architecture recommendation. Execution starts after that, not before.</li></ul>
+        <ul><li><strong>Overlay the two capability models.</strong> Duplication shows up by capability, which is where synergy actually lives. Grouping by technology finds overlap that does not matter and misses overlap that does.</li><li><strong>Compare operating model canvases</strong> for each capability being combined. Mismatched decision rights and information authority predict where integration will hurt long before a system is touched.</li><li><strong>Set posture per capability, not per deal.</strong> Identity usually merges early because everything else depends on it. Developer tooling merges quickly. ERP and HR run in parallel for a year or more. Customer-facing platforms never go on a fast timeline.</li><li><strong>Deliver the day-90 package:</strong> a verified inventory, a re-validated deal thesis, and an integration architecture recommendation. Execution starts after that, not before.</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Integration posture, per capability</span>
@@ -638,18 +638,18 @@
     <div class="stage-head">
       <span class="stage-num">13</span>
       <h3>Standing up or rebooting an EA function</h3>
-      <p>The rest of this page describes a function that is running. Getting there is its own problem, and the right size depends on the organization's shape, not on a model org chart. The headcount bands below are rough practitioner guidance; the signals in the right-hand column matter more than the numbers.</p>
+      <p>The rest of this page describes a function that is running. Getting there is its own problem, and the right size depends on the organization's shape, not on a model org chart. The headcount bands below are rough practitioner guidance. The signals in the right-hand column matter more than the numbers.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Organization shape</th><th>Who does enterprise architecture</th><th>The signal that it is time for more</th></tr>
           <tr><td>One product, under about 50 engineers</td><td>The CTO or a principal engineer, as part of the job. Significant decisions recorded as ADRs</td><td>The same platform decision gets made twice by different teams</td></tr>
-          <tr><td>About 50 to 200 engineers, or a second product line</td><td>One enterprise or principal architect with a small council of senior engineers; review only on the triggers in section <a href="#review">19</a></td><td>Teams choose overlapping platforms, or large purchases happen without anyone holding the whole picture</td></tr>
-          <tr><td>Several business units, 200 or more engineers, regulated data, or an acquisition program</td><td>A head of EA plus domain architects where the risk sits, usually data, security, and integration; intake and review tiers</td><td>Nobody can say how many applications you run or which ones do the same job</td></tr>
+          <tr><td>About 50 to 200 engineers, or a second product line</td><td>One enterprise or principal architect with a small council of senior engineers. Review only on the triggers in section <a href="#review">19</a></td><td>Teams choose overlapping platforms, or large purchases happen without anyone holding the whole picture</td></tr>
+          <tr><td>Several business units, 200 or more engineers, regulated data, or an acquisition program</td><td>A head of EA plus domain architects where the risk sits, usually data, security, and integration. Intake and review tiers</td><td>Nobody can say how many applications you run or which ones do the same job</td></tr>
           <tr><td>Large enterprise or serial acquirer</td><td>The full function described on this page, including business architecture</td><td>Duplicated capability measured in tens of millions a year</td></tr>
         </table>
-        <p>The first hire is a practicing architect who can hold a room with business leaders and has made real platform decisions, not a framework specialist or a tool administrator. Tools and frameworks can come later; a function whose first months are spent adopting TOGAF or populating a repository has usually lost the business before it produces a decision.</p>
+        <p>The first hire is a practicing architect who can hold a room with business leaders and has made real platform decisions, not a framework specialist or a tool administrator. Tools and frameworks can come later. A function whose first months are spent adopting TOGAF or populating a repository has usually lost the business before it produces a decision.</p>
       </div>
     </div>
     <div class="stage-grid single">
@@ -665,14 +665,14 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Rebooting one that is struggling</span>
-        <ul><li><strong>Diagnose first.</strong> Name which of the five failure patterns in section <a href="#failure">20</a> applies; the cure differs for each</li><li><strong>Announce what stops.</strong> Retire the lowest-value reviews, documents, and meetings first, publicly, so the change is visible before anything new is asked of anyone</li><li><strong>Keep what works.</strong> Most functions in trouble still do one or two things teams value; protect those</li><li><strong>Earn authority back case by case.</strong> A mandate restores attendance, not trust, and usually deepens the erosion</li></ul>
+        <ul><li><strong>Diagnose first.</strong> Name which of the five failure patterns in section <a href="#failure">20</a> applies. The cure differs for each</li><li><strong>Announce what stops.</strong> Retire the lowest-value reviews, documents, and meetings first, publicly, so the change is visible before anything new is asked of anyone</li><li><strong>Keep what works.</strong> Most functions in trouble still do one or two things teams value. Protect those</li><li><strong>Earn authority back case by case.</strong> A mandate restores attendance, not trust, and usually deepens the erosion</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">What not to do in the first 90 days</span>
         <ul><li>Starting with framework adoption, a repository purchase, or a standards catalog</li><li>Reviewing everything to prove relevance, which turns EA into a queue in its first month</li><li>Promising a complete current-state inventory before any decision is supported</li><li>Hiring a team before the first architect has shown what the function is for</li></ul>
       </div>
     </div>
-    <div class="same-note">If you are a new CTO and not a new head of EA, the first 30 days above fold into your own first 90; see <a href="../situation-starting-as-cto/index.html">Starting as CTO</a>. Score where the function stands at the end of the 90 days on <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a>.</div>
+    <div class="same-note">If you are a new CTO and not a new head of EA, the first 30 days above fold into your own first 90. See <a href="../situation-starting-as-cto/index.html">Starting as CTO</a>. Score where the function stands at the end of the 90 days on <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a>.</div>
   </div>
   <div class="stage-card" id="services">
     <div class="stage-head">
@@ -687,10 +687,10 @@
       </div>
       <div class="stage-cell">
         <span class="env-label b">Does not provide</span>
-        <ul><li>Operational firefighting; production incidents go to the teams that own the affected systems</li><li>Individual engineering decisions within an established architecture</li><li>Delivery or program management</li><li>Resolution of organizational or political problems that arrive disguised as technology questions</li></ul>
+        <ul><li>Operational firefighting. Production incidents go to the teams that own the affected systems</li><li>Individual engineering decisions within an established architecture</li><li>Delivery or program management</li><li>Resolution of organizational or political problems that arrive disguised as technology questions</li></ul>
       </div>
     </div>
-    <div class="same-note">The test for any EA activity: name a specific decision it will improve, and how. If no decision can be named, the activity probably doesn't belong in the function.</div>
+    <div class="same-note">The test for any EA activity: name a decision it will improve, and how. If no decision can be named, the activity probably doesn't belong in the function.</div>
   </div>
   <div class="stage-card" id="engagement">
     <div class="stage-head">
@@ -705,7 +705,7 @@
           <tr><td>Transactional</td><td>A bounded question answered with one output: an ADR, an analysis, a recommendation. Should be the most common pattern.</td><td>Low</td></tr>
           <tr><td>Advisory</td><td>Significant initiatives that need architectural input on a rhythm (weekly check-ins, decision sessions) while the team owns the work. Most material initiatives belong here.</td><td>Medium</td></tr>
           <tr><td>Review</td><td>Decisions above the review threshold, where EA pressure-tests the work without doing it</td><td>Low per review</td></tr>
-          <tr><td>Embedded</td><td>Multi-quarter, multi-team programs; a solution architect joins the team, attends its rituals, and owns its architecture artifacts</td><td>High; reserve it</td></tr>
+          <tr><td>Embedded</td><td>Multi-quarter, multi-team programs. A solution architect joins the team, attends its rituals, and owns its architecture artifacts</td><td>High. Reserve it</td></tr>
           <tr><td>Community</td><td>Chapters and guilds where architectural thinking spreads beyond the EA team</td><td>Ongoing investment</td></tr>
         </table>
       </div>
@@ -721,14 +721,14 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Roles</span>
-        <ul><li><strong>Head of EA:</strong> owns the operating model and the CIO/CTO relationship; still practices architecture as well as leading</li><li><strong>Principal Architects:</strong> own the most significant decisions; scarce, and the function's effectiveness tracks how well their time is protected</li><li><strong>Domain Architects:</strong> the authoritative voice within a specific domain (data, security, integration)</li><li><strong>Solution Architects:</strong> the practical interface between EA and delivery teams</li></ul>
+        <ul><li><strong>Head of EA:</strong> owns the operating model and the CIO/CTO relationship. Still practices architecture as well as leading</li><li><strong>Principal Architects:</strong> own the most significant decisions. Scarce, and the function's effectiveness tracks how well their time is protected</li><li><strong>Domain Architects:</strong> the authoritative voice within one domain (data, security, integration)</li><li><strong>Solution Architects:</strong> the practical interface between EA and delivery teams</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Capacity, steady state</span>
         <ul><li>30 to 40 percent: direct engagements</li><li>20 to 25 percent: review and consultation</li><li>15 to 20 percent: function-level work (standards, reference material)</li><li>10 to 15 percent: learning and development</li><li>10 to 15 percent: organizational overhead</li></ul>
       </div>
     </div>
-    <div class="same-note">Architects at 100 percent direct engagement and 0 percent function-level work means the function is cannibalizing its own future. The reverse means it isn't producing value today. Neither is sustainable. Two further disciplines: ring-fence some capacity for strategic work nobody is asking for, such as a target-state refresh or a reference model for an emerging area, because otherwise it is always deferred; and report where capacity actually goes. If one program is consuming 60 percent of the function, leadership should know whether that is a choice or an accident.</div>
+    <div class="same-note">Architects at 100 percent direct engagement and 0 percent function-level work means the function is cannibalizing its own future. The reverse means it isn't producing value today. Neither is sustainable. Two further disciplines: ring-fence some capacity for strategic work nobody is asking for, such as a target-state refresh or a reference model for an emerging area, because otherwise it is always deferred, and report where capacity actually goes. If one program is consuming 60 percent of the function, leadership should know whether that is a choice or an accident.</div>
   </div>
   <div class="stage-card" id="demand">
     <div class="stage-head">
@@ -746,7 +746,7 @@
         <ul><li>Strategic significance</li><li>Reversibility, harder-to-reverse ranks higher</li><li>Timing criticality, whether there is still a window for input</li><li>Sponsor engagement</li><li>Blast radius</li></ul>
       </div>
     </div>
-    <div class="same-note">Notably absent from the criteria: who is asking. Prioritizing by requester seniority produces capture by the loudest voices at the expense of the most valuable work. The intake form asks five things: what is being asked, which decision or initiative it supports, who is asking, how urgent it is, and what EA should produce. A request that cannot answer those gets clarified before it is accepted. Triage weekly; an untriaged backlog grows from days to weeks faster than anyone expects and discredits the channel.</div>
+    <div class="same-note">Notably absent from the criteria: who is asking. Prioritizing by requester seniority produces capture by the loudest voices at the expense of the most valuable work. The intake form asks five things: what is being asked, which decision or initiative it supports, who is asking, how urgent it is, and what EA should produce. A request that cannot answer those gets clarified before it is accepted. Triage weekly. An untriaged backlog grows from days to weeks faster than anyone expects and discredits the channel.</div>
   </div>
   <div class="stage-card" id="relationships">
     <div class="stage-head">
@@ -758,10 +758,10 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Relationship</th><th>Healthy arrangement</th><th>Warning sign</th></tr>
-          <tr><td>Reporting line</td><td>EA reports close enough to the technology executive to be in the room where significant decisions are made</td><td>EA sits three levels below where decisions happen; quality stops mattering</td></tr>
-          <tr><td>Delivery leadership</td><td>An explicit agreement on engagement patterns, the minimum rigor EA will not waive, and how disagreements get settled without escalation</td><td>Delivery sees EA as a brake; EA sees delivery as short-termist; both are partly right and nobody negotiates</td></tr>
+          <tr><td>Reporting line</td><td>EA reports close enough to the technology executive to be in the room where significant decisions are made</td><td>EA sits three levels below where decisions happen. Quality stops mattering</td></tr>
+          <tr><td>Delivery leadership</td><td>An explicit agreement on engagement patterns, the minimum rigor EA will not waive, and how disagreements get settled without escalation</td><td>Delivery sees EA as a brake. EA sees delivery as short-termist. Both are partly right and nobody negotiates</td></tr>
           <tr><td>Security</td><td>Either placement works, inside EA or inside security, as long as ownership of security-relevant architecture decisions is unambiguous</td><td>Nobody can say who decides when a security-relevant design choice comes up</td></tr>
-          <tr><td>Platform and SRE</td><td>EA shapes platform direction; platform and SRE own implementation and operation</td><td>EA tries to run the platform, or disengages and loses touch with where real architecture now happens</td></tr>
+          <tr><td>Platform and SRE</td><td>EA shapes platform direction. Platform and SRE own implementation and operation</td><td>EA tries to run the platform, or disengages and loses touch with where real architecture now happens</td></tr>
           <tr><td>Business leadership</td><td>Plain-language artifacts business leaders use, and invitations to decisions early while input still has value</td><td>EA is seen as technical-only and invited late, if at all</td></tr>
         </table>
       </div>
@@ -777,14 +777,14 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Touchpoint</th><th>Timing</th><th>Purpose</th></tr>
-          <tr><td>Early consult</td><td>Pre-scoping, before funding</td><td>Orientation and shared context; no formal decision</td></tr>
+          <tr><td>Early consult</td><td>Pre-scoping, before funding</td><td>Orientation and shared context. No formal decision</td></tr>
           <tr><td>Design review</td><td>After initial design, before deep build</td><td>Pressure-test the design, surface risks, name decisions and owners</td></tr>
           <tr><td>Readiness check</td><td>Before production deployment</td><td>Confirm that what got built matches what was designed</td></tr>
-          <tr><td>Post-deployment</td><td>Quarterly or event-driven</td><td>Feedback loop; extract patterns for the catalog</td></tr>
+          <tr><td>Post-deployment</td><td>Quarterly or event-driven</td><td>Feedback loop. Extract patterns for the catalog</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">Required engagement triggers on objective criteria: a new enterprise-shared capability, a new technology category, a standards exception request, spend above a defined threshold, or regulated data beyond ordinary scope. Small, in-pattern initiatives need no engagement at all; asking permission to use an already-reviewed pattern is friction pretending to be governance. Composition, tiers, and turnaround commitments are on <a href="../architecture-review-board/index.html">Architecture Review Board</a>; the principles reviews test against are on <a href="../architecture-principles/index.html">Architecture Principles</a>.</div>
+    <div class="same-note">Required engagement triggers on objective criteria: a new enterprise-shared capability, a new technology category, a standards exception request, spend above a defined threshold, or regulated data beyond ordinary scope. Small, in-pattern initiatives need no engagement at all. Asking permission to use an already-reviewed pattern is friction pretending to be governance. Composition, tiers, and turnaround commitments are on <a href="../architecture-review-board/index.html">Architecture Review Board</a>. The principles reviews test against are on <a href="../architecture-principles/index.html">Architecture Principles</a>.</div>
   </div>
   <div class="stage-card" id="failure">
     <div class="stage-head">
@@ -796,15 +796,15 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Pattern</th><th>What it looks like</th><th>Underlying cause</th><th>The cure</th></tr>
-          <tr><td>Ivory tower</td><td>Principles, standards, and target states teams ignore; respected in form, irrelevant in practice</td><td>Optimizing for artifacts over real decisions; architects too far from delivery</td><td>Fewer documents, more conversations; measure artifacts by use, not production</td></tr>
-          <tr><td>Governance theater</td><td>Teams comply with the review and ignore its output; decisions happen elsewhere</td><td>Reviews imposed without helping anyone decide better</td><td>Fewer, better reviews; if a review would not have changed the decision, skip it</td></tr>
-          <tr><td>Engineering-by-architects</td><td>Architects deep in code while the architecture goes undone</td><td>No clear boundary between architecture and engineering work</td><td>Reset the boundary; architects may code, but not instead of architecting</td></tr>
-          <tr><td>Unmanaged demand</td><td>Chronic overload; urgent work crowds out important work</td><td>Weak intake; saying no treated as forbidden</td><td>One channel, weekly triage, and reporting declined requests so leaders see the trade-off</td></tr>
+          <tr><td>Ivory tower</td><td>Principles, standards, and target states teams ignore. Respected in form, irrelevant in practice</td><td>Optimizing for artifacts over real decisions. Architects too far from delivery</td><td>Fewer documents, more conversations. Measure artifacts by use, not production</td></tr>
+          <tr><td>Governance theater</td><td>Teams comply with the review and ignore its output. Decisions happen elsewhere</td><td>Reviews imposed without helping anyone decide better</td><td>Fewer, better reviews. If a review would not have changed the decision, skip it</td></tr>
+          <tr><td>Engineering-by-architects</td><td>Architects deep in code while the architecture goes undone</td><td>No clear boundary between architecture and engineering work</td><td>Reset the boundary. Architects may code, but not instead of architecting</td></tr>
+          <tr><td>Unmanaged demand</td><td>Chronic overload. Urgent work crowds out important work</td><td>Weak intake. Saying no treated as forbidden</td><td>One channel, weekly triage, and reporting declined requests so leaders see the trade-off</td></tr>
           <tr><td>Credibility erosion</td><td>Significant choices made without EA, heard about second-hand</td><td>Past engagements were not useful enough to repeat</td><td>Slow: earn it back case by case. Mandates accelerate the erosion</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">The test that cuts through all five: the function that works is the one whose consumers, business leaders, delivery teams, and engineering leadership, would actively resist losing. A function that can name five leaders who would fight to keep it is doing well; one that cannot should treat the absence as information. Score your own function on <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a>.</div>
+    <div class="same-note">The test that cuts through all five: the function that works is the one whose consumers, business leaders, delivery teams, and engineering leadership, would actively resist losing. A function that can name five leaders who would fight to keep it is doing well. One that cannot should treat the absence as information. Score your own function on <a href="../ea-maturity-assessment/index.html">EA Maturity Assessment</a>.</div>
   </div>
   <div class="stage-card" id="standards">
     <div class="stage-head">
@@ -816,10 +816,10 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Standard</th><th>Current edition</th><th>Use it for</th></tr>
-          <tr><td>TOGAF Standard (The Open Group)</td><td>10th Edition, 2022, modular in structure<sup class="src"><a href="#src-4" title="The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022">[4]</a></sup></td><td>A reference method; adopt the parts you need and skip the rest</td></tr>
-          <tr><td>ArchiMate (The Open Group)</td><td>ArchiMate 4, released April 2026, succeeding 3.2 (2022)<sup class="src"><a href="#src-5" title="The Open Group, ArchiMate 4 Specification announcement, April 2026">[5]</a></sup>; check your modeling tool supports it before switching</td><td>Enterprise-level models linking capabilities, applications, and technology</td></tr>
+          <tr><td>TOGAF Standard (The Open Group)</td><td>10th Edition, 2022, modular in structure<sup class="src"><a href="#src-4" title="The Open Group, launch of the TOGAF Standard, 10th Edition, April 2022">[4]</a></sup></td><td>A reference method. Adopt the parts you need and skip the rest</td></tr>
+          <tr><td>ArchiMate (The Open Group)</td><td>ArchiMate 4, released April 2026, succeeding 3.2 (2022)<sup class="src"><a href="#src-5" title="The Open Group, ArchiMate 4 Specification announcement, April 2026">[5]</a></sup>. Check your modeling tool supports it before switching</td><td>Enterprise-level models linking capabilities, applications, and technology</td></tr>
           <tr><td>C4 model (Simon Brown)</td><td>Stable</td><td>Solution-level diagrams engineers will actually maintain</td></tr>
-          <tr><td>Architecture decision records (Michael Nygard, 2011)<sup class="src"><a href="#src-6" title="Michael Nygard, Documenting Architecture Decisions, November 2011">[6]</a></sup></td><td>Informal convention</td><td>Recording why a decision was made; see <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
+          <tr><td>Architecture decision records (Michael Nygard, 2011)<sup class="src"><a href="#src-6" title="Michael Nygard, Documenting Architecture Decisions, November 2011">[6]</a></sup></td><td>Informal convention</td><td>Recording why a decision was made. See <a href="../adr-roadmapping/index.html">ADRs &amp; Roadmapping</a></td></tr>
           <tr><td>BIZBOK Guide (Business Architecture Guild)</td><td>Periodically revised</td><td>Capability and value-stream mapping with business stakeholders</td></tr>
         </table>
       </div>
@@ -845,14 +845,14 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Rules that keep a tool useful</span>
-        <ul><li><strong>Model before tool.</strong> If the capability model and application list do not work in a spreadsheet, a platform will not fix them</li><li><strong>Integrations over data entry.</strong> Anything that depends on architects typing updates is stale within two quarters</li><li><strong>One owner per data element.</strong> Application owners own their records; EA owns the model and the quality checks</li><li><strong>Judge it by questions answered.</strong> Which applications support this capability, what do they cost, which are end of life. If the tool cannot answer those in minutes, the count of objects stored in it is irrelevant</li></ul>
+        <ul><li><strong>Model before tool.</strong> If the capability model and application list do not work in a spreadsheet, a platform will not fix them</li><li><strong>Integrations over data entry.</strong> Anything that depends on architects typing updates is stale within two quarters</li><li><strong>One owner per data element.</strong> Application owners own their records. EA owns the model and the quality checks</li><li><strong>Judge it by questions answered.</strong> Which applications support this capability, what do they cost, which are end of life. If the tool cannot answer those in minutes, the count of objects stored in it is irrelevant</li></ul>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The platform market</span>
-        <p>The platform category includes products such as SAP LeanIX, Ardoq, Bizzdesign, and the application portfolio modules of IT service management suites. Evaluate them against your first three questions and your integration sources, not feature lists; the scoring method on <a href="../vendor-evaluation/index.html">Vendor Evaluation</a> applies.</p>
+        <p>The platform category includes products such as SAP LeanIX, Ardoq, Bizzdesign, and the application portfolio modules of IT service management suites. Evaluate them against your first three questions and your integration sources, not feature lists. The scoring method on <a href="../vendor-evaluation/index.html">Vendor Evaluation</a> applies.</p>
       </div>
     </div>
-    <div class="same-note">The 200-application line is a practitioner rule of thumb, not a standard: below it, the cost of keeping a platform current usually exceeds the value it adds; above it, or with several business units feeding one portfolio, a spreadsheet stops being trustworthy. Portfolio scoring itself is on <a href="../apm-portfolio-map/index.html">Application Portfolio</a>.</div>
+    <div class="same-note">The 200-application line is a practitioner rule of thumb, not a standard: below it, the cost of keeping a platform current usually exceeds the value it adds. Above it, or with several business units feeding one portfolio, a spreadsheet stops being trustworthy. Portfolio scoring itself is on <a href="../apm-portfolio-map/index.html">Application Portfolio</a>.</div>
   </div>
   <div class="stage-card" id="measuring">
     <div class="stage-head">
@@ -872,15 +872,15 @@
         </table>
         <table class="matrix-table">
           <tr><th>Function outcome</th><th>How to read it</th></tr>
-          <tr><td>Decision durability</td><td>Share of significant decisions still standing two years later without reversal. Backward-looking and imperfect; still the most honest quality measure there is</td></tr>
+          <tr><td>Decision durability</td><td>Share of significant decisions still standing two years later without reversal. Backward-looking and imperfect. Still the most honest quality measure there is</td></tr>
           <tr><td>Early engagement rate</td><td>Share of significant initiatives where EA was involved while options were still open</td></tr>
           <tr><td>Business leader perception</td><td>Structured feedback twice a year: is EA helping or getting in the way?</td></tr>
-          <tr><td>Delivery lead perception</td><td>Does engaging EA make teams faster or slower; are the standards sensible; were the architects credible?</td></tr>
+          <tr><td>Delivery lead perception</td><td>Does engaging EA make teams faster or slower? Are the standards sensible? Were the architects credible?</td></tr>
           <tr><td>Architectural debt trajectory</td><td>Is the portfolio's architectural health improving, flat, or declining? Slow to move, hard to fake</td></tr>
         </table>
       </div>
     </div>
-    <div class="same-note">Activity counts, such as requests triaged, reviews held, ADRs written, and standards maintained, are hygiene: report them, never confuse them with value. Metrics are for diagnosis, not a report card; a function that treats them as a grade gets better numbers and worse results. When EA reports upward, translate every item into a risk or business statement, keep one fixed one-page format for at least a year, and put the bad news first. See <a href="../board-reporting/index.html">Board Reporting</a>.</div>
+    <div class="same-note">Activity counts, such as requests triaged, reviews held, ADRs written, and standards maintained, are hygiene: report them, never confuse them with value. Metrics are for diagnosis, not a report card. A function that treats them as a grade gets better numbers and worse results. When EA reports upward, translate every item into a risk or business statement, keep one fixed one-page format for at least a year, and put the bad news first. See <a href="../board-reporting/index.html">Board Reporting</a>.</div>
   </div>
 </main>
 

@@ -101,9 +101,9 @@
         <table class="matrix-table">
           <tr><th>Stage</th><th>Focus</th><th>Why it sits here in the sequence</th></tr>
           <tr><td>Foundation</td><td>MFA everywhere, least-privilege access, asset inventory, basic logging</td><td>Everything else depends on this being real, not aspirational</td></tr>
-          <tr><td>Visibility</td><td>Centralized logging, vulnerability scanning, dependency tracking</td><td>You can't manage what you can't see; this precedes any formal certification effort</td></tr>
+          <tr><td>Visibility</td><td>Centralized logging, vulnerability scanning, dependency tracking</td><td>You can't manage what you can't see. This precedes any formal certification effort</td></tr>
           <tr><td>Process</td><td>Incident response plan, vulnerability management SLA, access review cadence</td><td>Turns visibility into action with defined ownership and timelines</td></tr>
-          <tr><td>Certification</td><td>SOC 2, ISO 27001, or industry-specific frameworks</td><td>Documents what should already be true; pursuing it earlier produces a program built for the audit instead of for risk</td></tr>
+          <tr><td>Certification</td><td>SOC 2, ISO 27001, or industry-specific frameworks</td><td>Documents what should already be true. Pursuing it earlier produces a program built for the audit instead of for risk</td></tr>
         </table>
       </div>
     </div>
@@ -171,7 +171,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p>Start with the foundation-stage items above; they cost discipline more than headcount: enforce MFA, remove standing admin access, keep a current inventory of what systems exist and who owns them. A fractional security advisor or a well-scoped external assessment can substitute for a full-time hire through the visibility stage; process and certification need dedicated ownership once the company is large enough that a security incident would be existential.</p>
+        <p>Start with the foundation-stage items above. They cost discipline more than headcount: enforce MFA, remove standing admin access, keep a current inventory of what systems exist and who owns them. A fractional security advisor or a well-scoped external assessment can substitute for a full-time hire through the visibility stage. Process and certification need dedicated ownership once the company is large enough that a security incident would be existential.</p>
       </div>
     </div>
   </div>
@@ -255,16 +255,16 @@
     <div class="stage-head">
       <span class="stage-num">9</span>
       <h3>The first 180 days, sequenced</h3>
-      <p>A concrete plan that follows the stages above. Days are guides; the order matters more than the pace.</p>
+      <p>A concrete plan that follows the stages above. Days are guides. The order matters more than the pace.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Window</th><th>Deliverables</th></tr>
-          <tr><td>Days 0 to 30</td><td>Phishing-resistant MFA for administrators, email, and remote access; standing admin rights removed; asset and SaaS inventory started; endpoint detection deployed; backups verified offline or immutable, with one real restore</td></tr>
-          <tr><td>Days 31 to 90</td><td>Central logging with at least 12 months retention for security-relevant sources; external attack surface scanning; a 14-day deadline for known-exploited vulnerabilities on internet-facing systems; an incident response plan and one tabletop exercise; vendor inventory with data access mapped</td></tr>
-          <tr><td>Days 91 to 180</td><td>Secret scanning, dependency scanning, and static analysis in CI; quarterly access reviews with evidence; phishing simulation used for coaching; a risk register tied to the <a href="../technology-risk-appetite/index.html">risk appetite</a>; a gap assessment against NIST CSF 2.0 or CIS Controls IG1</td></tr>
-          <tr><td>After 180 days</td><td>Certification if customers require it, now documenting controls that already run; specialization of the team as described in section 7</td></tr>
+          <tr><td>Days 0 to 30</td><td>Phishing-resistant MFA for administrators, email, and remote access. Standing admin rights removed. Asset and SaaS inventory started. Endpoint detection deployed. Backups verified offline or immutable, with one real restore</td></tr>
+          <tr><td>Days 31 to 90</td><td>Central logging with at least 12 months retention for security-relevant sources. External attack surface scanning. A 14-day deadline for known-exploited vulnerabilities on internet-facing systems. An incident response plan and one tabletop exercise. Vendor inventory with data access mapped</td></tr>
+          <tr><td>Days 91 to 180</td><td>Secret scanning, dependency scanning, and static analysis in CI. Quarterly access reviews with evidence. Phishing simulation used for coaching. A risk register tied to the <a href="../technology-risk-appetite/index.html">risk appetite</a>. A gap assessment against NIST CSF 2.0 or CIS Controls IG1</td></tr>
+          <tr><td>After 180 days</td><td>Certification if customers require it, now documenting controls that already run. Specialization of the team as described in section 7</td></tr>
         </table>
       </div>
     </div>
@@ -273,7 +273,7 @@
     <div class="stage-head">
       <span class="stage-num">Diagram</span>
       <h3>The 180 days at a glance</h3>
-      <p>The plan above as a sequence. Days are guides; the order matters more than the pace.</p>
+      <p>The plan above as a sequence. Days are guides. The order matters more than the pace.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell" style="padding:20px;">
 <div style="overflow-x:auto;max-width:100%"><svg viewBox="0 0 880 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sp-title" style="width:100%;min-width:600px;height:auto;display:block;max-width:880px;margin:0 auto;"><defs><marker id="sp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker><marker id="sp-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs><title id="sp-title">The first 180 days of a security program</title><rect x="20" y="20" width="193" height="50" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
@@ -322,12 +322,12 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Framework</th><th>What it is</th><th>Use it when</th></tr>
-          <tr><td>NIST Cybersecurity Framework 2.0 (2024)</td><td>Outcome-based framework with six functions; 2.0 added Govern<sup class="src"><a href="#src-2" title="NIST, release of Cybersecurity Framework 2.0, February 2024">[2]</a></sup></td><td>You need a program backbone and a common language with the board</td></tr>
-          <tr><td>CIS Critical Security Controls v8.1</td><td>18 controls and 153 safeguards, grouped into three implementation groups; IG1 is essential cyber hygiene</td><td>You need a concrete, prioritized first-year checklist</td></tr>
-          <tr><td>ISO/IEC 27001:2022</td><td>A certifiable information security management system with 93 Annex A controls; 2013-version certificates expired on October 31, 2025<sup class="src"><a href="#src-3" title="IAF MD 26:2022, transition requirements for ISO/IEC 27001:2022">[3]</a></sup></td><td>International or enterprise customers ask for certification</td></tr>
-          <tr><td>SOC 2 (AICPA Trust Services Criteria)</td><td>An auditor's report; Type II covers how controls operated over a period, commonly 6 to 12 months</td><td>US B2B customers ask for an attestation</td></tr>
+          <tr><td>NIST Cybersecurity Framework 2.0 (2024)</td><td>Outcome-based framework with six functions. 2.0 added Govern<sup class="src"><a href="#src-2" title="NIST, release of Cybersecurity Framework 2.0, February 2024">[2]</a></sup></td><td>You need a program backbone and a common language with the board</td></tr>
+          <tr><td>CIS Critical Security Controls v8.1</td><td>18 controls and 153 safeguards, grouped into three implementation groups. IG1 is essential cyber hygiene</td><td>You need a concrete, prioritized first-year checklist</td></tr>
+          <tr><td>ISO/IEC 27001:2022</td><td>A certifiable information security management system with 93 Annex A controls. 2013-version certificates expired on October 31, 2025<sup class="src"><a href="#src-3" title="IAF MD 26:2022, transition requirements for ISO/IEC 27001:2022">[3]</a></sup></td><td>International or enterprise customers ask for certification</td></tr>
+          <tr><td>SOC 2 (AICPA Trust Services Criteria)</td><td>An auditor's report. Type II covers how controls operated over a period, commonly 6 to 12 months</td><td>US B2B customers ask for an attestation</td></tr>
           <tr><td>HITRUST CSF</td><td>A healthcare-oriented harmonized framework with e1, i1, and r2 assessment levels</td><td>Health systems or payers are your customers</td></tr>
-          <tr><td>PCI DSS v4.0.1</td><td>Card data security standard; the future-dated requirements became mandatory on March 31, 2025<sup class="src"><a href="#src-4" title="PCI Security Standards Council, future-dated requirements of PCI DSS v4.x">[4]</a></sup></td><td>You store, process, or transmit card data</td></tr>
+          <tr><td>PCI DSS v4.0.1</td><td>Card data security standard. The future-dated requirements became mandatory on March 31, 2025<sup class="src"><a href="#src-4" title="PCI Security Standards Council, future-dated requirements of PCI DSS v4.x">[4]</a></sup></td><td>You store, process, or transmit card data</td></tr>
           <tr><td>CMMC 2.0</td><td>US Department of Defense requirement, phased into contracts from November 10, 2025<sup class="src"><a href="#src-5" title="DFARS final rule on CMMC, Federal Register, September 10, 2025">[5]</a></sup></td><td>You hold defense contracts involving controlled unclassified information</td></tr>
         </table>
       </div>
@@ -344,7 +344,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Benchmark</th><th>Published figure</th><th>How to use it</th></tr>
-          <tr><td>Security budget as a share of IT spend</td><td>10.9 percent in 2025, down from 11.9 percent the year before; budgets grew 4 percent, the slowest in five years<sup class="src"><a href="#src-6" title="IANS Research and Artico Search, 2025 Security Budget Benchmark Report">[6]</a></sup></td><td>Useful as a reasonableness check, never as the justification. The program is sized by the sequencing above and the risk appetite, then compared with this.</td></tr><tr><td>Average cost of a data breach</td><td>$4.44M globally in 2025, down 9 percent; $10.22M in the United States; $7.42M in healthcare<sup class="src"><a href="#src-7" title="IBM, Cost of a Data Breach Report 2025">[7]</a></sup></td><td>Quote the figure for your country and sector, not the global one. Mean time to identify and contain was 241 days, which is the number that funds detection work.</td></tr>
+          <tr><td>Security budget as a share of IT spend</td><td>10.9 percent in 2025, down from 11.9 percent the year before. Budgets grew 4 percent, the slowest in five years<sup class="src"><a href="#src-6" title="IANS Research and Artico Search, 2025 Security Budget Benchmark Report">[6]</a></sup></td><td>Useful as a reasonableness check, never as the justification. The program is sized by the sequencing above and the risk appetite, then compared with this.</td></tr><tr><td>Average cost of a data breach</td><td>$4.44M globally in 2025, down 9 percent. $10.22M in the United States. $7.42M in healthcare<sup class="src"><a href="#src-7" title="IBM, Cost of a Data Breach Report 2025">[7]</a></sup></td><td>Quote the figure for your country and sector, not the global one. Mean time to identify and contain was 241 days, which is the number that funds detection work.</td></tr>
         </table>
       </div>
     </div>
@@ -353,7 +353,7 @@
 
 <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Checklist</span>
+      <span class="stage-num">Audit</span>
       <h3>Signs the program is for show</h3>
       <p>Patterns that show up when a security program looks complete in documentation and isn't reflected in daily operation.</p>
     </div>
@@ -376,7 +376,7 @@
 </main>
 
 <footer>
-  Reference only. Breach statistics are from Verizon's 2025 Data Breach Investigations Report; framework details reflect NIST CSF 2.0, CIS Controls v8.1, ISO/IEC 27001:2022, the AICPA Trust Services Criteria, HITRUST CSF, PCI DSS v4.0.1, and the CMMC program as of September 2026. Security program requirements vary by industry, regulatory exposure, and company scale; adapt sequencing accordingly.
+  Reference only. Breach statistics are from Verizon's 2025 Data Breach Investigations Report. Framework details reflect NIST CSF 2.0, CIS Controls v8.1, ISO/IEC 27001:2022, the AICPA Trust Services Criteria, HITRUST CSF, PCI DSS v4.0.1, and the CMMC program as of September 2026. Security program requirements vary by industry, regulatory exposure, and company scale. Adapt sequencing accordingly.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

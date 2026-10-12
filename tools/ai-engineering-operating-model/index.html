@@ -97,7 +97,7 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>What changes, and what doesn't</h3>
-      <p>AI-assisted coding shifts specific parts of the job and leaves others alone. Treating it as a uniform speedup misreads what's happening.</p>
+      <p>AI-assisted coding shifts some parts of the job and leaves others alone. Treating it as a uniform speedup misreads what's happening.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -196,10 +196,10 @@
           <tr><th>Source</th><th>Finding</th></tr>
           <tr><td>GitHub controlled experiment (Peng and colleagues, 2023)</td><td>Developers finished a bounded, well-specified task about 55 percent faster with an AI assistant<sup class="src"><a href="#src-1" title="Peng and colleagues, The Impact of AI on Developer Productivity, 2023">[1]</a></sup></td></tr>
           <tr><td>DORA, 2024</td><td>Higher AI adoption was associated with slightly lower delivery throughput and noticeably lower delivery stability<sup class="src"><a href="#src-2" title="DORA, 2024 Accelerate State of DevOps Report">[2]</a></sup></td></tr>
-          <tr><td>DORA, 2025 State of AI-assisted Software Development</td><td>About 90 percent of respondents use AI and over 80 percent report productivity gains<sup class="src"><a href="#src-3" title="DORA, 2025 State of AI-assisted Software Development">[3]</a></sup>; AI adoption was now associated with higher throughput, but instability persisted, and only about a quarter reported high trust in AI output. The report's central finding is that AI amplifies a team's existing strengths and weaknesses</td></tr>
+          <tr><td>DORA, 2025 State of AI-assisted Software Development</td><td>About 90 percent of respondents use AI and over 80 percent report productivity gains<sup class="src"><a href="#src-3" title="DORA, 2025 State of AI-assisted Software Development">[3]</a></sup>. AI adoption was now associated with higher throughput, but instability persisted, and only about a quarter reported high trust in AI output. The report's central finding is that AI amplifies a team's existing strengths and weaknesses</td></tr>
           <tr><td>METR randomized trial (July 2025)</td><td>Experienced open-source maintainers working in their own large repositories took about 19 percent longer with AI tools, while believing they were faster<sup class="src"><a href="#src-4" title="METR, early-2025 AI and experienced open-source developer productivity, July 2025">[4]</a></sup></td></tr>
-          <tr><td>METR update (February 2026)</td><td>A follow-up could not produce a reliable new estimate because developers increasingly declined to work without AI; the authors think gains have likely grown since early 2025 but could not measure how much<sup class="src"><a href="#src-5" title="METR, changes to the developer productivity experiment design, February 2026">[5]</a></sup></td></tr>
-          <tr><td>Veracode GenAI Code Security Report (2025)</td><td>About 45 percent of AI-generated code samples failed security tests, with no material improvement from newer models; syntax correctness rose while security did not<sup class="src"><a href="#src-6" title="Veracode, 2025 GenAI Code Security Report">[6]</a></sup></td></tr>
+          <tr><td>METR update (February 2026)</td><td>A follow-up could not produce a reliable new estimate because developers increasingly declined to work without AI. The authors think gains have likely grown since early 2025 but could not measure how much<sup class="src"><a href="#src-5" title="METR, changes to the developer productivity experiment design, February 2026">[5]</a></sup></td></tr>
+          <tr><td>Veracode GenAI Code Security Report (2025)</td><td>About 45 percent of AI-generated code samples failed security tests, with no material improvement from newer models. Syntax correctness rose while security did not<sup class="src"><a href="#src-6" title="Veracode, 2025 GenAI Code Security Report">[6]</a></sup></td></tr>
         </table>
       </div>
     </div>
@@ -237,10 +237,10 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Topic</th><th>Policy</th></tr>
-          <tr><td>Tools and data</td><td>Only approved tools under enterprise terms that exclude training on your code; no customer data, secrets, or regulated data in prompts to unapproved tools</td></tr>
-          <tr><td>Review</td><td>AI-assisted changes meet the same review bar as any other; very large generated diffs are split before review</td></tr>
+          <tr><td>Tools and data</td><td>Only approved tools under enterprise terms that exclude training on your code. No customer data, secrets, or regulated data in prompts to unapproved tools</td></tr>
+          <tr><td>Review</td><td>AI-assisted changes meet the same review bar as any other. Very large generated diffs are split before review</td></tr>
           <tr><td>Security</td><td>Secret scanning, dependency scanning, and static analysis run on every change, because roughly half of generated code fails security checks</td></tr>
-          <tr><td>Licensing</td><td>Use tools with duplicate-code filtering and IP indemnity; flag generated code that reproduces recognizable open-source code</td></tr>
+          <tr><td>Licensing</td><td>Use tools with duplicate-code filtering and IP indemnity. Flag generated code that reproduces recognizable open-source code</td></tr>
           <tr><td>Agents</td><td>Coding agents run with least privilege in sandboxed environments, never hold production credentials, and need human approval to merge or deploy</td></tr>
           <tr><td>Measurement</td><td>Track change failure rate, rework rate, and review time before and after adoption, per <a href="../engineering-metrics/index.html">Engineering Metrics</a></td></tr>
         </table>
@@ -257,24 +257,24 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Point</th><th>What the numbers showed</th><th>What the team did</th></tr>
-          <tr><td>Baseline</td><td>Change failure rate 12 percent; median review wait 6 hours</td><td>Recorded the baseline before rollout, the step most teams skip</td></tr>
-          <tr><td>Month 3</td><td>Pull requests up 35 percent; review wait up to 9 hours; change failure rate 16 percent</td><td>Capped change size, made security scanning blocking, added a review rotation</td></tr>
-          <tr><td>Month 6</td><td>Change failure rate 11 percent; lead time down about 20 percent from baseline</td><td>Kept the controls; moved freed capacity to the backlog of tests nobody had time to write</td></tr>
+          <tr><td>Baseline</td><td>Change failure rate 12 percent. Median review wait 6 hours</td><td>Recorded the baseline before rollout, the step most teams skip</td></tr>
+          <tr><td>Month 3</td><td>Pull requests up 35 percent. Review wait up to 9 hours. Change failure rate 16 percent</td><td>Capped change size, made security scanning blocking, added a review rotation</td></tr>
+          <tr><td>Month 6</td><td>Change failure rate 11 percent. Lead time down about 20 percent from baseline</td><td>Kept the controls. Moved freed capacity to the backlog of tests nobody had time to write</td></tr>
         </table>
       </div>
     </div>
   </div>
 <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs AI adoption is being measured or managed naively</h3>
+      <span class="stage-num">Warning signs</span>
+      <h3>How naive AI adoption shows itself</h3>
       <p>Patterns that show up when AI tooling gets adopted enthusiastically but without adjusting how the organization measures or trains around it.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
           <li>Productivity claims rest on lines of code, PR volume, or AI suggestion acceptance rate, with no outcome measure in sight</li>
-          <li>Code review practice hasn't been adjusted for the specific failure modes of AI-generated code</li>
+          <li>Code review practice hasn't been adjusted for the failure modes of AI-generated code</li>
           <li>No deliberate mechanism exists for junior engineers to build skills without AI assistance</li>
           <li>Change failure rate or defect rate hasn't been tracked before and after AI tooling adoption</li>
           <li>Headcount or timeline plans assume a productivity multiplier that someone asserted and nobody measured</li>
@@ -288,7 +288,7 @@
 </main>
 
 <footer>
-  Reference only. Draws on Peng and colleagues (2023), the DORA 2024 and 2025 reports including the DORA AI Capabilities Model, METR's July 2025 study and February 2026 update, and Veracode's GenAI Code Security reports through spring 2026. AI-assisted development is changing quickly; treat this as a set of questions to keep asking, not a settled answer.
+  Reference only. Draws on Peng and colleagues (2023), the DORA 2024 and 2025 reports including the DORA AI Capabilities Model, METR's July 2025 study and February 2026 update, and Veracode's GenAI Code Security reports through spring 2026. AI-assisted development is changing quickly. Treat this as a set of questions to keep asking, not a settled answer.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

@@ -87,17 +87,17 @@
     <div class="stage-head">
       <span class="stage-num">Reference</span>
       <h3>Academic concept, translated into practice</h3>
-      <p>Epistemology is the study of what counts as knowledge and how it's justified. None of these ideas require a philosophy background to use; they're already implicit in good discovery work.</p>
+      <p>Epistemology is the study of what counts as knowledge and how it's justified. None of these ideas require a philosophy background to use. They're already implicit in good discovery work.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Concept</th><th>Practical translation</th><th>Where it shows up</th></tr>
-          <tr><td>Justified true belief</td><td>A finding needs stated evidence and reasoning behind it; confident assertion on its own doesn't qualify</td><td>Every "Evidence Requirements" list across the diligence frameworks</td></tr>
+          <tr><td>Justified true belief</td><td>A finding needs stated evidence and reasoning behind it. Confident assertion on its own doesn't qualify</td><td>Every "Evidence Requirements" list across the diligence frameworks</td></tr>
           <tr><td>Degrees of belief</td><td>State how sure you are along with what you think is true. Certainty is rarely binary.</td><td>Confidence tags (High/Medium/Low) on every dollar figure in technical debt assessment</td></tr>
-          <tr><td>Falsifiability</td><td>A claim only means something if some piece of evidence could have proven it wrong</td><td>Red-flag pattern libraries naming what specifically would change a finding</td></tr>
-          <tr><td>Evidence hierarchy</td><td>Sources deserve unequal trust; rank them before you rely on them</td><td>Management representation ranked below direct system access in every diligence checklist</td></tr>
-          <tr><td>Bounded rationality</td><td>Perfect information isn't available; the goal is the best decision achievable within the constraints you have</td><td>Time-boxed diligence phases, quick-win prioritization in the 100-day assessment</td></tr>
+          <tr><td>Falsifiability</td><td>A claim only means something if some piece of evidence could have proven it wrong</td><td>Red-flag pattern libraries naming what would change a finding</td></tr>
+          <tr><td>Evidence hierarchy</td><td>Sources deserve unequal trust. Rank them before you rely on them</td><td>Management representation ranked below direct system access in every diligence checklist</td></tr>
+          <tr><td>Bounded rationality</td><td>Perfect information isn't available. The goal is the best decision achievable within the constraints you have</td><td>Time-boxed diligence phases, quick-win prioritization in the 100-day assessment</td></tr>
         </table>
       </div>
     </div>
@@ -134,7 +134,7 @@
           <tr><th>Method</th><th>What it does</th><th>Where it applies</th></tr>
           <tr><td>Triangulation</td><td>Cross-check a claim against at least two independent sources before treating it as fact</td><td>A claim made in one interview versus the same claim confirmed by system access or a second interviewee who wasn't in the room for the first</td></tr>
           <tr><td>Primary versus secondary evidence</td><td>Direct observation outranks a secondhand account of the observation</td><td>Reviewing the codebase itself versus accepting a description of the codebase's quality</td></tr>
-          <tr><td>Sampling logic</td><td>A convenience sample, whoever happens to be available and willing, is rarely a representative sample</td><td>Interview subject selection; reference customers a vendor hand-picks versus a broader, independently chosen set</td></tr>
+          <tr><td>Sampling logic</td><td>A convenience sample, whoever happens to be available and willing, is rarely a representative sample</td><td>Interview subject selection. Reference customers a vendor hand-picks versus a broader, independently chosen set</td></tr>
           <tr><td>Disconfirmation-seeking</td><td>Actively look for evidence against the working conclusion, and weigh it at least as heavily as the evidence for it</td><td>Testing whether an alternative explanation survives contact with the same evidence</td></tr>
           <tr><td>Correlation versus causation</td><td>A pattern in the data isn't automatically an explanation of the pattern</td><td>Distinguishing a triggering event from the underlying condition it merely exposed, in incident root-cause analysis</td></tr>
         </table>
@@ -150,7 +150,7 @@
         <p>A mechanism: if the first thing had been different, the second thing would have been different as a direct result, not just been less likely to show up alongside it. Establishing that usually takes more than the one data point that prompted the question, ideally a case where the suspected cause was absent and the effect still didn't happen.</p>
       </div>
     </div>
-    <div class="same-note"><strong>Worked example.</strong> A deployment goes out at 2:14pm. Error rates spike five minutes later. The natural read: the deploy caused the spike, since it's the thing sitting right next to it in time. Rolling the deploy back doesn't fix anything. Investigation finds a database connection pool that had been slowly exhausting for three days because of a slow query introduced earlier that week; the deploy's restart briefly reset open connections, masking the problem for a few minutes before the pool hit its ceiling anyway, on a schedule that had nothing to do with the deploy. The deploy correlates with the spike. The slow query, running unnoticed for three days, is what caused it.</div>
+    <div class="same-note"><strong>Worked example.</strong> A deployment goes out at 2:14pm. Error rates spike five minutes later. The natural read: the deploy caused the spike, since it's the thing sitting right next to it in time. Rolling the deploy back doesn't fix anything. Investigation finds a database connection pool that had been slowly exhausting for three days because of a slow query introduced earlier that week. The deploy's restart briefly reset open connections, masking the problem for a few minutes before the pool hit its ceiling anyway, on a schedule that had nothing to do with the deploy. The deploy correlates with the spike. The slow query, running unnoticed for three days, is what caused it.</div>
   </div>
 
   <div class="stage-card">
@@ -193,7 +193,7 @@
     <div class="stage-head">
       <span class="stage-num">Applied</span>
       <h3>Where this already lives across the toolkit</h3>
-      <p>None of this is new to this site; it's the pattern underneath several pages, named here for the first time.</p>
+      <p>None of this is new to this site. It's the pattern underneath several pages, named here for the first time.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -208,29 +208,11 @@
     </div>
   </div>
 
-  <div class="stage-card">
-    <div class="stage-head">
-      <span class="stage-num">Checklist</span>
-      <h3>Signs research quality is weak, regardless of how long it took</h3>
-      <p>Time spent and rigor are different things. These patterns show up in reports that took weeks and reports that took an afternoon alike.</p>
-    </div>
-    <div class="stage-grid single">
-      <div class="stage-cell">
-        <ul>
-          <li>Findings state conclusions with no evidence source attached</li>
-          <li>A single interview or a single document is treated with the same confidence as a cross-referenced, triangulated finding</li>
-          <li>No visible effort was made to find evidence against the working conclusion before it was written down</li>
-          <li>Numbers are presented without a confidence range or a stated basis</li>
-          <li>The research window kept extending without anyone asking whether the additional time was buying more confidence, or just more pages</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
+  
 </main>
 
 <footer>
-  Reference only. This is a practical translation of research discipline, not a formal epistemology course; treat it as a set of habits worth building into any discovery process.
+  Reference only. This is a practical translation of research discipline, not a formal epistemology course. Treat it as a set of habits worth building into any discovery process.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

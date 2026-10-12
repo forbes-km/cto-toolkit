@@ -97,7 +97,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Integration &amp; API Patterns</h1>
   <p>Integration is chosen by habit more than by design, and the habit is usually whatever the last project did. This page is a selection guide first and a catalog second: three questions that narrow the field, then the patterns with the rule that keeps each one from decaying, then the combinations that work, then the small set of rules worth enforcing across teams.</p>
-  <div class="caveat">Pattern names are stable; product names are not. Where a cloud provider's messaging, streaming, or gateway service is needed, use the <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> to find the equivalent across AWS, Azure, GCP, and OCI.</div>
+  <div class="caveat">Pattern names are stable. Product names are not. Where a cloud provider's messaging, streaming, or gateway service is needed, use the <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> to find the equivalent across AWS, Azure, GCP, and OCI.</div>
 </header>
 
 <main>
@@ -113,9 +113,9 @@
         <tr><td>Does the caller need the answer to proceed</td><td>Yes, right now, and it changes what the caller does next</td><td>Synchronous: REST, gRPC, GraphQL</td></tr>
         <tr><td></td><td>No, the caller only needs to know it will happen</td><td>Asynchronous: message queue, event stream, or a command with a callback</td></tr>
         <tr><td>What happens if the other side is down</td><td>The caller must fail too, visibly</td><td>Synchronous, with a circuit breaker and a clear error</td></tr>
-        <tr><td></td><td>The work should wait and complete later</td><td>Queue with durable storage and retry; the caller is decoupled from the consumer's availability</td></tr>
+        <tr><td></td><td>The work should wait and complete later</td><td>Queue with durable storage and retry. The caller is decoupled from the consumer's availability</td></tr>
         <tr><td>How many consumers, and do they know each other</td><td>One known consumer</td><td>Point-to-point call or queue</td></tr>
-        <tr><td></td><td>Many, changing, not all known to the producer</td><td>Event stream with a published schema; producers do not know who listens</td></tr>
+        <tr><td></td><td>Many, changing, not all known to the producer</td><td>Event stream with a published schema. Producers do not know who listens</td></tr>
         <tr><td>Is this a request, a fact, or a bulk movement of data</td><td>A request to do something</td><td>API call or command message</td></tr>
         <tr><td></td><td>A fact that something happened</td><td>Domain event</td></tr>
         <tr><td></td><td>A large dataset moving on a schedule</td><td>Batch, ELT into a warehouse or lakehouse, or change data capture. An API is the wrong tool here</td></tr>
@@ -126,15 +126,15 @@
     <div class="stage-head">
       <span class="stage-num">Pattern catalog</span>
       <h2>Synchronous patterns</h2>
-      <p>Use when the caller needs the answer to proceed. The cost is coupling to the callee's availability and latency; the benefit is simplicity and immediate consistency.</p>
+      <p>Use when the caller needs the answer to proceed. The cost is coupling to the callee's availability and latency. The benefit is simplicity and immediate consistency.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Pattern</th><th>Use it for</th><th>Do not use it for</th><th>The rule that keeps it healthy</th></tr>
-        <tr><td>REST over HTTP</td><td>Resource-oriented APIs consumed by many clients, public or partner APIs, anything a browser calls</td><td>High-frequency internal service-to-service calls where payload overhead matters, streaming</td><td>Version in the URL or header from day one; never break a published contract, add a new version</td></tr>
-        <tr><td>gRPC</td><td>Internal service-to-service calls with strict contracts, low latency, polyglot teams, streaming</td><td>Browser clients without a gateway, partner APIs where the consumer will not adopt protobuf</td><td>The proto file is the contract; it lives in one repository and is reviewed like code</td></tr>
-        <tr><td>GraphQL</td><td>A single front-end aggregating many back-end sources, mobile clients that need to control payload size</td><td>A general replacement for REST between services, anything where callers can craft arbitrarily expensive queries unchecked</td><td>Depth and complexity limits enforced at the gateway; persisted queries for production clients</td></tr>
-        <tr><td>API gateway</td><td>One entry point for authentication, rate limiting, routing, and observability across many services</td><td>A place to put business logic; a gateway with transformations nobody can find is the next legacy system</td><td>Cross-cutting concerns only; if a rule references a specific business entity, it belongs in a service</td></tr>
+        <tr><td>REST over HTTP</td><td>Resource-oriented APIs consumed by many clients, public or partner APIs, anything a browser calls</td><td>High-frequency internal service-to-service calls where payload overhead matters, streaming</td><td>Version in the URL or header from day one. Never break a published contract, add a new version</td></tr>
+        <tr><td>gRPC</td><td>Internal service-to-service calls with strict contracts, low latency, polyglot teams, streaming</td><td>Browser clients without a gateway, partner APIs where the consumer will not adopt protobuf</td><td>The proto file is the contract. It lives in one repository and is reviewed like code</td></tr>
+        <tr><td>GraphQL</td><td>A single front-end aggregating many back-end sources, mobile clients that need to control payload size</td><td>A general replacement for REST between services, anything where callers can craft arbitrarily expensive queries unchecked</td><td>Depth and complexity limits enforced at the gateway. Persisted queries for production clients</td></tr>
+        <tr><td>API gateway</td><td>One entry point for authentication, rate limiting, routing, and observability across many services</td><td>A place to put business logic. A gateway with transformations nobody can find is the next legacy system</td><td>Cross-cutting concerns only. If a rule references a business entity, it belongs in a service</td></tr>
         <tr><td>Backend for frontend</td><td>Each client type (web, mobile, partner) gets its own thin aggregation layer</td><td>Sharing one BFF across clients with different needs, which recreates the problem it solves</td><td>Owned by the client team that needs it, not a central integration team</td></tr>
       </table>
     </div></div>
@@ -143,17 +143,17 @@
     <div class="stage-head">
       <span class="stage-num">Pattern catalog</span>
       <h2>Asynchronous patterns</h2>
-      <p>Use when the caller does not need the answer now, when the other side may be down, or when many consumers should react to one fact. The cost is eventual consistency and harder debugging; the benefit is resilience and decoupling.</p>
+      <p>Use when the caller does not need the answer now, when the other side may be down, or when many consumers should react to one fact. The cost is eventual consistency and harder debugging. The benefit is resilience and decoupling.</p>
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Pattern</th><th>Use it for</th><th>Do not use it for</th><th>The rule that keeps it healthy</th></tr>
-        <tr><td>Message queue (point-to-point)</td><td>Work that must be done exactly once by one consumer: order fulfillment, email sending, background jobs</td><td>Broadcasting a fact to many consumers</td><td>Dead-letter queue with an owner and an alert; idempotent consumers, because at-least-once delivery is the reality</td></tr>
-        <tr><td>Publish and subscribe</td><td>One fact, many independent reactions, consumers added without touching the producer</td><td>Request-reply disguised as events, where the producer secretly waits for a specific subscriber</td><td>The producer never knows or cares who listens; if it does, the pattern is wrong</td></tr>
-        <tr><td>Event streaming (log)</td><td>High-volume ordered event history, replayable by new consumers, the backbone of event-driven architecture</td><td>Simple job queues where a stream's operational cost is unjustified</td><td>Schema registry with compatibility rules enforced at publish time; retention set by how far back the business needs to replay, not left at the default</td></tr>
-        <tr><td>Change data capture</td><td>Getting data out of a database into analytics, search, or another system without touching the application</td><td>A substitute for a domain event, because a row change is not a business fact</td><td>Treat the captured change as an internal feed; translate to a domain event before other teams consume it</td></tr>
+        <tr><td>Message queue (point-to-point)</td><td>Work that must be done exactly once by one consumer: order fulfillment, email sending, background jobs</td><td>Broadcasting a fact to many consumers</td><td>Dead-letter queue with an owner and an alert. Idempotent consumers, because at-least-once delivery is the reality</td></tr>
+        <tr><td>Publish and subscribe</td><td>One fact, many independent reactions, consumers added without touching the producer</td><td>Request-reply disguised as events, where the producer secretly waits for a specific subscriber</td><td>The producer never knows or cares who listens. If it does, the pattern is wrong</td></tr>
+        <tr><td>Event streaming (log)</td><td>High-volume ordered event history, replayable by new consumers, the backbone of event-driven architecture</td><td>Simple job queues where a stream's operational cost is unjustified</td><td>Schema registry with compatibility rules enforced at publish time. Retention set by how far back the business needs to replay, not left at the default</td></tr>
+        <tr><td>Change data capture</td><td>Getting data out of a database into analytics, search, or another system without touching the application</td><td>A substitute for a domain event, because a row change is not a business fact</td><td>Treat the captured change as an internal feed. Translate to a domain event before other teams consume it</td></tr>
         <tr><td>Saga (choreography or orchestration)</td><td>A business transaction spanning several services where a distributed transaction is not available</td><td>Anything that could be a single service with a local transaction</td><td>Every step has a compensating action written and tested before the saga goes live</td></tr>
-        <tr><td>Outbox</td><td>Publishing an event reliably in the same transaction as the database write</td><td>Nothing; it is the correct way to do this and the alternative is lost events</td><td>The relay that reads the outbox is monitored for lag like any other consumer</td></tr>
+        <tr><td>Outbox</td><td>Publishing an event reliably in the same transaction as the database write</td><td>Nothing. It is the correct way to do this and the alternative is lost events</td><td>The relay that reads the outbox is monitored for lag like any other consumer</td></tr>
       </table>
     </div></div>
   </div>
@@ -166,11 +166,11 @@
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Pattern</th><th>Use it for</th><th>Trade-off</th></tr>
-        <tr><td>Scheduled batch, file or bulk export</td><td>Large periodic movements between systems that tolerate hours of latency: finance close, regulatory extracts, partner feeds</td><td>Simple and cheap; latency and the operational fragility of schedules and file formats</td></tr>
-        <tr><td>ELT into a warehouse or lakehouse</td><td>Analytics, reporting, and anything that needs a joined view across many sources</td><td>Decouples producers from consumers entirely; the platform becomes a dependency and the data has an owner problem, covered in <a href="../data-strategy/index.html">Data Strategy</a></td></tr>
-        <tr><td>Streaming ingestion</td><td>Near-real-time analytics and operational dashboards</td><td>Cost and complexity are much higher than batch; justify the latency requirement with a business decision that changes at that latency</td></tr>
-        <tr><td>Data virtualization or federation</td><td>Querying across sources without moving data, for low-volume exploratory use</td><td>Performance and the illusion of a single system; it cannot stand in for an integration layer</td></tr>
-        <tr><td>Managed file transfer</td><td>Regulated B2B exchange where the counterparty will only do SFTP</td><td>Old, boring, and still correct for that case; wrap it with monitoring and a retention policy</td></tr>
+        <tr><td>Scheduled batch, file or bulk export</td><td>Large periodic movements between systems that tolerate hours of latency: finance close, regulatory extracts, partner feeds</td><td>Simple and cheap. Latency and the operational fragility of schedules and file formats</td></tr>
+        <tr><td>ELT into a warehouse or lakehouse</td><td>Analytics, reporting, and anything that needs a joined view across many sources</td><td>Decouples producers from consumers entirely. The platform becomes a dependency and the data has an owner problem, covered in <a href="../data-strategy/index.html">Data Strategy</a></td></tr>
+        <tr><td>Streaming ingestion</td><td>Near-real-time analytics and operational dashboards</td><td>Cost and complexity are much higher than batch. Justify the latency requirement with a business decision that changes at that latency</td></tr>
+        <tr><td>Data virtualization or federation</td><td>Querying across sources without moving data, for low-volume exploratory use</td><td>Performance and the illusion of a single system. It cannot stand in for an integration layer</td></tr>
+        <tr><td>Managed file transfer</td><td>Regulated B2B exchange where the counterparty will only do SFTP</td><td>Old, boring, and still correct for that case. Wrap it with monitoring and a retention policy</td></tr>
       </table>
     </div></div>
   </div>
@@ -184,9 +184,9 @@
       <ol class="num-list">
         <li><div><b>Command in, events out</b>A service accepts synchronous commands over REST or gRPC, writes to its own database, and publishes domain events through an outbox. Consumers subscribe. The service never calls other services synchronously to complete a write.</div></li>
         <li><div><b>Gateway plus BFF plus internal gRPC</b>Public traffic enters through a gateway that handles auth and rate limits, hits a client-specific BFF, which calls internal services over gRPC. Nothing internal is reachable from outside.</div></li>
-        <li><div><b>Event stream plus CDC plus lakehouse</b>Operational events flow through a stream; CDC captures the database changes that predate the event design; both land in the lakehouse for analytics. The lakehouse never feeds an operational decision back synchronously.</div></li>
+        <li><div><b>Event stream plus CDC plus lakehouse</b>Operational events flow through a stream. CDC captures the database changes that predate the event design. Both land in the lakehouse for analytics. The lakehouse never feeds an operational decision back synchronously.</div></li>
         <li><div><b>Queue plus saga for long-running business processes</b>An order, a claim, a loan application: a saga orchestrator steps through services via queues, each step idempotent, each with a compensating action, with the state of every in-flight process visible in one place.</div></li>
-        <li><div><b>Strangler with an anti-corruption layer</b>New services sit behind the same gateway as the legacy system; an anti-corruption layer translates between the legacy model and the new domain model so the new services never inherit the old shape. See <a href="../modernization-execution/index.html">Legacy Modernization Execution</a>.</div></li>
+        <li><div><b>Strangler with an anti-corruption layer</b>New services sit behind the same gateway as the legacy system. An anti-corruption layer translates between the legacy model and the new domain model so the new services never inherit the old shape. See <a href="../modernization-execution/index.html">Legacy Modernization Execution</a>.</div></li>
       </ol>
     </div></div>
   </div>
@@ -253,7 +253,7 @@
 <text x="788" y="210" text-anchor="end" font-size="9.5" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">failed after retries</text>
 <path d="M745,186 C745,335 600,335 522,292" fill="none" stroke="var(--b)" stroke-width="1.3" stroke-dasharray="3 3"/>
 <line x1="640" y1="306" x2="656" y2="322" stroke="var(--b)" stroke-width="2"/><line x1="656" y1="306" x2="640" y2="322" stroke="var(--b)" stroke-width="2"/>
-<text x="30" y="58" text-anchor="start" font-size="10.5" fill="var(--b)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service C never reads Service A's database; the contract is the only path.</text>
+<text x="30" y="58" text-anchor="start" font-size="10.5" fill="var(--b)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service C never reads Service A's database. The contract is the only path.</text>
 <text x="30" y="74" text-anchor="start" font-size="10.5" fill="var(--b)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Service A never calls B or C synchronously to finish a write.</text>
 <rect x="30" y="330" width="670" height="76" rx="8" fill="var(--paper)" stroke="var(--line)"/>
 <text x="46" y="352" text-anchor="start" font-size="10.5" fill="var(--accent)" font-weight="600" letter-spacing="0.05em" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">THE RULE</text>
@@ -273,7 +273,7 @@
     <div class="stage-grid single"><div class="stage-cell">
       <ul class="checklist">
         <li>Every published contract (OpenAPI, proto, event schema) is versioned, in a repository, reviewed, and never broken in place</li>
-        <li>No service reads another service's database; the only path is the contract</li>
+        <li>No service reads another service's database. The only path is the contract</li>
         <li>Every asynchronous consumer is idempotent and has a dead-letter path with an owner</li>
         <li>Every synchronous call across a network boundary has a timeout, a retry policy with backoff, and a circuit breaker</li>
         <li>Every integration is observable end to end: a correlation identifier propagates through calls and messages, and a trace exists for a single business transaction</li>
@@ -295,10 +295,10 @@
           <tr><th>Specification</th><th>Current version or status</th><th>Use it for</th></tr>
           <tr><td>OpenAPI</td><td>3.2, released September 2025<sup class="src"><a href="#src-1" title="OpenAPI Initiative, Announcing OpenAPI v3.2, September 2025">[1]</a></sup></td><td>Synchronous HTTP APIs: contract first, generated clients, linting in CI</td></tr>
           <tr><td>AsyncAPI</td><td>3.0, released December 2023<sup class="src"><a href="#src-2" title="AsyncAPI Initiative, AsyncAPI 3.0.0 release notes, December 2023">[2]</a></sup></td><td>Event-driven interfaces: channels, messages, and bindings for Kafka, AMQP, MQTT, and others</td></tr>
-          <tr><td>CloudEvents (CNCF)</td><td>1.0; the project graduated in CNCF in January 2024<sup class="src"><a href="#src-3" title="CNCF, graduation of CloudEvents, January 2024">[3]</a></sup></td><td>A common envelope for events so routing and tracing work across brokers and clouds</td></tr>
-          <tr><td>RFC 9457, Problem Details for HTTP APIs</td><td>IETF standard, July 2023; replaces RFC 7807<sup class="src"><a href="#src-4" title="IETF, RFC 9457, Problem Details for HTTP APIs, July 2023">[4]</a></sup></td><td>One machine-readable error format across every API</td></tr>
-          <tr><td>OWASP API Security Top 10</td><td>2023 edition</td><td>The review checklist; broken object-level authorization is still the top risk<sup class="src"><a href="#src-5" title="OWASP, API Security Top 10, 2023 edition">[5]</a></sup></td></tr>
-          <tr><td>Model Context Protocol (MCP)</td><td>Contributed to the Linux Foundation's Agentic AI Foundation in December 2025<sup class="src"><a href="#src-6" title="Linux Foundation, formation of the Agentic AI Foundation, December 2025">[6]</a></sup></td><td>Exposing tools and data to AI agents; treat each MCP server as an API with its own authentication, authorization, and rate limits</td></tr>
+          <tr><td>CloudEvents (CNCF)</td><td>1.0. The project graduated in CNCF in January 2024<sup class="src"><a href="#src-3" title="CNCF, graduation of CloudEvents, January 2024">[3]</a></sup></td><td>A common envelope for events so routing and tracing work across brokers and clouds</td></tr>
+          <tr><td>RFC 9457, Problem Details for HTTP APIs</td><td>IETF standard, July 2023. Replaces RFC 7807<sup class="src"><a href="#src-4" title="IETF, RFC 9457, Problem Details for HTTP APIs, July 2023">[4]</a></sup></td><td>One machine-readable error format across every API</td></tr>
+          <tr><td>OWASP API Security Top 10</td><td>2023 edition</td><td>The review checklist. Broken object-level authorization is still the top risk<sup class="src"><a href="#src-5" title="OWASP, API Security Top 10, 2023 edition">[5]</a></sup></td></tr>
+          <tr><td>Model Context Protocol (MCP)</td><td>Contributed to the Linux Foundation's Agentic AI Foundation in December 2025<sup class="src"><a href="#src-6" title="Linux Foundation, formation of the Agentic AI Foundation, December 2025">[6]</a></sup></td><td>Exposing tools and data to AI agents. Treat each MCP server as an API with its own authentication, authorization, and rate limits</td></tr>
         </table>
       </div>
     </div>
@@ -314,8 +314,8 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Integration</th><th>Pattern chosen</th><th>Why</th></tr>
-          <tr><td>Checkout calls tax calculation</td><td>Synchronous API with a timeout and a cached fallback rate</td><td>The answer is needed before the order completes; an outage cannot be allowed to stop sales</td></tr>
-          <tr><td>Order placed, notify fulfilment, billing, and analytics</td><td>Published event, one topic, three subscribers</td><td>The producer should not know or wait for its consumers; each can fail and replay independently</td></tr>
+          <tr><td>Checkout calls tax calculation</td><td>Synchronous API with a timeout and a cached fallback rate</td><td>The answer is needed before the order completes. An outage cannot be allowed to stop sales</td></tr>
+          <tr><td>Order placed, notify fulfilment, billing, and analytics</td><td>Published event, one topic, three subscribers</td><td>The producer should not know or wait for its consumers. Each can fail and replay independently</td></tr>
           <tr><td>Nightly load of 40 million rows to the warehouse</td><td>Batch file or change data capture, not an API</td><td>Volume and latency tolerance make request-response the wrong tool</td></tr>
           <tr><td>Retries on any of the above</td><td>Idempotency keys on every write</td><td>At-least-once delivery is the realistic guarantee, so duplicates must be harmless</td></tr>
         </table>
@@ -379,7 +379,7 @@
 </main>
 
 <footer>
-  Reference only. The full integration patterns catalog with worked selection examples is part of the private methodology. Message and event pattern names follow Gregor Hohpe and Bobby Woolf, Enterprise Integration Patterns (Addison-Wesley, 2003); the anti-corruption layer is from Eric Evans, Domain-Driven Design (Addison-Wesley, 2003); the saga pattern from Garcia-Molina and Salem (1987). The selection questions, rules, and combinations are this site's.
+  Reference only. The full integration patterns catalog with worked selection examples is part of the private methodology. Message and event pattern names follow Gregor Hohpe and Bobby Woolf, Enterprise Integration Patterns (Addison-Wesley, 2003). The anti-corruption layer is from Eric Evans, Domain-Driven Design (Addison-Wesley, 2003). The saga pattern from Garcia-Molina and Salem (1987). The selection questions, rules, and combinations are this site's.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 

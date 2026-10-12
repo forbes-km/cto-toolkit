@@ -81,7 +81,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Architecture Principles Library</h1>
   <p>Fifteen principles with the reasoning, the trade-off it forces, a worked example of how it shows up in a decision, and the signs it's being misapplied.</p>
-  <div class="caveat">Fifteen principles that have held up across engagements. Adopt half, adapt some, reject others; a smaller set held seriously is worth more than a longer list held loosely. Track exceptions: zero exceptions means a principle is unused or undertested, too many means it's no longer a principle.</div>
+  <div class="caveat">Fifteen principles that have held up across engagements. Adopt half, adapt some, reject others. A smaller set held seriously is worth more than a longer list held loosely. Track exceptions: zero exceptions means a principle is unused or undertested, too many means it's no longer a principle.</div>
 </header>
 
 <main>
@@ -94,7 +94,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li>Names a specific trade-off the organization has chosen</li>
+          <li>Names a trade-off the organization has chosen</li>
           <li>Is defensible against its opposite</li>
           <li>Produces different decisions than its absence would</li>
           <li>Comes with examples of when it was applied and what was given up as a result</li>
@@ -112,7 +112,7 @@
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Most software the organization needs has already been built by someone else. Building it again produces ongoing maintenance costs for software that doesn't differentiate the business.</p>
         <p><strong>Trade-off:</strong> Loss of control over roadmap and feature set. Accepted for commodity capabilities, rejected for differentiating ones.</p>
-        <p><strong>Worked example:</strong> Customer identity management is commodity, adopt a commercial platform. Fraud detection for a specific transaction pattern is differentiating, build it.</p>
+        <p><strong>Worked example:</strong> Customer identity management is commodity, adopt a commercial platform. Fraud detection for a particular transaction pattern is differentiating, build it.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Everything gets classified as differentiating to justify building. The cure is making someone name the differentiation concretely.</p>
       </div>
     </div>
@@ -127,19 +127,19 @@
         <p><strong>Rationale:</strong> Debt accumulates continuously. Campaigns to address it are always disruptive, under-scoped, and insufficient.</p>
         <p><strong>Trade-off:</strong> Feature velocity appears lower in the short term because capacity is visibly allocated away from new work.</p>
         <p><strong>Worked example:</strong> Delivery teams allocate 15 to 20 percent of sprint capacity to debt items, owned by engineering, informed to product.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> The allocation becomes theoretical; sprint reviews consistently show 100 percent feature work.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> The allocation becomes theoretical. Sprint reviews consistently show 100 percent feature work.</p>
       </div>
     </div>
   </div>
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">P3</span>
-      <h3>Make reversible decisions quickly; reserve slow deliberation for the irreversible</h3>
+      <h3>Make reversible decisions quickly. Reserve slow deliberation for the irreversible</h3>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Treating all decisions with the same process produces either dangerous speed on the irreversible or pointless bureaucracy on the reversible.</p>
-        <p><strong>Trade-off:</strong> Some decisions are harder to classify than the principle implies; the organization has to develop judgment about what's reversible in its context.</p>
+        <p><strong>Trade-off:</strong> Some decisions are harder to classify than the principle implies. The organization has to develop judgment about what's reversible in its context.</p>
         <p><strong>Worked example:</strong> A logging library choice is reversible, the team picks and moves. A primary data platform can't be reversed within a reasonable timeframe, so it goes through review with ADR documentation.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams classify inconvenient decisions as irreversible to defer them, or reversible to avoid oversight. The test: what does it cost in time and money to change this in 18 months?</p>
       </div>
@@ -153,7 +153,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Tight coupling between systems produces tight coupling between the teams that own them, and destroys both the system's and the team's autonomy over time.</p>
-        <p><strong>Trade-off:</strong> Loose coupling costs more to build initially; interfaces take design effort that a shared database doesn't.</p>
+        <p><strong>Trade-off:</strong> Loose coupling costs more to build initially. Interfaces take design effort that a shared database doesn't.</p>
         <p><strong>Worked example:</strong> The Order team calls the Customer service's API rather than reading the Customer database directly. The Customer team can refactor storage without coordinating with Order.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams paper over coupling with facades that still expose the underlying structure. Test: if the upstream team changes its implementation, does the downstream code break?</p>
       </div>
@@ -163,14 +163,14 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">P5</span>
-      <h3>Failure is the default state; design for it</h3>
+      <h3>Failure is the default state. Design for it</h3>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> At any non-trivial scale, something is always failing. Systems designed on the assumption that components work experience their first failure as an outage.</p>
-        <p><strong>Trade-off:</strong> Upfront complexity; designing for failure takes thought and adds code paths.</p>
+        <p><strong>Trade-off:</strong> Upfront complexity. Designing for failure takes thought and adds code paths.</p>
         <p><strong>Worked example:</strong> The order placement service, when the fraud service is unavailable, falls back to rule-based scoring rather than refusing orders. Flagged orders get deferred review.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Retries and fallbacks added without thinking through cascade effects; retry storms that take down dependencies are worse than the original failure.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Retries and fallbacks added without thinking through cascade effects. Retry storms that take down dependencies are worse than the original failure.</p>
       </div>
     </div>
   </div>
@@ -182,7 +182,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Systems not designed to be observed are systems whose behavior is a mystery in production, and the cost of instrumenting retroactively is higher than instrumenting from the start.</p>
-        <p><strong>Trade-off:</strong> Instrumentation is code that must be maintained; noisy instrumentation is worse than none.</p>
+        <p><strong>Trade-off:</strong> Instrumentation is code that must be maintained. Noisy instrumentation is worse than none.</p>
         <p><strong>Worked example:</strong> Every service produces request logs with correlation IDs, metrics on the operations that matter most, and traces covering cross-service flows, specified alongside functional requirements.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams log everything, measure nothing, and produce dashboards nobody reads. The cure: for each piece of instrumentation, ask what decision it supports.</p>
       </div>
@@ -191,14 +191,14 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">P7</span>
-      <h3>Prefer convention over configuration; prefer explicit over implicit</h3>
+      <h3>Prefer convention over configuration. Prefer explicit over implicit</h3>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Configuration without convention produces infinite surface area. Convention without explicit seams produces invisible magic.</p>
         <p><strong>Trade-off:</strong> The organization must invest in establishing and evolving conventions, ongoing work that drifts into inconsistency without it.</p>
         <p><strong>Worked example:</strong> All services log in a common format and expose health/metrics on conventional paths. A service that deviates for regulatory reasons writes down why.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Conventions are stated but not enforced; new services do whatever their authors prefer.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Conventions are stated but not enforced. New services do whatever their authors prefer.</p>
       </div>
     </div>
   </div>
@@ -210,9 +210,9 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Manual work is error-prone, non-repeatable, and invisible. The person doing it is a bottleneck and a knowledge concentration point.</p>
-        <p><strong>Trade-off:</strong> Automation costs more than doing the thing once; the 'more than twice' rule calibrates when that cost is worth paying.</p>
-        <p><strong>Worked example:</strong> New developer environment setup was a 3-day manual process. After the second hire it became a script; after the fifth, a one-click pipeline.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Automation becomes an end in itself; teams automate one-off work and produce scripts no one else uses.</p>
+        <p><strong>Trade-off:</strong> Automation costs more than doing the thing once. The 'more than twice' rule calibrates when that cost is worth paying.</p>
+        <p><strong>Worked example:</strong> New developer environment setup was a 3-day manual process. After the second hire it became a script. After the fifth, a one-click pipeline.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Automation becomes an end in itself. Teams automate one-off work and produce scripts no one else uses.</p>
       </div>
     </div>
   </div>
@@ -220,14 +220,14 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">P9</span>
-      <h3>Data has one authoritative source; every other copy is derived from it</h3>
+      <h3>Data has one authoritative source. Every other copy is derived from it</h3>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Parallel sources of truth always diverge, usually not discovered until a reconciliation problem surfaces in production.</p>
-        <p><strong>Trade-off:</strong> The authoritative source becomes a hard dependency for every downstream consumer; its availability matters more than in a distributed-truth design.</p>
-        <p><strong>Worked example:</strong> Customer contact information is authoritative in the CRM; Marketing receives it via streaming replica; Billing queries CRM directly. Nobody has their own editable copy.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Two teams claim authoritative ownership of overlapping data; reconciliation scripts appear. The cure is naming a single owner and migrating the other to consumer status.</p>
+        <p><strong>Trade-off:</strong> The authoritative source becomes a hard dependency for every downstream consumer. Its availability matters more than in a distributed-truth design.</p>
+        <p><strong>Worked example:</strong> Customer contact information is authoritative in the CRM. Marketing receives it via streaming replica. Billing queries CRM directly. Nobody has their own editable copy.</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Two teams claim authoritative ownership of overlapping data. Reconciliation scripts appear. The cure is naming a single owner and migrating the other to consumer status.</p>
       </div>
     </div>
   </div>
@@ -252,10 +252,10 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p><strong>Rationale:</strong> Retrofitting sensitivity controls is more expensive than building them in; systems that move data without awareness of sensitivity produce the gaps that show up in breach postmortems.</p>
+        <p><strong>Rationale:</strong> Retrofitting sensitivity controls is more expensive than building them in. Systems that move data without awareness of sensitivity produce the gaps that show up in breach postmortems.</p>
         <p><strong>Trade-off:</strong> Classification requires ongoing organizational discipline, every system handling data must know what classification applies.</p>
         <p><strong>Worked example:</strong> Customer purchase history is classified Restricted. A log entry including purchase history is subject to Restricted-level controls even if the producing system wouldn't otherwise be.</p>
-        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Classification exists in a policy but isn't wired into any control. The cure is instrumenting classification into specific enforcement (encryption, access logging).</p>
+        <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Classification exists in a policy but isn't wired into any control. The cure is instrumenting classification into actual enforcement (encryption, access logging).</p>
       </div>
     </div>
   </div>
@@ -267,7 +267,7 @@
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
-        <p><strong>Rationale:</strong> Build-only teams produce systems that are hard to operate because they don't experience the operational cost; run-only teams receive systems they can't confidently change.</p>
+        <p><strong>Rationale:</strong> Build-only teams produce systems that are hard to operate because they don't experience the operational cost. Run-only teams receive systems they can't confidently change.</p>
         <p><strong>Trade-off:</strong> Asking build teams to operate adds ongoing work. The cost of operational-ownership confusion is larger, but this is still a cost.</p>
         <p><strong>Worked example:</strong> A product team building a customer-facing service is on-call for it. If responsibility transfers to a central ops team, the transfer includes validated runbooks and paired on-call for 90 days.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Teams claim to operate but delegate incidents upward constantly. The cure is staffing and training to the operational responsibility. Softening the principle only hides the gap.</p>
@@ -277,7 +277,7 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">P13</span>
-      <h3>Decisions are recorded; rationale is part of the decision</h3>
+      <h3>Decisions are recorded. Rationale is part of the decision</h3>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -296,7 +296,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Good architectural decisions build on team context. A team that's operated a system for two years makes better decisions about it than one assembled three weeks ago.</p>
-        <p><strong>Trade-off:</strong> Stable teams are harder to scale up rapidly for new initiatives; the organization has to plan for this instead of throwing people at problems.</p>
+        <p><strong>Trade-off:</strong> Stable teams are harder to scale up rapidly for new initiatives. The organization has to plan for this instead of throwing people at problems.</p>
         <p><strong>Worked example:</strong> The team owning customer identity has a core of four engineers with two-plus years on it. New engineers onboard over three to six months rather than three weeks.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Team composition changes frequently, no one's been on the team more than six months. The cure is slowing the churn. Asking teams to document more treats the symptom.</p>
       </div>
@@ -305,12 +305,12 @@
   <div class="stage-card">
     <div class="stage-head">
       <span class="stage-num">P15</span>
-      <h3>Measure what matters; do not optimize what is merely easy to measure</h3>
+      <h3>Measure what matters. Do not optimize what is merely easy to measure</h3>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Rationale:</strong> Goodhart's law applies to architecture: when a measure becomes a target, it stops being a good measure. Easy proxies produce organizations that look healthy while failing at what matters.</p>
-        <p><strong>Trade-off:</strong> Measures that matter are harder to collect and slower to move; the temptation to substitute easy proxies is constant.</p>
+        <p><strong>Trade-off:</strong> Measures that matter are harder to collect and slower to move. The temptation to substitute easy proxies is constant.</p>
         <p><strong>Worked example:</strong> Instead of 'reviews conducted,' measure 'percentage of significant initiatives with early architecture engagement,' which requires judgment but reflects reality.</p>
         <p style="color:var(--ink-soft); font-style:italic;"><strong>Signs of misapplication:</strong> Dashboards show green metrics while the function is widely considered unhelpful. The cure: ask what consumers of the work would say is getting better or worse.</p>
       </div>
@@ -320,13 +320,13 @@
     <div class="stage-head">
       <span class="stage-num">When principles conflict</span>
       <h3>Conflict is expected</h3>
-      <p>Principles conflict. The conflict surfaces a trade-off the organization has to make; three approaches help resolve it in practice.</p>
+      <p>Principles conflict. The conflict surfaces a trade-off the organization has to make. Three approaches help resolve it in practice.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <ul>
-          <li><strong>State the specific conflict.</strong> "These sometimes conflict" is useless; "P1 conflicts with P4 here because the commercial product creates tight coupling with our existing systems" is resolvable.</li>
-          <li><strong>Identify which principle the context prioritizes.</strong> A regulatory system might privilege data classification over decision speed; a greenfield product might privilege the reverse. Neither is wrong; the context decides.</li>
+          <li><strong>State the conflict.</strong> "These sometimes conflict" is useless. "P1 conflicts with P4 here because the commercial product creates tight coupling with our existing systems" is resolvable.</li>
+          <li><strong>Identify which principle the context prioritizes.</strong> A regulatory system might privilege data classification over decision speed. A greenfield product might privilege the reverse. Neither is wrong. The context decides.</li>
           <li><strong>Record the resolution</strong> in the ADR. Future decisions in similar contexts have precedent to draw on.</li>
         </ul>
       </div>
@@ -336,7 +336,7 @@
 </main>
 
 <footer>
-  Reference only. Adopt what's defensible in your specific context; a principle nobody references in a decision is wall decoration.
+  Reference only. Adopt what's defensible in your context. A principle nobody references in a decision is wall decoration.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>

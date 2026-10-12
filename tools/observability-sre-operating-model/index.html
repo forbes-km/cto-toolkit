@@ -97,7 +97,7 @@
   <a class="back" href="../../index.html">&larr; CTO Toolkit</a>
   <h1>Observability &amp; SRE Operating Model</h1>
   <p><a href="../reliability-economics/index.html">Reliability as an Economic Decision</a> answers how much reliability the business can afford. This page answers how the function that delivers it is organized, what it owns, and how to stand it up without a reorganization that changes titles and nothing else.</p>
-  <div class="caveat">Tool and vendor names change; the responsibilities and the operating model do not. Where a platform-specific observability service is needed, the <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> lists equivalents across providers.</div>
+  <div class="caveat">Tool and vendor names change. The responsibilities and the operating model do not. Where a platform-specific observability service is needed, the <a href="../cloud-service-mapper/index.html">Cloud Service Mapper</a> lists equivalents across providers.</div>
 </header>
 
 <main>
@@ -110,10 +110,10 @@
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Model</th><th>Who is on call</th><th>Who owns reliability work</th><th>Fits when</th><th>Fails when</th></tr>
-        <tr><td>Ops team owns production</td><td>A central operations team</td><td>The ops team, reactively</td><td>Small estates, few changes, a product team that cannot be paged</td><td>Change volume rises; the ops team cannot understand what it is paging on, and the product team has no incentive to build operable software</td></tr>
+        <tr><td>Ops team owns production</td><td>A central operations team</td><td>The ops team, reactively</td><td>Small estates, few changes, a product team that cannot be paged</td><td>Change volume rises. The ops team cannot understand what it is paging on, and the product team has no incentive to build operable software</td></tr>
         <tr><td>You build it, you run it</td><td>Each product team, for its own services</td><td>Each product team</td><td>Autonomous teams with the platform support to be self-sufficient</td><td>Teams lack observability tooling, on-call is unfunded, and reliability work loses every prioritization to features</td></tr>
-        <tr><td>Embedded SRE</td><td>Product team, with an SRE embedded in it</td><td>Shared; the SRE drives standards and the team executes</td><td>Critical services that justify a dedicated reliability engineer</td><td>The SRE becomes the team's ops person and the standards work never happens</td></tr>
-        <tr><td>Central SRE with a platform</td><td>Product teams for their services; SRE for the platform and for a defined set of critical services</td><td>SRE owns the platform, the standards, the tooling, and error budget policy; teams own their services within it</td><td>Ten or more teams and a shared platform, which is most enterprises</td><td>The SRE team is treated as a rename of the ops team and is paged for everything</td></tr>
+        <tr><td>Embedded SRE</td><td>Product team, with an SRE embedded in it</td><td>Shared. The SRE drives standards and the team executes</td><td>Critical services that justify a dedicated reliability engineer</td><td>The SRE becomes the team's ops person and the standards work never happens</td></tr>
+        <tr><td>Central SRE with a platform</td><td>Product teams for their services. SRE for the platform and for a defined set of critical services</td><td>SRE owns the platform, the standards, the tooling, and error budget policy. Teams own their services within it</td><td>Ten or more teams and a shared platform, which is most enterprises</td><td>The SRE team is treated as a rename of the ops team and is paged for everything</td></tr>
       </table>      <p>Most organizations claiming the second model are running the first with extra steps: product teams are nominally on call, but escalate to a central team that does the restoration and owns none of the fixes. Naming the model that is running is the first step.</p>
     </div></div>
   </div>
@@ -187,10 +187,10 @@
 <text x="256" y="278" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">ingest volume by service, a budget per service, an alert when exceeded</text>
 <rect x="30" y="316" width="830" height="80" rx="8" fill="var(--paper)" stroke="var(--line)"/>
 <text x="46" y="337" text-anchor="start" font-size="10.5" fill="var(--accent)" font-weight="600" letter-spacing="0.05em" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace">TWO RULES</text>
-<text x="46" y="356" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Only symptoms page a human; causes go to dashboards and the investigation.</text>
+<text x="46" y="356" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Only symptoms page a human. Causes go to dashboards and the investigation.</text>
 <text x="46" y="372" text-anchor="start" font-size="11" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Standardize the instrumentation rather than the backend, so the backend stays a renewal decision rather than a hostage.</text>
 </svg>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">The producers on the left include the AI layer and the customer's own view, which most estates leave uninstrumented. The collector is the one place cost is controlled; if there is no owner there, the bill grows with coverage.</p>
+      <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">The producers on the left include the AI layer and the customer's own view, which most estates leave uninstrumented. The collector is the one place cost is controlled. If there is no owner there, the bill grows with coverage.</p>
     </div></div>
   </div>
 
@@ -205,9 +205,9 @@
         <tr><th>Responsibility</th><th>What it looks like when owned</th><th>What it looks like when nobody owns it</th></tr>
         <tr><td>Service level objectives</td><td>Every customer-facing service has an SLO agreed with its product owner, measured from the user's perspective, reviewed quarterly</td><td>A 99.9 percent target inherited from a contract, measured at the load balancer, that nobody can explain</td></tr>
         <tr><td>Error budget policy</td><td>A written rule for what happens when a service exhausts its budget: feature work pauses, reliability work is prioritized, the product owner signs off</td><td>The budget is reported and ignored</td></tr>
-        <tr><td>Observability standards</td><td>A required minimum for any service in production: structured logs, metrics with defined names, traces with propagated correlation, dashboards from a template, alerts tied to SLOs</td><td>Each team instruments what it thinks of; the incident reveals the gap</td></tr>
-        <tr><td>Alert hygiene</td><td>Every page maps to a user-visible symptom and has a runbook; pages per shift are measured and capped</td><td>Hundreds of alerts, most ignored, the important one lost among them</td></tr>
-        <tr><td>Incident management</td><td>A defined severity scale, an incident commander role that rotates, a communications role, a timeline kept live, and postmortem follow-through tracked as in <a href="../incident-response/index.html">Incident Response</a></td><td>Whoever is loudest runs the bridge; the timeline is reconstructed from chat logs afterwards</td></tr>
+        <tr><td>Observability standards</td><td>A required minimum for any service in production: structured logs, metrics with defined names, traces with propagated correlation, dashboards from a template, alerts tied to SLOs</td><td>Each team instruments what it thinks of. The incident reveals the gap</td></tr>
+        <tr><td>Alert hygiene</td><td>Every page maps to a user-visible symptom and has a runbook. Pages per shift are measured and capped</td><td>Hundreds of alerts, most ignored, the important one lost among them</td></tr>
+        <tr><td>Incident management</td><td>A defined severity scale, an incident commander role that rotates, a communications role, a timeline kept live, and postmortem follow-through tracked as in <a href="../incident-response/index.html">Incident Response</a></td><td>Whoever is loudest runs the bridge. The timeline is reconstructed from chat logs afterwards</td></tr>
         <tr><td>Capacity and performance</td><td>Forecasts for the services that matter, load tests before known peaks, headroom policy</td><td>Capacity is discovered when it runs out</td></tr>
         <tr><td>Production readiness</td><td>A checklist a service passes before it takes traffic: SLO, on-call, runbook, dashboards, backup and restore tested, dependencies declared</td><td>Services go live when the feature is done</td></tr>
         <tr><td>Toil reduction</td><td>Measured hours of manual operational work per service, with a budget and a backlog to eliminate it</td><td>The same restore run by hand every month by the same person</td></tr>
@@ -224,11 +224,11 @@
     <div class="stage-grid single"><div class="stage-cell">
       <ol class="num-list">
         <li><div><b>Decide the signals and their purpose first</b>Logs for forensic detail, metrics for state over time and alerting, traces for request flow across services. A signal with no consumer is cost. Most estates over-collect logs and under-instrument traces.</div></li>
-        <li><div><b>Standardize the instrumentation, not the vendor</b>Use a vendor-neutral instrumentation standard (OpenTelemetry has become the default) so the collection layer is portable and the backend can be changed at a renewal. The backend is a <a href="../saas-contract-negotiation/index.html">SaaS renewal</a> problem; the instrumentation should not be.</div></li>
+        <li><div><b>Standardize the instrumentation, not the vendor</b>Use a vendor-neutral instrumentation standard (OpenTelemetry has become the default) so the collection layer is portable and the backend can be changed at a renewal. The backend is a <a href="../saas-contract-negotiation/index.html">SaaS renewal</a> problem. The instrumentation should not be.</div></li>
         <li><div><b>Put a cost owner on telemetry</b>Ingest volume by service, with a budget per service and an alert when it is exceeded. Sampling for traces, retention tiers for logs, cardinality limits for metrics. The observability bill is a FinOps problem and belongs in <a href="../cloud-cost-management/index.html">Cloud FinOps</a>.</div></li>
         <li><div><b>Alert on symptoms</b>Alerts derive from SLOs: error rate, latency, availability as the user sees them. Cause-level signals (CPU, disk, queue depth) feed dashboards and the investigation and stay off the pager.</div></li>
         <li><div><b>Make the correlation identifier non-negotiable</b>One identifier propagates through every request, message, and log line. Without it, distributed debugging is guesswork, and the integration patterns in <a href="../integration-api-patterns/index.html">Integration &amp; API Patterns</a> depend on it.</div></li>
-        <li><div><b>Include the AI layer</b>Model calls, token usage, latency, cost, and output quality signals are telemetry too. An AI system in production without them is not observable; see <a href="../ai-architecture-map/index.html">AI Architecture</a>.</div></li>
+        <li><div><b>Include the AI layer</b>Model calls, token usage, latency, cost, and output quality signals are telemetry too. An AI system in production without them is not observable. See <a href="../ai-architecture-map/index.html">AI Architecture</a>.</div></li>
       </ol>
     </div></div>
   </div>
@@ -240,12 +240,12 @@
     </div>
     <div class="stage-grid single"><div class="stage-cell">
       <ul class="checklist">
-        <li>Rotations are at least six people deep; fewer means someone is on call one week in four or worse</li>
+        <li>Rotations are at least six people deep. Fewer means someone is on call one week in four or worse</li>
         <li>On-call is paid, either as an allowance or as time off, and the policy is written down</li>
-        <li>Pages per shift are measured; a shift with more than a handful of pages triggers a review of the alerts, not the person</li>
-        <li>Every page has a runbook; a page without one is a bug against the service, not a test of the responder</li>
+        <li>Pages per shift are measured. A shift with more than a handful of pages triggers a review of the alerts, not the person</li>
+        <li>Every page has a runbook. A page without one is a bug against the service, not a test of the responder</li>
         <li>Escalation is defined by service and by severity, with a named second line, so the first responder is never alone by default</li>
-        <li>Follow-the-sun is used where the organization spans time zones; if it does not, night pages are designed out, not endured</li>
+        <li>Follow-the-sun is used where the organization spans time zones. If it does not, night pages are designed out, not endured</li>
         <li>Toil discovered on call goes to a backlog with a budget, and the team sees it shrink</li>
         <li>New engineers shadow before they respond, and nobody is on the rota for a service they have never deployed</li>
       </ul>
@@ -260,11 +260,11 @@
     <div class="stage-grid single"><div class="stage-cell">
       <table class="matrix-table">
         <tr><th>Step</th><th>Move</th><th>Evidence it is done</th></tr>
-        <tr><td>1</td><td>Define severity levels and an incident commander rotation; run the next three incidents that way</td><td>Incident timelines exist; postmortems have owners and dates</td></tr>
-        <tr><td>2</td><td>Set SLOs for the five most important customer-facing services, measured from the user's side</td><td>Five SLO dashboards; product owners can state their service's target</td></tr>
-        <tr><td>3</td><td>Cut the alert list to the ones tied to those SLOs; delete or demote the rest</td><td>Pages per shift drop; every remaining page has a runbook</td></tr>
-        <tr><td>4</td><td>Publish a production readiness checklist and apply it to the next new service</td><td>One service has gone live through the checklist; the gaps it revealed are in a backlog</td></tr>
-        <tr><td>5</td><td>Adopt a vendor-neutral instrumentation standard and a telemetry cost budget per service</td><td>Ingest by service is visible; the observability bill is flat or falling as coverage rises</td></tr>
+        <tr><td>1</td><td>Define severity levels and an incident commander rotation. Run the next three incidents that way</td><td>Incident timelines exist. Postmortems have owners and dates</td></tr>
+        <tr><td>2</td><td>Set SLOs for the five most important customer-facing services, measured from the user's side</td><td>Five SLO dashboards. Product owners can state their service's target</td></tr>
+        <tr><td>3</td><td>Cut the alert list to the ones tied to those SLOs. Delete or demote the rest</td><td>Pages per shift drop. Every remaining page has a runbook</td></tr>
+        <tr><td>4</td><td>Publish a production readiness checklist and apply it to the next new service</td><td>One service has gone live through the checklist. The gaps it revealed are in a backlog</td></tr>
+        <tr><td>5</td><td>Adopt a vendor-neutral instrumentation standard and a telemetry cost budget per service</td><td>Ingest by service is visible. The observability bill is flat or falling as coverage rises</td></tr>
         <tr><td>6</td><td>Write the error budget policy and get the CEO or CPO to sign it</td><td>A feature release has been delayed once because a budget was exhausted, and the organization survived</td></tr>
         <tr><td>7</td><td>Decide the operating model on the record, fund it, and name what SRE owns versus what teams own</td><td>An org design decision recorded in an ADR, with the on-call model and the funding that goes with it</td></tr>
       </table>
@@ -282,9 +282,9 @@
           <tr><th>SLO</th><th>Error budget per 30 days</th><th>Page when</th><th>Ticket when</th></tr>
           <tr><td>99.0%</td><td>432 minutes (7.2 hours)</td><td>Budget burning 14.4 times faster than sustainable over 1 hour, or 6 times over 6 hours</td><td>Burning faster than sustainable over 3 days</td></tr>
           <tr><td>99.5%</td><td>216 minutes (3.6 hours)</td><td>Same multipliers</td><td>Same</td></tr>
-          <tr><td>99.9%</td><td>43.2 minutes</td><td>Same multipliers; at 14.4 times, 2 percent of the month's budget is gone in an hour</td><td>Same</td></tr>
+          <tr><td>99.9%</td><td>43.2 minutes</td><td>Same multipliers. At 14.4 times, 2 percent of the month's budget is gone in an hour</td><td>Same</td></tr>
           <tr><td>99.95%</td><td>21.6 minutes</td><td>Same multipliers</td><td>Same</td></tr>
-          <tr><td>99.99%</td><td>4.3 minutes</td><td>Usually requires automated mitigation; a human page arrives too late to protect the budget</td><td>Same</td></tr>
+          <tr><td>99.99%</td><td>4.3 minutes</td><td>Usually requires automated mitigation. A human page arrives too late to protect the budget</td><td>Same</td></tr>
         </table>
       </div>
     </div>
@@ -319,7 +319,7 @@
 <text x="721.5" y="60.6" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Ticket: above 1x for 3 days</text>
 <text x="721.5" y="75.6" text-anchor="middle" font-size="9.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">a slow leak nobody would page on</text>
 <text x="816.0" y="143.2" text-anchor="end" font-size="11" font-weight="700" fill="var(--accent)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">44% left</text>
-<text x="440.0" y="300.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Fast burns wake someone up; slow burns open a ticket. Paging on the slow leak trains people to ignore pages.</text>
+<text x="440.0" y="300.0" text-anchor="middle" font-size="11" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Fast burns wake someone up. Slow burns open a ticket. Paging on the slow leak trains people to ignore pages.</text>
 <text x="440.0" y="320.0" text-anchor="middle" font-size="10.5" font-weight="400" fill="var(--ink-soft)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Thresholds follow the multiwindow approach in the SRE Workbook, as in the table above. The line is illustrative.</text></svg></div>
       <p style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin:12px 0 0;">An error budget policy says what happens when the line reaches zero: feature work pauses until reliability recovers. Agree that before the month starts, not during an incident.</p>
     </div></div>
@@ -348,7 +348,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Standard</th><th>Status</th><th>Why it matters</th></tr>
-          <tr><td>OpenTelemetry (CNCF)</td><td>Traces and metrics stable in most major languages; logs stable in only a few so far (Java, .NET, C++, PHP at this review); check the status page for your language<sup class="src"><a href="#src-2" title="OpenTelemetry, language API and SDK status">[2]</a></sup></td><td>Instrument once and send to any backend, which removes the largest switching cost in observability</td></tr>
+          <tr><td>OpenTelemetry (CNCF)</td><td>Traces and metrics stable in most major languages. Logs stable in only a few so far (Java, .NET, C++, PHP at this review). Check the status page for your language<sup class="src"><a href="#src-2" title="OpenTelemetry, language API and SDK status">[2]</a></sup></td><td>Instrument once and send to any backend, which removes the largest switching cost in observability</td></tr>
           <tr><td>W3C Trace Context</td><td>W3C Recommendation<sup class="src"><a href="#src-3" title="W3C, Trace Context Recommendation">[3]</a></sup></td><td>Trace IDs survive hops between services, vendors, and cloud providers</td></tr>
           <tr><td>Prometheus exposition format and OpenMetrics</td><td>Widely supported</td><td>The de facto format for pull-based metrics</td></tr>
           <tr><td>SLO definitions in code (for example OpenSLO)</td><td>Community specification</td><td>SLOs reviewed and versioned like any other configuration</td></tr>
@@ -359,7 +359,7 @@
 </div>
   <div class="stage-card">
     <div class="stage-head">
-      <span class="stage-num">Checklist</span>
+      <span class="stage-num">Red flags</span>
       <h2>Operating model red flags</h2>
       <p>Any two of these usually means the SRE function exists in name only.</p>
     </div>
@@ -383,7 +383,7 @@
     </div>
     <div class="stage-grid">
       <div class="stage-cell a"><span class="env-label a">What it looks like</span><p>The operations team becomes the SRE team. Product teams are told they are now on call, escalate every page to SRE within minutes, and ship services with no SLO and no runbook because the checklist has no teeth. SRE is paged for everything, owns nothing, and attrits. Leadership concludes that SRE does not work here.</p></div>
-      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>The function owns standards and the platform, with a production readiness gate that product teams must pass and an error budget policy signed by the executive who owns the roadmap. Teams that meet the standard run their own services; the reliability function's success measure is how rarely it is paged for something it does not own. See <a href="../platform-engineering/index.html">Platform Engineering</a> for the platform side of the same operating model and <a href="../org-design/index.html">Org Design</a> for where the function reports.</p></div>
+      <div class="stage-cell"><span class="env-label b">The counter-move</span><p>The function owns standards and the platform, with a production readiness gate that product teams must pass and an error budget policy signed by the executive who owns the roadmap. Teams that meet the standard run their own services. The reliability function's success measure is how rarely it is paged for something it does not own. See <a href="../platform-engineering/index.html">Platform Engineering</a> for the platform side of the same operating model and <a href="../org-design/index.html">Org Design</a> for where the function reports.</p></div>
     </div>
   </div>
   <div class="stage-card">
@@ -403,7 +403,7 @@
 </main>
 
 <footer>
-  Reference only. The error budget policy and production readiness checklist are free to download above. Service level objectives, error budgets, and the toil concept originate in Google's Site Reliability Engineering (O'Reilly, 2016); the phrase you build it, you run it is Werner Vogels's (Amazon, 2006). OpenTelemetry is a CNCF project. The operating model comparison and sequencing are this site's.
+  Reference only. The error budget policy and production readiness checklist are free to download above. Service level objectives, error budgets, and the toil concept originate in Google's Site Reliability Engineering (O'Reilly, 2016). The phrase you build it, you run it is Werner Vogels's (Amazon, 2006). OpenTelemetry is a CNCF project. The operating model comparison and sequencing are this site's.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 </footer>
 
