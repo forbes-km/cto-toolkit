@@ -126,7 +126,7 @@
         <table class="matrix-table">
           <tr><th>Category</th><th>What to check</th><th>Common mistake</th></tr>
           <tr><td>Functional fit</td><td>Score against your own top ten requirements, not the vendor's feature list</td><td>Scoring against the demo instead of a trial with your own data</td></tr>
-          <tr><td>Security &amp; compliance posture</td><td>A current SOC 2 or ISO certification, not an expired one; the pen test summary if available</td><td>Accepting a security questionnaire response at face value with no artifact requested</td></tr>
+          <tr><td>Security &amp; compliance posture</td><td>A current SOC 2 or ISO certification, not an expired one. The pen test summary if available</td><td>Accepting a security questionnaire response at face value with no artifact requested</td></tr>
           <tr><td>Financial stability</td><td>Funding stage or profitability, customer concentration risk, runway if it's an early-stage vendor</td><td>Skipping this for anything that isn't a large, obviously stable vendor</td></tr>
           <tr><td>Integration complexity</td><td>API quality and documentation, tested in an integration spike, not taken on a sales engineer's word</td><td>Estimating integration effort from a slide deck instead of a technical spike</td></tr>
           <tr><td>Support &amp; SLA</td><td>Historical response time from reference customers, not the SLA document's stated target</td><td>Trusting the SLA document without checking whether it's ever enforced against the vendor</td></tr>
@@ -139,7 +139,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score a vendor</h3>
-      <p>Compare up to six vendors side by side, scored by one evaluator. The six default dimensions and their weights are a starting point: rename them, remove them, or add your own, such as data residency, AI terms, or accessibility. A vendor with any dimension at 1 is knocked out whatever its average, and the tool checks whether the winner survives a switch to equal weights. The full workbook supports multiple evaluators scoring independently and surfacing the variance between them, which is where this framework earns its keep; this tool is a single evaluator's pass. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Compare up to six vendors side by side, scored by one evaluator. The six default dimensions and their weights are a starting point: rename them, remove them, or add your own, such as data residency, AI terms, or accessibility. A vendor with any dimension at 1 is knocked out whatever its average, and the tool checks whether the winner survives a switch to equal weights. The full workbook supports multiple evaluators scoring independently and surfacing the variance between them, which is where this framework earns its keep. This tool is a single evaluator's pass. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -159,7 +159,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">Do this</span>
-        <p>Asking the vendor for a reference in a similar situation to yours (similar scale, similar use case), then asking that reference one specific question: &quot;what would you do differently if you were choosing again today.&quot; That question surfaces friction far more reliably than &quot;are you happy with them.&quot;</p>
+        <p>Asking the vendor for a reference in a similar situation to yours (similar scale, similar use case), then asking that reference one question: &quot;what would you do differently if you were choosing again today.&quot; That question surfaces friction far more reliably than &quot;are you happy with them.&quot;</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">Avoid this</span>
@@ -243,23 +243,23 @@
     <div class="stage-head">
       <span class="stage-num">6</span>
       <h3>The vendor risk register</h3>
-      <p>Above a materiality threshold, a vendor is a standing risk that outlives the purchase decision that created it. Enterprise risk management treats it that way; a vendor scorecard that ends at signing does not.</p>
+      <p>Above a materiality threshold, a vendor is a standing risk that outlives the purchase decision that created it. Enterprise risk management treats it that way. A vendor scorecard that ends at signing does not.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Field</th><th>What it tracks</th></tr>
-          <tr><td>Criticality tier</td><td>Whether the vendor is on the critical path for revenue or compliance, important but replaceable, or low-impact; sets the review cadence below</td></tr>
+          <tr><td>Criticality tier</td><td>Whether the vendor is on the critical path for revenue or compliance, important but replaceable, or low-impact. Sets the review cadence below</td></tr>
           <tr><td>Concentration</td><td>Share of category spend, share of total technology spend, and whether the vendor sits behind more than one internal system, so the real blast radius is visible</td></tr>
-          <tr><td>Financial health</td><td>Last checked date and source (funding round, public filings, a credit check for a private vendor); refreshed at each renewal at minimum, sooner for an early-stage vendor</td></tr>
-          <tr><td>Security posture drift</td><td>Current SOC 2 or ISO status against what was true at signing; certifications lapse and breach histories accumulate after the initial evaluation</td></tr>
+          <tr><td>Financial health</td><td>Last checked date and source (funding round, public filings, a credit check for a private vendor). Refreshed at each renewal at minimum, sooner for an early-stage vendor</td></tr>
+          <tr><td>Security posture drift</td><td>Current SOC 2 or ISO status against what was true at signing. Certifications lapse and breach histories accumulate after the initial evaluation</td></tr>
           <tr><td>Named exit path</td><td>The migration plan and its estimated cost and duration, reviewed regularly, because it goes stale as the vendor's product and your integration with it both keep changing</td></tr>
-          <tr><td>Owner</td><td>A named individual accountable for the vendor relationship, not a team or a function; see the same pattern in <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
+          <tr><td>Owner</td><td>A named individual accountable for the vendor relationship, not a team or a function. See the same pattern in <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a></td></tr>
         </table>
-        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">This is the same register discipline that underlies third-party risk management frameworks such as NIST SP 800-161 and ISO 27036; a formal certification against either is unnecessary for most organizations, but the register they describe, one row per material vendor, reviewed on a fixed cadence and not only at renewal, is worth running regardless of whether the paperwork ever gets audited.</p>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:10px 0 0;">This is the same register discipline that underlies third-party risk management frameworks such as NIST SP 800-161 and ISO 27036. A formal certification against either is unnecessary for most organizations, but the register they describe, one row per material vendor, reviewed on a fixed cadence and not only at renewal, is worth running regardless of whether the paperwork ever gets audited.</p>
       </div>
     </div>
-    <div class="same-note">Feed the criticality tier and concentration fields from here directly into the vendor concentration checklist on <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a>; the two pages track the same underlying risk from different angles and should use the same numbers.</div>
+    <div class="same-note">Feed the criticality tier and concentration fields from here directly into the vendor concentration checklist on <a href="../saas-contract-negotiation/index.html">SaaS Contract &amp; Renewal Negotiation</a>. The two pages track the same underlying risk from different angles and should use the same numbers.</div>
   </div>
 
       <div class="stage-card">
@@ -272,7 +272,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Vendor</th><th>Functional</th><th>Security</th><th>Financial</th><th>Integration</th><th>Support</th><th>Exit</th><th>Weighted</th><th>Outcome</th></tr>
-          <tr><td>Vendor A</td><td>5</td><td>3</td><td>4</td><td>3</td><td>3</td><td>2</td><td>3.65</td><td>Viable; negotiate data export and termination assistance</td></tr>
+          <tr><td>Vendor A</td><td>5</td><td>3</td><td>4</td><td>3</td><td>3</td><td>2</td><td>3.65</td><td>Viable. Negotiate data export and termination assistance</td></tr>
           <tr><td>Vendor B</td><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td>4</td><td>3.85</td><td>Selected</td></tr>
           <tr><td>Vendor C</td><td>4</td><td>1</td><td>4</td><td>5</td><td>4</td><td>4</td><td>3.55</td><td>Knocked out: a 1 on security disqualifies, whatever the average says</td></tr>
         </table>

@@ -101,14 +101,14 @@
     <div class="stage-head">
       <span class="stage-num">Framework</span>
       <h3>Six dimensions, scored independently</h3>
-      <p>Most organizations are unevenly mature across these six; that unevenness is itself the most useful output of the assessment.</p>
+      <p>Most organizations are unevenly mature across these six. That unevenness is itself the most useful output of the assessment.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Dimension</th><th>Level 1: Ad hoc</th><th>Level 3: Defined</th><th>Level 5: Optimized</th></tr>
           <tr><td>Identity &amp; access</td><td>Standing broad access, no consistent least-privilege policy across systems</td><td>Documented access policy applied through a defined onboarding/offboarding process</td><td>Just-in-time, continuously verified access with no standing privilege by default</td></tr>
-          <tr><td>Segmentation &amp; blast radius</td><td>Flat network, one compromised credential reaches most of the environment</td><td>Defined network segments with controlled points between them</td><td>Micro-segmented to the workload level; a single compromise is contained by design, not by luck</td></tr>
+          <tr><td>Segmentation &amp; blast radius</td><td>Flat network, one compromised credential reaches most of the environment</td><td>Defined network segments with controlled points between them</td><td>Micro-segmented to the workload level. A single compromise is contained by design, not by luck</td></tr>
           <tr><td>Detection &amp; response</td><td>Reliant on external reports to learn about a problem</td><td>Centralized logging and defined alerting on known threat patterns</td><td>Behavioral anomaly detection catching novel patterns, with a tested response plan behind it</td></tr>
           <tr><td>Vulnerability management</td><td>Scanning inconsistent, patching reactive and undocumented</td><td>Regular scanning cadence, patching SLA defined and mostly met</td><td>Continuous scanning integrated into deployment, patching SLA consistently met with evidence</td></tr>
           <tr><td>Third-party risk</td><td>Vendor access granted with no ongoing review</td><td>Vendor risk assessed at onboarding, reviewed periodically</td><td>Continuous vendor risk monitoring, access scoped and reviewed on the same cadence as internal identity</td></tr>
@@ -121,7 +121,7 @@
     <div class="stage-head">
       <span class="stage-num">Interactive</span>
       <h3>Score your own environment</h3>
-      <p>Score each dimension today and where it needs to be, with a line of evidence for each score. The tool applies this page's identity-first rule, ranks the gaps, and gives the sequence to close them. Runs entirely in your browser; nothing is sent anywhere.</p>
+      <p>Score each dimension today and where it needs to be, with a line of evidence for each score. The tool applies this page's identity-first rule, ranks the gaps, and gives the sequence to close them. Runs entirely in your browser. Nothing is sent anywhere.</p>
     </div>
     <div class="stage-grid single">
       <div class="stage-cell">
@@ -185,7 +185,7 @@
     <div class="stage-grid">
       <div class="stage-cell a">
         <span class="env-label a">The highest-leverage starting point</span>
-        <p>Identity and access almost always comes first. Segmentation, detection, and even third-party risk all assume you can trust who's making a request in the first place; building micro-segmentation on top of standing broad access adds complexity around a foundation that's still weak.</p>
+        <p>Identity and access almost always comes first. Segmentation, detection, and even third-party risk all assume you can trust who's making a request in the first place. Building micro-segmentation on top of standing broad access adds complexity around a foundation that's still weak.</p>
       </div>
       <div class="stage-cell">
         <span class="env-label b">The trap</span>
@@ -203,7 +203,7 @@
     <div class="stage-grid single">
       <div class="stage-cell">
         <p><strong>Scores:</strong> Identity &amp; access 2, Segmentation &amp; blast radius 2, Detection &amp; response 4, Vulnerability management 3, Third-party risk 2, Governance &amp; culture 3. Average: 2.7.</p>
-        <p><strong>The diagnosis the average hides:</strong> strong detection sitting on top of weak identity and segmentation is a specific, dangerous pattern. This organization can see an attacker after they're already in, but the foundational controls that would have made getting in hard, or limited what they could reach once inside, are still weak. The instinct this score pattern usually triggers, buy more detection tooling since it's already the strongest area, is backwards. More visibility into a wide-open environment doesn't reduce how wide open it is. Identity and segmentation need the next dollar; detection can wait.</p>
+        <p><strong>The diagnosis the average hides:</strong> strong detection sitting on top of weak identity and segmentation is a dangerous pattern. This organization can see an attacker after they're already in, but the foundational controls that would have made getting in hard, or limited what they could reach once inside, are still weak. The instinct this score pattern usually triggers, buy more detection tooling since it's already the strongest area, is backwards. More visibility into a wide-open environment doesn't reduce how wide open it is. Identity and segmentation need the next dollar. Detection can wait.</p>
       </div>
     </div>
   </div>
@@ -218,7 +218,7 @@
       <div class="stage-cell">
         <table class="matrix-table">
           <tr><th>Source</th><th>Date</th><th>What it contributes</th></tr>
-          <tr><td>NIST SP 800-207, Zero Trust Architecture</td><td>August 2020</td><td>The core definition: no implicit trust based on network location; per-request access decisions<sup class="src"><a href="#src-1" title="NIST SP 800-207, Zero Trust Architecture, August 2020">[1]</a></sup></td></tr>
+          <tr><td>NIST SP 800-207, Zero Trust Architecture</td><td>August 2020</td><td>The core definition: no implicit trust based on network location. Per-request access decisions<sup class="src"><a href="#src-1" title="NIST SP 800-207, Zero Trust Architecture, August 2020">[1]</a></sup></td></tr>
           <tr><td>CISA Zero Trust Maturity Model 2.0</td><td>April 2023</td><td>Five pillars (identity, devices, networks, applications and workloads, data) across four stages: traditional, initial, advanced, optimal<sup class="src"><a href="#src-2" title="CISA, Zero Trust Maturity Model Version 2.0, April 2023">[2]</a></sup></td></tr>
           <tr><td>NIST SP 800-207A</td><td>September 2023</td><td>Zero trust for cloud-native applications across multiple locations<sup class="src"><a href="#src-3" title="NIST SP 800-207A, September 2023">[3]</a></sup></td></tr>
           <tr><td>NIST SP 1800-35, Implementing a Zero Trust Architecture</td><td>June 2025</td><td>Nineteen example implementations built with commercial products at the National Cybersecurity Center of Excellence<sup class="src"><a href="#src-4" title="NIST NCCoE, final SP 1800-35, June 2025">[4]</a></sup></td></tr>
@@ -262,13 +262,13 @@
         <p>That the scope covered every system that matters, that the maturity level holds up outside the audit window, or that a novel attack pattern outside the certified controls would be caught. Treat certification as a floor.</p>
       </div>
     </div>
-    <div class="same-note">See <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> for the broader NIST CSF-based governance ladder this architecture-specific model complements; the two are meant to disagree sometimes. If they always agree, one is redundant.</div>
+    <div class="same-note">See <a href="../security-compliance-maturity/index.html">Security &amp; Compliance Maturity</a> for the broader NIST CSF-based governance ladder this architecture-specific model complements. The two are meant to disagree sometimes. If they always agree, one is redundant.</div>
   </div>
 
 </main>
 
 <footer>
-  Reference only. This previews the framework's six dimensions and scoring discipline; the full facilitated instrument and target-state architecture live in the <a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a> methodology. See <a href="../identity-access-architecture/index.html" style="color:var(--accent);">Identity &amp; Access Architecture</a> for the standalone treatment of the first-move dimension.
+  Reference only. This previews the framework's six dimensions and scoring discipline. The full facilitated instrument and target-state architecture live in the <a href="../enterprise-architecture-map/index.html">Enterprise Architecture</a> methodology. See <a href="../identity-access-architecture/index.html" style="color:var(--accent);">Identity &amp; Access Architecture</a> for the standalone treatment of the first-move dimension.
   <br><span style="opacity:0.7">Last reviewed October 2026.</span>
 
 </footer>
