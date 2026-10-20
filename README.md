@@ -2,7 +2,7 @@
 
 **[Open the toolkit: forbes-km.github.io/cto-toolkit](https://forbes-km.github.io/cto-toolkit/)**
 
-A reference library for CTOs, enterprise architects, and other technology leaders: 71 pages of frameworks, decision guides, in-browser calculators, and downloadable templates, built from 30+ years of running and assessing enterprise technology platforms.
+A reference library for CTOs, enterprise architects, and other technology leaders: 72 pages of frameworks, decision guides, in-browser calculators, and downloadable templates, built from 30+ years of running and assessing enterprise technology platforms.
 
 It is a static GitHub Pages site. No build step, no dependencies, no tracking. Every calculator runs in the browser and sends nothing anywhere.
 
@@ -12,7 +12,7 @@ Every page lives at `tools/<slug>/index.html`. The root `index.html` is the cata
 
 | Section | Covers |
 |---|---|
-| AI systems | Architecture, governance, FinOps, and portfolio management for AI initiatives |
+| AI systems | Architecture, governance, FinOps, and portfolio management for AI initiatives, plus the delivery pipeline controls for AI-assisted development |
 | Cloud and enterprise architecture | EA operating model, application portfolio, architecture review and principles, integration patterns, technical debt economics, cloud cost, data strategy, the Cloud Service Mapper |
 | Risk and resilience | Security program, identity and access architecture, zero-trust and compliance maturity, GRC, observability and SRE operating model, disaster recovery, reliability economics, data governance, the regulatory map |
 | Planning and diligence | ADRs and roadmapping, stakeholder engagement, business cases, vendor evaluation, SaaS renewal negotiation, technology M&A diligence, the diligence kit, and post-merger integration |
@@ -25,8 +25,8 @@ Three pages explain the whole: **Epistemology and Research Methods** is the thin
 
 ## What is runnable
 
-- **Interactive calculators** embedded in their pages: application portfolio scoring, AI initiative classification, zero-trust and EA maturity, security and compliance maturity, GRC common-control effort, business case NPV and IRR, capital allocation, reliability and disaster recovery cost-benefit, cloud FinOps maturity, vendor scoring, stakeholder mapping, technical debt ranking and multi-year sequencing, a regulatory applicability filter, AI use case risk tiering, error budget and burn rate, unit-cost forecasting, run-rate versus in-year savings, and hiring capacity
-- **Downloadable templates** (.md and .docx): ADR, incident postmortem, incident severity and communications kit, vendor evaluation scorecard, technology strategy, business case one-pager, AI use case intake form, risk appetite statement, executive role charter, error budget policy and production readiness checklist, emergency succession pack
+- **Interactive calculators** embedded in their pages: application portfolio scoring, AI initiative classification, zero-trust and EA maturity, security and compliance maturity, GRC common-control effort, business case NPV and IRR, capital allocation, reliability and disaster recovery cost-benefit, cloud FinOps maturity, vendor scoring, stakeholder mapping, technical debt ranking and multi-year sequencing, a regulatory applicability filter, AI use case risk tiering, error budget and burn rate, AI-assisted delivery control readiness, unit-cost forecasting, run-rate versus in-year savings, and hiring capacity
+- **Downloadable templates** (.md and .docx): ADR, incident postmortem, incident severity and communications kit, vendor evaluation scorecard, technology strategy, business case one-pager, AI use case intake form, risk appetite statement, executive role charter, error budget policy and production readiness checklist, AI-assisted development policy and pipeline control standard, emergency succession pack
 - **Downloadable workbooks** (.xlsx, formula-driven): technology capital allocation, cloud FinOps, AI inventory and risk register, decision rights RACI and log, succession heatmap, SaaS renewal calendar
 - **Industry overlays** for healthcare and financial services on Data Governance, Incident Response, Vendor Evaluation, the AI Governance Map, and the M&A Diligence Kit
 - **Benchmark tables** with sourced industry figures (downtime cost, SaaS utilization and inflation, security budget share, breach cost, technical debt, span of control, attrition) next to the rules of thumb they test
